@@ -22,9 +22,9 @@ INSERT INTO `gameobject` (id, map, spawnMask, phaseMask, position_x, position_y,
 (194159, 616, 2, 1, 759.544, 1306.71, 225.083, 0, 0, 0, 0, 0, -604800, 100, 1);
 
 -- vehicle data for Hover Disks and Wyrmrest Skytalons (normal and heroic)
-UPDATE `creature_template` SET VehicleId=220, Spell1=56091, Spell2=56092, Spell3=57090, Spell4=57143, Spell5=57108, Spell6=57092 WHERE entry IN (30161, 31752);
+UPDATE `creature_template` SET vehicle_id=220, Spell1=56091, Spell2=56092, Spell3=57090, Spell4=57143, Spell5=57108, Spell6=57092 WHERE entry IN (30161, 31752);
 
-UPDATE `creature_template` SET VehicleId=223 WHERE entry IN (30248, 31749);
+UPDATE `creature_template` SET vehicle_id=223 WHERE entry IN (30248, 31749);
 
 DELETE FROM `npc_spellclick_spells` WHERE npc_entry=30248;
 INSERT INTO `npc_spellclick_spells` (npc_entry, spell_id, quest_start, quest_start_active, quest_end, cast_flags) VALUES

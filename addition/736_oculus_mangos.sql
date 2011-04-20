@@ -89,7 +89,7 @@ UPDATE `creature_template` SET
 WHERE `entry` IN (27692);
 
 -- from me
-UPDATE `creature_template` SET `AIName` = '', `VehicleId` = 70, `ScriptName` = 'mob_oculus_dragon' WHERE `entry` IN (27692,27756,27755);
+UPDATE `creature_template` SET `AIName` = '', `vehicle_id` = 70, `ScriptName` = 'mob_oculus_dragon' WHERE `entry` IN (27692,27756,27755);
 DELETE FROM `spell_script_target` WHERE `entry` IN (49460, 49346, 49464);
 INSERT INTO `spell_script_target` VALUES (49460, 1, 27755);
 INSERT INTO `spell_script_target` VALUES (49346, 1, 27692);

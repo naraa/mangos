@@ -22,8 +22,8 @@ DELETE FROM `gameobject` WHERE `guid` IN (913334);
 UPDATE `instance_template` SET `ScriptName`='instance_icecrown_spire' WHERE `map`=631;
 
 -- Saurfang
-UPDATE `creature_template` SET `VehicleId` = 639, `AIName`='', `PowerType` = 3, `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
-UPDATE `creature_template` SET `VehicleId` = 639, `AIName`='', `PowerType` = 3 WHERE `entry` IN (38402,38582,38583);
+UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3, `ScriptName`='boss_deathbringer_saurfang' WHERE `entry`=37813;
+UPDATE `creature_template` SET `vehicle_id` = 639, `AIName`='', `PowerType` = 3 WHERE `entry` IN (38402,38582,38583);
 UPDATE `creature` SET `position_x` = -476.621,`position_y` = 2211.11,`position_z` = 541.197, `spawntimesecs` = 604800 WHERE `id` = 37813;
 UPDATE `creature_template` SET `ScriptName`='mob_blood_beast', `AIName`='' WHERE `entry`= 38508;
 DELETE FROM `spell_script_target` WHERE `entry` IN (72260, 72202, 72278,72279,72280);
@@ -116,8 +116,8 @@ UPDATE `gameobject_template` SET `faction` = '0', `ScriptName` = 'go_plague_sigi
 -- Abomination
 DELETE FROM `creature_template_addon` WHERE (`entry`=37672);
 INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37672, '70385 70405');
-UPDATE `creature_template` SET `VehicleId`=587 WHERE `entry` in (36678,38431,38585,38586);
-UPDATE `creature_template` SET `VehicleId`=591 WHERE `entry` in (37672,38605,38786,38787);
+UPDATE `creature_template` SET `vehicle_id`=587 WHERE `entry` in (36678,38431,38585,38586);
+UPDATE `creature_template` SET `vehicle_id`=591 WHERE `entry` in (37672,38605,38786,38787);
 DELETE FROM `spell_script_target` WHERE `entry` IN (70360);
 INSERT INTO `spell_script_target` VALUES (70360,1,37690);
 
