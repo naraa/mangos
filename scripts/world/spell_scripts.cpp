@@ -798,6 +798,9 @@ bool EffectDummyCreature_spell_dummy_npc(Unit* pCaster, uint32 uiSpellId, SpellE
                 bool isMale = urand(0,1);
                 Player* pPlayer = pCreatureTarget->GetLootRecipient();
 
+                if (!pPlayer)
+                    return true;
+
                 if (isMale)
                     DoScriptText(SAY_ITS_MALE, pCreatureTarget, pPlayer);
                 else
