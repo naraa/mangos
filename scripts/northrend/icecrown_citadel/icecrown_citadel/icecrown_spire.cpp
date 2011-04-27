@@ -28,7 +28,6 @@ enum
         SPELL_BERSERK                           = 47008,
         SPELL_FROST_BREATH                      = 70116,
         SPELL_BLIZZARD                          = 70362,
-        SPELL_SOUL_FEAST                        = 71203,
         SPELL_CLEAVE                            = 70361,
 
         SPELL_STOMP                             = 64652,
@@ -62,20 +61,20 @@ struct MANGOS_DLL_DECL mob_spire_frostwyrmAI : public BSWScriptedAI
 
         switch(stage)
         {
-            case 0: {
-                    timedCast(SPELL_SOUL_FEAST, diff);
-                    break;}
-            case 1: {
+            case 0:
+                    break;
+            case 1: 
                     doCast(SPELL_BERSERK);
                     stage = 2;
-                    break;}
-            case 2: {
-                    break;}
-            }
+                    break;
+            case 2:
+            default:
+                    break;
+        }
 
-                    timedCast(SPELL_CLEAVE, diff);
-                    timedCast(SPELL_BLIZZARD, diff);
-                    timedCast(SPELL_FROST_BREATH, diff);
+        timedCast(SPELL_CLEAVE, diff);
+        timedCast(SPELL_BLIZZARD, diff);
+        timedCast(SPELL_FROST_BREATH, diff);
 
         if (m_creature->GetHealthPercent() < 10.0f && stage == 0) stage = 1;
 
@@ -133,18 +132,18 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
 
         switch(stage)
         {
-            case 0: {
-                    timedCast(SPELL_SOUL_FEAST, diff);
-                    break;}
-            case 1: {
+            case 0:
+                    break;
+            case 1: 
                     doCast(SPELL_BERSERK);
                     stage = 2;
-                    break;}
-            case 2: {
-                    break;}
-            }
-                    timedCast(SPELL_STOMP, diff);
-                    timedCast(SPELL_DEATH_PLAGUE, diff);
+                    break;
+            case 2:
+            default:
+                    break;
+        }
+        timedCast(SPELL_STOMP, diff);
+        timedCast(SPELL_DEATH_PLAGUE, diff);
 
         if (m_creature->GetHealthPercent() < 2.0f && stage == 0) stage = 1;
 

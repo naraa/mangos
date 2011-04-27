@@ -51,7 +51,6 @@ enum BossSpells
     NPC_FROST_BOMB           = 37186,
 
     SPELL_FLY                = 59553,
-    QUEST_24757              = 72289,
     FROST_IMBUED_BLADE_AURA  = 72290,
 
     SPELL_BERSERK            = 47008,
@@ -176,8 +175,6 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public BSWScriptedAI
         doRemoveFromAll(SPELL_ICY_TOMB);
         pInstance->SetData(TYPE_SINDRAGOSA, DONE);
         DoScriptText(-1631423,m_creature,killer);
-
-        doCast(QUEST_24757);
 
         if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_RIMEFANG)))
             pTemp->SetRespawnDelay(7*DAY);

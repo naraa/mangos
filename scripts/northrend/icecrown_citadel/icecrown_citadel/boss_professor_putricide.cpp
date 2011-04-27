@@ -50,7 +50,6 @@ enum BossSpells
     NPC_GAS_CLOUD                 = 37562,
     SPELL_GASEOUS_BLOAT           = 70672,
     SPELL_EXPUNGED_GAS            = 70701,
-    SPELL_SOUL_FEAST              = 71203,
 //
     NPC_VOLATILE_OOZE             = 37697,
     SPELL_OOZE_ADHESIVE           = 70447,
@@ -167,7 +166,7 @@ struct MANGOS_DLL_DECL boss_proffesor_putricideAI : public BSWScriptedAI
         pInstance->SetData(TYPE_PUTRICIDE, IN_PROGRESS);
         DoScriptText(-1631249,m_creature, pWho);
 
-        if (Unit* pTarget = doSelectRandomPlayer(SPELL_SHADOWS_EDGE, true, 100.0f))
+        if (Unit* pTarget = doSelectRandomPlayer(SPELL_SHADOWS_EDGE, true, 100.0f)) //hack! need remove later
             doAura(SHADOW_INFUSION_AURA,pTarget);
     }
 
@@ -176,8 +175,6 @@ struct MANGOS_DLL_DECL boss_proffesor_putricideAI : public BSWScriptedAI
         if (!pInstance) return;
         pInstance->SetData(TYPE_PUTRICIDE, DONE);
         DoScriptText(-1631243,m_creature, killer);
-
-        doCast(QUEST_24749);
     }
 
     void JustSummoned(Creature* summoned)
@@ -487,11 +484,6 @@ struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public BSWScriptedAI
 
         if (!pTarget) Aggro(m_creature->getVictim());
 
-        if (timedQuery(SPELL_SOUL_FEAST, uiDiff))
-        {
-            doCast(SPELL_SOUL_FEAST);
-        }
-
         if (delay <= uiDiff)
         {
             if (pTarget && pTarget->isAlive() && pTarget->IsWithinDistInMap(m_creature, 3.0f))
@@ -572,12 +564,8 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public BSWScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (!pTarget) Aggro(m_creature->getVictim());
-
-        if (timedQuery(SPELL_SOUL_FEAST, uiDiff))
-        {
-            doCast(SPELL_SOUL_FEAST);
-        }
+        if (!pTarget) 
+            Aggro(m_creature->getVictim());
 
         if (delay <= uiDiff)
         {
