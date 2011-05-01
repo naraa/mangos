@@ -41,7 +41,6 @@ enum BossSpells
     SPELL_INOCULATE          = 69291,
     SPELL_REMOVE_UNOCULATE   = 69298,
     SPELL_GASTRIC_BLOAT      = 72219,
-    SPELL_GASTRIC_EXPLOSION  = 72227,
     SPELL_VILE_GAS           = 72272,
     SPELL_VILE_GAS_AURA      = 69244,
     SPELL_VILE_GAS_AURA_0    = 69248,
@@ -340,12 +339,6 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
         timedCast(SPELL_GAS_SPORE, diff);
 
         timedCast(SPELL_GASTRIC_BLOAT, diff);
-
-        if (auraCount(SPELL_GASTRIC_BLOAT,m_creature->getVictim(),EFFECT_INDEX_1) > 9)
-        {
-            m_creature->getVictim()->RemoveAurasDueToSpell(SPELL_GASTRIC_BLOAT);
-            doCast(SPELL_GASTRIC_EXPLOSION,m_creature->getVictim());
-        };
 
         if (timedQuery(SPELL_VILE_GAS, diff))
         {
