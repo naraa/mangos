@@ -13,7 +13,7 @@ UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_jaina_and_sylvana_FSextro' where `entry` IN (38160, 38161);
 UPDATE `creature_template` SET `scale`='0.8', `equipment_id`='1221' where `entry` IN (37597, 38160, 36993, 38188, 37221, 36955);
 UPDATE `creature_template` SET `scale`='0.8' where `entry` IN (36658, 37225, 37223, 37226, 37554);
-UPDATE `creature_template` SET `npcflag`='0' where `entry` IN (38160, 38161);
+UPDATE `creature_template` SET `npcflag`='3' where `entry` IN (38160, 38161);
 UPDATE `creature_template` SET `npcflag`='3' where `entry` IN (37597, 37596, 36993, 36990);
 UPDATE `creature_template` SET `scale`='1' where `entry` IN (38161, 37596, 36990);
 UPDATE `creature_template` SET `scale`='1' where `entry` IN (37755);
