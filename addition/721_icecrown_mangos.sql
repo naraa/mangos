@@ -181,6 +181,7 @@ UPDATE `creature_template` SET `faction_A` = 35, `faction_H` = 35 WHERE `entry`=
 UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `ScriptName`='mob_nightmare_portal', `AIName`='' WHERE `entry`= 38429;
 UPDATE `creature_template` SET `ScriptName`='mob_mana_void', `AIName`='' WHERE `entry`= 38068;
 DELETE FROM `creature` WHERE `guid` = 47738 AND `id` = 38589;
+DELETE FROM `pool_creature` WHERE `guid`=47738;
 
 UPDATE `gameobject_template` SET `faction` = '0',`data0` = '0' WHERE `gameobject_template`.`entry` IN (201375,201373);
 UPDATE `gameobject_template` SET `faction` = '114',`data0` = '0' WHERE `gameobject_template`.`entry` IN (201374);
@@ -200,7 +201,7 @@ UPDATE `gameobject_template` SET `faction` = '114',`data0` = '0' WHERE `gameobje
 UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201369,201379);
 -- frost bomb target from Lordronn
 DELETE FROM `creature_template_addon` WHERE `entry` = 37186;
-INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37186, '70022 0');
+INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37186, 70022);
 
 
 -- Lich King

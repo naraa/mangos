@@ -14,6 +14,8 @@ REPLACE INTO creature_template (entry, difficulty_entry_1, modelid_1, modelid_3,
 
 -- boss loot
 DELETE FROM creature_loot_template WHERE entry IN (30452, 30451, 30449, 28860, 288601, 288602, 288603, 31534, 31520, 31535, 31311, 313111, 313112, 313113);
+-- for YTDB
+DELETE FROM `reference_loot_template` WHERE `entry`=40630;
 -- Tenebron, Shadron, Vesperon
 UPDATE creature_template SET lootid=30449 WHERE entry IN (30452, 30451, 30449, 31534, 31520, 31535);
 INSERT INTO creature_loot_template (entry, item, ChanceOrQuestChance, groupid, mincountOrRef, maxcount, lootcondition, condition_value1, condition_value2) VALUES
