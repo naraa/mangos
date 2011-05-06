@@ -24,6 +24,7 @@ EndScriptData */
 /* ContentData
 at_shade_of_eranikus
 npc_malfurion_stormrage
+event_antalarion_statue_activation
 EndContentData */
 
 #include "precompiled.h"
@@ -39,14 +40,14 @@ bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const* p
 {
     if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
     {
-        //Only do stuff, if the player has finished the PreQuest
+        // Only do stuff, if the player has finished the PreQuest
         if (pPlayer->GetQuestRewardStatus(QUEST_THE_CHARGE_OF_DRAGONFLIGHTS) &&
             !pPlayer->GetQuestRewardStatus(QUEST_ERANIKUS_TYRANT_OF_DREAMS) &&
             pPlayer->GetQuestStatus(QUEST_ERANIKUS_TYRANT_OF_DREAMS) != QUEST_STATUS_COMPLETE)
         {
             if (pInstance->GetData(TYPE_MALFURION) != DONE)
             {
-                pPlayer->SummonCreature(NPC_MALFURION, -639.378723f, -4.238533f, -90.835098f, 2.724664f, TEMPSUMMON_DEAD_DESPAWN, 0);
+                pPlayer->SummonCreature(NPC_MALFURION, aSunkenTempleLocation[2].m_fX, aSunkenTempleLocation[2].m_fY, aSunkenTempleLocation[2].m_fZ, aSunkenTempleLocation[2].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
                 pInstance->SetData(TYPE_MALFURION, DONE);
             }
         }
@@ -57,6 +58,7 @@ bool AreaTrigger_at_shade_of_eranikus(Player* pPlayer, AreaTriggerEntry const* p
 /*######
 ## npc_malfurion_stormrage
 ######*/
+
 enum
 {
     EMOTE_MALFURION1              = -1109000,
@@ -72,8 +74,9 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
 {
     npc_malfurionAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        DoScriptText(EMOTE_MALFURION1, m_creature);
         m_uiSpeech   = 0;
-        m_uiSayTimer = 0;
+        m_uiSayTimer = 3000;
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
     }
 
@@ -83,7 +86,7 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
     void Reset() {}
     void UpdateAI(const uint32 uiDiff)
     {
-        // we are in Sunken Temple
+        // We are in Sunken Temple
         if (m_creature->GetMap()->IsDungeon())
         {
             if (m_uiSpeech < MAX_MALFURION_TEMPLE_SPEECHES)
@@ -93,28 +96,29 @@ struct MANGOS_DLL_DECL npc_malfurionAI : public ScriptedAI
                     switch (m_uiSpeech)
                     {
                         case 0:
-                            DoScriptText(EMOTE_MALFURION1, m_creature);
-                            m_uiSayTimer = 1500;
-                            break;
-                        case 1:
                             m_creature->HandleEmote(EMOTE_ONESHOT_BOW);
                             m_uiSayTimer = 2000;
                             break;
-                        case 2:
+                        case 1:
                             DoScriptText(SAY_MALFURION1, m_creature);
-                            m_uiSayTimer = 1000;
+                            m_creature->HandleEmote(EMOTE_STATE_TALK);
+                            m_uiSayTimer = 12000;
+                            break;
+                        case 2:
+                            DoScriptText(SAY_MALFURION2, m_creature);
+                            m_uiSayTimer = 12000;
                             break;
                         case 3:
-                            DoScriptText(SAY_MALFURION2, m_creature);
-                            m_uiSayTimer = 1000;
+                            DoScriptText(SAY_MALFURION3, m_creature);
+                            m_uiSayTimer = 11000;
                             break;
                         case 4:
-                            DoScriptText(SAY_MALFURION3, m_creature);
-                            m_uiSayTimer = 2000;
+                            DoScriptText(SAY_MALFURION4, m_creature);
+                            m_uiSayTimer = 4000;
                             break;
                         case 5:
-                            DoScriptText(SAY_MALFURION4, m_creature);
                             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                            m_creature->HandleEmote(EMOTE_STATE_NONE);
                             break;
                     }
 
@@ -132,17 +136,61 @@ CreatureAI* GetAI_npc_malfurion(Creature* pCreature)
     return new npc_malfurionAI(pCreature);
 }
 
+/*######
+## event_antalarion_statues
+######*/
+
+bool ProcessEventId_event_antalarion_statue_activation(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (pSource->GetTypeId() == TYPEID_PLAYER && pTarget->GetTypeId() == TYPEID_GAMEOBJECT)
+    {
+        if (instance_sunken_temple* pInstance = (instance_sunken_temple*)((Player*)pSource)->GetInstanceData())
+        {
+            // return if event completed
+            if (pInstance->GetData(TYPE_ATALARION) != NOT_STARTED)
+                return true;
+
+            // Send the event id to process
+            if (pInstance->ProcessStatueEvent(uiEventId))
+            {
+                // Activate the green light if the correct statue is activated
+                if (GameObject* pLight = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_LIGHT, INTERACTION_DISTANCE))
+                    pInstance->DoRespawnGameObject(pLight->GetGUID(), 30 * MINUTE);
+            }
+            else
+            {
+                // If the wrong statue was activated, then trigger trap
+                // We don't know actually which trap goes to which statue so we need to search for each
+                if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_1, INTERACTION_DISTANCE))
+                    pTrap->Use((Unit*)pSource);
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_2, INTERACTION_DISTANCE))
+                    pTrap->Use((Unit*)pSource);
+                else if (GameObject* pTrap = GetClosestGameObjectWithEntry((GameObject*)pTarget, GO_ATALAI_TRAP_3, INTERACTION_DISTANCE))
+                    pTrap->Use((Unit*)pSource);
+            }
+
+            return true;
+        }
+    }
+    return false;
+}
+
 void AddSC_sunken_temple()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "at_shade_of_eranikus";
-    newscript->pAreaTrigger = &AreaTrigger_at_shade_of_eranikus;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "at_shade_of_eranikus";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_shade_of_eranikus;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_malfurion_stormrage";
-    newscript->GetAI = &GetAI_npc_malfurion;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_malfurion_stormrage";
+    pNewScript->GetAI = &GetAI_npc_malfurion;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_antalarion_statue_activation";
+    pNewScript->pProcessEventId = &ProcessEventId_event_antalarion_statue_activation;
+    pNewScript->RegisterSelf();
 }
