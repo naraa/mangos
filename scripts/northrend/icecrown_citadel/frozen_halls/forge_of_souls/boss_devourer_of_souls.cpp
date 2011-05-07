@@ -172,52 +172,12 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
                    m_creature->DealDamage(i->getSource(), uiDamage/2,NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
       }
 
-    void SpawnOutro(uint32 guid)
-    {
-       if (Creature *pSummon = m_creature->SummonCreature(guid, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z,0, TEMPSUMMON_TIMED_DESPAWN, 300000))
-          {
-              uint8 i = urand(1,MAX_POINTS);
-
-              pSummon->GetMotionMaster()->MovePoint(i, SpawnLoc[i].x, SpawnLoc[i].y, SpawnLoc[i].z);
-
-              if (pSummon->GetEntry() == npc_jaina_extro)
-                  DoScriptText(SAY_JAINA_FS09_EXTRO, pSummon);
-              else if (pSummon->GetEntry() == npc_sylvana_extro)
-                  DoScriptText(SAY_SYLVANA_FS07_EXTRO, pSummon);
-          }
-    }
-
     void JustDied(Unit* pKiller)
     {
        if(!m_pInstance) return;
        m_pInstance->SetData(TYPE_DEVOURER, DONE);
        DoScriptText(SAY_DEVOURER_DEATH_MALE_01, m_creature);
        DespawnAllSummons();
-
-       Player* player = (Player*)pKiller;
-
-       if(player->GetTeam() == ALLIANCE)
-       {
-            m_pInstance->SetData64(DATA_LIDER,0);
-            SpawnOutro(npc_jaina_extro);
-            SpawnOutro(npc_jaina_credit);
-            SpawnOutro(npc_mage);
-            SpawnOutro(npc_mage_woman);
-            SpawnOutro(npc_cc_a_01);
-            SpawnOutro(npc_cc_a_02);
-            SpawnOutro(npc_cc_a_03);
-
-       } else
-       {
-            m_pInstance->SetData64(DATA_LIDER,1);
-            SpawnOutro(npc_sylvana_extro);
-            SpawnOutro(npc_sylvana_credit);
-            SpawnOutro(npc_mage);
-            SpawnOutro(npc_mage_woman);
-            SpawnOutro(npc_cc_h_01);
-            SpawnOutro(npc_cc_h_02);
-            SpawnOutro(npc_cc_h_03);
-        };
     }
 
     void KilledUnit(Unit* victim)

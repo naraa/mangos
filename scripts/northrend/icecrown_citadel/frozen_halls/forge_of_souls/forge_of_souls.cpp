@@ -95,22 +95,22 @@ bool StartEvent;
                     m_pInstance->SetData(TYPE_INTRO, DONE);
                     m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                     m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS01, m_creature);
                        StepTimer = 7000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                        StepTimer = 100;
                     ++Step;
                     break;
                 case 1:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS02, m_creature);
                        StepTimer = 9000;
                       } 
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS01, m_creature);
                        StepTimer = 12000;
@@ -118,12 +118,12 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 2:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS03, m_creature);
                        StepTimer = 8000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS02, m_creature);
                        StepTimer = 11000;
@@ -131,12 +131,12 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 3:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS04, m_creature);
                        StepTimer = 10000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS03, m_creature);
                        StepTimer = 11000;
@@ -144,12 +144,12 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 4:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS05, m_creature);
                        StepTimer = 8000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS04, m_creature);
                        StepTimer = 12000;
@@ -157,12 +157,12 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 5:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS06, m_creature);
                        StepTimer = 12000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS05, m_creature);
                        StepTimer = 7000;
@@ -170,12 +170,12 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 6:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS07, m_creature);
                        StepTimer = 7000;
                       }
-                    if(m_creature->GetEntry() == npc_sylvana)
+                    if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS06, m_creature);
                        StepTimer = 4000;
@@ -183,7 +183,7 @@ bool StartEvent;
                     ++Step;
                     break;
                 case 7:
-                    if(m_creature->GetEntry() == npc_jaina)
+                    if(m_creature->GetEntry() == NPC_JAINA_BEGIN )
                       {
                        DoScriptText(SAY_JAINA_FS08, m_creature);
                        StepTimer = 5000;
@@ -262,10 +262,6 @@ uint32 uiSummon_counter;
         if (m_pInstance->GetData(TYPE_DEVOURER) == DONE)
         {
 
-         if(m_pInstance->GetData64(DATA_LIDER) == 1 && m_creature->GetEntry() == npc_sylvana_extro) return;
-
-         if(m_pInstance->GetData64(DATA_LIDER) == 2 && m_creature->GetEntry() == npc_jaina_extro) return;
-
          if(StepTimer < diff)
            {
              switch(Step)
@@ -279,218 +275,18 @@ uint32 uiSummon_counter;
                   ++Step;
                   break;
                 case 1:
-                    if(m_creature->GetEntry() == npc_jaina_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_a_01,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5659.251f, 2472.017f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5627.611f, 2501.972f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5680.920f, 2482.998f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5641.398f, 2523.911f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            Step++;
-                        }
-                    }
-                    if(m_creature->GetEntry() == npc_sylvana_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_h_01,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5659.251f, 2472.017f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5627.611f, 2501.972f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5680.920f, 2482.998f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5641.398f, 2523.911f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            Step++;
-                        }
-                    }
                     break;
                 case 2:
-                    if(m_creature->GetEntry() == npc_jaina_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_a_02,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5661.508f, 2473.066f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5627.146f, 2499.098f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5682.331f, 2485.985f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5639.636f, 2521.228f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            Step++;
-                        }
-                    }
-                    if(m_creature->GetEntry() == npc_sylvana_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_h_02,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5661.508f, 2473.066f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5627.146f, 2499.098f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5682.331f, 2485.985f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5639.636f, 2521.228f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            Step++;
-                        }
-                    }
                     break;
                 case 3:
-                    if(m_creature->GetEntry() == npc_jaina_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_a_03,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5664.265f, 2473.974f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5626.768f, 2496.534f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5683.696f, 2489.598f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5637.580f, 2518.249f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            StepTimer = 8000;
-                            Step++;
-                        }
-                    }
-                    if(m_creature->GetEntry() == npc_sylvana_extro)
-                    {
-                        StepTimer = 100;
-                        if (uiSummon_counter < 4)
-                        {
-                            if (Creature* pTemp = m_creature->SummonCreature(npc_cc_h_03,5623.609f,2457.946f,705.891f,1.37f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            {
-                                pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                                pTemp->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
-                                switch(uiSummon_counter)
-                                 {
-                                   case 0:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5664.265f, 2473.974f, 708.696f);
-                                     break;
-                                   case 1:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5626.768f, 2496.534f, 708.696f);
-                                     break;
-                                   case 2:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5683.696f, 2489.598f, 708.696f);
-                                     break;
-                                   case 3:
-                                     pTemp->GetMotionMaster()->MovePoint(0, 5637.580f, 2518.249f, 708.696f);
-                                     break;
-                                 }
-                                uiSummon_counter++;
-                            }
-                        }
-                        else
-                        {
-                            uiSummon_counter = 0;
-                            StepTimer = 8000;
-                            Step++;
-                        }
-                    }
                     break;
                 case 4:
-                  if(m_creature->GetEntry() == npc_jaina_extro)
+                  if(m_creature->GetEntry() == NPC_JAINA_END)
                   {
                     DoScriptText(SAY_JAINA_FS09_EXTRO, m_creature);
                     StepTimer = 6000;
                   }
-                  if(m_creature->GetEntry() == npc_sylvana_extro)
+                  if(m_creature->GetEntry() == NPC_SILVANA_END)
                   {
                     DoScriptText(SAY_SYLVANA_FS07_EXTRO, m_creature);
                     StepTimer = 3000;
