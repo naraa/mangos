@@ -2820,6 +2820,10 @@
 						Name="the_eye"
 						>
 						<File
+							RelativePath="..\scripts\outland\tempest_keep\the_eye\boss_alar.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\outland\tempest_keep\the_eye\boss_astromancer.cpp"
 							>
 						</File>
@@ -2878,19 +2882,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\scripts\world\boss_emeriss.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_lethon.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_taerar.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\scripts\world\boss_ysondre.cpp"
+					RelativePath="..\scripts\world\bosses_emerald_dragons.cpp"
 					>
 				</File>
 				<File

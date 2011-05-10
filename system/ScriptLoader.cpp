@@ -29,9 +29,7 @@ extern void AddSC_example_misc();
 
 //world
 extern void AddSC_areatrigger_scripts();
-extern void AddSC_boss_emeriss();
-extern void AddSC_boss_taerar();
-extern void AddSC_boss_ysondre();
+extern void AddSC_bosses_emerald_dragons();
 extern void AddSC_generic_creature();
 extern void AddSC_go_scripts();
 extern void AddSC_guards();
@@ -513,9 +511,10 @@ extern void AddSC_instance_arcatraz();
 extern void AddSC_boss_high_botanist_freywinn();            //TK, botanica
 extern void AddSC_boss_laj();
 extern void AddSC_boss_warp_splinter();
-extern void AddSC_boss_kaelthas();                          //TK, the_eye
-extern void AddSC_boss_void_reaver();
+extern void AddSC_boss_alar();                              // TK, the_eye
 extern void AddSC_boss_high_astromancer_solarian();
+extern void AddSC_boss_kaelthas();
+extern void AddSC_boss_void_reaver();
 extern void AddSC_instance_the_eye();
 extern void AddSC_the_eye();
 extern void AddSC_boss_gatewatcher_iron_hand();             //TK, the_mechanar
@@ -562,9 +561,7 @@ void AddScripts()
 
     //world
     AddSC_areatrigger_scripts();
-    AddSC_boss_emeriss();
-    AddSC_boss_taerar();
-    AddSC_boss_ysondre();
+    AddSC_bosses_emerald_dragons();
     AddSC_generic_creature();
     AddSC_go_scripts();
     AddSC_guards();
@@ -1034,9 +1031,10 @@ void AddScripts()
     AddSC_boss_high_botanist_freywinn();                    //TK, botanica
     AddSC_boss_laj();
     AddSC_boss_warp_splinter();
-    AddSC_boss_kaelthas();                                  //TK, the_eye
-    AddSC_boss_void_reaver();
+    AddSC_boss_alar();                                      // TK, the_eye
     AddSC_boss_high_astromancer_solarian();
+    AddSC_boss_kaelthas();
+    AddSC_boss_void_reaver();
     AddSC_instance_the_eye();
     AddSC_the_eye();
     AddSC_boss_gatewatcher_iron_hand();                     //TK, the_mechanar

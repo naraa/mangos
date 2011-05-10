@@ -15,14 +15,14 @@
  */
 
 /* ScriptData
-SDName: Lethon
+SDName: boss_alar
 SD%Complete: 0
-SDComment: Place Holder
-SDCategory: Bosses
+SDComment: Placeholder
+SDCategory: Tempest Keep, The Eye
 EndScriptData */
 
 #include "precompiled.h"
 
-void AddSC_boss_lethon()
+void AddSC_boss_alar()
 {
 }
