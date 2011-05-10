@@ -316,7 +316,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             }
             if (uiData == FAIL)
             {
-                for (std::list<uint64>::const_iterator itr = m_lFaerlinaAddGUIDs.begin(); itr != m_lFaerlinaAddGUIDs.end(); ++itr)
+                for (GUIDList::const_iterator itr = m_lFaerlinaAddGUIDs.begin(); itr != m_lFaerlinaAddGUIDs.end(); ++itr)
                 {
                     Creature* pAdd = instance->GetCreature(*itr);
                     if (pAdd && !pAdd->isAlive())
@@ -600,7 +600,7 @@ void instance_naxxramas::SetGothTriggers()
     if (!pGoth)
         return;
 
-    for(std::list<uint64>::iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
+    for(GUIDList::const_iterator itr = m_lGothTriggerList.begin(); itr != m_lGothTriggerList.end(); ++itr)
     {
         if (Creature* pTrigger = instance->GetCreature(*itr))
         {
