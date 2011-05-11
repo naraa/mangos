@@ -244,6 +244,7 @@ extern void AddSC_instance_wailing_caverns();               // wailing_caverns
 extern void AddSC_wailing_caverns();
 extern void AddSC_boss_zumrah();                            // zulfarrak
 extern void AddSC_instance_zulfarrak();
+extern void AddSC_zulfarrak();
 
 // culling of stratholme
 extern void AddSC_boss_lord_epoch();
@@ -777,6 +778,7 @@ void AddScripts()
     AddSC_instance_wailing_caverns();                       // wailing_caverns
     AddSC_wailing_caverns();
     AddSC_boss_zumrah();                                    // zulfarrak
+    AddSC_zulfarrak();
     AddSC_instance_zulfarrak();
 
     AddSC_ashenvale();
