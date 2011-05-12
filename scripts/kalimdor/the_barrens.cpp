@@ -49,7 +49,7 @@ bool GossipHello_npc_beaten_corpse(Player* pPlayer, Creature* pCreature)
         pPlayer->GetQuestStatus(QUEST_LOST_IN_BATTLE) == QUEST_STATUS_COMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,"Examine corpse in detail...",GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(3557, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(3557, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -57,8 +57,8 @@ bool GossipSelect_npc_beaten_corpse(Player* pPlayer, Creature* pCreature, uint32
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF +1)
     {
-        pPlayer->SEND_GOSSIP_MENU(3558, pCreature->GetGUID());
-        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(3558, pCreature->GetObjectGuid());
+        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     }
     return true;
 }
@@ -158,7 +158,7 @@ bool QuestAccept_npc_gilthares(Player* pPlayer, Creature* pCreature, const Quest
         DoScriptText(SAY_GIL_START, pCreature, pPlayer);
 
         if (npc_giltharesAI* pEscortAI = dynamic_cast<npc_giltharesAI*>(pCreature->AI()))
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
     }
     return true;
 }
@@ -170,12 +170,12 @@ bool QuestAccept_npc_gilthares(Player* pPlayer, Creature* pCreature, const Quest
 bool GossipHello_npc_sputtervalve(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(6981) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT,"Can you tell me about this shard?",GOSSIP_SENDER_MAIN,GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -183,7 +183,7 @@ bool GossipSelect_npc_sputtervalve(Player* pPlayer, Creature* pCreature, uint32 
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {
-        pPlayer->SEND_GOSSIP_MENU(2013, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(2013, pCreature->GetObjectGuid());
         pPlayer->AreaExploredOrEventHappens(6981);
     }
     return true;
@@ -638,7 +638,7 @@ bool QuestAccept_npc_wizzlecranks_shredder(Player* pPlayer, Creature* pCreature,
         pCreature->setFaction(FACTION_RATCHET);
 
         if (npc_wizzlecranks_shredderAI* pEscortAI = dynamic_cast<npc_wizzlecranks_shredderAI*>(pCreature->AI()))
-            pEscortAI->Start(true, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(true, pPlayer, pQuest);
     }
     return true;
 }

@@ -211,7 +211,7 @@ struct MANGOS_DLL_DECL boss_shade_of_akamaAI : public ScriptedAI
             {
                 pSorcerer->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
                 pSorcerer->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
-                pSorcerer->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
+                pSorcerer->SetTargetGuid(m_creature->GetObjectGuid());
 
                 m_lSorcerersGUIDList.push_back(pSorcerer->GetGUID());
 
@@ -470,7 +470,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI
             m_creature->SetInCombatWith(pShade);
 
             pShade->HandleEmote(EMOTE_STATE_NONE);
-            pShade->SetUInt64Value(UNIT_FIELD_TARGET, m_creature->GetGUID());
+            pShade->SetTargetGuid(m_creature->GetObjectGuid());
 
             pShade->SetInCombatWithZone();
 
@@ -702,7 +702,7 @@ bool GossipHello_npc_akama(Player* pPlayer, Creature* pCreature)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(907, pCreature->GetObjectGuid());
     return true;
 }
 

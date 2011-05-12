@@ -316,8 +316,8 @@ bool GOUse_go_manaforge_control_console(Player* pPlayer, GameObject* pGo)
 {
     if (pGo->GetGoType() == GAMEOBJECT_TYPE_QUESTGIVER)
     {
-        pPlayer->PrepareQuestMenu(pGo->GetGUID());
-        pPlayer->SendPreparedQuest(pGo->GetGUID());
+        pPlayer->PrepareQuestMenu(pGo->GetObjectGuid());
+        pPlayer->SendPreparedQuest(pGo->GetObjectGuid());
     }
 
     Creature* pManaforge = NULL;
@@ -643,7 +643,7 @@ bool GossipHello_npc_protectorate_nether_drake(Player* pPlayer, Creature* pCreat
     if (pPlayer->GetQuestStatus(QUEST_NETHER_WINGS) == QUEST_STATUS_INCOMPLETE && pPlayer->HasItemCount(ITEM_PH_DISRUPTOR, 1))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_FLY_ULTRIS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -672,13 +672,13 @@ enum
 bool GossipHello_npc_veronia(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     // Behind Enemy Lines
     if (pPlayer->GetQuestStatus(QUEST_BEHIND_ENEMY_LINES) && !pPlayer->GetQuestRewardStatus(QUEST_BEHIND_ENEMY_LINES))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_FLY_CORUU, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -746,7 +746,7 @@ bool QuestAccept_npc_bessy(Player* pPlayer, Creature* pCreature, const Quest* pQ
         pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         if (npc_bessyAI* pBessyAI = dynamic_cast<npc_bessyAI*>(pCreature->AI()))
-            pBessyAI->Start(true, pPlayer->GetGUID(), pQuest);
+            pBessyAI->Start(true, pPlayer, pQuest);
     }
     return true;
 }
@@ -914,7 +914,7 @@ bool QuestAccept_npc_maxx_a_million(Player* pPlayer, Creature* pCreature, const 
             // Remove unit_flags (see comment in JustReachedHome)
             pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE + UNIT_FLAG_PASSIVE);
 
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest, true);
+            pEscortAI->Start(false, pPlayer, pQuest, true);
         }
     }
     return true;

@@ -91,7 +91,7 @@ bool QuestAccept_npc_kanati(Player* pPlayer, Creature* pCreature, const Quest* p
     if (pQuest->GetQuestId() == QUEST_PROTECT_KANATI)
     {
         if (npc_kanatiAI* pEscortAI = dynamic_cast<npc_kanatiAI*>(pCreature->AI()))
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest, true);
+            pEscortAI->Start(false, pPlayer, pQuest, true);
     }
     return true;
 }
@@ -177,7 +177,7 @@ bool QuestAccept_npc_lakota_windsong(Player* pPlayer, Creature* pCreature, const
         pCreature->setFaction(FACTION_ESCORT_H_NEUTRAL_ACTIVE);
 
         if (npc_lakota_windsongAI* pEscortAI = dynamic_cast<npc_lakota_windsongAI*>(pCreature->AI()))
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
     }
     return true;
 }
@@ -249,7 +249,7 @@ bool QuestAccept_npc_paoka_swiftmountain(Player* pPlayer, Creature* pCreature, c
         pCreature->setFaction(FACTION_ESCORT_H_NEUTRAL_ACTIVE);
 
         if (npc_paoka_swiftmountainAI* pEscortAI = dynamic_cast<npc_paoka_swiftmountainAI*>(pCreature->AI()))
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
     }
     return true;
 }
@@ -352,7 +352,7 @@ bool GossipHello_npc_plucky_johnson(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_SCOOP) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_QUEST, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(720, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(720, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -360,7 +360,7 @@ bool GossipSelect_npc_plucky_johnson(Player* pPlayer, Creature* pCreature, uint3
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {
-        pPlayer->SEND_GOSSIP_MENU(738, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(738, pCreature->GetObjectGuid());
         pPlayer->AreaExploredOrEventHappens(QUEST_SCOOP);
     }
 

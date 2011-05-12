@@ -357,7 +357,7 @@ bool QuestAccept_npc_akuno(Player* pPlayer, Creature* pCreature, const Quest* pQ
             pCreature->setFaction(FACTION_ESCORT_N_NEUTRAL_ACTIVE);
 
             DoScriptText(SAY_AKU_START, pCreature);
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
         }
     }
     return true;
@@ -447,7 +447,7 @@ bool GossipHello_npc_floon(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_CRACK_SKULLS) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FLOON1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
 
-    pPlayer->SEND_GOSSIP_MENU(9442, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(9442, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -456,7 +456,7 @@ bool GossipSelect_npc_floon(Player* pPlayer, Creature* pCreature, uint32 uiSende
     if (uiAction == GOSSIP_ACTION_INFO_DEF)
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_FLOON2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->SEND_GOSSIP_MENU(9443, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(9443, pCreature->GetObjectGuid());
     }
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
@@ -477,12 +477,12 @@ bool GossipSelect_npc_floon(Player* pPlayer, Creature* pCreature, uint32 uiSende
 bool GossipHello_npc_skyguard_handler_deesak(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetReputationRank(1031) >= REP_HONORED)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_SKYGUARD, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -776,7 +776,7 @@ bool QuestAccept_npc_letoll(Player* pPlayer, Creature* pCreature, const Quest* p
             DoScriptText(SAY_LE_START, pCreature);
             pCreature->setFaction(FACTION_ESCORT_N_NEUTRAL_PASSIVE);
 
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest, true);
+            pEscortAI->Start(false, pPlayer, pQuest, true);
         }
     }
 
@@ -916,10 +916,10 @@ bool GossipHello_npc_slim(Player* pPlayer, Creature* pCreature)
     if (pCreature->isVendor() && pPlayer->GetReputationRank(FACTION_CONSORTIUM) >= REP_FRIENDLY)
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
-        pPlayer->SEND_GOSSIP_MENU(9896, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(9896, pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_GOSSIP_MENU(9895, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(9895, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -927,7 +927,7 @@ bool GossipHello_npc_slim(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_slim(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -1129,7 +1129,7 @@ bool QuestAccept_npc_isla_starmane(Player* pPlayer, Creature* pCreature, const Q
         if (npc_isla_starmaneAI* pEscortAI = dynamic_cast<npc_isla_starmaneAI*>(pCreature->AI()))
         {
             pCreature->setFaction(pPlayer->GetTeam() == ALLIANCE ? FACTION_ESCORT_A_NEUTRAL_ACTIVE : FACTION_ESCORT_H_NEUTRAL_ACTIVE);
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
         }
     }
     return true;

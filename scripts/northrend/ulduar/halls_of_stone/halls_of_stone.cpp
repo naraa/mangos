@@ -731,7 +731,7 @@ bool GossipHello_npc_brann_hos(Player* pPlayer, Creature* pCreature)
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
 
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
 if (m_pInstance->GetData(TYPE_BRANN) != DONE)
     pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_START, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
@@ -739,7 +739,7 @@ if (m_pInstance->GetData(TYPE_BRANN) != DONE)
     pPlayer->SEND_GOSSIP_MENU(TEXT_ID_START, pCreature->GetGUID());
 
     //pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_PROGRESS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-    //pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetGUID());
+    //pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -749,7 +749,7 @@ bool GossipSelect_npc_brann_hos(Player* pPlayer, Creature* pCreature, uint32 uiS
     {
         pPlayer->CLOSE_GOSSIP_MENU();
         ((npc_brann_hosAI*)pCreature->AI())->m_uiStep = 1;
-        ((npc_brann_hosAI*)pCreature->AI())->Start(false, pPlayer->GetGUID());
+        ((npc_brann_hosAI*)pCreature->AI())->Start(false, pPlayer);
     }
 
     return true;

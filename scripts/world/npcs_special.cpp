@@ -801,8 +801,6 @@ CreatureAI* GetAI_npc_doctor(Creature* pCreature)
 ## npc_garments_of_quests
 ######*/
 
-//TODO: get text for each NPC
-
 enum
 {
     SPELL_LESSER_HEAL_R2    = 2052,
@@ -835,39 +833,39 @@ enum
 
 struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
 {
-    npc_garments_of_questsAI(Creature* pCreature) : npc_escortAI(pCreature) {Reset();}
+    npc_garments_of_questsAI(Creature* pCreature) : npc_escortAI(pCreature) { Reset(); }
 
-    uint64 caster;
+    ObjectGuid m_playerGuid;
 
-    bool bIsHealed;
-    bool bCanRun;
+    bool m_bIsHealed;
+    bool m_bCanRun;
 
-    uint32 RunAwayTimer;
+    uint32 m_uiRunAwayTimer;
 
     void Reset()
     {
-        caster = 0;
+        m_playerGuid = ObjectGuid();
 
-        bIsHealed = false;
-        bCanRun = false;
+        m_bIsHealed = false;
+        m_bCanRun = false;
 
-        RunAwayTimer = 5000;
+        m_uiRunAwayTimer = 5000;
 
         m_creature->SetStandState(UNIT_STAND_STATE_KNEEL);
-        //expect database to have RegenHealth=0
+        // expect database to have RegenHealth=0
         m_creature->SetHealth(int(m_creature->GetMaxHealth()*0.7));
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry *Spell)
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (Spell->Id == SPELL_LESSER_HEAL_R2 || Spell->Id == SPELL_FORTITUDE_R1)
+        if (pSpell->Id == SPELL_LESSER_HEAL_R2 || pSpell->Id == SPELL_FORTITUDE_R1)
         {
-            //not while in combat
+            // not while in combat
             if (m_creature->isInCombat())
                 return;
 
-            //nothing to be done now
-            if (bIsHealed && bCanRun)
+            // nothing to be done now
+            if (m_bIsHealed && m_bCanRun)
                 return;
 
             if (pCaster->GetTypeId() == TYPEID_PLAYER)
@@ -877,125 +875,125 @@ struct MANGOS_DLL_DECL npc_garments_of_questsAI : public npc_escortAI
                     case ENTRY_SHAYA:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_MOON) == QUEST_STATUS_INCOMPLETE)
                         {
-                            if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
+                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
                             {
-                                DoScriptText(SAY_SHAYA_THANKS,m_creature,pCaster);
-                                bCanRun = true;
+                                DoScriptText(SAY_SHAYA_THANKS, m_creature, pCaster);
+                                m_bCanRun = true;
                             }
-                            else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
+                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
                             {
-                                caster = pCaster->GetGUID();
+                                m_playerGuid = pCaster->GetObjectGuid();
                                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED,m_creature,pCaster);
-                                bIsHealed = true;
+                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                m_bIsHealed = true;
                             }
                         }
                         break;
                     case ENTRY_ROBERTS:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_1) == QUEST_STATUS_INCOMPLETE)
                         {
-                            if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
+                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
                             {
-                                DoScriptText(SAY_ROBERTS_THANKS,m_creature,pCaster);
-                                bCanRun = true;
+                                DoScriptText(SAY_ROBERTS_THANKS, m_creature, pCaster);
+                                m_bCanRun = true;
                             }
-                            else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
+                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
                             {
-                                caster = pCaster->GetGUID();
+                                m_playerGuid = pCaster->GetObjectGuid();
                                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED,m_creature,pCaster);
-                                bIsHealed = true;
+                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                m_bIsHealed = true;
                             }
                         }
                         break;
                     case ENTRY_DOLF:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_LIGHT_2) == QUEST_STATUS_INCOMPLETE)
                         {
-                            if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
+                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
                             {
-                                DoScriptText(SAY_DOLF_THANKS,m_creature,pCaster);
-                                bCanRun = true;
+                                DoScriptText(SAY_DOLF_THANKS, m_creature, pCaster);
+                                m_bCanRun = true;
                             }
-                            else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
+                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
                             {
-                                caster = pCaster->GetGUID();
+                                m_playerGuid = pCaster->GetObjectGuid();
                                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED,m_creature,pCaster);
-                                bIsHealed = true;
+                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                m_bIsHealed = true;
                             }
                         }
                         break;
                     case ENTRY_KORJA:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_SPIRIT) == QUEST_STATUS_INCOMPLETE)
                         {
-                            if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
+                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
                             {
-                                DoScriptText(SAY_KORJA_THANKS,m_creature,pCaster);
-                                bCanRun = true;
+                                DoScriptText(SAY_KORJA_THANKS, m_creature, pCaster);
+                                m_bCanRun = true;
                             }
-                            else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
+                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
                             {
-                                caster = pCaster->GetGUID();
+                                m_playerGuid = pCaster->GetObjectGuid();
                                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED,m_creature,pCaster);
-                                bIsHealed = true;
+                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                m_bIsHealed = true;
                             }
                         }
                         break;
                     case ENTRY_DG_KEL:
                         if (((Player*)pCaster)->GetQuestStatus(QUEST_DARKNESS) == QUEST_STATUS_INCOMPLETE)
                         {
-                            if (bIsHealed && !bCanRun && Spell->Id == SPELL_FORTITUDE_R1)
+                            if (m_bIsHealed && !m_bCanRun && pSpell->Id == SPELL_FORTITUDE_R1)
                             {
-                                DoScriptText(SAY_DG_KEL_THANKS,m_creature,pCaster);
-                                bCanRun = true;
+                                DoScriptText(SAY_DG_KEL_THANKS, m_creature, pCaster);
+                                m_bCanRun = true;
                             }
-                            else if (!bIsHealed && Spell->Id == SPELL_LESSER_HEAL_R2)
+                            else if (!m_bIsHealed && pSpell->Id == SPELL_LESSER_HEAL_R2)
                             {
-                                caster = pCaster->GetGUID();
+                                m_playerGuid = pCaster->GetObjectGuid();
                                 m_creature->SetStandState(UNIT_STAND_STATE_STAND);
-                                DoScriptText(SAY_COMMON_HEALED,m_creature,pCaster);
-                                bIsHealed = true;
+                                DoScriptText(SAY_COMMON_HEALED, m_creature, pCaster);
+                                m_bIsHealed = true;
                             }
                         }
                         break;
                 }
 
-                //give quest credit, not expect any special quest objectives
-                if (bCanRun)
-                    ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(),m_creature->GetGUID());
+                // give quest credit, not expect any special quest objectives
+                if (m_bCanRun)
+                    ((Player*)pCaster)->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
             }
         }
     }
 
-    void WaypointReached(uint32 uiPoint)
-    {
-    }
+    void WaypointReached(uint32 uiPointId) {}
 
-    void UpdateEscortAI(const uint32 diff)
+    void UpdateEscortAI(const uint32 uiDiff)
     {
-        if (bCanRun && !m_creature->isInCombat())
+        if (m_bCanRun && !m_creature->isInCombat())
         {
-            if (RunAwayTimer <= diff)
+            if (m_uiRunAwayTimer <= uiDiff)
             {
-                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(caster))
+                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
                 {
                     switch(m_creature->GetEntry())
                     {
-                        case ENTRY_SHAYA: DoScriptText(SAY_SHAYA_GOODBYE, m_creature, pPlayer); break;
+                        case ENTRY_SHAYA:   DoScriptText(SAY_SHAYA_GOODBYE, m_creature, pPlayer);   break;
                         case ENTRY_ROBERTS: DoScriptText(SAY_ROBERTS_GOODBYE, m_creature, pPlayer); break;
-                        case ENTRY_DOLF: DoScriptText(SAY_DOLF_GOODBYE, m_creature, pPlayer); break;
-                        case ENTRY_KORJA: DoScriptText(SAY_KORJA_GOODBYE, m_creature, pPlayer); break;
-                        case ENTRY_DG_KEL: DoScriptText(SAY_DG_KEL_GOODBYE, m_creature, pPlayer); break;
+                        case ENTRY_DOLF:    DoScriptText(SAY_DOLF_GOODBYE, m_creature, pPlayer);    break;
+                        case ENTRY_KORJA:   DoScriptText(SAY_KORJA_GOODBYE, m_creature, pPlayer);   break;
+                        case ENTRY_DG_KEL:  DoScriptText(SAY_DG_KEL_GOODBYE, m_creature, pPlayer);  break;
                     }
 
                     Start(true);
                 }
                 else
-                    EnterEvadeMode();                       //something went wrong
+                    EnterEvadeMode();                       // something went wrong
 
-                RunAwayTimer = 30000;
-            }else RunAwayTimer -= diff;
+                m_uiRunAwayTimer = 30000;
+            }
+            else
+                m_uiRunAwayTimer -= uiDiff;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1076,7 +1074,7 @@ bool GossipHello_npc_innkeeper(Player* pPlayer, Creature* pCreature)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_WHAT_TO_DO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     }
 
-    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+    pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     pPlayer->SendPreparedGossip(pCreature);
     return true;
 }
@@ -1086,18 +1084,18 @@ bool GossipSelect_npc_innkeeper(Player* pPlayer, Creature* pCreature, uint32 uiS
     switch(uiAction)
     {
         case GOSSIP_ACTION_INFO_DEF+1:
-            pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(TEXT_ID_WHAT_TO_DO, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->CLOSE_GOSSIP_MENU();
             pCreature->CastSpell(pPlayer, SPELL_TRICK_OR_TREAT, true);
             break;
         case GOSSIP_OPTION_VENDOR:
-            pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+            pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
             break;
         case GOSSIP_OPTION_INNKEEPER:
             pPlayer->CLOSE_GOSSIP_MENU();
-            pPlayer->SetBindPoint(pCreature->GetGUID());
+            pPlayer->SetBindPoint(pCreature->GetObjectGuid());
             break;
     }
 
@@ -1122,13 +1120,13 @@ enum
 bool GossipHello_npc_kingdom_of_dalaran_quests(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->HasItemCount(ITEM_KT_SIGNET,1) && (!pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_A) ||
         !pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_H) || !pPlayer->GetQuestRewardStatus(QUEST_MAGICAL_KINGDOM_N)))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_TELEPORT_TO, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1162,7 +1160,7 @@ bool GossipHello_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_BODY_HEART_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_BODY_HEART_H) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_GRANT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(TEXT_ID_DEFAULT, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(TEXT_ID_DEFAULT, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1170,7 +1168,7 @@ bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint
 {
     if (uiAction == GOSSIP_ACTION_INFO_DEF+1)
     {
-        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(TEXT_ID_PROGRESS, pCreature->GetObjectGuid());
         pPlayer->AreaExploredOrEventHappens((pPlayer->GetTeam() == ALLIANCE) ? QUEST_BODY_HEART_A : QUEST_BODY_HEART_H);
     }
     return true;
@@ -1183,7 +1181,7 @@ bool GossipSelect_npc_lunaclaw_spirit(Player* pPlayer, Creature* pCreature, uint
 bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     bool canBuy;
     canBuy = false;
@@ -1197,52 +1195,52 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
         case 2357:                                          //Merideth Carlson
         case 4885:                                          //Gregor MacVince
             if (pPlayer->GetReputationRank(72) != REP_EXALTED && race != RACE_HUMAN)
-                pPlayer->SEND_GOSSIP_MENU(5855, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5855, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 1261:                                          //Veron Amberstill
             if (pPlayer->GetReputationRank(47) != REP_EXALTED && race != RACE_DWARF)
-                pPlayer->SEND_GOSSIP_MENU(5856, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5856, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 3362:                                          //Ogunaro Wolfrunner
             if (pPlayer->GetReputationRank(76) != REP_EXALTED && race != RACE_ORC)
-                pPlayer->SEND_GOSSIP_MENU(5841, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5841, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 3685:                                          //Harb Clawhoof
             if (pPlayer->GetReputationRank(81) != REP_EXALTED && race != RACE_TAUREN)
-                pPlayer->SEND_GOSSIP_MENU(5843, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5843, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 4730:                                          //Lelanai
             if (pPlayer->GetReputationRank(69) != REP_EXALTED && race != RACE_NIGHTELF)
-                pPlayer->SEND_GOSSIP_MENU(5844, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5844, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 4731:                                          //Zachariah Post
             if (pPlayer->GetReputationRank(68) != REP_EXALTED && race != RACE_UNDEAD)
-                pPlayer->SEND_GOSSIP_MENU(5840, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5840, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 7952:                                          //Zjolnir
             if (pPlayer->GetReputationRank(530) != REP_EXALTED && race != RACE_TROLL)
-                pPlayer->SEND_GOSSIP_MENU(5842, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5842, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 7955:                                          //Milli Featherwhistle
             if (pPlayer->GetReputationRank(54) != REP_EXALTED && race != RACE_GNOME)
-                pPlayer->SEND_GOSSIP_MENU(5857, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(5857, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 16264:                                         //Winaestra
             if (pPlayer->GetReputationRank(911) != REP_EXALTED && race != RACE_BLOODELF)
-                pPlayer->SEND_GOSSIP_MENU(10305, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(10305, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
         case 17584:                                         //Torallius the Pack Handler
             if (pPlayer->GetReputationRank(930) != REP_EXALTED && race != RACE_DRAENEI)
-                pPlayer->SEND_GOSSIP_MENU(10239, pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(10239, pCreature->GetObjectGuid());
             else canBuy = true;
             break;
     }
@@ -1251,7 +1249,7 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
     {
         if (pCreature->isVendor())
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     }
     return true;
 }
@@ -1259,7 +1257,7 @@ bool GossipHello_npc_mount_vendor(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_mount_vendor(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -1274,23 +1272,24 @@ bool GossipHello_npc_rogue_trainer(Player* pPlayer, Creature* pCreature)
 
    if (pPlayer->getLevel() >= 24 && !pPlayer->HasItemCount(17126,1) && !pPlayer->GetQuestRewardStatus(6681))
         if (pCreature->isQuestGiver())
-           {
+        {
             pPlayer->PrepareGossipMenu(pCreature,50195);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "<Take the letter>", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
             pPlayer->SEND_GOSSIP_MENU(5996, pCreature->GetGUID());
             return true;
-           }
+        }
     return false;
 }
 
 bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
-      if (uiAction == GOSSIP_ACTION_INFO_DEF)
-      {
-            pPlayer->CastSpell(pPlayer,21100,false);
-            pPlayer->CLOSE_GOSSIP_MENU();
-            return true;
-      } else return false;
+    if (uiAction == GOSSIP_ACTION_INFO_DEF)
+    {
+        pPlayer->CastSpell(pPlayer,21100,false);
+        pPlayer->CLOSE_GOSSIP_MENU();
+        return true;
+    } 
+    else return false;
 }
 
 /*######
@@ -1310,7 +1309,7 @@ bool GossipSelect_npc_rogue_trainer(Player* pPlayer, Creature* pCreature, uint32
 bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->HasSpellCooldown(SPELL_INT) ||
         pPlayer->HasSpellCooldown(SPELL_ARM) ||
@@ -1320,11 +1319,11 @@ bool GossipHello_npc_sayge(Player* pPlayer, Creature* pCreature)
         pPlayer->HasSpellCooldown(SPELL_AGI) ||
         pPlayer->HasSpellCooldown(SPELL_STM) ||
         pPlayer->HasSpellCooldown(SPELL_SPI))
-        pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7393, pCreature->GetObjectGuid());
     else
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Yes", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-        pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7339, pCreature->GetObjectGuid());
     }
 
     return true;
@@ -1339,39 +1338,39 @@ void SendAction_npc_sayge(Player* pPlayer, Creature* pCreature, uint32 uiAction)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Turn him over to liege",            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confiscate the corn",               GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+4);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let him go and have the corn",      GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+5);
-            pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7340, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painfully",     GOSSIP_SENDER_MAIN+1, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Execute your friend painlessly",    GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let your friend go",                GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7341, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+3:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Confront the diplomat",             GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Show not so quiet defiance",        GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Remain quiet",                      GOSSIP_SENDER_MAIN+2, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7361, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+4:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Speak against your brother openly", GOSSIP_SENDER_MAIN+6, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Help your brother in",              GOSSIP_SENDER_MAIN+7, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Keep your brother out without letting him know", GOSSIP_SENDER_MAIN+8, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7362, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+5:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, keep gold",            GOSSIP_SENDER_MAIN+5, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Take credit, share the gold",       GOSSIP_SENDER_MAIN+4, GOSSIP_ACTION_INFO_DEF);
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Let the knight take credit",        GOSSIP_SENDER_MAIN+3, GOSSIP_ACTION_INFO_DEF);
-            pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7363, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, "Thanks",                            GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+6);
-            pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7364, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+6:
             pCreature->CastSpell(pPlayer, SPELL_FORTUNE, false);
-            pPlayer->SEND_GOSSIP_MENU(7365, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(7365, pCreature->GetObjectGuid());
             break;
     }
 }
@@ -1539,10 +1538,10 @@ bool GossipHello_npc_tabard_vendor(Player* pPlayer, Creature* pCreature)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_TABARD_OF_SUMMER_FLAMES, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+7);
         }
 
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -1552,7 +1551,7 @@ bool GossipSelect_npc_tabard_vendor(Player* pPlayer, Creature* pCreature, uint32
     switch(uiAction)
     {
         case GOSSIP_ACTION_TRADE:
-            pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+            pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->CLOSE_GOSSIP_MENU();
@@ -1653,7 +1652,7 @@ bool GossipHello_npc_locksmith(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestRewardStatus(QUEST_CONTAINMENT) && !pPlayer->HasItemCount(ITEM_VIOLET_HOLD_KEY, 1, true))
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_LOST_VIOLET_HOLD_KEY, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF +6);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }

@@ -50,13 +50,13 @@ enum
 bool GossipHello_npc_bunthen_plainswind(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->getClass() != CLASS_DRUID)
-        pPlayer->SEND_GOSSIP_MENU(4916, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4916, pCreature->GetObjectGuid());
     else if (pPlayer->GetTeam() != HORDE)
     {
         if (pPlayer->GetQuestStatus(QUEST_SEA_LION_ALLY) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_AQ_END, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
-        pPlayer->SEND_GOSSIP_MENU(4917, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4917, pCreature->GetObjectGuid());
     }
     else if (pPlayer->getClass() == CLASS_DRUID && pPlayer->GetTeam() == HORDE)
     {
@@ -65,7 +65,7 @@ bool GossipHello_npc_bunthen_plainswind(Player* pPlayer, Creature* pCreature)
         if (pPlayer->GetQuestStatus(QUEST_SEA_LION_HORDE) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_AQ_END, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
-        pPlayer->SEND_GOSSIP_MENU(4918, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4918, pCreature->GetObjectGuid());
     }
     return true;
 }
@@ -83,10 +83,10 @@ bool GossipSelect_npc_bunthen_plainswind(Player* pPlayer, Creature* pCreature, u
 
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->SEND_GOSSIP_MENU(5373, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(5373, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->SEND_GOSSIP_MENU(5376, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(5376, pCreature->GetObjectGuid());
             break;
     }
     return true;
@@ -153,7 +153,7 @@ struct MANGOS_DLL_DECL npc_clintar_dw_spiritAI : public npc_escortAI
                 break;
             case 49:
                 DoScriptText(SAY_END, m_creature, pPlayer);
-                pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetGUID());
+                pPlayer->TalkedToCreature(m_creature->GetEntry(), m_creature->GetObjectGuid());
                 break;
         }
     }
@@ -180,7 +180,7 @@ struct MANGOS_DLL_DECL npc_clintar_dw_spiritAI : public npc_escortAI
     }
 
     //called only from EffectDummy
-    void DoStart(uint64 uiPlayerGuid)
+    void DoStart(Unit* pStarter)
     {
         //not the best way, maybe check in DummyEffect if this creature are "free" and not in escort.
         if (HasEscortState(STATE_ESCORT_ESCORTING))
@@ -188,7 +188,7 @@ struct MANGOS_DLL_DECL npc_clintar_dw_spiritAI : public npc_escortAI
 
         m_creature->SetVisibility(VISIBILITY_ON);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-        Start(false, uiPlayerGuid);
+        Start(false, pStarter && pStarter->GetTypeId() == TYPEID_PLAYER ? (Player*)pStarter : NULL);
     }
 
     void JustSummoned(Creature* summoned)
@@ -221,7 +221,7 @@ bool EffectDummyCreature_npc_clintar_dw_spirit(Unit *pCaster, uint32 spellId, Sp
 
         //done here, escort can start
         if (npc_clintar_dw_spiritAI* pSpiritAI = dynamic_cast<npc_clintar_dw_spiritAI*>(pCreatureTarget->AI()))
-            pSpiritAI->DoStart(pCaster->GetGUID());
+            pSpiritAI->DoStart(pCaster);
 
         //always return true when we are handling this spell and effect
         return true;
@@ -244,10 +244,10 @@ bool GossipHello_npc_great_bear_spirit(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(5929) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(5930) == QUEST_STATUS_INCOMPLETE)
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BEAR1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-        pPlayer->SEND_GOSSIP_MENU(4719, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4719, pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_GOSSIP_MENU(4718, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4718, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -259,18 +259,18 @@ bool GossipSelect_npc_great_bear_spirit(Player* pPlayer, Creature* pCreature, ui
     {
         case GOSSIP_ACTION_INFO_DEF:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BEAR2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 1);
-            pPlayer->SEND_GOSSIP_MENU(4721, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4721, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF + 1:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BEAR3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
-            pPlayer->SEND_GOSSIP_MENU(4733, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4733, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_BEAR4, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
-            pPlayer->SEND_GOSSIP_MENU(4734, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4734, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->SEND_GOSSIP_MENU(4735, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(4735, pCreature->GetObjectGuid());
             if (pPlayer->GetQuestStatus(5929)==QUEST_STATUS_INCOMPLETE)
                 pPlayer->AreaExploredOrEventHappens(5929);
             if (pPlayer->GetQuestStatus(5930)==QUEST_STATUS_INCOMPLETE)
@@ -290,13 +290,13 @@ bool GossipSelect_npc_great_bear_spirit(Player* pPlayer, Creature* pCreature, ui
 bool GossipHello_npc_silva_filnaveth(Player* pPlayer, Creature* pCreature)
 {
     if (pPlayer->getClass() != CLASS_DRUID)
-        pPlayer->SEND_GOSSIP_MENU(4913, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4913, pCreature->GetObjectGuid());
     else if (pPlayer->GetTeam() != ALLIANCE)
     {
         if (pPlayer->GetQuestStatus(QUEST_SEA_LION_HORDE) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_AQ_AGI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 2);
 
-        pPlayer->SEND_GOSSIP_MENU(4915, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4915, pCreature->GetObjectGuid());
     }
     else if (pPlayer->getClass() == CLASS_DRUID && pPlayer->GetTeam() == ALLIANCE)
     {
@@ -305,7 +305,7 @@ bool GossipHello_npc_silva_filnaveth(Player* pPlayer, Creature* pCreature)
         if (pPlayer->GetQuestStatus(QUEST_SEA_LION_ALLY) == QUEST_STATUS_INCOMPLETE)
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_AQ_AGI, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF + 3);
 
-        pPlayer->SEND_GOSSIP_MENU(4914, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(4914, pCreature->GetObjectGuid());
     }
     return true;
 }
@@ -323,10 +323,10 @@ bool GossipSelect_npc_silva_filnaveth(Player* pPlayer, Creature* pCreature, uint
 
             break;
         case GOSSIP_ACTION_INFO_DEF + 2:
-            pPlayer->SEND_GOSSIP_MENU(5374, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(5374, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF + 3:
-            pPlayer->SEND_GOSSIP_MENU(5375, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(5375, pCreature->GetObjectGuid());
             break;
     }
     return true;

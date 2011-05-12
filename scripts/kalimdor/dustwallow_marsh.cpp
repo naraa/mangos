@@ -211,10 +211,10 @@ bool GossipHello_npc_deserter_agitator(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_TRAITORS_AMONG_US) == QUEST_STATUS_INCOMPLETE)
     {
         pCreature->setFaction(FACTION_THER_DESERTER);
-        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -234,12 +234,12 @@ enum
 bool GossipHello_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pPlayer->GetQuestStatus(QUEST_JAINAS_AUTOGRAPH) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_JAINA, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
@@ -248,7 +248,7 @@ bool GossipSelect_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature
 {
     if (uiAction == GOSSIP_SENDER_INFO)
     {
-        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetObjectGuid());
         pPlayer->CastSpell(pPlayer, SPELL_JAINAS_AUTOGRAPH, false);
     }
     return true;
@@ -364,7 +364,7 @@ bool QuestAccept_npc_morokk(Player* pPlayer, Creature* pCreature, const Quest* p
     if (pQuest->GetQuestId() == QUEST_CHALLENGE_MOROKK)
     {
         if (npc_morokkAI* pEscortAI = dynamic_cast<npc_morokkAI*>(pCreature->AI()))
-            pEscortAI->Start(true, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(true, pPlayer, pQuest);
 
         return true;
     }
@@ -383,15 +383,15 @@ enum
 bool GossipHello_npc_nat_pagle(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
     if (pCreature->isVendor() && pPlayer->GetQuestRewardStatus(QUEST_NATS_MEASURING_TAPE))
     {
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_VENDOR, GOSSIP_TEXT_BROWSE_GOODS, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_TRADE);
-        pPlayer->SEND_GOSSIP_MENU(7640, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7640, pCreature->GetObjectGuid());
     }
     else
-        pPlayer->SEND_GOSSIP_MENU(7638, pCreature->GetGUID());
+        pPlayer->SEND_GOSSIP_MENU(7638, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -399,7 +399,7 @@ bool GossipHello_npc_nat_pagle(Player* pPlayer, Creature* pCreature)
 bool GossipSelect_npc_nat_pagle(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
 {
     if (uiAction == GOSSIP_ACTION_TRADE)
-        pPlayer->SEND_VENDORLIST(pCreature->GetGUID());
+        pPlayer->SEND_VENDORLIST(pCreature->GetObjectGuid());
 
     return true;
 }
@@ -694,7 +694,7 @@ bool QuestAccept_npc_ogron(Player* pPlayer, Creature* pCreature, const Quest* pQ
     {
         if (npc_ogronAI* pEscortAI = dynamic_cast<npc_ogronAI*>(pCreature->AI()))
         {
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest, true);
+            pEscortAI->Start(false, pPlayer, pQuest, true);
             pCreature->setFaction(FACTION_ESCORT_N_FRIEND_PASSIVE);
             DoScriptText(SAY_OGR_START, pCreature, pPlayer);
         }
@@ -795,7 +795,7 @@ bool GossipHello_npc_cassa_crimsonwing(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_SURVEY_ALCAZ) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_RIDE, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 

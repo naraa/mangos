@@ -312,7 +312,7 @@ bool GossipHello_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature)
     if (pPlayer->GetQuestStatus(QUEST_THE_DWARVEN_SPY) == QUEST_STATUS_INCOMPLETE)
         pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_MOMENT, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(8239, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(8239, pCreature->GetObjectGuid());
     return true;
 }
 
@@ -322,13 +322,13 @@ bool GossipSelect_npc_prospector_anvilward(Player* pPlayer, Creature* pCreature,
     {
         case GOSSIP_ACTION_INFO_DEF+1:
             pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_SHOW, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
-            pPlayer->SEND_GOSSIP_MENU(8240, pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(8240, pCreature->GetObjectGuid());
             break;
         case GOSSIP_ACTION_INFO_DEF+2:
             pPlayer->CLOSE_GOSSIP_MENU();
 
             if (npc_prospector_anvilwardAI* pEscortAI = dynamic_cast<npc_prospector_anvilwardAI*>(pCreature->AI()))
-                pEscortAI->Start(false, pPlayer->GetGUID());
+                pEscortAI->Start(false, pPlayer);
 
             break;
     }

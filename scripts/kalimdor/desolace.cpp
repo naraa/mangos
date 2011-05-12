@@ -157,13 +157,13 @@ bool GossipHello_npc_aged_dying_ancient_kodo(Player* pPlayer, Creature* pCreatur
     if (pPlayer->HasAura(SPELL_KODO_KOMBO_PLAYER_BUFF) && pCreature->HasAura(SPELL_KODO_KOMBO_DESPAWN_BUFF))
     {
         //the expected quest objective
-        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetGUID());
+        pPlayer->TalkedToCreature(pCreature->GetEntry(), pCreature->GetObjectGuid());
 
         pPlayer->RemoveAurasDueToSpell(SPELL_KODO_KOMBO_PLAYER_BUFF);
         pCreature->GetMotionMaster()->MoveIdle();
     }
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
     return true;
 }
 
@@ -210,7 +210,7 @@ bool QuestAccept_npc_dalinda_malem(Player* pPlayer, Creature* pCreature, const Q
         {
             // TODO This faction change needs confirmation, also possible that we need to drop her PASSIVE flag
             pCreature->setFaction(FACTION_ESCORT_A_NEUTRAL_PASSIVE);
-            pEscortAI->Start(false, pPlayer->GetGUID(), pQuest);
+            pEscortAI->Start(false, pPlayer, pQuest);
         }
     }
     return true;

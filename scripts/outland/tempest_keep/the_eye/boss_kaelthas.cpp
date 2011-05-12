@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL advisorbase_ai : public ScriptedAI
             m_creature->ModifyAuraState(AURA_STATE_HEALTHLESS_35_PERCENT, false);
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             m_creature->ClearAllReactives();
-            m_creature->SetUInt64Value(UNIT_FIELD_TARGET,0);
+            m_creature->SetTargetGuid(ObjectGuid());
             m_creature->GetMotionMaster()->Clear();
             m_creature->GetMotionMaster()->MoveIdle();
             m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
@@ -457,7 +457,7 @@ struct MANGOS_DLL_DECL boss_kaelthasAI : public ScriptedAI
     {
         if (pSummoned->GetEntry() == NPC_FLAME_STRIKE_TRIGGER)
         {
-            pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, NULL, NULL, m_creature->GetGUID());
+            pSummoned->CastSpell(pSummoned, SPELL_FLAME_STRIKE_DUMMY, false, NULL, NULL, m_creature->GetObjectGuid());
             return;
         }
 
@@ -960,8 +960,8 @@ struct MANGOS_DLL_DECL boss_kaelthasAI : public ScriptedAI
                                         m_creature->CastSpell(pUnit, SPELL_KNOCKBACK, true);
                                         //Gravity lapse - needs an exception in Spell system to work
 
-                                        pUnit->CastSpell(pUnit, SPELL_GRAVITY_LAPSE, true, 0, 0, m_creature->GetGUID());
-                                        pUnit->CastSpell(pUnit, SPELL_GRAVITY_LAPSE_AURA, true, 0, 0, m_creature->GetGUID());
+                                        pUnit->CastSpell(pUnit, SPELL_GRAVITY_LAPSE, true, NULL, NULL, m_creature->GetObjectGuid());
+                                        pUnit->CastSpell(pUnit, SPELL_GRAVITY_LAPSE_AURA, true, NULL, NULL, m_creature->GetObjectGuid());
                                     }
                                 }
                                 m_uiGravityLapse_Timer = 10000;
