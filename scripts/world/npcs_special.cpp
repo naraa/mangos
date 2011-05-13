@@ -108,7 +108,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
     npc_air_force_botsAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pSpawnAssoc = NULL;
-        m_uiSpawnedGUID = 0;
+        m_spawnedGuid = ObjectGuid();
 
         // find the correct spawnhandling
         static uint32 uiEntryCount = sizeof(m_aSpawnAssociations)/sizeof(SpawnAssociation);
@@ -138,7 +138,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
     }
 
     SpawnAssociation* m_pSpawnAssoc;
-    uint64 m_uiSpawnedGUID;
+    ObjectGuid m_spawnedGuid;
 
     void Reset() { }
 
@@ -147,7 +147,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
         Creature* pSummoned = m_creature->SummonCreature(m_pSpawnAssoc->m_uiSpawnedCreatureEntry, 0.0f, 0.0f, 0.0f, 0.0f, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 300000);
 
         if (pSummoned)
-            m_uiSpawnedGUID = pSummoned->GetGUID();
+            m_spawnedGuid = pSummoned->GetObjectGuid();
         else
         {
             error_db_log("SD2: npc_air_force_bots: wasn't able to spawn creature %u", m_pSpawnAssoc->m_uiSpawnedCreatureEntry);
@@ -159,7 +159,7 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
 
     Creature* GetSummonedGuard()
     {
-        Creature* pCreature = m_creature->GetMap()->GetCreature(m_uiSpawnedGUID);
+        Creature* pCreature = m_creature->GetMap()->GetCreature(m_spawnedGuid);
 
         if (pCreature && pCreature->isAlive())
             return pCreature;
@@ -180,11 +180,11 @@ struct MANGOS_DLL_DECL npc_air_force_botsAI : public ScriptedAI
             if (!pPlayerTarget)
                 return;
 
-            Creature* pLastSpawnedGuard = m_uiSpawnedGUID == 0 ? NULL : GetSummonedGuard();
+            Creature* pLastSpawnedGuard = m_spawnedGuid.IsEmpty() ? NULL : GetSummonedGuard();
 
             // prevent calling GetCreature at next MoveInLineOfSight call - speedup
             if (!pLastSpawnedGuard)
-                m_uiSpawnedGUID = 0;
+                m_spawnedGuid.Clear();
 
             switch(m_pSpawnAssoc->m_SpawnType)
             {
@@ -479,7 +479,7 @@ struct MANGOS_DLL_DECL npc_doctorAI : public ScriptedAI
 {
     npc_doctorAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint64 Playerguid;
+    ObjectGuid m_playerGuid;
 
     uint32 SummonPatient_Timer;
     uint32 SummonPatientCount;
@@ -493,7 +493,7 @@ struct MANGOS_DLL_DECL npc_doctorAI : public ScriptedAI
 
     void Reset()
     {
-        Playerguid = 0;
+        m_playerGuid.Clear();
 
         SummonPatient_Timer = 10000;
         SummonPatientCount = 0;
@@ -522,12 +522,12 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
 {
     npc_injured_patientAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint64 Doctorguid;
+    ObjectGuid m_doctorGuid;
     Location* Coord;
 
     void Reset()
     {
-        Doctorguid = 0;
+        m_doctorGuid.Clear();
         Coord = NULL;
 
         //no select
@@ -562,9 +562,9 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
         {
             if ((((Player*)caster)->GetQuestStatus(6624) == QUEST_STATUS_INCOMPLETE) || (((Player*)caster)->GetQuestStatus(6622) == QUEST_STATUS_INCOMPLETE))
             {
-                if (Doctorguid)
+                if (!m_doctorGuid.IsEmpty())
                 {
-                    if (Creature* pDoctor = m_creature->GetMap()->GetCreature(Doctorguid))
+                    if (Creature* pDoctor = m_creature->GetMap()->GetCreature(m_doctorGuid))
                     {
                         if (npc_doctorAI* pDocAI = dynamic_cast<npc_doctorAI*>(pDoctor->AI()))
                             pDocAI->PatientSaved(m_creature, (Player*)caster, Coord);
@@ -620,9 +620,9 @@ struct MANGOS_DLL_DECL npc_injured_patientAI : public ScriptedAI
             m_creature->SetDeathState(JUST_DIED);
             m_creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
 
-            if (Doctorguid)
+            if (!m_doctorGuid.IsEmpty())
             {
-                if (Creature* pDoctor = m_creature->GetMap()->GetCreature(Doctorguid))
+                if (Creature* pDoctor = m_creature->GetMap()->GetCreature(m_doctorGuid))
                 {
                     if (npc_doctorAI* pDocAI = dynamic_cast<npc_doctorAI*>(pDoctor->AI()))
                         pDocAI->PatientDied(Coord);
@@ -643,7 +643,7 @@ npc_doctor (continue)
 
 void npc_doctorAI::BeginEvent(Player* pPlayer)
 {
-    Playerguid = pPlayer->GetGUID();
+    m_playerGuid = pPlayer->GetObjectGuid();
 
     SummonPatient_Timer = 10000;
     SummonPatientCount = 0;
@@ -668,7 +668,7 @@ void npc_doctorAI::BeginEvent(Player* pPlayer)
 
 void npc_doctorAI::PatientDied(Location* Point)
 {
-    Player* pPlayer = m_creature->GetMap()->GetPlayer(Playerguid);
+    Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
     if (pPlayer && ((pPlayer->GetQuestStatus(6624) == QUEST_STATUS_INCOMPLETE) || (pPlayer->GetQuestStatus(6622) == QUEST_STATUS_INCOMPLETE)))
     {
@@ -694,7 +694,7 @@ void npc_doctorAI::PatientDied(Location* Point)
 
 void npc_doctorAI::PatientSaved(Creature* soldier, Player* pPlayer, Location* Point)
 {
-    if (pPlayer && Playerguid == pPlayer->GetGUID())
+    if (pPlayer && m_playerGuid == pPlayer->GetObjectGuid())
     {
         if ((pPlayer->GetQuestStatus(QUEST_TRIAGE_A) == QUEST_STATUS_INCOMPLETE) || (pPlayer->GetQuestStatus(QUEST_TRIAGE_H) == QUEST_STATUS_INCOMPLETE))
         {
@@ -767,7 +767,7 @@ void npc_doctorAI::UpdateAI(const uint32 diff)
 
                 if (pPatientAI)
                 {
-                    pPatientAI->Doctorguid = m_creature->GetGUID();
+                    pPatientAI->m_doctorGuid = m_creature->GetObjectGuid();
 
                     if (Point)
                         pPatientAI->Coord = Point;
