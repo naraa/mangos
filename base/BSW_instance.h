@@ -18,6 +18,8 @@ class MANGOS_DLL_DECL BSWScriptedInstance : public ScriptedInstance
         void DoCompleteAchievement(uint32 uiAchievmentId);
         void DoOpenDoor(uint64 guid);
         void DoCloseDoor(uint64 guid);
+        void DoOpenDoor(ObjectGuid guid);
+        void DoCloseDoor(ObjectGuid guid);
 
         uint64 GetInstanceObjectGUID(uint32 entry);
         ObjectGuid const& GetInstanceObjectGuid(uint32 entry);

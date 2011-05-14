@@ -43,41 +43,32 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
 
     uint32 m_auiLeader;
 
-    uint64 m_uiFalricGUID;
-    uint64 m_uiMarwynGUID;
-    uint64 m_uiLichKingGUID;
-    uint64 m_uiLiderGUID;
-    uint64 m_uiUtherGUID;
+    ObjectGuid m_uiFalricGUID;
+    ObjectGuid m_uiMarwynGUID;
+    ObjectGuid m_uiLichKingGUID;
+    ObjectGuid m_uiLiderGUID;
+    ObjectGuid m_uiUtherGUID;
 
-    uint64 m_uiQuelDelarGUID;
+    ObjectGuid m_uiQuelDelarGUID;
 
-    uint64 m_uiMainGateGUID;
-    uint64 m_uiExitGateGUID;
-    uint64 m_uiDoor2GUID;
-    uint64 m_uiDoor3GUID;
+    ObjectGuid m_uiMainGateGUID;
+    ObjectGuid m_uiExitGateGUID;
+    ObjectGuid m_uiDoor2GUID;
+    ObjectGuid m_uiDoor3GUID;
 
-    uint64 m_uiFrostGeneralGUID;
-    uint64 m_uiCaptainsChestHordeGUID;
-    uint64 m_uiCaptainsChestAllianceGUID;
-    uint64 m_uiFrostmourneGUID;
-    uint64 m_uiFrostmourneAltarGUID;
-    uint64 m_uiPortalGUID;
-    uint64 m_uiIceWallGUID;
-    uint64 m_uiCaveGUID;
+    ObjectGuid m_uiFrostGeneralGUID;
+    ObjectGuid m_uiCaptainsChestHordeGUID;
+    ObjectGuid m_uiCaptainsChestAllianceGUID;
+    ObjectGuid m_uiFrostmourneGUID;
+    ObjectGuid m_uiFrostmourneAltarGUID;
+    ObjectGuid m_uiPortalGUID;
+    ObjectGuid m_uiIceWallGUID;
+    ObjectGuid m_uiCaveGUID;
 
     void Initialize()
     {
         for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
             m_auiEncounter[i] = NOT_STARTED;
-        m_uiMainGateGUID = 0;
-        m_uiFrostmourneGUID = 0;
-        m_uiFalricGUID = 0;
-        m_uiLiderGUID = 0;
-        m_uiLichKingGUID = 0;
-        m_uiExitGateGUID = 0;
-        m_uiSummons = 0;
-        m_uiIceWallGUID = 0;
-        m_uiCaveGUID = 0;
     }
 
     void OnCreatureCreate(Creature* pCreature)
@@ -85,22 +76,22 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         switch(pCreature->GetEntry())
         {
             case NPC_FALRIC:
-                   m_uiFalricGUID = pCreature->GetGUID();
+                   m_uiFalricGUID = pCreature->GetObjectGuid();
                    break;
             case NPC_MARWYN:
-                   m_uiMarwynGUID = pCreature->GetGUID();
+                   m_uiMarwynGUID = pCreature->GetObjectGuid();
                    break;
             case BOSS_LICH_KING:
-                   m_uiLichKingGUID = pCreature->GetGUID();
+                   m_uiLichKingGUID = pCreature->GetObjectGuid();
                    break;
             case NPC_FROST_GENERAL:
-                   m_uiFrostGeneralGUID = pCreature->GetGUID();
+                   m_uiFrostGeneralGUID = pCreature->GetObjectGuid();
                    break;
             case NPC_QUEL_DELAR:
-                   m_uiQuelDelarGUID = pCreature->GetGUID();
+                   m_uiQuelDelarGUID = pCreature->GetObjectGuid();
                    break;
             case NPC_UTHER:
-                   m_uiUtherGUID = pCreature->GetGUID();
+                   m_uiUtherGUID = pCreature->GetObjectGuid();
                    break;
         }
     }
@@ -109,39 +100,39 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
     {
         switch(pGo->GetEntry())
         {
-            case  GO_IMPENETRABLE_DOOR: m_uiMainGateGUID = pGo->GetGUID();
+            case  GO_IMPENETRABLE_DOOR: m_uiMainGateGUID = pGo->GetObjectGuid();
                                         if (GetData(TYPE_MARWYN) == DONE)
                                             DoOpenDoor(m_uiMainGateGUID);
                                         break;
-            case  GO_FROSTMOURNE:       m_uiFrostmourneGUID = pGo->GetGUID(); break;
-            case  GO_ICECROWN_DOOR:     m_uiExitGateGUID = pGo->GetGUID(); break;
-            case  GO_ICECROWN_DOOR_2:   m_uiDoor2GUID = pGo->GetGUID();
+            case  GO_FROSTMOURNE:       m_uiFrostmourneGUID = pGo->GetObjectGuid(); break;
+            case  GO_ICECROWN_DOOR:     m_uiExitGateGUID = pGo->GetObjectGuid(); break;
+            case  GO_ICECROWN_DOOR_2:   m_uiDoor2GUID = pGo->GetObjectGuid();
                                         if (GetData(TYPE_FROST_GENERAL) == DONE)
                                             DoOpenDoor(m_uiDoor2GUID);
                                         break;
-            case  GO_ICECROWN_DOOR_3:   m_uiDoor3GUID = pGo->GetGUID(); break;
-            case  GO_PORTAL:            m_uiPortalGUID = pGo->GetGUID(); break;
+            case  GO_ICECROWN_DOOR_3:   m_uiDoor3GUID = pGo->GetObjectGuid(); break;
+            case  GO_PORTAL:            m_uiPortalGUID = pGo->GetObjectGuid(); break;
             case  GO_CAPTAIN_CHEST_1:
                                   if (Difficulty == RAID_DIFFICULTY_10MAN_NORMAL)
-                                  m_uiCaptainsChestHordeGUID = pGo->GetGUID(); 
+                                  m_uiCaptainsChestHordeGUID = pGo->GetObjectGuid(); 
                                   break;
             case  GO_CAPTAIN_CHEST_3:
                                   if (Difficulty == RAID_DIFFICULTY_25MAN_NORMAL)
-                                  m_uiCaptainsChestHordeGUID = pGo->GetGUID(); 
+                                  m_uiCaptainsChestHordeGUID = pGo->GetObjectGuid(); 
                                   break;
             case  GO_CAPTAIN_CHEST_2:
                                   if (Difficulty == RAID_DIFFICULTY_10MAN_NORMAL)
-                                  m_uiCaptainsChestAllianceGUID = pGo->GetGUID(); 
+                                  m_uiCaptainsChestAllianceGUID = pGo->GetObjectGuid(); 
                                   break;
             case  GO_CAPTAIN_CHEST_4:
                                   if (Difficulty == RAID_DIFFICULTY_25MAN_NORMAL)
-                                  m_uiCaptainsChestAllianceGUID = pGo->GetGUID(); 
+                                  m_uiCaptainsChestAllianceGUID = pGo->GetObjectGuid(); 
                                   break;
 
-            case  GO_ICE_WALL:    m_uiIceWallGUID  = pGo->GetGUID();
+            case  GO_ICE_WALL:    m_uiIceWallGUID  = pGo->GetObjectGuid();
                                   pGo->SetPhaseMask(65535, true);
                                   break;
-            case  GO_CAVE:        m_uiCaveGUID     = pGo->GetGUID(); 
+            case  GO_CAVE:        m_uiCaveGUID     = pGo->GetObjectGuid(); 
                                   DoOpenDoor(m_uiCaveGUID);
                                   break;
         }
@@ -250,7 +241,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
         return 0;
     }
 
-    void SetData64(uint32 uiData, uint64 uiGuid)
+    void SetData64(uint32 uiData, ObjectGuid uiGuid)
     {
         switch(uiData)
         {
@@ -264,20 +255,20 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
     {
         switch(uiData)
         {
-            case GO_IMPENETRABLE_DOOR: return m_uiMainGateGUID;
-            case GO_FROSTMOURNE:       return m_uiFrostmourneGUID;
-            case NPC_FALRIC:           return m_uiFalricGUID;
-            case NPC_MARWYN:           return m_uiMarwynGUID;
-            case NPC_UTHER:            return m_uiUtherGUID;
-            case BOSS_LICH_KING:       return m_uiLichKingGUID;
-            case DATA_ESCAPE_LIDER:    return m_uiLiderGUID;
-            case NPC_FROST_GENERAL:    return m_uiFrostGeneralGUID;
-            case NPC_QUEL_DELAR:       return m_uiQuelDelarGUID;
-            case GO_ICECROWN_DOOR:     return m_uiExitGateGUID;
-            case GO_ICECROWN_DOOR_2:   return m_uiDoor2GUID;
-            case GO_ICECROWN_DOOR_3:   return m_uiDoor3GUID;
-            case GO_ICE_WALL:          return m_uiIceWallGUID;
-            case GO_CAVE:              return m_uiCaveGUID;
+            case GO_IMPENETRABLE_DOOR: return m_uiMainGateGUID.GetRawValue();
+            case GO_FROSTMOURNE:       return m_uiFrostmourneGUID.GetRawValue();
+            case NPC_FALRIC:           return m_uiFalricGUID.GetRawValue();
+            case NPC_MARWYN:           return m_uiMarwynGUID.GetRawValue();
+            case NPC_UTHER:            return m_uiUtherGUID.GetRawValue();
+            case BOSS_LICH_KING:       return m_uiLichKingGUID.GetRawValue();
+            case DATA_ESCAPE_LIDER:    return m_uiLiderGUID.GetRawValue();
+            case NPC_FROST_GENERAL:    return m_uiFrostGeneralGUID.GetRawValue();
+            case NPC_QUEL_DELAR:       return m_uiQuelDelarGUID.GetRawValue();
+            case GO_ICECROWN_DOOR:     return m_uiExitGateGUID.GetRawValue();
+            case GO_ICECROWN_DOOR_2:   return m_uiDoor2GUID.GetRawValue();
+            case GO_ICECROWN_DOOR_3:   return m_uiDoor3GUID.GetRawValue();
+            case GO_ICE_WALL:          return m_uiIceWallGUID.GetRawValue();
+            case GO_CAVE:              return m_uiCaveGUID.GetRawValue();
         }
         return 0;
     }
