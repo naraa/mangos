@@ -104,13 +104,13 @@ struct MANGOS_DLL_DECL npc_a_special_surpriseAI : public ScriptedAI
 
     uint32 m_uiExecuteSpeech_Timer;
     uint32 m_uiExecuteSpeech_Counter;
-    uint64 m_uiPlayerGUID;
+    ObjectGuid m_playerGuid;
 
     void Reset()
     {
         m_uiExecuteSpeech_Timer = 0;
         m_uiExecuteSpeech_Counter = 0;
-        m_uiPlayerGUID = 0;
+        m_playerGuid.Clear();
     }
 
     bool MeetQuestCondition(Player* pPlayer)
@@ -164,20 +164,20 @@ struct MANGOS_DLL_DECL npc_a_special_surpriseAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (m_uiPlayerGUID || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDist(m_creature, INTERACTION_DISTANCE))
+        if (!m_playerGuid.IsEmpty() || pWho->GetTypeId() != TYPEID_PLAYER || !pWho->IsWithinDist(m_creature, INTERACTION_DISTANCE))
             return;
 
         if (MeetQuestCondition((Player*)pWho))
-            m_uiPlayerGUID = pWho->GetGUID();
+            m_playerGuid = pWho->GetObjectGuid();
     }
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_uiPlayerGUID && !m_creature->getVictim() && m_creature->isAlive())
+        if (!m_playerGuid.IsEmpty() && !m_creature->getVictim() && m_creature->isAlive())
         {
             if (m_uiExecuteSpeech_Timer < uiDiff)
             {
-                Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID);
+                Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid);
 
                 if (!pPlayer)
                 {
@@ -525,7 +525,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
 {
     npc_death_knight_initiateAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    uint64 m_uiDuelerGUID;
+    ObjectGuid m_duelerGuid;
     uint32 m_uiDuelTimer;
     bool m_bIsDuelInProgress;
 
@@ -536,7 +536,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_UNK_15);
 
-        m_uiDuelerGUID = 0;
+        m_duelerGuid.Clear();
         m_uiDuelTimer = 5000;
         m_bIsDuelInProgress = false;
     }
@@ -556,7 +556,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
     {
         if (!m_bIsDuelInProgress && pSpell->Id == SPELL_DUEL_TRIGGERED && pCaster->GetTypeId() == TYPEID_PLAYER)
         {
-            m_uiDuelerGUID = pCaster->GetGUID();
+            m_duelerGuid = pCaster->GetObjectGuid();
             m_bIsDuelInProgress = true;
         }
     }
@@ -567,7 +567,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
         {
             uiDamage = 0;
 
-            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiDuelerGUID))
+            if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid))
                 m_creature->CastSpell(pPlayer, SPELL_DUEL_VICTORY, true);
 
             //possibly not evade, but instead have end sequenze
@@ -585,7 +585,7 @@ struct MANGOS_DLL_DECL npc_death_knight_initiateAI : public ScriptedAI
                 {
                     m_creature->setFaction(FACTION_HOSTILE);
 
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiDuelerGUID))
+                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_duelerGuid))
                         AttackStart(pPlayer);
                 }
                 else
@@ -676,7 +676,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
 
     uint32 m_uiWave;
     uint32 m_uiWave_Timer;
-    uint64 m_uiValrothGUID;
+    ObjectGuid m_valrothGuid;
 
     void Reset()
     {
@@ -684,7 +684,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
         {
             m_uiWave = 0;
             m_uiWave_Timer = 3000;
-            m_uiValrothGUID = 0;
+            m_valrothGuid.Clear();
         }
     }
 
@@ -724,13 +724,10 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
     void JustSummoned(Creature* pSummoned)
     {
         if (Player* pPlayer = GetPlayerForEscort())
-        {
             pSummoned->AI()->AttackStart(pPlayer);
-            pSummoned->AddThreat(m_creature);
-        }
 
         if (pSummoned->GetEntry() == NPC_HIGH_INQUISITOR_VALROTH)
-            m_uiValrothGUID = pSummoned->GetGUID();
+            m_valrothGuid = pSummoned->GetObjectGuid();
     }
 
     void SummonAcolyte(uint32 uiAmount)
@@ -769,7 +766,7 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
                         break;
                     case 4:
                     {
-                        Creature* pTemp = m_creature->GetMap()->GetCreature(m_uiValrothGUID);
+                        Creature* pTemp = m_creature->GetMap()->GetCreature(m_valrothGuid);
 
                         if (!pTemp || !pTemp->isAlive())
                         {
@@ -890,19 +887,19 @@ struct MANGOS_DLL_DECL npc_unworthy_initiate_anchorAI : public ScriptedAI
 {
     npc_unworthy_initiate_anchorAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_uiMyInitiate = 0;
+        m_myInitiateGuid = ObjectGuid();
         Reset();
     }
 
-    uint64 m_uiMyInitiate;
-    uint64 m_uiMyPrisonGUID;
+    ObjectGuid m_myInitiateGuid;
+    ObjectGuid m_myPrisonGuid;
 
     void Reset() { }
 
-    void NotifyMe(Unit* pSource, uint64 uiPrisonGuid)
+    void NotifyMe(Unit* pSource, GameObject* pGo)
     {
-        m_uiMyPrisonGUID = uiPrisonGuid;
-        Creature* pInitiate = m_creature->GetMap()->GetCreature(m_uiMyInitiate);
+        m_myPrisonGuid = pGo->GetObjectGuid();
+        Creature* pInitiate = m_creature->GetMap()->GetCreature(m_myInitiateGuid);
 
         if (pInitiate && pSource)
         {
@@ -911,14 +908,14 @@ struct MANGOS_DLL_DECL npc_unworthy_initiate_anchorAI : public ScriptedAI
         }
     }
 
-    void RegisterCloseInitiate(uint64 uiGuid)
+    void RegisterCloseInitiate(Creature* pCreature)
     {
-        m_uiMyInitiate = uiGuid;
+        m_myInitiateGuid = pCreature->GetObjectGuid();
     }
 
     void ResetPrison()
     {
-        if (GameObject* pPrison = m_creature->GetMap()->GetGameObject(m_uiMyPrisonGUID))
+        if (GameObject* pPrison = m_creature->GetMap()->GetGameObject(m_myPrisonGuid))
             pPrison->ResetDoorOrButton();
     }
 };
@@ -956,7 +953,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
 
     DisplayToSpell* m_pToTransform;
 
-    uint64 m_uiMyAnchorGUID;
+    ObjectGuid m_myAnchorGuid;
     uint32 m_uiNormFaction;
     uint32 m_uiAnchorCheckTimer;
     uint32 m_uiPhase;
@@ -971,7 +968,7 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         if (m_creature->getFaction() != m_uiNormFaction)
             m_creature->setFaction(m_uiNormFaction);
 
-        m_uiMyAnchorGUID = 0;
+        m_myAnchorGuid.Clear();
         m_uiAnchorCheckTimer = 5000;
         m_uiPhase = PHASE_INACTIVE_OR_COMBAT;
         m_uiPhaseTimer = 7500;
@@ -1004,8 +1001,8 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
 
     Creature* GetAnchor()
     {
-        if (m_uiMyAnchorGUID)
-            return m_creature->GetMap()->GetCreature(m_uiMyAnchorGUID);
+        if (!m_myAnchorGuid.IsEmpty())
+            return m_creature->GetMap()->GetCreature(m_myAnchorGuid);
         else
             return GetClosestCreatureWithEntry(m_creature, NPC_ANCHOR, INTERACTION_DISTANCE*2);
     }
@@ -1015,9 +1012,10 @@ struct MANGOS_DLL_DECL npc_unworthy_initiateAI : public ScriptedAI
         if (Creature* pAnchor = GetAnchor())
         {
             if (npc_unworthy_initiate_anchorAI* pAnchorAI = dynamic_cast<npc_unworthy_initiate_anchorAI*>(pAnchor->AI()))
-                pAnchorAI->RegisterCloseInitiate(m_creature->GetGUID());
+                pAnchorAI->RegisterCloseInitiate(m_creature);
 
             pAnchor->CastSpell(m_creature, SPELL_CHAINED_PESANT_CHEST, false);
+            m_myAnchorGuid = pAnchor->GetObjectGuid();
 
             m_uiAnchorCheckTimer = 0;
             return;
@@ -1140,7 +1138,7 @@ bool GOUse_go_acherus_soul_prison(Player* pPlayer, GameObject* pGo)
     if (Creature* pAnchor = GetClosestCreatureWithEntry(pGo, NPC_ANCHOR, INTERACTION_DISTANCE))
     {
         if (npc_unworthy_initiate_anchorAI* pAnchorAI = dynamic_cast<npc_unworthy_initiate_anchorAI*>(pAnchor->AI()))
-            pAnchorAI->NotifyMe(pPlayer, pGo->GetGUID());
+            pAnchorAI->NotifyMe(pPlayer, pGo);
     }
 
     return false;
