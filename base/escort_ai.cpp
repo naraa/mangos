@@ -495,7 +495,7 @@ void npc_escortAI::Start(bool bRun, const Player* pPlayer, const Quest* pQuest, 
     //disable npcflags
     m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_NONE);
 
-    debug_log("SD2: EscortAI started with " SIZEFMTD " waypoints. Run = %d, PlayerGuid = %s", WaypointList.size(), m_bIsRunning, m_playerGuid.GetString().c_str());
+    debug_log("SD2: EscortAI started with %u waypoints. Run = %d, PlayerGuid = %u", WaypointList.size(), m_bIsRunning, m_playerGuid.GetCounter());
 
     CurrentWP = WaypointList.begin();
 
