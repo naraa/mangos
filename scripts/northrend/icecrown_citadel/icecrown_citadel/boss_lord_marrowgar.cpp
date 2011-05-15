@@ -275,7 +275,7 @@ struct MANGOS_DLL_DECL mob_coldflameAI : public BSWScriptedAI
 
         if (!isCreator)
         {
-            if (m_creature->GetCreatorGuid() == m_pInstance->GetData64(NPC_LORD_MARROWGAR))
+            if (m_creature->GetCreatorGuid().GetRawValue() == m_pInstance->GetData64(NPC_LORD_MARROWGAR))
             {
                 isFirst = true;
                 uint32 m_tmpDirection = m_pInstance->GetData(DATA_DIRECTION);
