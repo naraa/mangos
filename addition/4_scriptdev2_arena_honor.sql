@@ -1,9 +1,9 @@
 -- npc arena-honor exchange
 
-DELETE FROM `script_texts` WHERE `entry` in (-1001007, -1001008);
-INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
-('-1001007','Недостаточно ХонорПойнтов!','Your not has enough HonorPoints!','','0','0','0','Unsuccesfull - honorpoint.'),
-('-1001008','Недостаточно АренаПойнтов!','Your not has enough AranaPoints!','','0','0','0','Unsuccesfull - arenapoint.');
+DELETE FROM script_texts WHERE entry in (-1001007, -1001008);
+INSERT INTO script_texts (entry,content_loc8, content_default, sound, type, language, emote, comment) VALUES
+('-1001007','Недостаточно ХонорПойнтов!','Your not has enough HonorPoints!','0','0','0','0','Unsuccesfull - honorpoint.'),
+('-1001008','Недостаточно АренаПойнтов!','Your not has enough AranaPoints!','0','0','0','0','Unsuccesfull - arenapoint.');
 
 -- Gossips
 DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3000774 AND -3000769;
