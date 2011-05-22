@@ -24,7 +24,7 @@ SDAuthor: MaxXx2021 aka Mioka
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_halls.h"
+#include "halls_of_reflection.h"
 #include "escort_ai.h"
 
 enum
@@ -138,6 +138,8 @@ enum
   SPELL_LICH_KING_CAST               = 57561,
   SPELL_FROSTMOURNE_VISUAL           = 73220,
   SPELL_SHIELD_DISRUPTION            = 58291,
+
+  SPELL_ESCAPED_FROM_ARTHAS          = 72830,
 
   FACTION                            = 2076,
 };
@@ -551,9 +553,9 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
         m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
 
+        m_creature->CastSpell(m_creature, SPELL_ICE_BARRIER, false);
         if(m_creature->GetEntry() == NPC_JAINA_OUTRO)
         {
-            m_creature->CastSpell(m_creature, SPELL_ICE_BARRIER, false);
             m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY2HL);
         }
 
@@ -812,12 +814,12 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
                 m_pInstance->SetNextEvent(107,m_creature->GetEntry(),2500);
                 break;
            case 107:
+                m_creature->RemoveAurasDueToSpell(SPELL_ICE_BARRIER);
                 if(m_creature->GetEntry() == NPC_JAINA_OUTRO)
                 {
                     if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
                         if (!pLichKing->HasAura(SPELL_ICE_PRISON))
                             pLichKing->CastSpell(pLichKing,SPELL_ICE_PRISON,true);
-                    m_creature->RemoveAurasDueToSpell(SPELL_ICE_BARRIER);
                     DoScriptText(SAY_JAINA_AGGRO, m_creature);
                 }
                 else if(m_creature->GetEntry() == NPC_SYLVANA_OUTRO)
@@ -867,6 +869,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
               m_pInstance->SetNextEvent(612,m_creature->GetEntry(),10000);
               break;
            case 612:
+              m_creature->CastSpell(m_creature,SPELL_ESCAPED_FROM_ARTHAS,false);
               m_pInstance->SetData(TYPE_LICH_KING, DONE);
               DoScriptText(SAY_ESCAPE_02, m_creature);
               m_pInstance->SetNextEvent(613,m_creature->GetEntry(),10000);

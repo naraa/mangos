@@ -23,7 +23,7 @@ SDCategory: Halls of Reflection
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_halls.h"
+#include "halls_of_reflection.h"
 #include "escort_ai.h"
 
 enum
@@ -166,7 +166,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
              pNewLeader->SetSpeedRate(MOVE_RUN, 1.0f, true);
              pNewLeader->SetRespawnDelay(DAY);
              pNewLeader->SetHealth(pNewLeader->GetMaxHealth()/10);
-             m_pInstance->SetData64(DATA_ESCAPE_LIDER, pNewLeader->GetGUID());
+             m_pInstance->SetData64(DATA_ESCAPE_LIDER, pNewLeader->GetObjectGuid().GetRawValue());
         }
         m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_ICECROWN_DOOR_2));
         m_pInstance->SetData(TYPE_PHASE, 4);

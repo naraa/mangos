@@ -23,7 +23,7 @@ SDCategory: Halls of Reflection
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_halls.h"
+#include "halls_of_reflection.h"
 
 enum
 {
@@ -189,6 +189,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
             if (m_uiSummonTimer < uiDiff) 
             {
                     ++SummonCount;
+                    m_pInstance->SetData(DATA_WAVE_COUNT,SummonCount);
                     if(SummonCount > 4) 
                     {
                         m_pInstance->SetData(TYPE_FALRIC, IN_PROGRESS);

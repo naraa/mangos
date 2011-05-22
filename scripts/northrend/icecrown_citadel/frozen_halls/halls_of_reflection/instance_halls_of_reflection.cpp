@@ -24,7 +24,7 @@ SDAuthor: /dev/rsa, modified by MaxXx2021 aka Mioka
 EndScriptData */
 
 #include "precompiled.h"
-#include "def_halls.h"
+#include "halls_of_reflection.h"
 #include "World.h"
 
 struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
@@ -40,6 +40,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
 
     uint8 Difficulty;
     uint8 m_uiSummons;
+    uint8 m_waveCount;
 
     uint32 m_auiLeader;
 
@@ -69,6 +70,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
     {
         for (uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
             m_auiEncounter[i] = NOT_STARTED;
+        m_waveCount = 0;
     }
 
     void OnCreatureCreate(Creature* pCreature)
@@ -197,6 +199,15 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
                 break;
             case DATA_ESCAPE_LIDER:         m_auiLeader = uiData;
                                             uiData = NOT_STARTED;
+            case DATA_WAVE_COUNT:           m_waveCount = uiData;
+                                            uiData = NOT_STARTED;
+                                            if (m_waveCount > 0 && m_waveCount < 10)
+                                            {
+                                                DoUpdateWorldState(WORLD_STATE_HOR, 1);
+                                                DoUpdateWorldState(WORLD_STATE_HOR_WAVE_COUNT, m_waveCount-1);
+                                            }
+                                            else
+                                                DoUpdateWorldState(WORLD_STATE_HOR, 0);
                 break;
             default:
                 break;
@@ -235,13 +246,13 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
             case TYPE_FROST_GENERAL:        return m_auiEncounter[uiType];
             case TYPE_HALLS:                return m_auiEncounter[uiType];
             case DATA_SUMMONS:              return m_uiSummons;
-            case DATA_ESCAPE_LIDER:        return m_auiLeader;
+            case DATA_ESCAPE_LIDER:         return m_auiLeader;
             default:                        return 0;
         }
         return 0;
     }
 
-    void SetData64(uint32 uiData, ObjectGuid uiGuid)
+    void SetData64(uint32 uiData, uint64 uiGuid)
     {
         switch(uiData)
         {
