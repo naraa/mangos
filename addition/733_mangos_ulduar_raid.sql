@@ -236,7 +236,7 @@ UPDATE creature SET position_x = 2000.9, position_y = -231.232 WHERE guid = 1319
 -- priest
 UPDATE creature SET position_x = 2009.06, position_y = -244.058 WHERE guid = 131933;
 DELETE FROM creature WHERE guid IN (800005);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800005, 32897, 603, 3, 128,0,0, 2009.06, -244.058, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);		-- aly priest 
 -- shaman
 UPDATE creature SET position_x = 1983.75, position_y = -243.358 WHERE id = 33328;
@@ -248,23 +248,23 @@ UPDATE creature SET position_x = 2021.12, position_y = -236.648 WHERE id = 33325
 -- druid
 UPDATE creature SET position_x = 2013.5, position_y = -240.338 WHERE id = 32901;
 DELETE FROM creature WHERE guid IN (800006);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800006, 32938, 603, 2, 1,0,0, 2013.5, -240.338, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- shaman:
 UPDATE creature SET position_x = 2011.48, position_y = -232.79 WHERE id = 32900;
 UPDATE creature SET position_x = 2011.48, position_y = -232.79 WHERE id = 32950;
 DELETE FROM creature WHERE guid IN (800007);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800007, 32938, 603, 2, 1,0,0, 2011.48, -232.79, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- mage:
 DELETE FROM creature WHERE guid IN (800008, 800010);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800008, 33327, 603, 2, 128,0,0, 1978.49, -241.476, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0), -- aly mage
 (800010, 32938, 603, 2, 1,0,0, 1978.49, -241.476, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 -- priest
 UPDATE creature SET position_x = 1997.88, position_y = -239.394 WHERE id = 33330;
 DELETE FROM creature WHERE guid IN (800009);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800009, 32938, 603, 2, 1,0,0, 1997.88, -239.394, 432.687, 1.68485, 7200,0,0, 5647, 0, 0, 0);
 
 -- Mimiron
@@ -417,7 +417,7 @@ INSERT INTO gameobject VALUES (110000,194635,603,3,65535,2022.490,-25.389,261.96
 DELETE FROM gameobject WHERE guid = 110001;
 INSERT INTO gameobject VALUES (110001,194462,603,3,65535,2104.555, -25.635,242.646,0,0,0,0,0,604800,100,1);
 DELETE FROM creature WHERE id IN (33890);
-INSERT INTO creature VALUES (800000,33890,603,3,65535,0,0,1981.422,-22.442,255.011,0,604800,0,0,1371428,0,0,0);
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (800000,33890,603,3,65535,0,0,1981.422,-22.442,255.011,0,604800,0,0,1371428,0,0,0);
 
 -- Algalon
 UPDATE creature_template SET ScriptName = 'boss_algalon' WHERE entry = 32871;
@@ -439,7 +439,7 @@ UPDATE creature_template SET `npcflag` = 1, `unit_flags` = 2, ScriptName = 'thor
 UPDATE creature_template SET `npcflag` = 1, `unit_flags` = 2, ScriptName = 'mimiron_image' WHERE entry = 33412;
 -- INSERT keepers imagees INTO the db
 DELETE FROM creature WHERE guid IN (800001, 800002, 800003, 800004);
-INSERT INTO creature VALUES
+INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
 (800001, 33410, 603, 3, 65535,0,0, 2036.892, 25.621, 411.358, 3.83, 604800,0,0, 5647, 0, 0, 0),		-- Freya 
 (800002, 33412, 603, 3, 65535,0,0, 1939.215, 42.677, 411.355, 5.31, 604800,0,0, 5647, 0, 0, 0),		-- Mimiron
 (800003, 33411, 603, 3, 65535,0,0, 1939.195, -90.662, 411.357, 1.06, 604800,0,0, 5647, 0, 0, 0), 	-- Hodir
