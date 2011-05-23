@@ -12,12 +12,30 @@
 #include "../system/ScriptLoader.h"
 #include "../system/system.h"
 #include "../../../game/ScriptMgr.h"
+#include "World.h"
 
 typedef std::vector<Script*> SDScriptVec;
 int num_sc_scripts;
 SDScriptVec m_scripts;
 
 Config SD2Config;
+
+/**********************************************************************
++additions for windows compiler
+**********************************************************************/
+template<> bool MaNGOS::Singleton<World>::si_destroyed;
+template<> bool MaNGOS::Singleton<ObjectMgr>::si_destroyed;
+template<> World *MaNGOS::Singleton<World>::si_instance;
+World::World()
+{
+}
+World::~World()
+{
+}
+ObjectMgr::~ObjectMgr()
+{
+}
+/***********************************************************************/
 
 QueryResult* strSD2Pquery(char* str)
 {
