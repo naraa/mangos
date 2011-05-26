@@ -7,10 +7,11 @@
 
 enum InstanceZA
 {
-    MAX_ENCOUNTER           = 7,
+    MAX_ENCOUNTER           = 8,
     MAX_VENDOR              = 2,
+    MAX_CHESTS              = 4,
 
-    SAY_INST_RELEASE        = -1568067,
+    SAY_INST_RELEASE        = -1568067,                     // TODO Event NYI
     SAY_INST_BEGIN          = -1568068,
     SAY_INST_PROGRESS_1     = -1568069,
     SAY_INST_PROGRESS_2     = -1568070,
@@ -37,24 +38,128 @@ enum InstanceZA
     TYPE_RAND_VENDOR_1      = 8,
     TYPE_RAND_VENDOR_2      = 9,
 
-    DATA_AKILZON            = 10,
-    DATA_NALORAKK           = 11,
-    DATA_JANALAI            = 12,
-    DATA_HALAZZI            = 13,
-    DATA_MALACRASS          = 14,
-    DATA_ZULJIN             = 15,
-    DATA_HARRISON           = 16,
-    DATA_SPIRIT_LYNX        = 17,
+    TYPE_RUN_EVENT_TIME     = 10,
 
-    DATA_J_EGGS_RIGHT       = 19,
-    DATA_J_EGGS_LEFT        = 20,
+    TYPE_J_EGGS_RIGHT       = 11,
+    TYPE_J_EGGS_LEFT        = 12,
 
-    DATA_GO_GONG            = 21,
-    DATA_GO_MALACRASS_GATE  = 22,
-    DATA_GO_ENTRANCE        = 23,
+    NPC_AKILZON             = 23574,
+    NPC_NALORAKK            = 23576,
+    NPC_JANALAI             = 23578,
+    NPC_HALAZZI             = 23577,
+    NPC_MALACRASS           = 24239,
+    NPC_ZULJIN              = 23863,
 
     NPC_EGG                 = 23817,
-    NPC_SPIRIT_LYNX         = 24143
+    NPC_SPIRIT_LYNX         = 24143,
+
+    NPC_HARRISON            = 24358,
+    // Time Run Event NPCs
+    NPC_TANZAR              = 23790,                        // at bear
+    NPC_KRAZ                = 24024,                        // at phoenix
+    NPC_ASHLI               = 24001,                        // at lynx
+    NPC_HARKOR              = 23999,                        // at eagle
+    // unused (TODO or TODO with DB-tools)
+    NPC_TANZAR_CORPSE       = 24442,
+    NPC_KRAZ_CORPSE         = 24444,
+    NPC_ASHIL_CORPSE        = 24441,
+    NPC_HARKOR_CORPSE       = 24443,
+
+    GO_STRANGE_GONG         = 187359,
+    GO_MASSIVE_GATE         = 186728,
+    GO_WIND_DOOR            = 186858,
+    GO_LYNX_TEMPLE_ENTRANCE = 186304,
+    GO_LYNX_TEMPLE_EXIT     = 186303,
+    GO_HEXLORD_ENTRANCE     = 186305,
+    GO_WOODEN_DOOR          = 186306,
+    GO_FIRE_DOOR            = 186859,
+
+    // unused, expected to be possible to handle within Database!
+    GO_TANZARS_TRUNK        = 186648,
+    GO_KRAZS_PACKAGE        = 186667,
+    GO_ASHLIS_BAG           = 186672,
+    GO_HARKORS_SATCHEL      = 187021,
+};
+
+enum BossToChestIndex
+{
+    INDEX_NALORAKK          = 0,
+    INDEX_JANALAI           = 1,
+    INDEX_HALAZZI           = 2,
+    INDEX_AKILZON           = 3
+};
+
+enum RunEventSteps
+{
+    RUN_START               = 1,
+    RUN_FAIL                = 2,
+    RUN_DONE                = 3,
+    RUN_PROGRESS            = 4,
+    RUN_FAIL_SOON           = 5
+};
+
+struct TimeEventNpcInfo
+{
+    TimeEventNpcInfo() : uiSavePosition(0) {}
+
+    uint8 uiSavePosition;                                   // stores in what order this npc was saved (0 means unsaved)
+    ObjectGuid npGuid;
+};
+
+class MANGOS_DLL_DECL instance_zulaman : public ScriptedInstance
+{
+    public:
+        instance_zulaman(Map* pMap);
+
+        void Initialize();
+        bool IsEncounterInProgress() const;
+
+        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo);
+
+        void SetData(uint32 uiType, uint32 uiData);
+        uint32 GetData(uint32 uiType);
+        uint64 GetData64(uint32 uiData);
+
+        const char* Save() { return m_strInstData.c_str(); }
+        void Load(const char* chrIn);
+
+        void Update(uint32 uiDiff);
+
+    private:
+        uint8 GetKilledPreBosses();
+        void DoTimeRunSay(RunEventSteps uiData);
+        void DoChestEvent(BossToChestIndex uiIndex);
+
+        std::string m_strInstData;
+        uint32 m_auiEncounter[MAX_ENCOUNTER];
+        uint32 m_auiRandVendor[MAX_VENDOR];
+        TimeEventNpcInfo m_aEventNpcInfo[MAX_CHESTS];
+
+        uint32 m_uiEventTimer;
+        uint32 m_uiGongCount;
+
+        uint64 m_uiAkilzonGUID;
+        uint64 m_uiNalorakkGUID;
+        uint64 m_uiJanalaiGUID;
+        uint64 m_uiHalazziGUID;
+        uint64 m_uiSpiritLynxGUID;
+        uint64 m_uiZuljinGUID;
+        uint64 m_uiMalacrassGUID;
+        uint64 m_uiHarrisonGUID;
+
+        uint64 m_uiStrangeGongGUID;
+        uint64 m_uiMassiveGateGUID;
+        uint64 m_uiWindDoorGUID;
+        uint64 m_uiLynxTempleEntranceGUID;
+        uint64 m_uiLynxTempleExitGUID;
+        uint64 m_uiMalacrassEntranceGUID;
+        uint64 m_uiWoodenDoorGUID;
+        uint64 m_uiFireDoorGUID;
+
+        GUIDList m_lEggsGUIDList;
+        uint32 m_uiEggsRemainingCount_Left;
+        uint32 m_uiEggsRemainingCount_Right;
 };
 
 #endif

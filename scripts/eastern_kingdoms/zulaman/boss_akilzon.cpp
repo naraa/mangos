@@ -89,6 +89,9 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_AKILZON, IN_PROGRESS);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -104,6 +107,12 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
             return;
 
         m_pInstance->SetData(TYPE_AKILZON, DONE);
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_AKILZON, FAIL);
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -243,7 +252,7 @@ struct MANGOS_DLL_DECL mob_soaring_eagleAI : public ScriptedAI
         if (!m_pInstance)
             return;
 
-        if (Creature* pAzkil = m_pInstance->instance->GetCreature(m_pInstance->GetData64(DATA_AKILZON)))
+        if (Creature* pAzkil = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_AKILZON)))
         {
             float fX, fY, fZ;
             pAzkil->GetRandomPoint(pAzkil->GetPositionX(), pAzkil->GetPositionY(), pAzkil->GetPositionZ()+15.0f, 30.0f, fX, fY, fZ);
