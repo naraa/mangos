@@ -1019,4 +1019,19 @@ void AddSC_borean_tundra()
     pNewScript->GetAI = &GetAI_npc_lurgglbr;
     pNewScript->pQuestAcceptNPC = &QuestAccept_npc_lurgglbr;
     pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_scourge_cage";
+    pNewScript->pGOUse = &GOHello_go_scourge_cage;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_nexus_drake";
+    pNewScript->GetAI = &GetAI_npc_nexus_drake;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_beryl_sorcerer";
+    pNewScript->GetAI = &GetAI_npc_beryl_sorcerer;
+    pNewScript->RegisterSelf();
 }
