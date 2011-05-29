@@ -409,7 +409,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
             break;
         case GO_BROKEN_HARPOON:
             m_uiBrokenHarpoonGUID = pGo->GetGUID();
-            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
             break;
 
             // Archivum
@@ -481,7 +481,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         case GO_MIMIRON_BUTTON:
             m_uiMimironButtonGUID = pGo->GetGUID();
             if (m_auiEncounter[7] == NOT_STARTED)
-                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
             break;
         case GO_MIMIRON_DOOR_1:
             m_uiMimironDoor1GUID = pGo->GetGUID();
@@ -537,7 +537,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
             break;
         case GO_DOOR_LEVER:
             m_uiThorimLeverGUID = pGo->GetGUID();
-            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
             break;
 
             // Prison

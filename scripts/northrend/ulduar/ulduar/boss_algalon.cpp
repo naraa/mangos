@@ -840,7 +840,7 @@ bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
     // disable if encounter is already done
     if (m_pInstance->GetData(TYPE_ALGALON) == DONE)
     {
-        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
         return false;
     }
 
@@ -850,7 +850,7 @@ bool GOHello_go_celestial_acces(Player* pPlayer, GameObject* pGo)
         if(pAlgalon->isAlive())
         {
             ((boss_algalonAI*)pAlgalon->AI())->StartEncounter();
-            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+            pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
             // open celestial door
             if(GameObject* pDoor = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_CELESTIAL_DOOR)))

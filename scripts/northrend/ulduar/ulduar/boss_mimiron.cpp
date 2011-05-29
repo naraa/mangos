@@ -1174,7 +1174,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
 
 		// reset button
         if(GameObject* pButton = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_MIMIRON_BUTTON)))
-            pButton->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+            pButton->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
 		// reset elevator
         if(GameObject* pLift = GetClosestGameObjectWithEntry(m_creature, GO_MIMIRON_ELEVATOR, DEFAULT_VISIBILITY_INSTANCE))
@@ -1274,7 +1274,7 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
                         break;
                     case 3:
                         if(GameObject* pButton = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_MIMIRON_BUTTON)))
-                            pButton->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                            pButton->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
                         if(m_bIsHardMode)
                         {
                             DoScriptText(SAY_HARD_MODE, m_creature);
@@ -2115,7 +2115,7 @@ bool GOHello_go_red_button(Player* pPlayer, GameObject* pGo)
 
     if (Creature* pMimiron = pGo->GetMap()->GetCreature(m_pInstance->GetData64(NPC_MIMIRON)))
     {
-        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1); 
+        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT); 
         pPlayer->CastSpell(pPlayer, SPELL_FLAMES_SUMMON, false);
         if(pMimiron->isAlive() && m_pInstance->GetData(TYPE_MIMIRON_PHASE) == PHASE_INTRO)
             ((boss_mimironAI*)pMimiron->AI())->m_bIsHardMode = true;

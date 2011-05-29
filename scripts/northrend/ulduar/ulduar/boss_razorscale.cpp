@@ -607,7 +607,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             {
                 if ((*iter))
                 {
-                    (*iter)->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                    (*iter)->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
                     //(*iter)->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8631);
                 }
             }
@@ -655,7 +655,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         {
             if(GameObject* pHarpoon = m_pInstance->instance->GetGameObject(m_uiHarpoonsGUID[m_uiHarpoonsRepaired]))
             {
-                pHarpoon->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+                pHarpoon->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
                 //pHarpoon->SetUInt32Value(GAMEOBJECT_DISPLAYID, 8245);
                 m_uiHarpoonsRepaired += 1;
             }
@@ -834,7 +834,7 @@ bool GOHello_go_broken_harpoon(Player* pPlayer, GameObject* pGo)
     if (!pInstance)
         return false;
 
-    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_UNK1);
+    pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
     if (Creature* pRazor = pGo->GetMap()->GetCreature(pInstance->GetData64(NPC_RAZORSCALE)))
         ((boss_razorscaleAI*)pRazor->AI())->m_uiHarpoonsUsed += 1;
 
