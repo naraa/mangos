@@ -10,4 +10,8 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_death_knight_gargoyle' WHERE 
 UPDATE `creature_template` SET `ScriptName` = 'npc_explosive_decoy' WHERE `entry` = '29134';
 -- Eye of Kilrogg
 UPDATE `creature_template` SET `ScriptName` = 'npc_eye_of_kilrogg' WHERE `entry` = '4277';
+-- Greater fire elemental
+UPDATE `creature_template` SET `ScriptName` = 'pet_greater_fire_elemental' WHERE `entry` = '15438';
+-- Greater earth elemental
+UPDATE `creature_template` SET `ScriptName` = 'pet_greater_earth_elemental' WHERE `entry` = '15352';
 
