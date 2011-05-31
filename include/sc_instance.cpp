@@ -4,7 +4,13 @@
 
 #include "precompiled.h"
 
-//Optional uiWithRestoreTime. If not defined, autoCloseTime will be used (if not 0 by default in *_template)
+/**
+   Function that uses a door or a button
+
+   @param   guid The ObjectGuid of the Door/ Button that shall be used
+   @param   uiWithRestoreTime (in seconds) if == 0 autoCloseTime will be used (if not 0 by default in *_template)
+   @param   bUseAlternativeState Use to alternative state
+ */
 void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTime, bool bUseAlternativeState)
 {
     if (!guid)
@@ -24,6 +30,30 @@ void ScriptedInstance::DoUseDoorOrButton(ObjectGuid guid, uint32 uiWithRestoreTi
     }
 }
 
+/// Function that uses a door or button that is stored in m_mGoEntryGuidStore
+void ScriptedInstance::DoUseDoorOrButton(uint64 uiEntry, uint32 uiWithRestoreTime /*= 0*/, bool bUseAlternativeState /*= false*/)
+{
+    // FIXME REMOVE when no more GO-Guids are stored as uint64
+    if (uiEntry > (uint64(HIGHGUID_GAMEOBJECT) << 48))
+    {
+        DoUseDoorOrButton(ObjectGuid(uiEntry), uiWithRestoreTime, bUseAlternativeState);
+        return;
+    }
+
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
+    if (find != m_mGoEntryGuidStore.end())
+        DoUseDoorOrButton(find->second, uiWithRestoreTime, bUseAlternativeState);
+    else
+        // Output log, possible reason is not added GO to storage, or not yet loaded
+        debug_log("SD2: Script call DoUseDoorOrButton(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+}
+
+/**
+   Function that respawns a despawned GameObject with given time
+
+   @param   guid The ObjectGuid of the GO that shall be respawned
+   @param   uiTimeToDespawn (in seconds) Despawn the GO after this time, default is a minute
+ */
 void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespawn)
 {
     if (!guid)
@@ -44,6 +74,30 @@ void ScriptedInstance::DoRespawnGameObject(ObjectGuid guid, uint32 uiTimeToDespa
     }
 }
 
+/// Function that respawns a despawned GO that is stored in m_mGoEntryGuidStore
+void ScriptedInstance::DoRespawnGameObject(uint64 uiEntry, uint32 uiTimeToDespawn)
+{
+    // FIXME REMOVE when no more GO-Guids are stored as uint64
+    if (uiEntry > (uint64(HIGHGUID_GAMEOBJECT) << 48))
+    {
+        DoRespawnGameObject(ObjectGuid(uiEntry), uiTimeToDespawn);
+        return;
+    }
+
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
+    if (find != m_mGoEntryGuidStore.end())
+        DoRespawnGameObject(find->second, uiTimeToDespawn);
+    else
+        // Output log, possible reason is not added GO to storage, or not yet loaded;
+        debug_log("SD2: Script call DoRespawnGameObject(by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+}
+
+/**
+   Helper function to update a world state for all players in the map
+
+   @param   uiStateId The WorldState that will be set for all players in the map
+   @param   uiStateData The Value to which the State will be set to
+ */
 void ScriptedInstance::DoUpdateWorldState(uint32 uiStateId, uint32 uiStateData)
 {
     Map::PlayerList const& lPlayers = instance->GetPlayers();
@@ -76,6 +130,7 @@ void ScriptedInstance::DoCompleteAchievement(uint32 uiAchievmentId)
         debug_log("SD2: DoCompleteAchievement attempt set data but no players in map.");
 }
 
+/// Get the first found Player* (with requested properties) in the map. Can return NULL.
 Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBeGamemaster /*=true*/)
 {
     Map::PlayerList const& lPlayers = instance->GetPlayers();
@@ -106,3 +161,29 @@ void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes tCriteri
         debug_log("SD2: DoStartTimedAchievement attempt start achievements but no players in map.");
 }
 
+/// Returns a pointer to a loaded GameObject that was stored in m_mGoEntryGuidStore. Can return NULL
+GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry)
+{
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(uiEntry);
+    if (find != m_mGoEntryGuidStore.end())
+        return instance->GetGameObject(find->second);
+
+    // Output log, possible reason is not added GO to map, or not yet loaded;
+    debug_log("SD2: Script requested gameobject with entry %u, but no gameobject of this entry was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+
+    return NULL;
+}
+
+/// Returns a pointer to a loaded Creature that was stored in m_mGoEntryGuidStore. Can return NULL
+Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bSkipDebugLog /*=false*/)
+{
+    EntryGuidMap::iterator find = m_mNpcEntryGuidStore.find(uiEntry);
+    if (find != m_mNpcEntryGuidStore.end())
+        return instance->GetCreature(find->second);
+
+    // Output log, possible reason is not added GO to map, or not yet loaded;
+    if (!bSkipDebugLog)
+        debug_log("SD2: Script requested creature with entry %u, but no npc of this entry was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
+
+    return NULL;
+}

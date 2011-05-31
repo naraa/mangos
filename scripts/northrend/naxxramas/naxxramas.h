@@ -12,6 +12,7 @@ enum
     // A few instance-script related texts
     SAY_THADDIUS_GREET          = -1533029,
     // Kel'Thuzad's taunts after killing Wing Bosses
+    SAY_KELTHUZAD_CAT_DIED      = -1533089,
     SAY_KELTHUZAD_TAUNT1        = -1533090,
     SAY_KELTHUZAD_TAUNT2        = -1533091,
     SAY_KELTHUZAD_TAUNT3        = -1533092,
@@ -68,6 +69,7 @@ enum
     NPC_RIVENDARE               = 30549,
 
     NPC_KELTHUZAD               = 15990,
+    NPC_MR_BIGGLESWORTH         = 16998,
 
     // Faerlina
     NPC_NAXXRAMAS_FOLLOWER      = 16505,
@@ -84,7 +86,7 @@ enum
     NPC_SPECT_RIDER             = 16150,
     NPC_SPECT_HORSE             = 16149,
 
-    // End boss adds
+    // Kel'Thuzad
     NPC_SOLDIER_FROZEN          = 16427,
     NPC_UNSTOPPABLE_ABOM        = 16428,
     NPC_SOUL_WEAVER             = 16429,
@@ -193,10 +195,10 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void OnPlayerDeath(Player* pPlayer);
+        void OnCreatureDeath(Creature* pCreature);
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
 
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
@@ -226,65 +228,14 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
         std::string strInstData;
 
-        uint64 m_uiAracEyeRampGUID;
-        uint64 m_uiPlagEyeRampGUID;
-        uint64 m_uiMiliEyeRampGUID;
-        uint64 m_uiConsEyeRampGUID;
-
-        uint64 m_uiAracPortalGUID;
-        uint64 m_uiPlagPortalGUID;
-        uint64 m_uiMiliPortalGUID;
-        uint64 m_uiConsPortalGUID;
-
-        uint64 m_uiAnubRekhanGUID;
-        uint64 m_uiFaerlinanGUID;
-
-        uint64 m_uiZeliekGUID;
-        uint64 m_uiThaneGUID;
-        uint64 m_uiBlaumeuxGUID;
-        uint64 m_uiRivendareGUID;
-
-        uint64 m_uiThaddiusGUID;
-        uint64 m_uiStalaggGUID;
-        uint64 m_uiFeugenGUID;
-
-        uint64 m_uiKelthuzadGUID;
-
-        uint64 m_uiPathExitDoorGUID;
-        uint64 m_uiGlutExitDoorGUID;
-
-        uint64 m_uiThadDoorGUID;
         GUIDList m_lThadTeslaCoilList;
-        uint64 m_uiThadNoxTeslaFeugenGUID;
-        uint64 m_uiThadNoxTeslaStalaggGUID;
 
-        uint64 m_uiAnubDoorGUID;
-        uint64 m_uiAnubGateGUID;
-        uint64 m_uiFaerDoorGUID;
-        uint64 m_uiFaerWebGUID;
-        uint64 m_uiMaexOuterGUID;
-        uint64 m_uiMaexInnerGUID;
         GUIDList m_lFaerlinaAddGUIDs;
 
-        uint64 m_uiGothikGUID;
-        uint64 m_uiGothCombatGateGUID;
-        uint64 m_uiGothikEntryDoorGUID;
-        uint64 m_uiGothikExitDoorGUID;
         GUIDList m_lGothTriggerList;
-        UNORDERED_MAP<uint64, GothTrigger> m_mGothTriggerMap;
+        UNORDERED_MAP<ObjectGuid, GothTrigger> m_mGothTriggerMap;
 
-        uint64 m_uiHorsemenDoorGUID;
-        uint64 m_uiHorsemenChestGUID;
-
-        uint64 m_uiNothEntryDoorGUID;
-        uint64 m_uiNothExitDoorGUID;
-        uint64 m_uiHeigEntryDoorGUID;
-        uint64 m_uiHeigExitDoorGUID;
-        uint64 m_uiLoathebDoorGUID;
         std::vector<uint64> m_avuiHeiganTraps[MAX_HEIGAN_TRAP_AREAS];
-
-        uint64 m_uiKelthuzadDoorGUID;
-        uint64 m_uiKelthuzadExitDoorGUID;
 
         float m_fChamberCenterX;
         float m_fChamberCenterY;
