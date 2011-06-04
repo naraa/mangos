@@ -727,6 +727,7 @@
     <ClCompile Include="..\scripts\world\mob_generic_creature.cpp" />
     <ClCompile Include="..\scripts\world\npcs_special.cpp" />
     <ClCompile Include="..\scripts\world\npc_professions.cpp" />
+	<ClCompile Include="..\scripts\world\pet_scripts.cpp" />
     <ClCompile Include="..\scripts\world\spell_scripts.cpp" />
     <ClCompile Include="..\include\precompiled.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
