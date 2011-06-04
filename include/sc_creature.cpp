@@ -187,7 +187,7 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 u
     //Check if each spell is viable(set it to null if not)
     for (uint8 i = 0; i < 4; ++i)
     {
-        pTempSpell = GetSpellStore()->LookupEntry(m_creature->m_spells[i]);
+        pTempSpell = GetSpellStore()->LookupEntry(m_creature->GetSpell(i));
 
         //This spell doesn't exist
         if (!pTempSpell)
@@ -195,11 +195,11 @@ SpellEntry const* ScriptedAI::SelectSpell(Unit* pTarget, int32 uiSchool, int32 u
 
         // Targets and Effects checked first as most used restrictions
         //Check the spell targets if specified
-        if (selectTargets && !(SpellSummary[m_creature->m_spells[i]].Targets & (1 << (selectTargets-1))))
+        if (selectTargets && !(SpellSummary[m_creature->GetSpell(i)].Targets & (1 << (selectTargets-1))))
             continue;
 
         //Check the type of spell if we are looking for a specific spell type
-        if (selectEffects && !(SpellSummary[m_creature->m_spells[i]].Effects & (1 << (selectEffects-1))))
+        if (selectEffects && !(SpellSummary[m_creature->GetSpell(i)].Effects & (1 << (selectEffects-1))))
             continue;
 
         //Check for school if specified
