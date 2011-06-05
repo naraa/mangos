@@ -487,7 +487,7 @@ void BSWScriptedAI::_fillEmptyDataField()
         {
             if (m_BSWRecords[i].m_uiSpellEntry[j] == 0)
             {
-                SpellEntry const* spell = GetSpellEntryByDifficulty(m_BSWRecords[i].m_uiSpellEntry[0],(Difficulty)j);
+                SpellEntry const* spell = GetSpellEntryByDifficulty(m_BSWRecords[i].m_uiSpellEntry[0],(Difficulty)j,true);
                 if (spell)
                     m_BSWRecords[i].m_uiSpellEntry[j] = spell->Id;
                 else m_BSWRecords[i].m_uiSpellEntry[j] = m_BSWRecords[i].m_uiSpellEntry[j-1];
