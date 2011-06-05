@@ -102,7 +102,6 @@ class MANGOS_DLL_DECL instance_forge_of_souls : public ScriptedInstance
 
         void SetData(uint32 uiType, uint32 uiData);
         uint32 GetData(uint32 uiType);
-        uint64 GetData64(uint32 uiData);
         void SetData64(uint32 uiType, uint64 uiData);
 
         void OnPlayerEnter(Player* pPlayer);
@@ -120,11 +119,8 @@ class MANGOS_DLL_DECL instance_forge_of_souls : public ScriptedInstance
 
         uint32 m_uiTeam;                                    // Team of first entered player, used to set if Jaina or Silvana to spawn
 
-        uint64 m_uiBronjahmGUID;
-        uint64 m_uiDevourerOrSoulsGUID;
-
-        std::list<ObjectGuid> m_luiSoulFragmentAliveGUIDs;
-        std::list<ObjectGuid> m_lEventMobGUIDs;
+        GUIDList m_luiSoulFragmentAliveGUIDs;
+        GUIDList m_lEventMobGUIDs;
 };
 
 #endif

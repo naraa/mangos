@@ -24,12 +24,11 @@ EndScriptData */
 #include "precompiled.h"
 #include "ahnkahet.h"
 
-struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
+instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
+    m_uiDevicesActivated(0)
 {
-    instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap) {Initialize();};
-
-    uint32 m_auiEncounter[MAX_ENCOUNTER];
-    std::string strInstData;
+    Initialize();
+}
 
     uint64 m_uiElderNadoxGUID;
     uint64 m_uiJedogaShadowseekerGUID;
@@ -38,7 +37,9 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
     uint64 m_uiTaldaramVortexGUID;
     uint8 m_uiDevicesActivated;
 
-    void Initialize()
+void instance_ahnkahet::OnCreatureCreate(Creature* pCreature)
+{
+    switch(pCreature->GetEntry())
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 
@@ -49,155 +50,92 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
         m_uiTaldaramVortexGUID = 0;
         m_uiDevicesActivated = 0;
     }
+}
 
-    void OnCreatureCreate(Creature* pCreature)
+void instance_ahnkahet::OnObjectCreate(GameObject* pGo)
+{
+    m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+}
+
+void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
+{
+    debug_log("SD2: Instance Ahn'Kahet: SetData received for type %u with data %u", uiType, uiData);
+
+    switch(uiType)
     {
-        switch(pCreature->GetEntry())
-        {
-            case NPC_ELDER_NADOX:         m_uiElderNadoxGUID = pCreature->GetGUID();         break;
-            case NPC_JEDOGA_SHADOWSEEKER: m_uiJedogaShadowseekerGUID = pCreature->GetGUID(); break;
-            case NPC_TALDARAM:            m_uiTaldaramGUID = pCreature->GetGUID(); break;
-        }
-    }
+        case TYPE_NADOX:
+            m_auiEncounter[uiType] = uiData;
+            break;
+        case TYPE_TALDARAM:
+            if (uiData == SPECIAL)
+            {
+                if (m_uiDevicesActivated < 2)
+                    ++m_uiDevicesActivated;
 
-    void OnObjectCreate(GameObject* pGo)
-    {
-        switch(pGo->GetEntry())
-        {
-            case GO_DOOR_TALDARAM:
-                m_uiTaldaramDoorGUID = pGo->GetGUID();
-                if (m_auiEncounter[1] == DONE)
-                    DoUseDoorOrButton(m_uiTaldaramDoorGUID);
-                break;
-            case GO_ANCIENT_DEVICE_L:
-                if (m_auiEncounter[1] == NOT_STARTED)
-                    pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-                break;
-            case GO_ANCIENT_DEVICE_R:
-                if (m_auiEncounter[1] == NOT_STARTED)
-                    pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-                break;
-            case GO_VORTEX:
-                m_uiTaldaramVortexGUID = pGo->GetGUID();
-                if (m_auiEncounter[1] != NOT_STARTED)
-                    DoUseDoorOrButton(m_uiTaldaramVortexGUID);
-                break;
-        }
-    }
-
-    void SetData(uint32 uiType, uint32 uiData)
-    {
-        debug_log("SD2: Instance Ahn'Kahet: SetData received for type %u with data %u",uiType,uiData);
-
-        switch(uiType)
-        {
-            case TYPE_NADOX:
-                m_auiEncounter[0] = uiData;
-                break;
-            case TYPE_TALDARAM:
-                if (uiData == SPECIAL)
+                if (m_uiDevicesActivated == 2)
                 {
-                    if (m_uiDevicesActivated < 2)
-                        ++m_uiDevicesActivated;
-
-                    if (m_uiDevicesActivated == 2)
-                    {
-                        m_auiEncounter[1] = uiData;
-                        DoUseDoorOrButton(m_uiTaldaramVortexGUID);
-                    }
+                    m_auiEncounter[uiType] = uiData;
+                    DoUseDoorOrButton(GO_VORTEX);
                 }
-                if (uiData == DONE)
-                {
-                    m_auiEncounter[1] = uiData;
-                    DoUseDoorOrButton(m_uiTaldaramDoorGUID);
-                }
-                break;
-            case TYPE_JEDOGA:
-                m_auiEncounter[2] = uiData;
-                break;
-            case TYPE_VOLAZJ:
-                m_auiEncounter[3] = uiData;
-                break;
-            case TYPE_AMANITAR:
-                m_auiEncounter[4] = uiData;
-                break;
-            default:
-                error_log("SD2: Instance Ahn'Kahet: ERROR SetData = %u for type %u does not exist/not implemented.",uiType,uiData);
-                break;
-        }
+            }
+            if (uiData == DONE)
+            {
+                m_auiEncounter[uiType] = uiData;
+                DoUseDoorOrButton(GO_DOOR_TALDARAM);
+            }
+            break;
+        case TYPE_JEDOGA:
+        case TYPE_VOLAZJ:
+        case TYPE_AMANITAR:
+            m_auiEncounter[uiType] = uiData;
+            break;
 
-        if (uiData == DONE)
-        {
-            OUT_SAVE_INST_DATA;
-
-            std::ostringstream saveStream;
-            saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
-                << " " << m_auiEncounter[4];
-
-            strInstData = saveStream.str();
-
-            SaveToDB();
-            OUT_SAVE_INST_DATA_COMPLETE;
-        }
+        default:
+            error_log("SD2: Instance Ahn'Kahet: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
+            break;
     }
 
-    const char* Save()
+    if (uiData == DONE)
     {
-        return strInstData.c_str();
-    }
+        OUT_SAVE_INST_DATA;
 
-    void Load(const char* chrIn)
+        std::ostringstream saveStream;
+        saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
+            << " " << m_auiEncounter[4];
+
+        m_strInstData = saveStream.str();
+
+        SaveToDB();
+        OUT_SAVE_INST_DATA_COMPLETE;
+    }
+}
+
+void instance_ahnkahet::Load(const char* chrIn)
+{
+    if (!chrIn)
+        return;
+
+    OUT_LOAD_INST_DATA(chrIn);
+
+    std::istringstream loadStream(chrIn);
+    loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4];
+
+    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {
-        if (!chrIn)
-        {
-            OUT_LOAD_INST_DATA_FAIL;
-            return;
-        }
-
-        OUT_LOAD_INST_DATA(chrIn);
-
-        std::istringstream loadStream(chrIn);
-        loadStream >> m_auiEncounter[0] >> m_auiEncounter[1] >> m_auiEncounter[2] >> m_auiEncounter[3] >> m_auiEncounter[4];
-
-        for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
-        {
-            if (m_auiEncounter[i] == IN_PROGRESS)
-                m_auiEncounter[i] = NOT_STARTED;
-        }
-
-        OUT_LOAD_INST_DATA_COMPLETE;
+        if (m_auiEncounter[i] == IN_PROGRESS)
+            m_auiEncounter[i] = NOT_STARTED;
     }
 
-    uint32 GetData(uint32 uiType)
-    {
-        switch(uiType)
-        {
-            case TYPE_NADOX:
-                return m_auiEncounter[0];
-            case TYPE_TALDARAM:
-                return m_auiEncounter[1];
-            case TYPE_JEDOGA:
-                return m_auiEncounter[2];
-            case TYPE_VOLAZJ:
-                return m_auiEncounter[3];
-            case TYPE_AMANITAR:
-                return m_auiEncounter[4];
-        }
-        return 0;
-    }
+    OUT_LOAD_INST_DATA_COMPLETE;
+}
 
-    uint64 GetData64(uint32 uiData)
-    {
-        switch(uiData)
-        {
-            case NPC_ELDER_NADOX:
-                return m_uiElderNadoxGUID;
-            case NPC_JEDOGA_SHADOWSEEKER:
-                return m_uiJedogaShadowseekerGUID;
-        }
-        return 0;
-    }
-};
+uint32 instance_ahnkahet::GetData(uint32 uiType)
+{
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
+    return 0;
+}
 
 InstanceData* GetInstanceData_instance_ahnkahet(Map* pMap)
 {
@@ -206,10 +144,10 @@ InstanceData* GetInstanceData_instance_ahnkahet(Map* pMap)
 
 void AddSC_instance_ahnkahet()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "instance_ahnkahet";
-    newscript->GetInstanceData = &GetInstanceData_instance_ahnkahet;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "instance_ahnkahet";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_ahnkahet;
+    pNewScript->RegisterSelf();
 }
