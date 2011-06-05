@@ -353,9 +353,9 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
 
     void FetchDragons()
     {
-        Creature* pTene = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_TENEBRON));
-        Creature* pShad = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADRON));
-        Creature* pVesp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VESPERON));
+        Creature* pTene = m_pInstance->GetSingleCreatureFromStorage(NPC_TENEBRON);
+        Creature* pShad = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
+        Creature* pVesp = m_pInstance->GetSingleCreatureFromStorage(NPC_VESPERON);
 
         //if at least one of the dragons are alive and are being called
         uint8 uiCountFetchableDragons = 0;
@@ -406,7 +406,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
     {
         if (m_pInstance)
         {
-            Creature* pTemp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(uiEntry));
+            Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(uiEntry);
 
             if (pTemp && pTemp->isAlive() && !pTemp->getVictim())
             {
@@ -1055,7 +1055,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
             }
 
             // Twilight Revenge to main boss
-            if (Creature* pSartharion = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SARTHARION)))
+            if (Creature* pSartharion = m_pInstance->GetSingleCreatureFromStorage(NPC_SARTHARION))
             {
                 if (pSartharion->isAlive())
                     m_creature->CastSpell(pSartharion, SPELL_TWILIGHT_REVENGE, true);
@@ -1409,7 +1409,7 @@ struct MANGOS_DLL_DECL mob_acolyte_of_shadronAI : public ScriptedAI
             if (m_pInstance->GetData(TYPE_SARTHARION_EVENT) == IN_PROGRESS)
             {
                 //not solo fight, so main boss has deduff
-                pDebuffTarget = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SARTHARION));
+                pDebuffTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_SARTHARION);
 
                 if (pDebuffTarget && pDebuffTarget->isAlive() && pDebuffTarget->HasAura(SPELL_GIFT_OF_TWILIGTH_SAR))
                     pDebuffTarget->RemoveAurasDueToSpell(SPELL_GIFT_OF_TWILIGTH_SAR);
@@ -1417,7 +1417,7 @@ struct MANGOS_DLL_DECL mob_acolyte_of_shadronAI : public ScriptedAI
             else
             {
                 //event not in progress, then solo fight and must remove debuff mini-boss
-                pDebuffTarget = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_SHADRON));
+                pDebuffTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
 
                 if (pDebuffTarget && pDebuffTarget->isAlive() && pDebuffTarget->HasAura(SPELL_GIFT_OF_TWILIGTH_SHA))
                     pDebuffTarget->RemoveAurasDueToSpell(SPELL_GIFT_OF_TWILIGTH_SHA);
