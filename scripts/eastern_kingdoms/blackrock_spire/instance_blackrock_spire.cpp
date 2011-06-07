@@ -85,7 +85,7 @@ void instance_blackrock_spire::OnObjectCreate(GameObject* pGo)
         case GO_ROOM_6_RUNE: m_aRoomRuneGuid[5] = pGo->GetObjectGuid(); return;
         case GO_ROOM_7_RUNE: m_aRoomRuneGuid[6] = pGo->GetObjectGuid(); return;
 
-        case GO_ROOKERY_EGG: m_lRookeryEggGUIDList.push_back(pGo->GetGUID());   return;
+        case GO_ROOKERY_EGG: m_lRookeryEggGUIDList.push_back(pGo->GetObjectGuid());   return;
 
         default:
             return;
@@ -105,8 +105,8 @@ void instance_blackrock_spire::OnCreatureCreate(Creature* pCreature)
             break;
 
         case NPC_BLACKHAND_SUMMONER:
-        case NPC_BLACKHAND_VETERAN:      m_lRoomEventMobGUIDList.push_back(pCreature->GetGUID()); break;
-        case NPC_BLACKHAND_INCANCERATOR: m_lIncanceratorGUIDList.push_back(pCreature->GetGUID()); break;
+        case NPC_BLACKHAND_VETERAN:      m_lRoomEventMobGUIDList.push_back(pCreature->GetObjectGuid()); break;
+        case NPC_BLACKHAND_INCANCERATOR: m_lIncanceratorGUIDList.push_back(pCreature->GetObjectGuid()); break;
     }
 }
 
@@ -154,7 +154,7 @@ void instance_blackrock_spire::SetData(uint32 uiType, uint32 uiData)
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3] << " " << m_auiEncounter[4];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;

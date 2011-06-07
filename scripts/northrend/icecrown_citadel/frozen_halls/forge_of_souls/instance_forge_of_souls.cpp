@@ -46,7 +46,7 @@ void instance_forge_of_souls::OnCreatureCreate(Creature* pCreature)
             break;
 
         case NPC_CORRUPTED_SOUL_FRAGMENT:
-            m_luiSoulFragmentAliveGUIDs.push_back(pCreature->GetGUID());
+            m_luiSoulFragmentAliveGUIDs.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
@@ -150,7 +150,7 @@ void instance_forge_of_souls::SetData(uint32 uiType, uint32 uiData)
         std::ostringstream saveStream;
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;

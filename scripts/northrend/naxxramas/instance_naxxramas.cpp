@@ -58,12 +58,12 @@ void instance_naxxramas::OnCreatureCreate(Creature* pCreature)
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
 
-        case NPC_SUB_BOSS_TRIGGER:  m_lGothTriggerList.push_back(pCreature->GetGUID()); break;
-        case NPC_TESLA_COIL:        m_lThadTeslaCoilList.push_back(pCreature->GetGUID()); break;
+        case NPC_SUB_BOSS_TRIGGER:  m_lGothTriggerList.push_back(pCreature->GetObjectGuid()); break;
+        case NPC_TESLA_COIL:        m_lThadTeslaCoilList.push_back(pCreature->GetObjectGuid()); break;
 
         case NPC_NAXXRAMAS_FOLLOWER:
         case NPC_NAXXRAMAS_WORSHIPPER:
-            m_lFaerlinaAddGUIDs.push_back(pCreature->GetGUID());
+            m_lFaerlinaAddGUIDs.push_back(pCreature->GetObjectGuid());
             break;
     }
 }
@@ -386,7 +386,7 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             << m_auiEncounter[9] << " " << m_auiEncounter[10] << " " << m_auiEncounter[11] << " "
             << m_auiEncounter[12] << " " << m_auiEncounter[13] << " " << m_auiEncounter[14] << " " << m_auiEncounter[15];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;

@@ -55,16 +55,16 @@ void instance_sunken_temple::OnObjectCreate(GameObject* pGo)
             break;
 
         case GO_ATALAI_LIGHT_BIG:
-            m_luiBigLightGUIDs.push_back(pGo->GetGUID());
+            m_luiBigLightGUIDs.push_back(pGo->GetObjectGuid());
             return;
         case GO_EVIL_CIRCLE:
-            m_vuiCircleGUIDs.push_back(pGo->GetGUID());
+            m_vuiCircleGUIDs.push_back(pGo->GetObjectGuid());
             return;
         case GO_ETERNAL_FLAME_1:
         case GO_ETERNAL_FLAME_2:
         case GO_ETERNAL_FLAME_3:
         case GO_ETERNAL_FLAME_4:
-            m_luiFlameGUIDs.push_back(pGo->GetGUID());
+            m_luiFlameGUIDs.push_back(pGo->GetObjectGuid());
             return;
 
         default:
@@ -250,7 +250,7 @@ void instance_sunken_temple::SetData(uint32 uiType, uint32 uiData)
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " "
                    << m_auiEncounter[3] << " " << m_auiEncounter[4];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;

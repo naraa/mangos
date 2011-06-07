@@ -212,7 +212,7 @@ struct MANGOS_DLL_DECL boss_ionarAI : public ScriptedAI
             if (m_creature->getVictim())
                 pSummoned->AI()->AttackStart(pTarget ? pTarget : m_creature->getVictim());
 
-            m_lSparkGUIDList.push_back(pSummoned->GetGUID());
+            m_lSparkGUIDList.push_back(pSummoned->GetObjectGuid());
         }
     }
 
