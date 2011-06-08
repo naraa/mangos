@@ -50,15 +50,15 @@ class MANGOS_DLL_DECL ScriptedInstance : public InstanceData
         // Get a Player from map
         Player* GetPlayerInMap(bool bOnlyAlive = false, bool bCanBeGamemaster = true);
 
-        // starts a timed achievement criteria for all players in instance
-        void DoStartTimedAchievement(AchievementCriteriaTypes tCriteriaType, uint32 uiTimedCriteriaMiscId);
-
         /// Wrapper for simulating map-wide text in this instance. It is expected that the Creature is stored in m_mNpcEntryGuidStore if loaded.
         void DoOrSimulateScriptTextForThisInstance(int32 iTextEntry, uint32 uiCreatureEntry)
         {
             // Prevent debug output in GetSingleCreatureFromStorage
             DoOrSimulateScriptTextForMap(iTextEntry, uiCreatureEntry, instance, GetSingleCreatureFromStorage(uiCreatureEntry, true));
         }
+
+        // Starts a timed achievement criteria for all players in instance
+        void DoStartTimedAchievement(AchievementCriteriaTypes criteriaType, uint32 uiTimedCriteriaMiscId);
 
     protected:
         // Storage for GO-Guids and NPC-Guids

@@ -147,8 +147,6 @@ enum
     AREATRIGGER_THADDIUS_DOOR   = 4113,
 
     // Achievement-related
-    ACHIEV_START_PATCHWERK_ID   = 10286,
-
     ACHIEV_CRIT_SAFETY_DANCE_N  = 7264,                     // Heigan, achievs 1996, 2139
     ACHIEV_CRIT_SAFETY_DANCE_H  = 7548,
     ACHIEV_CRIT_KNOCK_YOU_OUT_N = 7265,                     // Faerlina, achievs 1997, 2140
@@ -173,6 +171,10 @@ enum
     ACHIEV_CRIT_UNDYING_MAEX    = 13238,
     ACHIEV_CRIT_UNDYING_LOA     = 13239,
     ACHIEV_CRIT_UNDYING_THAD    = 13240,
+
+    // Timed achievement criterias
+    ACHIEV_START_PATCHWERK_ID   = 10286,
+    ACHIEV_START_MAEXXNA_ID     = 9891,
 };
 
 struct GothTrigger

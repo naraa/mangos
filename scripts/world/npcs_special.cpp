@@ -1621,7 +1621,6 @@ enum
 #define GOSSIP_LOST_THE_MASTERS_KEY      "I've lost my key to the Karazhan."
 #define GOSSIP_LOST_VIOLET_HOLD_KEY      "I've lost my key to the Violet Hold."
 
-
 bool GossipHello_npc_locksmith(Player* pPlayer, Creature* pCreature)
 {
 

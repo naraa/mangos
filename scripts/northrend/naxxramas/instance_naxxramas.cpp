@@ -220,7 +220,10 @@ void instance_naxxramas::SetData(uint32 uiType, uint32 uiData)
             m_auiEncounter[uiType] = uiData;
             DoUseDoorOrButton(GO_ARAC_ANUB_DOOR);
             if (uiData == DONE)
+            {
                 DoUseDoorOrButton(GO_ARAC_ANUB_GATE);
+                DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_MAEXXNA_ID);
+            }
             break;
         case TYPE_FAERLINA:
             DoUseDoorOrButton(GO_ARAC_FAER_WEB);

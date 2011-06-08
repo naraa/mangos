@@ -17,7 +17,7 @@
 SDName: boss_zarithian
 SD%Complete: 90%
 SDComment: by /dev/rsa && notagain
-SDCategory: ruby_sanctum
+SDCategory: Ruby Sanctum
 EndScriptData */
 
 // Need correct timers
@@ -49,6 +49,15 @@ static Locations SpawnLoc[]=
     {3008.552734f, 530.471680f, 89.195290f},     // 0 - Zarithian start point, o = 6,16
     {3014.313477f, 486.453735f, 89.255096f},    // 1 - Mob spawn 1
     {3025.324951f, 580.588501f, 88.593185f},    // 2 - Mob spawn 2
+};
+
+enum
+{
+    SAY_AGGRO           = -1724019,
+    SAY_SLAY_1          = -1724020,
+    SAY_SLAY_2          = -1724021,
+    SAY_DEATH           = -1724022,
+    SAY_SUMMON          = -1724023,
 };
 
 struct MANGOS_DLL_DECL boss_zarithianAI : public BSWScriptedAI

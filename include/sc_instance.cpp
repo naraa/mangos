@@ -131,22 +131,6 @@ Player* ScriptedInstance::GetPlayerInMap(bool bOnlyAlive /*=false*/, bool bCanBe
     return NULL;
 }
 
-void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes tCriteriaType, uint32 uiTimedCriteriaMiscId)
-{
-    Map::PlayerList const& lPlayers = instance->GetPlayers();
-
-    if (!lPlayers.isEmpty())
-    {
-        for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
-        {
-            if (Player* pPlayer = itr->getSource())
-                pPlayer->StartTimedAchievementCriteria(tCriteriaType, uiTimedCriteriaMiscId);
-        }
-    }
-    else
-        debug_log("SD2: DoStartTimedAchievement attempt start achievements but no players in map.");
-}
-
 /// Returns a pointer to a loaded GameObject that was stored in m_mGoEntryGuidStore. Can return NULL
 GameObject* ScriptedInstance::GetSingleGameObjectFromStorage(uint32 uiEntry)
 {
@@ -172,4 +156,26 @@ Creature* ScriptedInstance::GetSingleCreatureFromStorage(uint32 uiEntry, bool bS
         debug_log("SD2: Script requested creature with entry %u, but no npc of this entry was created yet, or it was not stored by script for map %u.", uiEntry, instance->GetId());
 
     return NULL;
+}
+
+/**
+   Helper function to start a timed achievement criteria for players in the map
+
+   @param   criteriaType The Type that is required to complete the criteria, see enum AchievementCriteriaTypes in MaNGOS
+   @param   uiTimedCriteriaMiscId The ID that identifies how the criteria is started
+ */
+void ScriptedInstance::DoStartTimedAchievement(AchievementCriteriaTypes criteriaType, uint32 uiTimedCriteriaMiscId)
+{
+    Map::PlayerList const& lPlayers = instance->GetPlayers();
+
+    if (!lPlayers.isEmpty())
+    {
+        for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
+        {
+            if (Player* pPlayer = itr->getSource())
+                pPlayer->StartTimedAchievementCriteria(criteriaType, uiTimedCriteriaMiscId);
+        }
+    }
+    else
+        debug_log("SD2: DoStartTimedAchievement attempt start achievements but no players in map.");
 }

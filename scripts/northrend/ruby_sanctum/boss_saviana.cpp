@@ -18,11 +18,20 @@
 SDName: boss_ragefire
 SD%Complete: 90%
 SDComment: by notagain && /dev/rsa
-SDCategory: ruby_sanctum
+SDCategory: Ruby Sanctum
 EndScriptData */
 
 #include "precompiled.h"
 #include "ruby_sanctum.h"
+
+enum
+{
+    SAY_AGGRO                   = -1724015,
+    SAY_SLAY_1                  = -1724016,
+    SAY_SLAY_2                  = -1724017,
+    SAY_SPECIAL                 = -1724018,
+    SOUND_DEATH                 = 17531,                    // On death it has only a screaming sound
+};
 
 enum BossSpells
 {
