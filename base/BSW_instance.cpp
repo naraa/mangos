@@ -37,32 +37,6 @@ void BSWScriptedInstance::DoCompleteAchievement(uint32 uiAchievmentId)
         debug_log("BSW: DoCompleteAchievement attempt set data, but no players in map.");
 }
 
-void BSWScriptedInstance::DoOpenDoor(uint64 guid)
-{
-    if (!guid)
-        return;
-
-    GameObject* pGo = instance->GetGameObject(guid);
-
-    if (pGo)
-        pGo->SetGoState(GO_STATE_ACTIVE);
-    else
-        debug_log("BSW: DoOpenDoor attempt set data to object %u, but no this object", guid);
-}
-
-void BSWScriptedInstance::DoCloseDoor(uint64 guid)
-{
-    if (!guid)
-        return;
-
-    GameObject* pGo = instance->GetGameObject(guid);
-
-    if (pGo)
-        pGo->SetGoState(GO_STATE_READY);
-    else
-        debug_log("BSW: DoCloseDoor attempt set data to object %u, but no this object", guid);
-}
-
 void BSWScriptedInstance::DoOpenDoor(ObjectGuid guid)
 {
     if (guid.IsEmpty())

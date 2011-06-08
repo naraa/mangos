@@ -204,7 +204,7 @@ struct MANGOS_DLL_DECL instance_halls_of_reflection : public BSWScriptedInstance
                                             if (m_waveCount > 0 && m_waveCount < 10)
                                             {
                                                 DoUpdateWorldState(WORLD_STATE_HOR, 1);
-                                                DoUpdateWorldState(WORLD_STATE_HOR_WAVE_COUNT, m_waveCount-1);
+                                                DoUpdateWorldState(WORLD_STATE_HOR_WAVE_COUNT, m_waveCount);
                                             }
                                             else
                                                 DoUpdateWorldState(WORLD_STATE_HOR, 0);
