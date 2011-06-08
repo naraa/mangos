@@ -186,16 +186,16 @@ struct MANGOS_DLL_DECL mob_soul_fragmentAI : public ScriptedAI
     }
 
     ScriptedInstance *m_pInstance;
-    Creature* pBoss;
     uint32 m_uiRangeCheck_Timer;
 
     void Reset()
     {
         m_uiRangeCheck_Timer = 1000;
         if (!m_pInstance) return;
-        pBoss = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_BRONJAHM));
+        Creature* pBoss = m_pInstance->GetSingleCreatureFromStorage(NPC_BRONJAHM);
         m_creature->SetSpeedRate(MOVE_RUN, 0.2f);
-        m_creature->GetMotionMaster()->MoveChase(pBoss);
+        if (Creature* pBoss = m_pInstance->GetSingleCreatureFromStorage(NPC_BRONJAHM))
+            m_creature->GetMotionMaster()->MoveChase(pBoss);
         m_creature->SetRespawnDelay(DAY);
     }
 
@@ -210,11 +210,16 @@ struct MANGOS_DLL_DECL mob_soul_fragmentAI : public ScriptedAI
 
         if (m_uiRangeCheck_Timer < uiDiff)
         {
-            if (pBoss->IsWithinDistInMap(m_creature, 2.0f))
+            if (Creature* pBoss = m_pInstance->GetSingleCreatureFromStorage(NPC_BRONJAHM))
             {
-                pBoss->CastSpell(pBoss, SPELL_CONSUME_SOUL, false);
+                if (pBoss->IsWithinDistInMap(m_creature, 2.0f))
+                {
+                    pBoss->CastSpell(pBoss, SPELL_CONSUME_SOUL, false);
+                    m_creature->ForcedDespawn();
+                } else m_creature->GetMotionMaster()->MoveChase(pBoss);
+            }
+            else
                 m_creature->ForcedDespawn();
-            } else m_creature->GetMotionMaster()->MoveChase(pBoss);
 
             m_uiRangeCheck_Timer = 1000;
         }
