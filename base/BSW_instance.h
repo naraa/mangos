@@ -19,12 +19,8 @@ class MANGOS_DLL_DECL BSWScriptedInstance : public ScriptedInstance
         void DoOpenDoor(ObjectGuid guid);
         void DoCloseDoor(ObjectGuid guid);
 
-        uint64 GetInstanceObjectGUID(uint32 entry);
-        ObjectGuid const& GetInstanceObjectGuid(uint32 entry);
-        void SetObject(Object* object);
-        void SetInstanceObject(GameObject* go) { if (go) SetObject((Object*)go); };
-        void SetInstanceUnit(Unit* unit) { if (unit) SetObject((Object*)unit); };
-        void SetInstanceCreature(Creature* creature) { if (creature) SetObject((Object*)creature); };
+        void DoOpenDoor(uint32 entry);
+        void DoCloseDoor(uint32 entry);
 
         void SetCriteriaState(uint32 criteria_id, bool state = true, Player* player = NULL);
         bool GetCriteriaState(uint32 criteria_id, Player const* player = NULL);
@@ -39,7 +35,7 @@ class MANGOS_DLL_DECL BSWScriptedInstance : public ScriptedInstance
         uint32 m_auiEventTimer;
         bool   m_auiEventLock;
         Map*   m_pMap;
-        std::map<uint32, ObjectGuid> m_objectGuidMap;
+
         std::map<uint32, bool>            m_groupCriteriaMap;
         std::multimap<uint32, ObjectGuid> m_personalCriteriaMap;
 

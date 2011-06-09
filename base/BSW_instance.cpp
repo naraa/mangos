@@ -13,7 +13,6 @@ BSWScriptedInstance::BSWScriptedInstance(Map* pMap) : ScriptedInstance(pMap)
     m_auiCreatureID = 0;
     m_auiEventLock  = false;
     m_pMap          = pMap;
-    m_objectGuidMap.clear();
 };
 
 BSWScriptedInstance::~BSWScriptedInstance()
@@ -63,6 +62,24 @@ void BSWScriptedInstance::DoCloseDoor(ObjectGuid guid)
         debug_log("BSW: DoCloseDoor attempt set data to object %u, but no this object", guid);
 }
 
+void BSWScriptedInstance::DoOpenDoor(uint32 entry)
+{
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
+    if (find != m_mGoEntryGuidStore.end())
+        DoOpenDoor(find->second);
+    else
+        debug_log("BSW: Script call DoOpenDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
+}
+
+void BSWScriptedInstance::DoCloseDoor(uint32 entry)
+{
+    EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
+    if (find != m_mGoEntryGuidStore.end())
+        DoCloseDoor(find->second);
+    else
+        debug_log("BSW: Script call DoCloseDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
+}
+
 uint32 BSWScriptedInstance::GetEvent(uint32 creatureID)
 {
     if (m_auiEventLock || m_auiCreatureID != creatureID)
@@ -101,35 +118,6 @@ bool BSWScriptedInstance::GetEventTimer(uint32 creatureID, const uint32 diff)
         m_auiEventTimer -= diff;
         return false;
     }
-}
-
-void BSWScriptedInstance::SetObject(Object* object)
-{
-    if (!object)
-        return;
-
-    m_objectGuidMap.insert(std::make_pair(object->GetEntry(), object->GetObjectGuid()));
-
-}
-
-ObjectGuid const& BSWScriptedInstance::GetInstanceObjectGuid(uint32 entry)
-{
-    std::map<uint32, ObjectGuid>::const_iterator itr = m_objectGuidMap.find(entry);
-
-    if (itr != m_objectGuidMap.end())
-        return itr->second;
-    else 
-        return ObjectGuid();
-
-}
-
-uint64 BSWScriptedInstance::GetInstanceObjectGUID(uint32 entry)
-{
-    ObjectGuid guid = GetInstanceObjectGuid(entry);
-    if (guid.IsEmpty())
-        return 0;
-    else
-        return guid.GetRawValue();
 }
 
 void BSWScriptedInstance::SetCriteriaState(uint32 criteria_id, bool state, Player* player)

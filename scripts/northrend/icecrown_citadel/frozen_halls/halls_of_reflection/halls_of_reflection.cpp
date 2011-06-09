@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 break;
             case 8:
                 DoCast(m_creature, SPELL_FROSTMOURNE_SOUNDS);
-                if(GameObject* pFrostmourne = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_FROSTMOURNE)))
+                if(GameObject* pFrostmourne = m_pInstance->GetSingleGameObjectFromStorage(GO_FROSTMOURNE))
                     pFrostmourne->SetGoState(GO_STATE_ACTIVE);
                 if(m_creature->GetEntry() == NPC_JAINA)
                     m_pInstance->SetNextEvent(9,m_creature->GetEntry(),12000);
@@ -518,7 +518,7 @@ bool GossipSelect_npc_jaina_and_sylvana_HRintro(Player* pPlayer, Creature* pCrea
 
     m_pInstance->SetNextEvent(1, pCreature->GetEntry(), 500);
 
-    m_pInstance->SetData64(DATA_ESCAPE_LIDER,pCreature->GetGUID());
+    m_pInstance->SetData(DATA_ESCAPE_LIDER,pCreature->GetEntry());
 
     return true;
 }
@@ -614,7 +614,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
 
     void DoDestructWall()
     {
-        m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_ICE_WALL));
+        m_pInstance->DoOpenDoor(GO_ICE_WALL);
         if (Creature* pWallTarget = m_creature->GetMap()->GetCreature(wallTarget))
         {
             pWallTarget->ForcedDespawn();
@@ -765,7 +765,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
         {
             case 100:
                 m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                 {
                     if (m_creature->GetEntry() == NPC_SYLVANA_OUTRO)
                         AttackStart(pLichKing);
@@ -790,7 +790,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
            case 104:
                 if(m_creature->GetEntry() == NPC_SYLVANA_OUTRO)
                 {
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         m_creature->CastSpell(pLichKing, SPELL_SYLVANA_STEP, false);
                     m_pInstance->SetNextEvent(105,m_creature->GetEntry(),3000);
                 }
@@ -809,7 +809,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
                 break;
            case 106:
                 Fight = true;
-                if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                     m_creature->CastSpell(pLichKing,(m_creature->GetEntry() == NPC_JAINA_OUTRO ? SPELL_ICE_PRISON : SPELL_DARK_ARROW),true);
                 m_pInstance->SetNextEvent(107,m_creature->GetEntry(),2500);
                 break;
@@ -817,14 +817,14 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
                 m_creature->RemoveAurasDueToSpell(SPELL_ICE_BARRIER);
                 if(m_creature->GetEntry() == NPC_JAINA_OUTRO)
                 {
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         if (!pLichKing->HasAura(SPELL_ICE_PRISON))
                             pLichKing->CastSpell(pLichKing,SPELL_ICE_PRISON,true);
                     DoScriptText(SAY_JAINA_AGGRO, m_creature);
                 }
                 else if(m_creature->GetEntry() == NPC_SYLVANA_OUTRO)
                 {
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         if (!pLichKing->HasAura(SPELL_DARK_ARROW))
                             pLichKing->CastSpell(pLichKing,SPELL_DARK_ARROW,true);
                     DoScriptText(SAY_SYLVANA_AGGRO, m_creature);
@@ -835,7 +835,8 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
                 break;
            case 108:
                 m_creature->GetMotionMaster()->MovePoint(0, 5577.187f, 2236.003f, 733.012f);
-                m_creature->SetUInt64Value(UNIT_FIELD_TARGET, m_pInstance->GetData64(BOSS_LICH_KING));
+                if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pLichKing->GetObjectGuid());
                 m_pInstance->SetNextEvent(109,m_creature->GetEntry(),10000);
                 break;
            case 109:
@@ -858,7 +859,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
               m_pInstance->SetNextEvent(611,m_creature->GetEntry(),6000);
               break;
             case 611:
-              if (GameObject* pCave = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_CAVE)))
+              if (GameObject* pCave = m_pInstance->GetSingleGameObjectFromStorage(GO_CAVE))
                   pCave->SetGoState(GO_STATE_READY);
               m_creature->RemoveAurasDueToSpell(SPELL_SILENCE);
               m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
@@ -929,22 +930,22 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
             {
                 case 1:
                     DoDestructWall();
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         DoScriptText(SAY_LICH_KING_WALL_02, pLichKing);
                     break;
                 case 2:
                     DoDestructWall();
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         DoScriptText(SAY_LICH_KING_WALL_03, pLichKing);
                     break;
                 case 3:
                     DoDestructWall();
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                         DoScriptText(SAY_LICH_KING_WALL_04, pLichKing);
                     break;
                 case 4:
                     DoDestructWall();
-                    if (Creature* pLichKing = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(BOSS_LICH_KING)))
+                    if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                     {
                         pLichKing->RemoveAurasDueToSpell(SPELL_WINTER);
                         pLichKing->SetSpeedRate(MOVE_WALK, 2.5f, true);
@@ -996,7 +997,7 @@ bool GossipSelect_npc_jaina_and_sylvana_HRextro(Player* pPlayer, Creature* pCrea
 
            if(m_pInstance)
            {
-              m_pInstance->SetData64(DATA_ESCAPE_LIDER, pCreature->GetGUID());
+              m_pInstance->SetData(DATA_ESCAPE_LIDER, pCreature->GetEntry());
               m_pInstance->SetData(TYPE_LICH_KING, IN_PROGRESS);
               m_pInstance->SetData(TYPE_PHASE, 5);
            }
@@ -1247,19 +1248,19 @@ struct MANGOS_DLL_DECL npc_queldelar_horAI : public ScriptedAI
             return;
         else if (m_pInstance->GetData(TYPE_FROST_GENERAL) == DONE)
         {
-            m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR));
-            m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_ICECROWN_DOOR_2));
+            m_pInstance->DoOpenDoor(GO_IMPENETRABLE_DOOR);
+            m_pInstance->DoOpenDoor(GO_ICECROWN_DOOR_2);
             m_pInstance->SetData(TYPE_PHASE, 3);
             return;
         }
         else if (m_pInstance->GetData(TYPE_MARWYN) == DONE)
         {
-            m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR));
+            m_pInstance->DoOpenDoor(GO_IMPENETRABLE_DOOR);
             return;
         }
         else if (m_pInstance->GetData(TYPE_FALRIC) == DONE)
         {
-            if (Creature* pMarwyn = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_MARWYN)))
+            if (Creature* pMarwyn = m_pInstance->GetSingleCreatureFromStorage(NPC_MARWYN))
             {
                 pMarwyn->SetVisibility(VISIBILITY_ON);
                 pMarwyn->CastSpell(pMarwyn, SPELL_BOSS_SPAWN_AURA, false);

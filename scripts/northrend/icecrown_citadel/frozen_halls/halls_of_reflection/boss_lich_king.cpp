@@ -140,7 +140,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
            || m_pInstance->GetData(TYPE_FROST_GENERAL) != DONE)
            return;
 
-        m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_ICECROWN_DOOR_2));
+        m_pInstance->DoOpenDoor(GO_ICECROWN_DOOR_2);
 
         Team team;
         if (Group* pGroup = pPlayer->GetGroup())
@@ -166,9 +166,9 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
              pNewLeader->SetSpeedRate(MOVE_RUN, 1.0f, true);
              pNewLeader->SetRespawnDelay(DAY);
              pNewLeader->SetHealth(pNewLeader->GetMaxHealth()/10);
-             m_pInstance->SetData64(DATA_ESCAPE_LIDER, pNewLeader->GetObjectGuid().GetRawValue());
+             m_pInstance->SetData(DATA_ESCAPE_LIDER, pNewLeader->GetEntry());
         }
-        m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_ICECROWN_DOOR_2));
+        m_pInstance->DoOpenDoor(GO_ICECROWN_DOOR_2);
         m_pInstance->SetData(TYPE_PHASE, 4);
         m_pInstance->SetNextEvent(100,GetLeader(),500);
    }
@@ -183,7 +183,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
                 DoCast(m_creature, SPELL_LICH_KING_CAST);
                 m_pInstance->SetData(TYPE_LICH_KING, SPECIAL);
                 DoScriptText(SAY_LICH_KING_END_DUN, m_creature);
-                if(Creature* pLider = (m_creature->GetMap()->GetCreature( m_pInstance->GetData64(DATA_ESCAPE_LIDER))))
+                if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
                 {
                     pLider->CastSpell(pLider, SPELL_SILENCE, false);
                     pLider->AddSplineFlag(SPLINEFLAG_FLYING);
@@ -245,7 +245,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
 
             m_pInstance->SetData(DATA_SUMMONS, 1);
 
-            if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+            if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
             {
                 summoned->GetMotionMaster()->MoveChase(pLider);
                 summoned->AddThreat(pLider, 100.0f);
@@ -255,7 +255,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
 
     uint32 GetLeader()
     {
-         if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+         if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
              return pLider->GetEntry();
          else
              return 0;
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
         case 101:
             if(GetLeader() == NPC_JAINA_OUTRO)
             DoScriptText((GetLeader() == NPC_JAINA_OUTRO ? SAY_LICH_KING_AGGRO_A : SAY_LICH_KING_AGGRO_H), m_creature);
-            if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+            if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
                 AttackStart(pLider);
             m_pInstance->SetNextEvent(102,GetLeader(),3000);
             break;
@@ -395,7 +395,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
             break;
 
         case 900:
-            if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+            if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
                 m_creature->DealDamage(pLider, pLider->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             m_pInstance->SetData(TYPE_LICH_KING, FAIL);
             m_creature->SetActiveObjectState(false);
@@ -444,7 +444,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
                pEscortAI->Start();
         }
         if (m_pInstance->GetData(TYPE_PHASE) == 5)
-            if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+            if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
                 if (pLider->isAlive() && pLider->IsWithinDistInMap(m_creature, 2.0f))
                 {
                     m_pInstance->SetData(TYPE_PHASE,7);
@@ -489,7 +489,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
 
     uint32 GetLeader()
     {
-         if (Creature* pLider = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(DATA_ESCAPE_LIDER)))
+         if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
              return pLider->GetEntry();
          else
              return 0;
@@ -500,7 +500,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
          switch(m_pInstance->GetEvent(m_creature->GetEntry()))
          {
             case 24:
-                m_pInstance->DoOpenDoor(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR));
+                m_pInstance->DoOpenDoor(GO_IMPENETRABLE_DOOR);
                 m_pInstance->SetNextEvent(25,GetLeader(),1000);
                 break;
             case 25:
@@ -508,17 +508,17 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 m_pInstance->SetNextEvent(26,m_creature->GetEntry(),3000);
                 break;
             case 26:
-                m_pInstance->DoCloseDoor(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR));
+                m_pInstance->DoCloseDoor(GO_IMPENETRABLE_DOOR);
                 m_pInstance->SetNextEvent(27,m_creature->GetEntry(),7000);
                 break;
             case 27:
                 DoScriptText(SAY_LICH_KING_17, m_creature);
-                if (Creature* pUther = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_UTHER))))
+                if (Creature* pUther = (m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER)))
                     pUther->CastSpell(pUther, SPELL_UTHER_DESPAWN, false);
                 m_pInstance->SetNextEvent(28,m_creature->GetEntry(),1500);
                 break;
             case 28:
-                if (Creature* pUther = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_UTHER))))
+                if (Creature* pUther = (m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER)))
                     pUther->ForcedDespawn();
                 m_pInstance->SetNextEvent(29,m_creature->GetEntry(),10000);
                 break;
@@ -528,11 +528,11 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 break;
             case 30:
                 m_creature->CastSpell(m_creature, SPELL_TAKE_FROSTMOURNE, false);
-                m_pInstance->DoCloseDoor(m_pInstance->GetData64(GO_FROSTMOURNE));
+                m_pInstance->DoCloseDoor(GO_FROSTMOURNE);
                 m_pInstance->SetNextEvent(31,m_creature->GetEntry(),1500);
                 break;
             case 31:
-                if (GameObject* pFrostmourne = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_FROSTMOURNE)))
+                if (GameObject* pFrostmourne = m_pInstance->GetSingleGameObjectFromStorage(GO_FROSTMOURNE))
                     pFrostmourne->SetPhaseMask(0, true);
                 m_creature->CastSpell(m_creature, SPELL_FROSTMOURNE_VISUAL, false);
                 m_pInstance->SetNextEvent(31,GetLeader(),500);
@@ -542,13 +542,13 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 m_pInstance->SetNextEvent(33,m_creature->GetEntry(),9000);
                 break;
             case 33:
-                if (Creature* pFalric = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_FALRIC))))
+                if (Creature* pFalric = (m_pInstance->GetSingleCreatureFromStorage(NPC_FALRIC)))
                 {
                     pFalric->SetVisibility(VISIBILITY_ON);
                     pFalric->CastSpell(pFalric, SPELL_BOSS_SPAWN_AURA, false);
                     pFalric->GetMotionMaster()->MovePoint(0, 5283.309f, 2031.173f, 709.319f);
                 }
-                if (Creature* pMarwyn = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_MARWYN))))
+                if (Creature* pMarwyn = (m_pInstance->GetSingleCreatureFromStorage(NPC_MARWYN)))
                 {
                     pMarwyn->SetVisibility(VISIBILITY_ON);
                     pMarwyn->CastSpell(pMarwyn, SPELL_BOSS_SPAWN_AURA, false);
@@ -558,17 +558,17 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 m_pInstance->SetNextEvent(34,m_creature->GetEntry(),1000);
                 break;
             case 34:
-                if (Creature* pFalric = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_FALRIC))))
+                if (Creature* pFalric = (m_pInstance->GetSingleCreatureFromStorage(NPC_FALRIC)))
                     DoScriptText(SAY_FALRIC_INTRO, pFalric);
-                if (Creature* pMarwyn = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_MARWYN))))
+                if (Creature* pMarwyn = (m_pInstance->GetSingleCreatureFromStorage(NPC_MARWYN)))
                     DoScriptText(SAY_MARWYN_INTRO, pMarwyn);
                 m_pInstance->SetData(TYPE_EVENT, 5);
                 m_pInstance->SetNextEvent(35,m_creature->GetEntry(),3000);
                 break;
             case 35:
-                if (GameObject* pGate = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR)))
+                if (GameObject* pGate = m_pInstance->GetSingleGameObjectFromStorage(GO_IMPENETRABLE_DOOR))
                      pGate->SetGoState(GO_STATE_ACTIVE);
-                if (Creature* pFalric = (m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_FALRIC))))
+                if (Creature* pFalric = m_pInstance->GetSingleCreatureFromStorage(NPC_FALRIC))
                     DoScriptText(SAY_FALRIC_INTRO2, pFalric);
                 m_pInstance->SetData(TYPE_FALRIC, SPECIAL);
                 m_pInstance->SetNextEvent(36,GetLeader(),4000);
@@ -584,7 +584,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 m_pInstance->SetNextEvent(38,m_creature->GetEntry(),8000);
                 break;
             case 38:
-                m_pInstance->DoCloseDoor(m_pInstance->GetData64(GO_IMPENETRABLE_DOOR));
+                m_pInstance->DoCloseDoor(GO_IMPENETRABLE_DOOR);
                 m_pInstance->SetNextEvent(39,m_creature->GetEntry(),5000);
                 break;
             case 39:
