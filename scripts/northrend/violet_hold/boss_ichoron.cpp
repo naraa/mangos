@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         Reset();
     }
     ScriptedInstance *m_pInstance;
-    std::list<uint64> m_lWaterElementsGUIDList;
+    std::list<ObjectGuid> m_lWaterElementsGUIDList;
 
     bool m_bIsRegularMode;
     bool m_bIsExploded;
@@ -141,7 +141,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
 
     void WaterElementHit()
     {
-       if (Creature* pIchoron = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(DATA_ICHORON)))
+       if (Creature* pIchoron = m_pInstance->GetSingleCreatureFromStorage(DATA_ICHORON))
        {
           if(pIchoron->isAlive())
           {
@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
             {
                 if(m_creature->HasAura(SPELL_DRAINED))
                 {
-                    m_creature->RemoveAurasByCasterSpell(SPELL_DRAINED,m_creature->GetGUID());
+                    m_creature->RemoveAurasByCasterSpell(SPELL_DRAINED,m_creature->GetObjectGuid());
                 }
                 m_creature->SetVisibility(VISIBILITY_ON);
                 m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
@@ -164,14 +164,14 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
         pSummoned->SetSpeedRate(MOVE_RUN, 0.2f);
         pSummoned->GetMotionMaster()->MoveFollow(m_creature, 0, 0);
         pSummoned->CastSpell(pSummoned, SPELL_WATER_GLOBULE, false);
-        m_lWaterElementsGUIDList.push_back(pSummoned->GetGUID());
+        m_lWaterElementsGUIDList.push_back(pSummoned->GetObjectGuid());
     }
    void DespawnWaterElements()
     {
         if (m_lWaterElementsGUIDList.empty())
             return;
 
-        for(std::list<uint64>::iterator itr = m_lWaterElementsGUIDList.begin(); itr != m_lWaterElementsGUIDList.end(); ++itr)
+        for(std::list<ObjectGuid>::iterator itr = m_lWaterElementsGUIDList.begin(); itr != m_lWaterElementsGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
             {
@@ -275,7 +275,7 @@ struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
                 DoScriptText(SAY_ENRAGE, m_creature);
                 if(m_creature->HasAura(SPELL_DRAINED))
                 {
-                    m_creature->RemoveAurasByCasterSpell(SPELL_DRAINED,m_creature->GetGUID());
+                    m_creature->RemoveAurasByCasterSpell(SPELL_DRAINED,m_creature->GetObjectGuid());
                 }
                 if(m_creature->GetVisibility() == VISIBILITY_OFF){m_creature->SetVisibility(VISIBILITY_ON);}
                 m_bIsFrenzy = true;
@@ -337,7 +337,7 @@ struct MANGOS_DLL_DECL mob_ichor_globuleAI : public ScriptedAI
         {
             if (m_pInstance)
             {
-                if (Creature* pIchoron = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(DATA_ICHORON)))
+                if (Creature* pIchoron = m_pInstance->GetSingleCreatureFromStorage(DATA_ICHORON))
                 {
                     float fDistance = m_creature->GetDistance2d(pIchoron);
                     if (fDistance <= 2)

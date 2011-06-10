@@ -52,53 +52,11 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
     uint32 m_uiDisruptions;
     int8 m_uiPortalTime;
 
-    uint64 m_uiSinclariGUID;
-    uint64 m_uiNPCSealDoorGUID;
-
-    uint64 m_uiErekemGUID;
-    uint64 m_uiMoraggGUID;
-    uint64 m_uiIchoronGUID;
-    uint64 m_uiXevozzGUID;
-    uint64 m_uiLavanthorGUID;
-    uint64 m_uiZuramatGUID;
-
-    uint64 m_uiSealDoorGUID;
-    uint64 m_uiErekemDoorGUID;
-    uint64 m_uiErekemDoorLeftGUID;
-    uint64 m_uiErekemDoorRightGUID;
-    uint64 m_uiMoraggDoorGUID;
-    uint64 m_uiIchoronDoorGUID;
-    uint64 m_uiXevozzDoorGUID;
-    uint64 m_uiLavanthorDoorGUID;
-    uint64 m_uiZuramatDoorGUID;
-
     void Initialize()
     {
         for (uint8 i = 0; i < MAX_ENCOUNTER; ++i)
             m_auiEncounter[i] = NOT_STARTED;
 
-        m_uiSinclariGUID = 0;
-        m_uiNPCSealDoorGUID = 0;
-        m_uiLastBossIDConst = 0;
-
-        m_uiErekemGUID      = 0;
-        m_uiMoraggGUID      = 0;
-        m_uiIchoronGUID     = 0;
-        m_uiXevozzGUID      = 0;
-        m_uiLavanthorGUID   = 0;
-        m_uiZuramatGUID     = 0;
-
-        m_uiDisruptions     = 0;
-
-        m_uiSealDoorGUID        = 0;
-        m_uiErekemDoorGUID      = 0;
-        m_uiErekemDoorLeftGUID  = 0;
-        m_uiErekemDoorRightGUID = 0;
-        m_uiMoraggDoorGUID      = 0;
-        m_uiIchoronDoorGUID     = 0;
-        m_uiXevozzDoorGUID      = 0;
-        m_uiLavanthorDoorGUID   = 0;
-        m_uiZuramatDoorGUID     = 0;
         Clear();
     }
 
@@ -138,64 +96,21 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
         switch(pCreature->GetEntry())
         {
             case NPC_SINCLARI:
-                m_uiSinclariGUID = pCreature->GetGUID();
-                break;
             case NPC_DOOR_SEAL:
-                m_uiNPCSealDoorGUID = pCreature->GetGUID();
-                break;
             case NPC_EREKEM:
-                m_uiErekemGUID = pCreature->GetGUID();
-                break;
             case NPC_MORAGG:
-                m_uiMoraggGUID = pCreature->GetGUID();
-                break;
             case NPC_ICHORON:
-                m_uiIchoronGUID = pCreature->GetGUID();
-                break;
             case NPC_XEVOZZ:
-                m_uiXevozzGUID = pCreature->GetGUID();
-                break;
             case NPC_LAVANTHOR:
-                m_uiLavanthorGUID = pCreature->GetGUID();
-                break;
             case NPC_ZURAMAT:
-                m_uiZuramatGUID = pCreature->GetGUID();
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                 break;
         }
     }
 
     void OnObjectCreate(GameObject* pGo)
     {
-        switch(pGo->GetEntry())
-        {
-            case GO_DOOR_SEAL:
-                m_uiSealDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_EREKEM:
-                m_uiErekemDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_EREKEM_LEFT:
-                m_uiErekemDoorLeftGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_EREKEM_RIGHT:
-                m_uiErekemDoorRightGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_MORAGG:
-                m_uiMoraggDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_ICHORON:
-                m_uiIchoronDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_XEVOZZ:
-                m_uiXevozzDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_LAVANTHOR:
-                m_uiLavanthorDoorGUID = pGo->GetGUID();
-                break;
-            case GO_DOOR_ZURAMAT:
-                m_uiZuramatDoorGUID = pGo->GetGUID();
-                break;
-        }
+        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
     void SetData(uint32 uiType, uint32 uiData)
@@ -210,10 +125,11 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
                 }
                 else if (uiData == FAIL || uiData == DONE)
                 {
-                DoUpdateWorldState(WORLD_STATE_VH, 0);
-                DoUseDoorOrButton(m_uiSealDoorGUID);
-                if (Creature* pSinclari = instance->GetCreature(m_uiSinclariGUID))
-                {pSinclari->ForcedDespawn(1000);}}
+                    DoUpdateWorldState(WORLD_STATE_VH, 0);
+                    DoUseDoorOrButton(GO_DOOR_SEAL);
+                    if (Creature* pSinclari = GetSingleCreatureFromStorage(NPC_SINCLARI))
+                        pSinclari->ForcedDespawn(1000);
+                }
                 m_auiEncounter[0] = uiData;
                 break;
             case TYPE_EREKEM:
@@ -251,7 +167,8 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
                 m_auiEncounter[10] = uiData;
                 break;
             case TYPE_RIFT:
-                if (uiData == FAIL) DoUseDoorOrButton(m_uiSealDoorGUID);
+                if (uiData == FAIL)
+                   DoUseDoorOrButton(GO_DOOR_SEAL);
                 m_auiEncounter[1] = uiData;
                 break;
             case TYPE_DOOR:
@@ -262,7 +179,7 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
                         DoUpdateWorldState(WORLD_STATE_VH_PRISON, m_uiShieldPercent);
                     else
                     {   DoUpdateWorldState(WORLD_STATE_VH, 0);
-                        DoUseDoorOrButton(m_uiSealDoorGUID);
+                        DoUseDoorOrButton(GO_DOOR_SEAL);
                         m_auiEncounter[0] = FAIL;
                     }
                 }
@@ -348,48 +265,6 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
                 return bIsInBoss;
             case TYPE_DISRUPTIONS:
                 return m_uiDisruptions;
-        }
-        return 0;
-    }
-
-    uint64 GetData64(uint32 uiData)
-    {
-        switch(uiData)
-        {
-            case DATA_EREKEM:
-                return m_uiErekemGUID;
-            case DATA_MORAGG:
-                return m_uiMoraggGUID;
-            case DATA_ICHORON:
-                return m_uiIchoronGUID;
-            case DATA_XEVOZZ:
-                return m_uiXevozzGUID;
-            case DATA_LAVANTHOR:
-                return m_uiLavanthorGUID;
-            case DATA_ZURAMAT:
-                return m_uiZuramatGUID;
-            case DATA_SINCLARI:
-                return m_uiSinclariGUID;
-            case DATA_NPC_SEAL_DOOR:
-                return m_uiNPCSealDoorGUID;
-            case DATA_SEAL_DOOR:
-                return m_uiSealDoorGUID;
-            case DATA_EREKEM_DOOR:
-                return m_uiErekemDoorGUID;
-            case DATA_EREKEM_DOOR_L:
-                return m_uiErekemDoorLeftGUID;
-            case DATA_EREKEM_DOOR_R:
-                return m_uiErekemDoorRightGUID;
-            case DATA_MORAGG_DOOR:
-                return m_uiMoraggDoorGUID;
-            case DATA_ICHORON_DOOR:
-                return m_uiIchoronDoorGUID;
-            case DATA_XEVOZZ_DOOR:
-                return m_uiXevozzDoorGUID;
-            case DATA_LAVANTHOR_DOOR:
-                return m_uiLavanthorDoorGUID;
-            case DATA_ZURAMAT_DOOR:
-                return m_uiZuramatDoorGUID;
         }
         return 0;
     }
