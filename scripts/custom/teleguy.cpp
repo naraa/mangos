@@ -27,7 +27,7 @@ bool GossipHello_mob_teleguy(Player *player, Creature *_Creature)
         player->ADD_GOSSIP_ITEM( 7, "[Instances] ->"			, GOSSIP_SENDER_MAIN, 5550);
         player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"			, GOSSIP_SENDER_MAIN, 5554);
         }
-    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
     return true;
 }
 
@@ -72,7 +72,7 @@ void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 act
             player->ADD_GOSSIP_ITEM( 5, "Scarlet Monastery. 20 Silver"       , GOSSIP_SENDER_MAIN, 1257);
             player->ADD_GOSSIP_ITEM( 7, "[More] ->"							 , GOSSIP_SENDER_MAIN, 5551);
             player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"					 , GOSSIP_SENDER_MAIN, 5552);	
-            player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+            player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
             break;
         case 5551: //More Instances
             player->ADD_GOSSIP_ITEM( 5, "Uldaman. 30 Silver"                   , GOSSIP_SENDER_MAIN, 1258);
@@ -88,7 +88,7 @@ void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 act
             player->ADD_GOSSIP_ITEM( 7, "[More] ->"							   , GOSSIP_SENDER_MAIN, 5553);
             player->ADD_GOSSIP_ITEM( 7, "<- [Back]"							   , GOSSIP_SENDER_MAIN, 5550);
             player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"					   , GOSSIP_SENDER_MAIN, 5552);	
-            player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+            player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
             break;
 
 case 5553: //Instances 60-70
@@ -106,7 +106,7 @@ player->ADD_GOSSIP_ITEM( 7, "<- [Back]"							   , GOSSIP_SENDER_MAIN, 5550);
 player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"					   , GOSSIP_SENDER_MAIN, 5552);
 
 
-player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 
 break;
 
@@ -126,7 +126,7 @@ player->ADD_GOSSIP_ITEM( 7, "<- [Back]"							   , GOSSIP_SENDER_MAIN, 5550);
 player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"					   , GOSSIP_SENDER_MAIN, 5552);
 
 
-player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 
 break;
 
@@ -158,7 +158,7 @@ player->ADD_GOSSIP_ITEM( 7, "[Instances] ->"				, GOSSIP_SENDER_MAIN, 5550);
 player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"			, GOSSIP_SENDER_MAIN, 5554);
 	}
 
-player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetGUID());
+player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 
 break;
 
