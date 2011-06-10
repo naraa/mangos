@@ -173,13 +173,13 @@ bool GossipHello_npc_riggle_bassbait(Player* pPlayer, Creature* pCreature)
 {
     if (pCreature->isQuestGiver()) // If the quest is still running.
     {
-        pPlayer->PrepareQuestMenu(pCreature->GetGUID());
-        pPlayer->SEND_GOSSIP_MENU(7614, pCreature->GetGUID());
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+        pPlayer->SEND_GOSSIP_MENU(7614, pCreature->GetObjectGuid());
         return true;
     }
     // The Quest is not there anymore 
     // There is a winner!
-    pPlayer->SEND_GOSSIP_MENU(7714, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(7714, pCreature->GetObjectGuid());
     return true;
 }
 
