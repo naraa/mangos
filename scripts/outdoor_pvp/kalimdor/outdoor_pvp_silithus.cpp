@@ -37,7 +37,7 @@ void outdoor_pvp_silithus::OnPlayerEnterZone(Player* pPlayer, uint32 uiZoneId)
             pPlayer->CastSpell(pPlayer, SPELL_CENARION_FAVOR, false);
 
         // add to the player set
-        sSilithusPlayers.insert(pPlayer->GetGUID());
+        sSilithusPlayers.insert(pPlayer->GetObjectGuid());
 
         // send actual world states
         SendPlayerWorldState(pPlayer);
@@ -48,8 +48,8 @@ void outdoor_pvp_silithus::OnPlayerEnterZone(Player* pPlayer, uint32 uiZoneId)
             pPlayer->RemoveAurasDueToSpell(SPELL_CENARION_FAVOR);
 
         // remove from the player set
-        if (sSilithusPlayers.find(pPlayer->GetGUID()) != sSilithusPlayers.end())
-            sSilithusPlayers.erase(pPlayer->GetGUID());
+        if (sSilithusPlayers.find(pPlayer->GetObjectGuid()) != sSilithusPlayers.end())
+            sSilithusPlayers.erase(pPlayer->GetObjectGuid());
     }
 }
 

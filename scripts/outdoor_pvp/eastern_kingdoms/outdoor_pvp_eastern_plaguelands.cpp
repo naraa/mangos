@@ -38,7 +38,7 @@ void outdoor_pvp_eastern_plaguelands::OnPlayerEnterZone(Player* pPlayer, uint32 
     //    pPlayer->CastSpell(pPlayer, SPELL_CENARION_FAVOR, false);
 
     // add to the player set
-    sPlaguelandsPlayers.insert(pPlayer->GetGUID());
+    sPlaguelandsPlayers.insert(pPlayer->GetObjectGuid());
 
     // send actual world states
     SendPlayerWorldState(pPlayer);
@@ -47,8 +47,8 @@ void outdoor_pvp_eastern_plaguelands::OnPlayerEnterZone(Player* pPlayer, uint32 
 void outdoor_pvp_eastern_plaguelands::OnPlayerLeaveZone(Player* pPlayer, uint32 uiZoneId)
 {
     // remove from the player set
-    if (sPlaguelandsPlayers.find(pPlayer->GetGUID()) != sPlaguelandsPlayers.end())
-        sPlaguelandsPlayers.erase(pPlayer->GetGUID());
+    if (sPlaguelandsPlayers.find(pPlayer->GetObjectGuid()) != sPlaguelandsPlayers.end())
+        sPlaguelandsPlayers.erase(pPlayer->GetObjectGuid());
 }
 
 void outdoor_pvp_eastern_plaguelands::SetData(uint32 uiType, uint32 uiData)
