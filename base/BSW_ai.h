@@ -259,7 +259,7 @@ struct MANGOS_DLL_DECL BSWScriptedAI : public ScriptedAI
 
         bool          _QuerySpellPeriod(uint8 m_uiSpellIdx, uint32 diff, bool ignorecast = false);
 
-        CanCastResult _DoCastSpellIfCan(Unit* pTarget, uint32 uiSpell, uint32 uiCastFlags = 0, uint64 uiOriginalCasterGUID = 0);
+        CanCastResult _DoCastSpellIfCan(Unit* pTarget, uint32 uiSpell, uint32 uiCastFlags = 0, ObjectGuid uiOriginalCasterGUID = ObjectGuid());
 
         bool          _doRemove(uint8 m_uiSpellIdx, Unit* pTarget = NULL, uint8 index = EFFECT_INDEX_ALL);
 

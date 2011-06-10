@@ -620,7 +620,7 @@ bool BSWScriptedAI::_doRemove(uint32 SpellID, Unit* pTarget, uint8 index)
         }
         else if (_auraCount(SpellID,pTarget,(SpellEffectIndex)index) > 1)
         {
-            if (SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetGUID()))
+            if (SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid()))
             {
                 if (holder->ModStackAmount(-1))
                 {
@@ -733,7 +733,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
 
             bool addedToExisting = true;
 
-            SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetGUID());
+            SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid());
 
             Aura* aura = NULL;
 
@@ -775,7 +775,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
     return false;
 };
 
-CanCastResult BSWScriptedAI::_DoCastSpellIfCan(Unit* pTarget, uint32 uiSpell, uint32 uiCastFlags, uint64 uiOriginalCasterGUID)
+CanCastResult BSWScriptedAI::_DoCastSpellIfCan(Unit* pTarget, uint32 uiSpell, uint32 uiCastFlags, ObjectGuid uiOriginalCasterGUID)
 {
     if (!pTarget || !pTarget->IsInWorld() || !pTarget->IsInMap(m_creature)|| !pTarget->isAlive()) return CAST_FAIL_OTHER;
 
