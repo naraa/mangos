@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
 
         // Temp hack until outro is implemented
-        if (Creature* pRimefang = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_RIMEFANG)))
+        if (Creature* pRimefang = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG))
         {
             pRimefang->GetMotionMaster()->Clear();
             pRimefang->GetMotionMaster()->MovePoint(0, 844.752f, 358.993f, 645.330f);
@@ -239,7 +239,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_MARK_OF_RIMEFANG) == CAST_OK)
                 {
-                    if (Creature* pRimefang = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_RIMEFANG)))
+                    if (Creature* pRimefang = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG))
                         ((boss_rimefangAI*)pRimefang->AI())->SetMainTarget(pTarget->GetGUID());
 
                     DoScriptText(SAY_MARK, m_creature);

@@ -94,7 +94,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if(Creature* pKrick = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_KRICK)))
+        if(Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
             DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, pKrick);
     }
 
@@ -110,7 +110,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KRICK, DONE);
 
         // ToDo - remove this when outro implemented
-        if(Creature* pKrick = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_KRICK)))
+        if(Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
             pKrick->DealDamage(pKrick, pKrick->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
     }
 
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
         {
             if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_POISON_NOVA : SPELL_POISON_NOVA_H))
             {
-                if(Creature* pKrick = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_KRICK)))
+                if(Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
                     DoScriptText(SAY_ORDER_BLOW, pKrick);
                 m_uiPoisonNovaTimer = 30000;
             }
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
             {
                 if (DoCastSpellIfCan(pTarget, SPELL_PURSUED) == CAST_OK)
                 {
-                    if(Creature* pKrick = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_KRICK)))
+                    if(Creature* pKrick = m_pInstance->GetSingleCreatureFromStorage(NPC_KRICK))
                     {
                         switch (urand(0, 2))
                         {
@@ -218,7 +218,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
 
         if (m_uiToxicWasteTimer < uiDiff)
         {
-            if(Creature* pIck = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_ICK)))
+            if(Creature* pIck = m_pInstance->GetSingleCreatureFromStorage(NPC_ICK))
             {
                 if (Unit* pTarget = pIck->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_krickAI : public ScriptedAI
 
         if (m_uiShadowboltTimer < uiDiff)
         {
-            if(Creature* pIck = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_ICK)))
+            if(Creature* pIck = m_pInstance->GetSingleCreatureFromStorage(NPC_ICK))
             {
                 if (Unit* pTarget = pIck->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
