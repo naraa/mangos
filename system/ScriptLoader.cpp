@@ -284,6 +284,8 @@ extern void AddSC_winterspring();
 //northrend
 
 extern void AddSC_trial_of_the_champion();                  //trial_of_the_champion
+extern void AddSC_boss_argent_challenge(); 
+extern void AddSC_boss_black_knight();
 extern void AddSC_boss_grand_champions();
 extern void AddSC_instance_trial_of_the_champion();
 
@@ -806,6 +808,8 @@ void AddScripts()
 
     //northrend
     AddSC_trial_of_the_champion();                            //trial_of_the_champion
+    AddSC_boss_argent_challenge();
+    AddSC_boss_black_knight();
     AddSC_boss_grand_champions();
     AddSC_instance_trial_of_the_champion();
 
