@@ -5,6 +5,7 @@
 #ifndef DEF_CRUSADER_H
 #define DEF_CRUSADER_H
 #include "BSW_ai.h"
+#include "BSW_instance.h"
 
 enum
 {

@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public BSWScriptedAI
     {
         if (!m_pInstance) return;
             DoScriptText(-1713547,m_creature);
-            if (Creature* pSister = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_DARKBANE)))
+            if (Creature* pSister = m_pInstance->GetSingleCreatureFromStorage(NPC_DARKBANE))
                if (!pSister->isAlive())
                          m_pInstance->SetData(TYPE_VALKIRIES, DONE);
                 else m_pInstance->SetData(TYPE_VALKIRIES, SPECIAL);
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_fjolaAI : public BSWScriptedAI
         if (!m_creature || !m_creature->isAlive())
             return;
 
-        if(pDoneBy->GetGUID() == m_creature->GetGUID()) return;
+        if(pDoneBy->GetObjectGuid() == m_creature->GetObjectGuid()) return;
 
         if(pDoneBy->GetTypeId() == TYPEID_PLAYER)
         {
@@ -263,7 +263,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public BSWScriptedAI
     {
         if (!m_pInstance) return;
             DoScriptText(-1713547,m_creature);
-            if (Creature* pSister = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_LIGHTBANE)))
+            if (Creature* pSister = m_pInstance->GetSingleCreatureFromStorage(NPC_LIGHTBANE))
                if (!pSister->isAlive())
                          m_pInstance->SetData(TYPE_VALKIRIES, DONE);
                 else m_pInstance->SetData(TYPE_VALKIRIES, SPECIAL);
@@ -293,7 +293,7 @@ struct MANGOS_DLL_DECL boss_eydisAI : public BSWScriptedAI
         if (!m_creature || !m_creature->isAlive())
             return;
 
-        if(pDoneBy->GetGUID() == m_creature->GetGUID()) return;
+        if(pDoneBy->GetObjectGuid() == m_creature->GetObjectGuid()) return;
 
         if(pDoneBy->GetTypeId() == TYPEID_PLAYER)
         {
@@ -432,7 +432,7 @@ bool GossipHello_mob_light_essence(Player *player, Creature* pCreature)
 {
     ScriptedInstance *pInstance = (ScriptedInstance *) pCreature->GetInstanceData();
     if(!pInstance) return true;
-        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
+        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
         player->RemoveAurasDueToSpell(SPELL_DARK_ESSENCE);
 //        player->CastSpell(player,SPELL_REMOVE_TOUCH,false); // Not worked now
         player->CastSpell(player,SPELL_LIGHT_ESSENCE,false);
@@ -484,7 +484,7 @@ bool GossipHello_mob_dark_essence(Player *player, Creature* pCreature)
 {
     ScriptedInstance *pInstance = (ScriptedInstance *) pCreature->GetInstanceData();
     if(!pInstance) return true;
-    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetGUID());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, pCreature->GetObjectGuid());
         player->RemoveAurasDueToSpell(SPELL_LIGHT_ESSENCE);
 //        player->CastSpell(player,SPELL_REMOVE_TOUCH,false); // Not worked now
         player->CastSpell(player,SPELL_DARK_ESSENCE,false);
@@ -512,8 +512,8 @@ struct MANGOS_DLL_DECL mob_unleashed_darkAI : public ScriptedAI
         SetCombatMovement(false); 
         m_creature->GetMotionMaster()->MoveRandom();
         m_uiRangeCheck_Timer = 1000;
-        pboss1 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_DARKBANE));
-        pboss2 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_LIGHTBANE));
+        pboss1 = m_pInstance->GetSingleCreatureFromStorage(NPC_DARKBANE);
+        pboss2 = m_pInstance->GetSingleCreatureFromStorage(NPC_LIGHTBANE);
     }
 
     void AttackStart(Unit *pWho)
@@ -582,8 +582,8 @@ struct MANGOS_DLL_DECL mob_unleashed_lightAI : public ScriptedAI
         SetCombatMovement(false); 
         m_creature->GetMotionMaster()->MoveRandom();
         m_uiRangeCheck_Timer = 1000;
-        pboss1 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_DARKBANE));
-        pboss2 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_LIGHTBANE));
+        pboss1 = m_pInstance->GetSingleCreatureFromStorage(NPC_DARKBANE);
+        pboss2 = m_pInstance->GetSingleCreatureFromStorage(NPC_LIGHTBANE);
     }
 
     void AttackStart(Unit *pWho)

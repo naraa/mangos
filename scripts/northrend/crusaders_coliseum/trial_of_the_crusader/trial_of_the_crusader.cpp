@@ -236,7 +236,7 @@ bool GossipHello_npc_toc_announcer(Player* pPlayer, Creature* pCreature)
         }
     };
 
-    pPlayer->SEND_GOSSIP_MENU(_GossipMessage[i].msgnum, pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(_GossipMessage[i].msgnum, pCreature->GetObjectGuid());
 
     return true;
 }
@@ -281,7 +281,7 @@ switch(uiAction) {
 
     case GOSSIP_ACTION_INFO_DEF+5: {
        if (pInstance->GetData(TYPE_LICH_KING) != DONE) return false;
-       if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARGENT_COLISEUM_FLOOR)))
+       if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARGENT_COLISEUM_FLOOR))
           {
            pGoFloor->SetUInt32Value(GAMEOBJECT_DISPLAYID,9060);
            pGoFloor->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
@@ -289,7 +289,7 @@ switch(uiAction) {
            }
            pCreature->CastSpell(pCreature,69016,false);
 
-           Creature* pTemp = pCreature->GetMap()->GetCreature(pInstance->GetData64(NPC_ANUBARAK));
+           Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ANUBARAK);
            if (!pTemp || !pTemp->isAlive())
                          pCreature->SummonCreature(NPC_ANUBARAK, SpawnLoc[19].x, SpawnLoc[19].y, SpawnLoc[19].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
            if (pTemp) {
@@ -445,7 +445,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
                pInstance->SetData(TYPE_EVENT,5080);
                break;
         case 5080:
-               if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARGENT_COLISEUM_FLOOR)))
+               if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARGENT_COLISEUM_FLOOR))
                   {
                    pGoFloor->SetUInt32Value(GAMEOBJECT_DISPLAYID,9060);
                    pGoFloor->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
@@ -456,7 +456,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
 
                pInstance->SetData(TYPE_ANUBARAK,IN_PROGRESS);
                   m_creature->SummonCreature(NPC_ANUBARAK, SpawnLoc[19].x, SpawnLoc[19].y, SpawnLoc[19].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                  if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_ANUBARAK))) {
+                  if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ANUBARAK)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[20].x, SpawnLoc[20].y, SpawnLoc[20].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
@@ -499,11 +499,11 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
 {
     npc_fizzlebang_tocAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        pInstance = (ScriptedInstance*)m_creature->GetInstanceData();
+        pInstance = (BSWScriptedInstance*)m_creature->GetInstanceData();
         Reset();
     }
 
-    InstanceData* pInstance;
+    BSWScriptedInstance* pInstance;
     uint32 UpdateTimer;
     Creature* pPortal;
     Creature* pTrigger;
@@ -581,11 +581,12 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     break;
                case 1140:
                     pInstance->SetData(TYPE_STAGE,4);
-                          m_creature->SummonCreature(NPC_JARAXXUS, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_JARAXXUS))) {
-                                pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                                pTemp->CastSpell(pTemp, SPELL_JARAXXUS_CHAINS, false);
-                                }
+                        m_creature->SummonCreature(NPC_JARAXXUS, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
+                        if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_JARAXXUS))
+                        {
+                            pTemp->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                            pTemp->CastSpell(pTemp, SPELL_JARAXXUS_CHAINS, false);
+                        }
                     pInstance->SetData(TYPE_EVENT, 1142);
                     UpdateTimer = 5000;
                     break;
@@ -600,7 +601,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     UpdateTimer = 5000;
                     break;
                case 1150:
-                      if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_JARAXXUS))) {
+                      if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_JARAXXUS)) {
                                 pTemp->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                                 pTemp->RemoveAurasDueToSpell(SPELL_JARAXXUS_CHAINS);
                                 pTemp->SetInCombatWithZone();
@@ -668,20 +669,20 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                DoScriptText(-1713500, m_creature);
                UpdateTimer = 12000;
                pInstance->SetData(TYPE_EVENT,120);
-//               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_WEST_PORTCULLIS));
+//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
         case 140:
                m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_TALK);
                DoScriptText(-1713501, m_creature);
                UpdateTimer = 10000;
                pInstance->SetData(TYPE_EVENT,150);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 150:
                 m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_NONE);
                 if (pInstance->GetData(TYPE_BEASTS) != DONE) {
                       m_creature->SummonCreature(NPC_GORMOK, SpawnLoc[26].x, SpawnLoc[26].y, SpawnLoc[26].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_GORMOK))) {
+                          if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_GORMOK)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
@@ -689,7 +690,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                         }
                 UpdateTimer = 10000;
                 pInstance->SetData(TYPE_EVENT,160);
-                pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+                pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                 pInstance->SetData(TYPE_STAGE,1);
                 pInstance->SetData(TYPE_BEASTS,IN_PROGRESS);
                 break;
@@ -703,19 +704,19 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
         case 205:
                UpdateTimer = 8000;
                pInstance->SetData(TYPE_EVENT,210);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
 
         case 210:
                         if (pInstance->GetData(TYPE_BEASTS) != DONE){
                         m_creature->SummonCreature(NPC_DREADSCALE, SpawnLoc[3].x, SpawnLoc[3].y, SpawnLoc[3].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                         m_creature->SummonCreature(NPC_ACIDMAW, SpawnLoc[4].x, SpawnLoc[4].y, SpawnLoc[4].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_DREADSCALE))) {
+                          if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_DREADSCALE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
                                 }
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_ACIDMAW))) {
+                          if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ACIDMAW)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
@@ -723,7 +724,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                         }
                UpdateTimer = 10000;
                pInstance->SetData(TYPE_EVENT,220);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 300:
                DoScriptText(-1713505, m_creature);
@@ -733,12 +734,12 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
         case 305:
                UpdateTimer = 8000;
                pInstance->SetData(TYPE_EVENT,310);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 310:
                 if (pInstance->GetData(TYPE_BEASTS) != DONE) {
                         m_creature->SummonCreature(NPC_ICEHOWL, SpawnLoc[26].x, SpawnLoc[26].y, SpawnLoc[26].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                              if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_ICEHOWL))) {
+                              if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ICEHOWL)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
@@ -746,13 +747,13 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                         }
                UpdateTimer = 10000;
                pInstance->SetData(TYPE_EVENT,320);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 400:
                DoScriptText(-1713509, m_creature);
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,0);
-//               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_WEST_PORTCULLIS));
+//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
 
         case 666:
@@ -760,7 +761,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,0);
                pInstance->SetData(TYPE_NORTHREND_BEASTS,NOT_STARTED);
-//               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_WEST_PORTCULLIS));
+//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
 
         case 1010:
@@ -943,7 +944,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                for(uint8 i = 0; i < crusaderscount; ++i)
                        {
                        m_creature->SummonCreature(crusader[i], SpawnLoc[i+2].x, SpawnLoc[i+2].y, SpawnLoc[i+2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                       if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(crusader[i]))) {
+                       if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(crusader[i])) {
                              pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                  pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                }
@@ -951,7 +952,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                pInstance->SetData(TYPE_CRUSADERS_COUNT,crusaderscount);
                UpdateTimer = 3000;
                pInstance->SetData(TYPE_EVENT,0);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                pInstance->SetData(TYPE_CRUSADERS,IN_PROGRESS);
                break;
 
@@ -1092,7 +1093,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                for(uint8 i = 0; i < crusaderscount; ++i)
                        {
                        m_creature->SummonCreature(crusader[i], SpawnLoc[i+2].x, SpawnLoc[i+2].y, SpawnLoc[i+2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                       if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(crusader[i]))) {
+                       if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(crusader[i])) {
                              pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                  pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                }
@@ -1100,7 +1101,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                pInstance->SetData(TYPE_CRUSADERS_COUNT,crusaderscount);
                UpdateTimer = 3000;
                pInstance->SetData(TYPE_EVENT,0);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                pInstance->SetData(TYPE_CRUSADERS,IN_PROGRESS);
                break;
 
@@ -1120,27 +1121,27 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                DoScriptText(-1713537, m_creature);
                UpdateTimer = 10000;
                pInstance->SetData(TYPE_EVENT,4015);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
 
         case 4015:
                pInstance->SetData(TYPE_STAGE,7);
                pInstance->SetData(TYPE_VALKIRIES,IN_PROGRESS);
                       m_creature->SummonCreature(NPC_LIGHTBANE, SpawnLoc[3].x, SpawnLoc[3].y, SpawnLoc[3].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                      if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_LIGHTBANE))) {
+                      if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_LIGHTBANE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
                                 }
                       m_creature->SummonCreature(NPC_DARKBANE, SpawnLoc[4].x, SpawnLoc[4].y, SpawnLoc[4].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-                      if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_DARKBANE))) {
+                      if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_DARKBANE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
                                 pTemp->SetInCombatWithZone();
                                 }
                UpdateTimer = 10000;
                pInstance->SetData(TYPE_EVENT,4016);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
 
         case 4040:
@@ -1261,7 +1262,7 @@ struct MANGOS_DLL_DECL npc_garrosh_tocAI : public ScriptedAI
                DoScriptText(-1713734, m_creature);
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,3091);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 4030:
                DoScriptText(-1713748, m_creature);
@@ -1341,7 +1342,7 @@ struct MANGOS_DLL_DECL npc_rinn_tocAI : public ScriptedAI
                DoScriptText(-1713534, m_creature);
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,3090);
-               pInstance->DoUseDoorOrButton(pInstance->GetData64(GO_MAIN_GATE_DOOR));
+               pInstance->DoUseDoorOrButton(GO_MAIN_GATE_DOOR);
                break;
         case 4020:
                DoScriptText(-1713548, m_creature);
