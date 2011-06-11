@@ -72,17 +72,17 @@ struct MANGOS_DLL_DECL boss_rimefangAI : public ScriptedAI
     uint32 m_uiHoarfrostTimer;
     uint32 m_uiIcyBlastTimer;
     uint32 m_uiIcyBlastSlowTimer;
-    uint64 m_uiMainTargetGUID;
+    ObjectGuid m_uiMainTargetGUID;
 
     void Reset()
     {
         m_uiHoarfrostTimer      = 25000;
         m_uiIcyBlastTimer       = 35000;
         m_uiIcyBlastSlowTimer   = 30000;
-        m_uiMainTargetGUID      = 0;
+        m_uiMainTargetGUID.Clear();
     }
 
-    void SetMainTarget(uint64 m_uiTargetGUID)
+    void SetMainTarget(ObjectGuid m_uiTargetGUID)
     {
         m_uiMainTargetGUID = m_uiTargetGUID;
     }
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_tyrannusAI : public ScriptedAI
                 if (DoCastSpellIfCan(pTarget, SPELL_MARK_OF_RIMEFANG) == CAST_OK)
                 {
                     if (Creature* pRimefang = m_pInstance->GetSingleCreatureFromStorage(NPC_RIMEFANG))
-                        ((boss_rimefangAI*)pRimefang->AI())->SetMainTarget(pTarget->GetGUID());
+                        ((boss_rimefangAI*)pRimefang->AI())->SetMainTarget(pTarget->GetObjectGuid());
 
                     DoScriptText(SAY_MARK, m_creature);
                     m_uiMarkOfRimefangTimer = urand(30000, 40000);
