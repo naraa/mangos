@@ -74,7 +74,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
     uint8 currentDoor;
     uint8 currentDoor2;
     int8 portalscount;
-    std::list<uint64> mobsGUIDList;
+    std::list<ObjectGuid> mobsGUIDList;
     uint32 speedK;
     Creature* dummyTarget;
 
@@ -96,26 +96,26 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
         currentDoor = 0;
         currentDoor2 = 0;
         mobsGUIDList.clear();
-        if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_VALITHRIA_QUEST)))
+        if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA_QUEST))
                 if (pTemp->GetVisibility() == VISIBILITY_ON)
                             pTemp->SetVisibility(VISIBILITY_OFF);
         doCast(SPELL_CORRUPTION);
     }
 
-    uint64 GetDoor(uint8 doornum)
+    uint32 GetDoor(uint8 doornum)
     {
         switch (doornum) {
             case 1:
-               return pInstance->GetData64(GO_VALITHRIA_DOOR_1);
+               return GO_VALITHRIA_DOOR_1;
                break;
             case 2:
-               return pInstance->GetData64(GO_VALITHRIA_DOOR_2);
+               return GO_VALITHRIA_DOOR_2;
                break;
             case 3:
-               return pInstance->GetData64(GO_VALITHRIA_DOOR_3);
+               return GO_VALITHRIA_DOOR_3;
                break;
             case 4:
-               return pInstance->GetData64(GO_VALITHRIA_DOOR_4);
+               return GO_VALITHRIA_DOOR_4;
                break;
             default:
                return 0;
@@ -158,7 +158,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
                               default: randommob = NPC_RISEN_ARCHMAGE;       break;
                               }
                        if (Unit* pTemp = doSummon(randommob, SpawnLoc[door].x, SpawnLoc[door].y, SpawnLoc[door].z, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 300000))
-                            mobsGUIDList.push_back(pTemp->GetGUID());
+                            mobsGUIDList.push_back(pTemp->GetObjectGuid());
                        }
     }
 
@@ -207,7 +207,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
             battlestarted = true;
             pInstance->SetData(TYPE_VALITHRIA, IN_PROGRESS);
             m_creature->SetHealth(m_creature->GetMaxHealth()/2.0f);
-            dummyTarget = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_COMBAT_TRIGGER));
+            dummyTarget = pInstance->GetSingleCreatureFromStorage(NPC_COMBAT_TRIGGER);
             if (!dummyTarget)
                 dummyTarget = m_creature->SummonCreature(NPC_COMBAT_TRIGGER, SpawnLoc[0].x, SpawnLoc[0].y, SpawnLoc[0].z, 0.0f, TEMPSUMMON_MANUAL_DESPAWN, 1000);
             if (!dummyTarget->isAlive())
@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
         if (mobsGUIDList.empty())
             return;
 
-        for(std::list<uint64>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
+        for(std::list<ObjectGuid>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                 if (pTemp->isAlive()) 
@@ -346,7 +346,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
                     return;
                     break;
             case 9:
-                    if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_VALITHRIA_QUEST)))
+                    if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_VALITHRIA_QUEST))
                     {
                         pTemp->SetPhaseMask(65535,true);
                         if (pTemp->HasAura(SPELL_CORRUPTION))

@@ -142,8 +142,8 @@ struct MANGOS_DLL_DECL boss_valanar_iccAI : public BSWScriptedAI
         if (!m_pInstance)
             return;
 
-        pBrother1 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_TALDARAM));
-        pBrother2 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_KELESETH));
+        pBrother1 = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM);
+        pBrother2 = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH);
 
         if (pBrother1 && !pBrother1->isAlive())
             pBrother1->Respawn();
@@ -294,8 +294,8 @@ struct MANGOS_DLL_DECL boss_taldaram_iccAI : public BSWScriptedAI
         if (!m_pInstance)
             return;
 
-        pBrother1 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VALANAR));
-        pBrother2 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_KELESETH));
+        pBrother1 = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR);
+        pBrother2 = m_pInstance->GetSingleCreatureFromStorage(NPC_KELESETH);
         if (pBrother1 && !pBrother1->isAlive())
             pBrother1->Respawn();
         if (pBrother2 && !pBrother2->isAlive())
@@ -457,8 +457,8 @@ struct MANGOS_DLL_DECL boss_keleseth_iccAI : public BSWScriptedAI
     {
         if (!m_pInstance)
             return;
-        pBrother1 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_TALDARAM));
-        pBrother2 = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VALANAR));
+        pBrother1 = m_pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM);
+        pBrother2 = m_pInstance->GetSingleCreatureFromStorage(NPC_VALANAR);
 
         if (pBrother1 && !pBrother1->isAlive())
             pBrother1->Respawn();
@@ -884,11 +884,11 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathel_introAI : public BSWScriptedAI
         }
         else
         {
-            if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_TALDARAM)))
+            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
                 doCast(SPELL_FAKE_DEATH,pPrince);
-            if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_KELESETH)))
+            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
                 doCast(SPELL_FAKE_DEATH,pPrince);
-            if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_VALANAR)))
+            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
                 doCast(SPELL_FAKE_DEATH,pPrince);
             pInstance->SetData(TYPE_BLOOD_COUNCIL, NOT_STARTED);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -939,15 +939,15 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathel_introAI : public BSWScriptedAI
                           break;
                 case 810:
                           DoScriptText(-1631311, m_creature);
-                          if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_TALDARAM)))
+                          if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
                           {
                               doRemove(SPELL_FAKE_DEATH,pPrince);
                           }
-                          if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_KELESETH)))
+                          if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
                           {
                               doRemove(SPELL_FAKE_DEATH,pPrince);
                           }
-                          if (Creature* pPrince = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_VALANAR)))
+                          if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
                           {
                               doRemove(SPELL_FAKE_DEATH,pPrince);
                           }

@@ -175,7 +175,6 @@ public:
 
     void SetData(uint32 uiType, uint32 uiData);
     uint32 GetData(uint32 uiType);
-    uint64 GetData64(uint32 uiType);
 
     const char* Save() { return strSaveData.c_str(); }
     void Load(const char* chrIn);
@@ -189,86 +188,6 @@ private:
 
     //Creatures GUID
     uint32 m_auiEncounter[MAX_ENCOUNTERS+1];
-    uint64 m_uiMarrogwarGUID;
-    uint64 m_uiDeathWhisperGUID;
-    uint64 m_uiSaurfangGUID;
-    uint64 m_uiRotfaceGUID;
-    uint64 m_uiFestergutGUID;
-    uint64 m_uiPutricideGUID;
-    uint64 m_uiTaldaramGUID;
-    uint64 m_uiValanarGUID;
-    uint64 m_uiKelesethGUID;
-    uint64 m_uiLanathelGUID;
-    uint64 m_uiLanathelintroGUID;
-    uint64 m_uiValithriaGUID;
-    uint64 m_uiValithriaQuestGUID;
-    uint64 m_uiSindragosaGUID;
-    uint64 m_uiLichKingGUID;
-    uint64 m_uiGasReleaseValveGUID;
-    uint64 m_uiBloodOrbCtrlGUID;
-
-    uint64 m_uiRimefangGUID;
-    uint64 m_uiSpinestalkerGUID;
-
-    uint64 m_uiStinkyGUID;
-    uint64 m_uiPreciousGUID;
-
-    uint64 m_uidummyTargetGUID;
-
-    uint64 m_uiIcewall1GUID;
-    uint64 m_uiIcewall2GUID;
-    uint64 m_uiSaurfangDoorGUID;
-    uint64 m_uiOratoryDoorGUID;
-    uint64 m_uiDeathWhisperElevatorGUID;
-    uint64 m_uiOrangePlagueGUID;
-    uint64 m_uiGreenPlagueGUID;
-    uint64 m_uiSDoorGreenGUID;
-    uint64 m_uiSDoorOrangeGUID;
-    uint64 m_uiSDoorCollisionGUID;
-    uint64 m_uiScientistDoorGUID;
-    uint64 m_uiCrimsonDoorGUID;
-    uint64 m_uiBloodwingDoorGUID;
-    uint64 m_uiCounsilDoor1GUID;
-    uint64 m_uiCounsilDoor2GUID;
-    uint64 m_uiGreenDragonDoor1GUID;
-    uint64 m_uiGreenDragonDoor2GUID;
-    uint64 m_uiFrostwingDoorGUID;
-
-    uint64 m_uiValithriaDoor1GUID;
-    uint64 m_uiValithriaDoor2GUID;
-    uint64 m_uiValithriaDoor3GUID;
-    uint64 m_uiValithriaDoor4GUID;
-
-    uint64 m_uiSindragosaDoor1GUID;
-    uint64 m_uiSindragosaDoor2GUID;
-
-    uint64 m_uiIceShard1GUID;
-    uint64 m_uiIceShard2GUID;
-    uint64 m_uiIceShard3GUID;
-    uint64 m_uiIceShard4GUID;
-
-    uint64 m_uiFrostyWindGUID;
-    uint64 m_uiFrostyEdgeGUID;
-    uint64 m_uiSnowEdgeGUID;
-    uint64 m_uiArthasPlatformGUID;
-    uint64 m_uiArthasPrecipiceGUID;
-
-    uint64 m_uiFrostmourneGUID;
-    uint64 m_uiFrostmourneTriggerGUID;
-    uint64 m_uiFrostmourneHolderGUID;
-
-    uint64 m_uiSaurfangCacheGUID;
-    uint64 m_uiGunshipArmoryAGUID;
-    uint64 m_uiGunshipArmoryHGUID;
-    uint64 m_uiValitriaCacheGUID;
-
-    uint64 m_uiGunshipArmoryH_ID;
-    uint64 m_uiGunshipArmoryA_ID;
-
-    uint64 m_uiMarrogarDoor;
-    uint64 m_uiBloodPrinceDoor;
-    uint64 m_uiIceCrownGrate;
-    uint64 m_uiSindragosaEntrance;
 
     uint32 m_uiCouncilInvocation;
 
@@ -278,7 +197,10 @@ private:
 
     uint32 m_uiStinkystate;
     uint32 m_uiPreciousstate;
-
+    uint32 m_uiGunshipArmoryA_ID;
+    uint32 m_uiGunshipArmoryH_ID;
+    uint32 m_uiValithriaCache;
+    uint32 m_uiSaurfangCache;
 };
 
 enum AchievementCriteriaIds

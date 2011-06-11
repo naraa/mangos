@@ -77,7 +77,7 @@ bool GOGossipHello_go_icecrown_teleporter(Player *pPlayer, GameObject* pGo)
     if (PortalLoc[i].active == true && (PortalLoc[i].state == true || pInstance->GetData(PortalLoc[i].encounter) == DONE || pPlayer->isGameMaster()))
              pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_TAXI, PortalLoc[i].textNum, GOSSIP_SENDER_MAIN, i);
     };
-    pPlayer->SEND_GOSSIP_MENU(TELEPORT_GOSSIP_MESSAGE, pGo->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(TELEPORT_GOSSIP_MESSAGE, pGo->GetObjectGuid());
     return true;
 }
 
@@ -89,9 +89,9 @@ bool GOHello_go_plague_sigil(Player *player, GameObject* pGo)
     if (pInstance->GetData(TYPE_FESTERGUT) == DONE
         && pInstance->GetData(TYPE_ROTFACE) == DONE)
         {
-            pInstance->DoOpenDoor(pInstance->GetData64(GO_SCIENTIST_DOOR_ORANGE));
-            pInstance->DoOpenDoor(pInstance->GetData64(GO_SCIENTIST_DOOR_GREEN));
-            pInstance->DoOpenDoor(pInstance->GetData64(GO_SCIENTIST_DOOR_COLLISION));
+            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE);
+            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
+            pInstance->DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
         };
     return true;
 }
@@ -102,7 +102,7 @@ bool GOHello_go_bloodwing_sigil(Player *player, GameObject* pGo)
     if(!pInstance) return false;
 
     if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-            pInstance->DoOpenDoor(pInstance->GetData64(GO_BLOODWING_DOOR));
+            pInstance->DoOpenDoor(GO_BLOODWING_DOOR);
 
     return true;
 }
@@ -113,7 +113,7 @@ bool GOHello_go_frostwing_sigil(Player *player, GameObject* pGo)
     if(!pInstance) return false;
 
     if (pInstance->GetData(TYPE_SAURFANG) == DONE)
-        pInstance->DoOpenDoor(pInstance->GetData64(GO_FROSTWING_DOOR));
+        pInstance->DoOpenDoor(GO_FROSTWING_DOOR);
 
     return true;
 }

@@ -262,7 +262,7 @@ struct MANGOS_DLL_DECL  mob_blood_beastAI : public BSWScriptedAI
 
     void Reset()
     {
-         pOwner = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_DEATHBRINGER_SAURFANG));
+         pOwner = pInstance->GetSingleCreatureFromStorage(NPC_DEATHBRINGER_SAURFANG);
          resetTimers();
          scentcasted = false;
     }

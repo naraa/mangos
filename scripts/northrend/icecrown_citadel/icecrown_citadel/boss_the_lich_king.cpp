@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
     bool finalphase;
     Creature* pTirion;
     Creature* pFrostmourne;
-    std::list<uint64> mobsGUIDList;
+    std::list<ObjectGuid> mobsGUIDList;
 
     void Reset()
     {
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
         pInstance->DoCloseDoor(pInstance->GetData64(GO_ICESHARD_3));
         pInstance->DoCloseDoor(pInstance->GetData64(GO_ICESHARD_4));
         if (oldflag)
-            if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARTHAS_PLATFORM)))
+            if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARTHAS_PLATFORM))
             {
                pGoFloor->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
                pGoFloor->SetUInt32Value(GAMEOBJECT_BYTES_1,oldflag);
@@ -238,7 +238,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
               summoned->SetInCombatWith(pTarget);
               summoned->AddThreat(pTarget,100.0f);
            }
-        mobsGUIDList.push_back(summoned->GetGUID());
+        mobsGUIDList.push_back(summoned->GetObjectGuid());
     }
 
     void DespawnMobs()
@@ -246,7 +246,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
         if (mobsGUIDList.empty())
             return;
 
-        for(std::list<uint64>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
+        for(std::list<ObjectGuid>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                 if (pTemp->isAlive()) 
@@ -359,10 +359,11 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                           finalphase = true;
                           doCast(SPELL_FURY_OF_FROSTMOURNE);
                           pInstance->SetData(TYPE_EVENT,13020);
-                          if (pTirion = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_TIRION))) {
-                                m_creature->SetInCombatWith(pTirion);
-                                pTirion->AddThreat(m_creature, 1000.0f);
-                                }
+                          if (pTirion = pInstance->GetSingleCreatureFromStorage(NPC_TIRION)) 
+                          {
+                              m_creature->SetInCombatWith(pTirion);
+                              pTirion->AddThreat(m_creature, 1000.0f);
+                          }
                           m_creature->SetInCombatWithZone();
                           break;
                 case 13020:
@@ -421,9 +422,9 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                           pInstance->SetData(TYPE_EVENT,13290);
                           stage = 13;
                           if (pFrostmourne) pFrostmourne->ForcedDespawn();
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_FROSTMOURNE_TRIGGER)))
+                          if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_FROSTMOURNE_TRIGGER))
                              pTemp->ForcedDespawn();
-                          if (Creature* pTemp = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_FROSTMOURNE_HOLDER)))
+                          if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_FROSTMOURNE_HOLDER))
                              pTemp->ForcedDespawn();
                           SetCombatMovement(true);
                           battlestarted = true;
@@ -508,7 +509,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                             pInstance->DoOpenDoor(pInstance->GetData64(GO_ICESHARD_2));
                             pInstance->DoOpenDoor(pInstance->GetData64(GO_ICESHARD_3));
                             pInstance->DoOpenDoor(pInstance->GetData64(GO_ICESHARD_4));
-                            if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARTHAS_PLATFORM)))
+                            if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARTHAS_PLATFORM))
                             {
                                  pGoFloor->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
                                  oldflag = pGoFloor->GetUInt32Value(GAMEOBJECT_BYTES_1);
@@ -562,7 +563,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                     break;
             case 7:          // Platform restore
                     if (movementstarted) return;
-                    if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARTHAS_PLATFORM)))
+                    if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARTHAS_PLATFORM))
                     {
                         pGoFloor->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
                         pGoFloor->SetUInt32Value(GAMEOBJECT_BYTES_1,oldflag);
@@ -597,7 +598,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
             case 9:           // Platform destruct
                     if (timedQuery(SPELL_QUAKE, diff))
                        {
-                            if (GameObject* pGoFloor = pInstance->instance->GetGameObject(pInstance->GetData64(GO_ARTHAS_PLATFORM)))
+                            if (GameObject* pGoFloor = pInstance->GetSingleGameObjectFromStorage(GO_ARTHAS_PLATFORM))
                             {
                                  pGoFloor->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_DAMAGED | GO_FLAG_NODESPAWN);
                                  oldflag = pGoFloor->GetUInt32Value(GAMEOBJECT_BYTES_1);
@@ -672,7 +673,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
     uint32 nextEvent;
     uint32 nextPoint;
     bool movementstarted;
-    uint64 MenethilGUID;
+    ObjectGuid MenethilGUID;
 
     void EnterEvadeMode()
     {
@@ -823,7 +824,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                           UpdateTimer = 12000;
                           {
                               Creature* pMenethil = m_creature->SummonCreature(NPC_MENETHIL, m_creature->GetPositionX()+5, m_creature->GetPositionY()+5, m_creature->GetPositionZ(), 0, TEMPSUMMON_MANUAL_DESPAWN, 5000);
-                              MenethilGUID = pMenethil->GetGUID();
+                              MenethilGUID = pMenethil->GetObjectGuid();
                           }
                           pInstance->SetData(TYPE_EVENT,13250);
                           DoScriptText(-1631560, m_creature->GetMap()->GetCreature(MenethilGUID));
@@ -841,7 +842,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                 case 13270:
                           UpdateTimer = 6000;
                           pInstance->SetData(TYPE_EVENT,13280);
-                          if (Creature* pLichKing = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_LICH_KING)))
+                          if (Creature* pLichKing = pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
                           {
                               m_creature->SetInCombatWith(pLichKing);
                               pLichKing->SetInCombatWith(m_creature);
@@ -879,7 +880,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                           UpdateTimer =90000;
                           pInstance->SetData(TYPE_EVENT,14030);
                           m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_NONE);
-                          if (Creature* pLichKing = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_LICH_KING)))
+                          if (Creature* pLichKing = pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
                               pLichKing->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
                           doSendCinematic();
                           break;
@@ -891,7 +892,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                               if (Creature* pMenethil = m_creature->GetMap()->GetCreature(MenethilGUID))
                                   if (pMenethil->isAlive())
                                       pMenethil->ForcedDespawn();
-                              if (Creature* pLichKing = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_LICH_KING)))
+                              if (Creature* pLichKing = pInstance->GetSingleCreatureFromStorage(NPC_LICH_KING))
                                   pLichKing->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
                           }
                           pInstance->SetData(TYPE_EVENT,0);
@@ -920,12 +921,12 @@ bool GossipHello_boss_tirion_icc(Player* pPlayer, Creature* pCreature)
     if (pInstance->GetData(TYPE_LICH_KING) != NOT_STARTED &&
         pInstance->GetData(TYPE_LICH_KING) != FAIL )
     {
-        pPlayer->PlayerTalkClass->SendGossipMenu(721002, pCreature->GetGUID());
+        pPlayer->PlayerTalkClass->SendGossipMenu(721002, pCreature->GetObjectGuid());
         return true;
     };
 
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3631608, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF);
-    pPlayer->PlayerTalkClass->SendGossipMenu(721001, pCreature->GetGUID());
+    pPlayer->PlayerTalkClass->SendGossipMenu(721001, pCreature->GetObjectGuid());
     return true;
 };
 

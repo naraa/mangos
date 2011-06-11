@@ -130,7 +130,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public BSWScriptedAI
 
     if (!pet)
     {
-        if (Creature* pGuard = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_PRECIOUS)))
+        if (Creature* pGuard = pInstance->GetSingleCreatureFromStorage(NPC_PRECIOUS))
             if (!pGuard->isAlive())
             {
                  pet = true;
