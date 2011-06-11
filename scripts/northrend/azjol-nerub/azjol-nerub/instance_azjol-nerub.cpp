@@ -31,27 +31,9 @@ struct MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
     uint32 m_auiEncounter[MAX_ENCOUNTER];
     std::string strInstData;
 
-    uint64 m_uiDoor_KrikthirGUID;
-    uint64 m_uiDoor_Anubarak_1GUID;
-    uint64 m_uiDoor_Anubarak_2GUID;
-    uint64 m_uiDoor_Anubarak_3GUID;
-
-    uint64 uiWatcherGashra;
-    uint64 uiWatcherSilthik;
-    uint64 uiWatcherNarjil;
-
     void Initialize()
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-        m_uiDoor_KrikthirGUID = 0;
-        m_uiDoor_Anubarak_1GUID = 0;
-        m_uiDoor_Anubarak_2GUID = 0;
-        m_uiDoor_Anubarak_3GUID = 0;
-
-        uiWatcherGashra = 0;
-        uiWatcherSilthik = 0;
-        uiWatcherNarjil = 0;
     }
 
     void OnObjectCreate(GameObject* pGo)
@@ -59,48 +41,35 @@ struct MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
         switch(pGo->GetEntry())
         {
             case GO_DOOR_KRIKTHIR:
-                m_uiDoor_KrikthirGUID = pGo->GetGUID();
                 if (m_auiEncounter[0] == DONE)
                     pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case GO_DOOR_ANUBARAK_1:
-                m_uiDoor_Anubarak_1GUID = pGo->GetGUID();
                 if (m_auiEncounter[2] == DONE || m_auiEncounter[2] == NOT_STARTED)
                     pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case GO_DOOR_ANUBARAK_2:
-                m_uiDoor_Anubarak_2GUID = pGo->GetGUID();
                 if (m_auiEncounter[2] == DONE || m_auiEncounter[2] == NOT_STARTED)
                     pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case GO_DOOR_ANUBARAK_3:
-                m_uiDoor_Anubarak_3GUID = pGo->GetGUID();
                 if (m_auiEncounter[2] == DONE || m_auiEncounter[2] == NOT_STARTED)
                     pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
         }
+        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
     void OnCreatureCreate(Creature* pCreature)
     {
         switch(pCreature->GetEntry())
         {
-            case 28730:    uiWatcherGashra = pCreature->GetGUID();   break;
-            case 28731:    uiWatcherSilthik = pCreature->GetGUID();  break;
-            case 28729:    uiWatcherNarjil = pCreature->GetGUID();   break;
+            case NPC_GASHRA:
+            case NPC_SILTHIK:
+            case NPC_NARJIL:
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                break;
         }
-    }
-
-    uint64 GetData64(uint32 identifier)
-    {
-        switch(identifier)
-        {
-            case DATA_WATCHER_GASHRA:               return uiWatcherGashra;
-            case DATA_WATCHER_SILTHIK:              return uiWatcherSilthik;
-            case DATA_WATCHER_NARJIL:               return uiWatcherNarjil;
-        }
-
-        return 0;
     }
 
     void SetData(uint32 uiType, uint32 uiData)
@@ -110,7 +79,7 @@ struct MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
             case TYPE_KRIKTHIR:
                 m_auiEncounter[0] = uiData;
                 if (uiData == DONE)
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_KrikthirGUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_KRIKTHIR))
                         pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case TYPE_HADRONOX:
@@ -120,20 +89,20 @@ struct MANGOS_DLL_DECL instance_azjol_nerub : public ScriptedInstance
                 m_auiEncounter[2] = uiData;
                 if (uiData == DONE || uiData == NOT_STARTED)
                 {
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_1GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_1))
                         pGo->SetGoState(GO_STATE_ACTIVE);
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_2GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_2))
                         pGo->SetGoState(GO_STATE_ACTIVE);
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_3GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_3))
                         pGo->SetGoState(GO_STATE_ACTIVE);
                 }
                 if (uiData == IN_PROGRESS)
                 {
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_1GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_1))
                         pGo->SetGoState(GO_STATE_READY);
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_2GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_2))
                         pGo->SetGoState(GO_STATE_READY);
-                    if (GameObject* pGo = instance->GetGameObject(m_uiDoor_Anubarak_3GUID))
+                    if (GameObject* pGo = GetSingleGameObjectFromStorage(GO_DOOR_ANUBARAK_3))
                         pGo->SetGoState(GO_STATE_READY);
                 }
                 break;

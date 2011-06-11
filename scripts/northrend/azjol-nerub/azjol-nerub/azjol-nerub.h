@@ -33,14 +33,19 @@ enum
     TYPE_HADRONOX               = 2,
     TYPE_ANUBARAK               = 3,
 
+    DATA_WATCHER_GASHRA         = 104,
+    DATA_WATCHER_SILTHIK        = 105,
+    DATA_WATCHER_NARJIL         = 106,
+
     GO_DOOR_KRIKTHIR            = 192395,
     GO_DOOR_ANUBARAK_1          = 192396,
     GO_DOOR_ANUBARAK_2          = 192397,
     GO_DOOR_ANUBARAK_3          = 192398,
 
-    DATA_WATCHER_GASHRA         = 4,
-    DATA_WATCHER_SILTHIK        = 5,
-    DATA_WATCHER_NARJIL         = 6
+    NPC_GASHRA                  = 28730,
+    NPC_SILTHIK                 = 28731,
+    NPC_NARJIL                  = 28729,
+
 };
 
 #endif

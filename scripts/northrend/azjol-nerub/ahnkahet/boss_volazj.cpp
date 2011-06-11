@@ -128,7 +128,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
     uint8 m_uiPhase;
-    uint64 m_uiLastShiverTargetGUID;
+    ObjectGuid m_uiLastShiverTargetGUID;
     uint8 m_uiShiverJumpTimer;
     uint8 m_uiLastSacrifaceHP;
 
@@ -150,7 +150,6 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
         m_uiShiverTimer = 18000;
         m_uiCheckTimer = 1000;
         m_uiShiverJumpTimer = 0;
-        m_uiLastShiverTargetGUID = 0;
 
         m_creature->SetRespawnDelay(DAY);
 
@@ -229,7 +228,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
             //Health check
             if(m_uiCheckTimer <= uiDiff)
             {
-                uint8 health = m_creature->GetHealth()*100 / m_creature->GetMaxHealth();                    
+                uint8 health = m_creature->GetHealth()*100 / m_creature->GetMaxHealth();
                 if(m_uiLastSacrifaceHP == 0 && health <= 50)
                 {
                     m_creature->InterruptNonMeleeSpells(true);
@@ -282,7 +281,7 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
     //This do everything which is needed by Insanity spell (CUSTOM)
     void DoInsanity()
     {
-        m_creature->SummonCreature(NPC_ANCIENT_VOID, SpawnLoc[8].x, SpawnLoc[8].y, SpawnLoc[8].z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);             
+        m_creature->SummonCreature(NPC_ANCIENT_VOID, SpawnLoc[8].x, SpawnLoc[8].y, SpawnLoc[8].z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);
 
         for(int i = 0; i <= 7; ++i)
             m_creature->SummonCreature(NPC_TWISTED_VISAGE, SpawnLoc[i].x, SpawnLoc[i].y, SpawnLoc[i].z, 0, TEMPSUMMON_CORPSE_DESPAWN, 0);

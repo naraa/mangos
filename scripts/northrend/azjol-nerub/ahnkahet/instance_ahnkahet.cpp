@@ -31,32 +31,22 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
     uint32 m_auiEncounter[MAX_ENCOUNTER];
     std::string strInstData;
 
-    uint64 m_uiElderNadoxGUID;
-    uint64 m_uiJedogaShadowseekerGUID;
-    uint64 m_uiTaldaramGUID;
-    uint64 m_uiTaldaramDoorGUID;
-    uint64 m_uiTaldaramVortexGUID;
     uint8 m_uiDevicesActivated;
 
     void Initialize()
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-
-        m_uiElderNadoxGUID = 0;
-        m_uiJedogaShadowseekerGUID = 0;
-        m_uiTaldaramGUID = 0;
-        m_uiTaldaramDoorGUID = 0;
-        m_uiTaldaramVortexGUID = 0;
-        m_uiDevicesActivated = 0;
     }
 
     void OnCreatureCreate(Creature* pCreature)
     {
         switch(pCreature->GetEntry())
         {
-            case NPC_ELDER_NADOX:         m_uiElderNadoxGUID = pCreature->GetGUID();         break;
-            case NPC_JEDOGA_SHADOWSEEKER: m_uiJedogaShadowseekerGUID = pCreature->GetGUID(); break;
-            case NPC_TALDARAM:            m_uiTaldaramGUID = pCreature->GetGUID(); break;
+            case NPC_ELDER_NADOX:
+            case NPC_JEDOGA_SHADOWSEEKER:
+            case NPC_TALDARAM:
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+                break;
         }
     }
 
@@ -65,9 +55,8 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
         switch(pGo->GetEntry())
         {
             case GO_DOOR_TALDARAM:
-                m_uiTaldaramDoorGUID = pGo->GetGUID();
                 if (m_auiEncounter[1] == DONE)
-                    DoUseDoorOrButton(m_uiTaldaramDoorGUID);
+                    pGo->SetGoState(GO_STATE_ACTIVE);
                 break;
             case GO_ANCIENT_DEVICE_L:
                 if (m_auiEncounter[1] == NOT_STARTED)
@@ -78,11 +67,11 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
                     pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
                 break;
             case GO_VORTEX:
-                m_uiTaldaramVortexGUID = pGo->GetGUID();
                 if (m_auiEncounter[1] != NOT_STARTED)
-                    DoUseDoorOrButton(m_uiTaldaramVortexGUID);
+                    pGo->SetGoState(GO_STATE_READY);
                 break;
         }
+        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
     void SetData(uint32 uiType, uint32 uiData)
@@ -103,13 +92,13 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
                     if (m_uiDevicesActivated == 2)
                     {
                         m_auiEncounter[1] = uiData;
-                        DoUseDoorOrButton(m_uiTaldaramVortexGUID);
+                        DoUseDoorOrButton(GO_VORTEX);
                     }
                 }
                 if (uiData == DONE)
                 {
                     m_auiEncounter[1] = uiData;
-                    DoUseDoorOrButton(m_uiTaldaramDoorGUID);
+                    DoUseDoorOrButton(GO_DOOR_TALDARAM);
                 }
                 break;
             case TYPE_JEDOGA:
@@ -186,17 +175,6 @@ struct MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
         return 0;
     }
 
-    uint64 GetData64(uint32 uiData)
-    {
-        switch(uiData)
-        {
-            case NPC_ELDER_NADOX:
-                return m_uiElderNadoxGUID;
-            case NPC_JEDOGA_SHADOWSEEKER:
-                return m_uiJedogaShadowseekerGUID;
-        }
-        return 0;
-    }
 };
 
 InstanceData* GetInstanceData_instance_ahnkahet(Map* pMap)
