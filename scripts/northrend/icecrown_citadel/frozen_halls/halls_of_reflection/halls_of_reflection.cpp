@@ -478,7 +478,7 @@ bool GossipHello_npc_jaina_and_sylvana_HRintro(Player* pPlayer, Creature* pCreat
     BSWScriptedInstance* m_pInstance = (BSWScriptedInstance*)pCreature->GetInstanceData();
 
     if(pCreature->isQuestGiver())
-       pPlayer->PrepareQuestMenu( pCreature->GetGUID());
+       pPlayer->PrepareQuestMenu( pCreature->GetObjectGuid());
 
     switch(pCreature->GetEntry())
     {
@@ -492,7 +492,7 @@ bool GossipHello_npc_jaina_and_sylvana_HRintro(Player* pPlayer, Creature* pCreat
             break;
     }
 
-    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetGUID());
+    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -974,11 +974,11 @@ bool GossipHello_npc_jaina_and_sylvana_HRextro(Player* pPlayer, Creature* pCreat
     if(m_pInstance->GetData(TYPE_LICH_KING) == DONE) return false;
 
     if(pCreature->isQuestGiver())
-       pPlayer->PrepareQuestMenu( pCreature->GetGUID());
+       pPlayer->PrepareQuestMenu( pCreature->GetObjectGuid());
 
     pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3594540, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
 
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
 
     return true;
 }
