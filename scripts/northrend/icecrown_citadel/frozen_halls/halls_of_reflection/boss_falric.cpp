@@ -150,7 +150,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
 
              if(Creature* Summon = m_creature->SummonCreature(pSummon, SpawnLoc[m_uiLocNo].x, SpawnLoc[m_uiLocNo].y, SpawnLoc[m_uiLocNo].z, SpawnLoc[m_uiLocNo].o, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 30000))
              {
-                m_uiSummonGUID[i] = Summon->GetGUID();
+                m_uiSummonGUID[i] = Summon->GetObjectGuid();
                 Summon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 Summon->setFaction(974);
              }
