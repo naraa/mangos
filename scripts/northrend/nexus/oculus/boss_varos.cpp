@@ -99,7 +99,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
     uint32 m_uiDragonMoveTimer;
     uint32 m_uiCheckTimer;
 
-    uint64 m_uiAzureDrakeGUID;
+    ObjectGuid m_uiAzureDrakeGUID;
 
     bool m_bIsCastChain;
 
@@ -135,7 +135,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
            if(Creature* Dragon = m_pInstance->instance->GetCreature(m_uiAzureDrakeGUID))
               Dragon->DealDamage(Dragon, Dragon->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
         }
-        m_uiAzureDrakeGUID = 0;
+        m_uiAzureDrakeGUID.Clear();
     }
 
     void CheckVehicle()
@@ -167,7 +167,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
         {
            Dragon->AddSplineFlag(SPLINEFLAG_FLYING);
            Dragon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-           m_uiAzureDrakeGUID = Dragon->GetGUID();
+           m_uiAzureDrakeGUID = Dragon->GetObjectGuid();
         }
     }
 

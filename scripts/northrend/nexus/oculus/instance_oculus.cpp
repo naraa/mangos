@@ -44,14 +44,9 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         Initialize();
     };
 
-    uint64 uiDrakos;
-    uint64 m_uiVarosGUID;
-    uint64 m_uiUromGUID;
-    uint64 m_uiEregosGUID;
-    uint64 uiProect;
-    uint64 uiCacheEregosGUID;
-    uint64 uiCacheEregosHGUID;
-    uint64 m_uiSpotLightGUID;
+    ObjectGuid uiCacheEregosGUID;
+    ObjectGuid uiCacheEregosHGUID;
+    ObjectGuid m_uiSpotLightGUID;
 
     uint32 m_auiEncounter[MAX_ENCOUNTERS+1];
 
@@ -63,12 +58,6 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         for (uint8 i = 0; i < MAX_ENCOUNTERS+1; ++i)
             m_auiEncounter[i] = NOT_STARTED;
 
-        uiCacheEregosGUID = 0;
-        m_uiSpotLightGUID = 0;
-        uiProect = 0;
-        m_uiVarosGUID = 0;
-        m_uiUromGUID = 0;
-        m_uiEregosGUID = 0;
         m_auiEncounter[TYPE_ROBOTS] = 10;
         m_auiEncounter[TYPE_UROM_PHASE] = 0;
     }
@@ -78,13 +67,13 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         switch(pGO->GetEntry())
         {
             case GO_EREGOS_CACHE:
-                uiCacheEregosGUID = pGO->GetGUID();
+                uiCacheEregosGUID = pGO->GetObjectGuid();
                 break;
             case GO_EREGOS_CACHE_H:
-                uiCacheEregosHGUID = pGO->GetGUID();
+                uiCacheEregosHGUID = pGO->GetObjectGuid();
                 break;
             case GO_SPOTLIGHT:
-                m_uiSpotLightGUID = pGO->GetGUID();
+                m_uiSpotLightGUID = pGO->GetObjectGuid();
                 break;
         }
     }
@@ -94,19 +83,11 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         switch(pCreature->GetEntry())
         {
             case NPC_DRAKOS:
-                uiDrakos = pCreature->GetGUID();
-                break;
             case NPC_VAROS:
-                m_uiVarosGUID = pCreature->GetGUID();
-                break;
             case NPC_UROM:
-                m_uiUromGUID = pCreature->GetGUID();
-                break;
             case NPC_EREGOS:
-                m_uiEregosGUID = pCreature->GetGUID();
-                break;
             case NPC_BALGAR_IMAGE:
-                uiProect = pCreature->GetGUID();
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                 break;
         }
     }
@@ -132,7 +113,7 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
                 m_auiEncounter[type] = m_auiEncounter[type] - data;
                 if(m_auiEncounter[type] == 0)
                 {
-                    if(Creature* pVaros = instance->GetCreature(m_uiVarosGUID))
+                    if(Creature* pVaros = GetSingleCreatureFromStorage(NPC_VAROS))
                     {
                         DoScriptText(SAY_VAROS_SPAWN, pVaros);
                         pVaros->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -177,18 +158,6 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
                 return m_auiEncounter[type];
             default:
                 return 0;
-        }
-        return 0;
-    }
-
-    uint64 GetData64(uint32 identifier)
-    {
-        switch(identifier)
-        {
-            case DATA_DRAKOS:                 return uiDrakos;
-            case NPC_VAROS:                   return m_uiVarosGUID;
-            case NPC_UROM:                    return m_uiUromGUID;
-            case NPC_EREGOS:                  return m_uiEregosGUID;
         }
         return 0;
     }
