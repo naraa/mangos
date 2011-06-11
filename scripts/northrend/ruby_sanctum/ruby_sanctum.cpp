@@ -174,9 +174,9 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
                           break;
 // Halion spawn
                     case 200:
-                          m_creature->SetActiveObjectState(true);
+                        m_creature->SetActiveObjectState(true);
                           {
-                          Creature* pHalion = m_creature->GetMap()->GetCreature(pInstance->GetData64(NPC_HALION_REAL));
+                          Creature* pHalion = pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL);
                           if (pInstance->GetData(TYPE_BALTHARUS) == DONE &&
                               pInstance->GetData(TYPE_RAGEFIRE) == DONE &&
                               pInstance->GetData(TYPE_XERESTRASZA) == DONE &&

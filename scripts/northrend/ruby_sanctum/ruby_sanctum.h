@@ -5,6 +5,7 @@
 #ifndef DEF_RUBY_SANCTUM_H
 #define DEF_RUBY_SANCTUM_H
 #include "BSW_ai.h"
+#include "BSW_instance.h"
 
 enum
 {
