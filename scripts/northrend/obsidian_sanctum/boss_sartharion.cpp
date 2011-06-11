@@ -174,9 +174,9 @@ float m_afTsunamiStartLoc[5][4]=
     {3287.5f, 511.10f, 58.6f, 3.19f},
 };
 
-uint64 m_uiAcolyteShadronGUID;
-uint64 m_uiAcolyteVesperonGUID;
-std::list<uint64> m_lEggsGUIDList;
+ObjectGuid m_uiAcolyteShadronGUID;
+ObjectGuid m_uiAcolyteVesperonGUID;
+std::list<ObjectGuid> m_lEggsGUIDList;
 
 /*######
 ## Boss Sartharion
@@ -259,9 +259,9 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
 
         if (m_pInstance)
         {
-            Creature* pTene = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_TENEBRON));
-            Creature* pShad = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADRON));
-            Creature* pVesp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VESPERON));
+            Creature* pTene = m_pInstance->GetSingleCreatureFromStorage(NPC_TENEBRON);
+            Creature* pShad = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
+            Creature* pVesp = m_pInstance->GetSingleCreatureFromStorage(NPC_VESPERON);
 
             if (m_bTenebronHelpedInFight && pTene)
             {
@@ -419,13 +419,13 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
                 int32 iTextId = 0;
 
                 Creature* pAdd = NULL;
-                pAdd = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_TENEBRON));
+                pAdd = m_pInstance->GetSingleCreatureFromStorage(NPC_TENEBRON);
                 if (pAdd)
                     m_uiTeneHealth = pAdd->GetHealth();
-                pAdd = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_SHADRON));
+                pAdd = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
                 if (pAdd)
                     m_uiShadHealth = pAdd->GetHealth();
-                pAdd = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_VESPERON));
+                pAdd = m_pInstance->GetSingleCreatureFromStorage(NPC_VESPERON);
                 if (pAdd)
                     m_uiVespHealth = pAdd->GetHealth();
 
@@ -497,13 +497,13 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
             {
                 m_creature->SetHealth(m_uiSarthHealth);
                 Creature* pTemp = NULL;
-                pTemp = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_TENEBRON));
+                pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_TENEBRON);
                 if (pTemp && pTemp->isAlive())
                     pTemp->SetHealth(m_uiTeneHealth);
-                pTemp = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_SHADRON));
+                pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
                 if (pTemp && pTemp->isAlive())
                     pTemp->SetHealth(m_uiShadHealth);
-                pTemp = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_VESPERON));
+                pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_VESPERON);
                 if (pTemp && pTemp->isAlive())
                     pTemp->SetHealth(m_uiVespHealth);
             }
@@ -517,13 +517,13 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
             DoScriptText(SAY_SARTHARION_BERSERK, m_creature);
             //DoCast(m_creature, SPELL_BERSERK);
             Creature* pTemp = NULL;
-            pTemp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_TENEBRON));
+            pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_TENEBRON);
             if (pTemp && pTemp->isAlive())
                 pTemp->CastSpell(pTemp, 27680, true);
-            pTemp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADRON));
+            pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON);
             if (pTemp && pTemp->isAlive())
                 pTemp->CastSpell(pTemp, 27680, true);
-            pTemp = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_VESPERON));
+            pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_VESPERON);
             if (pTemp && pTemp->isAlive())
                 pTemp->CastSpell(pTemp, 27680, true);
 
@@ -673,7 +673,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
                 }
                 if (!m_lEggsGUIDList.empty())
                 {
-                    for (std::list<uint64>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
+                    for (std::list<ObjectGuid>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
                     {
                         if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
                         {
@@ -904,7 +904,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
                         if (Creature* pEgg = m_creature->SummonCreature(NPC_TWILIGHT_EGG, pPortal->GetPositionX()-10+urand(0, 20), pPortal->GetPositionY()-10+urand(0, 20), pPortal->GetPositionZ()+1.0f, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 30000))
                         {
                             pEgg->SetPhaseMask(16, true);
-                            m_lEggsGUIDList.push_back(pEgg->GetGUID());
+                            m_lEggsGUIDList.push_back(pEgg->GetObjectGuid());
                         }
                     }
                     iPortalRespawnTime = 20;
@@ -919,18 +919,18 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
                             pAcolyte = NULL;
                             if (pAcolyte = m_creature->SummonCreature(NPC_ACOLYTE_OF_SHADRON, pPortal->GetPositionX()-10+urand(0, 20), pPortal->GetPositionY()-10+urand(0, 20), pPortal->GetPositionZ()+1.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000))
                             {
-                                m_uiAcolyteShadronGUID = pAcolyte->GetGUID();
+                                m_uiAcolyteShadronGUID = pAcolyte->GetObjectGuid();
                                 pAcolyte->SetPhaseMask(16, true);
                             }
                         }
                         if (m_pInstance->GetData(TYPE_SARTHARION_EVENT) == IN_PROGRESS)
                         {
-                            if (Creature* pSarth = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SARTHARION)))
+                            if (Creature* pSarth = m_pInstance->GetSingleCreatureFromStorage(NPC_SARTHARION))
                                 pSarth->CastSpell(pSarth, SPELL_GIFT_OF_TWILIGTH_SAR, true);
                         }
                         else
                         {
-                            if (Creature* pShad = m_creature->GetMap()->GetCreature(m_pInstance->GetData64(NPC_SHADRON)))
+                            if (Creature* pShad = m_pInstance->GetSingleCreatureFromStorage(NPC_SHADRON))
                                 pShad->CastSpell(pShad, SPELL_GIFT_OF_TWILIGTH_SHA, true);
                         }
                     }
@@ -960,7 +960,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
                             pAcolyte = NULL;
                             if (pAcolyte = m_creature->SummonCreature(NPC_ACOLYTE_OF_VESPERON, pPortal->GetPositionX()-10+urand(0, 20), pPortal->GetPositionY()-10+urand(0, 20), pPortal->GetPositionZ()+1.0f, 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 60000))
                             {
-                                m_uiAcolyteVesperonGUID = pAcolyte->GetGUID();
+                                m_uiAcolyteVesperonGUID = pAcolyte->GetObjectGuid();
                                 pAcolyte->SetPhaseMask(16, true);
                             }
                         }
@@ -995,7 +995,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
                 if (pAcolyte->isAlive())
                     bNoAliveTwilightRealm = false;
             if (!m_lEggsGUIDList.empty())
-                for (std::list<uint64>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
+                for (std::list<ObjectGuid>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
                     if (Creature* pTemp = m_creature->GetMap()->GetCreature( *itr))
                         if (pTemp->isAlive())
                         {
@@ -1018,7 +1018,7 @@ struct MANGOS_DLL_DECL dummy_dragonAI : public ScriptedAI
                 iTextId = SAY_TENEBRON_DEATH;
 
                 if (!m_lEggsGUIDList.empty())
-                    for (std::list<uint64>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
+                    for (std::list<ObjectGuid>::iterator itr = m_lEggsGUIDList.begin(); itr != m_lEggsGUIDList.end(); ++itr)
                         if (Creature* pEgg = m_creature->GetMap()->GetCreature( *itr))
                             pEgg->ForcedDespawn();
                 break;
@@ -1206,7 +1206,7 @@ struct MANGOS_DLL_DECL mob_shadronAI : public dummy_dragonAI
         m_uiAcolyteShadronTimer = 15000;
         m_uiCheckTimer = 2000;
         m_uiTailSweepTimer = 5000;
-        m_uiAcolyteShadronGUID = 0;
+        m_uiAcolyteShadronGUID.Clear();
     }
 
     void Aggro(Unit* pWho)
@@ -1306,7 +1306,7 @@ struct MANGOS_DLL_DECL mob_vesperonAI : public dummy_dragonAI
         m_uiAcolyteVesperonTimer = 15000;
         m_uiCheckTimer = 2000;
         m_uiTailSweepTimer = 5000;
-        m_uiAcolyteVesperonGUID = 0;
+        m_uiAcolyteVesperonGUID.Clear();
     }
 
     void Aggro(Unit* pWho)
@@ -1664,7 +1664,7 @@ struct MANGOS_DLL_DECL mob_flame_tsunamiAI : public ScriptedAI
 
     uint32 m_uiTickTimer;
     uint32 m_uiMovementStartTimer;
-    uint64 m_uiDummyDamagerGUID;
+    ObjectGuid m_uiDummyDamagerGUID;
 
     void Reset()
     {
@@ -1674,14 +1674,14 @@ struct MANGOS_DLL_DECL mob_flame_tsunamiAI : public ScriptedAI
         m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
         m_uiMovementStartTimer = 4000;
         m_uiTickTimer = 1000;
-        m_uiDummyDamagerGUID = 0;
+        m_uiDummyDamagerGUID.Clear();
         if (Creature* pDummyDamager = DoSpawnCreature(31103, 0, 0, 0, 0, TEMPSUMMON_TIMED_DESPAWN, 18000))
         {
             pDummyDamager->SetDisplayId(11686);
             pDummyDamager->setFaction(14);
             pDummyDamager->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
             pDummyDamager->SetSpeedRate(MOVE_RUN, m_creature->GetSpeedRate(MOVE_RUN));
-            m_uiDummyDamagerGUID = pDummyDamager->GetGUID();
+            m_uiDummyDamagerGUID = pDummyDamager->GetObjectGuid();
         }
     }
 
