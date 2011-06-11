@@ -187,7 +187,7 @@ bool StartEvent;
                       {
                        DoScriptText(SAY_JAINA_FS08, m_creature);
                        StepTimer = 5000;
-                      }                    
+                      }
                     ++Step;
                     break;
                }
@@ -198,7 +198,7 @@ bool StartEvent;
 bool GossipHello_npc_jaina_and_sylvana_FSintro(Player* pPlayer, Creature* pCreature)
 {
            if (pCreature->isQuestGiver())
-             pPlayer->PrepareQuestMenu( pCreature->GetGUID());
+             pPlayer->PrepareQuestMenu( pCreature->GetObjectGuid());
             switch(pCreature->GetEntry())
               {
                 case 37597:
@@ -211,7 +211,7 @@ bool GossipHello_npc_jaina_and_sylvana_FSintro(Player* pPlayer, Creature* pCreat
                   break;
                }
 
-    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetGUID()); //907
+    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetObjectGuid()); //907
     return true;
 }
 
