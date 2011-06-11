@@ -31,25 +31,11 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
     uint32 m_auiEncounter[MAX_ENCOUNTER];
     std::string strInstData;
 
-    uint64 m_uiArchavonGUID;
-    uint64 m_uiEmalonGUID;
-    uint64 m_uiKoralonGUID;
-    uint64 m_uiTempestMinion1GUID;
-    uint64 m_uiTempestMinion2GUID;
-    uint64 m_uiTempestMinion3GUID;
-    uint64 m_uiTempestMinion4GUID;
     uint8 m_uiMinion;
 
     void Initialize()
     {
         memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
-        m_uiArchavonGUID = 0;
-        m_uiEmalonGUID = 0;
-        m_uiKoralonGUID = 0;
-        m_uiTempestMinion1GUID = 0;
-        m_uiTempestMinion2GUID = 0;
-        m_uiTempestMinion3GUID = 0;
-        m_uiTempestMinion4GUID = 0;
         m_uiMinion = 0;
     }
 
@@ -57,32 +43,24 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
     {
         switch (pCreature->GetEntry())
         {
+            case NPC_TORAVON:
             case NPC_ARCHAVON:
-                m_uiArchavonGUID = pCreature->GetGUID();
-                break;
             case NPC_EMALON:
-                m_uiEmalonGUID = pCreature->GetGUID();
-                break;
             case NPC_KORALON:
-                m_uiKoralonGUID = pCreature->GetGUID();
+                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                 break;
             case NPC_TEMPEST_MINION:
-                ++m_uiMinion;
                 switch (m_uiMinion)
                 {
+                    case 0:
                     case 1:
-                        m_uiTempestMinion1GUID = pCreature->GetGUID();
-                        break;
                     case 2:
-                        m_uiTempestMinion2GUID = pCreature->GetGUID();
-                        break;
                     case 3:
-                        m_uiTempestMinion3GUID = pCreature->GetGUID();
+                        m_mNpcEntryGuidStore[m_uiMinion + DATA_TEMPEST_MINION_1] = pCreature->GetObjectGuid();
+                        ++m_uiMinion;
                         break;
                     case 4:
-                        m_uiTempestMinion4GUID = pCreature->GetGUID();
-                        break;
-                    case 5:
+                    default:
                         m_uiMinion = 0;
                         break;
                 }
@@ -138,27 +116,7 @@ struct MANGOS_DLL_DECL instance_vault_of_archavon : public ScriptedInstance
         return 0;
     }
 
-    uint64 GetData64(uint32 uiData)
-    {
-        switch (uiData)
-        {
-            case DATA_ARCHAVON:
-                return m_uiArchavonGUID;
-            case DATA_EMALON:
-                return m_uiEmalonGUID;
-            case DATA_KORALON:
-                return m_uiKoralonGUID;
-            case DATA_TEMPEST_MINION_1:
-                return m_uiTempestMinion1GUID;
-            case DATA_TEMPEST_MINION_2:
-                return m_uiTempestMinion2GUID;
-            case DATA_TEMPEST_MINION_3:
-                return m_uiTempestMinion3GUID;
-            case DATA_TEMPEST_MINION_4:
-                return m_uiTempestMinion4GUID;
-        }
-        return 0;
-    }
+
     const char* Save()
     {
         return strInstData.c_str();

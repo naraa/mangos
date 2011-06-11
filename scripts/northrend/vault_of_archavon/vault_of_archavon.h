@@ -9,23 +9,22 @@ enum
 {
     MAX_ENCOUNTER               = 4,
 
-    DATA_ARCHAVON               = 1,
-    DATA_EMALON                 = 2,
-    DATA_KORALON                = 3,
-    DATA_TEMPEST_MINION_1       = 4,
-    DATA_TEMPEST_MINION_2       = 5,
-    DATA_TEMPEST_MINION_3       = 6,
-    DATA_TEMPEST_MINION_4       = 7,
+    TYPE_ARCHAVON               = 0,
+    TYPE_EMALON                 = 1,
+    TYPE_KORALON                = 2,
+    TYPE_TORAVON                = 3,
 
-    TYPE_ARCHAVON               = 8,
-    TYPE_EMALON                 = 9,
-    TYPE_KORALON                = 10,
-    TYPE_TORAVON                = 11,
+    DATA_TEMPEST_MINION_1       = 101,
+    DATA_TEMPEST_MINION_2       = 102,
+    DATA_TEMPEST_MINION_3       = 103,
+    DATA_TEMPEST_MINION_4       = 104,
 
+
+    NPC_TORAVON                 = 38433,
     NPC_ARCHAVON                = 31125,
     NPC_EMALON                  = 33993,
     NPC_KORALON                 = 35013,
-    NPC_TEMPEST_MINION          = 33998
+    NPC_TEMPEST_MINION          = 33998,
 };
 
 #endif
