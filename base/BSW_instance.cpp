@@ -66,7 +66,10 @@ void BSWScriptedInstance::DoOpenDoor(uint32 entry)
 {
     EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
     if (find != m_mGoEntryGuidStore.end())
-        DoOpenDoor(find->second);
+    {
+        ObjectGuid guid = find->second;
+        DoOpenDoor(guid);
+    }
     else
         debug_log("BSW: Script call DoOpenDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
 }
@@ -75,7 +78,10 @@ void BSWScriptedInstance::DoCloseDoor(uint32 entry)
 {
     EntryGuidMap::iterator find = m_mGoEntryGuidStore.find(entry);
     if (find != m_mGoEntryGuidStore.end())
-        DoCloseDoor(find->second);
+    {
+        ObjectGuid guid = find->second;
+        DoCloseDoor(guid);
+    }
     else
         debug_log("BSW: Script call DoCloseDoor (by Entry), but no gameobject of entry %u was created yet, or it was not stored by script for map %u.", entry, instance->GetId());
 }

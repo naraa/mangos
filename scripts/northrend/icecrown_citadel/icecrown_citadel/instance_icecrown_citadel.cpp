@@ -137,13 +137,13 @@ static Locations SpawnLoc[]=
     {
         OpenAllDoors();
 
-    enum PhaseControl
-    {
-        HORDE_CONTROL_PHASE_SHIFT_1    = 55773,
-        HORDE_CONTROL_PHASE_SHIFT_2    = 60028,
-        ALLIANCE_CONTROL_PHASE_SHIFT_1 = 55774,
-        ALLIANCE_CONTROL_PHASE_SHIFT_2 = 60027,
-    };
+        enum PhaseControl
+        {
+            HORDE_CONTROL_PHASE_SHIFT_1    = 55773,
+            HORDE_CONTROL_PHASE_SHIFT_2    = 60028,
+            ALLIANCE_CONTROL_PHASE_SHIFT_1 = 55774,
+            ALLIANCE_CONTROL_PHASE_SHIFT_2 = 60027,
+        };
 /*
 
         if (!sWorld.getConfig(CONFIG_BOOL_ALLOW_TWO_SIDE_INTERACTION_GROUP)) return;
@@ -257,7 +257,6 @@ static Locations SpawnLoc[]=
                 m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
                 break;
             }
-            OpenAllDoors();
     }
 
     void instance_icecrown_spire::SetData(uint32 uiType, uint32 uiData)
