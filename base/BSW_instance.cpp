@@ -46,7 +46,7 @@ void BSWScriptedInstance::DoOpenDoor(ObjectGuid guid)
     if (pGo)
         pGo->SetGoState(GO_STATE_ACTIVE);
     else
-        debug_log("BSW: DoOpenDoor attempt set data to object %u, but no this object", guid);
+        debug_log("BSW: DoOpenDoor attempt set data to object %u, but no this object", guid.GetCounter());
 }
 
 void BSWScriptedInstance::DoCloseDoor(ObjectGuid guid)
@@ -59,7 +59,7 @@ void BSWScriptedInstance::DoCloseDoor(ObjectGuid guid)
     if (pGo)
         pGo->SetGoState(GO_STATE_READY);
     else
-        debug_log("BSW: DoCloseDoor attempt set data to object %u, but no this object", guid);
+        debug_log("BSW: DoCloseDoor attempt set data to object %u, but no this object", guid.GetCounter());
 }
 
 void BSWScriptedInstance::DoOpenDoor(uint32 entry)
