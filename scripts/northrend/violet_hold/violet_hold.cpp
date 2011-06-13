@@ -657,15 +657,15 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
     }
 }
 
-    
+
     void SetEvent()
     {
-     
+
         m_uiNextPortal_Timer = 5000;
-     
+
         if (m_pInstance){
             m_pInstance->SetData(TYPE_EVENT, IN_PROGRESS);
-            m_pInstance->DoUseDoorOrButton(DATA_SEAL_DOOR);
+            m_pInstance->DoUseDoorOrButton(GO_DOOR_SEAL);
         }
     }
     void EventEscort()
@@ -829,10 +829,6 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
     }
 };
 
-#define GOSSIP_ITEM_START_EVENT   "Activate the crystals when we get in trouble, right."
-#define GOSSIP_ITEM_TELE_IN   "I need to go in!"
-
-
 bool GossipHello_npc_sinclari(Player* pPlayer, Creature* pCreature)
 {
     if (ScriptedInstance* m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
@@ -872,7 +868,7 @@ bool GossipSelect_npc_sinclari(Player* pPlayer, Creature* pCreature, uint32 uiSe
             if (m_pInstance->GetData(TYPE_EVENT) == NOT_STARTED || m_pInstance->GetData(TYPE_EVENT) == FAIL)
             {
 
-                if (Creature* pSinclari = (m_pInstance->GetSingleCreatureFromStorage(DATA_SINCLARI)))
+                if (Creature* pSinclari = (m_pInstance->GetSingleCreatureFromStorage(NPC_SINCLARI)))
 
                     ((npc_sinclariAI*)pSinclari->AI())->EventEscort();
             }
@@ -981,27 +977,27 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
             {
                 case 6: // Lavanthor
                     m_uiBossType = TYPE_LAVANTHOR;
-                    m_uiDoorGUID = DATA_LAVANTHOR_DOOR;
+                    m_uiDoorGUID = GO_DOOR_LAVANTHOR;
                     break;
                 case 7: // Zuramat
                     m_uiBossType = TYPE_ZURAMAT;
-                    m_uiDoorGUID = DATA_ZURAMAT_DOOR;
+                    m_uiDoorGUID = GO_DOOR_ZURAMAT;
                     break;
                 case 3: // Moragg
                     m_uiBossType = TYPE_MORAGG;
-                    m_uiDoorGUID = DATA_MORAGG_DOOR;
+                    m_uiDoorGUID = GO_DOOR_MORAGG;
                     break;
                 case 2: // Erekem
                     m_uiBossType = TYPE_EREKEM;
-                    m_uiDoorGUID = DATA_EREKEM_DOOR;
+                    m_uiDoorGUID = GO_DOOR_EREKEM;
                     break;
                 case 4: // Ichoron
                     m_uiBossType = TYPE_ICHORON;
-                    m_uiDoorGUID = DATA_ICHORON_DOOR;
+                    m_uiDoorGUID = GO_DOOR_ICHORON;
                     break;
                 case 5: // Xevozz
                     m_uiBossType = TYPE_XEVOZZ;
-                    m_uiDoorGUID = DATA_XEVOZZ_DOOR;
+                    m_uiDoorGUID = GO_DOOR_XEVOZZ;
                     break;
                 case 0: // No boss
                     m_uiBossType = 0;
@@ -1042,8 +1038,8 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
                     m_pInstance->DoUseDoorOrButton(m_uiDoorGUID);
                     if (m_uiBossType == TYPE_EREKEM) 
                     {
-                        m_pInstance->DoUseDoorOrButton(DATA_EREKEM_DOOR_L);
-                        m_pInstance->DoUseDoorOrButton(DATA_EREKEM_DOOR_R);
+                        m_pInstance->DoUseDoorOrButton(GO_DOOR_EREKEM_RIGHT);
+                        m_pInstance->DoUseDoorOrButton(GO_DOOR_EREKEM_LEFT);
                     }
                 }
                 else 

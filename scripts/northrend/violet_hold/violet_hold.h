@@ -41,17 +41,6 @@ enum
     DATA_ZURAMAT            = 28,
     DATA_SINCLARI           = 29,
     DATA_BOSSTIME           = 30,
-    DATA_NPC_SEAL_DOOR      = 31,
-
-    DATA_SEAL_DOOR          = 32,
-    DATA_EREKEM_DOOR        = 33,
-    DATA_MORAGG_DOOR        = 34,
-    DATA_ICHORON_DOOR       = 35,
-    DATA_XEVOZZ_DOOR        = 36,
-    DATA_LAVANTHOR_DOOR     = 37,
-    DATA_ZURAMAT_DOOR       = 38,
-    DATA_EREKEM_DOOR_L      = 39,
-    DATA_EREKEM_DOOR_R      = 40,
 
     NPC_EREKEM             = 29315,
     NPC_EREKEM_GUARD       = 29395,
