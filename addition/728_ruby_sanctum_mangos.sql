@@ -24,7 +24,7 @@ INSERT IGNORE INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficul
 UPDATE `creature_template` SET `ScriptName`='', `AIName` ='' WHERE `entry`=39900;
 
 -- Zarithian
-UPDATE `creature_template` SET `ScriptName`='boss_zarithian', `AIName` ='' WHERE `entry`=39746;
+UPDATE `creature_template` SET `ScriptName`='boss_zarithrian', `AIName` ='' WHERE `entry`=39746;
 UPDATE `creature` SET `position_x` = '3008.552734',`position_y` = '530.471680',`position_z` = '89.195290',`orientation` = '6.16' WHERE `id` = 39746;
 UPDATE `creature_template` SET `ScriptName`='mob_flamecaller_ruby', `AIName` ='' WHERE `entry`=39814;
 

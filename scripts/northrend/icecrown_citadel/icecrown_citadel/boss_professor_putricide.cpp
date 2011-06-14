@@ -15,7 +15,7 @@
  */
 
 /* ScriptData
-SDName: boss_proffesor_putricide
+SDName: boss_professor_putricide
 SD%Complete: 70%
 SDComment: by /dev/rsa
 SDCategory: Icecrown Citadel
@@ -93,9 +93,9 @@ static Locations SpawnLoc[]=
     {4417.302246f, 3188.219971f, 389.332520f, 5.102f},  // 2 Putricide Rotface say o=5.102
 };
 
-struct MANGOS_DLL_DECL boss_proffesor_putricideAI : public BSWScriptedAI
+struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
 {
-    boss_proffesor_putricideAI(Creature* pCreature) : BSWScriptedAI(pCreature)
+    boss_professor_putricideAI(Creature* pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -411,9 +411,9 @@ struct MANGOS_DLL_DECL boss_proffesor_putricideAI : public BSWScriptedAI
     }
 };
 
-CreatureAI* GetAI_boss_proffesor_putricide(Creature* pCreature)
+CreatureAI* GetAI_boss_professor_putricide(Creature* pCreature)
 {
-    return new boss_proffesor_putricideAI(pCreature);
+    return new boss_professor_putricideAI(pCreature);
 }
 
 struct MANGOS_DLL_DECL mob_icc_gas_cloudAI : public BSWScriptedAI
@@ -726,12 +726,12 @@ CreatureAI* GetAI_mob_ooze_puddle(Creature* pCreature)
     return new mob_ooze_puddleAI(pCreature);
 }
 
-void AddSC_boss_proffesor_putricide()
+void AddSC_boss_professor_putricide()
 {
     Script *newscript;
     newscript = new Script;
-    newscript->Name = "boss_proffesor_putricide";
-    newscript->GetAI = &GetAI_boss_proffesor_putricide;
+    newscript->Name = "boss_professor_putricide";
+    newscript->GetAI = &GetAI_boss_professor_putricide;
     newscript->RegisterSelf();
 
     newscript = new Script;

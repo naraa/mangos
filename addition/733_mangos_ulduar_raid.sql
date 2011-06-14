@@ -357,6 +357,7 @@ UPDATE creature_template SET ScriptName = 'mob_dark_rune_commoner' WHERE entry =
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_warbringer' WHERE entry = 32877;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_ring_guard' WHERE entry = 32874;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_honor_guard' WHERE entry = 33125;
+UPDATE creature_template SET ScriptName = 'mob_dark_rune_evoker' WHERE entry = 32878;
 
 #DELETE FROM gameobject WHERE id = 194264; 
 #INSERT INTO gameobject VALUES (110010,194264,603,3,65535,2173.276, -252.805, 420.146, 3.027,0,0,0,0,604800,0,1);
@@ -461,5 +462,5 @@ UPDATE gameobject SET spawntimesecs = -604800 WHERE id IN (195046, 195047, 19430
 -- NOT SURE IF THE TRASH MOBS ARE SCRIPTED BY EVENTAI
 -- Mobs
 UPDATE creature_template SET ScriptName = 'generic_creature' WHERE entry IN (34086, 34085, 34069, 33237, 34234, 33236, 33264, 34164, 34196, 34199, 34198, 
-34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 33110, 
-32878, 33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875, 33346, 34057);
+34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 
+33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875);

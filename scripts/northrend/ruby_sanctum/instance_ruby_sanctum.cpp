@@ -50,7 +50,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
     uint64 m_uiHalion_tGUID;
     uint64 m_uiHalionControlGUID;
     uint64 m_uiRagefireGUID;
-    uint64 m_uiZarithianGUID;
+    uint64 m_uiZarithrianGUID;
     uint64 m_uiBaltharusGUID;
     uint64 m_uiCloneGUID;
     uint64 m_uiXerestraszaGUID;
@@ -83,7 +83,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         m_uiHalion_pGUID = 0;
         m_uiHalion_tGUID = 0;
         m_uiRagefireGUID = 0;
-        m_uiZarithianGUID = 0;
+        m_uiZarithrianGUID = 0;
         m_uiBaltharusGUID = 0;
         m_uiCloneGUID = 0;
         m_uiHalionPortal1GUID = 0;
@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
             case NPC_HALION_TWILIGHT:
             case NPC_HALION_CONTROL:
             case NPC_RAGEFIRE:
-            case NPC_ZARITHIAN:
+            case NPC_ZARITHRIAN:
             case NPC_BALTHARUS:
             case NPC_BALTHARUS_TARGET:
             case NPC_CLONE:
@@ -223,14 +223,14 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
                                     else if (uiData == DONE)
                                     {
                                         OpenAllDoors();
-                                        if (m_auiEncounter[TYPE_ZARITHIAN] == DONE)
+                                        if (m_auiEncounter[TYPE_ZARITHRIAN] == DONE)
                                         {
                                             m_auiEncounter[TYPE_EVENT] = 200;
                                             m_auiEventTimer = 30000;
                                         };
                                     }
                                     break;
-            case TYPE_ZARITHIAN:    m_auiEncounter[uiType] = uiData;
+            case TYPE_ZARITHRIAN:   m_auiEncounter[uiType] = uiData;
                                     if (uiData == DONE)
                                     {
                                         DoOpenDoor(GO_FLAME_WALLS);
@@ -295,7 +295,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
             case TYPE_RAGEFIRE:      return m_auiEncounter[uiType];
             case TYPE_BALTHARUS:     return m_auiEncounter[uiType];
             case TYPE_XERESTRASZA:   return m_auiEncounter[uiType];
-            case TYPE_ZARITHIAN:     return m_auiEncounter[uiType];
+            case TYPE_ZARITHRIAN:    return m_auiEncounter[uiType];
             case TYPE_HALION:        return m_auiEncounter[uiType];
 
             case TYPE_EVENT:         return m_auiEncounter[uiType];

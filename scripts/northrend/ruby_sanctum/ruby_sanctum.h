@@ -15,7 +15,7 @@ enum
     TYPE_RAGEFIRE                  = 1,
     TYPE_BALTHARUS                 = 2,
     TYPE_XERESTRASZA               = 3,
-    TYPE_ZARITHIAN                 = 4,
+    TYPE_ZARITHRIAN                = 4,
     TYPE_HALION                    = 5,
 
     TYPE_COUNTER                   = 6, // for WorldUpdateState
@@ -32,13 +32,13 @@ enum
 
     NPC_BALTHARUS                  = 39751,
     NPC_CLONE                      = 39899,
-    NPC_ZARITHIAN                  = 39746,
+    NPC_ZARITHRIAN                 = 39746,
     NPC_RAGEFIRE                   = 39747,
 
     NPC_XERESTRASZA                = 40429,
 
     NPC_BALTHARUS_TARGET           = 39900,
-    NPC_ZARITHIAN_SPAWN_STALKER    = 39794,
+    NPC_ZARITHRIAN_SPAWN_STALKER   = 39794,
 
     // Orb rotation
     NPC_SHADOW_PULSAR_N            = 40083, //spinning orb N spawn
