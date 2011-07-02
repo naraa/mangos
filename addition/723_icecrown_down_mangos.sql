@@ -24,7 +24,7 @@ UPDATE `creature_template` SET `equipment_id`='1290' where `entry` IN (36990, 37
 -- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_bonecaster' where `entry` IN (36564);
 -- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_animator' where `entry` IN (36516);
 -- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soul_horror' where `entry` IN (36522);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_npc_spectral_warden' where `entry` IN (36666);
+-- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_spectral_warden' where `entry` IN (36666);
 
 -- Pit of saron
 UPDATE `instance_template` SET `ScriptName`='instance_pit_of_saron' WHERE `map`=658;
@@ -34,8 +34,8 @@ UPDATE `creature_template` SET `ScriptName`='mob_exploding_orb', `AIName` ='' WH
 UPDATE `creature_template` SET `ScriptName`='boss_forgemaster_garfrost', `AIName` ='' WHERE `entry`=36494;
 UPDATE `creature_template` SET `ScriptName`='boss_scourgelord_tyrannus', `AIName` ='' WHERE `entry`=36658;
 UPDATE `creature_template` SET `ScriptName`='boss_rimefang', `AIName` ='' WHERE `entry`=36661;
--- UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSintro', `AIName` ='' WHERE `entry` IN (36990,36993);
--- UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSoutro', `AIName` ='' WHERE `entry` IN (38189,38188);
+UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSintro', `AIName` ='' WHERE `entry` IN (36990,36993);
+UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSoutro', `AIName` ='' WHERE `entry` IN (38189,38188);
 
 -- Halls of reflection
 UPDATE `instance_template` SET `ScriptName` = 'instance_halls_of_reflection' WHERE map=668;
