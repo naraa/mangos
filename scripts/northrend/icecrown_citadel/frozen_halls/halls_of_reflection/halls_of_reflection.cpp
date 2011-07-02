@@ -534,7 +534,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
     BSWScriptedInstance* m_pInstance;
 
     uint32 CastTimer;
-    int32 HoldTimer;
+    uint32 HoldTimer;
     uint8 m_wallNum;
     bool Fight;
     ObjectGuid wallTarget;

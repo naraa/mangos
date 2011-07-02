@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Instance_Ulduar
-SD%Complete: 
-SDComment: 
+SD%Complete:
+SDComment:
 SDCategory: Ulduar
 EndScriptData */
 
@@ -26,10 +26,10 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
 {
-    instance_ulduar(Map* pMap) : ScriptedInstance(pMap) 
-    { 
+    instance_ulduar(Map* pMap) : ScriptedInstance(pMap)
+    {
         Regular = pMap->IsRegularDifficulty();
-        Initialize(); 
+        Initialize();
     }
 
     bool Regular;
@@ -197,7 +197,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         m_uiThorimRareLootGUID  = 0;
         m_uiFreyaLootGUID       = 0;
         m_uiFreyaLoot1GUID      = 0;
-        m_uiFreyaLoot2GUID      = 0; 
+        m_uiFreyaLoot2GUID      = 0;
         m_uiFreyaLoot3GUID      = 0;
         m_uiMimironLootGUID     = 0;
         m_uiMimironHardLootGUID = 0;
@@ -806,7 +806,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
             }
             break;
         case TYPE_THORIM:
-            m_auiEncounter[9] = uiData;   
+            m_auiEncounter[9] = uiData;
             DoUseDoorOrButton(m_uiArenaEnterDoorGUID);
             if (uiData == IN_PROGRESS)
                 DoUseDoorOrButton(m_uiArenaExitDoorGUID);
@@ -977,7 +977,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
                 << m_auiEncounter[3] << " " << m_auiEncounter[4] << " " << m_auiEncounter[5] << " "
                 << m_auiEncounter[6] << " " << m_auiEncounter[7] << " " << m_auiEncounter[8] << " "
                 << m_auiEncounter[9] << " " << m_auiEncounter[10] << " " << m_auiEncounter[11] << " "
-                << m_auiEncounter[12] << " " << m_auiEncounter[13] << " " << m_auiHardBoss[0] << " " 
+                << m_auiEncounter[12] << " " << m_auiEncounter[13] << " " << m_auiHardBoss[0] << " "
                 << m_auiHardBoss[1] << " " << m_auiHardBoss[2] << " " << m_auiHardBoss[2] << " "
                 << m_auiHardBoss[4] << " " << m_auiHardBoss[5] << " " << m_auiHardBoss[6] << " "
                 << m_auiHardBoss[7] << " " << m_auiHardBoss[8] << " " << m_auiUlduarKeepers[0] << " "
@@ -1090,6 +1090,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
            case TYPE_XT002_HARD:
                break;
         }
+        return true;
     }
 
     uint32 GetData(uint32 uiType)

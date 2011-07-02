@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL mob_toc5_warriorAI : public ScriptedAI
         {
 			DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_MORTAL_STRIKE : SPELL_MORTAL_STRIKE_H);
             Mortal_Strike_Timer = m_bIsRegularMode ? 6000 : 4000;
-        }else Mortal_Strike_Timer -= diff;  
+        }else Mortal_Strike_Timer -= diff;
 
 		if (Rolling_Throw_Timer < diff)
         {
@@ -167,7 +167,7 @@ struct MANGOS_DLL_DECL mob_toc5_warriorAI : public ScriptedAI
 			}
 			intercept_check = 1000;
 		}
-		else 
+		else
 		{
 			intercept_check -= diff;
 			Intercept_Cooldown -= diff;
@@ -386,7 +386,7 @@ struct MANGOS_DLL_DECL mob_toc5_shamanAI : public ScriptedAI
         {
 			DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_CHAIN_LIGHTNING : SPELL_CHAIN_LIGHTNING_H);
             Chain_Lightning_Timer = m_bIsRegularMode ? 12000 : 8000;
-        }else Chain_Lightning_Timer -= diff;  
+        }else Chain_Lightning_Timer -= diff;
 
 		if (Hex_Timer < diff)
         {
@@ -551,11 +551,11 @@ struct MANGOS_DLL_DECL mob_toc5_hunterAI : public ScriptedAI
 		{
 			if (!m_creature->IsWithinDistInMap(m_creature->getVictim(), 8) && m_creature->IsWithinDistInMap(m_creature->getVictim(), 30))
 			{
-				m_creature->SetSpeedRate(MOVE_RUN, 0.0001);
+				m_creature->SetSpeedRate(MOVE_RUN, 0.0001f);
 			}
 			else
 			{
-				m_creature->SetSpeedRate(MOVE_RUN, 1.2);
+				m_creature->SetSpeedRate(MOVE_RUN, 1.2f);
 			}
 			enemy_check = 100;
 		}else enemy_check -= diff;
@@ -567,7 +567,7 @@ struct MANGOS_DLL_DECL mob_toc5_hunterAI : public ScriptedAI
         {
 			DoCast(m_creature->getVictim(), SPELL_SHOOT);
             Shoot_Timer = m_bIsRegularMode ? 5000 : 3000;
-        }else Shoot_Timer -= diff;  
+        }else Shoot_Timer -= diff;
 
 		if (Multi_Shot_Timer < diff)
         {
@@ -686,7 +686,7 @@ struct MANGOS_DLL_DECL mob_toc5_rogueAI : public ScriptedAI
         {
 	DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_EVISCERATE : SPELL_EVISCERATE_H);
             Eviscerate_Timer = m_bIsRegularMode ? 15000 : 10000;
-        }else Eviscerate_Timer -= diff;  
+        }else Eviscerate_Timer -= diff;
 
 	if (FoK_Timer < diff)
         {
