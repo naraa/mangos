@@ -43,6 +43,7 @@ UPDATE `creature_template` SET `scriptname`='mob_toc_hunter', `AIName` ='' WHERE
 UPDATE `creature_template` SET `scriptname`='mob_toc_rogue', `AIName` ='' WHERE `entry` IN (34472,34454);
 UPDATE `creature_template` SET `scriptname`='mob_toc_priest', `AIName` ='' WHERE `entry` IN (34466,34447);
 UPDATE `creature_template` SET `scriptname`='mob_toc_shadow_priest', `AIName` ='' WHERE `entry` IN (34473,34441);
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3444106') OR (`id`='3444119') OR (`id`='3444104') OR (`id`='3444108') OR (`id`='3444102') OR (`id`='3444116') OR (`id`='3444117') OR (`id`='3444107') OR (`id`='3444109') OR (`id`='3444115') OR (`id`='3444103') OR (`id`='3444114') OR (`id`='3444111') OR (`id`='3444110') OR (`id`='3444118') OR (`id`='3444105') OR (`id`='3444113') OR (`id`='3444101') OR (`id`='3444112');
 UPDATE `creature_template` SET `scriptname`='mob_toc_dk', `AIName` ='' WHERE `entry` IN (34461,34458);
 UPDATE `creature_template` SET `scriptname`='mob_toc_paladin', `AIName` ='' WHERE `entry` IN (34465,34445);
 UPDATE `creature_template` SET `scriptname`='mob_toc_retro_paladin', `AIName` ='' WHERE `entry` IN (34471,34456);

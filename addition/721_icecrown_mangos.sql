@@ -40,6 +40,8 @@ INSERT INTO `spell_proc_event` VALUES
 (72178, 0x7F,  0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0.000000, 0.000000, 0),
 (72176, 0x7F,  0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0.000000, 0.000000, 0);
 
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3781301');
+
 -- Deathwhisper
 UPDATE `creature_template` SET `ScriptName`='boss_lady_deathwhisper' WHERE `entry`=36855;
 UPDATE `creature_template` SET `faction_A`=14, `faction_H`=14,`ScriptName`='mob_vengeful_shade', `AIName`='' WHERE `entry`= 38222;
@@ -95,13 +97,15 @@ UPDATE `creature_template` SET `ScriptName`='boss_festergut', `AIName`=''  WHERE
 UPDATE `gameobject_template` SET `faction` = '114' WHERE `gameobject_template`.`entry` IN (201371);
 UPDATE `gameobject` SET `state` = '0' WHERE `id` IN (201371);
 UPDATE `creature_template` SET `ScriptName`='mob_vile_gas_stalker', `AIName`=''  WHERE `entry`= 38548;
-UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14,  `ScriptName`='', `AIName`='' WHERE `entry`= 36659;
+UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14,  `ScriptName`='mob_orange_gas_stalker', `AIName`='' WHERE `entry`= 36659;
 -- original auras from YTDB
 -- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES
 -- (36659, 0, 0, 1, 0, 0, '69126 69152 69154');
 -- DELETE FROM `creature_template_addon` WHERE `entry` = 36659;
 -- Visual effect mobs from Timmit
 UPDATE `creature` SET `spawnMask` = 15, `modelid` = 11686, `spawntimesecs` = 300 WHERE `id`=37013;
+
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3662701') OR (`id`='3662601');
 
 -- Professor putricide
 UPDATE `creature_template` SET `ScriptName`='boss_professor_putricide', `AIName`='' WHERE `entry`= 36678;
@@ -113,6 +117,9 @@ UPDATE `creature_template` SET `ScriptName`='mob_icc_volatile_ooze', `AIName`=''
 UPDATE `creature_template` SET `ScriptName`='mob_choking_gas_bomb', `AIName`='',`minlevel` = 82, `maxlevel` = 82, `faction_A` = 14, `faction_H` = 14, `scale` = 0.5 WHERE `entry`= 38159;
 UPDATE `creature_template` SET `ScriptName`='mob_ooze_puddle',`scale` = '1.0', `AIName`='', `minlevel` = 82, `maxlevel` = 82, `modelid_1` = 11686, `modelid_2` = 11686, `modelid_3` = 11686, `modelid_4` = 11686, `faction_A` = 14, `faction_H` = 14  WHERE `entry`= 37690;
 UPDATE `gameobject_template` SET `faction` = '0', `ScriptName` = 'go_plague_sigil' WHERE `gameobject_template`.`entry` IN (202182);
+
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3672304') OR (`id`='3672301') OR (`id`='3672302') OR (`id`='3672303') OR (`id`='3667801');
+
 -- Abomination
 DELETE FROM `creature_template_addon` WHERE (`entry`=37672);
 INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37672, '70385 70405');
@@ -203,7 +210,6 @@ UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201369,201379);
 DELETE FROM `creature_template_addon` WHERE `entry` = 37186;
 INSERT INTO `creature_template_addon` (`entry`, `auras`) VALUES (37186, 70022);
 
-
 -- Lich King
 UPDATE `creature_template` SET `ScriptName`='boss_the_lich_king_icc', `AIName`='' WHERE `entry`= 36597;
 UPDATE `creature_template` SET `ScriptName`='boss_tirion_icc', `npcflag`=1, `AIName`='' WHERE `entry`= 38995;
@@ -224,3 +230,7 @@ DELETE FROM `locales_npc_text` WHERE `entry` IN (721001,721002);
 INSERT INTO `locales_npc_text` (`entry`, `Text0_0_loc1`, `Text0_0_loc2`, `Text0_0_loc3`, `Text0_0_loc4`, `Text0_0_loc5`, `Text0_0_loc6`, `Text0_0_loc7`, `Text0_0_loc8`) VALUES
 (721001, 'Greetings $N! Are you ready to battle with Lich King?', NULL, NULL, NULL, NULL, NULL, NULL, 'Приветствую, $N! Поможешь мне прихлопнуть главного засранца WOW?'),
 (721002, 'Instance script designed by /dev/rsa especially for\n http://wow.teletoria.ru\n Thanks to:\n Vladimir Mangos\n Insider42\n Wowka321\n Selector\n and many other !\n', NULL, NULL, NULL, NULL, NULL, NULL, 'Скрипт инстанса разработан специально для\n http://wow.teletoria.ru\n Благодарности:\n Vladimir Mangos\n Insider42\n Wowka321\n Selector\n и многим другим!\n (c) /dev/rsa 2010 год');
+
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3797301') OR (`id`='3797201') OR (`id`='3797001');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3800401');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3811206') OR (`id`='3811204') OR (`id`='3811209') OR (`id`='3811201') OR (`id`='3811203') OR (`id`='3811210') OR (`id`='3811213') OR (`id`='3811214') OR (`id`='3811205') OR (`id`='3811212') OR (`id`='3811208') OR (`id`='3811207') OR (`id`='3811211') OR (`id`='3811202') OR (`id`='3811215');

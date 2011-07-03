@@ -2,7 +2,7 @@
 UPDATE `instance_template` SET `ScriptName`='instance_forge_of_souls' WHERE `map`=632;
 UPDATE `creature_template` SET `ScriptName`='boss_bronjahm', `AIName` ='' WHERE `entry`=36497;
 UPDATE `creature_template` SET `ScriptName`='mob_soul_fragment', `modelid_1`= 30233, `modelid_3`= 30233, `AIName` ='' WHERE `entry`=36535;
--- UPDATE `creature_template` SET `ScriptName`='mob_soul_storm', `AIName` ='' WHERE `entry`=;
+-- UPDATE `creature_template` SET `ScriptName`='mob_soul_storm', `AIName` ='' WHERE `entry`=; 
 
 -- UPDATE `creature_template` SET `ScriptName`='boss_devourer', `AIName` ='' WHERE `entry`=33113;
 UPDATE `creature_template` SET `AIName`='', `Scriptname`='boss_devourer_of_souls' where `entry` IN (36502);
@@ -18,13 +18,6 @@ UPDATE `creature_template` SET `npcflag`='3' where `entry` IN (37597, 37596, 369
 UPDATE `creature_template` SET `scale`='1' where `entry` IN (38161, 37596, 36990);
 UPDATE `creature_template` SET `scale`='1' where `entry` IN (37755);
 UPDATE `creature_template` SET `equipment_id`='1290' where `entry` IN (36990, 37596, 38161, 38189, 37223, 37554);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_watchman' where `entry` IN (36478);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_reaper' where `entry` IN (36499);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_adept' where `entry` IN (36620);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_bonecaster' where `entry` IN (36564);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soulguard_animator' where `entry` IN (36516);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_soul_horror' where `entry` IN (36522);
--- UPDATE `creature_template` SET `AIName`='', `Scriptname`='npc_spectral_warden' where `entry` IN (36666);
 
 -- Pit of saron
 UPDATE `instance_template` SET `ScriptName`='instance_pit_of_saron' WHERE `map`=658;
@@ -36,6 +29,7 @@ UPDATE `creature_template` SET `ScriptName`='boss_scourgelord_tyrannus', `AIName
 UPDATE `creature_template` SET `ScriptName`='boss_rimefang', `AIName` ='' WHERE `entry`=36661;
 UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSintro', `AIName` ='' WHERE `entry` IN (36990,36993);
 UPDATE `creature_template` SET `ScriptName`='npc_jaina_or_sylvanas_POSoutro', `AIName` ='' WHERE `entry` IN (38189,38188);
+UPDATE `scripted_areatrigger` SET `ScriptName`='at_tyrannus' WHERE `entry`='5578';
 
 -- Halls of reflection
 UPDATE `instance_template` SET `ScriptName` = 'instance_halls_of_reflection' WHERE map=668;
@@ -81,10 +75,10 @@ REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('694
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('69431', '1', '37584');
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('69431', '1', '37587');
 
-REPLACE INTO `creature_equip_template` VALUES ('38112', '50249', '49777', '0'); #Falric
+REPLACE INTO `creature_equip_template` VALUES ('38112', '50249', '49777', '0'); -- Falric
 UPDATE `creature_template` SET `equipment_id`='38112' WHERE `entry` IN (38112);
 
-REPLACE INTO `creature_equip_template` VALUES ('38113', '50248', '50248', '0'); #Marwyn
+REPLACE INTO `creature_equip_template` VALUES ('38113', '50248', '50248', '0'); -- Marwyn
 UPDATE `creature_template` SET `equipment_id`='38113' WHERE `entry` IN (38113);
 REPLACE INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (135341, 38112, 668, 3, 1, 0, 0, 5276.81, 2037.45, 709.32, 5.58779, 604800, 0, 0, 377468, 0, 0, 0);
 REPLACE INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES (135342, 38113, 668, 3, 1, 0, 0, 5341.72, 1975.74, 709.32, 2.40694, 604800, 0, 0, 539240, 0, 0, 0);
@@ -118,14 +112,14 @@ DELETE from `creature` WHERE `map` = 668 AND `id` IN (37221,37223,37554,36955);
 DELETE FROM `gameobject` WHERE `id` IN (202212,201710,202337,202336);
 UPDATE `gameobject_template` SET `flags` = 0 WHERE `gameobject_template`.`entry` IN (202212,201710,202337,202336);
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
-(972561, 202212, 668, 1, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
-(972562, 201710, 668, 1, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
-(972563, 202337, 668, 2, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
-(972564, 202336, 668, 2, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1);
+(972562, 202212, 668, 1, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
+(972563, 201710, 668, 1, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
+(972564, 202337, 668, 2, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1),
+(972565, 202336, 668, 2, 65535,  5241.047, 1663.4364, 784.295166, 0.54, 0, 0, 0, 0, -604800, 100, 1);
 -- Dalaran portal (override)
-DELETE FROM `gameobject` WHERE `guid` IN (972565);
+DELETE FROM `gameobject` WHERE `id` IN (202079);
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
-(972565, 202079, 668, 3, 65535, 5250.959961, 1639.359985, 784.302, 0, 0, 0, 0, 0, -604800, 100, 1);
+(972566, 202079, 668, 3, 65535, 5250.959961, 1639.359985, 784.302, 0, 0, 0, 0, 0, -604800, 100, 1);
 
 
 /* Original Icewalls from YTDB

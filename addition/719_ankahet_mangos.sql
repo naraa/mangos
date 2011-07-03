@@ -3,21 +3,18 @@ UPDATE `instance_template` SET `ScriptName` = 'instance_ahnkahet' WHERE `map`=61
 UPDATE `creature_template` SET `ScriptName` = 'boss_jedoga', `AIName`='' WHERE `entry`=29310;
 UPDATE `creature_template` SET `ScriptName` = 'boss_nadox', `AIName`='' WHERE `entry`=29309;
 UPDATE `creature_template` SET `ScriptName` = 'boss_taldaram', `AIName`='' WHERE `entry`=29308;
+UPDATE `creature_template` SET `ScriptName` = 'mob_flame_orb', `AIName`='' WHERE `entry`=30702;
 UPDATE `gameobject_template` SET `ScriptName` = 'go_nerubian_device' WHERE `entry` IN (193093,193094);
 UPDATE `creature_template` SET `ScriptName` = 'boss_volazj', `AIName`='' WHERE `entry`=29311;
+UPDATE `creature_template` SET `ScriptName` = 'mob_twisted_visage' WHERE `entry` = 30621;
+UPDATE `creature_template` SET `ScriptName` = 'mob_ancient_void' WHERE `entry` = 30622;
+UPDATE `creature_template` SET `ScriptName` = 'npc_twilight_volunteer', `AIName`='' WHERE `entry`=30385;
 
 DELETE FROM `creature_template_addon` WHERE `entry` IN (30385, 31474);
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 (30385, 0, 8, 1, 0, 0, 0, '');
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 (31474, 0, 8, 1, 0, 0, 0, '');
-
-DELETE FROM `creature_template` WHERE entry IN (31474, 30385, 29310, 31465);
-INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `equipment_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES
-(29310, 31465, 0, 0, 0, 0, 26777, 0, 26777, 0, 'Jedoga Shadowseeker', '', '', 0, 75, 75, 212700, 212700, 0, 0, 8204, 16, 16, 0, 1, 1, 339, 481, 0, 370, 7.5, 2000, 0, 2, 0, 0, 0, 0, 0, 0, 0, 293, 436, 53, 7, 0, 29310, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4176, 6960, '', 0, 3, 20, 20, 0, 0, 0, 0, 0, 0, 0, 172, 1, 1575, 0, 0, 'boss_jedoga'),
-(30385, 31474, 0, 0, 0, 0, 27382, 27384, 27383, 27385, 'Twilight Volunteer', '', '', 0, 74, 74, 25705, 25705, 0, 0, 0, 16, 16, 0, 1, 1, 0, 0, 0, 0, 1, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 2.5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 93, 0, 0, 'npc_twilight_volunteer'),
-(31465, 0, 0, 0, 0, 0, 26777, 0, 26777, 0, 'Jedoga Shadowseeker (1)', '', '', 0, 82, 82, 431392, 431392, 0, 0, 10253, 16, 16, 0, 1, 1, 463, 640, 0, 726, 13, 2000, 0, 2, 0, 0, 0, 0, 0, 0, 0, 360, 520, 91, 7, 0, 31465, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 8352, 13920, '', 0, 3, 32, 20, 0, 0, 0, 0, 0, 0, 0, 172, 1, 0, 0, 1, ''),
-(31474, 0, 0, 0, 0, 0, 27382, 27384, 27383, 27385, 'Twilight Volunteer (1)', '', '', 0, 81, 81, 58648, 58648, 0, 0, 0, 16, 16, 0,  1, 1, 0, 0, 0, 0, 1, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '', 0, 3, 4.5, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, '');
 
 UPDATE `creature_template` SET `unit_flags` = '0' WHERE `entry` IN (30114,31473);
 
@@ -30,15 +27,13 @@ DELETE FROM `gameobject` WHERE `guid` = 911321;
 INSERT INTO `gameobject` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `position_x`, `position_y`, `position_z`, `orientation`, `rotation0`, `rotation1`, `rotation2`, `rotation3`, `spawntimesecs`, `animprogress`, `state`) VALUES
 (911321, 194394, 619, 2, 1, 371.842, -701.621, -16.1797, 5.67851, 0, 0, 0.297751, -0.954644, -10, 0, 1);
 
-UPDATE `creature_template` SET `unit_flags` = 0, `difficulty_entry_1` = 0 WHERE `entry` IN (30258, 30391, 30435);
+UPDATE `creature_template` SET `unit_flags` = 0 WHERE `entry` IN (30258, 30391, 30435);
 UPDATE `creature_template` SET `ScriptName` ='npc_amanitar_mushroom', `AIName`='' WHERE `entry` IN (30391, 30435);
 UPDATE `creature_template` SET `ScriptName` ='boss_amanitar', `AIName`='', `mindmg` = 488, `maxdmg` = 648, `attackpower` = 782, `dmg_multiplier` = 13  WHERE `entry` = 30258;
 
-DELETE FROM `creature` WHERE `map` = 619 AND `id` IN (30258,30391);
+DELETE FROM `creature` WHERE `map` = 619 AND `id` IN (30391);
 
 INSERT INTO `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
-#Amanitar
-(30258, 619, 2, 1, 0, 0, 340.433, -884.8, -74.6965, 6.10105, 9800, 0, 0, 1, 0, 0, 0),
 
 #Mushrooms
 (30391, 619, 2, 1, 0, 0, 358.386, -885.553, -76.1054, 3.06235, 30, 0, 0, 1, 0, 0, 0),
@@ -108,6 +103,9 @@ INSERT INTO `creature` (`id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equip
 (30391, 619, 2, 1, 0, 0, 360.748, -967.779, -79.832, 2.56756, 30, 0, 0, 1, 0, 0, 0),
 (30391, 619, 2, 1, 0, 0, 350.138, -958.988, -79.4422, 2.16229, 30, 0, 0, 1, 0, 0, 0),
 (30391, 619, 2, 1, 0, 0, 342.879, -944.352, -79.8533, 1.64157, 30, 0, 0, 1, 0, 0, 0);
+
+UPDATE `creature_template` SET `minhealth` = 1 WHERE `entry` = 30391;
+UPDATE `creature_template` SET `minmana` = 0 WHERE `entry` = 29310;
 
 UPDATE `creature_template` SET `AIname`='EventAI' WHERE `entry` = 30176;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30176;

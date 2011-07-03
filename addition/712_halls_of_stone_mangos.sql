@@ -1,4 +1,5 @@
 UPDATE `creature_template` SET `ScriptName` = 'boss_krystallus' WHERE `entry` =27977 LIMIT 1 ;
+UPDATE `creature_template` SET `ScriptName` = 'mob_tribuna_controller' WHERE `entry` = 28234;
 
 UPDATE `gameobject` SET `state` = '1' WHERE `guid` =53556;
 UPDATE `gameobject` SET `state` = '1' WHERE `guid` =53560;

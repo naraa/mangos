@@ -223,6 +223,8 @@ UPDATE creature_template SET `modelid_1` = 25865 WHERE entry IN (32938, 33353);
 UPDATE creature_template SET ScriptName = 'mob_npc_flashFreeze' WHERE entry IN (32938);
 UPDATE creature SET spawnMask = 3 WHERE id IN (32938);
 UPDATE creature SET spawnMask = 2 WHERE id IN (32901, 32900, 32950, 32946,33333, 33330, 33326);
+UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 32938;
+
 UPDATE creature_template SET ScriptName = 'npc_hodir_priest' WHERE entry IN (32897, 33326, 32948, 33330);
 UPDATE creature_template SET ScriptName = 'npc_hodir_druid' WHERE entry IN (33325, 32901, 32941, 33333);
 UPDATE creature_template SET ScriptName = 'npc_hodir_shaman' WHERE entry IN (33328, 32900, 33332, 32950);
@@ -349,7 +351,7 @@ UPDATE creature_template SET ScriptName = 'mob_thorim_preadds' WHERE entry IN (3
 UPDATE creature SET spawnMask = 3 WHERE id = 32873;
 UPDATE creature_template SET ScriptName = 'npc_sif' WHERE entry = 33196;
 UPDATE `gameobject` SET `position_y` = -286.67, `position_z` = 419.50 WHERE `id` IN (194312, 194313, 194314, 194315);
-UPDATE gameobject_template SET flags = 6553632, ScriptName='go_thorim_lever' WHERE entry = 194264;
+-- UPDATE gameobject_template SET flags = 6553632, ScriptName='go_thorim_lever' WHERE entry = 194264; -- script doesnt existance
 -- adds
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_acolyte' WHERE entry = 33110;
 UPDATE creature_template SET ScriptName = 'mob_dark_rune_champion' WHERE entry = 32876;
@@ -446,6 +448,8 @@ INSERT INTO creature (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, 
 (800003, 33411, 603, 3, 65535,0,0, 1939.195, -90.662, 411.357, 1.06, 604800,0,0, 5647, 0, 0, 0), 	-- Hodir
 (800004, 33413, 603, 3, 65535,0,0, 2036.674, -73.814, 411.355, 2.51, 604800,0,0, 5647, 0, 0, 0); 	-- Thorim
 
+UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33410;
+
 -- Doors 
 UPDATE gameobject_template SET faction = 114 WHERE entry IN (194553, 194554, 194556, 194148, 194634, 194635, 194905, 194441,
 194442, 194416, 194774, 194775, 194776, 194560, 194557, 194558, 194750, 194910, 194559, 194635, 194636, 194637, 194631, 194255, 194630, 194767);
@@ -464,3 +468,10 @@ UPDATE gameobject SET spawntimesecs = -604800 WHERE id IN (195046, 195047, 19430
 UPDATE creature_template SET ScriptName = 'generic_creature' WHERE entry IN (34086, 34085, 34069, 33237, 34234, 33236, 33264, 34164, 34196, 34199, 34198, 
 34190, 34197, 33699, 34134, 34135, 34133, 33430, 33528, 33431, 33527, 33526, 33525, 33355, 33354, 34193, 34183, 
 33822, 33818, 33824, 33823, 33772, 33838, 33819, 33820, 32875);
+
+UPDATE `creature_template` SET `minhealth` = 50400 WHERE `entry` = 34004;
+UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33413;
+UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33411;
+UPDATE `creature_template` SET `minhealth` = 5647 WHERE `entry` = 33412;
+UPDATE `creature_template` SET `minhealth` = 5647, `minmana` = 0 WHERE `entry` = 33327;
+UPDATE `creature_template` SET `minhealth` = 5647, `minmana` = 0 WHERE `entry` = 32897;

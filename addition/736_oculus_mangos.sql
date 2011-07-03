@@ -109,7 +109,7 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_planar_anomaly' WHERE entry =
 UPDATE `creature_template` SET `ScriptName` = 'npc_belgar_image' WHERE entry = 28012;
 
 REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) values
-(61407, 1, 27447),
+-- (61407, 1, 27447),  -- TargetEntry 27447 does not have any implicit target TARGET_SCRIPT(38) or TARGET_SCRIPT_COORDINATES (46) or TARGET_FOCUS_OR_SCRIPTED_GAMEOBJECT (40).
 (51024, 1, 28239),
 (51022, 1, 28239),
 (57963, 1, 27656);
