@@ -124,7 +124,7 @@ INSERT INTO `script_waypoint` VALUES
    (29173, 9, 2259.34, -5294.379, 82.167, 0, 'event end');
 
 -- Quest The Gift That Keeps On Giving - script texts
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1609300 AND -1609310;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1609310 AND -1609300;
 INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 (-1609300, "Smell flesh... close...",0,0,0,0,"SAY_SCARLET_GHOUL_SPAWN1"),
 (-1609301, "The grave calls to us all!",0,0,0,0,"SAY_SCARLET_GHOUL_SPAWN2"),
