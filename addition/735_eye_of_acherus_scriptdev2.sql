@@ -1,5 +1,0 @@
--- Eye of Acherus texts
-DELETE FROM script_texts WHERE entry BETWEEN -1666452 AND -1666451;
-INSERT INTO script_texts (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
-('-1666451','The Eye of Acherus launches towards its destination','Око Акеруса вылетело в пункт назначения','0','3','0','0','EOA_LAUNCH'),
-('-1666452','The Eye of Acherus is in your control','Око Акеруса под вашим контролем','0','3','0','0','EOA_CONTROL');

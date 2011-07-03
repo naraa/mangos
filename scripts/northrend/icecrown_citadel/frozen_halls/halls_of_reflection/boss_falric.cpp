@@ -37,7 +37,9 @@ enum
     SPELL_HOPELESSNESS                      = 72395,
     SPELL_IMPENDING_DESPAIR                 = 72426,
     SPELL_DEFILING_HORROR                   = 72435,
+    //SPELL_DEFILING_HORROR_H                 = 72452,
     SPELL_QUIVERING_STRIKE                  = 72422,
+    //SPELL_QUIVERING_STRIKE_H                = 72453,
 
     SPELL_BERSERK                           = 47008
 };
@@ -94,7 +96,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
       DoScriptText(SAY_FALRIC_DEATH, m_creature);
     }
 
-    void AttackStart(Unit* who) 
+    void AttackStart(Unit* who)
     {
         if(!m_pInstance) return;
 
@@ -120,7 +122,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_6; break;
                    }
                    break;
-               case 1: 
+               case 1:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_2; break;
@@ -128,7 +130,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_4; break;
                    }
                    break;
-               case 2: 
+               case 2:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_2; break;
@@ -136,7 +138,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_6; break;
                    }
                    break;
-               case 3: 
+               case 3:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_1; break;
@@ -174,7 +176,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
 
         if (m_pInstance->GetData(TYPE_EVENT) == 5)
@@ -186,11 +188,11 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
         if (m_pInstance->GetData(TYPE_FALRIC) == SPECIAL)
         {
 
-            if (m_uiSummonTimer < uiDiff) 
+            if (m_uiSummonTimer < uiDiff)
             {
                     ++SummonCount;
                     m_pInstance->SetData(DATA_WAVE_COUNT,SummonCount);
-                    if(SummonCount > 4) 
+                    if(SummonCount > 4)
                     {
                         m_pInstance->SetData(TYPE_FALRIC, IN_PROGRESS);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
