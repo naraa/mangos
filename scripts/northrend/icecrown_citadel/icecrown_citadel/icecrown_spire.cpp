@@ -63,7 +63,7 @@ struct MANGOS_DLL_DECL mob_spire_frostwyrmAI : public BSWScriptedAI
         {
             case 0:
                     break;
-            case 1: 
+            case 1:
                     doCast(SPELL_BERSERK);
                     stage = 2;
                     break;
@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
     void JustDied(Unit *killer)
     {
         if(!pInstance) return;
-        if (killer->GetTypeId() == TYPEID_PLAYER || killer->GetCharmerOrOwner()->GetTypeId() == TYPEID_PLAYER )
+        if (killer->GetTypeId() == TYPEID_PLAYER || killer->GetCharmerOrOwnerOrSelf()->GetTypeId() == TYPEID_PLAYER )
               pInstance->SetData(TYPE_FLIGHT_WAR, DONE);
     }
 
@@ -134,7 +134,7 @@ struct MANGOS_DLL_DECL mob_frost_giantAI : public BSWScriptedAI
         {
             case 0:
                     break;
-            case 1: 
+            case 1:
                     doCast(SPELL_BERSERK);
                     stage = 2;
                     break;
