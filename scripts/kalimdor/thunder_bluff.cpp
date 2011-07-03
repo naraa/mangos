@@ -27,11 +27,14 @@ EndScriptData */
 # npc_cairne_bloodhoof
 ######*/
 
-#define SPELL_BERSERKER_CHARGE  16636
-#define SPELL_CLEAVE            16044
-#define SPELL_MORTAL_STRIKE     16856
-#define SPELL_THUNDERCLAP       23931
-#define SPELL_UPPERCUT          22916
+enum
+{
+    SPELL_BERSERKER_CHARGE  = 16636,
+    SPELL_CLEAVE            = 16044,
+    SPELL_MORTAL_STRIKE     = 16856,
+    SPELL_THUNDERCLAP       = 23931,
+    SPELL_UPPERCUT          = 22916
+};
 
 //TODO: verify abilities/timers
 struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
@@ -43,6 +46,8 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
     uint32 MortalStrike_Timer;
     uint32 Thunderclap_Timer;
     uint32 Uppercut_Timer;
+
+    bool CalledHelp;
 
     void Reset()
     {
@@ -57,6 +62,12 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if ((m_creature->isInCombat() || m_creature->getVictim() || m_creature->SelectHostileTarget()) && !CalledHelp)
+        {
+            m_creature->CallForHelp(100);
+            CalledHelp = true;
+        }
 
         if (BerserkerCharge_Timer < diff)
         {
