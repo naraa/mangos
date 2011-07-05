@@ -1,4 +1,4 @@
-/* Copyright (C) 2009 - 2010 by /dev/rsa for ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2009 - 2011 by /dev/rsa for ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 #include "precompiled.h"
@@ -153,7 +153,7 @@ CanCastResult BSWScriptedAI::_BSWSpellSelector(uint8 m_uiSpellIdx, Unit* pTarget
 
         switch (pSpell->m_CastTarget) {
 
-            case DO_NOTHING: 
+            case DO_NOTHING:
                    result = CAST_OK;
                    break;
 
@@ -191,7 +191,7 @@ CanCastResult BSWScriptedAI::_BSWSpellSelector(uint8 m_uiSpellIdx, Unit* pTarget
                    break;
 
             case APPLY_AURA_TARGET:
-                   if (!pTarget || !pTarget->IsInMap(m_creature)) 
+                   if (!pTarget || !pTarget->IsInMap(m_creature))
                    {
                        result = CAST_FAIL_OTHER;
                        break;
@@ -231,7 +231,7 @@ CanCastResult BSWScriptedAI::_BSWSpellSelector(uint8 m_uiSpellIdx, Unit* pTarget
                                pTarget = itr->getSource();
                                if (pTarget && pTarget->isAlive() && pTarget->IsWithinDistInMap(m_creature, pSpell->LocData.x))
                                {
-                                   if (!pSpell->m_IsBugged) 
+                                   if (!pSpell->m_IsBugged)
                                    {
                                        m_creature->CastSpell(pTarget, pSpell->m_uiSpellEntry[currentDifficulty], false);
                                    }
@@ -258,7 +258,7 @@ CanCastResult BSWScriptedAI::_BSWSpellSelector(uint8 m_uiSpellIdx, Unit* pTarget
 
             case CAST_ON_RANDOM_POINT:
                    if (!pTarget) pTarget = m_creature;
-                   if (pSpell->LocData.z <= 1.0f) 
+                   if (pSpell->LocData.z <= 1.0f)
                    {
                          float fPosX, fPosY, fPosZ;
                          if (!pTarget->IsPositionValid() || !pTarget->IsInMap(m_creature))
@@ -510,7 +510,7 @@ Unit* BSWScriptedAI::_doSummon(uint8 m_uiSpellIdx, TempSummonType summontype, ui
 
     debug_log("BSW: Summoning creature number %u type %u despawn delay %u",pSpell->m_uiSpellEntry[currentDifficulty], pSpell->m_CastTarget, delay);
 
-    if (pSpell->LocData.z <= 1.0f) 
+    if (pSpell->LocData.z <= 1.0f)
     {
         float fPosX, fPosY, fPosZ;
         if (!m_creature->IsPositionValid())
@@ -529,7 +529,7 @@ Unit* BSWScriptedAI::_doSummonAtPosition(uint8 m_uiSpellIdx, float fPosX, float 
 {
     BSWRecord* pSpell = &m_BSWRecords[m_uiSpellIdx];
 
-    switch (pSpell->m_CastTarget) 
+    switch (pSpell->m_CastTarget)
     {
         case SUMMON_NORMAL:
              return _doSummonAtPosition(pSpell->m_uiSpellEntry[currentDifficulty], TEMPSUMMON_CORPSE_TIMED_DESPAWN, 0, fPosX, fPosY, fPosZ);
@@ -749,7 +749,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
                 if (isStack)
                     holder->ModStackAmount(1);
             }
-            else 
+            else
             {
                 aura = CreateAura(spell, index, &_basepoint, holder, pTarget);
                 holder->SetAuraDuration(aura->GetAuraMaxDuration());
