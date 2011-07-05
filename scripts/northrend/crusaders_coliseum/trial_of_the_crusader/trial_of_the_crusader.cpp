@@ -332,7 +332,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
     std::list<WayPoints>::iterator WayPoint;
     uint32 WalkTimer;
     bool IsWalking;
-    Creature* pPortal;
+    ObjectGuid m_uiPortalGuid;
 
     void Reset()
     {
@@ -341,11 +341,21 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
         Event = false;
         MovementStarted = false;
         m_creature->SetRespawnDelay(DAY);
-        pPortal = m_creature->SummonCreature(NPC_TRIGGER, SpawnLoc[2].x, SpawnLoc[2].y, SpawnLoc[2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
-        pPortal->SetRespawnDelay(DAY);
-        pPortal->CastSpell(pPortal, 51807, false);
-        pPortal->SetDisplayId(17612);
+        if (Creature* pPortal = m_creature->SummonCreature(NPC_TRIGGER, SpawnLoc[2].x, SpawnLoc[2].y, SpawnLoc[2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME))
+        {
+            pPortal->SetRespawnDelay(DAY);
+            pPortal->CastSpell(pPortal, 51807, false);
+            pPortal->SetDisplayId(17612);
+            m_uiPortalGuid = pPortal->GetObjectGuid();
+        }
         if(pInstance) pInstance->SetData(TYPE_LICH_KING,IN_PROGRESS);
+    }
+
+    Creature* GetCreatureFromGuid(ObjectGuid m_uiGuid)
+    {
+        if (Creature* pCreature = m_creature->GetMap()->GetCreature(m_uiGuid))
+            return pCreature;
+        return NULL;
     }
 
     void AttackStart(Unit *who)
@@ -464,7 +474,8 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
                pInstance->SetData(TYPE_STAGE,9);
                Event=false;
                m_creature->ForcedDespawn();
-               pPortal->ForcedDespawn();
+                if (Creature* pPortal = GetCreatureFromGuid(m_uiPortalGuid))
+                    pPortal->ForcedDespawn();
                pInstance->SetData(TYPE_EVENT,0);
                UpdateTimer = 20000;
                break;
@@ -505,21 +516,28 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
 
     BSWScriptedInstance* pInstance;
     uint32 UpdateTimer;
-    Creature* pPortal;
-    Creature* pTrigger;
+    ObjectGuid m_uiPortalGuid;
+    ObjectGuid m_uiTriggerGuid;
+
+    Creature* GetCreatureFromGuid(ObjectGuid m_uiGuid)
+    {
+        if (Creature* pCreature = m_creature->GetMap()->GetCreature(m_uiGuid))
+            return pCreature;
+        return NULL;
+    }
 
     void JustDied(Unit* pKiller)
     {
         DoScriptText(-1713715, m_creature, pKiller);
         pInstance->SetData(TYPE_EVENT, 1180);
-        if (pPortal) pPortal->ForcedDespawn();
+        if (Creature* pPortal = GetCreatureFromGuid(m_uiPortalGuid)) pPortal->ForcedDespawn();
     }
 
     void Reset()
     {
         m_creature->SetRespawnDelay(DAY);
         m_creature->GetMotionMaster()->MovePoint(1, SpawnLoc[27].x, SpawnLoc[27].y, SpawnLoc[27].z);
-        pPortal = NULL;
+        m_uiPortalGuid = 0;
     }
 
     void UpdateAI(const uint32 diff)
@@ -546,35 +564,37 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                case 1130:
                     m_creature->GetMotionMaster()->MovementExpired();
                     m_creature->HandleEmoteCommand(EMOTE_STATE_SPELL_CHANNEL_OMNI);
-                    pPortal = m_creature->SummonCreature(NPC_WILFRED_PORTAL, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5, TEMPSUMMON_MANUAL_DESPAWN, 5000);
-                    if (pPortal)  {
-                                  pPortal->SetRespawnDelay(DAY);
-                                  pPortal->SetDisplayId(22862);
-                                  }
+                    if (Creature* pPortal = m_creature->SummonCreature(NPC_WILFRED_PORTAL, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5, TEMPSUMMON_MANUAL_DESPAWN, 5000))
+                    {
+                        pPortal->SetRespawnDelay(DAY);
+                        pPortal->SetDisplayId(22862);
+                        m_uiPortalGuid = pPortal->GetObjectGuid();
+                    }
                     DoScriptText(-1713512, m_creature);
                     pInstance->SetData(TYPE_EVENT, 1132);
                     UpdateTimer = 4000;
                     break;
                case 1132:
                     m_creature->GetMotionMaster()->MovementExpired();
-                    if (pPortal) pPortal->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.5f);
+                    if (Creature* pPortal = GetCreatureFromGuid(m_uiPortalGuid)) pPortal->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.5f);
                     pInstance->SetData(TYPE_EVENT, 1134);
                     UpdateTimer = 4000;
                     break;
                case 1134:
-                    if (pPortal) pPortal->SetDisplayId(15900);
-                    pTrigger =  m_creature->SummonCreature(NPC_TRIGGER, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5.0f, TEMPSUMMON_MANUAL_DESPAWN, 5000);
-                    if (pTrigger)  {
-                                   pTrigger->SetDisplayId(17612);
-                                   pTrigger->CastSpell(pTrigger, SPELL_WILFRED_PORTAL, false);
-                                   pTrigger->SetRespawnDelay(DAY);
-                                   }
+                    if (Creature* pPortal = GetCreatureFromGuid(m_uiPortalGuid)) pPortal->SetDisplayId(15900);
+                    if (Creature* pTrigger =  m_creature->SummonCreature(NPC_TRIGGER, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z, 5.0f, TEMPSUMMON_MANUAL_DESPAWN, 5000))
+                    {
+                        pTrigger->SetDisplayId(17612);
+                        pTrigger->CastSpell(pTrigger, SPELL_WILFRED_PORTAL, false);
+                        pTrigger->SetRespawnDelay(DAY);
+                        m_uiTriggerGuid = pTrigger->GetObjectGuid();
+                    }
                     m_creature->HandleEmoteCommand(EMOTE_ONESHOT_SPELLCAST_OMNI);
                     UpdateTimer = 4000;
                     pInstance->SetData(TYPE_EVENT, 1135);
                     break;
                case 1135:
-                    if (pTrigger) pTrigger->SetFloatValue(OBJECT_FIELD_SCALE_X, 2.0f);
+                    if (Creature* pTrigger = GetCreatureFromGuid(m_uiTriggerGuid)) pTrigger->SetFloatValue(OBJECT_FIELD_SCALE_X, 2.0f);
                     m_creature->HandleEmoteCommand(EMOTE_ONESHOT_SPELLCAST_OMNI);
                     UpdateTimer = 3000;
                     pInstance->SetData(TYPE_EVENT, 1140);
@@ -596,7 +616,7 @@ struct MANGOS_DLL_DECL npc_fizzlebang_tocAI : public ScriptedAI
                     DoScriptText(-1713513, m_creature);
                     break;
                case 1144:
-                    if (pTrigger) pTrigger->ForcedDespawn();
+                    if (Creature* pTrigger = GetCreatureFromGuid(m_uiTriggerGuid)) pTrigger->ForcedDespawn();
                     pInstance->SetData(TYPE_EVENT, 1150);
                     UpdateTimer = 5000;
                     break;
