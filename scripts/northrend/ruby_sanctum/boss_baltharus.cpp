@@ -32,6 +32,16 @@ static Locations SpawnLoc[]=
     {3153.06f, 389.486f, 86.2596f},            // Baltharus initial point
 };
 
+enum Says
+{
+    SAY_BALTHARUS_AGGRO        = -1666300,
+    SAY_BALTHARUS_SLAY_1       = -1666301,
+    SAY_BALTHARUS_SLAY_2       = -1666302,
+    SAY_BALTHARUS_DEATH        = -1666303,
+    SAY_BALTHARUS_SPECIAL_1    = -1666304,    // not being used
+    SAY_BALTHARUS_YELL         = -1666305,
+};
+
 enum Equipment
 {
     EQUIP_MAIN           = 49888,
@@ -104,7 +114,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         pInstance->SetData(TYPE_BALTHARUS, FAIL);
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
         if(!pInstance || intro ||
@@ -112,7 +122,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
             !pWho->IsWithinDistInMap(m_creature, 60.0f)) return;
 
         pInstance->SetData(TYPE_EVENT, 10);
-        DoScriptText(-1666305,m_creature);
+        DoScriptText(SAY_BALTHARUS_YELL,m_creature);
         intro = true;
     }
 
@@ -121,7 +131,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         if (!pInstance) return;
 
         if (pDummyTarget) pDummyTarget->ForcedDespawn();
-        DoScriptText(-1666303,m_creature);
+        DoScriptText(SAY_BALTHARUS_DEATH,m_creature);
         pInstance->SetData(TYPE_BALTHARUS, DONE);
     }
 
@@ -129,10 +139,10 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
     {
     switch (urand(0,1)) {
         case 0:
-               DoScriptText(-1666301,m_creature,pVictim);
+               DoScriptText(SAY_BALTHARUS_SLAY_1,m_creature,pVictim);
                break;
         case 1:
-               DoScriptText(-1666302,m_creature,pVictim);
+               DoScriptText(SAY_BALTHARUS_SLAY_2,m_creature,pVictim);
                break;
         };
     }
@@ -169,7 +179,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         m_creature->InterruptNonMeleeSpells(true);
         SetCombatMovement(true);
         pInstance->SetData(TYPE_BALTHARUS, IN_PROGRESS);
-        DoScriptText(-1666300,m_creature);
+        DoScriptText(SAY_BALTHARUS_AGGRO,m_creature);
     }
 
     void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
@@ -179,7 +189,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         if (!m_creature || !m_creature->isAlive())
             return;
 
-        if(pDoneBy->GetGUID() == m_creature->GetGUID()) 
+        if(pDoneBy->GetGUID() == m_creature->GetGUID())
           return;
 
         if (pClone && pClone->isAlive())
@@ -209,6 +219,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
                  m_creature->InterruptNonMeleeSpells(true);
                  if (is25())
                      doCast(SPELL_SUMMON_CLONE);
+                     DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
                  setStage(2);
                  break;
 
@@ -225,6 +236,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
                  m_creature->InterruptNonMeleeSpells(true);
                  if (!is25())
                         doCast(SPELL_SUMMON_CLONE);
+                        DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
                  setStage(5);
                  break;
 
@@ -241,6 +253,7 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
                  m_creature->InterruptNonMeleeSpells(true);
                  if (is25())
                      doCast(SPELL_SUMMON_CLONE);
+                     DoScriptText(SAY_BALTHARUS_SPECIAL_1,m_creature);
                  setStage(8);
                  break;
 
@@ -273,7 +286,7 @@ CreatureAI* GetAI_boss_baltharus(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public BSWScriptedAI
 {
-    mob_baltharus_cloneAI(Creature* pCreature) : BSWScriptedAI(pCreature) 
+    mob_baltharus_cloneAI(Creature* pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -292,10 +305,10 @@ struct MANGOS_DLL_DECL mob_baltharus_cloneAI : public BSWScriptedAI
     {
     switch (urand(0,1)) {
         case 0:
-               DoScriptText(-1666301,m_creature,pVictim);
+               DoScriptText(SAY_BALTHARUS_SLAY_1,m_creature,pVictim);
                break;
         case 1:
-               DoScriptText(-1666302,m_creature,pVictim);
+               DoScriptText(SAY_BALTHARUS_SLAY_2,m_creature,pVictim);
                break;
         };
     }
@@ -336,29 +349,6 @@ CreatureAI* GetAI_mob_baltharus_clone(Creature* pCreature)
 {
     return new mob_baltharus_cloneAI(pCreature);
 }
-
-
-enum
-{
-    // Xerestrasza intro and outro texts
-    SAY_HELP                    = -1724000,
-    SAY_THANKS                  = -1724002,
-    SAY_OUTRO_1                 = -1724003,
-    SAY_OUTRO_2                 = -1724004,
-    SAY_OUTRO_3                 = -1724005,
-    SAY_OUTRO_4                 = -1724006,
-    SAY_OUTRO_5                 = -1724007,
-    SAY_OUTRO_6                 = -1724008,
-    SAY_OUTRO_7                 = -1724009,
-
-    // Baltharus texts
-    SAY_INTRO                   = -1724001,
-    SAY_AGGRO                   = -1724010,
-    SAY_SLAY_1                  = -1724011,
-    SAY_SLAY_2                  = -1724012,
-    SAY_DEATH                   = -1724013,
-    SAY_SPLIT                   = -1724014,
-};
 
 void AddSC_boss_baltharus()
 {

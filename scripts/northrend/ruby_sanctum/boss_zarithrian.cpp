@@ -53,11 +53,11 @@ static Locations SpawnLoc[]=
 
 enum
 {
-    SAY_AGGRO           = -1724019,
-    SAY_SLAY_1          = -1724020,
-    SAY_SLAY_2          = -1724021,
-    SAY_DEATH           = -1724022,
-    SAY_SUMMON          = -1724023,
+    SAY_AGGRO           = -1666200,
+    SAY_SLAY_1          = -1666201,
+    SAY_SLAY_2          = -1666202,
+    SAY_DEATH           = -1666203,
+    SAY_SUMMON          = -1666204,
 };
 
 struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (getStage())
             ScriptedAI::MoveInLineOfSight(pWho);
@@ -103,10 +103,10 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
     {
     switch (urand(0,1)) {
         case 0:
-               DoScriptText(-1666201,m_creature,pVictim);
+               DoScriptText(SAY_SLAY_1,m_creature,pVictim);
                break;
         case 1:
-               DoScriptText(-1666202,m_creature,pVictim);
+               DoScriptText(SAY_SLAY_2,m_creature,pVictim);
                break;
         };
     }
@@ -130,13 +130,13 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
 
     }
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
         if(!pInstance) return;
 
         SetEquipmentSlots(false, EQUIP_MAIN, EQUIP_OFFHAND, EQUIP_RANGED);
         pInstance->SetData(TYPE_ZARITHRIAN, IN_PROGRESS);
-        DoScriptText(-1666200,m_creature);
+        DoScriptText(SAY_AGGRO,m_creature);
     }
 
     void JustDied(Unit *killer)
@@ -144,7 +144,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
         if(!pInstance) return;
 
         pInstance->SetData(TYPE_ZARITHRIAN, DONE);
-        DoScriptText(-1666203,m_creature);
+        DoScriptText(SAY_DEATH,m_creature);
     }
 
     void UpdateAI(const uint32 diff)
@@ -161,7 +161,7 @@ struct MANGOS_DLL_DECL boss_zarithrianAI : public BSWScriptedAI
 //                || currentDifficulty == RAID_DIFFICULTY_25MAN_HEROIC)
 //                doCast(SPELL_CALL_FLAMECALLER);
 
-            DoScriptText(-1666204,m_creature);
+            DoScriptText(SAY_SUMMON,m_creature);
         }
 
         timedCast(SPELL_CLEAVE_ARMOR, diff);

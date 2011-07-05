@@ -26,11 +26,11 @@ EndScriptData */
 
 enum
 {
-    SAY_AGGRO                   = -1724015,
-    SAY_SLAY_1                  = -1724016,
-    SAY_SLAY_2                  = -1724017,
-    SAY_SPECIAL                 = -1724018,
-    SOUND_DEATH                 = 17531,                    // On death it has only a screaming sound
+    SAY_AGGRO                   = -1666400,
+    SAY_SLAY_1                  = -1666401,
+    SAY_SLAY_2                  = -1666402,
+    SAY_SPECIAL                 = -1666404,
+    SOUND_DEATH                 = -1666403,                 // On death it has only a screaming sound
 };
 
 enum BossSpells
@@ -120,10 +120,10 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public BSWScriptedAI
     {
     switch (urand(0,1)) {
         case 0:
-               DoScriptText(-1666401,m_creature,pVictim);
+               DoScriptText(SAY_SLAY_1,m_creature,pVictim);
                break;
         case 1:
-               DoScriptText(-1666402,m_creature,pVictim);
+               DoScriptText(SAY_SLAY_2,m_creature,pVictim);
                break;
         };
     }
@@ -134,13 +134,13 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public BSWScriptedAI
             pInstance->SetData(TYPE_RAGEFIRE, FAIL);
     }
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
         if(!pInstance) return;
 
         pInstance->SetData(TYPE_RAGEFIRE, IN_PROGRESS);
         m_creature->SetInCombatWithZone();
-        DoScriptText(-1666400,m_creature);
+        DoScriptText(SAY_AGGRO,m_creature);
     }
 
     void JustDied(Unit *killer)
@@ -148,7 +148,7 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public BSWScriptedAI
         if(!pInstance) return;
 
         pInstance->SetData(TYPE_RAGEFIRE, DONE);
-        DoScriptText(-1666403,m_creature);
+        DoScriptText(SOUND_DEATH,m_creature);
     }
 
     void doBeacon(bool command = false)
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public BSWScriptedAI
             case 2: // Wait for movement
                  if (MovementStarted) return;
                  doCast(SPELL_CONFLAGATION);
-                 DoScriptText(-1666404,m_creature);
+                 DoScriptText(SAY_SPECIAL,m_creature);
                  setStage(3);
                  break;
 
@@ -263,7 +263,7 @@ struct MANGOS_DLL_DECL boss_ragefireAI : public BSWScriptedAI
             case 9: // Wait for movement
                  if (MovementStarted) return;
                  doCast(SPELL_CONFLAGATION);
-                 DoScriptText(-1666404,m_creature);
+                 DoScriptText(SAY_SPECIAL,m_creature);
                  setStage(10);
                  break;
 

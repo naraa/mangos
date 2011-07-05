@@ -28,7 +28,7 @@ EndScriptData */
 
 struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
 {
-    instance_ruby_sanctum(Map* pMap) : BSWScriptedInstance(pMap) 
+    instance_ruby_sanctum(Map* pMap) : BSWScriptedInstance(pMap)
     {
         Initialize();
     }
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
                         {
                             pPlayer->SendUpdateWorldState(UPDATE_STATE_UI_COUNT_T, 100 - value);
                         }
-                        else 
+                        else
                         {
                             pPlayer->SendUpdateWorldState(UPDATE_STATE_UI_COUNT_R, value);
                         }
@@ -155,8 +155,8 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
 
     void OpenAllDoors()
     {
-        if (m_auiEncounter[TYPE_RAGEFIRE] == DONE && 
-            m_auiEncounter[TYPE_BALTHARUS] == DONE && 
+        if (m_auiEncounter[TYPE_RAGEFIRE] == DONE &&
+            m_auiEncounter[TYPE_BALTHARUS] == DONE &&
             m_auiEncounter[TYPE_XERESTRASZA] == DONE)
             DoOpenDoor(GO_FLAME_WALLS);
         else
@@ -206,10 +206,10 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
         switch(uiType)
         {
             case TYPE_EVENT:        m_auiEncounter[uiType] = uiData; uiData = NOT_STARTED; break;
-            case TYPE_RAGEFIRE:     m_auiEncounter[uiType] = uiData; 
+            case TYPE_RAGEFIRE:     m_auiEncounter[uiType] = uiData;
                                         OpenAllDoors();
                                     break;
-            case TYPE_BALTHARUS:    m_auiEncounter[uiType] = uiData; 
+            case TYPE_BALTHARUS:    m_auiEncounter[uiType] = uiData;
                                         OpenAllDoors();
                                     break;
             case TYPE_XERESTRASZA:  m_auiEncounter[uiType] = uiData;
@@ -259,7 +259,7 @@ struct MANGOS_DLL_DECL instance_ruby_sanctum : public BSWScriptedInstance
                                     {
                                         UpdateWorldState(false,0);
                                     }
-                                    else 
+                                    else
                                     {
                                         UpdateWorldState(true,uiData);
                                     }

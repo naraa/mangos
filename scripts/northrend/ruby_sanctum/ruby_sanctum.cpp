@@ -23,6 +23,20 @@ EndScriptData */
 #include "precompiled.h"
 #include "ruby_sanctum.h"
 
+enum
+{
+    // Xerestrasza intro and outro texts
+    SAY_XERESTRASZA_YELL_1                = -1666000,
+    SAY_XERESTRASZA_YELL_2                = -1666001,
+    SAY_XERESTRASZA_SAY_1                 = -1666002,
+    SAY_XERESTRASZA_SAY_2                 = -1666003,
+    SAY_XERESTRASZA_SAY_3                 = -1666004,
+    SAY_XERESTRASZA_SAY_4                 = -1666005,
+    SAY_XERESTRASZA_SAY_5                 = -1666006,
+    SAY_XERESTRASZA_SAY_6                 = -1666007,
+    SAY_XERESTRASZA_SAY_7                 = -1666008,
+};
+
 static Locations SpawnLoc[]=
 {
     {3155.540039f, 342.391998f, 84.596802f},   // 0 - start point
@@ -64,7 +78,7 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if (type != POINT_MOTION_TYPE || !movementstarted) return;
-        if (id == nextPoint) 
+        if (id == nextPoint)
         {
             movementstarted = false;
             pInstance->SetData(TYPE_EVENT,nextEvent);
@@ -90,7 +104,7 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit *who)
     {
-        if(!pInstance || !who || who->GetTypeId() != TYPEID_PLAYER) 
+        if(!pInstance || !who || who->GetTypeId() != TYPEID_PLAYER)
             return;
 
         if (pInstance->GetData(TYPE_BALTHARUS) != DONE
@@ -121,46 +135,46 @@ struct MANGOS_DLL_DECL mob_xerestraszaAI : public ScriptedAI
                           pInstance->SetData(TYPE_EVENT, 20);
                           break;
                     case 20:
-                          DoScriptText(-1666000,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_YELL_1,m_creature);
                           pInstance->SetData(TYPE_EVENT,0);
                           break;
 // Xerestrasza event
                     case 30:
                           m_creature->SetActiveObjectState(true);
-                          DoScriptText(-1666001,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_YELL_2,m_creature);
                           StartMovement(1,40);
                           break;
                     case 40:
-                          DoScriptText(-1666002,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_1,m_creature);
                           StartMovement(2,50);
                           break;
                     case 50:
-                          DoScriptText(-1666003,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_2,m_creature);
                           UpdateTimer = 12000;
                           pInstance->SetData(TYPE_EVENT,60);
                           break;
                     case 60:
-                          DoScriptText(-1666004,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_3,m_creature);
                           UpdateTimer = 12000;
                           pInstance->SetData(TYPE_EVENT,70);
                           break;
                     case 70:
-                          DoScriptText(-1666005,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_4,m_creature);
                           UpdateTimer = 10000;
                           pInstance->SetData(TYPE_EVENT,80);
                           break;
                     case 80:
-                          DoScriptText(-1666006,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_5,m_creature);
                           UpdateTimer = 10000;
                           pInstance->SetData(TYPE_EVENT,90);
                           break;
                     case 90:
-                          DoScriptText(-1666007,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_6,m_creature);
                           UpdateTimer = 10000;
                           pInstance->SetData(TYPE_EVENT,100);
                           break;
                     case 100:
-                          DoScriptText(-1666008,m_creature);
+                          DoScriptText(SAY_XERESTRASZA_SAY_7,m_creature);
                           UpdateTimer = 4000;
                           pInstance->SetData(TYPE_EVENT,110);
                           break;
