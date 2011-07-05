@@ -1,11 +1,34 @@
 -- Oculus instance
 
+-- ---------------------- Script Names ----------------------
+UPDATE `creature_template` SET `AIName` = '', `vehicle_id` = 70, `ScriptName` = 'mob_oculus_dragon' WHERE `entry` IN (27692,27756,27755);
+UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 578;
+UPDATE `creature_template` SET `ScriptName` = 'npc_unstable_sphere' WHERE entry = 28166;
+UPDATE `creature_template` SET `ScriptName` = 'boss_drakos' WHERE entry = 27654;
+UPDATE `creature_template` SET `ScriptName` = 'boss_eregos' WHERE entry = 27656;
+UPDATE `creature_template` SET `ScriptName` = 'boss_varos' WHERE entry = 27447;
+UPDATE `creature_template` SET `ScriptName` = 'npc_varos_orb' WHERE entry = 28183;
+UPDATE `creature_template` SET `ScriptName` = 'npc_varos_beam_target' WHERE entry = 28239;
+UPDATE `creature_template` SET `ScriptName` = 'npc_oculus_robot' WHERE entry = 27641;
+UPDATE `creature_template` SET `ScriptName` = 'boss_urom' WHERE entry = 27655;
+UPDATE `creature_template` SET `ScriptName` = 'npc_planar_anomaly' WHERE entry = 30879;
+UPDATE `creature_template` SET `ScriptName` = 'npc_belgar_image' WHERE entry = 28012;
+UPDATE `gameobject_template` SET `ScriptName` = 'go_oculus_portal' WHERE `entry` = 188715;
+
+-- -----------------------  Instance fixes DB -----------------------------
+
 -- from traponinet
 /* Belgaristrasz and his companions give Drake, after completed quest (13124) */
 UPDATE `creature_template` SET `npcflag` = npcflag|1 WHERE `entry` IN (27657, 27658, 27659);
 UPDATE `creature_template` SET `gossip_menu_id` = 27657 WHERE `entry` = 27657;
 UPDATE `creature_template` SET `gossip_menu_id` = 27658 WHERE `entry` = 27658;
 UPDATE `creature_template` SET `gossip_menu_id` = 27659 WHERE `entry` = 27659;
+
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) values
+-- (61407, 1, 27447),  -- TargetEntry 27447 does not have any implicit target TARGET_SCRIPT(38) or TARGET_SCRIPT_COORDINATES (46) or TARGET_FOCUS_OR_SCRIPTED_GAMEOBJECT (40).
+(51024, 1, 28239),
+(51022, 1, 28239),
+(57963, 1, 27656);
 
 DELETE FROM `gossip_scripts` WHERE `id` IN (27657, 27658, 27659);
 INSERT INTO `gossip_scripts` VALUES (27657,0,17,37815,1,0,0,0,0,0,0,0,0,0,0,0,''),(27658,0,17,37860,1,0,0,0,0,0,0,0,0,0,0,0,''),(27659,0,17,37859,1,0,0,0,0,0,0,0,0,0,0,0,'');
@@ -63,6 +86,11 @@ VALUES
 (42275, 1, 6, 571, 0, '0', 3878.0, 6984.0, 106.0, 0, ''),
 (40557, 1, 6, 578, 0, '0', 1001.61, 1051.13, 359.48, 3.1, '');
 
+DELETE FROM `spell_script_target` WHERE `entry` IN (49460, 49346, 49464);
+INSERT INTO `spell_script_target` VALUES (49460, 1, 27755);
+INSERT INTO `spell_script_target` VALUES (49346, 1, 27692);
+INSERT INTO `spell_script_target` VALUES (49464, 1, 27756);
+
 -- from lanc
 UPDATE `creature_template` SET
     spell1 = 50232,
@@ -88,29 +116,20 @@ UPDATE `creature_template` SET
     spell5 = 0
 WHERE `entry` IN (27692);
 
--- from me
-UPDATE `creature_template` SET `AIName` = '', `vehicle_id` = 70, `ScriptName` = 'mob_oculus_dragon' WHERE `entry` IN (27692,27756,27755);
 DELETE FROM `spell_script_target` WHERE `entry` IN (49460, 49346, 49464);
 INSERT INTO `spell_script_target` VALUES (49460, 1, 27755);
 INSERT INTO `spell_script_target` VALUES (49346, 1, 27692);
 INSERT INTO `spell_script_target` VALUES (49464, 1, 27756);
 
--- from MaxX2021
-UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 578;
-UPDATE `creature_template` SET `ScriptName` = 'npc_unstable_sphere' WHERE entry = 28166;
-UPDATE `creature_template` SET `ScriptName` = 'boss_drakos' WHERE entry = 27654;
-UPDATE `creature_template` SET `ScriptName` = 'boss_eregos' WHERE entry = 27656;
-UPDATE `creature_template` SET `ScriptName` = 'boss_varos' WHERE entry = 27447;
-UPDATE `creature_template` SET `ScriptName` = 'npc_varos_orb' WHERE entry = 28183;
-UPDATE `creature_template` SET `ScriptName` = 'npc_varos_beam_target' WHERE entry = 28239;
-UPDATE `creature_template` SET `ScriptName` = 'npc_oculus_robot' WHERE entry = 27641;
-UPDATE `creature_template` SET `ScriptName` = 'boss_urom' WHERE entry = 27655;
-UPDATE `creature_template` SET `ScriptName` = 'npc_planar_anomaly' WHERE entry = 30879;
-UPDATE `creature_template` SET `ScriptName` = 'npc_belgar_image' WHERE entry = 28012;
+-- herbalism flower   a ytdb bugs flowers cant wander around lol
+UPDATE `creature_template` SET `unit_flags` = 33555204, `dynamicflags` = 8 WHERE `entry` = 29888;
+UPDATE `creature_template` SET `speed_walk` = 0, `speed_run` = 0, `movementId` = 0 WHERE `entry` = 29888;
 
-REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) values
--- (61407, 1, 27447),  -- TargetEntry 27447 does not have any implicit target TARGET_SCRIPT(38) or TARGET_SCRIPT_COORDINATES (46) or TARGET_FOCUS_OR_SCRIPTED_GAMEOBJECT (40).
-(51024, 1, 28239),
-(51022, 1, 28239),
-(57963, 1, 27656);
+-- Varos
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 27447; -- added immune to pacify
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 31559; -- added immune to pacify to hard version 
 
+-- Drakos the Interrogator
+UPDATE `creature_template` SET `maxhealth` = 431392 WHERE `entry` = 31558;  -- Hard Instance Version  data from wow.com
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 27654;  -- added immune to pacify
+UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 31558;  -- added immune to pacify to hard version
