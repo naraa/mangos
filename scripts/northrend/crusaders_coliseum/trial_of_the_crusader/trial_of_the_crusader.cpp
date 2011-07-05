@@ -689,7 +689,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                DoScriptText(-1713500, m_creature);
                UpdateTimer = 12000;
                pInstance->SetData(TYPE_EVENT,120);
-//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
+               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
         case 140:
                m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_ONESHOT_TALK);
@@ -773,7 +773,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                DoScriptText(-1713509, m_creature);
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,0);
-//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
+               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
 
         case 666:
@@ -781,7 +781,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                UpdateTimer = 5000;
                pInstance->SetData(TYPE_EVENT,0);
                pInstance->SetData(TYPE_NORTHREND_BEASTS,NOT_STARTED);
-//               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
+               pInstance->DoUseDoorOrButton(GO_WEST_PORTCULLIS);
                break;
 
         case 1010:
