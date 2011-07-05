@@ -43,7 +43,6 @@ struct MANGOS_DLL_DECL instance_trial_of_the_crusader : public BSWScriptedInstan
     uint32 m_uiDataDamageEydis;
     uint32 m_uiValkyrsCasting;
 
-    uint32 m_uiCrusadersCache;
     uint32 m_uiTributeChest1;
     uint32 m_uiTributeChest2;
     uint32 m_uiTributeChest3;
@@ -125,9 +124,23 @@ struct MANGOS_DLL_DECL instance_trial_of_the_crusader : public BSWScriptedInstan
                                 m_auiEncounter[3] = uiData;
                             if (uiData == DONE) 
                             {
-                               if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiCrusadersCache))
-                                   if (pChest && !pChest->isSpawned())
-                                         pChest->SetRespawnTime(7*DAY);
+                               uint32 uiCacheEntry = GO_CRUSADERS_CACHE_10; 
+
+                               switch (instance->GetDifficulty()) 
+                               { 
+                                   case RAID_DIFFICULTY_10MAN_HEROIC: 
+                                       uiCacheEntry = GO_CRUSADERS_CACHE_10_H; 
+                                       break; 
+                                   case RAID_DIFFICULTY_25MAN_NORMAL: 
+                                       uiCacheEntry = GO_CRUSADERS_CACHE_25; 
+                                       break; 
+                                   case RAID_DIFFICULTY_25MAN_HEROIC: 
+                                       uiCacheEntry = GO_CRUSADERS_CACHE_25_H; 
+                                       break; 
+                               } 
+                               if (GameObject* pChest = GetSingleGameObjectFromStorage(uiCacheEntry)) 
+                                   if (!pChest->isSpawned()) 
+                                       pChest->SetRespawnTime(7*DAY);
                             };
                             break;
         case TYPE_CRUSADERS_COUNT:  if (uiData == 0) --m_auiCrusadersCount;
