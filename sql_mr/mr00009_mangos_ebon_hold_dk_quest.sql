@@ -214,6 +214,20 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- end of EventAI
 -- -----------------------------------------------------------------------------------------------------------------------------------------------------
 
+- quest 12801 -the light of dawn
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_acherus_ghoul' WHERE `entry`='29219';
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_warrior_of_the_frozen_wastes' WHERE `entry`='29206';
+
+DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
+INSERT INTO `spell_script_target` VALUES (53679, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53701, 1, 29175);
+INSERT INTO `spell_script_target` VALUES (53705, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
+INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
 
 
 -- quest 12701 --massacre at lights point
@@ -236,13 +250,13 @@ UPDATE `quest_template` SET `ExclusiveGroup` = 12716 WHERE `entry` = 12716;
 
 /* Scourge Gryphon */
 UPDATE creature_template SET
-    spell1 = 0,
-    spell2 = 0,
-    spell3 = 0,
-    spell4 = 0,
-    spell5 = 0,
-    spell6 = 0,
-    vehicle_id = 146
+   spell1 = 0,
+   spell2 = 0,
+   spell3 = 0,
+   spell4 = 0,
+   spell5 = 0,
+   spell6 = 0,
+   vehicle_id = 146
 WHERE entry IN (28864);
 
 -- From jahangames
