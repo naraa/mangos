@@ -105,7 +105,37 @@ DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28782);
 INSERT INTO npc_spellclick_spells VALUES
 (28782, 46598, 0, 0, 0, 1);
 
+-- -----------------------------------
+-- Quest The Gift That Keeps On Giving
+-- -----------------------------------
 
+-- item spell script targets (Scarlet Miners)
+DELETE FROM spell_script_target WHERE entry = 52479;
+INSERT INTO spell_script_target VALUES
+(52479, 1, 28819),
+(52479, 1, 28822),
+(52479, 1, 28841);
+
+UPDATE `creature_template` SET `AIName` = "EventAI" WHERE `entry` = 28846;
+UPDATE `creature_template` SET `ScriptName` = "mob_scarlet_ghoul" WHERE `entry` = 28845;
+UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28822;
+UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28819;
+UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28891;
+UPDATE `item_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 39253;
+
+-- EventAI for ghost needs tweaked and double checked
+DELETE FROM `creature_ai_texts` WHERE `entry` IN (-286102, -286101, -286100);
+INSERT INTO `creature_ai_texts` VALUES
+(-286100, "Die, Scourge filth!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY1"),
+(-286101, "It won't be that easy, friend!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY2"),
+(-286102, "I'll take you with me!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY3");
+ 
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28846;
+INSERT INTO `creature_ai_scripts` VALUES
+(2884601, 28846, 11, 0, 100, 0, 0, 0, 0, 0, 1, -286100, -286101, -286102, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost - Random say at spawn");
+
+-- fix to take Quest Item Away at end of quest
+UPDATE `quest_template` SET `ReqItemId1` = 39253, `ReqItemCount1` = 1 WHERE `entry` = 12698;
 
 -- -------------------------------------
 -- ACID scripts for Scarlet Enclave mobs
@@ -184,41 +214,6 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- end of EventAI
 -- -----------------------------------------------------------------------------------------------------------------------------------------------------
 
--- Quest The Gift That Keeps On Giving
--- item spell script targets (Scarlet Miners)
-DELETE FROM spell_script_target WHERE entry = 52479;
-INSERT INTO spell_script_target VALUES
-(52479, 1, 28819),
-(52479, 1, 28822),
-(52479, 1, 28841);
-
-UPDATE `creature_template` SET `AIName` = "EventAI" WHERE `entry` = 28846;
-UPDATE `creature_template` SET `ScriptName` = "mob_scarlet_ghoul" WHERE `entry` = 28845;
- 
-DELETE FROM `creature_ai_texts` WHERE `entry` IN (-286102, -286101, -286100);
-INSERT INTO `creature_ai_texts` VALUES
-(-286100, "Die, Scourge filth!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY1"),
-(-286101, "It won't be that easy, friend!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY2"),
-(-286102, "I'll take you with me!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost SAY3");
- 
-DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28846;
-INSERT INTO `creature_ai_scripts` VALUES
-(2884601, 28846, 11, 0, 100, 0, 0, 0, 0, 0, 1, -286100, -286101, -286102, 0, 0, 0, 0, 0, 0, 0, 0, "Scarlet Ghost - Random say at spawn");
-
--- quest 12801 -the light of dawn
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_acherus_ghoul' WHERE `entry`='29219';
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_warrior_of_the_frozen_wastes' WHERE `entry`='29206';
-
-DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
-INSERT INTO `spell_script_target` VALUES (53679, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53701, 1, 29175);
-INSERT INTO `spell_script_target` VALUES (53705, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
-INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
 
 
 -- quest 12701 --massacre at lights point
