@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Ebon_Hold
 SD%Complete: 85
-SDComment: Quest support: 12848, 12733, 12739(and 12742 to 12750), 12727, 12698.
+SDComment: Quest support: 12641, 12848, 12733, 12739(and 12742 to 12750), 12727, 12698.
 SDCategory: Ebon Hold
 EndScriptData */
 
@@ -28,6 +28,7 @@ npc_unworthy_initiate_anchor
 npc_unworthy_initiate
 go_acherus_soul_prison
 mob_scarlet_ghoul
+npc_eye_of_acherus
 EndContentData */
 
 #include "precompiled.h"
@@ -1217,8 +1218,17 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         m_isActive = false;
     }
 
-    void AttackStart(Unit *)
+    void AttackStart(Unit *pWho)
     {
+         if (!pWho)
+            return;
+
+        if (m_creature->Attack(pWho, true))
+        {
+            m_creature->AddThreat(pWho);
+            m_creature->SetInCombatWith(pWho);
+            pWho->SetInCombatWith(m_creature);
+         }
     }
 
     void MoveInLineOfSight(Unit *)
@@ -1264,9 +1274,13 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
                 m_creature->GetMotionMaster()->MovePoint(0,1750.8276f, -5873.788f, 147.2266f);
                 m_isActive = true;
             }
+        } else m_creature->ForcedDespawn();
+
+        if (!m_creature->getVictim() || !m_creature->SelectHostileTarget())
+        {
+            DoMeleeAttackIfReady();
+            return;
         }
-        else
-            m_creature->ForcedDespawn();
     }
 };
 

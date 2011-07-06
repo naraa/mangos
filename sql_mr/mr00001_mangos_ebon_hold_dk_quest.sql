@@ -1,3 +1,27 @@
+-- Quest Death comes From a High
+-- ---------------------------------------------------------------
+-- Eye of acherus
+UPDATE `creature_template` SET `InhabitType` = 3, `ScriptName` = 'npc_eye_of_acherus' WHERE `entry` = 28511;
+REPLACE INTO `creature_template_addon` (`entry`,`moveflags`,`auras`) VALUES (28511,33562624,''),(28525,0,'64328'),(28542,0,'64328'),(28543,0,'64328'),(28544,0,'64328');
+REPLACE INTO `spell_script_target` (`entry`,`type`,`targetEntry`) VALUES (51859,1,28525),(51859,1,28542),(51859,1,28543),(51859,1,28544);
+DELETE FROM `creature_addon` WHERE `guid` IN (SELECT guid FROM `creature` WHERE `id` IN (28511,28525,28542,28543,28544));
+UPDATE `npc_spellclick_spells` SET `quest_start` = 0, `quest_start_active` = 0 WHERE `npc_entry` = 29501;
+
+-- hack fix paired with core commit for spell support to when this is reverted core support needs fixed
+UPDATE `quest_template` SET `ReqSpellCast1` = 51858, `ReqSpellCast2` = 51858, `ReqSpellCast3` = 51858, `ReqSpellCast4` = 51858 WHERE `entry` = 12641;
+
+-- Eye of acherus YTDB DB Fixes 
+UPDATE `creature_template` SET `minlevel` = 55, `maxlevel` = 55, `mindmg` = 60, `maxdmg` = 80 WHERE `entry` = 28511;
+
+-- Eye of acherus 
+-- YTDB Orignal Data 
+-- DELETE FROM `creature_template` WHERE (`entry`=28511);
+-- INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (28511, 0, 0, 0, 0, 0, 26320, 25499, 0, 0, 'Eye of Acherus', '', '', 0, 80, 80, 2614, 2614, 0, 0, 9730, 35, 35, 0, 1, 1.14286, 1, 0, 420, 630, 0, 157, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 336, 504, 126, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52694, 52006, 51859, 51904, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 'npc_eye_of_acherus');
+
+-- --------------------------------------------------------------------
+-- Quest Fix Noth Special Brew  (dk starting area quest fix 12716/12717
+UPDATE `quest_template` SET `SpecialFlags` = 0 WHERE `entry` = 12717;
+-- --------------------------------------------------------------------
 -- Quest The Gift That Keeps On Giving
 -- item spell script targets (Scarlet Miners)
 DELETE FROM spell_script_target WHERE entry = 52479;
@@ -50,9 +74,6 @@ DELETE FROM `creature` WHERE `map` = 609 AND `id` IN (29219,29206,29190);
 DELETE FROM `spell_target_position` WHERE `id` = 52462;
 INSERT INTO `spell_target_position` (id,target_map,target_position_x,target_position_y,target_position_z,target_orientation) VALUES (52462,609,2388.507568, -5900.213867, 108.645972, 3.797623);
 
--- Quest Fix Noth Special Brew  (dk starting area quest fix 12716/12717
-UPDATE `quest_template` SET `SpecialFlags` = 0 WHERE `entry` = 12717;
-
 DELETE FROM `creature_questrelation` WHERE `quest` = 12716; 
 DELETE FROM `gameobject_questrelation` WHERE `quest` = 12716; 
 UPDATE `item_template` SET `StartQuest`=0 WHERE `StartQuest` = 12716; 
@@ -63,16 +84,6 @@ DELETE FROM `gameobject_involvedrelation` WHERE `quest` = 12716;
 INSERT INTO `creature_involvedrelation` (`id`, `quest`) VALUES (28919, 12716); 
 UPDATE `creature_template` SET `npcflag`=`npcflag`|2 WHERE `entry`=28919; 
 UPDATE `quest_template` SET `ExclusiveGroup` = 12716 WHERE `entry` = 12716; 
-
--- Eye of acherus
-UPDATE `creature_template` SET `InhabitType` = 3, `ScriptName` = 'npc_eye_of_acherus' WHERE `entry` = 28511;
-REPLACE INTO `creature_template_addon` (`entry`,`moveflags`,`auras`) VALUES (28511,33562624,''),(28525,0,'64328'),(28542,0,'64328'),(28543,0,'64328'),(28544,0,'64328');
-REPLACE INTO `spell_script_target` (`entry`,`type`,`targetEntry`) VALUES (51859,1,28525),(51859,1,28542),(51859,1,28543),(51859,1,28544);
-DELETE FROM `creature_addon` WHERE `guid` IN (SELECT guid FROM `creature` WHERE `id` IN (28511,28525,28542,28543,28544));
-UPDATE `npc_spellclick_spells` SET `quest_start` = 0, `quest_start_active` = 0 WHERE `npc_entry` = 29501;
-
--- hack fix paired with core commit for spell support to when this is reverted core support needs fixed
-UPDATE `quest_template` SET `ReqSpellCast1` = 51858, `ReqSpellCast2` = 51858, `ReqSpellCast3` = 51858, `ReqSpellCast4` = 51858 WHERE `entry` = 12641;
 
 -- vehicle info some needs fixed
 -- from me
@@ -157,5 +168,3 @@ UPDATE creature_template SET minhealth = 26140, maxhealth = 26140, dynamicflags 
 INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28834);
 INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28886);
 INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28850);
-
-
