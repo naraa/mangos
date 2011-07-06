@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Ebon_Hold
 SD%Complete: 85
-SDComment: Quest support: 12641, 12848, 12733, 12739(and 12742 to 12750), 12727, 12698.
+SDComment: Quest support: 12641, 12848, 12733, 12739(and 12742 to 12750), 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
 SDCategory: Ebon Hold
 EndScriptData */
 
@@ -29,11 +29,18 @@ npc_unworthy_initiate
 go_acherus_soul_prison
 mob_scarlet_ghoul
 npc_eye_of_acherus
+npc_valkyr_battle_maiden
 EndContentData */
 
 #include "precompiled.h"
 #include "escort_ai.h"
 #include "ObjectMgr.h"
+#include "TemporarySummon.h"
+#include "WorldPacket.h"
+
+// not inuse yet but will be 
+//#define LESS_MOB // if you do not have a good server and do not want it to be laggy as hell -- uncomment this if you do
+
 
 /*######
 ## npc_a_special_surprise
@@ -3194,6 +3201,93 @@ struct MANGOS_DLL_DECL mob_acherus_ghoulAI : public ScriptedAI
 };
 
 /*######
+## npc_valkyr_battle_maiden
+######*/
+
+enum
+{
+    SPELL_REVIVE	=	51918,
+};
+
+#define REVIVE_WHISPER "It is not yet your time, champion. Rise! Rise and fight once more!"
+
+struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
+{
+    npc_valkyr_battle_maidenAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    float x, y, z;
+
+    uint32 m_uiPhase;
+    uint32 m_uiPhaseTimer;
+    ObjectGuid m_uiSummonerGuid;
+
+    void Reset()
+    {
+        m_uiSummonerGuid = 0;
+
+        if (m_uiSummonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid())
+            if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_uiSummonerGuid))
+                if(pUnit->GetTypeId() != TYPEID_PLAYER)
+                    m_uiSummonerGuid = 0;
+
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+        m_creature->SetVisibility(VISIBILITY_OFF);
+        m_creature->SetSplineFlags(SPLINEFLAG_FLYING);
+        m_uiPhase = 0;
+        m_uiPhaseTimer = 0;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        Player* pPlayer = NULL;
+        if (!(pPlayer = (Player*)m_creature->GetMap()->GetUnit(m_uiSummonerGuid)))
+            m_uiPhase = 3;
+        
+        if (m_uiPhaseTimer <= uiDiff)
+        {
+            switch (m_uiPhase)
+            {
+                case 0:
+                    pPlayer->GetClosePoint(x, y, z, m_creature->GetObjectBoundingRadius());
+                    m_creature->GetMotionMaster()->MovementExpired();
+                    m_creature->GetMap()->CreatureRelocation(m_creature, x-2.0f , y-1.5f, z+2.5f, 0);
+                    m_creature->SetFacingToObject(pPlayer);
+                    m_creature->SetVisibility(VISIBILITY_ON);
+                    m_uiPhase++;
+                    break;
+                case 1:
+                    m_creature->SetUInt64Value(UNIT_FIELD_TARGET, pPlayer->GetGUID());
+                    m_uiPhase++;
+                    break;
+                case 2:
+                    DoCast(pPlayer, SPELL_REVIVE, true);
+                    m_creature->MonsterWhisper(REVIVE_WHISPER, pPlayer);
+                    // cause 51918 has cast time of 2 seconds
+                    m_uiPhaseTimer = 3000;
+                    m_uiPhase++;
+                    break;
+                case 3:
+                    m_creature->ForcedDespawn();
+                default:
+                    break;
+            }
+        }
+        else
+            m_uiPhaseTimer -= uiDiff;
+    }
+};
+
+
+CreatureAI* GetAI_npc_valkyr_battle_maiden(Creature* pCreature)
+{
+    return new npc_valkyr_battle_maidenAI(pCreature);
+};
+
+/*######
 ## mob_warrior_of_the_frozen_wastes (53631)
 ######*/
 struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
@@ -3277,7 +3371,7 @@ struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
 CreatureAI* GetAI_npc_highlord_darion_mograine(Creature* pCreature)
 {
     return new npc_highlord_darion_mograineAI(pCreature);
-}
+};
 
 CreatureAI* GetAI_npc_the_lich_king_tirion_dawn(Creature* pCreature)
 {
@@ -3287,12 +3381,12 @@ CreatureAI* GetAI_npc_the_lich_king_tirion_dawn(Creature* pCreature)
 CreatureAI* GetAI_npc_minibosses_dawn_of_light(Creature* pCreature)
 {
     return new npc_minibosses_dawn_of_lightAI (pCreature);
-}
+};
 
 CreatureAI* GetAI_mob_warrior_of_the_frozen_wastes(Creature* pCreature)
 {
    return new mob_warrior_of_the_frozen_wastesAI(pCreature);
-}
+};
 
 CreatureAI* GetAI_mob_acherus_ghoul(Creature* pCreature)
 {
@@ -3373,4 +3467,8 @@ void AddSC_ebon_hold()
     pNewScript->GetAI = &GetAI_mob_warrior_of_the_frozen_wastes;
     pNewScript->RegisterSelf();
 
+    pNewScript = new Script;
+    pNewScript->Name= "npc_valkyr_battle_maiden";
+    pNewScript->GetAI = &GetAI_npc_valkyr_battle_maiden;
+    pNewScript->RegisterSelf();
 }

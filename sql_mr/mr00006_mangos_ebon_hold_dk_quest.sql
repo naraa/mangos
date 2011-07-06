@@ -2,12 +2,18 @@
 -- YTDB cleanup
 DELETE FROM `creature` WHERE `map` = 609 AND `guid` IN (116863);
 DELETE FROM `creature` WHERE `map` = 609 AND `id` IN (29219,29206,29190);
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2920601');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076') OR (`id`='2920601');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2889201') OR (`id`='2889202') OR (`id`='2889203') OR (`id`='2889204');
 UPDATE `creature_template` SET `unit_flags`=0,`type_flags`=8 WHERE entry IN (29174,29182,29186,29190,29206,29176,29177,29181);
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29178;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29179;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29180;
+
+-- ------------
+-- Special npcs
+-- ------------
+
+UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
 
 -- ---------------------------------------------------------------
 -- Quest Death comes From a High
