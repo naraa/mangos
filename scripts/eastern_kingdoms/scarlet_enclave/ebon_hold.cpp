@@ -1227,15 +1227,6 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
 
     void AttackStart(Unit *pWho)
     {
-         if (!pWho)
-            return;
-
-        if (m_creature->Attack(pWho, true))
-        {
-            m_creature->AddThreat(pWho);
-            m_creature->SetInCombatWith(pWho);
-            pWho->SetInCombatWith(m_creature);
-         }
     }
 
     void MoveInLineOfSight(Unit *)
@@ -1282,12 +1273,6 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
                 m_isActive = true;
             }
         } else m_creature->ForcedDespawn();
-
-        if (!m_creature->getVictim() || !m_creature->SelectHostileTarget())
-        {
-            DoMeleeAttackIfReady();
-            return;
-        }
     }
 };
 
@@ -3226,12 +3211,12 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
 
     void Reset()
     {
-        m_uiSummonerGuid = 0;
+        m_uiSummonerGuid.Clear();
 
         if (m_uiSummonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid())
             if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_uiSummonerGuid))
                 if(pUnit->GetTypeId() != TYPEID_PLAYER)
-                    m_uiSummonerGuid = 0;
+                    m_uiSummonerGuid.Clear();
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
