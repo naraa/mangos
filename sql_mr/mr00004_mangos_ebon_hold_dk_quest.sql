@@ -1,3 +1,4 @@
+-- ---------------------------------------------------------------
 -- Quest Death comes From a High
 -- ---------------------------------------------------------------
 -- Eye of acherus
@@ -18,10 +19,34 @@ UPDATE `creature_template` SET `minlevel` = 55, `maxlevel` = 55, `mindmg` = 60, 
 -- DELETE FROM `creature_template` WHERE (`entry`=28511);
 -- INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (28511, 0, 0, 0, 0, 0, 26320, 25499, 0, 0, 'Eye of Acherus', '', '', 0, 80, 80, 2614, 2614, 0, 0, 9730, 35, 35, 0, 1, 1.14286, 1, 0, 420, 630, 0, 157, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 336, 504, 126, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52694, 52006, 51859, 51904, 0, 0, 0, '', 0, 3, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 'npc_eye_of_acherus');
 
+-- -----------------------------------------------------------------------------
+-- Quest  Death's Changelle --
+-- -----------------------------------------------------------------------------
+ 
+-- bug olrun - is out of interaction reach for smaller races  --
+UPDATE `creature` SET `position_x` = 2371.77, `position_y` = -5788.7, `position_z` = 153.61 WHERE `guid` = 96309;
+
+-- Flying to high for smaller races to interact with olrun during  --
+DELETE FROM `creature_movement` WHERE `id`=96309;
+INSERT INTO `creature_movement` (`id`,`point`,`position_x`,`position_y`,`position_z`,`waittime`,`script_id`,`textid1`,`textid2`,`textid3`,`textid4`,`textid5`,`emote`,`spell`,`wpguid`,`orientation`,`model1`,`model2`) VALUES
+(96309, 1, 2376.5, -5781.67, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 2, 2372.28, -5788.87, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 3, 2364.96, -5780.4, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 4, 2360.76, -5774.66, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 5, 2365.82, -5770.87, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 6, 2371.81, -5767.54, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 7, 2371.6, -5775.58, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 8, 2376.5, -5781.67, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 9, 2372.28, -5788.87, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(96309, 10, 2364.96, -5780.4, 155.667, 2000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 -- --------------------------------------------------------------------
 -- Quest Fix Noth Special Brew  (dk starting area quest fix 12716/12717
+-- ---------------------------------------------------------------------
 UPDATE `quest_template` SET `SpecialFlags` = 0 WHERE `entry` = 12717;
--- --------------------------------------------------------------------
+
+
+
 -- Quest The Gift That Keeps On Giving
 -- item spell script targets (Scarlet Miners)
 DELETE FROM spell_script_target WHERE entry = 52479;
