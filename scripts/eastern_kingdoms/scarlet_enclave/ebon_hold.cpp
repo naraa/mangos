@@ -3245,7 +3245,7 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
                     m_uiPhase++;
                     break;
                 case 1:
-                    m_creature->SetUInt64Value(UNIT_FIELD_TARGET, pPlayer->GetGUID());
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pPlayer->GetObjectGuid());
                     m_uiPhase++;
                     break;
                 case 2:

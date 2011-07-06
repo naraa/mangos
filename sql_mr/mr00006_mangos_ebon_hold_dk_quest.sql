@@ -62,6 +62,51 @@ INSERT INTO `creature_movement` (`id`,`point`,`position_x`,`position_y`,`positio
 -- ---------------------------------------------------------------------
 UPDATE `quest_template` SET `SpecialFlags` = 0 WHERE `entry` = 12717;
 
+-- -------------------------------
+-- Quest Into the Realm of Shadows
+-- -------------------------------
+UPDATE creature_template SET IconName = 'vehichleCursor',
+unit_flags = 0,
+spell1 = 52362
+WHERE entry =28782;
+
+UPDATE quest_template SET 
+SrcSpell = 52359,
+SpecialFlags = 2,
+ReqCreatureOrGOId1 = 28768,
+ReqCreatureOrGOCount1 = 1,
+ReqSpellCast1 = 0,
+RewItemId1 = 39208,
+RewItemCount1 = 1 WHERE entry = 12687;
+
+DELETE FROM creature_involvedrelation WHERE quest IN (12687);
+INSERT INTO creature_involvedrelation (id, quest) VALUES (28788, 12687);
+UPDATE creature_template SET npcflag = 2 WHERE entry = 28788;
+
+DELETE FROM spell_script_target WHERE entry = 52349;
+
+UPDATE creature_ai_scripts SET 
+action1_type   = '11',
+action1_param1 = '52361',
+action1_param2 = '6',
+action1_param3 = '16',
+action2_type   = '11',
+action2_param1 = '52357',
+action2_param2 = '6',
+action2_param3 = '16',
+action3_type   = '0'
+WHERE id = 2876805;
+
+DELETE FROM creature WHERE id = 28782;
+
+DELETE FROM creature_template_addon WHERE entry = 28782;
+
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28782);
+INSERT INTO npc_spellclick_spells VALUES
+(28782, 46598, 0, 0, 0, 1);
+
+
+
 -- -------------------------------------
 -- ACID scripts for Scarlet Enclave mobs
 -- -------------------------------------
@@ -193,46 +238,6 @@ UPDATE `quest_template` SET `ExclusiveGroup` = 12716 WHERE `entry` = 12716;
 
 -- vehicle info some needs fixed
 -- from me
--- into realm of shadows
-UPDATE creature_template SET IconName = 'vehichleCursor',
-unit_flags = 0,
-spell1 = 52362
-WHERE entry =28782;
-
-UPDATE quest_template SET 
-SrcSpell = 52359,
-SpecialFlags = 2,
-ReqCreatureOrGOId1 = 28768,
-ReqCreatureOrGOCount1 = 1,
-ReqSpellCast1 = 0,
-RewItemId1 = 39208,
-RewItemCount1 = 1 WHERE entry = 12687;
-
-DELETE FROM creature_involvedrelation WHERE quest IN (12687);
-INSERT INTO creature_involvedrelation (id, quest) VALUES (28788, 12687);
-UPDATE creature_template SET npcflag = 2 WHERE entry = 28788;
-
-DELETE FROM spell_script_target WHERE entry = 52349;
-
-UPDATE creature_ai_scripts SET 
-action1_type   = '11',
-action1_param1 = '52361',
-action1_param2 = '6',
-action1_param3 = '16',
-action2_type   = '11',
-action2_param1 = '52357',
-action2_param2 = '6',
-action2_param3 = '16',
-action3_type   = '0'
-WHERE id = 2876806;
-
-DELETE FROM creature WHERE id = 28782;
-
-DELETE FROM creature_template_addon WHERE entry = 28782;
-
-DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28782);
-INSERT INTO npc_spellclick_spells VALUES
-(28782, 46598, 0, 0, 0, 1);
 
 /* Scourge Gryphon */
 UPDATE creature_template SET
