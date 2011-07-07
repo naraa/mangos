@@ -39,15 +39,11 @@ enum
 
 struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
 {
-    instance_oculus(Map* pMap) : ScriptedInstance(pMap)
+    instance_oculus(Map* pMap) : ScriptedInstance(pMap) 
     {
         m_bIsRegularMode = pMap->IsRegularDifficulty();
         Initialize();
     };
-
-    ObjectGuid uiCacheEregosGUID;
-    ObjectGuid uiCacheEregosHGUID;
-    ObjectGuid m_uiSpotLightGUID;
 
     uint32 m_auiEncounter[MAX_ENCOUNTERS+1];
 
@@ -65,26 +61,16 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
 
     void OnObjectCreate(GameObject* pGO)
     {
-        switch(pGO->GetEntry())
-        {
-            case GO_EREGOS_CACHE:
-                uiCacheEregosGUID = pGO->GetObjectGuid();
-                break;
-            case GO_EREGOS_CACHE_H:
-                uiCacheEregosHGUID = pGO->GetObjectGuid();
-                break;
-            case GO_SPOTLIGHT:
-                m_uiSpotLightGUID = pGO->GetObjectGuid();
-                break;
-        }
+        m_mGoEntryGuidStore[pGO->GetEntry()] = pGO->GetObjectGuid();
     }
 
     void OnCreatureCreate(Creature* pCreature)
     {
         switch(pCreature->GetEntry())
         {
-            case NPC_DRAKOS:
             case NPC_VAROS:
+                pCreature->SetActiveObjectState(true);
+            case NPC_DRAKOS:
             case NPC_UROM:
             case NPC_EREGOS:
             case NPC_BALGAR_IMAGE:
@@ -106,8 +92,8 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
                 m_auiEncounter[type] = data;
                 if (data == DONE)
                 {
-                    DoRespawnGameObject((m_bIsRegularMode ? uiCacheEregosGUID : uiCacheEregosHGUID), HOUR);
-                    DoRespawnGameObject(m_uiSpotLightGUID, HOUR);
+                    DoRespawnGameObject(m_bIsRegularMode ? GO_EREGOS_CACHE : GO_EREGOS_CACHE_H, HOUR);
+                    DoRespawnGameObject(GO_SPOTLIGHT, HOUR);
                 }
                 break;
             case TYPE_ROBOTS:
@@ -200,32 +186,11 @@ InstanceData* GetInstanceData_instance_oculus(Map* pMap)
     return new instance_oculus(pMap);
 }
 
-/*###
-# Oculus Orb
-####*/
-
-bool GOUse_go_oculus_portal(Player* pPlayer, GameObject* pGo)
-{
-	switch(pGo->GetEntry())
-	{
-	case GO_ORB_OF_NEXUS:
-		pPlayer->TeleportTo(571,3876.159912f,6984.439941f,106.32f,6.279f);
-		return true;
-	}
-
-	return false;
-}
-
 void AddSC_instance_oculus()
 {
     Script *newscript;
     newscript = new Script;
     newscript->Name = "instance_oculus";
     newscript->GetInstanceData = &GetInstanceData_instance_oculus;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "go_oculus_portal";
-    newscript->pGOUse = GOUse_go_oculus_portal;
     newscript->RegisterSelf();
 }

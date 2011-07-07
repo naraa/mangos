@@ -25,16 +25,16 @@ EndScriptData */
 #include "oculus.h"
 enum Spells
 {
-        SPELL_GREEN_SEAT                        = 49346,
-        SPELL_YELLOW_SEAT                       = 49460,
-        SPELL_RED_SEAT                          = 49464,
+    SPELL_GREEN_SEAT                        = 49346,
+    SPELL_YELLOW_SEAT                       = 49460,
+    SPELL_RED_SEAT                          = 49464,
 };
 
 enum NPC
 {
-        NPC_GREEN_DRAGON                        = 27692,
-        NPC_YELLOW_DRAGON                       = 27755,
-        NPC_RED_DRAGON                          = 27756,
+    NPC_GREEN_DRAGON                        = 27692,
+    NPC_YELLOW_DRAGON                       = 27755,
+    NPC_RED_DRAGON                          = 27756,
 };
 
 struct MANGOS_DLL_DECL mob_oculus_dragonAI : public ScriptedAI
@@ -78,9 +78,7 @@ struct MANGOS_DLL_DECL mob_oculus_dragonAI : public ScriptedAI
     void AttackStart(Unit *) {}
     void MoveInLineOfSight(Unit*) {}
 
-    void JustSummoned()
-    {
-    }
+    void JustSummoned(){}
 
     void JustDied(Unit* killer)
     {
@@ -159,14 +157,12 @@ struct MANGOS_DLL_DECL npc_oculus_robotAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset()
-    {
-    }
+    void Reset(){}
 
     void JustDied(Unit* pKiller)
     {
         if(m_pInstance)
-           m_pInstance->SetData(TYPE_ROBOTS, 1);
+            m_pInstance->SetData(TYPE_ROBOTS, 1);
     }
 
     void UpdateAI(const uint32 diff)
@@ -193,15 +189,12 @@ struct MANGOS_DLL_DECL npc_belgar_imageAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    void Reset()
-    {
-    }
+    void Reset(){}
 
     void UpdateAI(const uint32 diff)
     {
         if(!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
     }
 };
 
@@ -228,5 +221,4 @@ void AddSC_oculus()
     newscript->Name = "npc_belgar_image";
     newscript->GetAI = &GetAI_npc_belgar_image;
     newscript->RegisterSelf();
-
 }
