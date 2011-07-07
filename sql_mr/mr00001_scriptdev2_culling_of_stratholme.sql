@@ -1,46 +1,46 @@
 REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
-# TAVERN EVENT
-(-1557270, 'Hey! Stop rooting around in my cellar! Clear out!', 'Эй! А ну, хорош рыться в моей кладовке! Проваливайте!', 0,0,0,1, '34587'),
-(-1557271, 'This whole situation seems a bit paranoid, don\'t you think?', 'По-моему, все это сильно смахивает на паранойю, вы не находите?', 0,0,0,25, '34587'),
-(-1557272, 'Orders are orders, if prince says jump...', 'Приказ есть приказ. Если принц говорит прыгать...', 0,0,0,1, '34587'),
-(-1557273, 'It\'s strange order, you cant deny Suspicious food? Under that definition, you should arrest Belfast!', 'Странный приказ, что верно, то верно. Подозрительная пища? Тогда уж и Белфаста арестовывайте!', 0,0,0,1, '34587'),
-(-1557274, 'I HEARD THAT! No more ale for you! Not a drop!', 'Я ВСЕ СЛЫШАЛ! Больше эля ты не получишь! Ни капли!', 0,0,0,25, '34587'),
-(-1557275, 'Enough, Michael. Business is hurting enough with this scare as it is. We can use every copper.', 'Довольно, Майкл. Наши дела и так страдают из-за этой угрозы. Сейчас каждый медяк на счету.', 0,0,0,274, '34587'),
-(-1557276, 'The soldiers are doing important work. The safely of the people is more important, Mal, if you\'re interested in your customers living to spend another day.', 'Солдаты заняты очень важным делом, Мал. Если ты хочешь, чтобы твои покупатели дожили до завтрашнего дня - надо обеспечить их безопасность.', 0,0,0,1, '34587'),
-(-1557277, 'I can\'t argue with that.', 'С этим не поспоришь.', 0,0,0,1, '34587'),
-(-1557278, 'Don\'t worry too much. By the time I went odd duty, we hadnt a scrap of befouled grain here.', 'Не стоит так сильно волноваться. К тому времени, как я сдал пост, мы не нашли здесь и следа этого мерзского зерна.', 0,0,0,274, '34587'),
-(-1557279, 'Thank the Light for that.', 'Скажи спасибо Свету.', 0,0,0,1, '34587'),
-# ROGER EVENT
-(-1557280, 'Wait, what\'s that smell?', 'Стоп, что за вонь?', 0,0,0,1, '34587'),
-(-1557281, 'Can\'t be me, I took a bath 3 days ago!', 'Это не от меня, я мылся 3 дня назад!', 0,0,0,1, '34587'),
-(-1557282, 'Oh, close call. It\'s just the grain here.', 'О, это всего лишь зерно.', 0,0,0,1, '34587'),
-(-1557283, 'Wait a second. Grain isn\'t supposed to smell like THAT! I better go find a guard.', 'Погоди. Зерно не может ТАК вонять! Я лучше пойду поищу стражника.', 0,0,0,1, '34587'),
-# MORIGAN EVENT
-(-1557284, 'You don\'t mind me checking out your merchandise for signs of tampering, do you?', 'Вы же не возражаете, чтобы я проверил ваши товары?', 0,0,0,1, '34587'),
-(-1557285, 'No, sir.', 'Нет, сэр.', 0,0,0,1, '34587'),
-(-1557286, 'Wait, what is it? Youve been holding out on me, Perelli!', 'Подождите-ка, что это? Ты скрывал это от меня, Перелли!', 0,0,0,0, '34587'),
-(-1557287, 'What are you talking about, Sergeant?', 'О чем вы говорите, сержант?', 0,0,0,1, '34587'),
-(-1557288, 'I am confiscating this suspicious grain, Perelli. We were looking for signs of tampered food, and it would be in your best interest to stay put while Prince Arthas checks this out.', 'Я конфискую это подозрительное зерно, Перелли. Мы искали признаки подозрительной еды, и было бы в твоих лучших интересах оставаться на месте, пока принц Артас разбирается в происходящем.', 0,0,0,1, '34587'),
-(-1557289, 'You have to belive me, I am innocent!', 'Вы должны верить мне, я не виновен!', 0,0,0,20, '34587'),
-(-1557290, 'Well see about that. Perelli. Well see about that.', 'Это мы посмотрим, Перелли. Это мы посмотрим.', 0,0,0,1, '34587'),
-# JENA EVENT
-(-1557291, 'Martha. I am out of flour for bread. You wouldn\'t happen to have any grain from that recent, would you?', 'Марта, я не нашла у себя муки для выпечки хлеба. Вы не одолжите мне зерна?', 0,0,0,1, '34587'),
-(-1557292, 'Oh hello, Jena. Of Course you can borrow some grain. Help yourself.', 'О, привет Джена. Конечно я одолжу вам зерна. Возьмите сами.', 0,0,0,1, '34587'),
-(-1557293, 'Thanks. Martha! I owe you one.', 'Спасибо. Марта! Я твоя должница.', 0,0,0,1, '34587'),
-(-1557294, 'Martha, somethings wrong with this grain! Some of the Princes soldiers were looking for this. Im going to go look for one.', 'Марта, с этим зерном что-то не так! Солдаты Принца что-то говорили о нем. Пойду-ка поищу кого-нибудь из них.', 0,0,0,1, '34587'),
-(-1557295, 'Oh, my.', 'Боже мой.', 0,0,0,1, '34587'),
-# MALCOLM EVENT
-(-1557296, 'Looks like a storms coming in, Scruffy...', 'Похоже на приближающуюся бурю, Лохмач...', 0,0,0,0, '34587'),
-(-1557297, 'Whats wrong, pal?', 'Что случилось, друг?', 0,0,0,1, '34587'),
-(-1557298, 'What did you find, boy?', 'Что ты нашел, парень?', 0,0,0,0, '34587'),
-(-1557299, 'This is no good, Scruffy. Stay here and guard the house. I need to go find a soldier.', 'Выглядит плохо, Лохмач. Стой тут и охраняй дом, а я пока сбегаю - поищу солдат.', 0,0,0,0, '34587'),
-# BARTLEBY EVENT
-(-1557300, 'I knew I should have secured the wagon lock better when I was in Andorhal.', 'Надо было получше запереть фургон в Андорале.', 0,0,0,1, '34587'),
-(-1557301, 'This grain shipmend has been nothing but trouble!', 'От этого зерна пока одни лишь хлопоты!', 0,0,0,1, '34587'),
-(-1557302, 'Well, guess I should load everything back into the cart.', 'Ну, наверное, мне нужно сложить все обратно в телегу.', 0,0,0,0, '34587'),
-(-1557303, 'Oh, come on! My cart broke, my horse a shoe, and now the cargo goes bad!', 'О, черт! Моя телега сломалась, моя лошадь потеряла подкову, а теперь еще и с грузом проблемы!', 0,0,0,1, '34587'),
-(-1557304, 'I guess I\'ll go find the authorites. If I\'m lucky theyll tell me it\'s the plague and that were all to die!', 'Похоже, мне придется идти искать представителей закона. Если мне повезет, они скажут, что это чума и что скоро мы все умрем!', 0,0,0,1, '34587'),
-# ARTHAS INTRO EVENT
+-- TAVERN EVENT
+(-1597270, 'Hey! Stop rooting around in my cellar! Clear out!', 'Эй! А ну, хорош рыться в моей кладовке! Проваливайте!', 0,0,0,1, '34587'),
+(-1597271, 'This whole situation seems a bit paranoid, don\'t you think?', 'По-моему, все это сильно смахивает на паранойю, вы не находите?', 0,0,0,25, '34587'),
+(-1597272, 'Orders are orders, if prince says jump...', 'Приказ есть приказ. Если принц говорит прыгать...', 0,0,0,1, '34587'),
+(-1597273, 'It\'s strange order, you cant deny Suspicious food? Under that definition, you should arrest Belfast!', 'Странный приказ, что верно, то верно. Подозрительная пища? Тогда уж и Белфаста арестовывайте!', 0,0,0,1, '34587'),
+(-1597274, 'I HEARD THAT! No more ale for you! Not a drop!', 'Я ВСЕ СЛЫШАЛ! Больше эля ты не получишь! Ни капли!', 0,0,0,25, '34587'),
+(-1597275, 'Enough, Michael. Business is hurting enough with this scare as it is. We can use every copper.', 'Довольно, Майкл. Наши дела и так страдают из-за этой угрозы. Сейчас каждый медяк на счету.', 0,0,0,274, '34587'),
+(-1597276, 'The soldiers are doing important work. The safely of the people is more important, Mal, if you\'re interested in your customers living to spend another day.', 'Солдаты заняты очень важным делом, Мал. Если ты хочешь, чтобы твои покупатели дожили до завтрашнего дня - надо обеспечить их безопасность.', 0,0,0,1, '34587'),
+(-1597277, 'I can\'t argue with that.', 'С этим не поспоришь.', 0,0,0,1, '34587'),
+(-1597278, 'Don\'t worry too much. By the time I went odd duty, we hadnt a scrap of befouled grain here.', 'Не стоит так сильно волноваться. К тому времени, как я сдал пост, мы не нашли здесь и следа этого мерзского зерна.', 0,0,0,274, '34587'),
+(-1597279, 'Thank the Light for that.', 'Скажи спасибо Свету.', 0,0,0,1, '34587'),
+-- ROGER EVENT
+(-1597280, 'Wait, what\'s that smell?', 'Стоп, что за вонь?', 0,0,0,1, '34587'),
+(-1597281, 'Can\'t be me, I took a bath 3 days ago!', 'Это не от меня, я мылся 3 дня назад!', 0,0,0,1, '34587'),
+(-1597282, 'Oh, close call. It\'s just the grain here.', 'О, это всего лишь зерно.', 0,0,0,1, '34587'),
+(-1597283, 'Wait a second. Grain isn\'t supposed to smell like THAT! I better go find a guard.', 'Погоди. Зерно не может ТАК вонять! Я лучше пойду поищу стражника.', 0,0,0,1, '34587'),
+-- MORIGAN EVENT
+(-1597284, 'You don\'t mind me checking out your merchandise for signs of tampering, do you?', 'Вы же не возражаете, чтобы я проверил ваши товары?', 0,0,0,1, '34587'),
+(-1597285, 'No, sir.', 'Нет, сэр.', 0,0,0,1, '34587'),
+(-1597286, 'Wait, what is it? Youve been holding out on me, Perelli!', 'Подождите-ка, что это? Ты скрывал это от меня, Перелли!', 0,0,0,0, '34587'),
+(-1597287, 'What are you talking about, Sergeant?', 'О чем вы говорите, сержант?', 0,0,0,1, '34587'),
+(-1597288, 'I am confiscating this suspicious grain, Perelli. We were looking for signs of tampered food, and it would be in your best interest to stay put while Prince Arthas checks this out.', 'Я конфискую это подозрительное зерно, Перелли. Мы искали признаки подозрительной еды, и было бы в твоих лучших интересах оставаться на месте, пока принц Артас разбирается в происходящем.', 0,0,0,1, '34587'),
+(-1597289, 'You have to belive me, I am innocent!', 'Вы должны верить мне, я не виновен!', 0,0,0,20, '34587'),
+(-1597290, 'Well see about that. Perelli. Well see about that.', 'Это мы посмотрим, Перелли. Это мы посмотрим.', 0,0,0,1, '34587'),
+-- JENA EVENT
+(-1597291, 'Martha. I am out of flour for bread. You wouldn\'t happen to have any grain from that recent, would you?', 'Марта, я не нашла у себя муки для выпечки хлеба. Вы не одолжите мне зерна?', 0,0,0,1, '34587'),
+(-1597292, 'Oh hello, Jena. Of Course you can borrow some grain. Help yourself.', 'О, привет Джена. Конечно я одолжу вам зерна. Возьмите сами.', 0,0,0,1, '34587'),
+(-1597293, 'Thanks. Martha! I owe you one.', 'Спасибо. Марта! Я твоя должница.', 0,0,0,1, '34587'),
+(-1597294, 'Martha, somethings wrong with this grain! Some of the Princes soldiers were looking for this. Im going to go look for one.', 'Марта, с этим зерном что-то не так! Солдаты Принца что-то говорили о нем. Пойду-ка поищу кого-нибудь из них.', 0,0,0,1, '34587'),
+(-1597295, 'Oh, my.', 'Боже мой.', 0,0,0,1, '34587'),
+-- MALCOLM EVENT
+(-1597296, 'Looks like a storms coming in, Scruffy...', 'Похоже на приближающуюся бурю, Лохмач...', 0,0,0,0, '34587'),
+(-1597297, 'Whats wrong, pal?', 'Что случилось, друг?', 0,0,0,1, '34587'),
+(-1597298, 'What did you find, boy?', 'Что ты нашел, парень?', 0,0,0,0, '34587'),
+(-1597299, 'This is no good, Scruffy. Stay here and guard the house. I need to go find a soldier.', 'Выглядит плохо, Лохмач. Стой тут и охраняй дом, а я пока сбегаю - поищу солдат.', 0,0,0,0, '34587'),
+-- BARTLEBY EVENT
+(-1597300, 'I knew I should have secured the wagon lock better when I was in Andorhal.', 'Надо было получше запереть фургон в Андорале.', 0,0,0,1, '34587'),
+(-1597301, 'This grain shipmend has been nothing but trouble!', 'От этого зерна пока одни лишь хлопоты!', 0,0,0,1, '34587'),
+(-1597302, 'Well, guess I should load everything back into the cart.', 'Ну, наверное, мне нужно сложить все обратно в телегу.', 0,0,0,0, '34587'),
+(-1597303, 'Oh, come on! My cart broke, my horse a shoe, and now the cargo goes bad!', 'О, черт! Моя телега сломалась, моя лошадь потеряла подкову, а теперь еще и с грузом проблемы!', 0,0,0,1, '34587'),
+(-1597304, 'I guess I\'ll go find the authorites. If I\'m lucky theyll tell me it\'s the plague and that were all to die!', 'Похоже, мне придется идти искать представителей закона. Если мне повезет, они скажут, что это чума и что скоро мы все умрем!', 0,0,0,1, '34587'),
+-- ARTHAS INTRO EVENT
 (-1594071, 'Glad you could make it, Uther.', 'Я рад, что ты пришел, Утер!', 12828,0,0,1, '34587'),
 (-1594072, 'Watch your tone with me boy. You may be the prince, but I am still your superior as a paladin!', 'Следи за своим тоном, юноша. Хоть ты и принц, но, как паладин, ты все еще находишься под моим командованием.', 12839,0,0,25, '34587'),
 (-1594073, 'As if I could forget. Listen, Uther, there\'s something about the plague you should know...', 'Как будто я не помню. Послушай, Утер, я должен рассказать тебе кое-что про чуму...', 12829,0,0,0, '34587'),
@@ -59,7 +59,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594086, 'Jaina?', 'Джайна?', 12836,0,0,1, '34587'),
 (-1594087, 'Im sorry Arthas. I can\'t watch you do this.', 'Прости, Артас. Я не могу на это смотреть.', 12838,0,0,1, '34587'),
 (-1594088, 'Take position here and I will lead a small force inside Stratholme to begin the culling. We must contain and purge the infected for the sake of all of Lordaeron!', 'Займите позицию, а я поведу небольшой отряд в Стратхольм и начну очищение. Мы должны изолировать и уничтожить зараженных жителей ради всего Лордерона!', 14327,1,0,1, '34587'),
-#ARTHAS ENTER IN THE CITY
+-- ARTHAS ENTER IN THE CITY
 (-1594089, 'Everyone looks ready. Remember, these people are all infected with the plague and will die soon. We must purge Stratholme to protect the remainder of Lordaeron from the Scourge. Lets go!', 'Похоже, все готовы. Помните, эти люди заражены чумой и скоро умрут. Мы должны очистить Стратхольм и защитить Лордерон от Плети. Вперед.', 14293,0,0,1, '26499'),
 (-1594090, 'Prince Arthas, may the light be praised. Many people in the town have begun to fall seriously ill. Can you help us?', 'Принц Артас, слава Свету! Многие горожане серьезно больны. Можете ли вы помочь нам?', 0,0,0,1, '26499'),
 (-1594091, 'I can help you only with a clean death.', 'Я могу помочь вам лишь быстрой смертью.', 14294,0,0,0, '26499'),
@@ -70,14 +70,14 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594096, 'As you can see, your people are now mine. I will now turn this city, household by household, until the flame of life has been snuffed out forever.', 'Как видишь, твои люди отныне принадлежат мне. Дом за домом я порабощу этот город, и огонь жизни угаснет здесь навсегда...',14411,0,0,1, '26499'),
 (-1594097, 'I will not allow this, Mal\'Ganis. Better these people will die from my hand, than become your slaves after death.', 'Я не допущу этого, Мал\'Ганис! Лучше эти люди погибнут от моей руки, чем станут твоими рабами после смерти!',14296,0,0,5, '26499'),
 (-1594098, 'Mal\'Ganis will send his Scourge henchmen to meet us. Skilled warriors and mages go and destroy enemies. I will lead the remaining troops in the purification of Stratholme from infection.', 'Мал\'Ганис отправит своих прислужников из Плети навстречу нам. Опытные воины и маги, ступайте и уничтожьте врагов. Я возглавлю оставшиеся войска в деле очищения Стратхольма от заразы.',14885,0,0,1, '26499'),
-#MEATHOOK
+-- MEATHOOK
 (-1594110, 'Play time!', 'Поиграем!',13428,0,0,0, '26499'),
 (-1594111, 'New toys!', 'Новые игрушки!',13429,1,0,0, '26499'),
 (-1594112, 'This not fun...', 'Это не смешно...',13433,1,0,0, '26499'),
 (-1594113, 'Boring...', 'Скучно...',13430,1,0,0, '26499'),
 (-1594114, 'Why you stop moving?', 'Почему ты не двигаться?',13431,1,0,0, '26499'), # !
 (-1594115, 'Get up! Me not done!', 'Вставай! Я не закончил!',13432,1,0,0, '26499'), # !
-#SALRAMM
+-- SALRAMM
 (-1594129, 'You are too late, champion of Lordaeron. The dead shall have their day.', 'Слишком поздно, герой Лордерона! Пришло время мертвых.',0,1,0,0, '26499'),
 (-1594130, 'Ah, the entertainment has arrived!', 'А, развлечемся!',0,1,0,0, '26499'),
 (-1594131, 'You only advance... the master\'s plan...', 'Вы всего лишь часть плана хозяина...',0,1,0,0, '26499'),
@@ -91,7 +91,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594139, 'Come, citizen of Stratholme! Meet your saviors.', 'Жители Стратхольма, встречайте ваших спасителей...',0,1,0,0, '26499'),
 (-1594140, 'BOOM! Hahahahah...', 'Бум... Ха-ха-ха-ха...',0,1,0,0, '26499'),
 (-1594141, 'Blood... destruction... EXHILARATING!', 'Кровь... Разрушение... Восхитительно...',0,1,0,0, '26499'),
-#ARTHAS - HOUSE
+-- ARTHAS - HOUSE
 (-1594142, 'Heroes, hurry up, we\'ll meet near town hall. We must fight with Mal\'Ganis on its territory!', 'Герои, поспешите, встретимся у городской ратуши. Мы должны сразиться с Мал\'Ганисом на его территории!',14297,1,0,0, '26499'),
 (-1594143, 'Follow me, I know the way.', 'Идите за мной. Я знаю дорогу.',14298,0,0,1, '26499'),
 (-1594144, 'Ah, You\'ve finaly arrived, Prince Arthas. You\'re here just in the nick of time.', 'О, вы наконец-то прибыли, принц Артас. Вы едва успели.',0,0,0,1, '26499'),
@@ -108,7 +108,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594155, 'Prince Arthas Menethil, in this day mighty evil devoured your soul. Death, which you had to bring to others, today will come for you.', 'Принц Артас Менетил, в этот самый день могущественное зло поглотило твою душу. Смерть, которую ты должен был принести другим, сегодня придет за тобой.',13408,0,0,0, '26499'),
 (-1594156, 'I do for Lordaeron that should, and words and deeds will not stop me.', 'Я делаю для Лордерона то, что должен, и никакие слова и поступки меня не остановят.',14309,0,0,5, '26499'),
 (-1594157, 'Let\'s see, young prince...', 'Ну что ж, посмотрим, юный принц.',13409,0,0,0, '26499'),
-#Epoch
+-- Epoch
 (-1594119, 'We\'ll see about that, young prince.', 'Поcмотрим, молодой принц.',13416,0,0,0, '26499'),
 (-1594120, 'There is no future for you.', 'У тебя нет будущего...',13413,1,0,0, '26499'),
 (-1594121, 'This is the hour of our greatest triumph!', 'Пробил час нашего величайшего триумфа..',13414,1,0,0, '26499'),
@@ -116,7 +116,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594123, 'Tick tock, tick tock...', 'Тик-так... Тик-так...',13410,1,0,0, '26499'),
 (-1594124, 'Not quick enough!', 'Слишком медленно...',13411,1,0,0, '26499'),
 (-1594125, 'Let\'s get this over with.', 'Пора заканчивать...',13412,1,0,0, '26499'),
-#Street
+-- Street
 (-1594158, 'It will take not much time.', 'Это займет совсем немного времени.',14310,0,0,0, '26499'),
 (-1594159, 'Thanks Light, backdoor still works!', 'Слава Свету, что потайной ход еще работает.',14311,0,0,0, '26499'),
 (-1594160, 'Let\'s pass through this area as soon as possible. If we do not perish from the undead, we can die from this fire.', 'Давайте пройдем этот участок как можно быстрее. Если мы не погибнем от нежити, то можем погибнуть от этого огня.',14312,0,0,0, '26499'),
@@ -124,7 +124,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594162, 'The rest is over, let\'s go. Mal\'Ganis waits.', 'Отдых окончен, надо идти. Мал\'Ганис ждет.',14314,0,0,0, '26499'),
 (-1594163, 'Finally, we even like that lucky! The fire has not yet reached the commercial area. Mal\'Ganis should be in Square of Knights, which is not far from here. Tell me when you\'re ready to go.', 'Наконец нам хоть как-то повезло. Огонь еще не добрался до Торгового ряда. Мал\'Ганис должен быть на Площади рыцарей, которая находится недалеко отсюда. Скажите мне, как будете готовы идти дальше.',14315,0,0,0, '26499'),
 (-1594164, 'Let\'s justice will be here.', 'Да свершится правосудие.',14316,0,0,0, '26499'),
-#malganis
+-- malganis
 (-1594170, 'This will be a fine test, Prince Arthas.', 'Это будет достойное испытание, принц Артас.',14413,1,0,0, '26499'),
 (-1594171, 'All too easy.', 'Слишком просто...',14416,1,0,0, '26499'),
 (-1594172, 'The dark lord is displeased with your interference.', 'Темный повелитель не доволен твоим вмешательством...',14417,1,0,0, '26499'),
@@ -147,7 +147,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 DELETE FROM script_waypoint WHERE entry=26528;
 DELETE FROM script_waypoint WHERE entry=26499;
 INSERT INTO script_waypoint VALUES
-#Uther
+-- Uther
    (26528, 0, 1772.707,1263.927,138.867, 0, 'WP1'),
    (26528, 1, 1810.249,1276.557,141.854, 0, 'WP2'),
    (26528, 2, 1810.249,1276.557,141.854, 0, 'WP3'),
@@ -155,7 +155,7 @@ INSERT INTO script_waypoint VALUES
    (26528, 4, 1898.716,1288.757,143.461, 90000, 'WP5 - Pause Escort'),
    (26528, 5, 1851.476,1281.370,144.106, 0, 'WP6'),
    (26528, 6, 1794.357,1272.183,140.558, 0, 'WP7 - Uther Despawn'),
-#Arthas
+-- Arthas
    (26499, 0, 1902.959,1295.127,143.388, 0, 'WP1'),
    (26499, 1, 1916.657,1287.327,141.946, 0, 'WP2'),
    (26499, 2, 1913.726,1287.407,141.927, 10000, 'WP3 - Dialog'),

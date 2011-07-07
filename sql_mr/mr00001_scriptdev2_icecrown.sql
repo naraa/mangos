@@ -1,4 +1,4 @@
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1631608 AND -1631000;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1631594 AND -1631000;
 INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 
 -- Lord Marrowgar
@@ -186,7 +186,7 @@ INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, 
 ('-1631594','Ну вот вы и прикончили Артаса. Теперь будем ждать Катаклизм.','<need translate>','0','6','0','0','custom message');
 
 -- Gossips
-DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3631610 AND -3631600;
+DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3631608 AND -3631600;
 INSERT INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `comment`) VALUES
 ('-3631600', "Light\'s Hammer", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Молот света", "IceCrown citadel teleporter text 1"),
 ('-3631601', "Oratory of the Damned", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Молельня проклятых", "IceCrown citadel teleporter text 2"),
