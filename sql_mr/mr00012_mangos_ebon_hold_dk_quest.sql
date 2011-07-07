@@ -156,6 +156,8 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_mine_car' WHER
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scourge_gryphon' WHERE `entry` = 28864;
 UPDATE `gameobject_template` SET `ScriptName` = 'go_inconspicous_mine_car' WHERE `entry` = 190767;
 
+-- fixed dispaly of mine cart
+UPDATE `creature_template` SET `modelid_2` = 25703 WHERE `entry` = 28817;
 
 /* Scourge Gryphon */
 UPDATE creature_template SET
@@ -281,7 +283,7 @@ INSERT INTO `creature_ai_scripts` VALUES
 -- end of EventAI
 -- -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-- quest 12801 -the light of dawn
+-- quest 12801 -the light of dawn
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);

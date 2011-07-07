@@ -3419,7 +3419,6 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
 {
     npc_mine_carAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_creature->SetDisplayId(25703); // use to make dispaly mine cart instead of horse
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
         Reset();
     }
