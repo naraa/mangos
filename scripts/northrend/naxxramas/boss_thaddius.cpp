@@ -16,8 +16,8 @@
 
 /* ScriptData
 SDName: Boss_Thaddius
-SD%Complete: 85
-SDComment: Magnetic Pull, Tesla-Chains, Polaritiy-Shift missing (core!)
+SD%Complete: 95
+SDComment: 
 SDCategory: Naxxramas
 EndScriptData */
 
@@ -126,9 +126,6 @@ struct MANGOS_DLL_DECL boss_thaddiusAI : public Scripted_NoMovementAI
             case 1: DoScriptText(SAY_AGGRO_2, m_creature); break;
             case 2: DoScriptText(SAY_AGGRO_3, m_creature); break;
         }
-
-        // Make Attackable
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
     }
 
     void EnterEvadeMode()
@@ -284,8 +281,9 @@ bool EffectDummyNPC_spell_thaddius_encounter(Unit* pCaster, uint32 uiSpellId, Sp
             {
                 if (instance_naxxramas* pInstance = (instance_naxxramas*)pCreatureTarget->GetInstanceData())
                 {
-                    if (Player* pPlayer = pInstance->GetPlayerInMap(true, false))
-                        pCreatureTarget->AI()->AttackStart(pPlayer);
+                    // Make Attackable
+                    pCreatureTarget->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    pCreatureTarget->SetInCombatWithZone();
                 }
             }
             return true;
@@ -334,14 +332,10 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
 
         m_bToFeugen = m_creature->GetDistanceOrder(pNoxTeslaFeugen, pNoxTeslaStalagg);
 
-        return true;
+        if (DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN) == CAST_OK)
+            return true;
 
-        /* TODO Uncomment when Chain spells are proper implemented
-         * if (DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN) == CAST_OK)
-         *    return true;
-         *
-         * return false;
-         */
+        return false;
     }
 
     void ReApplyChain(uint32 uiEntry)
@@ -363,8 +357,7 @@ struct MANGOS_DLL_DECL npc_tesla_coilAI : public Scripted_NoMovementAI
             if (pGo && pGo->GetGoType() == GAMEOBJECT_TYPE_BUTTON && pGo->getLootState() == GO_ACTIVATED)
                 pGo->ResetDoorOrButton();
 
-            // TODO Uncomment when chain spells are proper implemented
-            // DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN);
+            DoCastSpellIfCan(m_creature, m_bToFeugen ? SPELL_FEUGEN_CHAIN : SPELL_STALAGG_CHAIN);
         }
     }
 
@@ -435,8 +428,8 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
     bool m_bBothDead;
 
     uint32 m_uiHoldTimer;
-    //uint32 m_uiWarStompTimer;
     uint32 m_uiReviveTimer;
+    uint32 m_uiMagneticPullTimer;
 
     void Reset()
     {
@@ -445,7 +438,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
 
         m_uiReviveTimer = 5*IN_MILLISECONDS;
         m_uiHoldTimer = 2*IN_MILLISECONDS;
-        //m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
+        m_uiMagneticPullTimer = 20*IN_MILLISECONDS;
 
         // We might Reset while faking death, so undo this
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -598,14 +591,14 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
                 m_uiHoldTimer -= uiDiff;
         }
 
-        /*  Doesn't happen in wotlk version any more
-        if (m_uiWarStompTimer < uiDiff)
+        if (m_uiMagneticPullTimer <= uiDiff)
         {
-            if (DoCastSpellIfCan(m_creature, SPELL_WARSTOMP) == CAST_OK)
-                m_uiWarStompTimer = urand(8*IN_MILLISECONDS, 10*IN_MILLISECONDS);
-        }
-        else
-            m_uiWarStompTimer -= uiDiff;*/
+            SetCombatMovement(false);
+            if (m_creature->GetEntry() == NPC_FEUGEN)
+                DoCastSpellIfCan(m_creature, SPELL_MAGNETIC_PULL_B);
+            m_uiHoldTimer = 3000;
+            m_uiMagneticPullTimer = 30*IN_MILLISECONDS;
+        }else m_uiMagneticPullTimer -= uiDiff;
 
         UpdateAddAI(uiDiff);                    // For Add Specific Abilities
 
@@ -629,7 +622,7 @@ struct MANGOS_DLL_DECL boss_thaddiusAddsAI : public ScriptedAI
         m_bFakeDeath = true;
 
         m_creature->InterruptNonMeleeSpells(false);
-        m_creature->SetHealth(0);
+        m_creature->SetHealth(1);
         m_creature->StopMoving();
         m_creature->ClearComboPointHolders();
         m_creature->RemoveAllAurasOnDeath();
@@ -708,13 +701,11 @@ struct MANGOS_DLL_DECL boss_feugenAI : public boss_thaddiusAddsAI
         Reset();
     }
     uint32 m_uiStaticFieldTimer;
-    uint32 m_uiMagneticPullTimer;                                       // TODO, missing
 
     void Reset()
     {
         boss_thaddiusAddsAI::Reset();
         m_uiStaticFieldTimer = urand(10*IN_MILLISECONDS, 15*IN_MILLISECONDS);
-        m_uiMagneticPullTimer = 20*IN_MILLISECONDS;
     }
 
     void Aggro(Unit* pWho)
