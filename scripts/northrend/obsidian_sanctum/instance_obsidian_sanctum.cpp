@@ -45,7 +45,7 @@ void instance_obsidian_sanctum::Initialize()
     m_lEggsGUIDList.clear();
     m_lWhelpsGUIDList.clear();
     m_lBlazesGUIDList.clear();
-    //m_lHitByVolcanoGUIDList.clear();
+    m_lHitByVolcanoGUIDList.clear();
 }
 
 void instance_obsidian_sanctum::OnCreatureCreate(Creature* pCreature)
