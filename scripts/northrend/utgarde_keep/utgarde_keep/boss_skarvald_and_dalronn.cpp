@@ -136,6 +136,8 @@ struct MANGOS_DLL_DECL boss_s_and_d_dummyAI : public ScriptedAI
 
         if (m_creature->getVictim())
             pSummoned->AI()->AttackStart(pTarget ? pTarget : m_creature->getVictim());
+
+        pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
     }
 
     void JustDied(Unit* pKiller)
