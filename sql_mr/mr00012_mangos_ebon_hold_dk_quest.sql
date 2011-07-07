@@ -60,6 +60,16 @@ INSERT INTO `creature_movement` (`id`,`point`,`position_x`,`position_y`,`positio
 -- --------------------------------------------------------------------
 -- Quest Fix Noth Special Brew  (dk starting area quest fix 12716/12717
 -- ---------------------------------------------------------------------
+DELETE FROM `creature_questrelation` WHERE `quest` = 12716; 
+DELETE FROM `gameobject_questrelation` WHERE `quest` = 12716; 
+UPDATE `item_template` SET `StartQuest`=0 WHERE `StartQuest` = 12716; 
+INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES (28919, 12716); 
+UPDATE `creature_template` SET `npcflag`=`npcflag`|2 WHERE `entry` = 28919; 
+DELETE FROM `creature_involvedrelation` WHERE `quest` = 12716; 
+DELETE FROM `gameobject_involvedrelation` WHERE `quest` = 12716; 
+INSERT INTO `creature_involvedrelation` (`id`, `quest`) VALUES (28919, 12716); 
+UPDATE `creature_template` SET `npcflag`=`npcflag`|2 WHERE `entry`=28919; 
+UPDATE `quest_template` SET `ExclusiveGroup` = 12716 WHERE `entry` = 12716; 
 UPDATE `quest_template` SET `SpecialFlags` = 0 WHERE `entry` = 12717;
 
 -- -------------------------------
@@ -114,13 +124,13 @@ DELETE FROM spell_script_target WHERE entry = 52479;
 INSERT INTO spell_script_target VALUES
 (52479, 1, 28819),
 (52479, 1, 28822),
-(52479, 1, 28841);
+(52479, 1, 28891);  -- 28841 miner with this id is used for massacre at light point quest
 
-UPDATE `creature_template` SET `AIName` = "EventAI" WHERE `entry` = 28846;
-UPDATE `creature_template` SET `ScriptName` = "mob_scarlet_ghoul" WHERE `entry` = 28845;
-UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28822;
-UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28819;
-UPDATE `creature_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28891;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 28846;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_ghoul' WHERE `entry` = 28845;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28822;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28819;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 28891;
 UPDATE `item_template` SET `ScriptName` = 'mob_scarlet_miner' WHERE `entry` = 39253;
 
 -- EventAI for ghost needs tweaked and double checked
@@ -136,6 +146,63 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 -- fix to take Quest Item Away at end of quest
 UPDATE `quest_template` SET `ReqItemId1` = 39253, `ReqItemCount1` = 1 WHERE `entry` = 12698;
+
+-- -------------------------------------
+-- -- Massacre at Light's point quest 12701
+-- -------------------------------------
+
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scarlet_miner' WHERE `entry` = 28841;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_mine_car' WHERE `entry` = 28817;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scourge_gryphon' WHERE `entry` = 28864;
+UPDATE `gameobject_template` SET `ScriptName` = 'go_inconspicous_mine_car' WHERE `entry` = 190767;
+
+
+/* Scourge Gryphon */
+UPDATE creature_template SET
+    spell1 = 0,
+    spell2 = 0,
+    spell3 = 0,
+    spell4 = 0,
+    spell5 = 0,
+    spell6 = 0,
+    vehicle_id = 25
+WHERE entry IN (28864);
+
+DELETE FROM `creature_template_addon` WHERE (`entry`=28864);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28864, 0, 0, 0, 0, 0, 0, 61453);
+
+UPDATE creature_template SET
+spell1 = 52435,
+spell2 = 52576,
+spell3 = 0,
+spell4 = 0,
+spell5 = 52588,
+spell6 = 0,
+vehicle_id = 79
+WHERE entry IN (28833);
+
+UPDATE creature_template SET
+spell1 = 52435,
+spell2 = 52576,
+spell3 = 0,
+spell4 = 0,
+spell5 = 52588,
+spell6 = 0,
+vehicle_id = 68
+WHERE entry IN (28887);
+
+INSERT INTO npc_spellclick_spells VALUES ('28833', '52447', '12701', '1', '12701', '1');
+INSERT INTO npc_spellclick_spells VALUES ('28887', '52447', '12701', '1', '12701', '1');
+UPDATE creature_template SET minhealth = 26140, maxhealth = 26140, dynamicflags = 0, minmana = 2117, maxmana = 2117, unit_flags = 772, minlevel = 55, maxlevel = 55, unk16 = 10, unk17 = 1, InhabitType = 3, scale = 1, mindmg = 685, maxdmg = 715, armor = 3232, attackpower = 214, unit_class = 2, TYPE = 10 WHERE entry = 28833;
+UPDATE creature_template SET minhealth = 26140, maxhealth = 26140, dynamicflags = 0, minmana = 0, maxmana = 0, unit_flags = 772, minlevel = 55, maxlevel = 55, unk16 = 10, unk17 = 1, InhabitType = 3, scale = 1, mindmg = 685, maxdmg = 715, armor = 3232, attackpower = 214, unit_class = 2, TYPE = 10 WHERE entry = 28887;
+INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28834);
+INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28886);
+INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28850);
+
+DELETE FROM `spell_target_position` WHERE `id` = 52462;
+INSERT INTO `spell_target_position` (id,target_map,target_position_x,target_position_y,target_position_z,target_orientation) VALUES (52462,609,2388.507568, -5900.213867, 108.645972, 3.797623);
+
+
 
 -- -------------------------------------
 -- ACID scripts for Scarlet Enclave mobs
@@ -228,63 +295,3 @@ INSERT INTO `spell_script_target` VALUES (53705, 1, 29183);
 INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
 INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
 INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
-
-
--- quest 12701 --massacre at lights point
-DELETE FROM `spell_target_position` WHERE `id` = 52462;
-INSERT INTO `spell_target_position` (id,target_map,target_position_x,target_position_y,target_position_z,target_orientation) VALUES (52462,609,2388.507568, -5900.213867, 108.645972, 3.797623);
-
-DELETE FROM `creature_questrelation` WHERE `quest` = 12716; 
-DELETE FROM `gameobject_questrelation` WHERE `quest` = 12716; 
-UPDATE `item_template` SET `StartQuest`=0 WHERE `StartQuest` = 12716; 
-INSERT INTO `creature_questrelation` (`id`, `quest`) VALUES (28919, 12716); 
-UPDATE `creature_template` SET `npcflag`=`npcflag`|2 WHERE `entry` = 28919; 
-DELETE FROM `creature_involvedrelation` WHERE `quest` = 12716; 
-DELETE FROM `gameobject_involvedrelation` WHERE `quest` = 12716; 
-INSERT INTO `creature_involvedrelation` (`id`, `quest`) VALUES (28919, 12716); 
-UPDATE `creature_template` SET `npcflag`=`npcflag`|2 WHERE `entry`=28919; 
-UPDATE `quest_template` SET `ExclusiveGroup` = 12716 WHERE `entry` = 12716; 
-
--- vehicle info some needs fixed
--- from me
-
-/* Scourge Gryphon */
-UPDATE creature_template SET
-   spell1 = 0,
-   spell2 = 0,
-   spell3 = 0,
-   spell4 = 0,
-   spell5 = 0,
-   spell6 = 0,
-   vehicle_id = 146
-WHERE entry IN (28864);
-
--- From jahangames
--- Massacre at Light's point quest
-UPDATE creature_template SET
-spell1 = 52435,
-spell2 = 52576,
-spell3 = 0,
-spell4 = 0,
-spell5 = 52588,
-spell6 = 0,
-vehicle_id = 79
-WHERE entry IN (28833);
-
-UPDATE creature_template SET
-spell1 = 52435,
-spell2 = 52576,
-spell3 = 0,
-spell4 = 0,
-spell5 = 52588,
-spell6 = 0,
-vehicle_id = 68
-WHERE entry IN (28887);
-
-INSERT INTO npc_spellclick_spells VALUES ('28833', '52447', '12701', '1', '12701', '1');
-INSERT INTO npc_spellclick_spells VALUES ('28887', '52447', '12701', '1', '12701', '1');
-UPDATE creature_template SET minhealth = 26140, maxhealth = 26140, dynamicflags = 0, minmana = 2117, maxmana = 2117, unit_flags = 772, minlevel = 55, maxlevel = 55, unk16 = 10, unk17 = 1, InhabitType = 3, scale = 1, mindmg = 685, maxdmg = 715, armor = 3232, attackpower = 214, unit_class = 2, TYPE = 10 WHERE entry = 28833;
-UPDATE creature_template SET minhealth = 26140, maxhealth = 26140, dynamicflags = 0, minmana = 0, maxmana = 0, unit_flags = 772, minlevel = 55, maxlevel = 55, unk16 = 10, unk17 = 1, InhabitType = 3, scale = 1, mindmg = 685, maxdmg = 715, armor = 3232, attackpower = 214, unit_class = 2, TYPE = 10 WHERE entry = 28887;
-INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28834);
-INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28886);
-INSERT IGNORE INTO spell_script_target VALUES (52576, 1, 28850);

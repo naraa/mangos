@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Ebon_Hold
 SD%Complete: 85
-SDComment: Quest support: 12641, 12848, 12733, 12739(and 12742 to 12750), 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
+SDComment: Quest support: 12641, 12701, 12848, 12733, 12739(and 12742 to 12750), 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
 SDCategory: Ebon Hold
 EndScriptData */
 
@@ -27,8 +27,14 @@ npc_death_knight_initiate
 npc_unworthy_initiate_anchor
 npc_unworthy_initiate
 go_acherus_soul_prison
+npc_koltira_deathweaver
+Mob scarlet miner
+npc_scarlet_miner
 mob_scarlet_ghoul
+Gothik
 npc_eye_of_acherus
+npc_mine_cart
+scourge_gryphon
 npc_valkyr_battle_maiden
 EndContentData */
 
@@ -710,7 +716,7 @@ enum eKoltira
     SPELL_KOLTIRA_TRANSFORM         = 52899,
     SPELL_ANTI_MAGIC_ZONE           = 52894,
 
-    QUEST_BREAKOUT                  = 12727,
+    QUEST_BLOODY_BREAKOUT           = 12727,
 
     NPC_CRIMSON_ACOLYTE             = 29007,
     NPC_HIGH_INQUISITOR_VALROTH     = 29001,
@@ -862,7 +868,7 @@ CreatureAI* GetAI_npc_koltira_deathweaver(Creature* pCreature)
 
 bool QuestAccept_npc_koltira_deathweaver(Player* pPlayer, Creature* pCreature, const Quest* pQuest)
 {
-    if (pQuest->GetQuestId() == QUEST_BREAKOUT)
+    if (pQuest->GetQuestId() == QUEST_BLOODY_BREAKOUT)
     {
         pCreature->SetStandState(UNIT_STAND_STATE_STAND);
 
@@ -873,7 +879,7 @@ bool QuestAccept_npc_koltira_deathweaver(Player* pPlayer, Creature* pCreature, c
 }
 
 /*######
-##
+## npc_unworthy_initiate_anchor
 ######*/
 
 enum
@@ -929,10 +935,6 @@ DisplayToSpell m_aDisplayToSpell[] =
     {25372, 51550},                                         // forsaken F
     {25373, 51551}                                          // belf M
 };
-
-/*######
-## npc_unworthy_initiate_anchor
-######*/
 
 struct MANGOS_DLL_DECL npc_unworthy_initiate_anchorAI : public ScriptedAI
 {
@@ -1280,6 +1282,7 @@ CreatureAI* GetAI_npc_eye_of_acherus(Creature* pCreature)
 {
     return new npc_eye_of_acherusAI(pCreature);
 }
+
 /*######
 ## Mob scarlet miner
 ######*/
@@ -1419,7 +1422,7 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
     {
         if (!m_bIsSpawned)
         {
-            DoScriptText(SAY_SCARLET_GHOUL_SPAWN1 + urand(0, 5), m_creature);
+            DoScriptText(SAY_SCARLET_GHOUL_SPAWN1 - urand(0, 5), m_creature);
             m_bIsSpawned = true;
         }
 
@@ -1430,7 +1433,7 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
                 if (Creature* pGothik = m_creature->GetMap()->GetCreature(m_uiHarvesterGUID) )
                 {
                     if (pGothik->AI()->DoCastSpellIfCan(m_creature, roll_chance_i(50) ? 52519 : 52521) == CAST_OK)
-                        DoScriptText(SAY_SCARLET_GOTHIK1 + urand(0, 4), pGothik);
+                        DoScriptText(SAY_SCARLET_GOTHIK1 - urand(0, 4), pGothik);
 
                     m_uiWaitForThrowTimer = 5000;
                     m_creature->KnockBackFrom(pGothik, 15.0, 5.0);
@@ -3262,16 +3265,16 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
 
     uint32 m_uiPhase;
     uint32 m_uiPhaseTimer;
-    ObjectGuid m_uiSummonerGuid;
+    ObjectGuid m_summonerGuid;
 
     void Reset()
     {
-        m_uiSummonerGuid.Clear();
+        m_summonerGuid.Clear();
 
-        if (m_uiSummonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid())
-            if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_uiSummonerGuid))
+        if (m_summonerGuid = (dynamic_cast<TemporarySummon*>(m_creature))->GetSummonerGuid())
+            if(Unit* pUnit = m_creature->GetMap()->GetUnit(m_summonerGuid))
                 if(pUnit->GetTypeId() != TYPEID_PLAYER)
-                    m_uiSummonerGuid.Clear();
+                    m_summonerGuid.Clear();
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
@@ -3284,7 +3287,7 @@ struct MANGOS_DLL_DECL npc_valkyr_battle_maidenAI : ScriptedAI
     void UpdateAI(const uint32 uiDiff)
     {
         Player* pPlayer = NULL;
-        if (!(pPlayer = (Player*)m_creature->GetMap()->GetUnit(m_uiSummonerGuid)))
+        if (!(pPlayer = (Player*)m_creature->GetMap()->GetUnit(m_summonerGuid)))
             m_uiPhase = 3;
 
         if (m_uiPhaseTimer <= uiDiff)
@@ -3408,6 +3411,321 @@ struct MANGOS_DLL_DECL mob_warrior_of_the_frozen_wastesAI : public ScriptedAI
    }
 };
 
+/*######
+## npc_mine_car
+######*/
+
+struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
+{
+    npc_mine_carAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_creature->SetDisplayId(25703); // use to make dispaly mine cart instead of horse
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_OOC_NOT_ATTACKABLE);
+        Reset();
+    }
+
+    ObjectGuid m_scarletMinerGuid;
+
+    void Reset()
+    {
+    }
+
+    void MoveInLineOfSight(Unit* /*pUnit*/)
+    {
+        return;
+    }
+
+    void EnterCombat(Unit* /*pUnit*/)
+    {
+        return;
+    }
+
+    void AttackStart(Unit* /*pUnit*/)
+    {
+        return;
+    }
+
+    void SetScarletMinerGuid(const uint64 &guid)  //hum  ObjectGuid   here ????
+    {
+        m_scarletMinerGuid = guid;
+    }
+
+    void FollowMiner()
+    {
+        if(Creature* pMiner = m_creature->GetMap()->GetCreature(m_scarletMinerGuid))
+        {
+            // buggy sometimes...
+            m_creature->SetSpeedRate(MOVE_WALK, 1.5f, true);
+            m_creature->SetSpeedRate(MOVE_RUN, 1.5f, true);
+            m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+
+            m_creature->GetMotionMaster()->MoveFollow(pMiner, 1.0f, 0);
+        }
+    }
+
+    void ExitMineCar()
+    {
+        if(Creature* pMiner = m_creature->GetMap()->GetCreature(m_scarletMinerGuid))
+            pMiner->ForcedDespawn();
+    }
+
+    void UpdateAI(const uint32 /*uiDiff*/)
+    {
+    }
+};
+
+/*######
+## npc_scarlet_miner
+######*/
+
+enum
+{
+    SPELL_CAR_DRAG	=	52465,
+    SPELL_CAR_CHECK	=	54173
+};
+
+#define SAY_SCARLET_MINER1  "Where'd this come from? I better get this down to the ships before the foreman sees it!"
+#define SAY_SCARLET_MINER2  "Now I can have a rest!"
+
+struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
+{
+    npc_scarlet_minerAI(Creature* pCreature) : npc_escortAI(pCreature)
+    {
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+        Reset();
+    }
+
+    uint32 m_uiMonoTimer;
+    uint32 m_uiMonoPhase;
+
+    ObjectGuid m_mineCarGuid;
+    ObjectGuid m_playerGuid;
+
+    bool m_bReachedShip;
+    uint32 m_uiShipDelay;
+
+    void Reset()
+    {
+        m_uiMonoTimer = 0;
+        m_uiMonoPhase = 0;
+
+        m_mineCarGuid.Clear();
+        m_playerGuid.Clear();
+
+        m_bReachedShip = false;
+        m_uiShipDelay = 3000;
+    }
+
+    void StartCarEvent(Player *pPlayer)
+    {
+        pPlayer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+        if (pPlayer->GetVehicle())
+        {
+            m_mineCarGuid = pPlayer->GetVehicle()->GetBase()->GetObjectGuid();
+            m_playerGuid = pPlayer->GetObjectGuid();
+            Start(false, pPlayer);
+        }
+    }
+
+    void WaypointReached(uint32 uiWp)
+    {
+        switch(uiWp)
+        {
+            case 0:
+                if (Unit *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
+                    m_creature->SetInFront(pMineCar);
+
+                // say something
+                SetRun(true);
+                m_uiMonoTimer = 4000;
+                m_uiMonoPhase = 1;
+                break;
+            case 17:
+                m_bReachedShip = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiMonoPhase)
+        {
+            if (m_uiMonoTimer <= uiDiff)
+            {
+                if (m_uiMonoPhase == 1)
+                {
+                    m_creature->MonsterSay(SAY_SCARLET_MINER1,LANG_UNIVERSAL, NULL);
+
+                    if (Creature *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
+                        DoCast(pMineCar, SPELL_CAR_DRAG);
+
+                        m_uiMonoTimer = 800;
+                        m_uiMonoPhase = 2;
+                }
+                else
+                {
+                    if (Creature *pMineCar = m_creature->GetMap()->GetCreature( m_mineCarGuid))
+                    {
+                        if(npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
+                        {
+                            pMineCarAI->FollowMiner();
+                        }
+                        m_uiMonoPhase = 0;
+                    }
+                }
+            }
+            else
+                m_uiMonoTimer -= uiDiff;
+        }
+
+        if (m_bReachedShip)
+        {
+            if (m_uiShipDelay <= uiDiff)
+            {
+                if (Creature *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
+                {
+                    m_creature->SetInFront(pMineCar);
+                    m_creature->MonsterSay(SAY_SCARLET_MINER2,LANG_UNIVERSAL, NULL);
+                    pMineCar->Relocate(pMineCar->GetPositionX(), pMineCar->GetPositionY(), pMineCar->GetPositionZ() + 1);
+                    pMineCar->GetMotionMaster()->MovementExpired();
+                    pMineCar->StopMoving();
+                    pMineCar->RemoveAurasDueToSpell(SPELL_CAR_DRAG);
+
+                    if (Player *pPlayer = m_creature->GetMap()->GetPlayer(ObjectGuid(m_playerGuid)))
+                    {
+                        pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        if (pPlayer->GetVehicle())
+                            pPlayer->ExitVehicle();
+                    }
+
+                    // Say something
+
+                    if(npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
+                    {
+                        pMineCarAI->ExitMineCar();
+                    }
+
+                    m_bReachedShip = false;
+                }
+            }
+            else
+                m_uiShipDelay -= uiDiff;
+        }
+        npc_escortAI::UpdateAI(uiDiff);
+    }
+};
+
+/*######
+## GO_inconspicous_mine_car
+######*/
+
+enum
+{
+    QUEST_MASSACRE_AT_LIGHTS_POINT	=	12701,
+
+    ENTRY_SCARLET_MINER				=	28841,
+    ENTRY_MINE_CAR					=	28817,
+
+    SPELL_MINE_CAR_SUMM				=	52463
+};
+
+bool GOUse_inconspicous_mine_car(Player *pPlayer, GameObject* /*pGo*/)
+{
+    if (pPlayer->GetQuestStatus(QUEST_MASSACRE_AT_LIGHTS_POINT) == QUEST_STATUS_INCOMPLETE)
+    {
+        if (Creature *pMiner = pPlayer->SummonCreature(ENTRY_SCARLET_MINER, 2383.869629f, -5900.312500f, 107.996086f, pPlayer->GetOrientation(),TEMPSUMMON_DEAD_DESPAWN, 1))
+        {
+            pPlayer->CastSpell(pPlayer, SPELL_MINE_CAR_SUMM, true);
+            if (Creature *pMineCar = (Creature*)pPlayer->GetVehicle()->GetBase())
+            {
+                if (npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
+                {
+                    pMineCarAI->SetScarletMinerGuid(pMiner->GetObjectGuid());
+                    if(npc_scarlet_minerAI* pMinerAI = dynamic_cast<npc_scarlet_minerAI*>(pMiner->AI()))
+                    {
+                        pMinerAI->StartCarEvent(pPlayer);
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+/*######
+## npc_scourge_gryphon  -- waypoints for just gryphon arent working for some reason
+######*/
+
+enum
+{
+    RIDE_VEHICLE_HARDCODED = 46598
+};
+
+struct MANGOS_DLL_DECL npc_scourge_gryphonAI : public npc_escortAI
+{
+    npc_scourge_gryphonAI(Creature* pCreature) : npc_escortAI(pCreature)
+    {
+        //m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+        Reset();
+    }
+
+    void Reset()
+    {
+    }
+
+    void SpellHit(Unit* pUnit, const SpellEntry* pSpell)
+    {
+        if (pUnit && pUnit->GetTypeId() == TYPEID_PLAYER)
+        {
+            if (pSpell->Id == RIDE_VEHICLE_HARDCODED)
+            {
+                FlyToDeathsBreach((Player*)pUnit);
+            }
+        }
+    }
+
+    void FlyToDeathsBreach(Player* pPlayer)
+    {
+        pPlayer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+        // Need to be set here. If flag is applied earlier, the Spell Immune Mask
+        // makes the vehicle mount spell (ID - 46598 Ride Vehicle Hardcoded) disfunctional
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+        m_creature->SetSplineFlags(SPLINEFLAG_FLYING);
+
+        Start(true, pPlayer);
+    }
+
+    void WaypointReached(uint32 uiWp)
+    {
+        switch(uiWp)
+        {
+            case 0:
+                SetRun();
+                break;
+            case 4:
+                if (m_creature->GetVehicle())
+                    m_creature->GetVehicle()->RemoveAllPassengers();
+
+                if (Player* pPlayer = GetPlayerForEscort())
+                    pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+                m_creature->ForcedDespawn();
+                    return;
+            default:
+                break;
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        npc_escortAI::UpdateAI(uiDiff);
+    }
+};
+
 CreatureAI* GetAI_npc_highlord_darion_mograine(Creature* pCreature)
 {
     return new npc_highlord_darion_mograineAI(pCreature);
@@ -3431,6 +3749,21 @@ CreatureAI* GetAI_mob_warrior_of_the_frozen_wastes(Creature* pCreature)
 CreatureAI* GetAI_mob_acherus_ghoul(Creature* pCreature)
 {
    return new mob_acherus_ghoulAI(pCreature);
+};
+
+CreatureAI* GetAI_npc_mine_car(Creature* pCreature)
+{
+    return new npc_mine_carAI(pCreature);
+};
+
+CreatureAI* GetAI_npc_scarlet_miner(Creature* pCreature)
+{
+    return new npc_scarlet_minerAI(pCreature);
+};
+
+CreatureAI* GetAI_npc_scourge_gryphon(Creature* pCreature)
+{
+    return new npc_scourge_gryphonAI(pCreature);
 };
 
 void AddSC_ebon_hold()
@@ -3505,6 +3838,26 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name = "mob_acherus_ghoul";
     pNewScript->GetAI = &GetAI_mob_acherus_ghoul;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mine_car";
+    pNewScript->GetAI = &GetAI_npc_mine_car;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_scarlet_miner";
+    pNewScript->GetAI = &GetAI_npc_scarlet_miner;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_inconspicous_mine_car";
+    pNewScript->pGOUse = &GOUse_inconspicous_mine_car;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_scourge_gryphon";
+    pNewScript->GetAI = &GetAI_npc_scourge_gryphon;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
