@@ -59,7 +59,6 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
    uint32 Warp_Timer;
    uint32 Stop_Timer;
    uint32 Course_Timer;
-   uint64 m_uiArthasGUID;
 
    void Reset() 
    {

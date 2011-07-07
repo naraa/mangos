@@ -117,104 +117,55 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         {
             case NPC_CHROMI01: 
                          pCreature->SetActiveObjectState(true);
-                         m_uiChromi01GUID = pCreature->GetGUID();
                          break;
             case NPC_CHROMI02:
                          pCreature->SetActiveObjectState(true);
-                         m_uiChromi02GUID = pCreature->GetGUID();
                          if (m_auiEncounter[0] == DONE)
                             pCreature->SetVisibility(VISIBILITY_ON);
                          else
                             pCreature->SetVisibility(VISIBILITY_OFF);
                          break;
-            case NPC_MIKE: 
-                         m_uiMikeGUID = pCreature->GetGUID();
-                         break;
             case NPC_MAL_CORICS: 
                          pCreature->SetActiveObjectState(true);
-                         m_uiMalCoricsGUID = pCreature->GetGUID();
                          break;
             case NPC_GRIAN_STONE: 
                          pCreature->SetActiveObjectState(true);
                          pCreature->SetStandState(UNIT_STAND_STATE_SIT_MEDIUM_CHAIR);
-                         m_uiGrianStoneGUID = pCreature->GetGUID();
                          break;
             case NPC_JAMES: 
                          pCreature->SetActiveObjectState(true);
                          pCreature->SetStandState(UNIT_STAND_STATE_SIT_MEDIUM_CHAIR);
-                         m_uiJamesGUID = pCreature->GetGUID();
                          break;
             case NPC_FRAS_FRASIABI:
                          pCreature->SetActiveObjectState(true);
                          pCreature->SetStandState(UNIT_STAND_STATE_SIT_MEDIUM_CHAIR); 
-                         m_uiFrasCiabiGUID = pCreature->GetGUID();
                          break;
             case NPC_FORRESTER: 
                          pCreature->SetActiveObjectState(true);
                          pCreature->SetStandState(UNIT_STAND_STATE_SIT_MEDIUM_CHAIR);
-                         m_uiForrestenGUID = pCreature->GetGUID();
-                         break;
-            case NPC_ROGER:
-                         m_uiRogerGUID = pCreature->GetGUID();
-                         break;
-            case NPC_MORIGAN:
-                         m_uiMoriganGUID = pCreature->GetGUID();
                          break;
             case NPC_PERELLI:
                          pCreature->SetActiveObjectState(true);
-                         m_uiPerelliGUID = pCreature->GetGUID();
-                         break;
-            case NPC_JENA:
-                         m_uiJenaGUID = pCreature->GetGUID();
                          break;
             case NPC_MARTHA:
                          pCreature->CastSpell(pCreature, 58925, false);
                          pCreature->SetActiveObjectState(true);
-                         m_uiMarthaGUID = pCreature->GetGUID();
-                         break;
-            case NPC_MALCOLM:
-                         m_uiMalcolmGUID = pCreature->GetGUID();
                          break;
             case NPC_DOG:
                          pCreature->SetActiveObjectState(true);
-                         m_uiDogGUID = pCreature->GetGUID();
-                         break;
-            case NPC_BARTLEBY:
-                         m_uiBartlebyGUID = pCreature->GetGUID();
-                         break;
-            case NPC_UTHER:
-                         m_uiUtherGUID = pCreature->GetGUID();
-                         break;
-            case NPC_ARTHAS:
-                         m_uiArthasGUID = pCreature->GetGUID();
                          break;
             case NPC_JAINA:
                          pCreature->SetActiveObjectState(true);
-                         m_uiJainaGUID = pCreature->GetGUID();
                          break;
             case NPC_INFINITE_CORRUPTOR: 
                          pCreature->SetPhaseMask(0, true);
-                         m_uiCorruptorGUID = pCreature->GetGUID();
                          break;
         }
     }
 
     void OnObjectCreate(GameObject* pGo)
     {
-        if (pGo->GetEntry() == GO_SHKAF_GATE)
-            m_uiShkafGateGUID = pGo->GetGUID();
-
-        if (pGo->GetEntry() == GO_MALGANIS_GATE1)
-            m_uiMalGate1GUID = pGo->GetGUID();
-
-        if (pGo->GetEntry() == GO_MALGANIS_GATE2)
-            m_uiMalGate2GUID = pGo->GetGUID();
-
-        if (pGo->GetEntry() == GO_MALGANIS_CHEST || pGo->GetEntry() == GO_MALGANIS_CHEST_H)
-            m_uiMalChestGUID = pGo->GetGUID();
-
-        if (pGo->GetEntry() == GO_EXIT)
-            m_uiExitGUID = pGo->GetGUID();
+         m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
     void ChromiWhispers()
@@ -230,7 +181,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
            for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
            {
                 pChromi->MonsterWhisper("Good work with crates! Come to me in front of Stratholme for your next assignment!", i->getSource(), false);
-                i->getSource()->KilledMonsterCredit(30996, pChromi->GetGUID());
+                i->getSource()->KilledMonsterCredit(30996, pChromi->GetObjectGuid());
                 i->getSource()->DestroyItemCount(ITEM_ARCANE_DISRUPTOR, 1, true);
             }
             pChromi->SetVisibility(VISIBILITY_OFF);
@@ -325,38 +276,6 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
             case TYPE_MALGANIS:
                 return m_auiEncounter[6];
         }
-        return 0;
-    }
-
-    uint64 GetData64(uint32 uiData)
-    {
-        switch(uiData)
-        {
-            case NPC_FORRESTER: return m_uiForrestenGUID;
-            case NPC_JAMES: return m_uiJamesGUID;
-            case NPC_FRAS_FRASIABI: return m_uiFrasCiabiGUID;
-            case NPC_MAL_CORICS: return m_uiMalCoricsGUID;
-            case NPC_GRIAN_STONE: return m_uiGrianStoneGUID;
-            case NPC_ROGER: return m_uiRogerGUID;
-            case NPC_MORIGAN: return m_uiMoriganGUID;
-            case NPC_PERELLI: return m_uiPerelliGUID;
-            case NPC_JENA: return m_uiJenaGUID;
-            case NPC_MARTHA: return m_uiMarthaGUID;
-            case NPC_MALCOLM: return m_uiMalcolmGUID;
-            case NPC_DOG: return m_uiDogGUID;
-            case NPC_BARTLEBY: return m_uiBartlebyGUID;
-            case NPC_UTHER: return m_uiUtherGUID;
-            case NPC_ARTHAS: return m_uiArthasGUID;
-            case NPC_JAINA: return m_uiJainaGUID;
-            case NPC_SALRAMM: return m_uiSalrammGUID;
-            case NPC_MALGANIS: return m_uiMalganisGUID;
-            case GO_SHKAF_GATE: return m_uiShkafGateGUID;
-            case GO_MALGANIS_GATE1: return m_uiMalGate1GUID;
-            case GO_MALGANIS_GATE2: return m_uiMalGate2GUID;
-            case GO_MALGANIS_CHEST: return m_uiMalChestGUID;
-            case GO_EXIT: return m_uiExitGUID;
-        }
-
         return 0;
     }
 

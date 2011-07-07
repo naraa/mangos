@@ -1007,7 +1007,7 @@ struct MANGOS_DLL_DECL npc_time_riftCSAI : public ScriptedAI
          switch(Step)
          {
            case 1:
-              if (Creature* pArthas = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_ARTHAS)))
+              if (Creature* pArthas = m_pInstance->GetSingleCreatureFromStorage(NPC_ARTHAS))
               {
                  Drakonian01 = m_creature->SummonCreature(NPC_INFINITE_ADVERSARY,(m_creature->GetPositionX()-2)+rand()%4, (m_creature->GetPositionY()-2)+rand()%4, m_creature->GetPositionZ(),3.229f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,900000);
                  Drakonian01->GetMotionMaster()->MovePoint(0, pArthas->GetPositionX(), pArthas->GetPositionY(), pArthas->GetPositionZ());
