@@ -295,6 +295,10 @@ struct MANGOS_DLL_DECL boss_ionarAI : public ScriptedAI
                 m_creature->InterruptNonMeleeSpells(false);
 
             DoCastSpellIfCan(m_creature, SPELL_DISPERSE);
+
+            // reset timers - don't interrupt Disperse
+            m_uiBallLightning_Timer = urand(10000, 11000);
+            m_uiStaticOverload_Timer = urand(5000, 6000);
         }
 
         DoMeleeAttackIfReady();
