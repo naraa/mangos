@@ -439,6 +439,7 @@ struct MANGOS_DLL_DECL boss_sartharionAI : public ScriptedAI
             if (pTemp && pTemp->isAlive() && !pTemp->getVictim())
             {
                 pTemp->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                pTemp->SetWalk(false);
 
                 m_uiSarthHealth = m_creature->GetHealth();
                 DoCast(m_creature, SPELL_WILL_OF_SARTHARION);
