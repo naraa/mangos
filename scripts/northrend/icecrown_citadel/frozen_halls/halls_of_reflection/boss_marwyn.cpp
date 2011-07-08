@@ -27,13 +27,13 @@ EndScriptData */
 
 enum
 {
-    SAY_MARWYN_INTRO                        = -1594506,
-    SAY_MARWYN_AGGRO                        = -1594513,
-    SAY_MARWYN_DEATH                        = -1594514,
-    SAY_MARWYN_SLAY01                       = -1594515,
-    SAY_MARWYN_SLAY02                       = -1594516,
-    SAY_MARWYN_SP01                         = -1594517,
-    SAY_MARWYN_SP02                         = -1594518,
+    SAY_MARWYN_INTRO                        = -1668506,
+    SAY_MARWYN_AGGRO                        = -1668513,
+    SAY_MARWYN_DEATH                        = -1668514,
+    SAY_MARWYN_SLAY01                       = -1668515,
+    SAY_MARWYN_SLAY02                       = -1668516,
+    SAY_MARWYN_SP01                         = -1668517,
+    SAY_MARWYN_SP02                         = -1668518,
 
     SPELL_OBLITERATE                        = 72360,
     SPELL_SHARED_SUFFERING                  = 72368,

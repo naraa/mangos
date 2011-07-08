@@ -155,6 +155,7 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scarlet_miner'
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_mine_car' WHERE `entry` = 28817;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scourge_gryphon' WHERE `entry` = 28864;
 UPDATE `gameobject_template` SET `ScriptName` = 'go_inconspicous_mine_car' WHERE `entry` = 190767;
+UPDATE `creature_template` SET `mechanic_immune_mask` = 0, `flags_extra` = 0 WHERE `entry` = 28864;
 
 -- fixed dispaly of mine cart
 UPDATE `creature_template` SET `modelid_2` = 25703 WHERE `entry` = 28817;
@@ -170,8 +171,8 @@ UPDATE creature_template SET
     vehicle_id = 25
 WHERE entry IN (28864);
 
-DELETE FROM `creature_template_addon` WHERE (`entry`=28864);
-INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28864, 0, 0, 0, 0, 0, 0, 61453);
+ DELETE FROM `creature_template_addon` WHERE (`entry`=28864);
+ INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28864, 0, 0, 0, 0, 0, 0, 61453);
 
 UPDATE creature_template SET
 spell1 = 52435,

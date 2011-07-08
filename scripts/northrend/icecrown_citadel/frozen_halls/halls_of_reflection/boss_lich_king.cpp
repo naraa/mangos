@@ -65,16 +65,16 @@ enum
   SAY_LICH_KING_WIN                  = -1594485,
 
   /*INTRO - Lich King Arrive*/
-  SAY_LICH_KING_17                   = -1594468,
-  SAY_LICH_KING_18                   = -1594469,
-  SAY_LICH_KING_19                   = -1594470,
-  SAY_JAINA_20                       = -1594471,
-  SAY_SYLVANA_20                     = -1594472,
-  SAY_LICH_KING_A_21                 = -1594473,
-  SAY_LICH_KING_H_21                 = -1594474,
-  SAY_FALRIC_INTRO                   = -1594475,
-  SAY_MARWYN_INTRO                   = -1594476,
-  SAY_FALRIC_INTRO2                  = -1594505,
+  SAY_LICH_KING_17                   = -1668468,
+  SAY_LICH_KING_18                   = -1668469,
+  SAY_LICH_KING_19                   = -1668470,
+  SAY_JAINA_20                       = -1668471,
+  SAY_SYLVANA_20                     = -1668472,
+  SAY_LICH_KING_A_21                 = -1668473,
+  SAY_LICH_KING_H_21                 = -1668474,
+  SAY_FALRIC_INTRO                   = -1668475,
+  SAY_MARWYN_INTRO                   = -1668476,
+  SAY_FALRIC_INTRO2                  = -1668505,
 
   SPELL_TAKE_FROSTMOURNE             = 72729,
   SPELL_FROSTMOURNE_DESPAWN          = 72726,
@@ -85,10 +85,10 @@ enum
   SPELL_FROSTMOURNE_VISUAL           = 73220,
 
   /*INTRO - Pre Escape*/
-  SAY_LICH_KING_AGGRO_A              = -1594477,
-  SAY_LICH_KING_AGGRO_H              = -1594478,
-  SAY_JAINA_AGGRO                    = -1594479,
-  SAY_SYLVANA_AGGRO                  = -1594480,
+  SAY_LICH_KING_AGGRO_A              = -1668477,
+  SAY_LICH_KING_AGGRO_H              = -1668478,
+  SAY_JAINA_AGGRO                    = -1668479,
+  SAY_SYLVANA_AGGRO                  = -1668480,
 
 };
 

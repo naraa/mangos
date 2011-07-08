@@ -68,9 +68,3 @@ INSERT IGNORE INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`lan
 (-1608063,'My death will not stop the invasion!',0,1,0,'Portal Keeper/Guardian DEATH_2'),
 (-1608065,'Destroy all who stand against us!',0,0,0,'Azure Captain AGGRO_1');
 
--- gossips
--- Lieutenant Sinclari (30658)
-DELETE FROM `gossip_texts` WHERE `entry` IN (-3608001,-3608000);
-INSERT INTO `gossip_texts` (entry,content_default,comment) VALUES
-(-3608001,'Get your people to safety, we\'ll keep the Blue Dragonflight\'s forces at bay.','sinclari GOSSIP_ITEM_START'),
-(-3608000,'Activate the crystals when we get in trouble, right?','sinclari GOSSIP_ITEM_INTRO');
