@@ -1172,22 +1172,22 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
         m_uiTorsoGUID           = 0;
         m_uiHeadGUID            = 0;
 
-		// reset button
+        // reset button
         if(GameObject* pButton = m_pInstance->instance->GetGameObject(m_pInstance->GetData64(GO_MIMIRON_BUTTON)))
             pButton->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
 
-		// reset elevator
+        // reset elevator
         if(GameObject* pLift = GetClosestGameObjectWithEntry(m_creature, GO_MIMIRON_ELEVATOR, DEFAULT_VISIBILITY_INSTANCE))
             pLift->SetGoState(GO_STATE_ACTIVE);
 
-		// kill torso and Head
+        // kill torso and Head
         if(Creature* pTorso = GetClosestCreatureWithEntry(m_creature, NPC_VX001, 80.0f))
             pTorso->DealDamage(pTorso, pTorso->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
         if(Creature* pHead = GetClosestCreatureWithEntry(m_creature, NPC_AERIAL_UNIT, 80.0f))
             pHead->DealDamage(pHead, pHead->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
-		// reset tank
+        // reset tank
         if (Creature* pTank = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_LEVIATHAN_MK)))
         {
             if(pTank->isAlive())
@@ -1211,17 +1211,17 @@ struct MANGOS_DLL_DECL boss_mimironAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MIMIRON, NOT_STARTED);
     }
 
-	// start event
+    // start event
     void Aggro(Unit *who) 
     {
         DoScriptText(SAY_AGGRO, m_creature);
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_MIMIRON, IN_PROGRESS);
-			// activate teleporter
+            // activate teleporter
             if(m_pInstance->GetData(TYPE_MIMIRON_TP) != DONE)
                 m_pInstance->SetData(TYPE_MIMIRON_TP, DONE);
-			// start intro
+            // start intro
             if(m_pInstance->GetData(TYPE_MIMIRON) != DONE)
                 m_pInstance->SetData(TYPE_MIMIRON_PHASE, PHASE_INTRO);
         }
@@ -2017,7 +2017,7 @@ struct MANGOS_DLL_DECL mob_mimiron_flamesAI : public ScriptedAI
         if (m_pInstance && m_pInstance->GetData(TYPE_MIMIRON) != IN_PROGRESS) 
             m_creature->ForcedDespawn();
 
-		// spread flames
+        // spread flames
         if(m_uiFlamesSpreadTimer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_FLAMES_SPREAD);

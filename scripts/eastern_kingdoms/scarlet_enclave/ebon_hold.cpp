@@ -1290,8 +1290,8 @@ enum scarletminer
 {
     QUEST_GIFT_THAT_KEEPS_GIVING        = 12698,
     SPELL_GIFT_OF_THE_HARVESTER_MISSILE = 52481,
-    SPELL_SUMMOM_GHOUL					= 52490,
-    SPELL_SUMMON_GHOST					= 52505,
+    SPELL_SUMMOM_GHOUL                    = 52490,
+    SPELL_SUMMON_GHOST                    = 52505,
 };
 
 struct MANGOS_DLL_DECL mob_scarlet_minerAI : public ScriptedAI
@@ -1318,7 +1318,7 @@ struct MANGOS_DLL_DECL mob_scarlet_minerAI : public ScriptedAI
         {
             if(((Player*)pCaster)->GetQuestStatus(QUEST_GIFT_THAT_KEEPS_GIVING) == QUEST_STATUS_INCOMPLETE)
             {
-                if (rand()%100 < 35)	//35% chance to summon ghoul
+                if (rand()%100 < 35)    //35% chance to summon ghoul
                 {
                     pCaster->CastSpell(m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),SPELL_SUMMOM_GHOUL, true);
                 }
@@ -2585,7 +2585,7 @@ struct MANGOS_DLL_DECL npc_highlord_darion_mograineAI : public npc_escortAI
                             pTemp->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
                             pTemp->GetMotionMaster()->MovePoint(0, LightofDawnLoc[2].x, LightofDawnLoc[2].y, LightofDawnLoc[2].z);
                             if (Creature* pTemp = m_creature->GetMap()->GetCreature(uiLichKingGUID))
-                            	pTemp->GetMap()->CreatureRelocation(pTemp, LightofDawnLoc[28].x, LightofDawnLoc[28].y, LightofDawnLoc[28].z, 0.0f); // workarounds, he should kick back by Tirion, but here we relocate him
+                                pTemp->GetMap()->CreatureRelocation(pTemp, LightofDawnLoc[28].x, LightofDawnLoc[28].y, LightofDawnLoc[28].z, 0.0f); // workarounds, he should kick back by Tirion, but here we relocate him
                         }
                         JumpToNextStep(1500);
                         break;
@@ -3249,7 +3249,7 @@ struct MANGOS_DLL_DECL mob_acherus_ghoulAI : public ScriptedAI
 
 enum
 {
-    SPELL_REVIVE	=	51918,
+    SPELL_REVIVE    =    51918,
 };
 
 #define REVIVE_WHISPER "It is not yet your time, champion. Rise! Rise and fight once more!"
@@ -3479,8 +3479,8 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
 
 enum
 {
-    SPELL_CAR_DRAG	=	52465,
-    SPELL_CAR_CHECK	=	54173
+    SPELL_CAR_DRAG    =    52465,
+    SPELL_CAR_CHECK    =    54173
 };
 
 #define SAY_SCARLET_MINER1  "Where'd this come from? I better get this down to the ships before the foreman sees it!"
@@ -3623,12 +3623,12 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
 
 enum
 {
-    QUEST_MASSACRE_AT_LIGHTS_POINT	=	12701,
+    QUEST_MASSACRE_AT_LIGHTS_POINT    =    12701,
 
-    ENTRY_SCARLET_MINER				=	28841,
-    ENTRY_MINE_CAR					=	28817,
+    ENTRY_SCARLET_MINER                =    28841,
+    ENTRY_MINE_CAR                    =    28817,
 
-    SPELL_MINE_CAR_SUMM				=	52463
+    SPELL_MINE_CAR_SUMM                =    52463
 };
 
 bool GOUse_inconspicous_mine_car(Player *pPlayer, GameObject* /*pGo*/)

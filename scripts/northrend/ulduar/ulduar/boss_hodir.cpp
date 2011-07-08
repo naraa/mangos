@@ -31,7 +31,7 @@ enum
     SPELL_FROZEN_BLOWS          = 62478,
     SPELL_FROZEN_BLOWS_H        = 63512,
     SPELL_FREEZE                = 62469,
-    SPELL_BITTER_COLD           = 62038,	// SPELL BROKEN!!!!
+    SPELL_BITTER_COLD           = 62038,    // SPELL BROKEN!!!!
     SPELL_ICICLE                = 62460,    // full spell -> needs core fix
     SPELL_ICE_SHARDS            = 65370,    // icicle damage -> 14k
     SPELL_ICICLE_DUMMY          = 62453,
@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL mob_icicleAI : public ScriptedAI
     {
         pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         SetCombatMovement(false);
-		pCreature->setFaction(14);
+        pCreature->setFaction(14);
         Reset();
     }
 
@@ -172,10 +172,10 @@ struct MANGOS_DLL_DECL mob_icicleAI : public ScriptedAI
         m_uiSpellDelayTimer = 500;
     }
 
-	void AttackStart(Unit* pWho)
-	{
-		return;
-	}
+    void AttackStart(Unit* pWho)
+    {
+        return;
+    }
 
     void UpdateAI(const uint32 diff)
     { 
@@ -214,7 +214,7 @@ struct MANGOS_DLL_DECL mob_npc_flashFreezeAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         pCreature->SetDisplayId(25865);     // invisible
-		pCreature->GetMotionMaster()->MoveIdle();
+        pCreature->GetMotionMaster()->MoveIdle();
         SetCombatMovement(false);
         Reset();
     }
@@ -438,8 +438,8 @@ struct MANGOS_DLL_DECL boss_hodirAI : public ScriptedAI
             DoScriptText(SAY_SLAY02, m_creature);
     }
 
-	// Flash freeze. Hacky way, needs core support
-	// PLEASE REMOVE FOR REVISION!
+    // Flash freeze. Hacky way, needs core support
+    // PLEASE REMOVE FOR REVISION!
     void DoFlashFreeze()
     {
         std::list<Creature*> lSnowdrift;

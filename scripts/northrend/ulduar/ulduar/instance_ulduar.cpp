@@ -34,7 +34,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
 
     bool Regular;
 
-	// initialize the encouter variables
+    // initialize the encouter variables
     std::string m_strInstData;
     uint32 m_auiEncounter[MAX_ENCOUNTER];
     uint32 m_auiHardBoss[HARD_ENCOUNTER];
@@ -42,12 +42,12 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
     uint32 m_auiUlduarTeleporters[3];
     uint32 m_auiMiniBoss[6];
 
-	// boss phases which need to be used inside the instance script
+    // boss phases which need to be used inside the instance script
     uint32 m_uiMimironPhase;
     uint32 m_uiYoggPhase;
     uint32 m_uiVisionPhase;
 
-	// creature guids
+    // creature guids
     uint64 m_uiLeviathanGUID;
     uint64 m_uiIgnisGUID;
     uint64 m_uiRazorscaleGUID;
@@ -171,16 +171,16 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         m_uiVezaxGUID           = 0;
         m_uiYoggSaronGUID       = 0;
         m_uiAlgalonGUID         = 0;
-        m_uiRightArmGUID		= 0;
-        m_uiLeftArmGUID			= 0;
-        m_uiFeralDefenderGUID	= 0;
+        m_uiRightArmGUID        = 0;
+        m_uiLeftArmGUID            = 0;
+        m_uiFeralDefenderGUID    = 0;
         m_uiElderBrightleafGUID = 0;
         m_uiElderStonebarkGUID  = 0;
         m_uiElderIronbrachGUID  = 0;
         m_uiSaroniteAnimusGUID  = 0;
         m_uiRunicColossusGUID   = 0;
         m_uiRuneGiantGUID       = 0;
-        m_uiJormungarGUID		= 0;
+        m_uiJormungarGUID        = 0;
         m_uiLeviathanMkGUID     = 0;
         m_uiHodirImageGUID      = 0;
         m_uiFreyaImageGUID      = 0;
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         m_uiYoggBrainGUID       = 0;
 
         // loot
-        m_uiKologarnLootGUID	= 0;
+        m_uiKologarnLootGUID    = 0;
         m_uiHodirLootGUID       = 0;
         m_uiHodirRareLootGUID   = 0;
         m_uiThorimLootGUID      = 0;
@@ -678,7 +678,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         }
     }
 
-	// functions to open or close some doors
+    // functions to open or close some doors
     void OpenDoor(uint64 guid)
     {
         if(!guid) return;
@@ -743,7 +743,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
             {
                 OpenDoor(m_uiIronCouncilDoorGUID);
                 OpenDoor(m_uiArchivumDoorGUID);
-                CheckIronCouncil();		// used for a hacky achiev, remove for revision!
+                CheckIronCouncil();        // used for a hacky achiev, remove for revision!
             } else if (uiData == IN_PROGRESS)
                 CloseDoor(m_uiIronCouncilDoorGUID);
             break;
@@ -764,7 +764,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
             m_auiEncounter[6] = uiData;
             if (uiData == DONE)
             {
-//                CheckIronCouncil();		// used for a hacky achiev, remove for revision!
+//                CheckIronCouncil();        // used for a hacky achiev, remove for revision!
                 if (GameObject* pGO = instance->GetGameObject(m_uiMimironTramGUID))
                 {
                     pGO->SetUInt32Value(GAMEOBJECT_LEVEL, 0);
@@ -787,7 +787,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
                 if(Creature* pImage = instance->GetCreature(m_uiMimironImageGUID))
                     pImage->SetVisibility(VISIBILITY_ON);
                 OpenMadnessDoor();
-                CheckKeepers();		// used for a hacky achiev, remove for revision!
+                CheckKeepers();        // used for a hacky achiev, remove for revision!
             }
             break;
         case TYPE_HODIR:
@@ -802,7 +802,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
                 if(Creature* pImage = instance->GetCreature(m_uiHodirImageGUID))
                     pImage->SetVisibility(VISIBILITY_ON);
                 OpenMadnessDoor();
-                CheckKeepers();		// used for a hacky achiev, remove for revision!
+                CheckKeepers();        // used for a hacky achiev, remove for revision!
             }
             break;
         case TYPE_THORIM:
@@ -818,7 +818,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
                 if(Creature* pImage = instance->GetCreature(m_uiThorimImageGUID))
                     pImage->SetVisibility(VISIBILITY_ON);
                 OpenMadnessDoor();
-                CheckKeepers();		// used for a hacky achiev, remove for revision!
+                CheckKeepers();        // used for a hacky achiev, remove for revision!
             }
             break;
         case TYPE_FREYA:
@@ -838,7 +838,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
                 if(Creature* pImage = instance->GetCreature(m_uiFreyaImageGUID))
                     pImage->SetVisibility(VISIBILITY_ON);
                 OpenMadnessDoor();
-                CheckKeepers();		// used for a hacky achiev, remove for revision!
+                CheckKeepers();        // used for a hacky achiev, remove for revision!
             }
             break;
 
@@ -1069,7 +1069,7 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
         return 0;
     }
 
-	// TODO: implement all achievs here!
+    // TODO: implement all achievs here!
     bool CheckAchievementCriteriaMeet(uint32 criteria_id, const Player *source)
     {
         switch(criteria_id)
