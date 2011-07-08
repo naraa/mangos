@@ -1,9 +1,16 @@
 -- For YTDB s
+DELETE FROM scripted_areatrigger WHERE entry=3626;
+INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
+
+-- ------------------------------
 -- Quest: Drake Hunt (11940/11919)
+-- ------------------------------
 UPDATE `creature_template` SET ScriptName='npc_nexus_drake', AIName='' WHERE entry = 26127;
 
+-- -------------------------------
 -- Quest: Merciful Freedom (11676)
+-- -------------------------------
 UPDATE gameobject_template SET ScriptName='go_scourge_cage' WHERE entry IN (187854,187855,187856,187857,187858,187859,187860,187862,187863,187864,187865,187866,187867,187868,187870,187871,187872,187873,187874,187861,190803);
 
 -- Quest: Abduction (11590)
@@ -20,7 +27,9 @@ UPDATE `creature_template` SET
 `ScriptName`='npc_beryl_sorcerer' , AIName=''
 WHERE entry=25316;
 
+-- ---------------------------------------------------
 -- Mob support for Quest: Powering Our Defenses (8490)
+-- ---------------------------------------------------
 -- Enraged Wraith
 DELETE FROM `creature` WHERE id = 17086;
 UPDATE `creature_template` SET AIName='EventAI', flags_extra=flags_extra|64 WHERE entry=17086;
@@ -29,7 +38,6 @@ DELETE FROM `creature_ai_scripts` WHERE creature_id = 17086;
 INSERT INTO `creature_ai_scripts` VALUES
 (1708601,17086,2,0,100,0,25,0,0,0,11,8599,0,1,1,-106,0,0,0,0,0,0,'Enraged Wraith - Cast Enrage on 50% HP');
 
--- For YTDB DBs
 
 -- Console/conflict fixes from recent checks added by mangos for EventAI
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2531612') OR (`id`='2531601') OR (`id`='2531603') OR (`id`='2531609') OR (`id`='2531611') OR (`id`='2531608') OR (`id`='2531607') OR (`id`='2531610') OR (`id`='2531604') OR (`id`='2531606') OR (`id`='2531602') OR (`id`='2531605') OR (`id`='2531651');
@@ -41,7 +49,9 @@ DELETE FROM `creature_ai_scripts` WHERE (`id`='2920404') OR (`id`='2920403') OR 
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 
+-- ---------------
 -- Gamel the Cruel
+-- ---------------
 UPDATE creature SET spawntimesecs = 30 WHERE id = 26449;
 
 UPDATE creature_template SET AIName = 'EventAI', dmg_multiplier = 2 WHERE entry = 26449;
@@ -49,18 +59,24 @@ DELETE FROM creature_ai_scripts WHERE creature_id = 26449;
 INSERT INTO creature_ai_scripts VALUES
 (2644901, 26449, 0,0,80,1, 2000,2000,5000,5000, 11,19643,1,0, 0,0,0,0, 0,0,0,0,'Gamel the Cruel - mortal strike');
 
+-- ---------------------------
 -- fix quest _abduction 11590
-
+-- ---------------------------
 -- item (Arcane Binder)
 DELETE FROM item_required_target WHERE entry = 34691;
 INSERT INTO item_required_target VALUES
 (34691,1,25316);
 
+
+-- --------------------------------------------------
 -- fixes for Quest Kickin'Nass and Takin manes (12630)
+-- --------------------------------------------------
 UPDATE `creature_template` SET `flags_extra` = 128 WHERE `entry` = 28523;
 DELETE FROM creature WHERE id=28523;  -- deletes  nass kc bunny credit needs to be summoned not already spawn
 
+-- -----------------------------
 -- Quest Fixes to Hard_to_sallow
+-- -----------------------------
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26293';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2629302');
 INSERT INTO `creature_ai_scripts` VALUES ('2629302', '26293', '2', '0', '100', '0', '70', '50', '0', '0', '1', '-262930', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Hulking Jormungar - emote between 70% and 50% ');
@@ -72,7 +88,9 @@ INSERT INTO `creature_ai_scripts` VALUES ('2629301', '26293', '9', '0', '100', '
 DELETE FROM `creature_ai_texts` WHERE entry IN ('-262930');
 INSERT INTO `creature_ai_texts` VALUES ('-262930', 'The Hulking Jormungar falters for a moment, opening its mouth wide.', '', '', '', '', '', '', '', '', '3', '0', '0', '0', 'Hulking Jormungar-raid emote');
 
+-- ------------------------------------------
 -- Support for quest The Denouncement (12273)
+-- ------------------------------------------
 
 -- Remove creature
 DELETE FROM creature WHERE guid=105029 AND id=27237;
@@ -150,7 +168,9 @@ UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `en
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 27235;
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 27237;
 
+-- ----------------------------------------------
 -- Support for quest Defiling Uther's Tomb (9444)
+-- ----------------------------------------------
 DELETE FROM creature_ai_scripts WHERE creature_id=27002;
 INSERT INTO creature_ai_scripts VALUES
 (2700201,27002,11,0,100,0,0,0,0,0,1,-270021,0,0,0,0,0,0,0,0,0,0,'Grom\'thar the Thunderbringer - Yell on Spawn'),
@@ -163,12 +183,16 @@ INSERT INTO creature_ai_texts (entry, content_default, type, comment) VALUES
 (-270021,'I\'ll consume your flesh and pick my teeth with your bones!',1,'Grom\'thar the Thunderbringer yell1'),
 (-270022,'You\'re no magnataur! Where... did you... find... such strength?',1,'Grom\'thar the Thunderbringer yell2');
 
+-- --------------------------------------------------------
 -- aldaron the reckless loc fix Blood elf starting area fix
+-- --------------------------------------------------------
 DELETE FROM `creature` WHERE `id`=16294;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (67521, 16294, 530, 1, 1, 0, 0, 8747.7, -6116.85, 68.5645, 5.28401, 300, 0, 0, 148, 825, 0, 0);
 
+-- -------------------------------------------------
 -- Support for quest A Necessary Distraction (10637)
+-- -------------------------------------------------
 
 -- Azaloth (21506)
 -- UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 21506;
