@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL npc_unstable_sphereAI : public ScriptedAI
 
     void Reset()
     {
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->GetMotionMaster()->MovePoint(0, (CENTER_X-35)+rand()%70, (CENTER_Y-35)+rand()%70, m_creature->GetPositionZ());
         m_creature->SetSpeedRate(MOVE_RUN, 2, true);
         m_creature->setFaction(14);

@@ -165,7 +165,7 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
 
         if(Creature* Dragon = m_creature->SummonCreature(NPC_AZURE_CAPTAIN, (m_creature->GetPositionX()-45)+rand()%90, (m_creature->GetPositionY()-45)+rand()%90, m_creature->GetPositionZ() + 30.0f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 100))
         {
-           Dragon->AddSplineFlag(SPLINEFLAG_FLYING);
+           Dragon->SetLevitate(true);
            Dragon->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
            m_uiAzureDrakeGUID = Dragon->GetObjectGuid();
         }

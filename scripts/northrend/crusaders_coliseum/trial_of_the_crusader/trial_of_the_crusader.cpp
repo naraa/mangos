@@ -294,7 +294,7 @@ switch(uiAction) {
                          pCreature->SummonCreature(NPC_ANUBARAK, SpawnLoc[19].x, SpawnLoc[19].y, SpawnLoc[19].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
            if (pTemp) {
                         pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[20].x, SpawnLoc[20].y, SpawnLoc[20].z);
-                        pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                        pTemp->SetWalk(true);
                         pTemp->SetInCombatWithZone();
                         }
            pInstance->SetData(TYPE_STAGE,9);
@@ -381,7 +381,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
         AddWaypoint(0, SpawnLoc[2].x, SpawnLoc[2].y, SpawnLoc[2].z);
         AddWaypoint(1, SpawnLoc[17].x, SpawnLoc[17].y, SpawnLoc[17].z);
         AddWaypoint(2, SpawnLoc[18].x, SpawnLoc[18].y, SpawnLoc[18].z);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
         WayPoint = WayPointList.begin();
         MovementStarted = true;
         IsWalking = true;
@@ -468,7 +468,7 @@ struct MANGOS_DLL_DECL boss_lich_king_tocAI : public ScriptedAI
                   m_creature->SummonCreature(NPC_ANUBARAK, SpawnLoc[19].x, SpawnLoc[19].y, SpawnLoc[19].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                   if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ANUBARAK)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[20].x, SpawnLoc[20].y, SpawnLoc[20].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                pInstance->SetData(TYPE_STAGE,9);
@@ -704,7 +704,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                       m_creature->SummonCreature(NPC_GORMOK, SpawnLoc[26].x, SpawnLoc[26].y, SpawnLoc[26].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                           if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_GORMOK)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                         }
@@ -733,12 +733,12 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                         m_creature->SummonCreature(NPC_ACIDMAW, SpawnLoc[4].x, SpawnLoc[4].y, SpawnLoc[4].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                           if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_DREADSCALE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                           if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ACIDMAW)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                         }
@@ -761,7 +761,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                         m_creature->SummonCreature(NPC_ICEHOWL, SpawnLoc[26].x, SpawnLoc[26].y, SpawnLoc[26].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                               if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_ICEHOWL)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                         }
@@ -966,7 +966,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                        m_creature->SummonCreature(crusader[i], SpawnLoc[i+2].x, SpawnLoc[i+2].y, SpawnLoc[i+2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                        if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(crusader[i])) {
                              pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                 pTemp->SetWalk(true);
                                }
                        }
                pInstance->SetData(TYPE_CRUSADERS_COUNT,crusaderscount);
@@ -1115,7 +1115,7 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                        m_creature->SummonCreature(crusader[i], SpawnLoc[i+2].x, SpawnLoc[i+2].y, SpawnLoc[i+2].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                        if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(crusader[i])) {
                              pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                 pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                 pTemp->SetWalk(true);
                                }
                        }
                pInstance->SetData(TYPE_CRUSADERS_COUNT,crusaderscount);
@@ -1150,13 +1150,13 @@ struct MANGOS_DLL_DECL npc_tirion_tocAI : public ScriptedAI
                       m_creature->SummonCreature(NPC_LIGHTBANE, SpawnLoc[3].x, SpawnLoc[3].y, SpawnLoc[3].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                       if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_LIGHTBANE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                       m_creature->SummonCreature(NPC_DARKBANE, SpawnLoc[4].x, SpawnLoc[4].y, SpawnLoc[4].z, 5, TEMPSUMMON_CORPSE_TIMED_DESPAWN, DESPAWN_TIME);
                       if (Creature* pTemp = pInstance->GetSingleCreatureFromStorage(NPC_DARKBANE)) {
                                 pTemp->GetMotionMaster()->MovePoint(0, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
-                                pTemp->AddSplineFlag(SPLINEFLAG_WALKMODE);
+                                pTemp->SetWalk(true);
                                 pTemp->SetInCombatWithZone();
                                 }
                UpdateTimer = 10000;

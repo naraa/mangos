@@ -584,7 +584,7 @@ struct MANGOS_DLL_DECL boss_vx001AI : public ScriptedAI
         m_creature->GetMotionMaster()->MoveIdle();
         SetCombatMovement(false);
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  3, 0.0f);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  3, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  3, 26);
     }
 
     void JustDied(Unit* pKiller)
@@ -881,7 +881,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
             m_creature->GetMotionMaster()->MoveIdle();
             SetCombatMovement(false);
             m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, 0.0f);
-            m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, 26);
         }
     }
 
@@ -975,14 +975,14 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
         SetCombatMovement(false);
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  6.5f, 0.0f);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 6.5f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 6.5f, 26);
     }
 
     // get the boss down by the magnetic core
     void SetToGround()
     {
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), CENTER_Z, 0);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), CENTER_Z, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), CENTER_Z, 26);
         m_bIsGrounded = true;
         // make boss land
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
@@ -1026,7 +1026,7 @@ struct MANGOS_DLL_DECL boss_aerial_command_unitAI : public ScriptedAI
         if (m_uiGroundTimer < uiDiff && m_bIsGrounded)
         {
             m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, 0.0f);
-            m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  7, 26);
             m_bIsGrounded = false;
             // make boss fly
             m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);

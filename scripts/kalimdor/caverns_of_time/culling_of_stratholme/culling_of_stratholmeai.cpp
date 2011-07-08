@@ -404,7 +404,7 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
     {
         unit->GetMotionMaster()->MovementExpired(false);
         unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->SendMonsterMove(X, Y, Z, SPLINETYPE_NORMAL , unit->GetSplineFlags(), Timer);
+        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -554,7 +554,7 @@ struct MANGOS_DLL_DECL npc_moriganAI : public ScriptedAI
     void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
     {
         unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->SendMonsterMove(X, Y, Z, SPLINETYPE_NORMAL , unit->GetSplineFlags(), Timer);
+        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -683,7 +683,7 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
               {
                  pTemp->SetGuidValue(UNIT_FIELD_TARGET, 0);
                  pTemp->GetMap()->CreatureRelocation(pTemp, 1640.089f, 725.766f, 113.561f, 4.77f);
-                 pTemp->SendMonsterMove(1640.089f, 725.766f, 113.561f, SPLINETYPE_NORMAL , pTemp->GetSplineFlags(), 1500);
+                 pTemp->MonsterMoveWithSpeed(1640.089f, 725.766f, 113.561f, 26);
               }
               m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1629.452f, 729.416f, 112.712f);
@@ -739,7 +739,7 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
     void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
     {
         unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->SendMonsterMove(X, Y, Z, SPLINETYPE_NORMAL , unit->GetSplineFlags(), Timer);
+        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -928,7 +928,7 @@ struct MANGOS_DLL_DECL npc_malcolmAI : public ScriptedAI
     void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
     {
         unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->SendMonsterMove(X, Y, Z, SPLINETYPE_NORMAL , unit->GetSplineFlags(), Timer);
+        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -1075,7 +1075,7 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
     void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
     {
         unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->SendMonsterMove(X, Y, Z, SPLINETYPE_NORMAL , unit->GetSplineFlags(), Timer);
+        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)

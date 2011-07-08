@@ -628,7 +628,7 @@ struct MANGOS_DLL_DECL mob_ball_of_flamesAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         SetCombatMovement(false);
         m_creature->GetPosition(fPosX, fPosY, fPosZ);
         m_creature->GetRandomPoint(fPosX, fPosY, fPosZ, urand(40, 60), fPosX, fPosY, fPosZ);
@@ -709,7 +709,7 @@ struct MANGOS_DLL_DECL mob_kinetic_bombAI : public ScriptedAI
 
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->SetSpeedRate(MOVE_RUN, 0.2f);
         m_creature->SetSpeedRate(MOVE_WALK, 0.2f);
         SetCombatMovement(false);

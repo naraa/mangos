@@ -106,7 +106,7 @@ struct MANGOS_DLL_DECL boss_lavanthorAI : public ScriptedAI
     void StartMovement(uint32 id)
     {
         m_creature->GetMotionMaster()->MovePoint(id, PortalLoc[id].x, PortalLoc[id].y, PortalLoc[id].z);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         MovementStarted = true;

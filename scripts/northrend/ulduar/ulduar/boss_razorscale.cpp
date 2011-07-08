@@ -540,7 +540,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         if(m_creature->GetPositionZ() < 435.0f)
         {
             m_creature->GetMap()->CreatureRelocation(m_creature, PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 0.0f);
-            m_creature->SendMonsterMove(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 26);
         }
 
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
@@ -587,7 +587,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         SetCombatMovement(false);
         m_creature->GetMotionMaster()->MoveIdle();
         m_creature->GetMap()->CreatureRelocation(m_creature, PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 0.0f);
-        m_creature->SendMonsterMove(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        m_creature->MonsterMoveWithSpeed(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 26);
     }
 
     void JustReachedHome()
@@ -624,7 +624,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         if(m_creature->GetPositionZ() < 430.0f && m_bAirphase && !m_bIsGrounded)
         {
             m_creature->GetMap()->CreatureRelocation(m_creature, PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 0.0f);
-            m_creature->SendMonsterMove(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 26);
         }
 
         // air spells
@@ -705,7 +705,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
             if(Creature* pCommander = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_COMMANDER)))
                 DoScriptText(SAY_GROUND, pCommander);
             m_creature->GetMap()->CreatureRelocation(m_creature, PositionLoc[3].x, PositionLoc[3].y, PositionLoc[3].z, 1.5);
-            m_creature->SendMonsterMove(PositionLoc[3].x, PositionLoc[3].y, PositionLoc[3].z, SPLINETYPE_FACINGSPOT, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(PositionLoc[3].x, PositionLoc[3].y, PositionLoc[3].z, 26);
             // timers
             m_uiHarpoonsUsed    = 0;
             m_bIsGrounded       = true;
@@ -745,7 +745,7 @@ struct MANGOS_DLL_DECL boss_razorscaleAI : public ScriptedAI
         if (m_uiGrounded_Timer < uiDiff && m_bIsGrounded)
         {
             m_creature->GetMap()->CreatureRelocation(m_creature, PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 0.0f);
-            m_creature->SendMonsterMove(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+            m_creature->MonsterMoveWithSpeed(PositionLoc[4].x, PositionLoc[4].y, PositionLoc[4].z, 26);
             
             m_bIsGrounded               = false;
             m_uiFireball_Timer          = 10000;

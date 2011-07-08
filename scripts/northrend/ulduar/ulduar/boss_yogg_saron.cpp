@@ -982,7 +982,7 @@ struct MANGOS_DLL_DECL boss_brain_of_yogg_saronAI : public ScriptedAI
         //m_pInstance->SetData(TYPE_VISION_PHASE, PHASE_VISION_STORMWIND);
         //m_creature->GetMotionMaster()->MoveIdle();
         //m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), 255.011f, 0.0f);
-        //m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), 255.011f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        //m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), 255.011f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
     }
 
     void DamageTaken(Unit *done_by, uint32 &uiDamage)
@@ -1450,9 +1450,9 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
         m_creature->SetHealth(m_creature->GetMaxHealth());
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-        m_creature->SetSplineFlags(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, 5.9f);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, 26);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -1591,7 +1591,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                             m_creature->GetMotionMaster()->MoveIdle();
                             SetCombatMovement(false);
                             m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, 5.9f);
-                            m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+                            m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), 329.397f, 26);
                             ++m_uiIntro_Phase;
                             m_uiSpeech_Timer = 8000;
                             break;
@@ -1715,7 +1715,7 @@ struct MANGOS_DLL_DECL boss_saraAI : public ScriptedAI
                         DoCast(m_creature, SPELL_SHADOWY_BARRIER);
                         m_creature->SetHealth(m_creature->GetMaxHealth());
                         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  10, 5.9f);
-                        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  10, SPLINETYPE_NORMAL, m_creature->GetSplineFlags(), 1);
+                        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() +  10, 26);
                         if(Creature* pYogg = (Creature*)m_creature->GetMap()->GetUnit(m_pInstance->GetData64(NPC_YOGGSARON)))
                             ((boss_yogg_saronAI*)pYogg->AI())->StartSecondPhase();
                         m_uiPhaseYellTimer = 30000 + urand(5000, 10000);

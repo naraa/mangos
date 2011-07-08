@@ -761,8 +761,8 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                 DoScriptText(SAY_JUMP, m_creature);
                 // move in arena
                 m_creature->GetMotionMaster()->MovePoint(0, 2134.719f, -263.148f, 419.846f);
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
-                m_creature->SetSplineFlags(SPLINEFLAG_FALLING); 
+                m_creature->SetWalk(false);
+//                m_creature->SetSplineFlags(SPLINEFLAG_FALLING); 
                 m_bIsPhaseEnd = true;
                 m_uiPhase2Timer = 9000;
             }
@@ -889,7 +889,7 @@ struct MANGOS_DLL_DECL boss_thorimAI : public ScriptedAI
                 // phase 2 prepared
                 if(m_uiPhase2Timer < uiDiff && m_bIsPhaseEnd)
                 {
-                    m_creature->RemoveSplineFlag(SPLINEFLAG_FALLING);
+//                    m_creature->RemoveSplineFlag(SPLINEFLAG_FALLING);
                     m_creature->RemoveAurasDueToSpell(SPELL_SHEAT_OF_LIGHTNING);
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     if(!m_bIsHardMode)

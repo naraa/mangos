@@ -2037,7 +2037,7 @@ struct MANGOS_DLL_DECL npc_death_knight_gargoyle : public ScriptedAI
      m_creature->SetUInt32Value(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
      m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
      m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-     m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+     m_creature->SetLevitate(true);
 
      inCombat = false;
      m_uiGargoyleStrikeTimer = urand(3000, 5000);

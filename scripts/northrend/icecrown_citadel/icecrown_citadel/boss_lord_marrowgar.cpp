@@ -62,7 +62,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
         resetTimers();
         m_creature->SetSpeedRate(MOVE_RUN, 1);
         m_creature->SetSpeedRate(MOVE_WALK, 1);
-//        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+//        m_creature->SetWalk(true);
     }
 
     void MoveInLineOfSight(Unit* pWho) 
@@ -174,7 +174,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
                     setStage(2);
                     DoScriptText(-1631002,m_creature);
                     DoResetThreat();
-                    m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                    m_creature->SetWalk(false);
                     m_creature->SetSpeedRate(MOVE_RUN, 3);
                     m_creature->SetSpeedRate(MOVE_WALK, 3);
                     break;
@@ -206,7 +206,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
                     pInstance->SetData(DATA_DIRECTION, 0);
                     m_creature->SetSpeedRate(MOVE_RUN, 1);
                     m_creature->SetSpeedRate(MOVE_WALK, 1);
-//                    m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+//                    m_creature->SetWalk(true);
                     setStage(0);
                     break;
             default:

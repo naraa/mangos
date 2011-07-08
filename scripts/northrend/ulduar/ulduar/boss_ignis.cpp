@@ -216,7 +216,7 @@ struct MANGOS_DLL_DECL mob_iron_constructAI : public ScriptedAI
         {
             if (pTemp->isAlive())
             {
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(0, pTemp->GetPositionX(), pTemp->GetPositionY(), pTemp->GetPositionZ());
 
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))

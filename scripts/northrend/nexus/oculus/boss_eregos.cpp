@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
            }
         }
 
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
         uiArcaneBarrageTimer = 12000;
@@ -137,7 +137,7 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
     void JustDied(Unit* killer)
     {
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()-100.0f, 0);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()-100.0f, SPLINETYPE_NORMAL , m_creature->GetSplineFlags(), 6000);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ()-100.0f, 26);
             DoScriptText(SAY_DEATH, m_creature);
         if (m_pInstance)
             m_pInstance->SetData(TYPE_EREGOS, DONE);
@@ -270,7 +270,7 @@ struct MANGOS_DLL_DECL npc_planar_anomalyAI : public ScriptedAI
     {
         m_creature->SetDisplayId(11686);
         m_creature->SetObjectScale(2.0f);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->SetSpeedRate(MOVE_RUN, 1.5, true);
         m_creature->setFaction(14);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);

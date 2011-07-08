@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
 
         if(m_pInstance)
             m_pInstance->SetData(TYPE_GRIEF, IN_PROGRESS);
-//            pSummoned->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+//            pSummoned->SetWalk(false);
 //            pSummoned->GetMotionMaster()->MovePoint(0, fX, fY, fZ);
     }
 

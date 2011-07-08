@@ -75,7 +75,7 @@ struct MANGOS_DLL_DECL boss_falricAI : public BSWScriptedAI
 
     void Aggro(Unit* pVictim)
     {
-      m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+      m_creature->SetWalk(false);
       DoScriptText(SAY_FALRIC_AGGRO, m_creature);
       DoCast(m_creature, SPELL_HOPELESSNESS);
     }

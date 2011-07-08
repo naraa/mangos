@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
                     (*iter)->RemoveAllAuras();
                     (*iter)->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     (*iter)->SetSpeedRate(MOVE_RUN, 3.0f);
-                    (*iter)->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                    (*iter)->SetWalk(false);
                     (*iter)->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
                 }
             }
