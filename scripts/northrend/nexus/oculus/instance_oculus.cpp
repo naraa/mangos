@@ -209,7 +209,6 @@ void AddSC_instance_oculus()
     newscript->GetInstanceData = &GetInstanceData_instance_oculus;
     newscript->RegisterSelf();
 
-    Script *newscript;
     newscript = new Script; 
     newscript->Name = "go_oculus_portal"; 
     newscript->pGOUse = GOUse_go_oculus_portal; 
