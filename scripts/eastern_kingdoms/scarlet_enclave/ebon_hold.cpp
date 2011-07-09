@@ -3427,6 +3427,7 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
 
     void Reset()
     {
+        m_scarletMinerGuid.Clear();
     }
 
     void MoveInLineOfSight(Unit* /*pUnit*/)
