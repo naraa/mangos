@@ -243,6 +243,7 @@ struct MANGOS_DLL_DECL npc_injured_rainspeakerAI : public npc_escortAI
                 if (Player* pPlayer = GetPlayerForEscort())
                 {
                     DoScriptText(SAY_END_1, m_creature, pPlayer);
+                    pPlayer->AreaExploredOrEventHappens(QUEST_FORTUNATE_MISUNDERSTAND);
                     DoCastSpellIfCan(m_creature, SPELL_ORACLE_INTRO);
                 }
                 break;
