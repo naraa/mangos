@@ -2,6 +2,13 @@
 DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
+-- ------------------------------
+-- Quest : 12078 Worm Wrangler --
+-- ------------------------------
+
+DELETE FROM `item_required_target` WHERE `entry` = 36771 AND `type` = 1 AND `targetEntry` = 26359;
+INSERT INTO `item_required_target` (`entry`, `type`, `targetEntry`) VALUES
+('36771', '1', '26359');
 
 -- ------------------------------
 -- Quest: Drake Hunt (11940/11919)
@@ -71,7 +78,7 @@ INSERT INTO item_required_target VALUES
 -- --------------------------------------------------
 -- fixes for Quest Kickin'Nass and Takin manes (12630)
 -- --------------------------------------------------
-UPDATE `creature_template` SET `flags_extra` = 128 WHERE `entry` = 28523;
+UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 28523;
 DELETE FROM creature WHERE id=28523;  -- deletes  nass kc bunny credit needs to be summoned not already spawn
 
 -- -----------------------------
