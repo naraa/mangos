@@ -198,7 +198,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                     m_pInstance->SetNextEvent(4,m_creature->GetEntry(),500);
                 break;
             case 4:
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(0, 5307.031f, 1997.920f, 709.341f);
                 m_pInstance->SetNextEvent(5,m_creature->GetEntry(),10000);
                 break;
@@ -764,7 +764,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
         switch(m_pInstance->GetEvent(m_creature->GetEntry()))
         {
             case 100:
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                m_creature->SetWalk(false);
                 if (Creature* pLichKing = m_pInstance->GetSingleCreatureFromStorage(BOSS_LICH_KING))
                 {
                     if (m_creature->GetEntry() == NPC_SYLVANA_OUTRO)
@@ -862,9 +862,9 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
               if (GameObject* pCave = m_pInstance->GetSingleGameObjectFromStorage(GO_CAVE))
                   pCave->SetGoState(GO_STATE_READY);
               m_creature->RemoveAurasDueToSpell(SPELL_SILENCE);
-              m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+              m_creature->SetLevitate(false);
               m_creature->CastSpell(m_creature, SPELL_SHIELD_DISRUPTION,false);
-              m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+              m_creature->SetWalk(false);
               m_creature->GetMotionMaster()->MovePoint(0, 5258.911328f,1652.112f,784.295166f);
               DoScriptText(SAY_ESCAPE_01, m_creature);
               m_pInstance->SetNextEvent(612,m_creature->GetEntry(),10000);
@@ -1295,7 +1295,7 @@ struct MANGOS_DLL_DECL npc_queldelar_horAI : public ScriptedAI
              pNewLeader->setFaction(35);
              pNewLeader->SetPhaseMask(65535, true);
              pNewLeader->GetMotionMaster()->MovePoint(0, WallLoc[5].x,WallLoc[5].y,WallLoc[5].z);
-             pNewLeader->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+             pNewLeader->SetWalk(false);
              pNewLeader->SetSpeedRate(MOVE_RUN, 1.0f, true);
              pNewLeader->SetRespawnDelay(DAY);
         }

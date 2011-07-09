@@ -268,7 +268,7 @@ uint32 uiSummon_counter;
                {
                 case 0:
                   m_creature->SetVisibility(VISIBILITY_ON);
-                  m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                  m_creature->SetWalk(false);
                   m_creature->GetMotionMaster()->MovePoint(0, 5653.337f, 2496.407f, 708.829f);
                   uiSummon_counter = 0;
                   StepTimer = 400;

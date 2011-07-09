@@ -1048,7 +1048,7 @@ struct MANGOS_DLL_DECL mob_orb_carrierAI : public BSWScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         MovementStarted = false;
-        m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(false);
         m_creature->SetSpeedRate(MOVE_RUN, 6.0f);
     }
 

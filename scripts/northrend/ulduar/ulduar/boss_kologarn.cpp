@@ -41,33 +41,33 @@ enum
     EMOTE_STONE_GRIP    = -1603357,
 
     //kologarn
-    SPELL_OVERHEAD_SMASH		= 63356,
-    SPELL_OVERHEAD_SMASH_H		= 64003,
-    SPELL_ONE_ARMED_SMASH		= 63573,
-    SPELL_ONE_ARMED_SMASH_H		= 64006,
-    SPELL_STONE_SHOUT			= 63716,
-    SPELL_STONE_SHOUT_H			= 64005,
-    SPELL_PETRIFYING_BREATH		= 62030,
-    SPELL_PETRIFYING_BREATH_H	= 63980,
+    SPELL_OVERHEAD_SMASH        = 63356,
+    SPELL_OVERHEAD_SMASH_H        = 64003,
+    SPELL_ONE_ARMED_SMASH        = 63573,
+    SPELL_ONE_ARMED_SMASH_H        = 64006,
+    SPELL_STONE_SHOUT            = 63716,
+    SPELL_STONE_SHOUT_H            = 64005,
+    SPELL_PETRIFYING_BREATH        = 62030,
+    SPELL_PETRIFYING_BREATH_H    = 63980,
     SPELL_FOCUSED_EYEBEAM       = 63346,
     SPELL_FOCUSED_EYEBEAM_H     = 63976,
     SPELL_FOCUSED_EYEBEAM_TRIG  = 63369,
     SPELL_FOCUSED_EYEBEAM_VISUAL= 63368,
     SPELL_ENRAGE                = 26662,
     //left arm
-    SPELL_SHOCKWAVE				= 63783,
-    SPELL_SHOCKWAVE_H			= 63982,
+    SPELL_SHOCKWAVE                = 63783,
+    SPELL_SHOCKWAVE_H            = 63982,
     //right arm
     SPELL_STONE_GRIP_GRAB       = 63981,    // not working
-    SPELL_STONE_GRIP			= 64290,
-    SPELL_STONE_GRIP_H			= 64292,
+    SPELL_STONE_GRIP            = 64290,
+    SPELL_STONE_GRIP_H            = 64292,
     //both
-    SPELL_ARM_VISUAL			= 64753,
+    SPELL_ARM_VISUAL            = 64753,
     //rubble
-    SPELL_RUMBLE				= 63818,    // on 10 man
-    SPELL_STONE_NOVA			= 63978,    // on 25 man
+    SPELL_RUMBLE                = 63818,    // on 10 man
+    SPELL_STONE_NOVA            = 63978,    // on 25 man
     //NPC ids
-    MOB_RUBBLE					= 33768, 
+    MOB_RUBBLE                    = 33768, 
 
     ACHIEV_RUBBLE_AND_ROLL      = 2959,
     ACHIEV_RUBBLE_AND_ROLL_H    = 2960,
@@ -303,7 +303,7 @@ struct MANGOS_DLL_DECL boss_right_armAI : public ScriptedAI
 
             DoScriptText(EMOTE_STONE_GRIP, m_creature);
 
-			// this needs vehicles!
+            // this needs vehicles!
             for(int i = 0; i < m_uiMaxTargets; i++)
             {
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0)){
@@ -490,7 +490,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
             m_uiEyebeah_Timer = 20000;
         }else m_uiEyebeah_Timer -= uiDiff;
 
-		// respawn arms
+        // respawn arms
         if (m_uiRespawnLeftTimer < uiDiff && m_bIsLeftDead)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_LEFT_ARM)))
@@ -519,7 +519,7 @@ struct MANGOS_DLL_DECL boss_kologarnAI : public ScriptedAI
             }
         }else m_uiRespawnRightTimer -= uiDiff; 
 
-		// check if arms are dead and if there is no player in melee range
+        // check if arms are dead and if there is no player in melee range
         if (m_uiCheck_Timer < uiDiff)
         {
             if (Creature* lArm = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_LEFT_ARM)))

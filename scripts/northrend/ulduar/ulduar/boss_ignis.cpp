@@ -39,32 +39,32 @@ enum
     SAY_DEATH       = -1603019,
 
     //ignis the furnace master
-    SPELL_FLAME_JETS			= 62680,
-    SPELL_FLAME_JETS_H			= 63472,
-    SPELL_SLAG_POT				= 62717,
-    SPELL_SLAG_POT_H			= 63477,
-    SPELL_SLAG_POT_DMG			= 65722,
-    SPELL_SLAG_POT_DMG_H		= 65723,
-    SPELL_SCORCH				= 62546,
-    SPELL_SCORCH_H				= 63474,
-    BUFF_STRENGHT_OF_CREATOR	= 64473,
-    SPELL_STRENGHT_OF_CREATOR2	= 64474,
-    SPELL_STRENGHT_OF_CREATOR3	= 64475,
-    SPELL_HASTE					= 66045,
+    SPELL_FLAME_JETS            = 62680,
+    SPELL_FLAME_JETS_H            = 63472,
+    SPELL_SLAG_POT                = 62717,
+    SPELL_SLAG_POT_H            = 63477,
+    SPELL_SLAG_POT_DMG            = 65722,
+    SPELL_SLAG_POT_DMG_H        = 65723,
+    SPELL_SCORCH                = 62546,
+    SPELL_SCORCH_H                = 63474,
+    BUFF_STRENGHT_OF_CREATOR    = 64473,
+    SPELL_STRENGHT_OF_CREATOR2    = 64474,
+    SPELL_STRENGHT_OF_CREATOR3    = 64475,
+    SPELL_HASTE                    = 66045,
     SPELL_ENRAGE                = 26662,
     //iron construct
-    SPELL_HEAT					= 65667,
-    SPELL_MOLTEN				= 62373,
-    SPELL_BRITTLE				= 62382,
-    SPELL_SHATTER				= 62383,
+    SPELL_HEAT                    = 65667,
+    SPELL_MOLTEN                = 62373,
+    SPELL_BRITTLE                = 62382,
+    SPELL_SHATTER                = 62383,
     //scorch target
-    AURA_SCORCH					= 62548,
-    AURA_SCORCH_H				= 63476,
+    AURA_SCORCH                    = 62548,
+    AURA_SCORCH_H                = 63476,
     AURA_HEAT                   = 65667,
     SPELL_FREEZE_ANIM           = 16245,
     //NPC ids
-    MOB_IRON_CONSTRUCT			= 33121,
-    MOB_SCORCH_TARGET			= 33221,
+    MOB_IRON_CONSTRUCT            = 33121,
+    MOB_SCORCH_TARGET            = 33221,
 
     ACHIEV_STOKIN_THE_FURNACE   = 2930,
     ACHIEV_STOKIN_THE_FURNACE_H = 2929,
@@ -216,7 +216,7 @@ struct MANGOS_DLL_DECL mob_iron_constructAI : public ScriptedAI
         {
             if (pTemp->isAlive())
             {
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(0, pTemp->GetPositionX(), pTemp->GetPositionY(), pTemp->GetPositionZ());
 
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))

@@ -297,7 +297,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
 
         if (m_creature->Attack(pWho, true)) 
         {
-            m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+            m_creature->SetWalk(false);
             m_creature->AddThreat(pWho);
             m_creature->SetInCombatWith(pWho);
             pWho->SetInCombatWith(m_creature);
@@ -499,7 +499,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 // berserk
                 if(m_uiBerserk_Timer < uiDiff)
                 {
-                    DoScriptText(SAY_BERSERK, m_creature);	
+                    DoScriptText(SAY_BERSERK, m_creature);    
                     DoCast(m_creature, SPELL_BERSERK);
                     m_uiBerserk_Timer = 360000;
                 }else m_uiBerserk_Timer -= uiDiff;
@@ -575,7 +575,7 @@ struct MANGOS_DLL_DECL boss_algalonAI : public ScriptedAI
                 break;
             case 3:
                 // make boss kneel
-                m_creature->SetSplineFlags(SPLINEFLAG_UNKNOWN12);
+//                m_creature->SetSplineFlags(SPLINEFLAG_UNKNOWN12);
                 if(m_bIsDespawned)
                 {
                     DoScriptText(SAY_DESPAWN1, m_creature);
@@ -731,7 +731,7 @@ struct MANGOS_DLL_DECL mob_collapsing_starAI : public ScriptedAI
             m_creature->DealDamage(m_creature, (m_creature->GetMaxHealth() * 0.01), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             m_uiHealthTimer = 1000;
         }else m_uiHealthTimer -= uiDiff;
-    }	
+    }    
 };
 
 //Living constellation
@@ -809,7 +809,7 @@ struct MANGOS_DLL_DECL mob_cosmic_smash_targetAI : public ScriptedAI
             DoCast(m_creature, SPELL_COSMIC_SMASH_MISSILE);
             m_uiSpellTimer = 60000;
         }else m_uiSpellTimer -= uiDiff;
-    }	
+    }    
 };
 
 

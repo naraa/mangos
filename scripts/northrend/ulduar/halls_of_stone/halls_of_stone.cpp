@@ -198,12 +198,12 @@ struct MANGOS_DLL_DECL mob_tribuna_controllerAI : public ScriptedAI
                         if (uiPositionCounter == 0)
                         {
                             c->GetMap()->CreatureRelocation((*itr), 927.265f, 333.200f, 218.780f, (*itr)->GetOrientation());
-                            c->MonsterMove(927.265f, 333.200f, 218.780f, 1);
+                            c->MonsterMoveWithSpeed(927.265f, 333.200f, 218.780f, 26);
                         }
                         else
                         {
                             c->GetMap()->CreatureRelocation((*itr), 921.745f, 328.076f, 218.780f, (*itr)->GetOrientation());
-                            c->MonsterMove(921.745f, 328.076f, 218.780f, 1);
+                            c->MonsterMoveWithSpeed(921.745f, 328.076f, 218.780f, 26);
                         }
                     }
                     ++uiPositionCounter;

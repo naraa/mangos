@@ -54,7 +54,7 @@ struct MANGOS_DLL_DECL npc_cs_gnoulAI : public ScriptedAI
 
    void Reset()
    {
-     m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+     m_creature->SetWalk(false);
      MoveTimer = (urand(100, 5000));
      m_uiFleshTimer = (urand(3000, 10000));
      WaypointId = 1;
@@ -235,7 +235,7 @@ struct MANGOS_DLL_DECL npc_cs_necromancerAI : public ScriptedAI
 
    void Reset() 
    { 
-     m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+     m_creature->SetWalk(false);
      MoveTimer = (urand(100, 5000));
      m_uiCourseTimer = (urand(7000, 17000));
      m_uiShadowBoltTimer = (urand(3000, 10000));
@@ -429,7 +429,7 @@ struct MANGOS_DLL_DECL npc_cs_fieldAI : public ScriptedAI
 
    void Reset() 
    { 
-     m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+     m_creature->SetWalk(false);
      MoveTimer = (urand(100, 5000));
      m_uiBlowTimer = (urand(7000, 17000));
      m_uiScarabTimer = (urand(3000, 10000));
@@ -625,7 +625,7 @@ struct MANGOS_DLL_DECL npc_cs_acolyteAI : public ScriptedAI
 
    void Reset() 
    { 
-     m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+     m_creature->SetWalk(false);
      MoveTimer = (urand(100, 5000));
      m_uiColdTimer = (urand(7000, 17000));
      m_uiFireTimer = (urand(3000, 10000));
@@ -835,7 +835,7 @@ struct MANGOS_DLL_DECL npc_cs_butcherAI : public ScriptedAI
    void Reset() 
    { 
      DoCast(m_creature, SPELL_CLOUD);
-     m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+     m_creature->SetWalk(false);
      MoveTimer = (urand(100, 5000));
      WaypointId = 1;
    }

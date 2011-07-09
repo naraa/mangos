@@ -774,7 +774,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                           pInstance->SetData(TYPE_EVENT,12052);
                           break;
                 case 12052:
-                          m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                          m_creature->SetWalk(false);
                           StartMovement(3,12053);
                           break;
                 case 12053:
@@ -796,7 +796,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
                           pInstance->SetData(TYPE_EVENT,13131);
                           break;
                 case 13131:
-                          m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                          m_creature->SetWalk(false);
                           StartMovement(2,13132);
                           break;
                 case 13132:
@@ -964,7 +964,7 @@ struct MANGOS_DLL_DECL  mob_ice_sphere_iccAI : public BSWScriptedAI
     {
         resetTimers();
         doCast(SPELL_ICE_SPHERE_VISUAL);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
     }
 
 
@@ -1114,7 +1114,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public BSWScriptedAI
            }
        SetCombatMovement(false);
        movementstarted = false;
-       m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+       m_creature->SetWalk(true);
     }
 
 

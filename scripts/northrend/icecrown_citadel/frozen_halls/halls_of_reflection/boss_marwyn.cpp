@@ -163,7 +163,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
     void Aggro(Unit* pVictim)
     {
         if (!m_pInstance) return;
-        m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(false);
         DoScriptText(SAY_MARWYN_AGGRO, m_creature);
     }
 

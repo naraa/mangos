@@ -149,8 +149,8 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
 
                 // hacky way to complete achievements; use only if you have this function
                 m_pInstance->DoCompleteAchievement(m_bIsRegularMode ? ACHIEV_MORNING_SARONITE : ACHIEV_MORNING_SARONITE_H);
-				// hack used when the hard mode loot is within the Animus corpse
-				// PLEASE REMOVE FOR REVISION
+                // hack used when the hard mode loot is within the Animus corpse
+                // PLEASE REMOVE FOR REVISION
                 if(Creature* pAnimus = m_pInstance->instance->GetCreature(m_uiAnimusGUID))
                     pAnimus->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
             }
@@ -176,7 +176,7 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
 
         if (!lVapors.empty())
         {
-			// vapors need more speed
+            // vapors need more speed
             for(std::list<Creature*>::iterator iter = lVapors.begin(); iter != lVapors.end(); ++iter)
             {
                 if ((*iter) && (*iter)->isAlive())
@@ -184,7 +184,7 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
                     (*iter)->RemoveAllAuras();
                     (*iter)->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     (*iter)->SetSpeedRate(MOVE_RUN, 3.0f);
-                    (*iter)->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                    (*iter)->SetWalk(false);
                     (*iter)->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
                 }
             }
@@ -218,8 +218,8 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
         m_bIsAnimusAlive = true;
     }
 
-	// hacky way for the mark of the faceless, needs core support
-	// PLEASE REMOVE FOR REVISION!
+    // hacky way for the mark of the faceless, needs core support
+    // PLEASE REMOVE FOR REVISION!
     void CheckForMark(uint64 m_uiTargetGUID)
     {
         if(m_uiTargetGUID == 0)
@@ -308,7 +308,7 @@ struct MANGOS_DLL_DECL boss_vezaxAI : public ScriptedAI
         }
         else m_uiMarkTimer -= uiDiff;
 
-		// HACK FOR MARK OF THE FACELESS
+        // HACK FOR MARK OF THE FACELESS
         // mark check ending
         if(m_uiMarkEndTimer < uiDiff && m_bHasMark)
             m_bHasMark = false;

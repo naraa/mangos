@@ -162,7 +162,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
 
         if (Creature* pNewLeader = m_creature->SummonCreature(newLeader,WallLoc[6].x,WallLoc[6].y,WallLoc[6].z,WallLoc[6].o,TEMPSUMMON_MANUAL_DESPAWN,0,true))
         {
-             pNewLeader->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+             pNewLeader->SetWalk(false);
              pNewLeader->SetSpeedRate(MOVE_RUN, 1.0f, true);
              pNewLeader->SetRespawnDelay(DAY);
              pNewLeader->SetHealth(pNewLeader->GetMaxHealth()/10);
@@ -186,8 +186,8 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
                 if (Creature* pLider = m_pInstance->GetSingleCreatureFromStorage(m_pInstance->GetData(DATA_ESCAPE_LIDER)))
                 {
                     pLider->CastSpell(pLider, SPELL_SILENCE, false);
-                    pLider->AddSplineFlag(SPLINEFLAG_FLYING);
-                    pLider->SendMonsterMove(pLider->GetPositionX(), pLider->GetPositionY(), pLider->GetPositionZ() + 4, SPLINETYPE_NORMAL , pLider->GetSplineFlags(), 3000);
+                    pLider->SetLevitate(true);
+                    pLider->MonsterMoveWithSpeed(pLider->GetPositionX(), pLider->GetPositionY(), pLider->GetPositionZ() + 4, 26);
                 }
                 m_pInstance->SetData(TYPE_PHASE, 6);
                 m_pInstance->SetNextEvent(610,GetLeader(),5000);
@@ -438,7 +438,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
 
            NonFight = true;
            m_creature->AttackStop();
-           m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+           m_creature->SetWalk(true);
            m_creature->SetSpeedRate(MOVE_WALK, 2.7f, true);
            if (boss_lich_king_hrAI* pEscortAI = dynamic_cast<boss_lich_king_hrAI*>(m_creature->AI()))
                pEscortAI->Start();
@@ -575,7 +575,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
                 break;
             case 37:
                 m_creature->GetMotionMaster()->MovementExpired(false);
-                m_creature->RemoveSplineFlag(SPLINEFLAG_WALKMODE);
+                m_creature->SetWalk(false);
                 m_creature->GetMotionMaster()->MovePoint(0, 5443.880f, 2147.095f, 707.695f);
                 if (GetLeader() == NPC_JAINA)
                     DoScriptText(SAY_LICH_KING_A_21, m_creature);

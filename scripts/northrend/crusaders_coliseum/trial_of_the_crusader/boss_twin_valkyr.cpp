@@ -399,7 +399,7 @@ struct MANGOS_DLL_DECL mob_light_essenceAI : public ScriptedAI
     void Reset() 
     {
     m_creature->SetRespawnDelay(DAY);
-    m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+    m_creature->SetWalk(true);
     m_creature->GetMotionMaster()->MoveRandom();
     }
 
@@ -452,7 +452,7 @@ struct MANGOS_DLL_DECL mob_dark_essenceAI : public ScriptedAI
     void Reset() 
     {
     m_creature->SetRespawnDelay(DAY);
-    m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+    m_creature->SetWalk(true);
     m_creature->GetMotionMaster()->MoveRandom();
     }
 

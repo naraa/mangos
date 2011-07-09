@@ -27,27 +27,27 @@ EndScriptData */
 enum
 {
     //xt yells
-    SAY_AGGRO				= -1603038,
-    SAY_DEATH				= -1603030,
-    SAY_TANCTRUM			= -1603037,
-    SAY_SLAY_01				= -1603036,
-    SAY_SLAY_02				= -1603035,
-    SAY_BERSERK				= -1603031,
-    SAY_ADDS				= -1603032,
-    SAY_HEART_OPEN			= -1603034,
-    SAY_HEART_CLOSE			= -1603033,
+    SAY_AGGRO                = -1603038,
+    SAY_DEATH                = -1603030,
+    SAY_TANCTRUM            = -1603037,
+    SAY_SLAY_01                = -1603036,
+    SAY_SLAY_02                = -1603035,
+    SAY_BERSERK                = -1603031,
+    SAY_ADDS                = -1603032,
+    SAY_HEART_OPEN            = -1603034,
+    SAY_HEART_CLOSE            = -1603033,
     EMOTE_HEART             = -1603350,
     EMOTE_REPAIR            = -1603351,
 
     //xt-002
-    SPELL_TANCTRUM			= 62776,
+    SPELL_TANCTRUM            = 62776,
     SPELL_LIGHT_BOMB_TRIG   = 65598,
-    SPELL_LIGHT_BOMB		= 63018,
-    SPELL_LIGHT_BOMB_H		= 65121,
-    SPELL_GRAVITY_BOMB		= 63024,
-    SPELL_GRAVITY_BOMB_H	= 64234,
-    SPELL_ENRAGE			= 47008,
-    SPELL_STUN				= 3618,
+    SPELL_LIGHT_BOMB        = 63018,
+    SPELL_LIGHT_BOMB_H        = 65121,
+    SPELL_GRAVITY_BOMB        = 63024,
+    SPELL_GRAVITY_BOMB_H    = 64234,
+    SPELL_ENRAGE            = 47008,
+    SPELL_STUN                = 3618,
 
     // hard mode
     SPELL_HEARTBREAK        = 65737,
@@ -61,21 +61,21 @@ enum
     NPC_LIFESPARK           = 34004,
 
     //heart of the deconstructor
-    SPELL_EXPOSED_HEART		= 63849,
+    SPELL_EXPOSED_HEART        = 63849,
 
     //XE-321 Boombot
-    SPELL_BOOM				= 38831,			// replacing real spell
+    SPELL_BOOM                = 38831,            // replacing real spell
 
     //XM-024 Pummeller
-    SPELL_CLEAVE			= 8374,
-    SPELL_TRAMPLE			= 5568,
-    SPELL_UPPERCUT			= 10966,
+    SPELL_CLEAVE            = 8374,
+    SPELL_TRAMPLE            = 5568,
+    SPELL_UPPERCUT            = 10966,
 
     //NPC ids
-    NPC_HEART				= 33329,
-    NPC_SCRAPBOT			= 33343,
-    NPC_BOOMBOT				= 33346,
-    NPC_PUMMELER			= 33344, 
+    NPC_HEART                = 33329,
+    NPC_SCRAPBOT            = 33343,
+    NPC_BOOMBOT                = 33346,
+    NPC_PUMMELER            = 33344, 
 
     // Achievs
     ACHIEV_HEARTBREAKER         = 3058,
@@ -131,8 +131,8 @@ struct MANGOS_DLL_DECL mob_voidzoneAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-		// should be an aura here. Couldn't find it
-		// hacky way, needs fixing!
+        // should be an aura here. Couldn't find it
+        // hacky way, needs fixing!
         if (Spell_Timer < diff)
         {
             Map *map = m_creature->GetMap();
@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL mob_xtheartAI : public ScriptedAI
     void JustDied(Unit* pKiller)
     {
         // used for hard mode loot only when hard mode loot is within the heart's corpse
-		// remove this for revision
+        // remove this for revision
         m_creature->RemoveFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
         if(m_pInstance)
             m_pInstance->SetData(TYPE_XT002_HARD, IN_PROGRESS);
@@ -427,8 +427,8 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
             {
                 m_pInstance->SetData(TYPE_XT002_HARD, DONE);
                 // make the heart give the loot for hard mode
-				// hacky way of giving hard mode loot, used only when hard mode loot is within the heart's corpse
-				// PLEASE REMOVE FOR REVISION!
+                // hacky way of giving hard mode loot, used only when hard mode loot is within the heart's corpse
+                // PLEASE REMOVE FOR REVISION!
                 if(Creature* pHeart = m_pInstance->instance->GetCreature(m_uiXtHeartGUID))
                     pHeart->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_LOOTABLE);
             }
@@ -523,7 +523,7 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
         // Achiev timer
         uiEncounterTimer += uiDiff;
 
-		// light bomb
+        // light bomb
         if (m_uiLight_Bomb_Timer < uiDiff && !m_bPhase2)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -533,14 +533,14 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
                 pLightBombTarGUID = pTarget->GetGUID();
             }
 
-			// spawn a life spark from the target
+            // spawn a life spark from the target
             if(m_bIsHardMode)
                 m_uiLifeSparkTimer = 9000;
 
             m_uiLight_Bomb_Timer = urand(10000, 14000);
         }else m_uiLight_Bomb_Timer -= uiDiff;   
 
-		// graviti bomb
+        // graviti bomb
         if (m_uiGravity_Bomb_Timer < uiDiff && !m_bPhase2)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -550,7 +550,7 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
                 pGravityBombTarGUID = pTarget->GetGUID();
             }
 
-			// spawn a void zone from the target
+            // spawn a void zone from the target
             if(m_bIsHardMode)
                 m_uiVoidZoneTimer = 9000;
 
@@ -577,7 +577,7 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
                 m_uiEnrage_Timer = 5000;
         }else m_uiEnrage_Timer -= uiDiff;
 
-		// adds range check
+        // adds range check
         if (m_uiRange_Check_Timer < uiDiff)
         {
             if (!m_lScrapbotsGUIDList.empty())
@@ -630,7 +630,7 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
         {
             m_bPhase2 = false;
 
-			// the spell doesn't increase the boss' heart. Override
+            // the spell doesn't increase the boss' heart. Override
             if(m_uiHpDelayTimer < uiDiff && m_bHasMoreHealth)
             {
                 m_creature->SetHealth(m_creature->GetMaxHealth()+ (m_creature->GetMaxHealth() * m_bIsRegularMode ? 0.5 : 0.6));
@@ -682,7 +682,7 @@ struct MANGOS_DLL_DECL boss_xt002AI : public ScriptedAI
             if(Creature *Heart = m_creature->SummonCreature(NPC_HEART, 0.0f, 0.0f, 0.0f, 0, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 900000))
             {
                 m_uiXtHeartGUID = Heart->GetGUID();
-				// this needs fixing in DB
+                // this needs fixing in DB
                 if(!m_bIsRegularMode)
                     Heart->SetMaxHealth(7199999);
             }

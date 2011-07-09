@@ -335,7 +335,7 @@ struct MANGOS_DLL_DECL mob_frost_sphereAI : public BSWScriptedAI
     {
         m_creature->SetRespawnDelay(DAY);
         m_creature->SetSpeedRate(MOVE_RUN, 0.1f);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
         m_creature->GetMotionMaster()->MoveRandom();
     }
 

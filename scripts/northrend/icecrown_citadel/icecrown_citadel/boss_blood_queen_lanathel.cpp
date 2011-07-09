@@ -216,7 +216,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
                     StartMovement(1);
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-                    m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+                    m_creature->SetLevitate(true);
                     stage = 2;
                     break;
             case 2:
@@ -240,7 +240,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
                     m_creature->AttackStop();
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
-                    m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+                    m_creature->SetLevitate(false);
                     StartMovement(0);
                     stage = 5;
                     break;

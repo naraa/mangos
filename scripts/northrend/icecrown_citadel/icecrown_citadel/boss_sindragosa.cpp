@@ -151,7 +151,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public BSWScriptedAI
         m_creature->RemoveAurasDueToSpell(SPELL_FLY);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
-        m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(false);
 
         ScriptedAI::EnterEvadeMode();
     }
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public BSWScriptedAI
                     m_creature->CastSpell(m_creature,SPELL_FLY, true);
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 50331648);
                     m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 50331648);
-                    m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+                    m_creature->SetLevitate(true);
                     m_creature->GetMotionMaster()->MovePoint(1, SpawnLoc[1].x, SpawnLoc[1].y, SpawnLoc[1].z);
                     m_creature->HandleEmoteCommand(EMOTE_ONESHOT_FLY_SIT_GROUND_UP);
                 break;
@@ -319,7 +319,7 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public BSWScriptedAI
                         m_creature->RemoveAurasDueToSpell(SPELL_FLY);
                         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
                         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
-                        m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+                        m_creature->SetLevitate(false);
                     };
                 break;
 

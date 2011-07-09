@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL  mob_small_oozeAI : public BSWScriptedAI
         resetTimers();
         m_creature->SetRespawnDelay(7*DAY);
         doCast(SPELL_RADIATING_OOZE);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
         m_creature->SetSpeedRate(MOVE_RUN, 0.5);
         m_creature->SetSpeedRate(MOVE_WALK, 0.5);
    }
@@ -251,7 +251,7 @@ struct MANGOS_DLL_DECL  mob_big_oozeAI : public BSWScriptedAI
         resetTimers();
         m_creature->SetRespawnDelay(7*DAY);
         doCast(SPELL_UNSTABLE_OOZE);
-        m_creature->AddSplineFlag(SPLINEFLAG_WALKMODE);
+        m_creature->SetWalk(true);
         m_creature->SetSpeedRate(MOVE_RUN, 0.5);
         m_creature->SetSpeedRate(MOVE_WALK, 0.5);
         exploded = false;

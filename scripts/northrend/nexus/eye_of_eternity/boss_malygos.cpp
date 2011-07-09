@@ -296,7 +296,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
         m_creature->SetSpeedRate(MOVE_FLIGHT, 2.0f);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->GetMotionMaster()->Clear();
 
         DespawnCreatures(NPC_POWER_SPARK);
@@ -337,7 +337,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
         DespawnCreatures(NPC_STATIC_FIELD);
         m_creature->SummonCreature(NPC_ALEXSTRASZA, CENTER_X+20.0f, CENTER_Y+20.0f, AIR_Z, 0, TEMPSUMMON_DEAD_DESPAWN, 0);
         m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z-500.0f, 0);
-        m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z-400.0f, SPLINETYPE_NORMAL , m_creature->GetSplineFlags(), 10000);
+        m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z-400.0f, 26);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -395,7 +395,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
         {
             if (Creature* pDisk = pSummoned->SummonCreature(NPC_HOVER_DISK, pSummoned->GetPositionX(), pSummoned->GetPositionY(), pSummoned->GetPositionZ(), 0, TEMPSUMMON_CORPSE_DESPAWN, 0))
             {
-                pDisk->SetSplineFlags(SPLINEFLAG_FLYING);
+                pDisk->SetLevitate(true);
                 pDisk->CastSpell(pDisk, SPELL_FLIGHT, true);
                 if (uiEntry == NPC_NEXUS_LORD)
                     pDisk->SetSpeedRate(MOVE_WALK, 1.5f);
@@ -472,7 +472,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                 pTargetSparkPortal->Respawn();
 
             m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, 0);
-            m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+            m_creature->SetLevitate(false);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             m_uiPhase = PHASE_FLOOR;
             m_creature->SetInCombatWithZone();
@@ -698,7 +698,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                     else if (m_uiVortexPhase == MAX_VORTEX+9)
                     {
                         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, 0);
-                        m_creature->RemoveSplineFlag(SPLINEFLAG_FLYING);
+                        m_creature->SetLevitate(false);
                         m_uiSubPhase = 0;
                         m_creature->GetMotionMaster()->Clear();
                         if (Unit* pTarget = m_creature->getVictim())
@@ -753,7 +753,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
             if (m_uiVortexTimer <= uiDiff)
             {
                 m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-                m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+                m_creature->SetLevitate(true);
                 SetCombatMovement(false);
                 m_creature->GetMotionMaster()->Clear();
                 m_creature->GetMotionMaster()->MovePoint(POINT_ID_VORTEX_AIR, CENTER_X, CENTER_Y, AIR_Z);
@@ -778,7 +778,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
                     m_uiPhase = PHASE_ADDS;
                     m_uiSubPhase = SUBPHASE_TALK;
                     m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-                    m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+                    m_creature->SetLevitate(true);
                     SetCombatMovement(false);
                     m_creature->GetMotionMaster()->Clear();
                     m_creature->GetMotionMaster()->MovePoint(0, CENTER_X, CENTER_Y, AIR_Z);
@@ -1066,7 +1066,7 @@ struct MANGOS_DLL_DECL npc_power_sparkAI : public ScriptedAI
         m_uiCheckTimer = 0;
 
         SetCombatMovement(false);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         m_creature->CastSpell(m_creature, SPELL_POWER_SPARK_VISUAL, false);
     }
 
@@ -1092,7 +1092,7 @@ struct MANGOS_DLL_DECL npc_power_sparkAI : public ScriptedAI
             m_creature->CastSpell(m_creature, SPELL_POWER_SPARK_PLAYERS, true);
             m_creature->GetMotionMaster()->Clear();
             m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f, 0);
-            m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f, SPLINETYPE_NORMAL , m_creature->GetSplineFlags(), 1000);
+            m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f,26);
             m_creature->ForcedDespawn(60000);
         }
     }
@@ -1296,7 +1296,7 @@ struct MANGOS_DLL_DECL npc_hover_diskAI : public ScriptedAI
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         m_creature->setFaction(35);
         m_creature->CastSpell(m_creature, SPELL_FLIGHT, true);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
     }
 
     void AttackStart(Unit *pWho)
@@ -1320,7 +1320,7 @@ struct MANGOS_DLL_DECL npc_hover_diskAI : public ScriptedAI
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                     m_creature->GetMap()->CreatureRelocation(m_creature, m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f, 0);
-                    m_creature->SendMonsterMove(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f, SPLINETYPE_NORMAL , m_creature->GetSplineFlags(), 4000);
+                    m_creature->MonsterMoveWithSpeed(m_creature->GetPositionX(), m_creature->GetPositionY(), FLOOR_Z+1.5f, 26);
                     m_bMoved = true;
                     m_bPassengerHere = false;
                 }
@@ -1351,7 +1351,7 @@ struct MANGOS_DLL_DECL npc_alexstraszaAI : public ScriptedAI
         m_uiTimer = 9500;
         m_uiCount = 0;
         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
         if (m_pInstance)
             if (Creature* pMalygos = m_pInstance->GetSingleCreatureFromStorage(NPC_MALYGOS))
                 m_creature->SetFacingToObject(pMalygos);
@@ -1485,7 +1485,7 @@ struct MANGOS_DLL_DECL npc_whyrmrest_skytalonAI : public ScriptedAI
         SeatTimer = 2000;
         ownerGUID = m_creature->GetCreatorGuid();
         m_creature->SetByteValue(UNIT_FIELD_BYTES_1, 3, UNIT_BYTE1_FLAG_ALWAYS_STAND | UNIT_BYTE1_FLAG_UNK_2);
-        m_creature->AddSplineFlag(SPLINEFLAG_FLYING);
+        m_creature->SetLevitate(true);
     }
 
     void AttackStart(Unit *) {}
