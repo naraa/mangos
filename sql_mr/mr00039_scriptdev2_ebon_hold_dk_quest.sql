@@ -105,6 +105,8 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
    (-1609285, '%s disappears. Tirion walks over to where Darion lay',0,2,0,0,'The Lich King'),
    (-1609286, 'Light washes over the chapel �X the Light of Dawn is uncovered.',0,2,0,0,'');
 
+DELETE FROM `script_texts` WHERE entry BETWEEN -160293 AND -1609289;
+INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Emotes
    (-1609289, "Orbaz flees.",0,2,0,0,"Orbaz"),
    (-1609290, "Highlord Darion Mograine kneels in defeat before Tirion Fordring.",0,3,0,0,"Highlord Darion Mograine"),
@@ -115,7 +117,8 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
 -- ----------------------------------------------
 -- Quest how to win friends and influence enemies
 -- ----------------------------------------------
-
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1609119 AND -1609101;
+INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
    (-1609101, 'I\'ll tear the secrets from your soul! Tell me about the "Crimson Dawn" and your life may be spared!',0,0,0,0,'player SAY_PERSUADE1'),
    (-1609102, 'Tell me what you know about "Crimson Dawn" or the beatings will continue!',0,0,0,0,'player SAY_PERSUADE2'),
    (-1609103, 'I\'m through being courteous with your kind, human! What is the "Crimson Dawn?"',0,0,0,0,'player SAY_PERSUADE3'),
@@ -165,7 +168,7 @@ VALUES
     ('28864', '0', '2199.4602', '-6125.4033', '35.6491', '1000'),
     ('28864', '1', '2237.8930', '-6007.2319', '73.6170', '0'),
     ('28864', '2', '2292.5766', '-5931.1767', '109.880', '0'),
-    ('28864', '3', '2311.4689', '-5781.7138', '187.213', '0'),
+    ('28864', '3', '2337.958496', '-5776.514648', '171.126999', '0'),
     ('28864', '4', '2363.8535', '-5715.2338', '153.921', '0');
 
 DELETE FROM `script_waypoint` WHERE `entry` = 28841;
