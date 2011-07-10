@@ -2,6 +2,14 @@
 DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
+-- -------------------------
+-- fix quest toxic_test 9051
+-- -------------------------
+UPDATE `quest_template` SET `ReqCreatureOrGOId1` = '6498' WHERE `entry` =9051;
+DELETE FROM `creature_ai_scripts` WHERE `id` =649802;
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `action1_type`, `action1_param1`, `action1_param2`, `comment`) VALUES
+('649802', '6498', '8', '100', '1', '7211', '-1', '33', '6498', '6', 'quest Credit for quest 9051'); 
+
 -- ------------------------------
 -- Quest : 12078 Worm Wrangler --
 -- ------------------------------
