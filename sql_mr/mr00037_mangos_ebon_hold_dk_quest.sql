@@ -4,6 +4,8 @@ DELETE FROM `creature` WHERE `map` = 609 AND `guid` IN (116863);
 DELETE FROM `creature` WHERE `map` = 609 AND `id` IN (29219,29206,29190);
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076') OR (`id`='2920601');
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2889201') OR (`id`='2889202') OR (`id`='2889203') OR (`id`='2889204');
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`='28939') OR (`creature_id`='28610');
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565')
 UPDATE `creature_template` SET `unit_flags`=0,`type_flags`=8 WHERE entry IN (29174,29182,29186,29190,29206,29176,29177,29181);
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29178;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29179;
@@ -14,6 +16,11 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 -- ------------
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
+
+-- -----------------------------------------------------
+-- Quest how to win friends and how to influence enemies
+-- -----------------------------------------------------
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_crusade_persuaded' WHERE `entry` IN (28939,28610);   -- 28640 scarlet crusader needs to be added
 
 -- ---------------------------------------------------------------
 -- Quest Death comes From a High

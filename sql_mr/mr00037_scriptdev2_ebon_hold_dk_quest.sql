@@ -1,10 +1,14 @@
--- Eye of Acherus texts
+-- -------------------
+-- Eye of Acherus text
+-- -------------------
 DELETE FROM script_texts WHERE entry BETWEEN -1666452 AND -1666451;
 INSERT INTO script_texts (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
 ('-1666451','The Eye of Acherus launches towards its destination','Око Акеруса вылетело в пункт назначения','0','3','0','0','EOA_LAUNCH'),
 ('-1666452','The Eye of Acherus is in your control','Око Акеруса под вашим контролем','0','3','0','0','EOA_CONTROL');
 
+-- -----------------------
 -- Quest The Light of Dawn
+-- -----------------------
 
 DELETE FROM `script_texts` WHERE entry BETWEEN -1609286 AND -1609201;
 INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
@@ -101,8 +105,6 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
    (-1609285, '%s disappears. Tirion walks over to where Darion lay',0,2,0,0,'The Lich King'),
    (-1609286, 'Light washes over the chapel �X the Light of Dawn is uncovered.',0,2,0,0,'');
 
-DELETE FROM `script_texts` WHERE entry BETWEEN -1609293 AND -1609289;
-INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Emotes
    (-1609289, "Orbaz flees.",0,2,0,0,"Orbaz"),
    (-1609290, "Highlord Darion Mograine kneels in defeat before Tirion Fordring.",0,3,0,0,"Highlord Darion Mograine"),
@@ -110,20 +112,34 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
    (-1609292, "Highlord Tirion Fordring gasps for air.",0,2,0,0,"Highlord Tirion Fordring"),
    (-1609293, "Highlord Darion Mograine collapses.",0,2,0,0,"Highlord Darion Mograine");
 
-DELETE FROM `script_waypoint` WHERE entry=29173;
-INSERT INTO `script_waypoint` VALUES
-   (29173, 0, 2431.639, -5137.05, 83.843, 0, 'intro'),
-   (29173, 1, 2319.242, -5266.486, 82.825, 0, 'summon & on hold'),
-   (29173, 2, 2318.775, -5266.832, 82.783, 0, 'cast light of dawn'),
-   (29173, 3, 2280.812, -5284.091, 82.608, 0, 'move to here and start'),
-   (29173, 4, 2280.727, -5286.839, 82.930, 0, 'move forward to talk'),
-   (29173, 5, 2280.812, -5284.091, 82.608, 0, 'when baba pop'),
-   (29173, 6, 2281.461, -5263.014, 81.164, 0, 'charge to lich king'),
-   (29173, 7, 2257.479, -5296.702, 82.165, 0, 'being kicked by Lich King'),
-   (29173, 8, 2261.237, -5294.983, 82.167, 0, 'throw'),
-   (29173, 9, 2259.34, -5294.379, 82.167, 0, 'event end');
+-- ----------------------------------------------
+-- Quest how to win friends and influence enemies
+-- ----------------------------------------------
 
+   (-1609101, 'I\'ll tear the secrets from your soul! Tell me about the "Crimson Dawn" and your life may be spared!',0,0,0,0,'player SAY_PERSUADE1'),
+   (-1609102, 'Tell me what you know about "Crimson Dawn" or the beatings will continue!',0,0,0,0,'player SAY_PERSUADE2'),
+   (-1609103, 'I\'m through being courteous with your kind, human! What is the "Crimson Dawn?"',0,0,0,0,'player SAY_PERSUADE3'),
+   (-1609104, 'Is your life worth so little? Just tell me what I need to know about "Crimson Dawn" and I\'ll end your suffering quickly.',0,0,0,0,'player SAY_PERSUADE4'),
+   (-1609105, 'I can keep this up for a very long time, Scarlet dog! Tell me about the "Crimson Dawn!"',0,0,0,0,'player SAY_PERSUADE5'),
+   (-1609106, 'What is the "Crimson Dawn?"',0,0,0,0,'player SAY_PERSUADE6'),
+   (-1609107, '"Crimson Dawn!" What is it! Speak!',0,0,0,0,'player SAY_PERSUADE7'),
+   (-1609108, 'You\'ll be hanging in the gallows shortly, Scourge fiend!',0,0,0,0,'crusader SAY_CRUSADER1'),
+   (-1609109, 'You\'ll have to kill me, monster! I will tell you NOTHING!',0,0,0,0,'crusader SAY_CRUSADER2'),
+   (-1609110, 'You hit like a girl. Honestly. Is that the best you can do?',0,0,0,0,'crusader SAY_CRUSADER3'),
+   (-1609111, 'ARGH! You burned my last good tabard!',0,0,0,0,'crusader SAY_CRUSADER4'),
+   (-1609112, 'Argh... The pain... The pain is almost as unbearable as the lashings I received in grammar school when I was but a child.',0,0,0,0,'crusader SAY_CRUSADER5'),
+   (-1609113, 'I used to work for Grand Inquisitor Isillien! Your idea of pain is a normal mid-afternoon for me!',0,0,0,0,'crusader SAY_CRUSADER6'),
+   (-1609114, 'I\'ll tell you everything! STOP! PLEASE!',0,0,0,20,'break crusader SAY_PERSUADED1'),
+   (-1609115, 'We... We have only been told that the "Crimson Dawn" is an awakening. You see, the Light speaks to the High General. It is the Light...',0,0,0,20,'break crusader SAY_PERSUADED2'),
+   (-1609116, 'The Light that guides us. The movement was set in motion before you came... We... We do as we are told. It is what must be done.',0,0,0,20,'break crusader SAY_PERSUADED3'),
+   (-1609117, 'I know very little else... The High General chooses who may go and who must stay behind. There\'s nothing else... You must believe me!',0,0,0,20,'break crusader SAY_PERSUADED4'),
+   (-1609118, 'LIES! The pain you are about to endure will be talked about for years to come!',0,0,0,0,'break crusader SAY_PERSUADED5'),
+   (-1609119, 'NO! PLEASE! There is one more thing that I forgot to mention... A courier comes soon... From Hearthglen. It...',0,0,0,20,'break crusader SAY_PERSUADED6');
+
+-- --------------------------------------------------
 -- Quest The Gift That Keeps On Giving - script texts
+-- --------------------------------------------------
+
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1609310 AND -1609300;
 INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 (-1609300, "Smell flesh... close...",0,0,0,0,"SAY_SCARLET_GHOUL_SPAWN1"),
@@ -138,7 +154,9 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
 (-1609309, "It puts the ghoul in the pit or else it gets the lash!",0,0,0,0,"SAY_SCARLET_GOTHIK4"),
 (-1609310, "Get in the pit you worthless pile of garbage!",0,0,0,0,"SAY_SCARLET_GOTHIK5");
 
+-- ---------------------------------------
 -- Waypoints for Massacre at Light's Point
+-- ---------------------------------------
 
 DELETE FROM `script_waypoint` WHERE `entry`='28864';
 INSERT INTO `script_waypoint` 
@@ -172,3 +190,20 @@ VALUES
     ('28841', '15', '2129.866699', '-6174.107910', '4.3807790', '0'),
     ('28841', '16', '2122.426270', '-6185.311035', '14.052804', '0'),
     ('28841', '17', '2117.739014', '-6193.830079', '13.354200', '10000');
+
+-- --------------------
+-- WP for light of dawn
+-- --------------------
+
+DELETE FROM `script_waypoint` WHERE entry=29173;
+INSERT INTO `script_waypoint` VALUES
+   (29173, 0, 2431.639, -5137.05, 83.843, 0, 'intro'),
+   (29173, 1, 2319.242, -5266.486, 82.825, 0, 'summon & on hold'),
+   (29173, 2, 2318.775, -5266.832, 82.783, 0, 'cast light of dawn'),
+   (29173, 3, 2280.812, -5284.091, 82.608, 0, 'move to here and start'),
+   (29173, 4, 2280.727, -5286.839, 82.930, 0, 'move forward to talk'),
+   (29173, 5, 2280.812, -5284.091, 82.608, 0, 'when baba pop'),
+   (29173, 6, 2281.461, -5263.014, 81.164, 0, 'charge to lich king'),
+   (29173, 7, 2257.479, -5296.702, 82.165, 0, 'being kicked by Lich King'),
+   (29173, 8, 2261.237, -5294.983, 82.167, 0, 'throw'),
+   (29173, 9, 2259.34, -5294.379, 82.167, 0, 'event end');
