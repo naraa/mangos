@@ -18,7 +18,7 @@
 SDName: Ebon_Hold
 SD%Complete: 85
 SDComment: Quest support: 12641, 12701, 12848, 12733, 12739(and 12742 to 12750), 12720, 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
-ToDo: restore spells to mobs in quest how to persudae friends and win enemies
+ToDo:
 SDCategory: Ebon Hold
 EndScriptData */
 
@@ -3734,12 +3734,12 @@ enum win_friends
 {
    QUEST_HOW_TO_WIN_FRIENDS          = 12720,
 
-   //NPC_PREACHER                      = 28939,
-   //SPELL_HOLY_FURY_OOC               = 34809,    //TIMER OOC 600000
-   //SPELL_HOLY_SMITE                  = 15498,    // 5000 - 75000
+   NPC_PREACHER                      = 28939,
+   SPELL_HOLY_FURY_OOC               = 34809,
+   SPELL_HOLY_SMITE                  = 15498,
    
-   //NPC_MARKSMEN                      = 28610,
-   //SPELL_RAPTOR_STRIKE               = 32915,      // 4000  -  7000
+   NPC_MARKSMEN                      = 28610,
+   SPELL_RAPTOR_STRIKE               = 32915,
    
    SAY_PERSUADE1                     = -1609101,
    SAY_PERSUADE2                     = -1609102,
@@ -3771,10 +3771,14 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
        Reset();
    }
 
+   ObjectGuid m_playerGUID;
    uint32 m_uiSpeech_timer;
    uint32 m_uiSpeech_counter;
    uint32 m_uiCrusade_faction;
-   ObjectGuid m_playerGUID;
+
+   uint32 m_uiHOLYFURYTimer;
+   uint32 m_uiHOLYSMITETimer;
+   uint32 m_uiRATORSTRIKETimer;
 
    void Reset()
    {
@@ -3782,6 +3786,11 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
        m_uiSpeech_counter = 0;
        m_uiCrusade_faction = 0;
        m_playerGUID.Clear();
+
+       m_uiHOLYFURYTimer     = 60000;
+       m_uiHOLYSMITETimer    = 5500;
+
+       m_uiRATORSTRIKETimer  = 4500;
    }
 
    void SpellHit(Unit *caster, const SpellEntry *spell)
@@ -3839,12 +3848,10 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
                    case 2: DoScriptText(SAY_PERSUADED2, m_creature); m_uiSpeech_timer = 8000; m_uiSpeech_counter++; break;
                    case 3: DoScriptText(SAY_PERSUADED3, m_creature); m_uiSpeech_timer = 8000; m_uiSpeech_counter++; break;
                    case 4: DoScriptText(SAY_PERSUADED4, m_creature); m_uiSpeech_timer = 8000; m_uiSpeech_counter++; break;
-                   case 5: DoScriptText(SAY_PERSUADED5, pPlayer); m_uiSpeech_timer = 8000; m_uiSpeech_counter++; break;
+                   case 5: DoScriptText(SAY_PERSUADED5, pPlayer);    m_uiSpeech_timer = 8000; m_uiSpeech_counter++; break;
                    case 6:
                        DoScriptText(SAY_PERSUADED6, m_creature);
                        m_creature->setFaction(m_uiCrusade_faction);
-                       //m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                       //m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
                        m_uiSpeech_timer = 0;
                        m_uiCrusade_faction = 0;
                        m_uiSpeech_counter++;
@@ -3855,7 +3862,40 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
                }
             }else m_uiSpeech_timer -= diff;
        else
-           DoMeleeAttackIfReady(); 
+           if (m_creature->GetEntry() == NPC_PREACHER)
+           {
+               if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                   return;
+
+               if (m_uiHOLYSMITETimer < diff)
+               {
+                   DoCastSpellIfCan(m_creature->getVictim(), SPELL_HOLY_SMITE);
+                   m_uiHOLYSMITETimer = 5500 + rand()%1400;
+               }else m_uiHOLYSMITETimer -= diff;
+
+               if (m_uiHOLYFURYTimer < diff)
+               {
+                   DoCastSpellIfCan(m_creature, SPELL_HOLY_FURY_OOC);
+                   m_uiHOLYFURYTimer = 1000 + rand()%90000;
+               }else m_uiHOLYFURYTimer -= diff;
+
+                   DoMeleeAttackIfReady();
+            }
+            else
+            {
+                if (m_creature->GetEntry() == NPC_MARKSMEN)
+                {
+                    if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                    return;
+
+                    if (m_uiRATORSTRIKETimer < diff)
+                    {
+                        DoCastSpellIfCan(m_creature->getVictim(), SPELL_RAPTOR_STRIKE);
+                        m_uiRATORSTRIKETimer = 4500 + rand()%1400;
+                    }else m_uiRATORSTRIKETimer -= diff;
+                   DoMeleeAttackIfReady();
+                }
+            }
    }
 };
 
