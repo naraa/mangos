@@ -1370,8 +1370,8 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
     {
         m_bIsSpawned = false;
         fDist = (float)urand(1, 5);
-        m_uiCreatorGuid = m_creature->GetCreatorGuid();
-        if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_uiCreatorGuid) )
+        m_creatorGuid = m_creature->GetCreatorGuid();
+        if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid) )
             fAngle = m_creature->GetAngle(pOwner);
 
         Reset();
@@ -1380,9 +1380,9 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
 
     Unit* pTarget;
 
-    ObjectGuid m_uiCreatorGuid;
-    ObjectGuid m_uiTargetGUID;
-    ObjectGuid m_uiHarvesterGUID;
+    ObjectGuid m_creatorGuid;
+    ObjectGuid m_targetGUID;
+    ObjectGuid m_harvesterGUID;
 
     uint32 m_uiWaitForThrowTimer;
 
@@ -1397,15 +1397,18 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
         m_uiWaitForThrowTimer   = 3000;
         m_bWaitForThrow         = false;
         pTarget                 = NULL;
+        m_creatorGuid.Clear();
+        m_targetGUID.Clear();
+        m_harvesterGUID.Clear();
     }
 
     void MoveInLineOfSight(Unit *pWho)
     {
         if (!m_bWaitForThrow && pWho->GetEntry() == ENTRY_GOTHIK && m_creature->GetDistance(pWho) < 15.0f)
         {
-            m_uiHarvesterGUID = pWho->GetObjectGuid();
+            m_harvesterGUID = pWho->GetObjectGuid();
 
-            if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_uiCreatorGuid) )
+            if (Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid) )
             {
                 pOwner->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid() );
                 // this will execute if m_creature survived Harvester's wrath
@@ -1432,7 +1435,7 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
         {
             if (m_uiWaitForThrowTimer <= uiDiff)
             {
-                if (Creature* pGothik = m_creature->GetMap()->GetCreature(m_uiHarvesterGUID) )
+                if (Creature* pGothik = m_creature->GetMap()->GetCreature(m_harvesterGUID) )
                 {
                     if (pGothik->AI()->DoCastSpellIfCan(m_creature, roll_chance_i(50) ? 52519 : 52521) == CAST_OK)
                         DoScriptText(SAY_SCARLET_GOTHIK1 - urand(0, 4), pGothik);
@@ -1447,7 +1450,7 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
             return;
         }
 
-        Player* pOwner = m_creature->GetMap()->GetPlayer(m_uiCreatorGuid);
+        Player* pOwner = m_creature->GetMap()->GetPlayer(m_creatorGuid);
         if (!pOwner || !pOwner->IsInWorld())
         {
             m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NONE, NULL, false);
@@ -3538,7 +3541,6 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
                 if (Unit *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
                     m_creature->SetInFront(pMineCar);
 
-                // say something
                 SetRun(true);
                 m_uiMonoTimer = 4000;
                 m_uiMonoPhase = 1;
@@ -3603,8 +3605,6 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
                             pPlayer->ExitVehicle();
                     }
 
-                    // Say something
-
                     if(npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
                     {
                         pMineCarAI->ExitMineCar();
@@ -3627,11 +3627,10 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
 enum
 {
     QUEST_MASSACRE_AT_LIGHTS_POINT    =    12701,
-
-    ENTRY_SCARLET_MINER                =    28841,
+    ENTRY_SCARLET_MINER               =    28841,
     ENTRY_MINE_CAR                    =    28817,
 
-    SPELL_MINE_CAR_SUMM                =    52463
+    SPELL_MINE_CAR_SUMM               =    52463
 };
 
 bool GOUse_inconspicous_mine_car(Player *pPlayer, GameObject* /*pGo*/)
@@ -3661,7 +3660,7 @@ bool GOUse_inconspicous_mine_car(Player *pPlayer, GameObject* /*pGo*/)
 }
 
 /*######
-## npc_scourge_gryphon  -- waypoints for just gryphon arent working for some reason
+## npc_scourge_gryphon
 ######*/
 
 enum
@@ -3712,13 +3711,10 @@ struct MANGOS_DLL_DECL npc_scourge_gryphonAI : public npc_escortAI
                 SetRun();
                 break;
             case 4:
-                if (m_creature->GetVehicle())
-                    m_creature->GetVehicle()->RemoveAllPassengers();
-
                 if (Player* pPlayer = GetPlayerForEscort())
                     pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
-                m_creature->ForcedDespawn();
+                m_creature->ForcedDespawn();   // should be enough to remove players  just take the vehicle away 8)
                     return;
             default:
                 break;
@@ -3739,11 +3735,11 @@ enum win_friends
    QUEST_HOW_TO_WIN_FRIENDS          = 12720,
 
    //NPC_PREACHER                      = 28939,
-   //SPELL_HOLY_FURY_OOC                 = 34809,    //TIMER OOC 600000
-   //SPELL_HOLY_SMITE                    = 15498,    // 5000 - 75000
+   //SPELL_HOLY_FURY_OOC               = 34809,    //TIMER OOC 600000
+   //SPELL_HOLY_SMITE                  = 15498,    // 5000 - 75000
    
    //NPC_MARKSMEN                      = 28610,
-   //SPELL_RAPTOR_STRIKE                 = 32915,      // 4000  -  7000
+   //SPELL_RAPTOR_STRIKE               = 32915,      // 4000  -  7000
    
    SAY_PERSUADE1                     = -1609101,
    SAY_PERSUADE2                     = -1609102,
