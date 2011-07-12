@@ -21,8 +21,21 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `
 -- Quest:: An End To All Things
 -- ----------------------------
 
--- frostbrood vanuqiser is missing her spells
-UPDATE `creature_template` SET `spell1` = 53110, `spell2` = 53114, `InhabitType` = 5 WHERE `entry` = 28670;
+-- Frostbrood Vanquisher
+UPDATE creature_template SET
+    spell1 = 53114,
+    spell2 = 53110,
+    spell3 = 0,
+    spell4 = 0,
+    spell5 = 0,
+    spell6 = 0,
+    vehicle_id = 156
+WHERE entry IN (28670);
+
+UPDATE creature_template SET maxhealth = 133525, minhealth = 133525, maxmana = 51360, minmana = 51360, InhabitType = 3 WHERE entry = 28670;
+
+REPLACE INTO creature_template_addon (entry, mount, bytes1, b2_0_sheath, emote, moveflags, auras) VALUES
+(28670, 0, 50331648, 1, 0, 1024, '53112');
 
 -- -----------------------------
 -- Quest::Ambush at the overlook
