@@ -17,6 +17,13 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
 
+-- ----------------------------
+-- Quest:: An End To All Things
+-- ----------------------------
+
+-- frostbrood vanuqiser is missing her spells
+UPDATE `creature_template` SET `spell1` = 53110, `spell2` = 53114, `InhabitType` = 5 WHERE `entry` = 28670;
+
 -- -----------------------------
 -- Quest::Ambush at the overlook
 -- -----------------------------
