@@ -17,6 +17,40 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
 
+-- ----------------------
+-- Quest::Bloody Breakout
+-- ----------------------
+
+UPDATE `creature_template` SET `mechanic_immune_mask` = 12582928 WHERE `entry` = 28912; 
+UPDATE `creature_template` SET `mechanic_immune_mask` = 12582928 WHERE `entry` = 28447;
+
+UPDATE `gameobject_template` SET `castBarCaption` = 'Valroth\'s Remains' WHERE `entry` = 191092;  -- caption bar message when looting remains
+
+UPDATE `creature_template` SET `equipment_id` = 0 WHERE `entry` = 28912;  -- tabled half dead version shouldnt be carrying a axe
+UPDATE `creature_template` SET `equipment_id` = 488 WHERE `entry` = 28447; -- this is model with axe
+
+DELETE FROM `creature_template_addon` WHERE (`entry`=28912);   -- spawned entry should nt have anti zone magic field 
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28912, 0, 7, 1, 0, 0, 0, ''); 
+
+DELETE FROM `creature_template_addon` WHERE (`entry`=28447);  -- this entry is the one that needs antimagic zone
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28447, 0, 0, 1, 0, 0, 0, 52894);
+
+-- tweaked crimsons EAIs
+DELETE FROM `creature` WHERE `id`=29007;
+UPDATE `creature_template` SET `AIName`='EventAI',minmana=1020,maxmana=1058,unit_flags=32768 WHERE (`entry`='29007');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '29007';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2900702');
+INSERT INTO `creature_ai_scripts` VALUES ('2900702', '29007', '0', '0', '100', '1', '1000', '4000', '1000', '4000', '11', '15498', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '29007';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2900701');
+INSERT INTO `creature_ai_scripts` VALUES ('2900701', '29007', '4', '0', '100', '0', '0', '0', '0', '0', '11', '15498', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '29007';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2900703');
+INSERT INTO `creature_ai_scripts` VALUES ('2900703', '29007', '11', '0', '100', '1', '0', '0', '0', '0', '11', '34809', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '');
+
 -- -----------------------------------------------------
 -- Quest how to win friends and how to influence enemies
 -- -----------------------------------------------------
@@ -48,7 +82,7 @@ UPDATE `creature_template` SET `minlevel` = 55, `maxlevel` = 55, `mindmg` = 60, 
 -- -----------------------------------------------------------------------------
  
 -- bug olrun - is out of interaction reach for smaller races  --
-UPDATE `creature` SET `position_x` = 2371.77, `position_y` = -5788.7, `position_z` = 153.61 WHERE `guid` = 96309;
+UPDATE `creature` SET `position_x` = 2371.77, `position_y` = -5788.7, `position_z` = 155.61 WHERE `guid` = 96309;
 
 -- Flying to high for smaller races to interact with olrun during  --
 DELETE FROM `creature_movement` WHERE `id`=96309;
@@ -168,18 +202,10 @@ UPDATE `creature_template` SET `mechanic_immune_mask` = 0, `flags_extra` = 0 WHE
 UPDATE `creature_template` SET `modelid_2` = 25703 WHERE `entry` = 28817;
 
 /* Scourge Gryphon */
-UPDATE creature_template SET
-    spell1 = 0,
-    spell2 = 0,
-    spell3 = 0,
-    spell4 = 0,
-    spell5 = 0,
-    spell6 = 0,
-WHERE entry IN (28864);
 UPDATE creature_template SET vehicle_id = 143, speed_run = 2 WHERE entry = 28864;
 
- DELETE FROM `creature_template_addon` WHERE (`entry`=28864);
- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28864, 0, 0, 0, 0, 0, 0, 61453);
+DELETE FROM `creature_template_addon` WHERE (`entry`=28864);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28864, 0, 0, 0, 0, 0, 0, 61453);
 
 UPDATE creature_template SET
 spell1 = 52435,
