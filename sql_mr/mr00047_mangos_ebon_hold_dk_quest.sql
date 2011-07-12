@@ -24,10 +24,22 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `
 UPDATE `creature_template` SET `mechanic_immune_mask` = 12582928 WHERE `entry` = 28912; 
 UPDATE `creature_template` SET `mechanic_immune_mask` = 12582928 WHERE `entry` = 28447;
 
+-- tweak Valroth EAI
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '29001';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2900112');
+INSERT INTO `creature_ai_scripts` VALUES ('2900112', '29001', '0', '0', '100', '1', '2000', '10000', '7500', '10000', '11', '52922', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Cast Inquisitor_penance');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '29001';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2900101');
+INSERT INTO `creature_ai_scripts` VALUES ('2900101', '29001', '1', '0', '100', '0', '0', '0', '0', '0', '21', '1', '1', '0', '22', '0', '0', '0', '0', '0', '0', '0', 'High Inquisitor Valroth - Set Phase to 0 on Spawn');
+
 UPDATE `gameobject_template` SET `castBarCaption` = 'Valroth\'s Remains' WHERE `entry` = 191092;  -- caption bar message when looting remains
 
 UPDATE `creature_template` SET `equipment_id` = 0 WHERE `entry` = 28912;  -- tabled half dead version shouldnt be carrying a axe
 UPDATE `creature_template` SET `equipment_id` = 488 WHERE `entry` = 28447; -- this is model with axe
+
+DELETE FROM `creature_equip_template` WHERE (`entry`=488);
+INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES (488, 38633, 0, 0); -- make sure axe is right 
 
 DELETE FROM `creature_template_addon` WHERE (`entry`=28912);   -- spawned entry should nt have anti zone magic field 
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (28912, 0, 7, 1, 0, 0, 0, ''); 

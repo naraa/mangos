@@ -738,13 +738,12 @@ struct MANGOS_DLL_DECL npc_koltira_deathweaverAI : public npc_escortAI
 
     void Reset()
     {
-        m_creature->UpdateEntry(NPC_KOLTIRA);  // needs to go back to regular entry at reset
-        m_valrothGuid.Clear();
-
         if (!HasEscortState(STATE_ESCORT_ESCORTING))
         {
             m_uiWave = 0;
             m_uiWave_Timer = 3000;
+            m_creature->UpdateEntry(NPC_KOLTIRA);  // needs to go back to regular entry at reset
+            m_valrothGuid.Clear();
         }
     }
 
@@ -888,90 +887,6 @@ bool QuestAccept_npc_koltira_deathweaver(Player* pPlayer, Creature* pCreature, c
     }
     return true;
 }
-
-/*######
-## Mob High Inquisitor Valroth
-######*/
-enum valroth
-{
-    SAY_VALROTH1                      = -1609122,
-    SAY_VALROTH2                      = -1609123,
-    SAY_VALROTH3                      = -1609124,
-    SAY_VALROTH4                      = -1609125,
-    SAY_VALROTH5                      = -1609126,
-    SAY_VALROTH6                      = -1609127,
-    SPELL_RENEW                       = 38210,
-    SPELL_INQUISITOR_PENANCE          = 52922,
-    SPELL_VALROTH_SMITE               = 52926,
-    SPELL_SUMMON_VALROTH_REMAINS      = 52929
-};
-
-struct MANGOS_DLL_DECL mob_high_inquisitor_valrothAI : public ScriptedAI
-{
-    mob_high_inquisitor_valrothAI(Creature *pCreature) : ScriptedAI(pCreature)
-    {
-        Reset();
-    }
-
-    uint32 uiRenew_timer;
-    uint32 uiInquisitor_Penance_timer;
-    uint32 uiValroth_Smite_timer;
-
-    void Reset()
-    {
-        uiRenew_timer = 1000;
-        uiInquisitor_Penance_timer = 2000;
-        uiValroth_Smite_timer = 1000;
-    }
-
-    void Aggro(Unit* who)
-    {
-        DoScriptText(SAY_VALROTH2, m_creature);
-        DoCast(who, SPELL_VALROTH_SMITE);
-    }
-
-    void UpdateAI(const uint32 diff)
-    {
-        if (uiRenew_timer < diff)
-        {
-            Shout();
-            DoCast(m_creature, SPELL_RENEW);
-            uiRenew_timer = 1000 + rand()%5000;
-        }else uiRenew_timer -= diff;
-
-        if (uiInquisitor_Penance_timer < diff)
-        {
-            Shout();
-            DoCast(m_creature->getVictim(), SPELL_INQUISITOR_PENANCE);
-            uiInquisitor_Penance_timer = 2000 + rand()%5000;
-        }else uiInquisitor_Penance_timer -= diff;
-
-        if (uiValroth_Smite_timer < diff)
-        {
-            Shout();
-            DoCast(m_creature->getVictim(), SPELL_VALROTH_SMITE);
-            uiValroth_Smite_timer = 1000 + rand()%5000;
-        }else uiValroth_Smite_timer -= diff;
-
-        DoMeleeAttackIfReady();
-    }
-
-    void Shout()
-    {
-        switch(rand()%20)
-        {
-            case 0: DoScriptText(SAY_VALROTH3, m_creature);break;
-            case 1: DoScriptText(SAY_VALROTH4, m_creature);break;
-            case 2: DoScriptText(SAY_VALROTH5, m_creature);break;
-        }
-    }
-
-    void JustDied(Unit* killer)
-    {
-        DoScriptText(SAY_VALROTH6, m_creature);
-        killer->CastSpell(m_creature, SPELL_SUMMON_VALROTH_REMAINS, true);
-    }
-};
 
 /*######
 ## npc_unworthy_initiate_anchor
@@ -4037,11 +3952,6 @@ CreatureAI* GetAI_npc_scourge_gryphon(Creature* pCreature)
     return new npc_scourge_gryphonAI(pCreature);
 };
 
-CreatureAI* GetAI_mob_high_inquisitor_valroth(Creature* pCreature)
-{
-    return new mob_high_inquisitor_valrothAI (pCreature);
-};
-
 void AddSC_ebon_hold()
 {
     Script* pNewScript;
@@ -4124,11 +4034,6 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name = "npc_scarlet_miner";
     pNewScript->GetAI = &GetAI_npc_scarlet_miner;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "mob_high_inquisitor_valroth";
-    pNewScript->GetAI = &GetAI_mob_high_inquisitor_valroth;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
