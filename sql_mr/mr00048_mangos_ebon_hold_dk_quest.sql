@@ -17,6 +17,11 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
 
+-- -----------------------------
+-- Quest::Ambush at the overlook
+-- -----------------------------
+UPDATE `creature_template` SET `ScriptName`='mob_scarlet_courier' WHERE `entry`='29076';
+
 -- ----------------------
 -- Quest::Bloody Breakout
 -- ----------------------

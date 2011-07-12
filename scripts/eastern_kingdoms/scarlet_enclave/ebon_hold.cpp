@@ -3907,6 +3907,91 @@ struct MANGOS_DLL_DECL npc_crusade_persuadedAI : public ScriptedAI
    }
 };
 
+//Scarlet courier
+enum ScarletCourierEnum
+{
+    SAY_TREE1               = -1609531,
+    SAY_TREE2               = -1609532,
+    GO_INCONSPICUOUS_TREE   = 191144,
+    NPC_SCARLET_COURIER     = 29076
+};
+
+struct MANGOS_DLL_DECL mob_scarlet_courierAI : ScriptedAI
+{
+    mob_scarlet_courierAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    {
+        Reset();
+    }
+
+    uint8 m_uiStage;
+    uint32 m_uiStageTimer;
+
+    void Reset()
+    {
+        m_creature->Mount(14338); // not sure about this id
+        m_uiStage = 1;
+        m_uiStageTimer = 3*IN_MILLISECONDS;
+    }
+
+    void EnterCombat(Unit* pWho)
+    {
+        DoScriptText(SAY_TREE2, m_creature);
+        m_creature->Unmount();
+        m_uiStage = 0;
+    }
+
+    void MovementInform(uint32 m_uiType, uint32 m_uiId)
+    {
+        if (m_uiType != POINT_MOTION_TYPE)
+            return;
+
+        if (m_uiId == 1)
+            m_uiStage = 2;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiStage && !m_creature->isInCombat())
+        {
+            if (m_uiStageTimer <= uiDiff)
+            {
+                switch(m_uiStage)
+                {
+                    case 1:
+                        m_creature->SetWalk(true);
+                        if (GameObject* tree = GetClosestGameObjectWithEntry(m_creature,GO_INCONSPICUOUS_TREE, 40.0f))
+                        {
+                            DoScriptText(SAY_TREE1, m_creature);
+                            float x, y, z;
+                            tree->GetContactPoint(m_creature, x, y, z);
+                            m_creature->GetMotionMaster()->MovePoint(1, x, y, z);
+                        }
+                        break;
+                    case 2:
+                        if (GameObject* tree = GetClosestGameObjectWithEntry(m_creature,GO_INCONSPICUOUS_TREE, 40.0f))
+                            if (Unit *unit = tree->GetOwner())
+                                AttackStart(unit);
+                        break;
+                    default:
+                        break;
+                }
+
+                m_uiStageTimer = 3*IN_MILLISECONDS;
+                m_uiStage = 0;
+            }
+            else
+                m_uiStageTimer -= uiDiff;
+        }
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_mob_scarlet_courier(Creature* pCreature)
+{
+    return new mob_scarlet_courierAI(pCreature);
+};
+
 CreatureAI* GetAI_npc_crusade_persuaded(Creature* pCreature)
 {
    return new npc_crusade_persuadedAI(pCreature);
@@ -4059,5 +4144,10 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name = "npc_crusade_persuaded";
     pNewScript->GetAI = &GetAI_npc_crusade_persuaded;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name= "mob_scarlet_courier";
+    pNewScript->GetAI = &GetAI_mob_scarlet_courier;
     pNewScript->RegisterSelf();
 }
