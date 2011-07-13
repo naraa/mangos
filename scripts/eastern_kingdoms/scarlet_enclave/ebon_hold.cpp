@@ -47,7 +47,7 @@ EndContentData */
 #include "WorldPacket.h"
 
 // not inuse yet but will be
-//#define LESS_MOB // if you do not have a good server and do not want it to be laggy as hell -- uncomment this if you do
+//#define LESS_LAG // if you do not have a good server and do not want it to be laggy as hell -- uncomment this if you do
 
 
 /*######
@@ -1279,7 +1279,9 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
             {
                 m_creature->CastSpell(m_creature, SPELL_EYE_PHASEMASK, true);
                 m_creature->CastSpell(m_creature, SPELL_EYE_VISUAL, true);
-                m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
+                //m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
+                //m_creature->SetLevitate(true);   // will be uncommented if any troubles with flying inhabit 4
+                m_creature->SetSpeedRate(MOVE_RUN, 5.0f);
                 DoScriptText(TEXT_EYE_LAUNCHED, m_creature);
                 m_creature->GetMotionMaster()->MovePoint(0,1750.8276f, -5873.788f, 147.2266f);
                 m_isActive = true;
@@ -1499,6 +1501,16 @@ void UpdateWorldState(Map *map, uint32 id, uint32 state)
 
 enum mograine
 {
+/*#ifdef LESS_LAG
+    ENCOUNTER_DK_NUMBER               = 5,  // how many player queue to start the quest , or -
+    ENCOUNTER_DK_TIMER                = 10, // *every 5 minutes. These have to be done in instance data
+    ENCOUNTER_DEFENDER_NUMBER         = 10, // how many of defender
+    ENCOUNTER_EARTHSHATTER_NUMBER     = 10, // how many of earthshatter
+    ENCOUNTER_ABOMINATION_NUMBER      = 2,  // how many of abomination
+    ENCOUNTER_BEHEMOTH_NUMBER         = 1,  // how many of behemoth
+    ENCOUNTER_GHOUL_NUMBER            = 5, // how many of ghoul
+    ENCOUNTER_WARRIOR_NUMBER          = 1,  // how many of warrior
+#else*/
     ENCOUNTER_DK_NUMBER               = 5,  // how many player queue to start the quest , or -
     ENCOUNTER_DK_TIMER                = 10, // *every 5 minutes. These have to be done in instance data
     ENCOUNTER_DEFENDER_NUMBER         = 20, // how many of defender
@@ -1507,6 +1519,8 @@ enum mograine
     ENCOUNTER_BEHEMOTH_NUMBER         = 2,  // how many of behemoth
     ENCOUNTER_GHOUL_NUMBER            = 10, // how many of ghoul
     ENCOUNTER_WARRIOR_NUMBER          = 2,  // how many of warrior
+//#endif
+
     ENCOUNTER_TOTAL_DAWN              = 300,  // Total number
     ENCOUNTER_TOTAL_SCOURGE           = 10000,
 
