@@ -115,7 +115,7 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,
    (-1609285, '%s disappears. Tirion walks over to where Darion lay',0,2,0,0,'The Lich King'),
    (-1609286, 'Light washes over the chapel �X the Light of Dawn is uncovered.',0,2,0,0,'');
 
-DELETE FROM `script_texts` WHERE entry BETWEEN -160293 AND -1609289;
+DELETE FROM `script_texts` WHERE entry BETWEEN -1609293 AND -1609289;
 INSERT INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Emotes
    (-1609289, "Orbaz flees.",0,2,0,0,"Orbaz"),
