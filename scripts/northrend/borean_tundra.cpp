@@ -763,8 +763,8 @@ enum
     NPC_RAELORASZ                   = 26117,
     DRAKE_HUNT_KILL_CREDIT          = 26175,
 
-    //SPELL_INTANGIBLE_PRESENCE     = 36513,
-    //SPELL_NETHERBREATH            = 36631,
+    SPELL_INTANGIBLE_PRESENCE     = 36513,
+    SPELL_NETHERBREATH            = 36631,
 
     QUEST_DRAKE_HUNT                = 11919,
     QUEST_DRAKE_HUNT_D              = 11940
@@ -778,15 +778,15 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
      uint64 uiHarpoonerGUID;
      bool bWithRedDragonBlood;
      bool bIsFollowing;
-     //uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
-     //uint32 SPELL_NETHERBREATH_Timer;
+     uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
+     uint32 SPELL_NETHERBREATH_Timer;
 
      void Reset()
      {
          bWithRedDragonBlood = false;
          bIsFollowing = false;
-         //SPELL_INTANGIBLE_PRESENCE_Timer; = 16600;    MAX REPEAT 19700
-         //SPELL_NETHERBREATH_Timer = 2600;             MAX REPEAT 20000
+         SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
+         SPELL_NETHERBREATH_Timer = 4600;
      }
 
      void EnterCombat(Unit* pWho)
@@ -825,7 +825,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
           }
       }
 
-     void UpdateAI(const uint32 uidiff)  // TODO: ADD SPELLS
+     void UpdateAI(const uint32 uidiff)
         {
             if (bWithRedDragonBlood && uiHarpoonerGUID && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
             {
@@ -847,8 +847,24 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
                 m_creature->ForcedDespawn(1000);
             }
 
-            if (!m_creature->getVictim())
+            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
                 return;
+
+            if (SPELL_NETHERBREATH_Timer < uidiff)
+            {
+                DoCastSpellIfCan(m_creature->getVictim(),SPELL_NETHERBREATH);
+                SPELL_NETHERBREATH_Timer = 4600;
+            }
+            else
+                SPELL_NETHERBREATH_Timer -= uidiff;
+
+            if (SPELL_INTANGIBLE_PRESENCE_Timer < uidiff)
+            {
+                DoCastSpellIfCan(m_creature,SPELL_INTANGIBLE_PRESENCE);
+                SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
+             }
+             else
+                 SPELL_INTANGIBLE_PRESENCE_Timer -= uidiff;
 
             DoMeleeAttackIfReady();
         }
