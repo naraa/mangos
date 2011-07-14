@@ -17,7 +17,47 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_valkyr_battle_maiden' WHERE `entry` = '28534';
 
--- ----------------------------
+-- ------------------------
+-- QUEST::DAWN OF THE LIGHT
+-- ------------------------
+-- remove the four static uneeded spawn around chapel --  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29174;
+
+-- remove static rayne--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29181;
+
+-- remove static rimblat--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29182;
+
+-- remove static krofax--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29176;
+
+-- remove static eligor--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29177;
+
+-- remove static tyrosus--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29178;
+
+-- remove static leon--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29179;
+
+-- remove stativ duke--  spawned during event not static plus they respawn during event
+DELETE FROM `creature` WHERE `id`=29180;
+
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_acherus_ghoul' WHERE `entry`='29219';
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_warrior_of_the_frozen_wastes' WHERE `entry`='29206';
+
+DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
+INSERT INTO `spell_script_target` VALUES (53679, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53701, 1, 29175);
+INSERT INTO `spell_script_target` VALUES (53705, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
+INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
+INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
+
 -- Quest:: An End To All Things
 -- ----------------------------
 
@@ -351,18 +391,3 @@ INSERT INTO `creature_ai_scripts` VALUES
 
 -- end of EventAI
 -- -----------------------------------------------------------------------------------------------------------------------------------------------------
-
--- quest 12801 -the light of dawn
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_acherus_ghoul' WHERE `entry`='29219';
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_warrior_of_the_frozen_wastes' WHERE `entry`='29206';
-
-DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
-INSERT INTO `spell_script_target` VALUES (53679, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53701, 1, 29175);
-INSERT INTO `spell_script_target` VALUES (53705, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
-INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
-INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
