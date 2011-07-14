@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+   Copyright (C) 2011 MangosR2_ScriptDev2 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +17,7 @@
 
 /* ScriptData
 SDName: Ebon_Hold
-SD%Complete: 85
+SD%Complete: 95%  ---- still a few minor bugs here and there 
 SDComment: Quest support: 12641, 12701, 12848, 12733, 12739(and 12742 to 12750), 12720, 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
 ToDo:
 SDCategory: Ebon Hold
