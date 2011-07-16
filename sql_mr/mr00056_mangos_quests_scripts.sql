@@ -3,6 +3,42 @@ DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
 -- -------------------------
+-- Quest :: 12644
+-- -------------------------
+
+UPDATE gameobject_template SET
+ScriptName='go_still_at_it_quest'
+WHERE entry IN(190638,190637,190635,190636,190639);
+
+UPDATE creature_template SET
+ScriptName='npc_tipsy_mcmanus'
+WHERE entry=28566;
+
+DELETE FROM `gameobject` WHERE guid = '200000';
+INSERT INTO `gameobject` VALUES ('200000','190643','571','3','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
+
+DELETE from creature where id=28537;
+INSERT into creature VALUES
+(2853701,28537,571,1,1,0,0,5550.404,5768.214,-78.02,1.278,300,0,0,0,0,0,0);
+
+DELETE from spell_script_target WHERE entry in(51932,51931,51933);
+INSERT into spell_script_target VALUES
+(51932,1,28537),
+(51931,1,28537),
+(51933,1,28537);
+
+UPDATE creature_template SET
+flags_extra=flags_extra |128
+WHERE entry=28537;
+
+-- -------------------------
+-- Quest :: 12645
+-- -------------------------
+
+UPDATE item_template SET ScriptName = 'item_jungle_punch_sample' WHERE entry = 38697;
+UPDATE creature_template SET ScriptName = 'mob_taste_test' WHERE entry IN (28047,28568,27986);
+
+-- -------------------------
 -- quest 11542/11543 
 -- -------------------------
 
