@@ -52,17 +52,21 @@ enum PathType
     PATHFIND_NOT_USING_PATH = 0x0010    // used when we are either flying/swiming or on map w/o mmaps
 };
 
-class PathInfo
+class PathFinder
 {
     public:
-        PathInfo(Unit const* owner);
-        ~PathInfo();
+        PathFinder(Unit const* owner);
+        ~PathFinder();
 
-        // return: true if new path was calculated
-        // false otherwise (no change needed)
-        bool calculate(float destX, float destY, float destZ,
-                       bool useStraightPath = false, bool forceDest = false);
+        // Calculate the path from owner to given destination
+        // return: true if new path was calculated, false otherwise (no change needed)
+        bool calculate(float destX, float destY, float destZ, bool forceDest = false);
 
+        // option setters - use optional
+        void setUseStrightPath(bool useStraightPath) { m_useStraightPath = useStraightPath; };
+        void setPathLengthLimit(float distance) { m_pointPathLimit = std::min<uint32>(uint32(distance/SMOOTH_PATH_STEP_SIZE), MAX_POINT_PATH_LENGTH); };
+
+        // result getters
         Vector3 getStartPosition()      const { return m_startPosition; }
         Vector3 getEndPosition()        const { return m_endPosition; }
         Vector3 getActualEndPosition()  const { return m_actualEndPosition; }
@@ -80,6 +84,7 @@ class PathInfo
 
         bool           m_useStraightPath;  // type of path will be generated
         bool           m_forceDestination; // when set, we will always arrive at given point
+        uint32         m_pointPathLimit;   // limit point path size; min(this, MAX_POINT_PATH_LENGTH)
 
         Vector3        m_startPosition;    // {x, y, z} of current location
         Vector3        m_endPosition;      // {x, y, z} of the destination
@@ -105,8 +110,8 @@ class PathInfo
         float dist3DSqr(const Vector3 &p1, const Vector3 &p2) const;
         bool inRangeYZX(const float* v1, const float* v2, float r, float h) const;
 
-        dtPolyRef getPathPolyByPosition(const dtPolyRef *polyPath, uint32 polyPathSize, const float* point, float *distance = NULL);
-        dtPolyRef getPolyByLocation(const float* point, float *distance);
+        dtPolyRef getPathPolyByPosition(const dtPolyRef *polyPath, uint32 polyPathSize, const float* point, float *distance = NULL) const;
+        dtPolyRef getPolyByLocation(const float* point, float *distance) const;
         bool HaveTiles(const Vector3 &p) const;
 
         void BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos);
@@ -117,7 +122,7 @@ class PathInfo
         void createFilter();
         void updateFilter();
 
-        // smooth path functions
+        // smooth path aux functions
         uint32 fixupCorridor(dtPolyRef* path, uint32 npath, uint32 maxPath,
                              const dtPolyRef* visited, uint32 nvisited);
         bool getSteerTarget(const float* startPos, const float* endPos, float minTargetDist,

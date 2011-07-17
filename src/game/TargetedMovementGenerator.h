@@ -68,7 +68,7 @@ class MANGOS_DLL_SPEC TargetedMovementGeneratorMedium
         bool i_recalculateTravel : 1;
         bool i_targetReached : 1;
 
-        PathInfo* i_path;
+        PathFinder* i_path;
 };
 
 template<class T>

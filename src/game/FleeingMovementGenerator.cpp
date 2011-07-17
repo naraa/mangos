@@ -44,7 +44,8 @@ void FleeingMovementGenerator<T>::_setTargetLocation(T &owner)
 
     owner.addUnitState(UNIT_STAT_FLEEING_MOVE);
 
-    PathInfo path(&owner);
+    PathFinder path(&owner);
+    path.setPathLengthLimit(30.0f);
     path.calculate(x, y, z);
     if(!(path.getPathType() & PATHFIND_NORMAL))
     {
@@ -52,15 +53,8 @@ void FleeingMovementGenerator<T>::_setTargetLocation(T &owner)
         return;
     }
 
-    PointsArray p = path.getPath();
-    // make sure we do not use too long paths
-    p.resize(std::min<uint32>(p.size(), 5));
-    Vector3 dest = p[p.size()-1];
-    owner.UpdateAllowedPositionZ(dest.x, dest.y, dest.z);
-    p[p.size()-1] = dest;
-
     Movement::MoveSplineInit init(owner);
-    init.MovebyPath(p);
+    init.MovebyPath(path.getPath());
     init.SetWalk(false);
     int32 traveltime = init.Launch();
     i_nextCheckTime.Reset(traveltime + urand(800, 1500));

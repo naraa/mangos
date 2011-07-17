@@ -5320,8 +5320,9 @@ bool ChatHandler::HandleMmapPathCommand(char* args)
     player->GetPosition(x, y, z);
 
     // path
-    PathInfo path(target);
-    path.calculate(x, y, z, useStraightPath);
+    PathFinder path(target);
+    path.setUseStrightPath(useStraightPath);
+    path.calculate(x, y, z);
 
     PointsArray pointPath = path.getPath();
     PSendSysMessage("%s's path to %s:", target->GetName(), player->GetName());

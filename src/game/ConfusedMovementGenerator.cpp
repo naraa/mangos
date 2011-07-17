@@ -79,7 +79,8 @@ bool ConfusedMovementGenerator<T>::Update(T &unit, const uint32 &diff)
 
             unit.UpdateAllowedPositionZ(x, y, z);
 
-            PathInfo path(&unit);
+            PathFinder path(&unit);
+            path.setPathLengthLimit(30.0f);
             path.calculate(x, y, z);
             if(!(path.getPathType() & PATHFIND_NORMAL))
             {

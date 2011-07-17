@@ -7023,7 +7023,7 @@ bool ChatHandler::HandleMmapTestArea(char* args)
         m_session->GetPlayer()->GetPosition(gx,gy,gz);
         for (std::list<Creature*>::iterator itr = creatureList.begin(); itr != creatureList.end(); ++itr)
         {
-            PathInfo path(*itr);
+            PathFinder path(*itr);
             path.calculate(gx, gy, gz);
             ++paths;
         }
