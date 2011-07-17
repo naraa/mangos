@@ -41,6 +41,7 @@ INSERT INTO `gameobject` VALUES ('200000','190643','571','3','1','5545.45','5767
 DELETE from creature where id=28537;
 INSERT into creature VALUES
 (2853701,28537,571,1,1,0,0,5550.404,5768.214,-78.02,1.278,300,0,0,0,0,0,0);
+UPDATE `creature_template` SET `minhealth` = 0, `maxhealth` = 1 WHERE `entry` = 28537;
 
 DELETE from spell_script_target WHERE entry in(51932,51931,51933);
 INSERT into spell_script_target VALUES
