@@ -3,6 +3,27 @@ DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
 -- -------------------------
+-- -Quest:: 11656
+-- -------------------------
+-- better support
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25510';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2551051');
+INSERT INTO `creature_ai_scripts` VALUES ('2551051', '25510', '8', '0', '100', '1', '45692', '-1', '0', '0', '33', '25510', '6', '0', '11', '64561', '0', '22', '41', '240000', '0', '0', 'ytdb-q11656');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25511';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2551151');
+INSERT INTO `creature_ai_scripts` VALUES ('2551151', '25511', '8', '0', '100', '1', '45692', '-1', '0', '0', '33', '25511', '6', '0', '11', '64561', '0', '22', '41', '240000', '0', '0', 'ytdb-q11656');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25512';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2551251');
+INSERT INTO `creature_ai_scripts` VALUES ('2551251', '25512', '8', '0', '100', '1', '45692', '-1', '0', '0', '33', '25512', '6', '0', '11', '64561', '0', '22', '41', '240000', '0', '0', 'ytdb-q11656');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25513';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2551351');
+INSERT INTO `creature_ai_scripts` VALUES ('2551351', '25513', '8', '0', '100', '1', '45692', '-1', '0', '0', '33', '25513', '6', '0', '11', '64561', '0', '22', '41', '240000', '0', '0', 'ytdb-q11656');
+
+-- -------------------------
 -- Quest :: 12644
 -- -------------------------
 
