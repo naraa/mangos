@@ -33,16 +33,24 @@ EndContentData */
 ## npc_lady_sylvanas_windrunner
 ######*/
 
-#define SAY_LAMENT_END              -1000196
-#define EMOTE_LAMENT_END            -1000197
+enum
+{
+    SAY_LAMENT_END                  = -1000196,
+    EMOTE_LAMENT_END                = -1000197,
 
-#define SOUND_CREDIT                10896
-#define ENTRY_HIGHBORNE_LAMENTER    21628
-#define ENTRY_HIGHBORNE_BUNNY       21641
+    SOUND_CREDIT                    = 10896,
+    ENTRY_HIGHBORNE_LAMENTER        = 21628,
+    ENTRY_HIGHBORNE_BUNNY           = 21641,
 
-#define SPELL_HIGHBORNE_AURA        37090
-#define SPELL_SYLVANAS_CAST         36568
-#define SPELL_RIBBON_OF_SOULS       34432                   //the real one to use might be 37099
+    SPELL_HIGHBORNE_AURA            = 37090,
+    SPELL_SYLVANAS_CAST             = 36568,
+    SPELL_RIBBON_OF_SOULS           = 34432,                  //the real one to use might be 37099
+    SPELL_BLACK_ARROW               = 59712,
+    SPELL_FADE                      = 20672,
+    SPELL_MULTI_SHOT                = 59713,
+    SPELL_SHOOT_SYLVANAS            = 59710,
+    SPELL_SUMMON_SKELETON           = 59711,
+};
 
 float HighborneLoc[4][3]=
 {
@@ -66,6 +74,12 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
     float myY;
     float myZ;
 
+    uint32 m_uiBlackArrowTimer;
+    uint32 m_uiMultiShotTimer;
+    uint32 m_uiFadeTimer;
+    uint32 m_uiShootTimer;
+    uint32 m_uiSummonSkeletonTimer;
+
     void Reset()
     {
         myX = m_creature->GetPositionX();
@@ -75,6 +89,12 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
         LamentEvent_Timer = 5000;
         LamentEvent = false;
         m_targetGuid.Clear();
+
+        m_uiBlackArrowTimer     = 15000;
+        m_uiMultiShotTimer      = 11000;
+        m_uiFadeTimer           = 15000;
+        m_uiShootTimer          = 5000;
+        m_uiSummonSkeletonTimer = 17000;
     }
 
     void JustSummoned(Creature *summoned)
@@ -91,11 +111,11 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (LamentEvent)
         {
-            if (LamentEvent_Timer < diff)
+            if (LamentEvent_Timer < uiDiff)
             {
                 float raX = myX;
                 float raY = myY;
@@ -111,11 +131,53 @@ struct MANGOS_DLL_DECL npc_lady_sylvanas_windrunnerAI : public ScriptedAI
                     DoScriptText(EMOTE_LAMENT_END, m_creature);
                     LamentEvent = false;
                 }
-            }else LamentEvent_Timer -= diff;
+            }else LamentEvent_Timer -= uiDiff;
         }
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (m_uiBlackArrowTimer < uiDiff)
+        {
+            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_BLACK_ARROW);
+            m_uiBlackArrowTimer = urand(15000, 25000);
+        }
+        else
+            m_uiBlackArrowTimer -= uiDiff;
+
+        if (m_uiMultiShotTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_MULTI_SHOT);
+            m_uiMultiShotTimer = urand(11000, 14000);
+        }
+        else
+            m_uiMultiShotTimer -= uiDiff;
+
+        if (m_uiFadeTimer < uiDiff)
+        {
+            DoCast(m_creature, SPELL_FADE);
+            m_uiFadeTimer = urand(15000, 20000);
+        }
+        else
+            m_uiFadeTimer -= uiDiff;
+
+        if (m_uiShootTimer < uiDiff)
+        {
+            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_SHOOT_SYLVANAS);
+            m_uiShootTimer = urand(6000, 9000);
+        }
+        else
+            m_uiShootTimer -= uiDiff;
+
+        if (m_uiSummonSkeletonTimer < uiDiff)
+        {
+            DoCast(m_creature, SPELL_SUMMON_SKELETON);
+            m_uiSummonSkeletonTimer = urand(17000, 23000);
+        }
+        else
+            m_uiSummonSkeletonTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

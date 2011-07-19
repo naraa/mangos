@@ -33,7 +33,8 @@ enum
     SPELL_CLEAVE            = 16044,
     SPELL_MORTAL_STRIKE     = 16856,
     SPELL_THUNDERCLAP       = 23931,
-    SPELL_UPPERCUT          = 22916
+    SPELL_UPPERCUT          = 22916,
+    SPELL_WAR_STOMP         = 59705,
 };
 
 //TODO: verify abilities/timers
@@ -46,6 +47,7 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
     uint32 MortalStrike_Timer;
     uint32 Thunderclap_Timer;
     uint32 Uppercut_Timer;
+    uint32 m_uiWarStompTimer;
 
     void Reset()
     {
@@ -54,6 +56,7 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
         MortalStrike_Timer = 10000;
         Thunderclap_Timer = 15000;
         Uppercut_Timer = 10000;
+        m_uiWarStompTimer = 25000;
     }
 
     void Aggro(Unit* pWho)
@@ -61,42 +64,48 @@ struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
         m_creature->CallForHelp(100);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (BerserkerCharge_Timer < diff)
+        if (BerserkerCharge_Timer < uiDiff)
         {
             Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
             if (target)
                 DoCastSpellIfCan(target,SPELL_BERSERKER_CHARGE);
             BerserkerCharge_Timer = 25000;
-        }else BerserkerCharge_Timer -= diff;
+        }else BerserkerCharge_Timer -= uiDiff;
 
-        if (Uppercut_Timer < diff)
+        if (Uppercut_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
             Uppercut_Timer = 20000;
-        }else Uppercut_Timer -= diff;
+        }else Uppercut_Timer -= uiDiff;
 
-        if (Thunderclap_Timer < diff)
+        if (Thunderclap_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP);
             Thunderclap_Timer = 15000;
-        }else Thunderclap_Timer -= diff;
+        }else Thunderclap_Timer -= uiDiff;
 
-        if (MortalStrike_Timer < diff)
+        if (MortalStrike_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTAL_STRIKE);
             MortalStrike_Timer = 15000;
-        }else MortalStrike_Timer -= diff;
+        }else MortalStrike_Timer -= uiDiff;
 
-        if (Cleave_Timer < diff)
+        if (Cleave_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
             Cleave_Timer = 7000;
-        }else Cleave_Timer -= diff;
+        }else Cleave_Timer -= uiDiff;
+
+        if (m_uiWarStompTimer < uiDiff)
+        {
+            DoCastSpellIfCan(m_creature, SPELL_WAR_STOMP);
+            m_uiWarStompTimer = urand(20000, 25000);
+        }else m_uiWarStompTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
