@@ -1408,7 +1408,7 @@ struct MANGOS_DLL_DECL mob_scarlet_ghoulAI : public ScriptedAI
         m_uiWaitForThrowTimer   = 3000;
         m_bWaitForThrow         = false;
         pTarget                 = NULL;
-        m_creatorGuid.Clear();
+        //m_creatorGuid.Clear();
         m_targetGUID.Clear();
         m_harvesterGUID.Clear();
     }
