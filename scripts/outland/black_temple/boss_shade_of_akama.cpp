@@ -209,6 +209,7 @@ struct MANGOS_DLL_DECL boss_shade_of_akamaAI : public ScriptedAI
                 pSorcerer->SetWalk(false);
                 pSorcerer->GetMotionMaster()->MovePoint(0, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ());
                 pSorcerer->SetTargetGuid(m_creature->GetObjectGuid());
+                pSorcerer->setFaction(14);
 
                 m_lSorcerersGUIDList.push_back(pSorcerer->GetObjectGuid());
 
@@ -582,6 +583,7 @@ struct MANGOS_DLL_DECL npc_akamaAI : public ScriptedAI
 
                         pBroken->GetMotionMaster()->MovePoint(0, wx, wy, wz);
                         pBroken->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                        pBroken->setFaction(35);
 
                         m_lBrokenGUIDList.push_back(pBroken->GetObjectGuid());
                     }
