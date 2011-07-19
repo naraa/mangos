@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public BSWScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        switch (urand(0,1)) 
+        switch (urand(0,1))
         {
             case 0:
                DoScriptText(-1631103,m_creature,pVictim);
@@ -147,7 +147,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public BSWScriptedAI
 
         summoned->SetOwnerGuid(m_creature->GetObjectGuid());
 
-        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0) ) 
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0) )
         {
             summoned->AddThreat(pTarget, 100.0f);
             summoned->GetMotionMaster()->MoveChase(pTarget);
@@ -183,7 +183,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public BSWScriptedAI
                     if (m_creature->GetHealthPercent() <= 30.0f) setStage(1);
                     break;
 
-            case 1: 
+            case 1:
                         doCast(SPELL_FRENZY);
                         setStage(2);
                         DoScriptText(-1631101,m_creature);
@@ -250,7 +250,7 @@ CreatureAI* GetAI_boss_deathbringer_saurfang(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_blood_beastAI : public BSWScriptedAI
 {
-    mob_blood_beastAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_blood_beastAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -269,7 +269,7 @@ struct MANGOS_DLL_DECL  mob_blood_beastAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_SAURFANG) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_SAURFANG) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

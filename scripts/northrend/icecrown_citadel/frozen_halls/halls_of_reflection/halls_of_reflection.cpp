@@ -39,7 +39,7 @@ enum
   SAY_SYLVANA_INTRO_04               = -1668439,
 
   /*INTRO - Uther Dialog*/
-  SAY_UTHER_A_01                     = -1668440, 
+  SAY_UTHER_A_01                     = -1668440,
   SAY_UTHER_H_01                     = -1668441,
   SAY_JAINA_02                       = -1668442,
   SAY_SYLVANA_02                     = -1668443,
@@ -188,7 +188,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                     m_pInstance->SetNextEvent(3,m_creature->GetEntry(),8000);
                 }
                 break;
-            case 3: 
+            case 3:
                 if (m_creature->GetEntry() == NPC_JAINA)
                 {
                     DoScriptText(SAY_JAINA_INTRO_02, m_creature);
@@ -303,7 +303,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
                 {
-                    DoScriptText(SAY_UTHER_H_05, pUther); 
+                    DoScriptText(SAY_UTHER_H_05, pUther);
                     m_pInstance->SetNextEvent(14,m_creature->GetEntry(),19000);
                 }
                 break;
@@ -315,14 +315,14 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA)
                 {
-                    DoScriptText(SAY_SYLVANA_06, m_creature); 
+                    DoScriptText(SAY_SYLVANA_06, m_creature);
                     m_pInstance->SetNextEvent(15,m_creature->GetEntry(),2000);
                 }
                 break;
             case 15:
                 if (m_creature->GetEntry() == NPC_JAINA && pUther)
                 {
-                    DoScriptText(SAY_UTHER_A_07, pUther); 
+                    DoScriptText(SAY_UTHER_A_07, pUther);
                     m_pInstance->SetNextEvent(16,m_creature->GetEntry(),12000);
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA && pUther)
@@ -334,7 +334,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
             case 16:
                 if (m_creature->GetEntry() == NPC_JAINA)
                 {
-                    DoScriptText(SAY_JAINA_08, m_creature); 
+                    DoScriptText(SAY_JAINA_08, m_creature);
                     m_pInstance->SetNextEvent(17,m_creature->GetEntry(),6000);
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA)
@@ -393,7 +393,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
             case 21:
                 if (m_creature->GetEntry() == NPC_JAINA && pUther)
                 {
-                    DoScriptText(SAY_UTHER_A_13, pUther); 
+                    DoScriptText(SAY_UTHER_A_13, pUther);
                     m_pInstance->SetNextEvent(22,m_creature->GetEntry(),5000);
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA)
@@ -404,7 +404,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRintroAI : public ScriptedAI
             case 22:
                 if (m_creature->GetEntry() == NPC_JAINA && pUther)
                 {
-                    DoScriptText(SAY_UTHER_A_14, pUther); 
+                    DoScriptText(SAY_UTHER_A_14, pUther);
                     m_pInstance->SetNextEvent(23,m_creature->GetEntry(),12000);
                 }
                 else if (m_creature->GetEntry() == NPC_SYLVANA)
@@ -486,7 +486,7 @@ bool GossipHello_npc_jaina_and_sylvana_HRintro(Player* pPlayer, Creature* pCreat
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3594536, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3594537, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
             break;
-       case NPC_SYLVANA: 
+       case NPC_SYLVANA:
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3594538, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
             pPlayer->ADD_GOSSIP_ITEM_ID(GOSSIP_ICON_CHAT, -3594539, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
             break;
@@ -566,10 +566,10 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
        if (!who)
            return;
 
-       if (m_creature->GetEntry() != NPC_SYLVANA_OUTRO) 
+       if (m_creature->GetEntry() != NPC_SYLVANA_OUTRO)
            return;
 
-       if (m_pInstance->GetData(TYPE_LICH_KING) == IN_PROGRESS || Fight != true) 
+       if (m_pInstance->GetData(TYPE_LICH_KING) == IN_PROGRESS || Fight != true)
            return;
 
        npc_escortAI::AttackStart(who);
@@ -804,7 +804,7 @@ struct MANGOS_DLL_DECL npc_jaina_and_sylvana_HRextroAI : public npc_escortAI
                     m_creature->GetMotionMaster()->MovePoint(0, (m_creature->GetPositionX()-5)+rand()%10, (m_creature->GetPositionY()-5)+rand()%10, m_creature->GetPositionZ());
                     m_pInstance->SetNextEvent(106,m_creature->GetEntry(),3000);
                 }
-                else 
+                else
                     m_pInstance->SetNextEvent(106,m_creature->GetEntry(),12000);
                 break;
            case 106:
@@ -1039,7 +1039,7 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
 
    void Reset()
    {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
         m_uiShieldTimer = 5000;
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -1047,18 +1047,18 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
         DoScriptText(SAY_DEATH, m_creature);
         m_pInstance->SetData(TYPE_FROST_GENERAL, DONE);
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
 
-        if (m_creature->getVictim()) 
+        if (m_creature->getVictim())
             return;
 
         if (pWho->GetTypeId() != TYPEID_PLAYER
@@ -1076,7 +1076,7 @@ struct MANGOS_DLL_DECL npc_frostworn_generalAI : public ScriptedAI
 
     void Aggro(Unit* pVictim)
     {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
         DoScriptText(SAY_AGGRO, m_creature);
         m_pInstance->SetData(TYPE_FROST_GENERAL, IN_PROGRESS);
@@ -1148,7 +1148,7 @@ struct MANGOS_DLL_DECL npc_spiritual_reflectionAI : public BSWScriptedAI
 
     void Reset()
     {
-        if (!m_pInstance) 
+        if (!m_pInstance)
             return;
         isMirror = false;
         victimGuid = ObjectGuid();
@@ -1177,7 +1177,7 @@ struct MANGOS_DLL_DECL npc_spiritual_reflectionAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_FROST_GENERAL) != IN_PROGRESS) 
+        if (!m_pInstance || m_pInstance->GetData(TYPE_FROST_GENERAL) != IN_PROGRESS)
             m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1302,7 +1302,7 @@ struct MANGOS_DLL_DECL npc_queldelar_horAI : public ScriptedAI
 //        m_creature->SetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID, 63135);
     }
 
-    void AttackStart(Unit* who) 
+    void AttackStart(Unit* who)
     {
          return;
     }

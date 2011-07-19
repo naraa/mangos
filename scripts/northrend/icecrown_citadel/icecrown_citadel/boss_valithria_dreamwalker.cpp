@@ -189,7 +189,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
               Reset();
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (!pInstance || ( intro && battlestarted)) return;
 
@@ -260,7 +260,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
         for(std::list<ObjectGuid>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                if (pTemp->isAlive()) 
+                if (pTemp->isAlive())
                 {
                     pTemp->DeleteThreatList();
                     pTemp->CombatStop(true);
@@ -304,35 +304,35 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
 
         switch(getStage())
         {
-            case 0: 
+            case 0:
                     if ( m_creature->GetHealthPercent() > 90.0f ) setStage(2);
                     if ( m_creature->GetHealthPercent() < 10.0f ) setStage(3);
                     break;
-            case 1: 
+            case 1:
                     if ( m_creature->GetHealthPercent() < 90.0f && m_creature->GetHealthPercent() > 10.0f ) setStage(0);
                     if ( m_creature->GetHealthPercent() > 99.9f ) setStage(5);
                     break;
-            case 2: 
+            case 2:
                     DoScriptText(-1631407,m_creature);
                     setStage(1);
                     break;
-            case 3: 
+            case 3:
                     DoScriptText(-1631406,m_creature);
                     setStage(1);
                     break;
-            case 4: 
+            case 4:
                     break;
-            case 5: 
+            case 5:
                     DoScriptText(-1631408,m_creature);
                     if (hasAura(SPELL_CORRUPTION,m_creature)) doRemove(SPELL_CORRUPTION);
                     setStage(6);
                     return;
                     break;
-            case 6: 
+            case 6:
                     if (timedQuery(SPELL_CORRUPTION, diff)) setStage(7);
                     return;
                     break;
-            case 7: 
+            case 7:
                     doCast(SPELL_DREAMWALKER_RAGE);
                     setStage(8);
                     return;
@@ -360,13 +360,13 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
                     break;
             default:
                     break;
-        } 
+        }
 
 
         if (timedQuery(NPC_RISEN_ARCHMAGE, (uint32)(diff + diff*(speedK/100)))) {
                 if (urand(0,1) == 1) DoScriptText(-1631402,m_creature);
                 speedK = speedK+10;
-                if (currentDifficulty == RAID_DIFFICULTY_25MAN_NORMAL 
+                if (currentDifficulty == RAID_DIFFICULTY_25MAN_NORMAL
                    || currentDifficulty == RAID_DIFFICULTY_25MAN_HEROIC) {
                                                         pInstance->DoCloseDoor(GetDoor(currentDoor2));
                                                         currentDoor2 = urand(1,2);
@@ -385,7 +385,7 @@ struct MANGOS_DLL_DECL boss_valithria_dreamwalkerAI : public BSWScriptedAI
                                                         }
                                                         };
 
-        if (timedQuery(SPELL_NIGHTMARE_PORTAL, diff) || portalscount > 0) 
+        if (timedQuery(SPELL_NIGHTMARE_PORTAL, diff) || portalscount > 0)
                                                         {
                                                         if (!portalscount) {
                                                                            portalscount = 3;
@@ -408,7 +408,7 @@ CreatureAI* GetAI_boss_valithria_dreamwalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL mob_nightmare_portalAI : public BSWScriptedAI
 {
-    mob_nightmare_portalAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_nightmare_portalAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -426,7 +426,7 @@ struct MANGOS_DLL_DECL mob_nightmare_portalAI : public BSWScriptedAI
         portalcasted = false;
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         if (!m_pInstance || portalcasted) return;
 
@@ -459,7 +459,7 @@ CreatureAI* GetAI_mob_nightmare_portal(Creature *pCreature)
 
 struct MANGOS_DLL_DECL mob_mana_voidAI : public ScriptedAI
 {
-    mob_mana_voidAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_mana_voidAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -471,7 +471,7 @@ struct MANGOS_DLL_DECL mob_mana_voidAI : public ScriptedAI
     void Reset()
     {
 //        m_creature->SetDisplayId(29308);
-        SetCombatMovement(false); 
+        SetCombatMovement(false);
 //        m_creature->GetMotionMaster()->MoveRandom();
         m_creature->CastSpell(m_creature, SPELL_VOID_BUFF, false);
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -491,7 +491,7 @@ struct MANGOS_DLL_DECL mob_mana_voidAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_VALITHRIA) != IN_PROGRESS) 
+        if (!m_pInstance || m_pInstance->GetData(TYPE_VALITHRIA) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (m_ui_Timer < uiDiff)

@@ -196,9 +196,9 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
         }
    }
 
-   void AttackStart(Unit* who) 
+   void AttackStart(Unit* who)
    {
-      if (!m_pInstance || !who || NonFight) 
+      if (!m_pInstance || !who || NonFight)
           return;
 
      if (m_pInstance->GetData(TYPE_LICH_KING) == IN_PROGRESS || who->GetTypeId() == TYPEID_PLAYER) return;
@@ -225,7 +225,7 @@ struct MANGOS_DLL_DECL boss_lich_king_hrAI : public npc_escortAI
 
     void JustSummoned(Creature* summoned)
     {
-        if (!m_pInstance || !summoned) 
+        if (!m_pInstance || !summoned)
             return;
 
         if (summoned->GetEntry() == NPC_JAINA_OUTRO
@@ -483,7 +483,7 @@ struct MANGOS_DLL_DECL boss_lich_king_intro_horAI : public ScriptedAI
     {
     }
 
-    void AttackStart(Unit* who) 
+    void AttackStart(Unit* who)
     {
     }
 
@@ -640,7 +640,7 @@ struct MANGOS_DLL_DECL npc_undead_horAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS) 
+        if (!m_pInstance || m_pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
             m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

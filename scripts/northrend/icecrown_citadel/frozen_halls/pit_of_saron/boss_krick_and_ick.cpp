@@ -147,13 +147,13 @@ struct MANGOS_DLL_DECL boss_ickAI : public ScriptedAI
                     {
                         switch (urand(0, 2))
                         {
-                        case 0: 
+                        case 0:
                             DoScriptText(SAY_TARGET_1, pKrick);
                             break;
-                        case 1: 
+                        case 1:
                             DoScriptText(SAY_TARGET_2, pKrick);
                             break;
-                        case 2: 
+                        case 2:
                             DoScriptText(SAY_TARGET_3, pKrick);
                             break;
                         }

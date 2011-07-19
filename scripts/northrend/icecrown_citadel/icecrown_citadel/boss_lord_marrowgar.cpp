@@ -65,7 +65,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
 //        m_creature->SetWalk(true);
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
         if (intro) return;
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
         if (pInstance) pInstance->SetData(TYPE_MARROWGAR, FAIL);
     }
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
         if(!pInstance) return;
         pInstance->SetData(TYPE_MARROWGAR, IN_PROGRESS);
@@ -129,7 +129,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
 
         switch(getStage())
         {
-            case 0: 
+            case 0:
                     if (timedQuery(SPELL_BONE_STRIKE, diff))
                         if (Unit* pTarget = doSelectRandomPlayer(SPELL_BONE_STRIKE_IMPALE, false, 60.0f, isHeroic()))
                             if (doCast(SPELL_BONE_STRIKE, pTarget) == CAST_OK)

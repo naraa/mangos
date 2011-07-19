@@ -372,7 +372,7 @@ struct MANGOS_DLL_DECL boss_taldaram_iccAI : public BSWScriptedAI
                 --ballscount;
             };
             timedCast(SPELL_GLITTERING_SPARKS, uiDiff);
-            if (timedCast(SPELL_CONJURE_FLAME_1, uiDiff) == CAST_OK) 
+            if (timedCast(SPELL_CONJURE_FLAME_1, uiDiff) == CAST_OK)
                 ballscount = 1;
          }
 
@@ -577,7 +577,7 @@ struct MANGOS_DLL_DECL mob_dark_nucleusAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_BLOOD_COUNCIL) != IN_PROGRESS) 
+        if (!m_pInstance || m_pInstance->GetData(TYPE_BLOOD_COUNCIL) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

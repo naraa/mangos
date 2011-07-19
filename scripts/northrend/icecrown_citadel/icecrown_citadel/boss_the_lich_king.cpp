@@ -160,7 +160,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
         pInstance->DoCloseDoor(pInstance->GetData64(GO_FROSTY_WIND));
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
     }
 
@@ -185,7 +185,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if (type != POINT_MOTION_TYPE || !movementstarted) return;
-        if (id == nextPoint) 
+        if (id == nextPoint)
         {
             movementstarted = false;
             pInstance->SetData(TYPE_EVENT,nextEvent);
@@ -249,7 +249,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
         for(std::list<ObjectGuid>::iterator itr = mobsGUIDList.begin(); itr != mobsGUIDList.end(); ++itr)
         {
             if (Creature* pTemp = m_creature->GetMap()->GetCreature(*itr))
-                if (pTemp->isAlive()) 
+                if (pTemp->isAlive())
                 {
                     pTemp->DeleteThreatList();
                     pTemp->CombatStop(true);
@@ -260,7 +260,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
     }
 
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
         if(!pInstance) return;
         pInstance->SetData(TYPE_LICH_KING, IN_PROGRESS);
@@ -359,7 +359,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                           finalphase = true;
                           doCast(SPELL_FURY_OF_FROSTMOURNE);
                           pInstance->SetData(TYPE_EVENT,13020);
-                          if (pTirion = pInstance->GetSingleCreatureFromStorage(NPC_TIRION)) 
+                          if (pTirion = pInstance->GetSingleCreatureFromStorage(NPC_TIRION))
                           {
                               m_creature->SetInCombatWith(pTirion);
                               pTirion->AddThreat(m_creature, 1000.0f);
@@ -465,7 +465,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                         DoScriptText(-1631518,m_creature);
                     };
 
-                    if (m_creature->GetHealthPercent() < 70.0f) 
+                    if (m_creature->GetHealthPercent() < 70.0f)
                        {
                             stage = 1;
                             DoScriptText(-1631515,m_creature);
@@ -526,12 +526,12 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                     break;
             case 5:           // Phase 2
 
-                    if (timedQuery(SPELL_SPAWN_DEFILE, diff)) 
+                    if (timedQuery(SPELL_SPAWN_DEFILE, diff))
                        {
                             doCast(SPELL_SPAWN_DEFILE);
                             DoScriptText(-1631531,m_creature);
                        }
-                    if (timedQuery(SPELL_SUMMON_VALKYR, diff)) 
+                    if (timedQuery(SPELL_SUMMON_VALKYR, diff))
                        {
                             doCast(SPELL_SUMMON_VALKYR);
                             DoScriptText(-1631527,m_creature);
@@ -548,7 +548,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                         DoScriptText(-1631518,m_creature);
                     };
 
-                    if (m_creature->GetHealthPercent() < 40.0f) 
+                    if (m_creature->GetHealthPercent() < 40.0f)
                        {
                             stage = 6;
                             DoScriptText(-1631523,m_creature);
@@ -614,14 +614,14 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
                        }
                    break;
             case 10:           // Phase 3
-                    if (timedQuery(SPELL_SPAWN_DEFILE, diff)) 
+                    if (timedQuery(SPELL_SPAWN_DEFILE, diff))
                        {
                             doCast(SPELL_SPAWN_DEFILE);
 //                            DoScriptText(-1631527,m_creature);
                        }
                     timedCast(SPELL_SOUL_REAPER, diff);
 
-                    if (timedQuery(SPELL_HARVEST_SOUL, diff)) 
+                    if (timedQuery(SPELL_HARVEST_SOUL, diff))
                        {
                             doCast(SPELL_HARVEST_SOUL);
                             DoScriptText(-1631520,m_creature);
@@ -632,7 +632,7 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
 
                     DoMeleeAttackIfReady();
 
-                    if (m_creature->GetHealthPercent() < 10.0f) 
+                    if (m_creature->GetHealthPercent() < 10.0f)
                        {
                             stage = 11;
                             DoScriptText(-1631513,m_creature);
@@ -702,7 +702,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if (type != POINT_MOTION_TYPE || !movementstarted) return;
-        if (id == nextPoint) 
+        if (id == nextPoint)
         {
             movementstarted = false;
             pInstance->SetData(TYPE_EVENT,nextEvent);
@@ -741,7 +741,7 @@ struct MANGOS_DLL_DECL boss_tirion_iccAI : public ScriptedAI
     void UpdateAI(const uint32 diff)
     {
 
-        if (pInstance->GetData(TYPE_LICH_KING) == FAIL && m_creature->HasAura(SPELL_ICEBLOCK_TRIGGER)) 
+        if (pInstance->GetData(TYPE_LICH_KING) == FAIL && m_creature->HasAura(SPELL_ICEBLOCK_TRIGGER))
         {
             m_creature->RemoveAurasDueToSpell(SPELL_ICEBLOCK_TRIGGER);
             m_creature->GetMotionMaster()->MoveTargetedHome();
@@ -952,7 +952,7 @@ CreatureAI* GetAI_boss_tirion_icc(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_ice_sphere_iccAI : public BSWScriptedAI
 {
-    mob_ice_sphere_iccAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_ice_sphere_iccAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -970,7 +970,7 @@ struct MANGOS_DLL_DECL  mob_ice_sphere_iccAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!hasAura(SPELL_ICE_SPHERE_VISUAL))
@@ -986,7 +986,7 @@ struct MANGOS_DLL_DECL  mob_ice_sphere_iccAI : public BSWScriptedAI
             return;
             }
 
-        if (m_creature->getVictim()->GetTypeId() != TYPEID_PLAYER) 
+        if (m_creature->getVictim()->GetTypeId() != TYPEID_PLAYER)
             return;
 
         timedCast(SPELL_ICE_PULSE, uiDiff);
@@ -1095,7 +1095,7 @@ CreatureAI* GetAI_mob_strangulate_vehicle(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_vile_spiritAI : public BSWScriptedAI
 {
-    mob_vile_spiritAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_vile_spiritAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -1120,7 +1120,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -1133,7 +1133,7 @@ struct MANGOS_DLL_DECL  mob_vile_spiritAI : public BSWScriptedAI
            movementstarted = true;
         }
 
-        if (m_creature->getVictim()->GetTypeId() != TYPEID_PLAYER) 
+        if (m_creature->getVictim()->GetTypeId() != TYPEID_PLAYER)
             return;
 
         if (m_creature->IsWithinDistInMap(m_creature->getVictim(), 1.0f))
@@ -1151,7 +1151,7 @@ CreatureAI* GetAI_mob_vile_spirit(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_raging_spiritAI : public BSWScriptedAI
 {
-    mob_raging_spiritAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_raging_spiritAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -1167,7 +1167,7 @@ struct MANGOS_DLL_DECL  mob_raging_spiritAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_LICH_KING) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

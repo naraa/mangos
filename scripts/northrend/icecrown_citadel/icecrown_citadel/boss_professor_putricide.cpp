@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
         m_creature->SetRespawnDelay(7*DAY);
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
 
@@ -136,7 +136,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        switch (urand(0,1)) 
+        switch (urand(0,1))
         {
             case 0:
                 DoScriptText(-1631241,m_creature,pVictim);
@@ -150,17 +150,17 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if (type != POINT_MOTION_TYPE || !movementstarted) return;
-        if (id == nextPoint) 
+        if (id == nextPoint)
         {
             movementstarted = false;
             m_creature->GetMotionMaster()->MovementExpired();
         }
     }
 
-    void Aggro(Unit *pWho) 
+    void Aggro(Unit *pWho)
     {
         if (!pInstance) return;
-        if (!pWho || pWho->GetTypeId() != TYPEID_PLAYER) 
+        if (!pWho || pWho->GetTypeId() != TYPEID_PLAYER)
             return;
 
         pInstance->SetData(TYPE_PUTRICIDE, IN_PROGRESS);
@@ -288,7 +288,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
 
         switch(stage)
         {
-            case 0: 
+            case 0:
 
                     if (timedQuery(SPELL_UNSTABLE_EXPERIMENT, diff))
                         CallOoze();
@@ -305,7 +305,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
                     if (m_creature->GetHealthPercent() < 80.0f ) stage = 1;
 
                     break;
-            case 1: 
+            case 1:
                     m_creature->InterruptNonMeleeSpells(true);
                     m_creature->AttackStop();
                     SetCombatMovement(false);
@@ -329,7 +329,7 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
                     SetCombatMovement(true);
                     stage = 4;
                     break;
-            case 4: 
+            case 4:
 
                     if (timedQuery(SPELL_UNSTABLE_EXPERIMENT, diff))
                         CallOoze();
@@ -564,7 +564,7 @@ struct MANGOS_DLL_DECL mob_icc_volatile_oozeAI : public BSWScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (!pTarget) 
+        if (!pTarget)
             Aggro(m_creature->getVictim());
 
         if (delay <= uiDiff)

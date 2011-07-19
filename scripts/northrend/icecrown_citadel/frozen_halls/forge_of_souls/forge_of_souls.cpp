@@ -65,7 +65,7 @@ bool StartEvent;
 
     void Reset()
     {
-            if(m_pInstance) 
+            if(m_pInstance)
                if(m_pInstance->GetData(TYPE_DEVOURER) == DONE)
                    m_creature->SetVisibility(VISIBILITY_OFF);
             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
@@ -109,7 +109,7 @@ bool StartEvent;
                       {
                        DoScriptText(SAY_JAINA_FS02, m_creature);
                        StepTimer = 9000;
-                      } 
+                      }
                     if(m_creature->GetEntry() == NPC_SILVANA_BEGIN)
                       {
                        DoScriptText(SAY_SYLVANA_FS01, m_creature);

@@ -86,7 +86,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public BSWScriptedAI
         resetTimers();
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
         if(!pInstance || intro) return;
@@ -109,7 +109,7 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public BSWScriptedAI
         }
     }
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
         if(!pInstance) return;
         pInstance->SetData(TYPE_ROTFACE, IN_PROGRESS);
@@ -192,7 +192,7 @@ CreatureAI* GetAI_boss_rotface(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_small_oozeAI : public BSWScriptedAI
 {
-    mob_small_oozeAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_small_oozeAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -212,7 +212,7 @@ struct MANGOS_DLL_DECL  mob_small_oozeAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -237,7 +237,7 @@ CreatureAI* GetAI_mob_small_ooze(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_big_oozeAI : public BSWScriptedAI
 {
-    mob_big_oozeAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_big_oozeAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -295,7 +295,7 @@ CreatureAI* GetAI_mob_big_ooze(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_sticky_oozeAI : public ScriptedAI
 {
-    mob_sticky_oozeAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_sticky_oozeAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -315,7 +315,7 @@ struct MANGOS_DLL_DECL  mob_sticky_oozeAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -331,7 +331,7 @@ CreatureAI* GetAI_mob_sticky_ooze(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_ooze_explode_stalkerAI : public BSWScriptedAI
 {
-    mob_ooze_explode_stalkerAI(Creature *pCreature) : BSWScriptedAI(pCreature) 
+    mob_ooze_explode_stalkerAI(Creature *pCreature) : BSWScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -353,7 +353,7 @@ struct MANGOS_DLL_DECL  mob_ooze_explode_stalkerAI : public BSWScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (creator && creator->isAlive())
@@ -372,7 +372,7 @@ CreatureAI* GetAI_mob_ooze_explode_stalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_ooze_spray_stalkerAI : public ScriptedAI
 {
-    mob_ooze_spray_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_ooze_spray_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -395,7 +395,7 @@ struct MANGOS_DLL_DECL  mob_ooze_spray_stalkerAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_ROTFACE) != IN_PROGRESS)
               m_creature->ForcedDespawn();
     }
 };

@@ -1,5 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
-   Copyright (C) 2011 MangosR2_ScriptDev2 
+   Copyright (C) 2011 MangosR2_ScriptDev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: Ebon_Hold
-SD%Complete: 95%  ---- still a few minor bugs here and there 
+SD%Complete: 95%  ---- still a few minor bugs here and there
 SDComment: Quest support: 12641, 12701, 12848, 12733, 12739(and 12742 to 12750), 12720, 12727, 12698. Special Npc (npc_valkyr_battle_maiden)
 ToDo:
 SDCategory: Ebon Hold
@@ -3760,10 +3760,10 @@ enum win_friends
    NPC_PREACHER                      = 28939,
    SPELL_HOLY_FURY_OOC               = 34809,
    SPELL_HOLY_SMITE                  = 15498,
-   
+
    NPC_MARKSMEN                      = 28610,
    SPELL_RAPTOR_STRIKE               = 32915,
-   
+
    SAY_PERSUADE1                     = -1609101,
    SAY_PERSUADE2                     = -1609102,
    SAY_PERSUADE3                     = -1609103,
@@ -3933,7 +3933,7 @@ enum ScarletCourierEnum
 
 struct MANGOS_DLL_DECL mob_scarlet_courierAI : ScriptedAI
 {
-    mob_scarlet_courierAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_scarlet_courierAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         Reset();
     }

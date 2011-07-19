@@ -81,7 +81,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
     {
         if(!pInstance) return;
         resetTimers();
-        if (m_creature->isAlive()) 
+        if (m_creature->isAlive())
             pInstance->SetData(TYPE_FESTERGUT, NOT_STARTED);
         setStage(0);
         intro = false;
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
 
     }
 
-    void MoveInLineOfSight(Unit* pWho) 
+    void MoveInLineOfSight(Unit* pWho)
     {
         ScriptedAI::MoveInLineOfSight(pWho);
         if(!pInstance || intro) return;
@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
     void Aggro(Unit *pWho)
     {
         if(!pInstance) return;
-        if (pWho->GetTypeId() != TYPEID_PLAYER) 
+        if (pWho->GetTypeId() != TYPEID_PLAYER)
             return;
 
         Creature* pBlightTarget = m_creature->GetMap()->GetCreature(blightTargetGUID);
@@ -209,7 +209,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
 
         if(!pInstance) return;
 
-        if (!pet) 
+        if (!pet)
         {
             if (Creature* pGuard = pInstance->GetSingleCreatureFromStorage(NPC_STINKY))
                 if (!pGuard->isAlive())
@@ -235,7 +235,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
                         setStage(1);
                     break;
             case 1:
-                    switch (urand(0,2)) 
+                    switch (urand(0,2))
                     {
                         case 0:  DoScriptText(-1631210,m_creature); break;
                         case 1:  DoScriptText(-1631211,m_creature); break;
@@ -291,7 +291,7 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
                         setStage(7);
                     break;
             case 7:
-                    switch (urand(0,2)) 
+                    switch (urand(0,2))
                     {
                         case 0:  DoScriptText(-1631210,m_creature); break;
                         case 1:  DoScriptText(-1631211,m_creature); break;
@@ -368,7 +368,7 @@ CreatureAI* GetAI_boss_festergut(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_vile_gas_stalkerAI : public ScriptedAI
 {
-    mob_vile_gas_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_vile_gas_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -393,7 +393,7 @@ struct MANGOS_DLL_DECL  mob_vile_gas_stalkerAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pInstance || pInstance->GetData(TYPE_FESTERGUT) != IN_PROGRESS) 
+        if (!pInstance || pInstance->GetData(TYPE_FESTERGUT) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -413,7 +413,7 @@ CreatureAI* GetAI_mob_vile_gas_stalker(Creature* pCreature)
 
 struct MANGOS_DLL_DECL  mob_orange_gas_stalkerAI : public ScriptedAI
 {
-    mob_orange_gas_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature) 
+    mob_orange_gas_stalkerAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
         pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         Reset();
@@ -435,7 +435,7 @@ struct MANGOS_DLL_DECL  mob_orange_gas_stalkerAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-//        if (!pInstance || pInstance->GetData(TYPE_FESTERGUT) != IN_PROGRESS) 
+//        if (!pInstance || pInstance->GetData(TYPE_FESTERGUT) != IN_PROGRESS)
 //              m_creature->ForcedDespawn();
     }
 };

@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
     {
         if(!pInstance)
             return;
-        if (m_creature->isAlive()) 
+        if (m_creature->isAlive())
             pInstance->SetData(TYPE_LANATHEL, NOT_STARTED);
         stage = 0;
         UpdateTimer = 1000;
@@ -91,7 +91,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        switch (urand(0,1)) 
+        switch (urand(0,1))
         {
             case 0:
                DoScriptText(-1631330,m_creature,pVictim);
@@ -111,7 +111,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
     void MovementInform(uint32 type, uint32 id)
     {
         if (type != POINT_MOTION_TYPE || !movementstarted) return;
-        if (id == nextPoint) 
+        if (id == nextPoint)
         {
             movementstarted = false;
             m_creature->GetMotionMaster()->MovementExpired();
@@ -175,9 +175,9 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
 
         switch(stage)
         {
-            case 0: 
+            case 0:
 
-                    if (timedQuery(SPELL_TWILIGHT_BLOODBOLT, diff)) 
+                    if (timedQuery(SPELL_TWILIGHT_BLOODBOLT, diff))
                         bloodbolts = 1;
 
                     if (timedQuery(SPELL_DELRIOUS_SLASH, diff))
@@ -190,7 +190,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
 
                     if (timedQuery(SPELL_VAMPIRIC_BITE,diff))
                     {
-                       switch (urand(0,1)) 
+                       switch (urand(0,1))
                        {
                            case 0:
                                   DoScriptText(-1631322,m_creature);
@@ -220,7 +220,7 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathelAI : public BSWScriptedAI
                     stage = 2;
                     break;
             case 2:
-                    if (movementstarted) 
+                    if (movementstarted)
                         return;
                     DoScriptText(-1631327,m_creature);
                     doCast(SPELL_BLOODBOLT_WHIRL);
@@ -291,7 +291,7 @@ struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
     {
         m_creature->SetDisplayId(11686);
         m_creature->SetRespawnDelay(7*DAY);
-        SetCombatMovement(false); 
+        SetCombatMovement(false);
         m_creature->SetInCombatWithZone();
         m_lifetimer = 10000;
         DoCast(m_creature, SPELL_SWARMING_SHADOWS_VISUAL);
@@ -299,7 +299,7 @@ struct MANGOS_DLL_DECL mob_swarming_shadowsAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_pInstance || m_pInstance->GetData(TYPE_LANATHEL) != IN_PROGRESS) 
+        if (!m_pInstance || m_pInstance->GetData(TYPE_LANATHEL) != IN_PROGRESS)
               m_creature->ForcedDespawn();
 
         if (!m_creature->HasAura(SPELL_SWARMING_SHADOWS_VISUAL))

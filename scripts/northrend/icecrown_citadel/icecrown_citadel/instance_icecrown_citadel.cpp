@@ -31,7 +31,7 @@ static Locations SpawnLoc[]=
     {-428.140503f, 2421.336914f, 191.233078f},  // 1 Alliance ship enter
 };
 
-    instance_icecrown_spire::instance_icecrown_spire(Map* pMap) : BSWScriptedInstance(pMap) 
+    instance_icecrown_spire::instance_icecrown_spire(Map* pMap) : BSWScriptedInstance(pMap)
     {
         Difficulty = pMap->GetDifficulty();
         Initialize();
@@ -39,14 +39,14 @@ static Locations SpawnLoc[]=
 
     void instance_icecrown_spire::OpenAllDoors()
     {
-        if (m_auiEncounter[1] == DONE) 
+        if (m_auiEncounter[1] == DONE)
         {
             DoOpenDoor(GO_ICEWALL_1);
             DoOpenDoor(GO_ICEWALL_2);
             DoOpenDoor(GO_MARROWGAR_DOOR);
             DoOpenDoor(GO_ORATORY_DOOR);
         };
-        if (m_auiEncounter[2] == DONE) 
+        if (m_auiEncounter[2] == DONE)
         {
             if (GameObject* pGO = GetSingleGameObjectFromStorage(GO_DEATHWHISPER_ELEVATOR))
             {
@@ -54,24 +54,24 @@ static Locations SpawnLoc[]=
                 pGO->SetGoState(GO_STATE_READY);
             }
         };
-        if (m_auiEncounter[4] == DONE) 
+        if (m_auiEncounter[4] == DONE)
         {
             DoOpenDoor(GO_SAURFANG_DOOR);
             DoOpenDoor(GO_BLOODWING_DOOR);
             DoOpenDoor(GO_FROSTWING_DOOR);
         };
-        if (m_auiEncounter[5] == DONE) 
+        if (m_auiEncounter[5] == DONE)
             DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE);
-        if (m_auiEncounter[6] == DONE) 
+        if (m_auiEncounter[6] == DONE)
             DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
-        if (m_auiEncounter[6] == DONE && m_auiEncounter[5] == DONE) 
+        if (m_auiEncounter[6] == DONE && m_auiEncounter[5] == DONE)
             DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
-        if (m_auiEncounter[8] == DONE) 
+        if (m_auiEncounter[8] == DONE)
         {
             DoOpenDoor(GO_COUNCIL_DOOR_1);
             DoOpenDoor(GO_COUNCIL_DOOR_2);
         };
-        if (m_auiEncounter[10] == DONE) 
+        if (m_auiEncounter[10] == DONE)
         {
             DoOpenDoor(GO_GREEN_DRAGON_DOOR_2);
             DoOpenDoor(GO_SINDRAGOSA_DOOR_1);
@@ -94,7 +94,7 @@ static Locations SpawnLoc[]=
         m_uiStinkystate = NOT_STARTED;
         m_uiPreciousstate = NOT_STARTED;
 
-        switch (Difficulty) 
+        switch (Difficulty)
         {
              case RAID_DIFFICULTY_10MAN_NORMAL:
                        m_uiGunshipArmoryH_ID = GO_GUNSHIP_ARMORY_H_10;
@@ -156,7 +156,7 @@ static Locations SpawnLoc[]=
                   pPlayer->CastSpell(pPlayer, HORDE_CONTROL_PHASE_SHIFT_2, false);
                   break;
             case HORDE:
-                  if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(ALLIANCE_CONTROL_PHASE_SHIFT_1)) 
+                  if (pPlayer && pPlayer->IsInWorld() && pPlayer->HasAura(ALLIANCE_CONTROL_PHASE_SHIFT_1))
                       pPlayer->RemoveAurasDueToSpell(ALLIANCE_CONTROL_PHASE_SHIFT_1);
                   pPlayer->CastSpell(pPlayer, ALLIANCE_CONTROL_PHASE_SHIFT_2, false);
                   break;
@@ -168,9 +168,9 @@ static Locations SpawnLoc[]=
     {
         switch(pCreature->GetEntry())
         {
-            case NPC_LORD_MARROWGAR: 
-            case NPC_LADY_DEATHWHISPER: 
-            case NPC_DEATHBRINGER_SAURFANG: 
+            case NPC_LORD_MARROWGAR:
+            case NPC_LADY_DEATHWHISPER:
+            case NPC_DEATHBRINGER_SAURFANG:
             case NPC_FESTERGUT:
             case NPC_ROTFACE:
             case NPC_PROFESSOR_PUTRICIDE:
@@ -200,30 +200,30 @@ static Locations SpawnLoc[]=
     {
         switch(pGo->GetEntry())
         {
-            case GO_ICEWALL_1: 
-            case GO_ICEWALL_2: 
-            case GO_ORATORY_DOOR: 
+            case GO_ICEWALL_1:
+            case GO_ICEWALL_2:
+            case GO_ORATORY_DOOR:
             case GO_DEATHWHISPER_ELEVATOR:
-            case GO_SAURFANG_DOOR: 
-            case GO_ORANGE_PLAGUE: 
-            case GO_GREEN_PLAGUE: 
-            case GO_SCIENTIST_DOOR_GREEN: 
-            case GO_SCIENTIST_DOOR_ORANGE: 
-            case GO_SCIENTIST_DOOR_COLLISION: 
+            case GO_SAURFANG_DOOR:
+            case GO_ORANGE_PLAGUE:
+            case GO_GREEN_PLAGUE:
+            case GO_SCIENTIST_DOOR_GREEN:
+            case GO_SCIENTIST_DOOR_ORANGE:
+            case GO_SCIENTIST_DOOR_COLLISION:
             case GO_SCIENTIST_DOOR:
-            case GO_CRIMSON_HALL_DOOR: 
-            case GO_BLOODWING_DOOR: 
-            case GO_COUNCIL_DOOR_1: 
-            case GO_COUNCIL_DOOR_2: 
-            case GO_FROSTWING_DOOR: 
-            case GO_GREEN_DRAGON_DOOR_1: 
-            case GO_GREEN_DRAGON_DOOR_2: 
-            case GO_VALITHRIA_DOOR_1: 
-            case GO_VALITHRIA_DOOR_2: 
-            case GO_VALITHRIA_DOOR_3: 
-            case GO_VALITHRIA_DOOR_4: 
-            case GO_SINDRAGOSA_DOOR_1: 
-            case GO_SINDRAGOSA_DOOR_2: 
+            case GO_CRIMSON_HALL_DOOR:
+            case GO_BLOODWING_DOOR:
+            case GO_COUNCIL_DOOR_1:
+            case GO_COUNCIL_DOOR_2:
+            case GO_FROSTWING_DOOR:
+            case GO_GREEN_DRAGON_DOOR_1:
+            case GO_GREEN_DRAGON_DOOR_2:
+            case GO_VALITHRIA_DOOR_1:
+            case GO_VALITHRIA_DOOR_2:
+            case GO_VALITHRIA_DOOR_3:
+            case GO_VALITHRIA_DOOR_4:
+            case GO_SINDRAGOSA_DOOR_1:
+            case GO_SINDRAGOSA_DOOR_2:
             case GO_SAURFANG_CACHE_10:
             case GO_SAURFANG_CACHE_25:
             case GO_SAURFANG_CACHE_10_H:
@@ -240,16 +240,16 @@ static Locations SpawnLoc[]=
             case GO_DREAMWALKER_CACHE_25:
             case GO_DREAMWALKER_CACHE_10_H:
             case GO_DREAMWALKER_CACHE_25_H:
-            case GO_ICESHARD_1: 
-            case GO_ICESHARD_2: 
-            case GO_ICESHARD_3: 
-            case GO_ICESHARD_4: 
-            case GO_FROSTY_WIND: 
-            case GO_FROSTY_EDGE: 
-            case GO_SNOW_EDGE: 
-            case GO_ARTHAS_PLATFORM: 
-            case GO_ARTHAS_PRECIPICE: 
-            case GO_GAS_RELEASE_VALVE: 
+            case GO_ICESHARD_1:
+            case GO_ICESHARD_2:
+            case GO_ICESHARD_3:
+            case GO_ICESHARD_4:
+            case GO_FROSTY_WIND:
+            case GO_FROSTY_EDGE:
+            case GO_SNOW_EDGE:
+            case GO_ARTHAS_PLATFORM:
+            case GO_ARTHAS_PRECIPICE:
+            case GO_GAS_RELEASE_VALVE:
             case GO_MARROWGAR_DOOR:
             case GO_BLOODPRINCE_DOOR:
             case GO_ICECROWN_GRATE:
@@ -267,11 +267,11 @@ static Locations SpawnLoc[]=
                 break;
             case TYPE_MARROWGAR:
                 m_auiEncounter[TYPE_MARROWGAR] = uiData;
-                if (uiData == IN_PROGRESS) 
+                if (uiData == IN_PROGRESS)
                     DoCloseDoor(GO_MARROWGAR_DOOR);
                 else DoOpenDoor(GO_MARROWGAR_DOOR);
 
-                if (uiData == DONE) 
+                if (uiData == DONE)
                 {
                     DoOpenDoor(GO_ICEWALL_1);
                     DoOpenDoor(GO_ICEWALL_2);
@@ -279,13 +279,13 @@ static Locations SpawnLoc[]=
                 }
                 break;
              case TYPE_DEATHWHISPER:
-                m_auiEncounter[TYPE_DEATHWHISPER] = uiData; 
-                if (uiData == IN_PROGRESS) 
+                m_auiEncounter[TYPE_DEATHWHISPER] = uiData;
+                if (uiData == IN_PROGRESS)
                     DoCloseDoor(GO_ORATORY_DOOR);
-                else 
+                else
                     DoOpenDoor(GO_ORATORY_DOOR);
 
-                if (uiData == DONE) 
+                if (uiData == DONE)
                 {
                     if (GameObject* pGO = GetSingleGameObjectFromStorage(GO_DEATHWHISPER_ELEVATOR))
                     {
@@ -295,32 +295,32 @@ static Locations SpawnLoc[]=
                 }
                 break;
              case TYPE_FLIGHT_WAR:
-                if (uiData == DONE && m_auiEncounter[TYPE_FLIGHT_WAR] != DONE  ) 
+                if (uiData == DONE && m_auiEncounter[TYPE_FLIGHT_WAR] != DONE  )
                 {
                                 if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiGunshipArmoryA_ID))
-                                    if (pChest && !pChest->isSpawned()) 
+                                    if (pChest && !pChest->isSpawned())
                                     {
                                         pChest->SetRespawnTime(7*DAY);
                                     };
 
                                 if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiGunshipArmoryH_ID))
-                                    if (pChest && !pChest->isSpawned()) 
+                                    if (pChest && !pChest->isSpawned())
                                     {
                                         pChest->SetRespawnTime(7*DAY);
                                     };
                 };
-                m_auiEncounter[3] = uiData; 
+                m_auiEncounter[3] = uiData;
                 break;
              case TYPE_SAURFANG:
-                m_auiEncounter[TYPE_SAURFANG] = uiData; 
-                if (uiData == DONE) 
+                m_auiEncounter[TYPE_SAURFANG] = uiData;
+                if (uiData == DONE)
                 {
                     DoOpenDoor(GO_SAURFANG_DOOR);
                     DoOpenDoor(GO_BLOODWING_DOOR);
                     DoOpenDoor(GO_FROSTWING_DOOR);
 
                     if (GameObject* pChest = GetSingleGameObjectFromStorage(m_uiSaurfangCache))
-                    if (pChest && !pChest->isSpawned()) 
+                    if (pChest && !pChest->isSpawned())
                     {
                         pChest->SetRespawnTime(7*DAY);
                     };
@@ -329,15 +329,15 @@ static Locations SpawnLoc[]=
              case TYPE_FESTERGUT:
                 m_auiEncounter[TYPE_FESTERGUT] = uiData;
 
-                if (uiData == IN_PROGRESS) 
+                if (uiData == IN_PROGRESS)
                     DoCloseDoor(GO_ORANGE_PLAGUE);
                 else
                     DoOpenDoor(GO_ORANGE_PLAGUE);
 
-                if (uiData == DONE)  
+                if (uiData == DONE)
                 {
                     DoOpenDoor(GO_ORANGE_PLAGUE);
-                    if (m_auiEncounter[TYPE_ROTFACE] == DONE) 
+                    if (m_auiEncounter[TYPE_ROTFACE] == DONE)
                     {
                         DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
                         DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
@@ -353,7 +353,7 @@ static Locations SpawnLoc[]=
                 if (uiData == DONE)
                 {
                     DoOpenDoor(GO_SCIENTIST_DOOR_GREEN);
-                    if (m_auiEncounter[TYPE_FESTERGUT] == DONE) 
+                    if (m_auiEncounter[TYPE_FESTERGUT] == DONE)
                     {
                         DoOpenDoor(GO_SCIENTIST_DOOR_ORANGE);
                         DoOpenDoor(GO_SCIENTIST_DOOR_COLLISION);
@@ -362,7 +362,7 @@ static Locations SpawnLoc[]=
                 break;
              case TYPE_PUTRICIDE:
                 m_auiEncounter[TYPE_PUTRICIDE] = uiData;
-                if (uiData == IN_PROGRESS) 
+                if (uiData == IN_PROGRESS)
                     DoCloseDoor(GO_SCIENTIST_DOOR);
                 else
                     DoOpenDoor(GO_SCIENTIST_DOOR);
@@ -381,7 +381,7 @@ static Locations SpawnLoc[]=
                 else
                     DoOpenDoor(GO_CRIMSON_HALL_DOOR);
 
-                if (uiData == DONE) 
+                if (uiData == DONE)
                 {
                     DoOpenDoor(GO_COUNCIL_DOOR_1);
                     DoOpenDoor(GO_COUNCIL_DOOR_2);
@@ -390,7 +390,7 @@ static Locations SpawnLoc[]=
              case TYPE_LANATHEL:
                 m_auiEncounter[TYPE_LANATHEL] = uiData;
 
-                if (uiData == IN_PROGRESS) 
+                if (uiData == IN_PROGRESS)
                     DoCloseDoor(GO_BLOODPRINCE_DOOR);
                 else DoOpenDoor(GO_BLOODPRINCE_DOOR);
 
@@ -417,7 +417,7 @@ static Locations SpawnLoc[]=
                     DoOpenDoor(GO_SINDRAGOSA_DOOR_1);
                     DoOpenDoor(GO_SINDRAGOSA_DOOR_2);
                     if (GameObject* pChest = GetSingleGameObjectFromStorage( m_uiValithriaCache))
-                        if (pChest && !pChest->isSpawned()) 
+                        if (pChest && !pChest->isSpawned())
                         {
                             pChest->SetRespawnTime(7*DAY);
                         };
@@ -499,12 +499,12 @@ static Locations SpawnLoc[]=
                           return m_auiEncounter[uiType];
 
              case DATA_DIRECTION:     return m_uiDirection;
-             case DATA_BLOOD_INVOCATION:         return m_uiCouncilInvocation; 
+             case DATA_BLOOD_INVOCATION:         return m_uiCouncilInvocation;
              case TYPE_STINKY:        return m_uiStinkystate;
              case TYPE_PRECIOUS:      return m_uiPreciousstate;
              case TYPE_EVENT:         return m_auiEvent;
              case TYPE_EVENT_TIMER:   return m_auiEventTimer;
-             case TYPE_EVENT_NPC:     switch (m_auiEvent) 
+             case TYPE_EVENT_NPC:     switch (m_auiEvent)
                                          {
                                           case 12030:
                                           case 12050:

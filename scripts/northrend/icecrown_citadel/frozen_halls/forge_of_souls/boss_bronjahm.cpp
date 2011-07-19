@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
         stage = 0;
     }
 
-    void Aggro(Unit *who) 
+    void Aggro(Unit *who)
     {
        Music = (urand(0, 2));
        switch(Music)
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
          case 2:
             m_creature->PlayDirectSound(Battle03);
             BattleMusicTimer = 36000;
-            break; 
+            break;
         }
 
         if(pInstance) pInstance->SetData(TYPE_BRONJAHM, IN_PROGRESS);
@@ -118,7 +118,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
 
         switch(stage)
         {
-            case 0: 
+            case 0:
                     if  (timedQuery(SPELL_CORRUPT_SOUL, diff))
                         {
                             if (Unit* pTarget= m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
                                 }
                         }
                     break;
-            case 1: 
+            case 1:
                         if (timedCast(SPELL_TELEPORT, diff) == CAST_OK) stage = 2;
                     break;
             case 2:
@@ -143,7 +143,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
                                stage = 3;
                                }
                     break;
-            case 3: 
+            case 3:
                         timedCast(SPELL_FEAR, diff);
                     break;
         }
@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL boss_bronjahmAI : public BSWScriptedAI
              case 2:
                 m_creature->PlayDirectSound(Battle03);
                 BattleMusicTimer = 37000;
-                break; 
+                break;
             }
         } else BattleMusicTimer -= diff;
     }

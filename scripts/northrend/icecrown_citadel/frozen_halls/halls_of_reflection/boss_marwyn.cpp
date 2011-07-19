@@ -88,7 +88,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_6; break;
                    }
                    break;
-               case 1: 
+               case 1:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_2; break;
@@ -96,7 +96,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_4; break;
                    }
                    break;
-               case 2: 
+               case 2:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_2; break;
@@ -104,7 +104,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
                      case 3: pSummon = NPC_DARK_6; break;
                    }
                    break;
-               case 3: 
+               case 3:
                    switch(urand(1, 3))
                    {
                      case 1: pSummon = NPC_DARK_1; break;
@@ -167,7 +167,7 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
         DoScriptText(SAY_MARWYN_AGGRO, m_creature);
     }
 
-    void AttackStart(Unit* who) 
+    void AttackStart(Unit* who)
     {
         if (!m_pInstance) return;
 
@@ -189,14 +189,14 @@ struct MANGOS_DLL_DECL boss_marwynAI : public BSWScriptedAI
 
         if(m_pInstance->GetData(TYPE_MARWYN) == SPECIAL)
         {
-           if(m_uiSummonTimer < uiDiff) 
+           if(m_uiSummonTimer < uiDiff)
            {
                     ++SummonCount;
                     m_pInstance->SetData(DATA_WAVE_COUNT,SummonCount+5);
                     if(SummonCount == 1)
                         DoScriptText(SAY_MARWYN_INTRO, m_creature);
 
-                   if(SummonCount > 4) 
+                   if(SummonCount > 4)
                    {
                         m_pInstance->SetData(TYPE_MARWYN, IN_PROGRESS);
                         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
