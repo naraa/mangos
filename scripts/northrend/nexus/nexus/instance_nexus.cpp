@@ -137,6 +137,8 @@ void instance_nexus::SetData(uint32 uiType, uint32 uiData)
         {
             if (pCreature->isAlive())
                 pCreature->RemoveAurasDueToSpell(SPELL_FROZEN_PRISON);
+                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
     }
 

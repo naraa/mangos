@@ -87,6 +87,7 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
             {
                 m_creature->CastSpell(m_creature, SPELL_FROZEN_PRISON, true);
                 m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             }
                 
         }
