@@ -221,6 +221,7 @@
     <ClCompile Include="..\include\sc_instance.cpp" />
     <ClCompile Include="..\include\sc_outdoor_pvp.cpp" />
     <ClCompile Include="..\scripts\battlegrounds\battleground.cpp" />
+    <ClCompile Include="..\scripts\battlegrounds\battlegroundSA.cpp" />
     <ClCompile Include="..\scripts\custom\npc_arena_honor.cpp" />
     <ClCompile Include="..\scripts\custom\teleguy.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\alterac_mountains.cpp" />
