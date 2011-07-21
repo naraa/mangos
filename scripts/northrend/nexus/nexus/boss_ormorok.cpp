@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiSpellCrystalSpikesTimer = 12*IN_MILLISECONDS;                         
+        m_uiSpellCrystalSpikesTimer = 12*IN_MILLISECONDS;
         m_uiTrampleTimer = 10*IN_MILLISECONDS;
         m_uiReflectionTimer = 30*IN_MILLISECONDS;
         m_uiSummonTanglerTimer = 17*IN_MILLISECONDS;
@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
@@ -225,7 +225,7 @@ struct MANGOS_DLL_DECL mob_crystal_spikeAI : public Scripted_NoMovementAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE); //
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff)
     {
         if (m_uiCrystalSpikePreVisualTimer < uiDiff)
         {
@@ -242,8 +242,8 @@ struct MANGOS_DLL_DECL mob_crystal_spikeAI : public Scripted_NoMovementAI
         }
         else
             m_uiCrystallSpikeDamageTimer -= uiDiff;
-    } 
-}; 
+    }
+};
 
 CreatureAI* GetAI_mob_crystal_spike(Creature* pCreature)
 {
@@ -261,7 +261,7 @@ struct MANGOS_DLL_DECL mob_crystalline_tanglerAI : public ScriptedAI
         m_uiRootsTimer = 1*IN_MILLISECONDS;
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff)
     {
         if (m_uiRootsTimer < uiDiff)
         {
@@ -272,9 +272,9 @@ struct MANGOS_DLL_DECL mob_crystalline_tanglerAI : public ScriptedAI
         else
             m_uiRootsTimer -= uiDiff;
 
-        DoMeleeAttackIfReady();   
-    } 
-}; 
+        DoMeleeAttackIfReady();
+    }
+};
 
 CreatureAI* GetAI_mob_crystalline_tangler(Creature* pCreature)
 {
