@@ -2,10 +2,6 @@
 -- YTDB cleanup
 DELETE FROM `creature` WHERE `map` = 609 AND `guid` IN (116863);
 DELETE FROM `creature` WHERE `map` = 609 AND `id` IN (29219,29206,29190);
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076') OR (`id`='2920601');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2889201') OR (`id`='2889202') OR (`id`='2889203') OR (`id`='2889204');
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`='28939') OR (`creature_id`='28610');
-DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 UPDATE `creature_template` SET `unit_flags`=0,`type_flags`=8 WHERE entry IN (29174,29182,29186,29190,29206,29176,29177,29181);
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29178;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29179;
@@ -143,11 +139,7 @@ REPLACE INTO `spell_script_target` (`entry`,`type`,`targetEntry`) VALUES (51859,
 DELETE FROM `creature_addon` WHERE `guid` IN (SELECT guid FROM `creature` WHERE `id` IN (28511,28525,28542,28543,28544));
 UPDATE `npc_spellclick_spells` SET `quest_start` = 0, `quest_start_active` = 0 WHERE `npc_entry` = 29501;
 
---- hack fix paired with core commit for spell support to when this is reverted core support needs fixed
---UPDATE `quest_template` SET `ReqSpellCast1` = 51858, `ReqSpellCast2` = 51858, `ReqSpellCast3` = 51858, `ReqSpellCast4` = 51858 WHERE `entry` = 12641;
 UPDATE `quest_template` SET `ReqSpellCast1` = 0, `ReqSpellCast2` = 0, `ReqSpellCast3` = 0, `ReqSpellCast4` = 0 WHERE `entry` = 12641;
-
-
 
 DELETE FROM `creature_template` WHERE (`entry`=28511);
 INSERT INTO `creature_template` (`entry`, `difficulty_entry_1`, `difficulty_entry_2`, `difficulty_entry_3`, `KillCredit1`, `KillCredit2`, `modelid_1`, `modelid_2`, `modelid_3`, `modelid_4`, `name`, `subname`, `IconName`, `gossip_menu_id`, `minlevel`, `maxlevel`, `minhealth`, `maxhealth`, `minmana`, `maxmana`, `armor`, `faction_A`, `faction_H`, `npcflag`, `speed_walk`, `speed_run`, `scale`, `rank`, `mindmg`, `maxdmg`, `dmgschool`, `attackpower`, `dmg_multiplier`, `baseattacktime`, `rangeattacktime`, `unit_class`, `unit_flags`, `dynamicflags`, `family`, `trainer_type`, `trainer_spell`, `trainer_class`, `trainer_race`, `minrangedmg`, `maxrangedmg`, `rangedattackpower`, `type`, `type_flags`, `lootid`, `pickpocketloot`, `skinloot`, `resistance1`, `resistance2`, `resistance3`, `resistance4`, `resistance5`, `resistance6`, `spell1`, `spell2`, `spell3`, `spell4`, `PetSpellDataId`, `mingold`, `maxgold`, `AIName`, `MovementType`, `InhabitType`, `unk16`, `unk17`, `RacialLeader`, `questItem1`, `questItem2`, `questItem3`, `questItem4`, `questItem5`, `questItem6`, `movementId`, `RegenHealth`, `equipment_id`, `trainer_id`, `vendor_id`, `mechanic_immune_mask`, `flags_extra`, `ScriptName`) VALUES (28511, 0, 0, 0, 0, 0, 26320, 25499, 0, 0, 'Eye of Acherus', '', '', 0, 55, 55, 2614, 2614, 0, 0, 9730, 35, 35, 0, 1, 1.14286, 1, 0, 420, 630, 0, 157, 1, 2000, 2000, 1, 0, 0, 0, 0, 0, 0, 0, 336, 504, 126, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 52694, 52006, 51859, 51904, 0, 0, 0, '', 0, 4, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 'npc_eye_of_acherus');
@@ -239,7 +231,7 @@ DELETE FROM spell_script_target WHERE entry = 52479;
 INSERT INTO spell_script_target VALUES
 (52479, 1, 28819),
 (52479, 1, 28822),
-(52479, 1, 28891);  -- 28841 miner with this id is used for massacre at light point quest
+(52479, 1, 28891);
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 28846;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'mob_scarlet_ghoul' WHERE `entry` = 28845;

@@ -2,6 +2,22 @@
 DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
+-- Console/conflict fixes from recent checks added by mangos for EventAI   // need s to be rewrote to delete by creature ID to ensure rerun ability
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2531612') OR (`id`='2531601') OR (`id`='2531603') OR (`id`='2531609') OR (`id`='2531611') OR (`id`='2531608') OR (`id`='2531607') OR (`id`='2531610') OR (`id`='2531604') OR (`id`='2531606') OR (`id`='2531602') OR (`id`='2531605') OR (`id`='2531651');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2612702') OR (`id`='2612701');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2748307') OR (`id`='2748302') OR (`id`='2748305') OR (`id`='2748303') OR (`id`='2748308') OR (`id`='2748301') OR (`id`='2748306') OR (`id`='2748304');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2760001') OR (`id`='2760006') OR (`id`='2760007') OR (`id`='2760004') OR (`id`='2760010') OR (`id`='2760009') OR (`id`='2760002') OR (`id`='2760011') OR (`id`='2760005') OR (`id`='2760008') OR (`id`='2760003');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2920404') OR (`id`='2920403') OR (`id`='2920402') OR (`id`='2920401') OR (`id`='2920003') OR (`id`='2920001') OR (`id`='2920002') OR (`id`='2919902') OR (`id`='2919901') OR (`id`='2919903');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076') OR (`id`='2920601');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2889201') OR (`id`='2889202') OR (`id`='2889203') OR (`id`='2889204');
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`='28939') OR (`creature_id`='28610');
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
+
+-- text clean up for above
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
+
+
 -- ----------------------------------------
 -- Quest 11466 fixes and improvements
 -- ----------------------------------------
@@ -136,13 +152,14 @@ DELETE FROM `creature_ai_scripts` WHERE (`id`='2509251');
 INSERT INTO `creature_ai_scripts` VALUES ('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543');
 
 -- -------------------------
--- fix quest toxic_test 9051
+-- fix quest toxic_test 9051 -- still not working is kill credit
 -- -------------------------
-UPDATE `quest_template` SET `ReqCreatureOrGOId1` = '6498' WHERE `entry` =9051;
-UPDATE `quest_template` SET `ReqCreatureOrGOCount1` = 1 WHERE `entry` = 9051;
-DELETE FROM `creature_ai_scripts` WHERE `id` =649802;
-INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `action1_type`, `action1_param1`, `action1_param2`, `comment`) VALUES
-('649802', '6498', '8', '100', '1', '7211', '-1', '33', '6498', '6', 'quest Credit for quest 9051'); 
+UPDATE `quest_template` SET `ReqCreatureOrGOId1` = '6498' WHERE `entry` =9051; -- fixes spell credit
+UPDATE `quest_template` SET `ReqCreatureOrGOCount1` = 1 WHERE `entry` = 9051; -- fixes spell credit
+
+DELETE FROM `creature_ai_scripts` WHERE `id` =649802; -- clean up of testing hack to get kill credit
+
+UPDATE `quest_template` SET `ReqSourceId1` = 22432, `ReqSourceCount1` = 1 WHERE `entry` = 9051; -- take item out of player inventory upon completetion
 
 -- ------------------------------
 -- Quest : 12078 Worm Wrangler --
@@ -186,17 +203,6 @@ UPDATE `creature_template` SET AIName='EventAI', flags_extra=flags_extra|64 WHER
 DELETE FROM `creature_ai_scripts` WHERE creature_id = 17086;
 INSERT INTO `creature_ai_scripts` VALUES
 (1708601,17086,2,0,100,0,25,0,0,0,11,8599,0,1,1,-106,0,0,0,0,0,0,'Enraged Wraith - Cast Enrage on 50% HP');
-
-
--- Console/conflict fixes from recent checks added by mangos for EventAI
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2531612') OR (`id`='2531601') OR (`id`='2531603') OR (`id`='2531609') OR (`id`='2531611') OR (`id`='2531608') OR (`id`='2531607') OR (`id`='2531610') OR (`id`='2531604') OR (`id`='2531606') OR (`id`='2531602') OR (`id`='2531605') OR (`id`='2531651');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2612702') OR (`id`='2612701');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2748307') OR (`id`='2748302') OR (`id`='2748305') OR (`id`='2748303') OR (`id`='2748308') OR (`id`='2748301') OR (`id`='2748306') OR (`id`='2748304');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2760001') OR (`id`='2760006') OR (`id`='2760007') OR (`id`='2760004') OR (`id`='2760010') OR (`id`='2760009') OR (`id`='2760002') OR (`id`='2760011') OR (`id`='2760005') OR (`id`='2760008') OR (`id`='2760003');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2920404') OR (`id`='2920403') OR (`id`='2920402') OR (`id`='2920401') OR (`id`='2920003') OR (`id`='2920001') OR (`id`='2920002') OR (`id`='2919902') OR (`id`='2919901') OR (`id`='2919903');
-
-DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
-DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 
 -- ---------------
 -- Gamel the Cruel
