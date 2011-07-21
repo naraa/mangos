@@ -98,9 +98,6 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_ORMOROK, IN_PROGRESS);
     }
 
     void JustDied(Unit* pKiller)

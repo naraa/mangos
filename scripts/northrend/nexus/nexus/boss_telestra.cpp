@@ -120,9 +120,6 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
     void EnterCombat(Unit* who)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_TELESTRA, IN_PROGRESS);
     }
 
     void JustDied(Unit* killer)

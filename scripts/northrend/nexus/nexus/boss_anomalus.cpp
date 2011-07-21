@@ -94,9 +94,6 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     void EnterCombat(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_ANOMALUS, IN_PROGRESS);
     }
 
     void JustDied(Unit* pKiller)
