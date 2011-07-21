@@ -26,24 +26,21 @@ EndScriptData */
 
 enum
 {
+    // Spells
+    SPELL_INTENSE_COLD          = 48094,
+    SPELL_CRYSTALFIRE_BREATH    = 48096,
+    SPELL_CRYSTALFIRE_BREATH_H  = 57091,
+    SPELL_CRYSTALLIZE           = 48179,
+    SPELL_CRYSTAL_CHAINS        = 50997,
+    SPELL_TAIL_SWEEP            = 50155,
+    SPELL_ENRAGE                = 8599,
+
+    // Texts
     SAY_AGGRO                   = -1576016,
     SAY_CRYSTAL_NOVA            = -1576017,
     SAY_ENRAGE                  = -1576018,
     SAY_KILL                    = -1576019,
     SAY_DEATH                   = -1576020,
-
-    SPELL_INTENSE_COLD          = 48094,
-
-    SPELL_CRYSTALFIRE_BREATH    = 48096,
-    SPELL_CRYSTALFIRE_BREATH_H  = 57091,
-
-    SPELL_CRYSTALLIZE           = 48179,
-
-    SPELL_CRYSTAL_CHAINS        = 50997,
-
-    SPELL_TAIL_SWEEP            = 50155,
-
-    SPELL_ENRAGE                = 8599
 };
 
 /*######
@@ -62,20 +59,18 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 uiCrystalChainTimer;
-    uint32 uiTailSweepTimer;
-    uint32 uiCrystalfireBreathTimer;
-    uint32 uiCrystallizeTimer;
-
     bool m_bIsEnraged;
+    uint32 m_uiCrystalChainTimer;
+    uint32 m_uiTailSweepTimer;
+    uint32 m_uiCrystalfireBreathTimer;
+    uint32 m_uiCrystallizeTimer;
 
     void Reset()
     {
-        uiCrystalChainTimer = 30000;
-        uiTailSweepTimer = urand(5000, 7500);
-        uiCrystalfireBreathTimer = urand(10000, 20000);
-        uiCrystallizeTimer = urand(20000, 30000);
-
+        m_uiCrystalChainTimer = 30*IN_MILLISECONDS;
+        m_uiTailSweepTimer = urand(5*IN_MILLISECONDS, 7.5*IN_MILLISECONDS);
+        m_uiCrystalfireBreathTimer = urand(10*IN_MILLISECONDS, 20*IN_MILLISECONDS);
+        m_uiCrystallizeTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
         m_bIsEnraged = false;
 
         if (!m_pInstance)
@@ -84,12 +79,7 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
         if (m_creature->isAlive())
         {
             if (m_pInstance->GetData(TYPE_KERISTRASZA) != SPECIAL)
-            {
                 m_creature->CastSpell(m_creature, SPELL_FROZEN_PRISON, true);
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-            }
-                
         }
     }
 
@@ -129,7 +119,7 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
             }
         }
 
-        if (uiCrystalChainTimer < uiDiff)
+        if (m_uiCrystalChainTimer < uiDiff)
         {
             if (!m_creature->IsNonMeleeSpellCasted(false))
             {
@@ -140,14 +130,14 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
                         if (Player* pPlayer = pTarget->GetCharmerOrOwnerPlayerOrPlayerItself())
                             DoCastSpellIfCan(pPlayer, SPELL_CRYSTAL_CHAINS);
 
-                        uiCrystalChainTimer = 30000;
+                        m_uiCrystalChainTimer = 30*IN_MILLISECONDS;
                     }
                 }
                 else
                 {
                     if (Unit* pSource = m_creature->getVictim())
                     {
-                        uiCrystalChainTimer = 15000;
+                        m_uiCrystalChainTimer = 15*IN_MILLISECONDS;
 
                         Player* pPlayer = pSource->GetCharmerOrOwnerPlayerOrPlayerItself();
 
@@ -172,36 +162,36 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
             }
         }
         else
-            uiCrystalChainTimer -= uiDiff;
+            m_uiCrystalChainTimer -= uiDiff;
 
-        if (uiTailSweepTimer < uiDiff)
+        if (m_uiTailSweepTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, SPELL_TAIL_SWEEP) == CAST_OK)
-                uiTailSweepTimer = urand(2500, 7500);
+                m_uiTailSweepTimer = urand(2.5*IN_MILLISECONDS, 7.5*IN_MILLISECONDS);
         }
         else
-            uiCrystalChainTimer -= uiDiff;
+            m_uiCrystalChainTimer -= uiDiff;
 
-        if (uiCrystalfireBreathTimer < uiDiff)
+        if (m_uiCrystalfireBreathTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_CRYSTALFIRE_BREATH : SPELL_CRYSTALFIRE_BREATH_H) == CAST_OK)
-                uiCrystalfireBreathTimer = urand(15000, 20000);
+                m_uiCrystalfireBreathTimer = urand(15*IN_MILLISECONDS, 20*IN_MILLISECONDS);
         }
         else
-            uiCrystalfireBreathTimer -= uiDiff;
+            m_uiCrystalfireBreathTimer -= uiDiff;
 
         if (!m_bIsRegularMode)
         {
-            if (uiCrystallizeTimer < uiDiff)
+            if (m_uiCrystallizeTimer < uiDiff)
             {
                 if (DoCastSpellIfCan(m_creature, SPELL_CRYSTALLIZE) == CAST_OK)
                 {
-                    uiCrystallizeTimer = urand(15000, 25000);
+                    m_uiCrystallizeTimer = urand(15*IN_MILLISECONDS, 25*IN_MILLISECONDS);
                     DoScriptText(SAY_CRYSTAL_NOVA, m_creature);
                 }
             }
             else
-                uiCrystallizeTimer -= uiDiff;
+                m_uiCrystallizeTimer -= uiDiff;
         }
 
         DoMeleeAttackIfReady();
@@ -215,10 +205,10 @@ CreatureAI* GetAI_boss_keristrasza(Creature* pCreature)
 
 void AddSC_boss_keristrasza()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_keristrasza";
-    newscript->GetAI = &GetAI_boss_keristrasza;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_keristrasza";
+    pNewScript->GetAI = &GetAI_boss_keristrasza;
+    pNewScript->RegisterSelf();
 }
