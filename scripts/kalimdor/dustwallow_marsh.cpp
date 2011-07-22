@@ -220,41 +220,6 @@ bool GossipHello_npc_deserter_agitator(Player* pPlayer, Creature* pCreature)
 }
 
 /*######
-## npc_lady_jaina_proudmoore
-######*/
-
-enum
-{
-    QUEST_JAINAS_AUTOGRAPH = 558,
-    SPELL_JAINAS_AUTOGRAPH = 23122
-};
-
-#define GOSSIP_ITEM_JAINA "I know this is rather silly but i have a young ward who is a bit shy and would like your autograph."
-
-bool GossipHello_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature)
-{
-    if (pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
-
-    if (pPlayer->GetQuestStatus(QUEST_JAINAS_AUTOGRAPH) == QUEST_STATUS_INCOMPLETE)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_JAINA, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
-
-    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
-
-    return true;
-}
-
-bool GossipSelect_npc_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
-{
-    if (uiAction == GOSSIP_SENDER_INFO)
-    {
-        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetObjectGuid());
-        pPlayer->CastSpell(pPlayer, SPELL_JAINAS_AUTOGRAPH, false);
-    }
-    return true;
-}
-
-/*######
 ## npc_morokk
 ######*/
 
@@ -845,6 +810,9 @@ enum
     SPELL_FIREBALL                  = 20692,
     SPELL_SUMMON_WATER_ELEMENT      = 20681,
     SPELL_TELEPORT                  = 20682,
+
+    QUEST_JAINAS_AUTOGRAPH = 558,
+    SPELL_JAINAS_AUTOGRAPH = 23122
 };
 
 struct MANGOS_DLL_DECL boss_lady_jaina_proudmooreAI : public ScriptedAI
@@ -919,6 +887,31 @@ struct MANGOS_DLL_DECL boss_lady_jaina_proudmooreAI : public ScriptedAI
     }
 };
 
+#define GOSSIP_ITEM_JAINA "I know this is rather silly but i have a young ward who is a bit shy and would like your autograph."
+
+bool GossipHello_boss_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature)
+{
+    if (pCreature->isQuestGiver())
+        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
+
+    if (pPlayer->GetQuestStatus(QUEST_JAINAS_AUTOGRAPH) == QUEST_STATUS_INCOMPLETE)
+        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_JAINA, GOSSIP_SENDER_MAIN, GOSSIP_SENDER_INFO);
+
+    pPlayer->SEND_GOSSIP_MENU(pPlayer->GetGossipTextId(pCreature), pCreature->GetObjectGuid());
+
+    return true;
+}
+
+bool GossipSelect_boss_lady_jaina_proudmoore(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
+{
+    if (uiAction == GOSSIP_SENDER_INFO)
+    {
+        pPlayer->SEND_GOSSIP_MENU(7012, pCreature->GetObjectGuid());
+        pPlayer->CastSpell(pPlayer, SPELL_JAINAS_AUTOGRAPH, false);
+    }
+    return true;
+}
+
 CreatureAI* GetAI_boss_lady_jaina_proudmoore(Creature* pCreature)
 {
     return new boss_lady_jaina_proudmooreAI(pCreature);
@@ -942,12 +935,6 @@ void AddSC_dustwallow_marsh()
     pNewScript->Name = "npc_deserter_agitator";
     pNewScript->GetAI = &GetAI_npc_deserter_agitator;
     pNewScript->pGossipHello = &GossipHello_npc_deserter_agitator;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "npc_lady_jaina_proudmoore";
-    pNewScript->pGossipHello = &GossipHello_npc_lady_jaina_proudmoore;
-    pNewScript->pGossipSelect = &GossipSelect_npc_lady_jaina_proudmoore;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
@@ -988,5 +975,7 @@ void AddSC_dustwallow_marsh()
     pNewScript = new Script;
     pNewScript->Name = "boss_lady_jaina_proudmoore";
     pNewScript->GetAI = &GetAI_boss_lady_jaina_proudmoore;
+    pNewScript->pGossipHello = &GossipHello_boss_lady_jaina_proudmoore;
+    pNewScript->pGossipSelect = &GossipSelect_boss_lady_jaina_proudmoore;
     pNewScript->RegisterSelf();
 }

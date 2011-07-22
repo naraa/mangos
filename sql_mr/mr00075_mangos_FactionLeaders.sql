@@ -2,7 +2,7 @@ UPDATE `creature_template` SET `ScriptName`='boss_king_magni_bronzebreard' WHERE
 UPDATE `creature_template` SET `ScriptName`='boss_high_tinker_mekkatorque' WHERE `entry`=7937;
 UPDATE `creature_template` SET `ScriptName`='boss_lorthemar_theron' WHERE `entry`=16802;
 UPDATE `creature_template` SET `ScriptName`='boss_king_varian_wrynn' WHERE `entry`=29611;
-UPDATE `creature_template` SET `ScriptName`='npc_lady_jaina_proudmoore' WHERE `entry`=4968;
+UPDATE `creature_template` SET `ScriptName`='boss_lady_jaina_proudmoore' WHERE `entry`=4968;
 UPDATE `creature_template` SET `ScriptName`='boss_prophet_velen' WHERE `entry`=17468;
 UPDATE `creature_template` SET `ScriptName`='boss_voljin' WHERE `entry`=10540;
 UPDATE `creature_template` SET `ScriptName`='boss_tyrande_whisperwind' WHERE `entry`=7999;
