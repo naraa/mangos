@@ -172,10 +172,12 @@ struct MANGOS_DLL_DECL mob_sanctum_sentryAI : public ScriptedAI
             // they should follow Auriaya, but this looks ugly!
             if (Creature* pTemp = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_AURIAYA)))
             {
-                if (pTemp->isAlive())
+                if (pTemp->isAlive() && !m_creature->hasUnitState(UNIT_STAT_FOLLOW))
                 {
-                    m_creature->GetMotionMaster()->MoveFollow(pTemp,0.0f,0.0f);
-                    m_creature->GetMap()->CreatureRelocation(m_creature, pTemp->GetPositionX(), pTemp->GetPositionY(), pTemp->GetPositionZ(), 0.0f);
+
+                    float angle = m_creature->GetAngle(pTemp);
+                    m_creature->GetMotionMaster()->Clear(false);
+                    m_creature->GetMotionMaster()->MoveFollow(pTemp, PET_FOLLOW_DIST, angle);
                 }
             }
         }
