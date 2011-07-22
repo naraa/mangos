@@ -2,21 +2,23 @@
 DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
--- Console/conflict fixes from recent checks added by mangos for EventAI   // need s to be rewrote to delete by creature ID to ensure rerun ability
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2531612') OR (`id`='2531601') OR (`id`='2531603') OR (`id`='2531609') OR (`id`='2531611') OR (`id`='2531608') OR (`id`='2531607') OR (`id`='2531610') OR (`id`='2531604') OR (`id`='2531606') OR (`id`='2531602') OR (`id`='2531605') OR (`id`='2531651');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2612702') OR (`id`='2612701');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2748307') OR (`id`='2748302') OR (`id`='2748305') OR (`id`='2748303') OR (`id`='2748308') OR (`id`='2748301') OR (`id`='2748306') OR (`id`='2748304');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2760001') OR (`id`='2760006') OR (`id`='2760007') OR (`id`='2760004') OR (`id`='2760010') OR (`id`='2760009') OR (`id`='2760002') OR (`id`='2760011') OR (`id`='2760005') OR (`id`='2760008') OR (`id`='2760003');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2920404') OR (`id`='2920403') OR (`id`='2920402') OR (`id`='2920401') OR (`id`='2920003') OR (`id`='2920001') OR (`id`='2920002') OR (`id`='2919902') OR (`id`='2919901') OR (`id`='2919903');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2921901') OR (`id`='90076') OR (`id`='2920601');
-DELETE FROM `creature_ai_scripts` WHERE (`id`='2889201') OR (`id`='2889202') OR (`id`='2889203') OR (`id`='2889204');
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`='28939') OR (`creature_id`='28610');
-DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
-
--- text clean up for above
+-- EAI Text clean up for quests/sd2
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 
+-- mangosR2 EAI CleanUp for quests/sd2
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25316;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 26127;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27483;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27600;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28610;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28939;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29199;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29200;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29204;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29206;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29219;
 
 -- ----------------------------------------
 -- Quest 11466 fixes and improvements
@@ -179,7 +181,10 @@ UPDATE `creature_template` SET ScriptName='npc_nexus_drake', AIName='' WHERE ent
 -- -------------------------------
 UPDATE gameobject_template SET ScriptName='go_scourge_cage' WHERE entry IN (187854,187855,187856,187857,187858,187859,187860,187862,187863,187864,187865,187866,187867,187868,187870,187871,187872,187873,187874,187861,190803);
 
+-- ------------------------
 -- Quest: Abduction (11590)
+-- ------------------------
+
 UPDATE `creature_template` SET
 minhealth=6387,
 maxhealth=7185,

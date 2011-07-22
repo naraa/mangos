@@ -54,6 +54,7 @@ INSERT INTO `spell_script_target` VALUES (53706, 1, 29183);
 INSERT INTO `spell_script_target` VALUES (53677, 1, 29227);
 INSERT INTO `spell_script_target` VALUES (53685, 1, 29175);
 
+-- ----------------------------
 -- Quest:: An End To All Things
 -- ----------------------------
 
