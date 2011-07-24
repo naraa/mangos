@@ -54,22 +54,22 @@ if(PCH)
   )
 endif()
 
-add_library(mangosscript SHARED
+add_library(mangosscriptR2 SHARED
   ${mangosscript_SRCS}
 )
 
 if(WIN32)
-  target_link_libraries(mangosscript
+  target_link_libraries(mangosscriptR2
     mangosd # FIXME: could this be done for unix? because unix won't generate exe.libs
     ${ACE_LIBRARIES}
     debug ${WIN_DEBUGLIBS}
   )
 endif()
 
-add_dependencies(mangosscript revision.h)
+add_dependencies(mangosscriptR2 revision.h)
 if(NOT ACE_USE_EXTERNAL)
-  add_dependencies(mangosscript ACE_Project)
-# add_dependencies(mangosscript ace)
+  add_dependencies(mangosscriptR2 ACE_Project)
+# add_dependencies(mangosscriptR2 ace)
 endif()
 
 if(UNIX)
@@ -92,7 +92,7 @@ if(UNIX)
     BUILD_WITH_INSTALL_RPATH OFF
   )
 
-  set_target_properties(mangosscript PROPERTIES
+  set_target_properties(mangosscriptR2 PROPERTIES
     LINK_FLAGS ${mangosscript_LINK_FLAGS}
     ${mangosscript_PROPERTIES}
   )
@@ -100,7 +100,7 @@ endif()
 
 # Because size for linker is to big - seriously ?!
 if(WIN32)
-  set_target_properties(mangosscript PROPERTIES
+  set_target_properties(mangosscriptR2 PROPERTIES
       LINK_FLAGS_DEBUG "/DEBUG /INCREMENTAL:NO"
   )
 endif()
@@ -128,14 +128,14 @@ if(PCH)
     if(MSVC)
       set(mangosscript_pch "${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.cpp")
     endif()
-    add_native_precompiled_header(mangosscript ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
+    add_native_precompiled_header(mangosscriptR2 ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
   elseif(CMAKE_COMPILER_IS_GNUCXX)
-    add_precompiled_header(mangosscript ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
+    add_precompiled_header(mangosscriptR2 ${CMAKE_CURRENT_SOURCE_DIR}/include/precompiled.h)
   endif()
 endif()
 
 # LIBRARY = dyld / so, RUNTIME = dll
-install(TARGETS mangosscript
+install(TARGETS mangosscriptR2
   LIBRARY DESTINATION ${LIBS_DIR}
   RUNTIME DESTINATION ${LIBS_DIR}
 )
