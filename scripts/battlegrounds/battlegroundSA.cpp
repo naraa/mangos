@@ -19,36 +19,6 @@
 #include "BattleGroundSA.h"
 #include "Vehicle.h"
 
-#define Spell_Boom        52408
-
-struct MANGOS_DLL_DECL npc_sa_bombAI : public ScriptedAI
-{
-    npc_sa_bombAI(Creature* pCreature) : ScriptedAI(pCreature) { SetCombatMovement(false); Reset(); }
-    uint32 event_bomb;
-    float fx, fy, fz;
-    void Reset() { m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE); event_bomb = 10000; }
-    void Aggro(Unit* who){}
-    void JustDied(Unit* Killer){ m_creature->ForcedDespawn(); }
-    void KilledUnit(Unit *victim){}
-    void UpdateAI(const uint32 diff)
-    {
-        if (event_bomb < diff)
-        {
-            m_creature->GetPosition(fx, fy, fz);
-            m_creature->CastSpell(m_creature, 34602, true);
-            m_creature->CastSpell(m_creature, 71495, true);
-            m_creature->CastSpell(fx, fy, fz, Spell_Boom, true, 0, 0, m_creature->GetCharmerGuid());
-            m_creature->ForcedDespawn();
-        } else
-            event_bomb -= diff;
-    }
-};
-
-CreatureAI* GetAI_npc_sa_bomb(Creature* pCreature)
-{
-    return new npc_sa_bombAI (pCreature);
-}
-
 struct MANGOS_DLL_DECL npc_sa_demolisherAI : public ScriptedAI
 {
     npc_sa_demolisherAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -470,11 +440,6 @@ bool GOHello_go_sa_bomb(Player* pPlayer, GameObject* pGo)
 void AddSC_battlegroundSA()
 {
     Script *pNewScript;
-
-    pNewScript = new Script;
-    pNewScript->Name="npc_sa_bomb";
-    pNewScript->GetAI = &GetAI_npc_sa_bomb;
-    pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "npc_sa_demolisher";
