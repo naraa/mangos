@@ -20,6 +20,11 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29204;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29206;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29219;
 
+-- fixes for upcoming YTDB DB update
+UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 35766);
+UPDATE creature_template SET ScriptName='' WHERE entry=36549;
+UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHERE `entry`=34816;  -- needed to be rerun
+
 -- ----------------------------------------
 -- Quest 11466 fixes and improvements
 -- ----------------------------------------
