@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2 Scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +17,7 @@
 
 /* ScriptData
 SDName: Boss_Janalai
-SD%Complete: 75
+SD%Complete: 80%
 SDComment:
 SDCategory: Zul'Aman
 EndScriptData */
@@ -312,13 +313,25 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
     }
 
     //Teleport every player into the middle if more than 20 yards away (possibly what spell 43096 should do)
-    void TeleportPlayersOutOfRange()
+    /*void TeleportPlayersOutOfRange()
     {
         std::vector<ObjectGuid> vGuids;
         m_creature->FillGuidsListFromThreatList(vGuids);
         for (std::vector<ObjectGuid>::const_iterator i = vGuids.begin();i != vGuids.end(); ++i)
         {
             Unit* pTemp = m_creature->GetMap()->GetUnit(*i);
+
+            if (pTemp && pTemp->GetTypeId() == TYPEID_PLAYER && !m_creature->IsWithinDist(pTemp, 20.0f))
+                m_creature->CastSpell(pTemp, SPELL_SUMMONALL, true);
+        }
+    }*/
+
+    void TeleportPlayersOutOfRange()
+    {
+        ThreatList const& tList = m_creature->getThreatManager().getThreatList();
+        for (ThreatList::const_iterator i = tList.begin();i != tList.end(); ++i)
+        {
+            Unit* pTemp = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
 
             if (pTemp && pTemp->GetTypeId() == TYPEID_PLAYER && !m_creature->IsWithinDist(pTemp, 20.0f))
                 m_creature->CastSpell(pTemp, SPELL_SUMMONALL, true);
@@ -444,7 +457,7 @@ struct MANGOS_DLL_DECL boss_janalaiAI : public ScriptedAI
             {
                 DoScriptText(SAY_BERSERK, m_creature);
 
-                DoCastSpellIfCan(m_creature, SPELL_ENRAGE, CAST_INTERRUPT_PREVIOUS);
+                DoCast(m_creature, SPELL_ENRAGE);
                 m_bIsEnraged = true;
             }
 

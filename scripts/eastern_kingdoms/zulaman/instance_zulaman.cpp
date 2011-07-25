@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Instance_Zulaman
 SD%Complete: 50
-SDComment: Support for Quests and Mini-Events still TODO
+SDComment: Support for Quests and Mini-Events still TODO and prisoners
 SDCategory: Zul'Aman
 EndScriptData */
 

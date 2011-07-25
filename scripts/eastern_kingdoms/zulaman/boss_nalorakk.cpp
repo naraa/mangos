@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2 Scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +18,7 @@
 /* ScriptData
 SDName: Boss_Nalorakk
 SD%Complete: 80
-SDComment: Todo: Trash Waves
+SDComment: Todo: Trash Waves and add tanzar support for after boss
 SDCategory: Zul'Aman
 EndScriptData */
 
@@ -56,6 +57,52 @@ enum
     SPELL_RENDFLESH         = 42397,
     SPELL_DEAFENINGROAR     = 42398
 };
+
+// missing texts and says research
+/*
+Nalorakk sound quotes:
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkAggro.wav")
+You be dead soon enough!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkBerserk.wav")
+You had your chance, now it be too late!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkDeath.wav")
+I be waiting on the other side.
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkEvent01.wav")
+Ahh..what could be better than serving the bear spirit for all eternity? Come closer now, bring your souls to me!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkEvent02.wav")
+*Nalorakk sniffs the air*
+I smell you strangers. Dont be delaying your fate. Come to me now, I make your sacrifice quick.
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkSlay01.wav")
+Ha ha ha, now whatchoo got to say?
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkSlay02.wav")
+Da Amani gonna rule again!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkSurge.wav")
+I bring the pain!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkToTroll.wav")
+Make way for Nalorakk!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkWave01.wav")
+Get the move on guards! It be killing time!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkWave02.wav")
+Guards! Go already! Who you be more afraid of? Dem...or me?
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkWave03.wav")
+Ride now! Ride out there and bring me back some heads!
+
+/script PlaySoundFile("Sound\\Creature\\Nalorakk\\NalorakkWave04.wav")
+I be losing my patience! Go on, make them wish they were never born!
+
+*/
 
 struct MANGOS_DLL_DECL boss_nalorakkAI : public ScriptedAI
 {
@@ -258,9 +305,10 @@ CreatureAI* GetAI_boss_nalorakk(Creature* pCreature)
 
 void AddSC_boss_nalorakk()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_nalorakk";
-    newscript->GetAI = &GetAI_boss_nalorakk;
-    newscript->RegisterSelf();
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_nalorakk";
+    pNewScript->GetAI = &GetAI_boss_nalorakk;
+    pNewScript->RegisterSelf();
 }
