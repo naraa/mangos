@@ -1,5 +1,4 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 MangosR2 Scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -18,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Halazzi
 SD%Complete: 70
-SDComment: Details and timers need check.  NEED info on prisoner for him i cant find anything but new stuff (( prisoner name might be "ASHLIS")
+SDComment: Details and timers need check.
 SDCategory: Zul'Aman
 EndScriptData */
 
@@ -61,8 +60,7 @@ enum
     SPELL_SUMMON_LYNX               = 43143,
     SPELL_SUMMON_TOTEM              = 43302,
 
-    NPC_TOTEM                       = 24224,
-    SPELL_LIGHTNING                 = 43301
+    NPC_TOTEM                       = 24224
 };
 
 enum HalazziPhase
@@ -77,15 +75,6 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
     boss_halazziAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-
-		// need a vertern to figure this out for correct spell support
-        SpellEntry *TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_SUMMON_TOTEM);
-        if(TempSpell && TempSpell->EffectImplicitTargetA[0] != 1)
-            TempSpell->EffectImplicitTargetA[0] = 1;
-
-        TempSpell = (SpellEntry*)GetSpellStore()->LookupEntry(SPELL_LIGHTNING);
-        if(TempSpell && TempSpell->CastingTimeIndex != 5)
-            TempSpell->CastingTimeIndex = 5; // 2000 ms casting time also need to figure what controls spell cooldown
         Reset();
     }
 
@@ -131,7 +120,6 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-        m_creature->SetInCombatWithZone();
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_HALAZZI, IN_PROGRESS);
@@ -293,11 +281,13 @@ struct MANGOS_DLL_DECL boss_halazziAI : public ScriptedAI
 
         if (m_uiPhase == PHASE_FINAL || m_uiPhase == PHASE_TOTEM)
         {
-            if(m_uiTotemTimer < uiDiff)
+            if (m_uiTotemTimer < uiDiff)
             {
-                DoCast(m_creature, SPELL_SUMMON_TOTEM);
-                m_uiTotemTimer = 20000;
-            }else m_uiTotemTimer -= uiDiff;
+                DoCastSpellIfCan(m_creature, SPELL_SUMMON_TOTEM);
+                m_uiTotemTimer = 20*IN_MILLISECONDS;
+            }
+            else
+                m_uiTotemTimer -= uiDiff;
 
             if (m_uiShockTimer < uiDiff)
             {
@@ -395,15 +385,15 @@ CreatureAI* GetAI_boss_spirit_lynx(Creature* pCreature)
 
 void AddSC_boss_halazzi()
 {
-    Script* pNewScript;
+    Script* newscript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_halazzi";
-    pNewScript->GetAI = &GetAI_boss_halazzi;
-    pNewScript->RegisterSelf();
+    newscript = new Script;
+    newscript->Name = "boss_halazzi";
+    newscript->GetAI = &GetAI_boss_halazzi;
+    newscript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_spirit_lynx";
-    pNewScript->GetAI = &GetAI_boss_spirit_lynx;
-    pNewScript->RegisterSelf();
+    newscript = new Script;
+    newscript->Name = "boss_spirit_lynx";
+    newscript->GetAI = &GetAI_boss_spirit_lynx;
+    newscript->RegisterSelf();
 }

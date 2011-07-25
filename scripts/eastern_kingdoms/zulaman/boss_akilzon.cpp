@@ -1,5 +1,4 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 MangosR2 Scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,15 +16,13 @@
 
 /* ScriptData
 SDName: Boss_Akilzon
-SD%Complete: 70%
-SDComment: TODO: prisoner event and misc
+SD%Complete: 50
+SDComment: TODO: Correct timers, correct details, remove hack for eagles
 SDCategory: Zul'Aman
 EndScriptData */
 
 #include "precompiled.h"
 #include "zulaman.h"
-#include "spell.h"
-#include "weather.h"
 
 enum
 {
@@ -54,11 +51,10 @@ enum
     NPC_SOARING_EAGLE       = 24858,
     MAX_EAGLE_COUNT         = 6,
 
-    SE_LOC_X_MAX            = 400,
-    SE_LOC_X_MIN            = 335,
-    SE_LOC_Y_MAX            = 1435,
-    SE_LOC_Y_MIN            = 1370,
-    MOB_TEMP_TRIGGER        = 23920
+    //SE_LOC_X_MAX            = 400,
+    //SE_LOC_X_MIN            = 335,
+    //SE_LOC_Y_MAX            = 1435,
+    //SE_LOC_Y_MIN            = 1370
 };
 
 struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
@@ -74,47 +70,25 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
     uint32 m_uiStaticDisruptTimer;
     uint32 m_uiCallLightTimer;
     uint32 m_uiGustOfWindTimer;
-    uint32 m_uiElectricalStorm_Timer;
+    uint32 m_uiStormTimer;
     uint32 m_uiSummonEagleTimer;
     uint32 m_uiBerserkTimer;
     bool m_bIsBerserk;
-
-    ObjectGuid TargetGUID;
-    ObjectGuid CycloneGUID;
-    ObjectGuid CloudGUID;
-    uint32 StormCount;
-    uint32 StormSequenceTimer;
-    bool isRaining;
 
     void Reset()
     {
         m_uiStaticDisruptTimer = urand(7000, 14000);
         m_uiCallLightTimer = urand(15000, 25000);
         m_uiGustOfWindTimer = urand(20000, 30000);
-        m_uiElectricalStorm_Timer = 50000;
+        m_uiStormTimer = 50000;
         m_uiSummonEagleTimer = 65000;
         m_uiBerserkTimer = MINUTE*8*IN_MILLISECONDS;
         m_bIsBerserk = false;
-
-        TargetGUID.Clear();
-        CloudGUID.Clear();
-        CycloneGUID.Clear();
-
-        StormCount = 0;
-        StormSequenceTimer = 0;
-
-        isRaining = false;
-
-        DespawnSummons(NPC_SOARING_EAGLE);
-        SetWeather(WEATHER_STATE_FINE, 0.0f);
     }
 
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-
-        m_creature->SetInCombatWithZone();
-        SetWeather(WEATHER_STATE_THUNDERS, 0.0f);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_AKILZON, IN_PROGRESS);
@@ -128,9 +102,6 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
     void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_DEATH, m_creature);
-
-        DespawnSummons(NPC_SOARING_EAGLE);
-        SetWeather(WEATHER_STATE_FINE, 0.0f);
 
         if (!m_pInstance)
             return;
@@ -161,190 +132,10 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
         }
     }
 
-    void DespawnSummons(uint32 entry)
-    {
-        std::list<Creature*> templist;
-        float x, y, z;
-        m_creature->GetPosition(x, y, z);
-
-        {
-            CellPair pair(MaNGOS::ComputeCellPair(x, y));
-            Cell cell(pair);
-            cell.SetNoCreate();
-
-            AllCreaturesOfEntryInRangeCheck check(m_creature, entry, 100);
-            MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRangeCheck> searcher(templist, check);
-
-            TypeContainerVisitor<MaNGOS::CreatureListSearcher<AllCreaturesOfEntryInRangeCheck>, GridTypeMapContainer> cSearcher(searcher);
-
-            // cellVisit<GridReadGuard> cell.Visit(cell, pair);
-            cell.Visit(pair, cSearcher, *(m_creature->GetMap()),*m_creature,100);
-        }
-
-        for(std::list<Creature*>::iterator i = templist.begin(); i != templist.end(); ++i)
-        {
-            (*i)->SetVisibility(VISIBILITY_OFF);
-            (*i)->SetDeathState(JUST_DIED);
-        }
-    }
-
-    Player* SelectRandomPlayer(float range = 0.0f, bool alive = true)
-    {
-        Map *map = m_creature->GetMap();
-        if (!map->IsDungeon())
-            return NULL;
-
-        Map::PlayerList const &PlayerList = map->GetPlayers();
-        if (PlayerList.isEmpty())
-            return NULL;
-
-        std::list<Player*> temp;
-        std::list<Player*>::iterator j;
-
-        for(Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-			if((range == 0.0f || m_creature->IsWithinDistInMap(i->getSource(), range))
-				&& (!alive || i->getSource()->isTargetableForAttack()))
-				temp.push_back(i->getSource());
-
-		if (temp.size())
-        {
-			j = temp.begin();
-		    advance(j, rand()%temp.size());
-		    return (*j);
-		}
-        return NULL;
-
-    }
-
-    void SetWeather(uint32 weather, float grade)
-    {
-        Map *map = m_creature->GetMap();
-        if (!map->IsDungeon())
-            return;
-
-        WorldPacket data(SMSG_WEATHER, (4+4+4));
-        data << uint32(weather) << (float)grade << uint8(0);
-
-        ((DungeonMap*)map)->SendToPlayers(&data);
-    }
-
-    void HandleStormSequence(Unit *Cloud) // 1: begin, 2-9: tick, 10: end
-    {
-        if(StormCount < 10 && StormCount > 1)
-        {
-            // deal damage
-            int32 bp0 = 800;
-            for(uint8 i = 2; i < StormCount; ++i)
-                bp0 *= 2;
-
-            CellPair p(MaNGOS::ComputeCellPair(m_creature->GetPositionX(), m_creature->GetPositionY()));
-            Cell cell(p);
-            cell.SetNoCreate();
-
-            std::list<Unit *> tempUnitMap;
-
-            {
-                MaNGOS::AnyAoETargetUnitInObjectRangeCheck u_check(m_creature, 999);
-                MaNGOS::UnitListSearcher<MaNGOS::AnyAoETargetUnitInObjectRangeCheck> searcher(tempUnitMap, u_check);
-
-                TypeContainerVisitor<MaNGOS::UnitListSearcher<MaNGOS::AnyAoETargetUnitInObjectRangeCheck>, WorldTypeMapContainer > world_unit_searcher(searcher);
-                TypeContainerVisitor<MaNGOS::UnitListSearcher<MaNGOS::AnyAoETargetUnitInObjectRangeCheck>, GridTypeMapContainer >  grid_unit_searcher(searcher);
-
-                //CellLock<GridReadGuard> cell_lock(cell, p);
-                cell.Visit(p, world_unit_searcher, *(m_creature->GetMap()),*m_creature,100);
-                cell.Visit(p, grid_unit_searcher, *(m_creature->GetMap()),*m_creature,100);
-            }
-
-            for(std::list<Unit*>::iterator i = tempUnitMap.begin(); i != tempUnitMap.end(); ++i)
-            {
-                if(!Cloud->IsWithinDistInMap(*i, 15))
-                {
-                    float x, y, z;
-                    (*i)->GetPosition(x, y, z);
-                    x = rand()%2 ? x + rand()%5 : x - rand()%5;
-                    y = rand()%2 ? y + rand()%5 : y - rand()%5;
-                    z = Cloud->GetPositionZ() + 2 - rand()%4;
-
-                    if(Creature *trigger = m_creature->SummonCreature(MOB_TEMP_TRIGGER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 2000))
-                    {
-                        trigger->StopMoving();
-                        trigger->CastSpell(trigger, 37248, true);
-                        trigger->CastCustomSpell(*i, 43137, &bp0, NULL, NULL, true, 0, 0, m_creature->GetObjectGuid());
-                    }
-                }
-            }
-
-            // visual
-            float x, y, z;
-            for(uint8 i = 0; i < StormCount; ++i)
-            {
-                Cloud->GetPosition(x, y, z);
-                x = rand()%2 ? x + rand()%10 : x - rand()%10;
-                y = rand()%2 ? y + rand()%10 : y - rand()%10;
-                z = z + 2 - rand()%4;
-
-                if(Unit *trigger = m_creature->SummonCreature(MOB_TEMP_TRIGGER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 2000))
-                {
-                    trigger->addUnitState(MOVEFLAG_LEVITATING);
-                    trigger->StopMoving();
-                    trigger->CastSpell(trigger, 37248, true);
-                }
-
-                Cloud->GetPosition(x, y, z);
-                x = rand()%2 ? x + 10 + rand()%10 : x - 10 - rand()%10;
-                y = rand()%2 ? y + 10 + rand()%10 : y - 10 - rand()%10;
-
-                if(Unit *trigger = m_creature->SummonCreature(MOB_TEMP_TRIGGER, x, y, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 2000))
-                {
-                    trigger->SetMaxHealth(9999999);
-                    trigger->SetHealth(9999999);
-                    trigger->CastSpell(trigger, 43661, true);
-                }
-            }
-        }
-
-        StormCount++;
-
-        if (StormCount > 10)
-        {
-            StormCount = 0; // finish
-            m_creature->InterruptNonMeleeSpells(false);
-            Cloud->RemoveAurasDueToSpell(45213);
-            CloudGUID.Clear();
-
-            if (Unit* Cyclone = m_creature->GetMap()->GetUnit( CycloneGUID))
-                Cyclone->RemoveAurasDueToSpell(25160);
-
-            SetWeather(WEATHER_STATE_FINE, 0.0f);
-            isRaining = false;
-        }
-
-        StormSequenceTimer = 1000;
-    }
-
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        if(StormCount)
-        {
-            Unit* target = m_creature->GetMap()->GetUnit(CloudGUID);
-            if (!target || !target->isAlive())
-            {
-                EnterEvadeMode();
-                return;
-            }
-            else if (Unit* Cyclone = m_creature->GetMap()->GetUnit(CycloneGUID))
-                Cyclone->CastSpell(target, 25160, true); // keep casting or...
-
-            if(StormSequenceTimer < uiDiff)
-            {
-                HandleStormSequence(target);
-            }else StormSequenceTimer -= uiDiff;
-
-            return;
-        }
 
         if (m_uiCallLightTimer < uiDiff)
         {
@@ -354,15 +145,25 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
 
         if (m_uiStaticDisruptTimer < uiDiff)
         {
-            Unit* SDVictim = m_creature->GetMap()->GetUnit( TargetGUID);
-            if(SDVictim && SDVictim->isAlive())
-                SDVictim->CastSpell(SDVictim, SPELL_STATIC_VISUAL, true);
-
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
                 m_creature->CastSpell(pTarget, SPELL_STATIC_DISRUPTION, false);
 
             m_uiStaticDisruptTimer = urand(7000, 14000);
         }else m_uiStaticDisruptTimer -= uiDiff;
+
+        if (m_uiStormTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                if (m_creature->IsNonMeleeSpellCasted(false))
+                    m_creature->InterruptNonMeleeSpells(false);
+
+                DoScriptText(EMOTE_STORM, m_creature);
+                m_creature->CastSpell(pTarget, SPELL_ELECTRICAL_STORM, false);
+            }
+
+            m_uiStormTimer = 60000;
+        }else m_uiStormTimer -= uiDiff;
 
         if (m_uiGustOfWindTimer < uiDiff)
         {
@@ -371,50 +172,6 @@ struct MANGOS_DLL_DECL boss_akilzonAI : public ScriptedAI
 
             m_uiGustOfWindTimer = urand(20000, 30000);
         }else m_uiGustOfWindTimer -= uiDiff;
-
-        if (!isRaining && m_uiElectricalStorm_Timer < uint32(8000 + rand()%5000))
-        {
-            SetWeather(WEATHER_STATE_HEAVY_RAIN, 0.9999f);
-            isRaining = true;
-        }
-
-        if (m_uiElectricalStorm_Timer < uiDiff)
-        {
-            Unit* target = SelectRandomPlayer(50);
-            if(!target)
-                target = m_creature->getVictim();
-
-            float x, y, z;
-            target->GetPosition(x, y, z);
-            Unit *Cloud = m_creature->SummonCreature(MOB_TEMP_TRIGGER, x, y, m_creature->GetPositionZ() + 10, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
-
-            if(Cloud)
-            {
-                CloudGUID = Cloud->GetObjectGuid();
-                Cloud->addUnitState(MOVE_FLIGHT);
-                Cloud->StopMoving();
-                Cloud->SetFloatValue(OBJECT_FIELD_SCALE_X, 3.0f);
-                Cloud->setFaction(35);
-                Cloud->SetMaxHealth(9999999);
-                Cloud->SetHealth(9999999);
-                Cloud->CastSpell(Cloud, 45213, true); // cloud visual
-                m_creature->StopMoving();
-                Cloud->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                DoScriptText(EMOTE_STORM, m_creature);
-                m_creature->CastSpell(Cloud, SPELL_ELECTRICAL_STORM, false); // siphon soul
-            }
-
-            Unit *Cyclone = m_creature->SummonCreature(MOB_TEMP_TRIGGER, x, y, z, 0, TEMPSUMMON_TIMED_DESPAWN, 15000);
-            if(Cyclone)
-            {
-                Cyclone->CastSpell(Cyclone, 25160, true); // wind visual
-                CycloneGUID = Cyclone->GetObjectGuid();
-            }
-
-            m_uiElectricalStorm_Timer = 60000; //60 seconds(bosskillers)
-            StormCount = 1;
-            StormSequenceTimer = 0;
-        } else m_uiElectricalStorm_Timer -= uiDiff;
 
         if (m_uiSummonEagleTimer < uiDiff)
         {
@@ -546,15 +303,15 @@ CreatureAI* GetAI_mob_soaring_eagle(Creature* pCreature)
 
 void AddSC_boss_akilzon()
 {
-    Script* pNewScript;
+    Script *newscript;
 
-    pNewScript = new Script;
-    pNewScript->Name = "boss_akilzon";
-    pNewScript->GetAI = &GetAI_boss_akilzon;
-    pNewScript->RegisterSelf();
+    newscript = new Script;
+    newscript->Name = "boss_akilzon";
+    newscript->GetAI = &GetAI_boss_akilzon;
+    newscript->RegisterSelf();
 
-    pNewScript = new Script;
-    pNewScript->Name = "mob_soaring_eagle";
-    pNewScript->GetAI = &GetAI_mob_soaring_eagle;
-    pNewScript->RegisterSelf();
+    newscript = new Script;
+    newscript->Name = "mob_soaring_eagle";
+    newscript->GetAI = &GetAI_mob_soaring_eagle;
+    newscript->RegisterSelf();
 }

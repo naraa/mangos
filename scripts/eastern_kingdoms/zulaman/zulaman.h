@@ -44,11 +44,11 @@ enum InstanceZA
     TYPE_J_EGGS_LEFT        = 12,
 
     NPC_AKILZON             = 23574,
-    NPC_NALORAKK         = 23576,
-    NPC_JANALAI          = 23578,
+    // NPC_NALORAKK         = 23576,
+    // NPC_JANALAI          = 23578,
     NPC_HALAZZI             = 23577,
     NPC_MALACRASS           = 24239,
-    NPC_ZULJIN           = 23863,
+    // NPC_ZULJIN           = 23863,
 
     NPC_EGG                 = 23817,
     NPC_SPIRIT_LYNX         = 24143,
