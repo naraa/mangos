@@ -143,7 +143,7 @@ void AddSC_outdoor_pvp_eastern_plaguelands()
     pNewScript = new Script;
     pNewScript->Name = "outdoor_pvp_eastern_plaguelands";
     pNewScript->GetInstanceData = &GetInstanceData_outdoor_pvp_eastern_plaguelands;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 }
 
 

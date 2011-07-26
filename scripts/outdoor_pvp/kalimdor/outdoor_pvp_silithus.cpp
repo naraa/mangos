@@ -274,5 +274,5 @@ void AddSC_outdoor_pvp_silithus()
     pNewScript = new Script;
     pNewScript->Name = "outdoor_pvp_silithus";
     pNewScript->GetInstanceData = &GetInstanceData_outdoor_pvp_silithus;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 }

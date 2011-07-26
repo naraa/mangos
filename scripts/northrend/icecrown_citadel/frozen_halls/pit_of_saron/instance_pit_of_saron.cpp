@@ -159,5 +159,5 @@ void AddSC_instance_pit_of_saron()
     pNewScript = new Script;
     pNewScript->Name = "at_tyrannus";
     pNewScript->pAreaTrigger = &AreaTrigger_at_tyrannus;
-    pNewScript->RegisterSelf();
+    pNewScript->RegisterSelf(false);
 }
