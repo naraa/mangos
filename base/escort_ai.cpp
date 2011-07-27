@@ -316,7 +316,7 @@ void npc_escortAI::UpdateAI(const uint32 uiDiff)
     }
 
     //Check if player or any member of his group is within range
-   /* if (HasEscortState(STATE_ESCORT_ESCORTING) && m_playerGuid && !m_creature->getVictim() && !HasEscortState(STATE_ESCORT_RETURNING))
+    if (HasEscortState(STATE_ESCORT_ESCORTING) && m_playerGuid && !m_creature->getVictim() && !HasEscortState(STATE_ESCORT_RETURNING))
     {
         if (m_uiPlayerCheckTimer < uiDiff)
         {
@@ -339,7 +339,7 @@ void npc_escortAI::UpdateAI(const uint32 uiDiff)
         }
         else
             m_uiPlayerCheckTimer -= uiDiff;
-    }*/
+    }
 
     UpdateEscortAI(uiDiff);
 }
