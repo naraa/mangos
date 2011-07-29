@@ -134,9 +134,9 @@ struct MANGOS_DLL_DECL boss_dredAI : public ScriptedAI
         //Grievous Bite remove
         if (Check_Timer < uiDiff)
         {
-            Unit* pPlayer = m_creature->getVictim();
-            if (pPlayer->GetHealth() == pPlayer->GetMaxHealth())
-                if (pPlayer->HasAura(SPELL_GRIEVOUS_BITE))
+            if (Unit* pPlayer = m_creature->getVictim())
+                if (pPlayer->GetHealth() == pPlayer->GetMaxHealth())
+                    if (pPlayer->HasAura(SPELL_GRIEVOUS_BITE))
                         pPlayer->RemoveAura(SPELL_GRIEVOUS_BITE, EFFECT_INDEX_0);
             Check_Timer = 1000;
         }else Check_Timer -= uiDiff;
