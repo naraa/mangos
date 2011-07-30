@@ -31,6 +31,7 @@ namespace MMAP
     TerrainBuilder::TerrainBuilder(bool skipLiquid) : m_skipLiquid (skipLiquid){ }
     TerrainBuilder::~TerrainBuilder() { }
 
+    /**************************************************************************/
     void TerrainBuilder::getLoopVars(Spot portion, int &loopStart, int &loopEnd, int &loopInc)
     {
         switch (portion)
@@ -63,6 +64,7 @@ namespace MMAP
         }
     }
 
+    /**************************************************************************/
     void TerrainBuilder::loadMap(uint32 mapID, uint32 tileX, uint32 tileY, MeshData &meshData)
     {
         if (loadMap(mapID, tileX, tileY, meshData, ENTIRE))
@@ -74,6 +76,7 @@ namespace MMAP
         }
     }
 
+    /**************************************************************************/
     bool TerrainBuilder::loadMap(uint32 mapID, uint32 tileX, uint32 tileY, MeshData &meshData, Spot portion)
     {
         char mapFileName[255];
@@ -284,7 +287,6 @@ namespace MMAP
         // liquid above ground
         // ground above any liquid type
         // ground below <1.5 yard of water
-
         int loopStart, loopEnd, loopInc, tTriCount = 4;
         bool useTerrain, useLiquid;
 
@@ -293,119 +295,120 @@ namespace MMAP
         int* ltris = ltriangles.getCArray();
         int* ttris = ttriangles.getCArray();
 
+        if (ltriangles.size() + ttriangles.size() == 0)
+            return false;
+
         getLoopVars(portion, loopStart, loopEnd, loopInc);
 
-        if (ltriangles.size() || ttriangles.size())
+        for (int i = loopStart; i < loopEnd; i+=loopInc)
         {
-            for (int i = loopStart; i < loopEnd; i+=loopInc)
+            for (int j = 0; j < 2; ++j)
             {
-                for (int j = 0; j < 2; ++j)
-                {
-                    // default is true, will change to false if needed
-                    useTerrain = true;
-                    useLiquid = true;
-                    uint8 liquidType;
+                // default is true, will change to false if needed
+                useTerrain = true;
+                useLiquid = true;
+                uint8 liquidType;
 
-                    // if there is no liquid, don't use liquid
-                    if (!liquid_type ||
-                        !meshData.liquidVerts.size() ||
-                        !ltriangles.size())
-                         useLiquid = false;
+                // if there is no liquid, don't use liquid
+                if (!liquid_type ||
+                    !meshData.liquidVerts.size() ||
+                    !ltriangles.size())
+                     useLiquid = false;
+                else
+                {
+                    liquidType = getLiquidType(i, liquid_type);
+                    switch (liquidType)
+                    {
+                        default:
+                            useLiquid = false;
+                            break;
+                        case MAP_LIQUID_TYPE_WATER:
+                        case MAP_LIQUID_TYPE_OCEAN:
+                            // merge different types of water
+                            liquidType = NAV_WATER;
+                            break;
+                        case MAP_LIQUID_TYPE_MAGMA:
+                            liquidType = NAV_MAGMA;
+                            break;
+                        case MAP_LIQUID_TYPE_SLIME:
+                            liquidType = NAV_SLIME;
+                            break;
+                        case MAP_LIQUID_TYPE_DARK_WATER:
+                            // players should not be here, so logically neither should creatures
+                            useTerrain = false;
+                            useLiquid = false;
+                            break;
+                    }
+                }
+
+                // if there is no terrain, don't use terrain
+                if (!ttriangles.size())
+                    useTerrain = false;
+
+                // liquid is rendered as quads.  If any triangle has invalid height,
+                // don't render any of the triangles in that quad
+                if (useLiquid)
+                    if ((&lverts[ltris[0]*3])[1] == INVALID_MAP_LIQ_HEIGHT ||
+                        (&lverts[ltris[1]*3])[1] == INVALID_MAP_LIQ_HEIGHT ||
+                        (&lverts[ltris[2]*3])[1] == INVALID_MAP_LIQ_HEIGHT)
+                    {
+                        useLiquid = false;
+                    }
+
+                // if there is a hole here, don't use the terrain
+                if (useTerrain)
+                    useTerrain = !isHole(i, holes);
+
+                if (useTerrain && useLiquid)
+                {
+                    // get the indexes of the corners of the quad
+                    int idx1, idx2, idx3;
+                    if (j == 0)
+                    {
+                        idx1 = 0;
+                        idx2 = 1;
+                        idx3 = tTriCount;
+                    }
                     else
                     {
-                        liquidType = getLiquidType(i, liquid_type);
-                        switch (liquidType)
-                        {
-                            default:
-                                useLiquid = false;
-                                break;
-                            case MAP_LIQUID_TYPE_WATER:
-                            case MAP_LIQUID_TYPE_OCEAN:
-                                // merge different types of water
-                                liquidType = NAV_WATER;
-                                break;
-                            case MAP_LIQUID_TYPE_MAGMA:
-                                liquidType = NAV_MAGMA;
-                                break;
-                            case MAP_LIQUID_TYPE_SLIME:
-                                liquidType = NAV_SLIME;
-                                break;
-                            case MAP_LIQUID_TYPE_DARK_WATER:
-                                // players should not be here, so logically neither should creatures
-                                useTerrain = false;
-                                useLiquid = false;
-                                break;
-                        }
+                        idx1 = 0;
+                        idx2 = 3*tTriCount/2-2;
+                        idx3 = 3*tTriCount/2-1;
                     }
 
-                    // if there is no terrain, don't use terrain
-                    if (!ttriangles.size())
-                        useTerrain = false;
-
-                    // liquid is rendered as quads.  If any triangle has invalid height,
-                    // don't render any of the triangles in that quad
-                    if (useLiquid)
-                        if ((&lverts[ltris[0]*3])[1] == INVALID_MAP_LIQ_HEIGHT ||
-                            (&lverts[ltris[1]*3])[1] == INVALID_MAP_LIQ_HEIGHT ||
-                            (&lverts[ltris[2]*3])[1] == INVALID_MAP_LIQ_HEIGHT)
-                        {
-                            useLiquid = false;
-                        }
-
-                    // if there is a hole here, don't use the terrain
-                    if (useTerrain)
-                        useTerrain = !isHole(i, holes);
-
-                    if (useTerrain && useLiquid)
-                    {
-                        // get the indexes of the corners of the quad
-                        int idx1, idx2, idx3;
-                        if (j == 0)
-                        {
-                            idx1 = 0;
-                            idx2 = 1;
-                            idx3 = tTriCount;
-                        }
-                        else
-                        {
-                            idx1 = 0;
-                            idx2 = 3*tTriCount/2-2;
-                            idx3 = 3*tTriCount/2-1;
-                        }
-
-                        if (useTerrain &&
-                           (&lverts[ltris[0]*3])[1] - 1.5f > (&tverts[ttris[idx1]*3])[1] &&
-                           (&lverts[ltris[1]*3])[1] - 1.5f > (&tverts[ttris[idx2]*3])[1] &&
-                           (&lverts[ltris[2]*3])[1] - 1.5f > (&tverts[ttris[idx3]*3])[1])
-                            useTerrain = false; // if the whole terrain triangle is 1.5yds under liquid, don't use it
-                        else if (useLiquid &&
-                                (&lverts[ltris[0]*3])[1] < (&tverts[ttris[idx1]*3])[1] &&
-                                (&lverts[ltris[1]*3])[1] < (&tverts[ttris[idx2]*3])[1] &&
-                                (&lverts[ltris[2]*3])[1] < (&tverts[ttris[idx3]*3])[1])
-                            useLiquid = false;  // if the whole liquid triangle is under terrain, don't use it
-                    }
-
-                    if (useLiquid)
-                    {
-                        meshData.liquidType.append(liquidType);
-                        for (int k = 0; k < 3; ++k)
-                            meshData.liquidTris.append(ltris[k]);
-                    }
-
-                    if (useTerrain)
-                        for (int k = 0; k < 3*tTriCount/2; ++k)
-                            meshData.solidTris.append(ttris[k]);
-
-                    // advance to next set of triangles
-                    ltris += 3;
-                    ttris += 3*tTriCount/2;
+                    if (useTerrain &&
+                       (&lverts[ltris[0]*3])[1] - 1.5f > (&tverts[ttris[idx1]*3])[1] &&
+                       (&lverts[ltris[1]*3])[1] - 1.5f > (&tverts[ttris[idx2]*3])[1] &&
+                       (&lverts[ltris[2]*3])[1] - 1.5f > (&tverts[ttris[idx3]*3])[1])
+                        useTerrain = false; // if the whole terrain triangle is 1.5yds under liquid, don't use it
+                    else if (useLiquid &&
+                            (&lverts[ltris[0]*3])[1] < (&tverts[ttris[idx1]*3])[1] &&
+                            (&lverts[ltris[1]*3])[1] < (&tverts[ttris[idx2]*3])[1] &&
+                            (&lverts[ltris[2]*3])[1] < (&tverts[ttris[idx3]*3])[1])
+                        useLiquid = false;  // if the whole liquid triangle is under terrain, don't use it
                 }
+
+                if (useLiquid)
+                {
+                    meshData.liquidType.append(liquidType);
+                    for (int k = 0; k < 3; ++k)
+                        meshData.liquidTris.append(ltris[k]);
+                }
+
+                if (useTerrain)
+                    for (int k = 0; k < 3*tTriCount/2; ++k)
+                        meshData.solidTris.append(ttris[k]);
+
+                // advance to next set of triangles
+                ltris += 3;
+                ttris += 3*tTriCount/2;
             }
         }
 
         return meshData.solidTris.size() || meshData.liquidTris.size();
     }
 
+    /**************************************************************************/
     void TerrainBuilder::getHeightCoord(int index, Grid grid, float xOffset, float yOffset, float* coord, float* v)
     {
         // wow coords: x, y, height
@@ -425,6 +428,7 @@ namespace MMAP
         }
     }
 
+    /**************************************************************************/
     void TerrainBuilder::getHeightTriangle(int square, Spot triangle, int* indices, bool liquid/* = false*/)
     {
         int rowOffset = square/V8_SIZE;
@@ -471,6 +475,7 @@ namespace MMAP
 
     }
 
+    /**************************************************************************/
     void TerrainBuilder::getLiquidCoord(int index, int index2, float xOffset, float yOffset, float* coord, float* v)
     {
         // wow coords: x, y, height
@@ -483,6 +488,7 @@ namespace MMAP
     static uint16 holetab_h[4] = {0x1111, 0x2222, 0x4444, 0x8888};
     static uint16 holetab_v[4] = {0x000F, 0x00F0, 0x0F00, 0xF000};
 
+    /**************************************************************************/
     bool TerrainBuilder::isHole(int square, const uint16 holes[16][16])
     {
         int row = square / 128;
@@ -497,6 +503,7 @@ namespace MMAP
         return (hole & holetab_h[holeCol] & holetab_v[holeRow]) != 0;
     }
 
+    /**************************************************************************/
     uint8 TerrainBuilder::getLiquidType(int square, const uint8 liquid_type[16][16])
     {
         int row = square / 128;
@@ -507,6 +514,7 @@ namespace MMAP
         return liquid_type[cellRow][cellCol];
     }
 
+    /**************************************************************************/
     bool TerrainBuilder::loadVMap(uint32 mapID, uint32 tileX, uint32 tileY, MeshData &meshData)
     {
         IVMapManager* vmapManager = new VMapManager2();
@@ -518,18 +526,17 @@ namespace MMAP
             if (result == VMAP_LOAD_RESULT_ERROR)
                 break;
 
-            ModelInstance* models = NULL;
-            uint32 count = 0;
-
             InstanceTreeMap instanceTrees;
             ((VMapManager2*)vmapManager)->getInstanceMapTree(instanceTrees);
 
             if (!instanceTrees[mapID])
                 break;
 
+            ModelInstance* models = NULL;
+            uint32 count = 0;
             instanceTrees[mapID]->getModelInstances(models, count);
 
-            if (!models || !count)
+            if (!models)
                 break;
 
             for (uint32 i = 0; i < count; ++i)
@@ -551,7 +558,7 @@ namespace MMAP
                 bool isM2 = instance.name.find(".m2") != instance.name.npos || instance.name.find(".M2") != instance.name.npos;
 
                 // transform data
-                float scale = models[i].iScale;
+                float scale = instance.iScale;
                 G3D::Matrix3 rotation = G3D::Matrix3::fromEulerAnglesZYX(-1*G3D::pi()*instance.iRot.y/180.f, -1*G3D::pi()*instance.iRot.x/180.f, -1*G3D::pi()*instance.iRot.z/180.f);
                 Vector3 position = instance.iPos;
                 position.x -= 32*GRID_SIZE;
@@ -586,7 +593,7 @@ namespace MMAP
                         vertsY = tilesY + 1;
                         uint8* flags = liquid->GetFlagsStorage();
                         float* data = liquid->GetHeightStorage();
-                        uint8 type;
+                        uint8 type = NAV_EMPTY;
 
                         // convert liquid type to NavTerrain
                         switch (liquid->GetType())
@@ -663,8 +670,8 @@ namespace MMAP
         return retval;
     }
 
-
-    void TerrainBuilder::transform(vector<Vector3> source, vector<Vector3> &transformedVertices, float scale, G3D::Matrix3 rotation, Vector3 position)
+    /**************************************************************************/
+    void TerrainBuilder::transform(vector<Vector3> &source, vector<Vector3> &transformedVertices, float scale, G3D::Matrix3 &rotation, Vector3 &position)
     {
         for (vector<Vector3>::iterator it = source.begin(); it != source.end(); ++it)
         {
@@ -676,7 +683,8 @@ namespace MMAP
         }
     }
 
-    void TerrainBuilder::copyVertices(vector<Vector3> source, G3D::Array<float> &dest)
+    /**************************************************************************/
+    void TerrainBuilder::copyVertices(vector<Vector3> &source, G3D::Array<float> &dest)
     {
         for (vector<Vector3>::iterator it = source.begin(); it != source.end(); ++it)
         {
@@ -686,7 +694,8 @@ namespace MMAP
         }
     }
 
-    void TerrainBuilder::copyIndices(vector<MeshTriangle> source, G3D::Array<int> &dest, int offset, bool flip)
+    /**************************************************************************/
+    void TerrainBuilder::copyIndices(vector<MeshTriangle> &source, G3D::Array<int> &dest, int offset, bool flip)
     {
         if (flip)
         {
@@ -708,13 +717,15 @@ namespace MMAP
         }
     }
 
-    void TerrainBuilder::copyIndices(G3D::Array<int> &dest, G3D::Array<int> source, int offset)
+    /**************************************************************************/
+    void TerrainBuilder::copyIndices(G3D::Array<int> &source, G3D::Array<int> &dest, int offset)
     {
         int* src = source.getCArray();
-        for (int i = 0; i < source.size(); ++i)
+        for (int32 i = 0; i < source.size(); ++i)
             dest.append(src[i] + offset);
     }
 
+    /**************************************************************************/
     void TerrainBuilder::cleanVertices(G3D::Array<float> &verts, G3D::Array<int> &tris)
     {
         map<int, int> vertMap;
@@ -758,6 +769,7 @@ namespace MMAP
         vertMap.clear();
     }
 
+    /**************************************************************************/
     void TerrainBuilder::loadOffMeshConnections(uint32 mapID, uint32 tileX, uint32 tileY, MeshData &meshData, const char* offMeshFilePath)
     {
         // no meshfile input given?
