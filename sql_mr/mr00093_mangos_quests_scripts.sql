@@ -25,6 +25,11 @@ UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 
 UPDATE creature_template SET ScriptName='' WHERE entry=36549;
 UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHERE `entry`=34816;  -- needed to be rerun
 
+-- ----------------------------------------
+-- Quest 12470
+-- ----------------------------------------
+UPDATE creature_template SET ScriptName='npc_hourglass', AIName = '' WHERE entry=27840;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 27840;
 
 -- ----------------------------------------
 -- Bury Those Cockroaches Quest 11608
