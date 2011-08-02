@@ -95,6 +95,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
 
     uint32 m_uiArcaneBuffetTimer;
     uint32 m_uiFrostBreathTimer;
+    uint32 m_uiTailLashTimer;
     uint32 m_uiWildMagicTimer;
     uint32 m_uiSpectralBlastTimer;
     uint32 m_uiExitTimer;
@@ -108,6 +109,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
     void Reset()
     {
         m_uiArcaneBuffetTimer       = 8000;
+        m_uiTailLashTimer           = 30000;
         m_uiFrostBreathTimer        = 24000;
         m_uiWildMagicTimer          = 18000;
         m_uiSpectralBlastTimer      = 30000;
@@ -327,6 +329,15 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         }
         else
             m_uiWildMagicTimer -= diff;
+
+        if (m_uiTailLashTimer < uiDiff)
+        {
+            if (m_creature->getVictim())
+                DoCast(m_creature->getVictim(), SPELL_TAIL_LASH);
+            m_uiTailLashTimer = 30000;
+        }
+        else
+            m_uiTailLashTimer -= uiDiff;
 
         if (m_uiSpectralBlastTimer < diff)
         {
