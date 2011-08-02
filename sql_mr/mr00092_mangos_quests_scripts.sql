@@ -25,6 +25,13 @@ UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 
 UPDATE creature_template SET ScriptName='' WHERE entry=36549;
 UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHERE `entry`=34816;  -- needed to be rerun
 
+
+-- ----------------------------------------
+-- Bury Those Cockroaches Quest 11608
+-- ----------------------------------------
+ 
+UPDATE creature_template SET ScriptName='npc_seaforium_depth_charge' WHERE entry=25401;
+
 -- ----------------------------------------
 -- Quest 11466 fixes and improvements
 -- ----------------------------------------
