@@ -47,6 +47,8 @@ enum KalecgosEncounter
     SAY_SATH_SLAY1                  = -1580014,
     SAY_SATH_SLAY2                  = -1580015,
     SAY_SATH_ENRAGE                 = -1580016,
+    SPELL_HEROIC_STRIKE             = 45026,
+    SPELL_REVITALIZE                = 45027,
 
     //Kalecgos
     SPELL_SPECTRAL_BLAST_DUMMY      = 44869,
@@ -54,8 +56,6 @@ enum KalecgosEncounter
 
     SPELL_ARCANE_BUFFET             = 45018,
     SPELL_FROST_BREATH              = 44799,
-    SPELL_HEROIC_STRIKE             = 45026,
-    SPELL_REVITALIZE                = 45027,
     SPELL_TAIL_LASH                 = 45122,
     SPELL_TRANSFORM_KALEC           = 45027,
     SPELL_CRAZED_RAGE               = 44806,                // this should be 44807 instead
@@ -84,7 +84,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
 
         /*if (pCreature->getFaction() != 14)
         {
-            error_db_log("SD2: creature entry %u has faction %u but spellId %u requires different.", pCreature->GetEntry(), pCreature->getFaction(), SPELL_SPECTRAL_REALM_FORCE_FACTION);
+            error_db_log("SD2: creature entry %u has faction %u but spellId %u requires uiDifferent.", pCreature->GetEntry(), pCreature->getFaction(), SPELL_SPECTRAL_REALM_FORCE_FACTION);
             pCreature->setFaction(14);
         }*/
 
@@ -247,7 +247,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->getVictim() || !m_creature->SelectHostileTarget() || m_bBanished)
             return;
@@ -280,7 +280,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
 
         if (m_uiExitTimer)
         {
-            if (m_uiExitTimer <= diff)
+            if (m_uiExitTimer <= uiDiff)
             {
                 debug_log("SD2: KALEC: Exiting the arena");
 
@@ -291,10 +291,10 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
 
                 m_creature->GetMotionMaster()->MovePoint(1, x, y, z);
                 m_uiExitTimer = 0;
-            }else m_uiExitTimer -= diff;
+            }else m_uiExitTimer -= uiDiff;
         }
 
-        if (m_uiArcaneBuffetTimer < diff)
+        if (m_uiArcaneBuffetTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_ARCANE_BUFFET) == CAST_OK)
             {
@@ -305,9 +305,9 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             }
         }
         else
-            m_uiArcaneBuffetTimer -= diff;
+            m_uiArcaneBuffetTimer -= uiDiff;
 
-        if (m_uiFrostBreathTimer < diff)
+        if (m_uiFrostBreathTimer < uiDiff)
         {
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_FROST_BREATH) == CAST_OK)
             {
@@ -318,9 +318,9 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             }
         }
         else
-            m_uiFrostBreathTimer -= diff;
+            m_uiFrostBreathTimer -= uiDiff;
 
-        if (m_uiWildMagicTimer < diff)
+        if (m_uiWildMagicTimer < uiDiff)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(target, WildMagic[rand()%6]);
@@ -328,7 +328,7 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             m_uiWildMagicTimer = 19000;
         }
         else
-            m_uiWildMagicTimer -= diff;
+            m_uiWildMagicTimer -= uiDiff;
 
         if (m_uiTailLashTimer < uiDiff)
         {
@@ -339,14 +339,14 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
         else
             m_uiTailLashTimer -= uiDiff;
 
-        if (m_uiSpectralBlastTimer < diff)
+        if (m_uiSpectralBlastTimer < uiDiff)
         {
             m_bHasSpectralTarget = false;
             m_creature->CastSpell(m_creature, SPELL_SPECTRAL_BLAST_DUMMY, false);
             m_uiSpectralBlastTimer = 30000;
         }
         else
-            m_uiSpectralBlastTimer -= diff;
+            m_uiSpectralBlastTimer -= uiDiff;
 
         if (!m_bBanished)
             DoMeleeAttackIfReady();
@@ -427,7 +427,7 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_SATH_SLAY1 : SAY_SATH_SLAY2, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->getVictim() || !m_creature->SelectHostileTarget() || m_bBanished)
             return;
@@ -444,31 +444,31 @@ struct MANGOS_DLL_DECL boss_sathrovarrAI : public ScriptedAI
             m_bEnraged = true;
         }
 
-        if (CorruptingStrikeTimer < diff)
+        if (CorruptingStrikeTimer < uiDiff)
         {
             if (!urand(0, 1))
                 DoScriptText(SAY_SATH_SPELL2, m_creature);
 
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_CORRUPTING_STRIKE);
             CorruptingStrikeTimer = 13000;
-        }else CorruptingStrikeTimer -= diff;
+        }else CorruptingStrikeTimer -= uiDiff;
 
-        if (CurseOfBoundlessAgonyTimer < diff)
+        if (CurseOfBoundlessAgonyTimer < uiDiff)
         {
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCastSpellIfCan(pTarget, SPELL_CURSE_OF_BOUNDLESS_AGONY);
 
             CurseOfBoundlessAgonyTimer = 35000;
-        }else CurseOfBoundlessAgonyTimer -= diff;
+        }else CurseOfBoundlessAgonyTimer -= uiDiff;
 
-        if (ShadowBoltVolleyTimer < diff)
+        if (ShadowBoltVolleyTimer < uiDiff)
         {
             if (!urand(0, 1))
                 DoScriptText(SAY_SATH_SPELL1, m_creature);
 
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_BOLT_VOLLEY);
             ShadowBoltVolleyTimer = 15000;
-        }else ShadowBoltVolleyTimer -= diff;
+        }else ShadowBoltVolleyTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -512,12 +512,12 @@ struct MANGOS_DLL_DECL boss_kalecgos_humanoidAI : public ScriptedAI
         // Whatever happens when Kalec (Half-elf) dies
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->getVictim() || !m_creature->SelectHostileTarget())
             return;
 
-        if (RevitalizeTimer < diff)
+        if (RevitalizeTimer < uiDiff)
         {
             if (m_pInstance)
             {
@@ -526,13 +526,13 @@ struct MANGOS_DLL_DECL boss_kalecgos_humanoidAI : public ScriptedAI
                     DoCastSpellIfCan(pPlayer, SPELL_REVITALIZE);*/
                 RevitalizeTimer = 30000;
             }
-        }else RevitalizeTimer -= diff;
+        }else RevitalizeTimer -= uiDiff;
 
-        if (HeroicStrikeTimer < diff)
+        if (HeroicStrikeTimer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_HEROIC_STRIKE);
             HeroicStrikeTimer = 30000;
-        }else HeroicStrikeTimer -= diff;
+        }else HeroicStrikeTimer -= uiDiff;
 
         if (m_creature->GetHealthPercent() < 20.0f && !HasYelled20Percent)
         {
@@ -609,25 +609,25 @@ CreatureAI* GetAI_boss_kalecgos_humanoid(Creature* pCreature)
 
 void AddSC_boss_kalecgos()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->GetAI = &GetAI_boss_kalecgos;
-    newscript->Name = "boss_kalecgos";
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->GetAI = &GetAI_boss_kalecgos;
+    pNewScript->Name = "boss_kalecgos";
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->GetAI = &GetAI_boss_sathrovarr;
-    newscript->Name = "boss_sathrovarr";
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->GetAI = &GetAI_boss_sathrovarr;
+    pNewScript->Name = "boss_sathrovarr";
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->GetAI = &GetAI_boss_kalecgos_humanoid;
-    newscript->Name = "boss_kalecgos_humanoid";
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->GetAI = &GetAI_boss_kalecgos_humanoid;
+    pNewScript->Name = "boss_kalecgos_humanoid";
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->pGOUse = &GOUse_go_spectral_rift;
-    newscript->Name = "go_spectral_rift";
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->pGOUse = &GOUse_go_spectral_rift;
+    pNewScript->Name = "go_spectral_rift";
+    pNewScript->RegisterSelf();
 }
