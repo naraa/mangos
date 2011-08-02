@@ -344,7 +344,7 @@ enum
 
 struct MANGOS_DLL_DECL npc_hourglassAI : public ScriptedAI 
 { 
-    npc_hourglassAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); } 
+    npc_hourglassAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); SetCombatMovement(false); } 
 
     uint32 uiWaveTimer; 
     uint32 uiWaveCounter;
