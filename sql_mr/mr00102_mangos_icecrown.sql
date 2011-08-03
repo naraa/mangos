@@ -23,6 +23,12 @@ DELETE FROM `gameobject` WHERE `guid` IN (913334);
 
 UPDATE `instance_template` SET `ScriptName`='instance_icecrown_spire' WHERE `map`=631;
 
+-- fix for ytdb data on frostwing door/puddle
+
+DELETE FROM `gameobject` WHERE `id`=201919;
+INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
+(7807, 201919, 631, 1, 128, 4356.52, 2651.74, 351.1, 1.61378, 0, 0, 0.722138, 0.691749, 25, 255, 1);
+
 -- --------
 -- Saurfang
 -- --------
