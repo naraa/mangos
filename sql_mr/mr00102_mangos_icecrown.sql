@@ -111,6 +111,14 @@ INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('6978
 DELETE FROM `spell_script_target` WHERE `entry` = 69508;
 INSERT INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('69508', '1', '37986');
 
+-- fix rotface combat reach was set to 40 he could hit u from across the room
+DELETE FROM `creature_model_info` WHERE (`modelid`=31005);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31005, 5, 4, 2, 0, 0);
+
+-- fix stinky modelID info
+DELETE FROM `creature_model_info` WHERE (`modelid`=30483);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (30483, 5, 1, 2, 0, 0);
+
 -- ---------
 -- Festergut
 -- ---------
@@ -126,6 +134,14 @@ UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14,  `ScriptName`
 -- DELETE FROM `creature_template_addon` WHERE `entry` = 36659;
 -- Visual effect mobs from Timmit
 UPDATE `creature` SET `spawnMask` = 15, `modelid` = 11686, `spawntimesecs` = 300 WHERE `id`=37013;
+
+-- fixed modelID info
+DELETE FROM `creature_model_info` WHERE (`modelid`=31006);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31006, 5, 4, 2, 0, 0);
+
+-- fix peroicus modelID info
+DELETE FROM `creature_model_info` WHERE (`modelid`=30483);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (30483, 5, 1, 2, 0, 0);
 
 -- -------------------
 -- Professor putricide
