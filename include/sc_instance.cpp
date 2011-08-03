@@ -323,9 +323,9 @@ void DialogueHelper::DialogueUpdate(uint32 uiDiff)
 
 void ScriptedInstance::DestroyItemFromAllPlayers(uint32 uiItemId)
 {
-	 Map::PlayerList const& lPlayers = instance->GetPlayers();
+    Map::PlayerList const& lPlayers = instance->GetPlayers();
 
-	if (!lPlayers.isEmpty())
+    if (!lPlayers.isEmpty())
     {
         for(Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
         {
@@ -334,6 +334,6 @@ void ScriptedInstance::DestroyItemFromAllPlayers(uint32 uiItemId)
                     pPlayer->DestroyItemCount(uiItemId,pPlayer->GetItemCount(uiItemId),true);
         }
 	}
-	else
-		error_log("SD2: DestroyItemFromAllPlayers attempt to remove item: %u but no players in map.", uiItemId);
+    else
+        error_log("SD2: DestroyItemFromAllPlayers attempt to remove item: %u but no players in map.", uiItemId);
 }
