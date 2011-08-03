@@ -49,7 +49,7 @@ INSERT INTO `spell_proc_event` VALUES
 -- Deathwhisper
 -- ------------
 
-UPDATE `creature_template` SET `ScriptName`='boss_lady_deathwhisper' WHERE `entry`=36855;
+UPDATE `creature_template` SET `ScriptName`='boss_lady_deathwhisper', `AIName`='' WHERE `entry`=36855;
 UPDATE `creature_template` SET `faction_A`=14, `faction_H`=14,`ScriptName`='mob_vengeful_shade', `AIName`='' WHERE `entry`= 38222;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_adherent', `AIName`='' WHERE `entry`= 37949;
 UPDATE `creature_template` SET `ScriptName`='mob_cult_fanatic', `AIName`='' WHERE `entry`= 37890;
@@ -58,11 +58,11 @@ UPDATE `creature_template` SET `ScriptName`='mob_cult_fanatic', `AIName`='' WHER
 -- Marrowgar
 -- ---------
 
-UPDATE `creature_template` SET `ScriptName`='boss_lord_marrowgar' WHERE `entry`= 36612;
+UPDATE `creature_template` SET `ScriptName`='boss_lord_marrowgar', `AIName`='' WHERE `entry`= 36612;
 UPDATE `gameobject_template` SET `faction` = '114',`data0` = '0' WHERE `gameobject_template`.`entry` IN (201910,201911);
 UPDATE `gameobject` SET `state` = '1' WHERE `guid` IN (72526,72525);
-UPDATE `creature_template` SET `ScriptName`='mob_coldflame', `minlevel` = 82, `maxlevel` = 82, `modelid_1` = 11686, `modelid_2` = 11686, `modelid_3` = 11686, `modelid_4` = 11686, `faction_A` = 14, `faction_H` = 14  WHERE `entry`= 36672;
-UPDATE `creature_template` SET `ScriptName`='mob_bone_spike' WHERE `entry`= 38711;
+UPDATE `creature_template` SET `ScriptName`='mob_coldflame', `minlevel` = 82, `maxlevel` = 82, `modelid_1` = 11686, `modelid_2` = 11686, `modelid_3` = 11686, `modelid_4` = 11686, `faction_A` = 14, `faction_H` = 14, `AIName`=''  WHERE `entry`= 36672;
+UPDATE `creature_template` SET `ScriptName`='mob_bone_spike', `AIName`='' WHERE `entry`= 38711;
 
 -- --------------
 -- Gunship battle
@@ -250,7 +250,7 @@ UPDATE `gameobject` SET `state` = '1' WHERE `id` IN (201380,201381,201382,201383
 -- ----------
 -- Sindragosa
 -- ----------
-UPDATE `creature_template` SET `ScriptName`='boss_sindragosa' WHERE `entry`= 36853;
+UPDATE `creature_template` SET `ScriptName`='boss_sindragosa', `AIName`='' WHERE `entry`= 36853;
 UPDATE `creature_template` SET `ScriptName`='mob_rimefang', `AIName`='' WHERE `entry`= 37533;
 UPDATE `creature_template` SET `ScriptName`='mob_spinestalker', `AIName`='' WHERE `entry`= 37534;
 
