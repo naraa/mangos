@@ -26,7 +26,6 @@ INSERT into script_texts (entry,content_default,type,comment) VALUES
 (-1760010,'Add orange, quickly !',0,'SAY_ADD_ORANGE'),
 (-1760011,'You failed! You will have to begin new destillation process if you still want cask',0,'SAY_FAIL');
 
-
 DELETE FROM script_texts WHERE entry BETWEEN -1999855 AND -1999852;
 INSERT INTO script_texts (`entry`,`content_default`,`comment`) VALUES
 (-1999855,'<sigh> ... This is the end of me','Crusader Lamoof - moan'),
@@ -43,3 +42,5 @@ INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
 (-1999814,'Free rum? Why... that\'s me favourite kind!',0,'Jack Adams (4)'),
 (-1999813,'Sweet Neptulon! That was... one drink... too many!',0,'Jack Adams (5)'),
 (-1999812,'What are you lot looking at? Pour me another drink!',0,'Jack Adams (6)');
+
+DELETE FROM script_texts WHERE entry BETWEEN -1000598 AND -1000594;  -- clean up of script texts for quest 14107

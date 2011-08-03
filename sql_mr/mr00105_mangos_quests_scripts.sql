@@ -28,6 +28,23 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR 
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 
+-- ---------------
+-- Quest 14107 ---
+-- ---------------
+
+-- still needs support to grip of scourge server side effect and immue to the spell for quest
+
+DELETE FROM `item_required_target` WHERE `entry` = 47033;
+INSERT INTO `item_required_target` (`entry`, `type`, `targetEntry`) VALUES ('47033', '1', '32149');
+UPDATE `creature_template` SET `KillCredit1` = 35055 WHERE `entry` = 32149; -- set fallen proxy
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 32149;
+UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 35055 WHERE `entry` = 14107;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '32149';
+
+-- addition to EAI for fallen hero  
+DELETE FROM `creature_ai_scripts` WHERE (`id`='3214952'); 
+INSERT INTO `creature_ai_scripts` VALUES ('3214952', '32149', '0', '0', '100', '1', '3000', '4000', '5000', '7000', '11', '11976', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'Strike  -- fallen hero timed cast ');
+
 -- ---------------------
 -- Quest::14111---------
 -- ---------------------
