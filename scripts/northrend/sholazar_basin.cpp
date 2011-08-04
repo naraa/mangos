@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Sholazar_Basin
 SD%Complete: 100
-SDComment: Quest support: 12573, 12570, 12580, 12688
+SDComment: Quest support: 12573, 12570, 12580, 12644, 12645, 12688,
 SDCategory: Sholazar Basin
 EndScriptData */
 
@@ -26,6 +26,15 @@ npc_helice
 npc_injured_rainspeaker
 npc_mosswalker_victim
 npc_vekjik - TODO, can be moved to database (already exist)
+NPC_HEMET_NESINGWAY
+NPC_HADRIUS_HARLOWE
+NPC_TAMARA_WOBBLESPROCKET
+Tipsy McManus
+GO_BARREL_OF_ORANGES
+GO_BARREL_OF_PAPAYAS
+GO_BARREL_OF_BANANAS
+GO_PRESSURE_VALVE
+GO_BRAZIER
 EndContentData */
 
 #include "precompiled.h"
