@@ -30,11 +30,13 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR 
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492') OR (`entry`='-312493');
+
 -- ---------------
 -- Quest 14107 ---
 -- ---------------
 
 -- still needs support to grip of scourge server side effect and immue to the spell for quest
+
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_fallen_hero_spirit' WHERE `entry` = 32149;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scourge_conventor' WHERE `entry` = 32257;
 
@@ -45,7 +47,8 @@ UPDATE `creature_template` SET `KillCredit1` = 35055 WHERE `entry` = 32149; -- s
 UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 35055 WHERE `entry` = 14107;
 UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 32149; -- Fallens arent suppose to attack unless attacked
 UPDATE `creature_template` SET `maxmana` = 7786 WHERE `entry` = 32149; -- updated fallen mana to 3.3.5 standard
-
+UPDATE `creature_template` SET `maxmana` = 7988 WHERE `entry` = 32257; -- updated scourgeconv mob mana to 3.3.5
+UPDATE `creature_template` SET `modelid_1` = 27651, `modelid_2` = 27651, `modelid_3` = 27651 WHERE `entry` = 32257; -- conventors are skeletons
 -- ---------------------
 -- Quest::14111---------
 -- ---------------------
