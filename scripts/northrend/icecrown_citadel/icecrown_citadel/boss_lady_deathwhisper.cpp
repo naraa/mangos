@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public BSWScriptedAI
             case 1:
                DoScriptText(-1631030,m_creature,pVictim);
                break;
-        };
+        }
     }
 
     void JustReachedHome()
@@ -532,24 +532,25 @@ CreatureAI* GetAI_mob_cult_fanatic(Creature* pCreature)
 
 void AddSC_boss_lady_deathwhisper()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "boss_lady_deathwhisper";
-    newscript->GetAI = &GetAI_boss_lady_deathwhisper;
-    newscript->RegisterSelf();
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mob_vengeful_shade";
-    newscript->GetAI = &GetAI_mob_vengeful_shade;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_lady_deathwhisper";
+    pNewScript->GetAI = &GetAI_boss_lady_deathwhisper;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_cult_adherent";
-    newscript->GetAI = &GetAI_mob_cult_adherent;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_vengeful_shade";
+    pNewScript->GetAI = &GetAI_mob_vengeful_shade;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_cult_fanatic";
-    newscript->GetAI = &GetAI_mob_cult_fanatic;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_cult_adherent";
+    pNewScript->GetAI = &GetAI_mob_cult_adherent;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "mob_cult_fanatic";
+    pNewScript->GetAI = &GetAI_mob_cult_fanatic;
+    pNewScript->RegisterSelf();
 }
