@@ -2,6 +2,14 @@
 DELETE FROM scripted_areatrigger WHERE entry=3626;
 INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
+-- temp fix need to find true fix
+-- help fix quest 12813 currently
+-- insert been commented out til i figure out how to handle this guy in this area  he shouldn't be here like this or in this form or something
+DELETE FROM `creature` WHERE `id`=29560;
+-- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+-- (88692, 29560, 571, 1, 1, 0, 0, 7458.74, 4846.24, 54.1606, 0.0676441, 300, 0, 0, 63000, 19970, 0, 0);
+
+
 -- -----------------------------------
 -- mangosR2 EAI CleanUp for quests/sd2
 -- -----------------------------------
@@ -30,6 +38,88 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR 
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492') OR (`entry`='-312493');
+
+
+-- ----------------------------------------------------------------
+-- Start of Quest and related data and fixes ----------------------
+-- ----------------------------------------------------------------
+
+-- ---------------
+-- Quest 12813 ---
+-- ---------------
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29329;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29330;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29333;
+
+
+-- fixed spawn of onslaught harbor guards
+DELETE FROM `creature` WHERE `id`=29330;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(120868, 29330, 571, 1, 1, 0, 0, 7524.52, 4846.26, 54.1595, 0.0303891, 600, 0, 0, 12175, 0, 0, 0),
+(120869, 29330, 571, 1, 1, 0, 0, 7524.35, 4849.76, 54.1595, 0.0343194, 600, 0, 0, 12175, 0, 0, 0),
+(120870, 29330, 571, 1, 1, 0, 0, 7505.04, 4845.96, 54.1604, 0.0186107, 600, 0, 0, 12175, 0, 0, 0),
+(120871, 29330, 571, 1, 1, 0, 0, 7505.39, 4849.73, 54.1604, 0.0421631, 600, 0, 0, 12175, 0, 0, 0),
+(120874, 29330, 571, 1, 1, 0, 0, 7698.62, 4863.31, 8.10987, 0.0421443, 600, 0, 0, 12175, 0, 0, 0),
+(120875, 29330, 571, 1, 1, 0, 0, 7698.12, 4852.14, 8.2296, 0.0264354, 600, 0, 0, 12175, 0, 0, 0),
+(56765, 29330, 571, 1, 1, 0, 0, 7822.03, 5065.76, 1.34168, 3.19317, 600, 0, 0, 12175, 0, 0, 0),
+(56764, 29330, 571, 1, 1, 0, 0, 7826.57, 5022.96, 2.33828, 1.49592, 600, 0, 0, 12175, 0, 0, 0),
+(56763, 29330, 571, 1, 1, 0, 0, 7893.25, 4991.14, 6.24547, 0.0986963, 600, 0, 0, 12175, 0, 0, 0),
+(56762, 29330, 571, 1, 1, 0, 0, 7890.09, 4918.48, 1.80733, 0.177237, 600, 0, 0, 12175, 0, 0, 0),
+(56761, 29330, 571, 1, 1, 0, 0, 7905.39, 4864.59, 1.58049, 5.86509, 600, 0, 0, 12175, 0, 0, 0),
+(56760, 29330, 571, 1, 1, 0, 0, 7900.21, 4824.12, 2.04582, 2.19414, 600, 0, 0, 12175, 0, 0, 0),
+(56759, 29330, 571, 1, 1, 0, 0, 7845.14, 4863.29, 4.0894, 5.96169, 600, 0, 0, 12175, 0, 0, 0),
+(56766, 29330, 571, 1, 1, 0, 0, 7836.08, 5117.19, 1.62269, 1.46293, 600, 0, 0, 12175, 0, 0, 0),
+(56767, 29330, 571, 1, 1, 0, 0, 7622.53, 4814.38, 20.3294, 0.700302, 600, 0, 0, 12175, 0, 0, 0),
+(56768, 29330, 571, 1, 1, 0, 0, 7625.13, 4889.11, 19.9184, 4.97915, 600, 0, 0, 12175, 0, 0, 0),
+(4456496, 29330, 571, 1, 65535, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
+(4456497, 29330, 571, 1, 65535, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
+
+-- ACID scripts (ytdb and R2 acid combined 8P ) and related fixes
+
+-- Still needs texts if any
+-- Timers could use adjusting 
+
+-- onslaught Paladin
+UPDATE `creature_template` SET `maxmana` = 7988 WHERE `entry` = 29329;
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2932951');
+INSERT INTO `creature_ai_scripts` VALUES ('2932951', '29329', '8', '0', '100', '0', '52741', '-1', '0', '0', '11', '54415', '0', '22', '33', '29398', '6', '0', '41', '0', '0', '0', 'ytdb-q12813');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2932952');
+INSERT INTO `creature_ai_scripts` VALUES ('2932952', '29329', '0', '0', '100', '0', '4000', '6000', '10000', '14000', '11', '19131', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast shield charge');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2932953');
+INSERT INTO `creature_ai_scripts` VALUES ('2932953', '29329', '0', '0', '100', '0', '7000', '9000', '13000', '16000', '11', '32774', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast Avengers shield');
+
+-- onslaught gryphon rider
+UPDATE `creature_template` SET `spell2` = 40652, `spell3` = '' WHERE `entry` = 29333; -- removed incorrect and dupe throw spear spell
+UPDATE `creature_template` SET `maxmana` = 7988 WHERE `entry` = 29333;
+UPDATE `creature_template` SET `maxhealth` = 12600 WHERE `entry` = 29333;
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933351');
+INSERT INTO `creature_ai_scripts` VALUES ('2933351', '29333', '8', '0', '100', '0', '52741', '-1', '0', '0', '11', '54415', '0', '22', '33', '29398', '6', '0', '41', '0', '0', '0', 'ytdb_q12813');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933352');
+INSERT INTO `creature_ai_scripts` VALUES ('2933352', '29333', '9', '0', '100', '0', '10', '40', '5000', '7000', '11', '54617', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast throw spear ');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933353');
+INSERT INTO `creature_ai_scripts` VALUES ('2933353', '29333', '9', '0', '100', '0', '1', '5', '5000', '7000', '11', '40652', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast wing clip');
+
+-- onslaught harbor guard
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933051');
+INSERT INTO `creature_ai_scripts` VALUES ('2933051', '29330', '8', '0', '100', '0', '52741', '-1', '0', '0', '11', '54415', '0', '22', '33', '29398', '6', '0', '41', '0', '0', '0', 'ytdb-q12813');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933052');
+INSERT INTO `creature_ai_scripts` VALUES ('2933052', '29330', '9', '0', '100', '0', '5', '30', '5000', '6000', '11', '6660', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast shoot');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933053');
+INSERT INTO `creature_ai_scripts` VALUES ('2933053', '29330', '9', '0', '100', '0', '5', '30', '7000', '8000', '11', '18802', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast frost shoot');
+
+-- just some area related fixes
+
+-- onslauhgt raven bishop
+UPDATE `creature_template` SET `maxmana` = 17628 WHERE `entry` = 29338;
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933801');
+INSERT INTO `creature_ai_scripts` VALUES ('2933801', '29338', '0', '0', '100', '0', '6000', '7500', '8000', '10000', '11', '50740', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast raven flock');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2933802');
+INSERT INTO `creature_ai_scripts` VALUES ('2933802', '29338', '2', '0', '100', '0', '40', '30', '20', '40', '11', '50750', '0', '21', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast raven heal');
+-- need to implent blessing of the light  need to do more research on this spell   -- server side script effevt
+
+-- onslaught darkweaver
+UPDATE `creature_template` SET `maxmana` = 35256 WHERE `entry` = 29614;
 
 -- ---------------
 -- Quest 14107 ---
@@ -201,15 +291,15 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- EventAI -- one additional has been made to YTDB acid  a despawn  so quest graphics and effects reset for next player  at the moment its 2 mins to despawn and 30 secs to respawn (credit triggers are invis) quest might take longer then 2 mins 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25090';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2509051');
-INSERT INTO `creature_ai_scripts` VALUES ('2509051', '25090', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25090', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543');
+INSERT INTO `creature_ai_scripts` VALUES ('2509051', '25090', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25090', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25091';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2509151');
-INSERT INTO `creature_ai_scripts` VALUES ('2509151', '25091', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25091', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543');
+INSERT INTO `creature_ai_scripts` VALUES ('2509151', '25091', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25091', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25092';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2509251');
-INSERT INTO `creature_ai_scripts` VALUES ('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543');
+INSERT INTO `creature_ai_scripts` VALUES ('2509251', '25092', '8', '0', '100', '1', '45115', '-1', '0', '0', '33', '25092', '6', '0', '11', '73119', '0', '22', '41', '120000', '0', '0', 'ytdb-q11542,11543&R2');
 
 -- -------------------------
 -- fix quest toxic_test 9051 -- still not working is kill credit
@@ -252,9 +342,7 @@ minmana=7031,
 maxmana=7196
 WHERE entry=25474;
 
-UPDATE `creature_template` SET
-`ScriptName`='npc_beryl_sorcerer' , AIName=''
-WHERE entry=25316;
+UPDATE `creature_template` SET `ScriptName`='npc_beryl_sorcerer' , AIName='' WHERE entry=25316;
 
 -- ---------------------------------------------------
 -- Mob support for Quest: Powering Our Defenses (8490)
@@ -265,7 +353,7 @@ UPDATE `creature_template` SET AIName='EventAI', flags_extra=flags_extra|64 WHER
 
 DELETE FROM `creature_ai_scripts` WHERE creature_id = 17086;
 INSERT INTO `creature_ai_scripts` VALUES
-(1708601,17086,2,0,100,0,25,0,0,0,11,8599,0,1,1,-106,0,0,0,0,0,0,'Enraged Wraith - Cast Enrage on 50% HP');
+(1708601,17086,2,0,100,0,25,0,0,0,11,8599,0,1,1,-106,0,0,0,0,0,0,'R2 - Enraged Wraith - Cast Enrage on 50% HP');
 
 -- ---------------
 -- Gamel the Cruel
@@ -275,7 +363,7 @@ UPDATE creature SET spawntimesecs = 30 WHERE id = 26449;
 UPDATE creature_template SET AIName = 'EventAI', dmg_multiplier = 2 WHERE entry = 26449;
 DELETE FROM creature_ai_scripts WHERE creature_id = 26449;
 INSERT INTO creature_ai_scripts VALUES
-(2644901, 26449, 0,0,80,1, 2000,2000,5000,5000, 11,19643,1,0, 0,0,0,0, 0,0,0,0,'Gamel the Cruel - mortal strike');
+(2644901, 26449, 0,0,80,1, 2000,2000,5000,5000, 11,19643,1,0, 0,0,0,0, 0,0,0,0,'R2 - Gamel the Cruel - mortal strike');
 
 -- ---------------------------
 -- fix quest _abduction 11590
@@ -297,14 +385,14 @@ DELETE FROM creature WHERE id=28523;  -- deletes  nass kc bunny credit needs to 
 -- -----------------------------
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26293';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2629302');
-INSERT INTO `creature_ai_scripts` VALUES ('2629302', '26293', '2', '0', '100', '0', '70', '50', '0', '0', '1', '-262930', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Hulking Jormungar - emote between 70% and 50% ');
+INSERT INTO `creature_ai_scripts` VALUES ('2629302', '26293', '2', '0', '100', '0', '70', '50', '0', '0', '1', '-262930', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - Hulking Jormungar - emote between 70% and 50% ');
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26293';
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2629301');
-INSERT INTO `creature_ai_scripts` VALUES ('2629301', '26293', '9', '0', '100', '1', '0', '30', '14000', '17000', '11', '50293', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Hulking Jormungar - Cast Corrosive Poison');
+INSERT INTO `creature_ai_scripts` VALUES ('2629301', '26293', '9', '0', '100', '1', '0', '30', '14000', '17000', '11', '50293', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', ' R2 - Hulking Jormungar - Cast Corrosive Poison');
 
 DELETE FROM `creature_ai_texts` WHERE entry IN ('-262930');
-INSERT INTO `creature_ai_texts` VALUES ('-262930', 'The Hulking Jormungar falters for a moment, opening its mouth wide.', '', '', '', '', '', '', '', '', '3', '0', '0', '0', 'Hulking Jormungar-raid emote');
+INSERT INTO `creature_ai_texts` VALUES ('-262930', 'The Hulking Jormungar falters for a moment, opening its mouth wide.', '', '', '', '', '', '', '', '', '3', '0', '0', '0', 'R2 - Hulking Jormungar-raid emote');
 
 -- ------------------------------------------
 -- Support for quest The Denouncement (12273)
@@ -327,10 +415,10 @@ INSERT INTO item_required_target VALUES
 -- Texts
 DELETE FROM creature_ai_texts WHERE entry IN (-272371,-272351,-272341,-272361);
 INSERT INTO creature_ai_texts VALUES
-(-272371,'High general Abbendis personally told me that it was a mistake to come north and that we\'re doomed! I urge you all to lay down your weapons and leave before it\'s too late!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Commander Jordan yell'),
-(-272351,'Renounce the Scarlet Onslaught! Don\'t listen to the lies of the high general and the grand admiral any longer!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Lead Cannoneer Zierhut yell'),
-(-272341,'You are being misled! The Onslaught is all lies! The Scourge and the Forsaken are not our enemies! Wake up!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Blacksmith Goodman yell'),
-(-272361,'Abbendis is nothing but a harlot and Grand Admiral Westwind is selling her cheap like he sold us out!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'Stable Master Mercer yell');
+(-272371,'High general Abbendis personally told me that it was a mistake to come north and that we\'re doomed! I urge you all to lay down your weapons and leave before it\'s too late!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Commander Jordan yell'),
+(-272351,'Renounce the Scarlet Onslaught! Don\'t listen to the lies of the high general and the grand admiral any longer!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Lead Cannoneer Zierhut yell'),
+(-272341,'You are being misled! The Onslaught is all lies! The Scourge and the Forsaken are not our enemies! Wake up!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Blacksmith Goodman yell'),
+(-272361,'Abbendis is nothing but a harlot and Grand Admiral Westwind is selling her cheap like he sold us out!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'R2 - Stable Master Mercer yell');
 
 -- ACID
 DELETE FROM creature_ai_scripts WHERE id IN (2723701,2723702,2723703,2723704,2723705,2723501,2723502,2723503,2723504,2723401,2723402,2723403,2723404,2723405,2723601,2723602,2723603,2723604);
@@ -339,47 +427,47 @@ INSERT INTO creature_ai_scripts VALUES
 -- Commander Jordan (27237)
 
 -- yell
-(2723701,27237,4,0,100,6,0,0,0,0,1,-272371,0,0,0,0,0,0,0,0,0,0,'Commander Jordan - Yell on Aggro'),
+(2723701,27237,4,0,100,6,0,0,0,0,1,-272371,0,0,0,0,0,0,0,0,0,0,'R2 - Commander Jordan - Yell on Aggro'),
 -- Avenging Wrath (50837)
-(2723702,27237,0,0,100,1,1000,3000,25000,30000,11,50837,0,0,0,0,0,0,0,0,0,0,'Commander Jordan - Cast Avenging Wrath'),
+(2723702,27237,0,0,100,1,1000,3000,25000,30000,11,50837,0,0,0,0,0,0,0,0,0,0,'R2 - Commander Jordan - Cast Avenging Wrath'),
 -- Consecration (32773)
-(2723703,27237,9,0,100,1,0,10,18000,23000,11,32773,0,1,0,0,0,0,0,0,0,0,'Commander Jordan - Cast Consecration'),
+(2723703,27237,9,0,100,1,0,10,18000,23000,11,32773,0,1,0,0,0,0,0,0,0,0,'R2 -Commander Jordan - Cast Consecration'),
 -- Kill credit (48723/48724)
-(2723704,27237,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'Commander Jordan - Set Phase 2 after spell hit'),
-(2723705,27237,6,1,100,0,0,0,0,0,33,27426,6,3,0,0,0,0,0,0,0,0,'Commander Jordan - Kill Credit on Death (Phase 2)'),
+(2723704,27237,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'R2 - Commander Jordan - Set Phase 2 after spell hit'),
+(2723705,27237,6,1,100,0,0,0,0,0,33,27426,6,3,0,0,0,0,0,0,0,0,'R2 -Commander Jordan - Kill Credit on Death (Phase 2)'),
 
 
 -- Lead Cannoneer Zierhut (27235)
 
 -- yell
-(2723501,27235,4,0,100,6,0,0,0,0,1,-272351,0,0,0,0,0,0,0,0,0,0,'Lead Cannoneer Zierhut - Yell on Aggro'),
+(2723501,27235,4,0,100,6,0,0,0,0,1,-272351,0,0,0,0,0,0,0,0,0,0,'R2 - Lead Cannoneer Zierhut - Yell on Aggro'),
 -- Torch Toss (50832)
-(2723502,27235,0,0,100,1,3000,7000,12000,15000,11,50832,4,0,0,0,0,0,0,0,0,0,'Lead Cannoneer Zierhut - Cast Torch Toss'),
+(2723502,27235,0,0,100,1,3000,7000,12000,15000,11,50832,4,0,0,0,0,0,0,0,0,0,'R2 - Lead Cannoneer Zierhut - Cast Torch Toss'),
 -- Kill Credit (48725/48726)
-(2723503,27235,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'Lead Cannoneer Zierhut - Set Phase 2 after spell hit'),
-(2723504,27235,6,1,100,0,0,0,0,0,33,27427,6,3,0,0,0,0,0,0,0,0,'Lead Cannoneer Zierhut - Kill Credit on Death (Phase 2)'),
+(2723503,27235,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'R2 - Lead Cannoneer Zierhut - Set Phase 2 after spell hit'),
+(2723504,27235,6,1,100,0,0,0,0,0,33,27427,6,3,0,0,0,0,0,0,0,0,'R2 - Lead Cannoneer Zierhut - Kill Credit on Death (Phase 2)'),
 
 -- Blacksmith Goodman (27234)
 
 -- yell
-(2723401,27234,4,0,100,6,0,0,0,0,1,-272341,0,0,0,0,0,0,0,0,0,0,'Blacksmith Goodman - Yell on Aggro'),
+(2723401,27234,4,0,100,6,0,0,0,0,1,-272341,0,0,0,0,0,0,0,0,0,0,' R2 - Blacksmith Goodman - Yell on Aggro'),
 -- Crush Armor (33661)
-(2723402,27234,0,0,100,1,2000,5000,5000,7000,11,33661,1,0,0,0,0,0,0,0,0,0,'Blacksmith Goodman - Cast Crush Armor'),
+(2723402,27234,0,0,100,1,2000,5000,5000,7000,11,33661,1,0,0,0,0,0,0,0,0,0,'R2 - Blacksmith Goodman - Cast Crush Armor'),
 -- Skull Crack (15621)
-(2723403,27234,0,0,100,1,6000,9000,10000,14000,11,15621,1,1,0,0,0,0,0,0,0,0,'Blacksmith Goodman - Cast Skull Crack'),
+(2723403,27234,0,0,100,1,6000,9000,10000,14000,11,15621,1,1,0,0,0,0,0,0,0,0,'R2 - Blacksmith Goodman - Cast Skull Crack'),
 -- Kill credit (48727/48728)
-(2723404,27234,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'Blacksmith Goodman - Set Phase 2 after spell hit'),
-(2723405,27234,6,1,100,0,0,0,0,0,33,27428,6,3,0,0,0,0,0,0,0,0,'Blacksmith Goodman - Kill Credit on Death (Phase 2)'),
+(2723404,27234,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'R2 - Blacksmith Goodman - Set Phase 2 after spell hit'),
+(2723405,27234,6,1,100,0,0,0,0,0,33,27428,6,3,0,0,0,0,0,0,0,0,'R2 - Blacksmith Goodman - Kill Credit on Death (Phase 2)'),
 
 -- Stable Master Mercer (27236)
 
 -- yell
-(2723601,27236,4,0,100,6,0,0,0,0,1,-272361,0,0,0,0,0,0,0,0,0,0,'Stable Master Mercer - Yell on Aggro'),
+(2723601,27236,4,0,100,6,0,0,0,0,1,-272361,0,0,0,0,0,0,0,0,0,0,'R2 - Stable Master Mercer - Yell on Aggro'),
 -- Summon Warhorse (50829)
-(2723602,27236,4,0,100,0,0,0,0,0,11,50829,0,1,12,28187,6,0,0,0,0,0,'Stable Master Mercer - Summon Warhorse on Aggro'),
+(2723602,27236,4,0,100,0,0,0,0,0,11,50829,0,1,12,28187,6,0,0,0,0,0,'R2 - Stable Master Mercer - Summon Warhorse on Aggro'),
 -- Kill credit (48729/48730)
-(2723603,27236,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'Stable Master Mercer - Set Phase 2 after spell hit'),
-(2723604,27236,6,1,100,0,0,0,0,0,33,27429,6,3,0,0,0,0,0,0,0,0,'Stable Master Mercer - Kill Credit on Death (Phase 2)');
+(2723603,27236,8,0,100,0,48712,-1,0,0,22,1,0,0,0,0,0,0,0,0,0,0,'R2 - Stable Master Mercer - Set Phase 2 after spell hit'),
+(2723604,27236,6,1,100,0,0,0,0,0,33,27429,6,3,0,0,0,0,0,0,0,0,'R2 - Stable Master Mercer - Kill Credit on Death (Phase 2)');
 
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 27236;
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 27234;
@@ -398,12 +486,12 @@ INSERT INTO creature_ai_scripts VALUES
 
 DELETE FROM creature_ai_texts WHERE entry IN (-270021,-270022);
 INSERT INTO creature_ai_texts (entry, content_default, type, comment) VALUES
-(-270021,'I\'ll consume your flesh and pick my teeth with your bones!',1,'Grom\'thar the Thunderbringer yell1'),
-(-270022,'You\'re no magnataur! Where... did you... find... such strength?',1,'Grom\'thar the Thunderbringer yell2');
+(-270021,'I\'ll consume your flesh and pick my teeth with your bones!',1,'R2 - Grom\'thar the Thunderbringer yell1'),
+(-270022,'You\'re no magnataur! Where... did you... find... such strength?',1,'R2 - Grom\'thar the Thunderbringer yell2');
 
--- --------------------------------------------------------
--- aldaron the reckless loc fix Blood elf starting area fix
--- --------------------------------------------------------
+-- --------------------------------------------------------------
+-- aldaron the reckless loc fix Blood elf starting area Quest fix
+-- --------------------------------------------------------------
 DELETE FROM `creature` WHERE `id`=16294;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (67521, 16294, 530, 1, 1, 0, 0, 8747.7, -6116.85, 68.5645, 5.28401, 300, 0, 0, 148, 825, 0, 0);
