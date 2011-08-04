@@ -323,6 +323,8 @@ DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=37813);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=36627);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=36723);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=36789);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=36612);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=36855);
 
 -- -----------------------------------------------------------------------------------------------
 -- Instance Fixes --------------------------------------------------------------------------------
