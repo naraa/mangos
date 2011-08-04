@@ -17,6 +17,8 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29200;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29204;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29206;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29219;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32149;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32257;
 
 -- fixes for upcoming YTDB DB update
 UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 35766);
@@ -27,23 +29,22 @@ UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHE
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
-
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492') OR (`entry`='-312493');
 -- ---------------
 -- Quest 14107 ---
 -- ---------------
 
 -- still needs support to grip of scourge server side effect and immue to the spell for quest
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_fallen_hero_spirit' WHERE `entry` = 32149;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_scourge_conventor' WHERE `entry` = 32257;
 
+UPDATE `gameobject_template` SET `castBarCaption` = 'Discarded Soul Crytal' WHERE `entry` = 195344;
 DELETE FROM `item_required_target` WHERE `entry` = 47033;
 INSERT INTO `item_required_target` (`entry`, `type`, `targetEntry`) VALUES ('47033', '1', '32149');
 UPDATE `creature_template` SET `KillCredit1` = 35055 WHERE `entry` = 32149; -- set fallen proxy
-UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 32149;
 UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 35055 WHERE `entry` = 14107;
-UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '32149';
-
--- addition to EAI for fallen hero  
-DELETE FROM `creature_ai_scripts` WHERE (`id`='3214952'); 
-INSERT INTO `creature_ai_scripts` VALUES ('3214952', '32149', '0', '0', '100', '1', '3000', '4000', '5000', '7000', '11', '11976', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'Strike  -- fallen hero timed cast ');
+UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 32149; -- Fallens arent suppose to attack unless attacked
+UPDATE `creature_template` SET `maxmana` = 7786 WHERE `entry` = 32149; -- updated fallen mana to 3.3.5 standard
 
 -- ---------------------
 -- Quest::14111---------

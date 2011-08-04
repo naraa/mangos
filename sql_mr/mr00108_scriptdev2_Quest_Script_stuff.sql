@@ -1,3 +1,6 @@
+-- ------------------------------------
+-- Quest :: 12644, Quest :: 12645 texts
+-- ------------------------------------
 
 DELETE FROM script_texts WHERE entry BETWEEN -1999791 AND -1999783;
 INSERT INTO script_texts VALUES
@@ -26,12 +29,9 @@ INSERT into script_texts (entry,content_default,type,comment) VALUES
 (-1760010,'Add orange, quickly !',0,'SAY_ADD_ORANGE'),
 (-1760011,'You failed! You will have to begin new destillation process if you still want cask',0,'SAY_FAIL');
 
-DELETE FROM script_texts WHERE entry BETWEEN -1999855 AND -1999852;
-INSERT INTO script_texts (`entry`,`content_default`,`comment`) VALUES
-(-1999855,'<sigh> ... This is the end of me','Crusader Lamoof - moan'),
-(-1999854,'<sigh> ... Well, I supposed it could be worse.','Crusader Lamoof - quest credit'),
-(-1999853,'Thank you friend. If not your aid I would not be here any more.','Crusader Jonathan - quest credit'),
-(-1999852,'I am in your debt. Thank you for my life','Crusader Josephine - quest credit');
+-- -----------
+-- Quest 11466
+-- -----------
 
 DELETE FROM script_texts WHERE entry BETWEEN -1999818 AND -1999812;
 INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
@@ -43,4 +43,14 @@ INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
 (-1999813,'Sweet Neptulon! That was... one drink... too many!',0,'Jack Adams (5)'),
 (-1999812,'What are you lot looking at? Pour me another drink!',0,'Jack Adams (6)');
 
-DELETE FROM script_texts WHERE entry BETWEEN -1000598 AND -1000594;  -- clean up of script texts for quest 14107
+-- -----------------
+-- Quest texts 14107
+-- -----------------
+
+DELETE FROM script_texts WHERE entry BETWEEN -1000598 AND -1000594;
+INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
+(-1000594,'At last... now I can rest.',0,0,0,0,'hero spirit SAY_BLESS_1'),
+(-1000595,'I\'m so tired. Just let me rest for a moment.',0,0,0,0,'hero spirit SAY_BLESS_2'),
+(-1000596,'I can\'t hear the screams anymore. Is this the end?',0,0,0,0,'hero spirit SAY_BLESS_3'),
+(-1000597,'My nightmare, is it finally over?',0,0,0,0,'hero spirit SAY_BLESS_4'),
+(-1000598,'It was awful... I dreamt I was fighting against my friends.',0,0,0,0,'hero spirit SAY_BLESS_5');
