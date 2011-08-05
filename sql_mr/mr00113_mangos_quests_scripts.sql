@@ -27,11 +27,16 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29206;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29219;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32149;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32257;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 36626;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 36678;
 
--- fixes for upcoming YTDB DB update
+-- fixes for YTDB DB update
 UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 35766);
 UPDATE creature_template SET ScriptName='' WHERE entry=36549;
 UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHERE `entry`=34816;  -- needed to be rerun
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37444;
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 31818;
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37283;
 
 -- EAI Text clean up for quests/sd2
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
@@ -51,6 +56,7 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492')
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29329;
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29330;
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29333;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 29338;
 
 
 -- fixed spawn of onslaught harbor guards
@@ -72,8 +78,8 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 (56766, 29330, 571, 1, 1, 0, 0, 7836.08, 5117.19, 1.62269, 1.46293, 600, 0, 0, 12175, 0, 0, 0),
 (56767, 29330, 571, 1, 1, 0, 0, 7622.53, 4814.38, 20.3294, 0.700302, 600, 0, 0, 12175, 0, 0, 0),
 (56768, 29330, 571, 1, 1, 0, 0, 7625.13, 4889.11, 19.9184, 4.97915, 600, 0, 0, 12175, 0, 0, 0),
-(4456496, 29330, 571, 1, 0, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
-(4456497, 29330, 571, 1, 0, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
+(4456496, 29330, 571, 1, 1, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
+(4456497, 29330, 571, 1, 1, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
 
 -- ACID scripts (ytdb and R2 acid combined 8P ) and related fixes
 
