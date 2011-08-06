@@ -68,7 +68,7 @@ inline float dtQueryFilter::getCost(const float* pa, const float* pb,
 }
 #endif	
 	
-static const float H_SCALE = 0.999f; // Search heuristic scale.
+static const float H_SCALE = 2.0f; // Search heuristic scale.
 
 
 dtNavMeshQuery* dtAllocNavMeshQuery()
@@ -695,7 +695,7 @@ dtStatus dtNavMeshQuery::findPath(dtPolyRef startRef, dtPolyRef endRef,
 			if ((neighbourNode->flags & DT_NODE_OPEN) && total >= neighbourNode->total)
 				continue;
 			// The node is already visited and process, and the new result is worse, skip.
-			if ((neighbourNode->flags & DT_NODE_CLOSED) && total >= neighbourNode->total)
+			if ((neighbourNode->flags & DT_NODE_CLOSED) /*&& total >= neighbourNode->total*/)
 				continue;
 			
 			// Add or update the node.
