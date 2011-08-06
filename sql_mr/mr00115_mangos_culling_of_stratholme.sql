@@ -51,3 +51,9 @@ INSERT INTO `creature` (id, map, spawnMask, phaseMask, modelid, equipment_id, po
 (27892, 595, 3, 1, 0, 0, 1602.3, 809.385, 123.454, 5.02884, 25, 0, 0, 8982, 0, 0, 0),
 (32273, 595, 2, 1, 0, 1839, 2330.93, 1275.59, 132.848, 3.60489, 86400, 0, 0, 417911, 0, 0, 0),
 (28439, 595, 2, 1, 0, 0, 2336.56, 1277.9, 132.885, 3.47923, 25, 0, 0, 1, 0, 0, 0);
+
+-- Mal'Ganis completion of encounter
+DELETE FROM `achievement_criteria_requirement` WHERE `criteria_id` IN (6381, 6808);
+INSERT INTO `achievement_criteria_requirement` VALUES
+(6381, 12, 0, 0),
+(6808, 12, 1, 0);
