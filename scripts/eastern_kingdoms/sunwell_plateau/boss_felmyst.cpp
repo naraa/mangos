@@ -38,6 +38,9 @@ enum Texts
 
 enum TransformFelmystOutro
 {
+    //SPELL_BREAK_ICE                 = 46650,  // related to the door //outro
+    // SPELL_OPEN_DOOR              = 46652, // outro
+    // SPELL_FELMYST_SUMMON         = 45069, // outro
     SPELL_TRANSFORM_TRIGGER        = 44885,   // madrigosa to self, trigger 46350
     SPELL_TRANSFORM_VISUAL         = 46350,   // 46411stun?
     SPELL_TRANSFORM_FELMYST        = 45068,   // become fel
