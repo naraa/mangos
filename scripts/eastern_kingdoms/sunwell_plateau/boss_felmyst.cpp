@@ -17,14 +17,14 @@
 /* ScriptData
 SDName: boss_felmyst
 SD%Complete:
-SDComment:
+SDComment: END_OUTRO not made. Script for Outro Madrigosa to be added here
 SDCategory: Sunwell Plateau
 EndScriptData */
 
 #include "precompiled.h"
 #include "sunwell_plateau.h"
 
-enum
+enum Texts
 {
     SAY_INTRO           = -1580036,
     SAY_KILL_1          = -1580037,
@@ -34,6 +34,14 @@ enum
     SAY_BREATH          = -1580039,
     SAY_BERSERK         = -1580041,
     SAY_KALECGOS_OUTRO  = -1580043,
+};
+
+enum TransformFelmystOutro
+{
+    SPELL_TRANSFORM_TRIGGER        = 44885,   // madrigosa to self, trigger 46350
+    SPELL_TRANSFORM_VISUAL         = 46350,   // 46411stun?
+    SPELL_TRANSFORM_FELMYST        = 45068,   // become fel
+    SPELL_FELMYST_SUMMON           = 45069,
 };
 
 void AddSC_boss_felmyst()
