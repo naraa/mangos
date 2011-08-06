@@ -146,6 +146,13 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
             m_pInstance->SetData(TYPE_KALECGOS, IN_PROGRESS);
     }
 
+    void JustDied(Unit* killer)
+    {
+// Walk around due to the fact spectral realm isnt working
+        if (m_pInstance)
+              m_pInstance->SetData(TYPE_KALECGOS, DONE);
+    }
+
     void DamageTaken(Unit* done_by, uint32 &damage)
     {
         if (damage >= m_creature->GetHealth() && done_by != m_creature)
@@ -239,8 +246,9 @@ struct MANGOS_DLL_DECL boss_kalecgosAI : public ScriptedAI
 
         if (id)
         {
-            if (m_pInstance)
-                m_pInstance->SetData(TYPE_KALECGOS, DONE);
+// origanl data for finishing
+            //if (m_pInstance)
+              //  m_pInstance->SetData(TYPE_KALECGOS, DONE);
 
             m_creature->SetVisibility(VISIBILITY_OFF);
             m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);

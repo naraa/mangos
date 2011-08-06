@@ -82,6 +82,8 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
     switch(pGo->GetEntry())
     {
         case GO_FORCEFIELD:
+            if (m_auiEncounter[TYPE_KALECGOS] == DONE)
+                pGo->SetGoState(GO_STATE_ACTIVE);   // maybe needs despawn
         case GO_BOSS_COLLISION_1:
         case GO_BOSS_COLLISION_2:
         case GO_ICE_BARRIER:
