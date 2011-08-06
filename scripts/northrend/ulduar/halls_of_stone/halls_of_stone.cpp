@@ -111,6 +111,8 @@ enum
     SPELL_SEARING_GAZE_H               = 59867,
     NPC_SEARING_GAZE_TARGET            = 28265,
 
+    SPELL_ACHIEVEMENT_CHECK            = 59046,             // Doesn't exist in client dbc
+
     NPC_DARK_RUNE_PROTECTOR            = 27983,
     NPC_DARK_RUNE_STORMCALLER          = 27984,
     NPC_IRON_GOLEM_CUSTODIAN           = 27985,
@@ -198,12 +200,12 @@ struct MANGOS_DLL_DECL mob_tribuna_controllerAI : public ScriptedAI
                         if (uiPositionCounter == 0)
                         {
                             c->GetMap()->CreatureRelocation((*itr), 927.265f, 333.200f, 218.780f, (*itr)->GetOrientation());
-                            c->MonsterMoveWithSpeed(927.265f, 333.200f, 218.780f, 26);
+                            c->MonsterMoveWithSpeed(927.265f, 333.200f, 218.780f, 1);
                         }
                         else
                         {
                             c->GetMap()->CreatureRelocation((*itr), 921.745f, 328.076f, 218.780f, (*itr)->GetOrientation());
-                            c->MonsterMoveWithSpeed(921.745f, 328.076f, 218.780f, 26);
+                            c->MonsterMoveWithSpeed(921.745f, 328.076f, 218.780f, 1);
                         }
                     }
                     ++uiPositionCounter;
@@ -699,8 +701,9 @@ struct MANGOS_DLL_DECL npc_brann_hosAI : public npc_escortAI
                         m_pInstance->SetData(TYPE_BRANN, DONE);
                     }
 
-                    if (Player* pPlayer = GetPlayerForEscort())
-                        pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, m_creature);
+                    //if (Player* pPlayer = GetPlayerForEscort())
+                        //pPlayer->GroupEventHappens(QUEST_HALLS_OF_STONE, m_creature);
+                    DoCastSpellIfCan(m_creature, SPELL_ACHIEVEMENT_CHECK, CAST_TRIGGERED);
 
                     m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
                     m_creature->SetUInt32Value(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
