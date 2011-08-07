@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2_Scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,7 +17,7 @@
 
 /* ScriptData
 SDName: Instance_Sunwell_Plateau
-SD%Complete: 70%
+SD%Complete: 80%
 SDComment:
 SDCategory: Sunwell_Plateau
 EndScriptData */
@@ -87,9 +88,11 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
         case GO_BOSS_COLLISION_1:
         case GO_BOSS_COLLISION_2:
         case GO_ICE_BARRIER:
+            //if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == DONE)
+              //  pGo->SetGoState(GO_STATE_ACTIVE);   // IceWall not working yet  but also not in use yet
             break;
         case GO_FIRE_BARRIER:
-            if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == DONE)
+            if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_FIRST_GATE:

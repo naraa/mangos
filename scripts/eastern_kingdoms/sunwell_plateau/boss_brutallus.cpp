@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2_ScriptDev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,9 +17,8 @@
 
 /* ScriptData
 SDName: Boss_Brutallus
-SD%Complete: 50
-SDComment: Intro ONLY Madrigosa added here ENDING and transform to felmyst will be handled in felmyst script.
-SD_Note To DEVS:: currently Madrigosa has a corpse already spawned i wanna switch this him already being where she is summoned but static and use script to set visibilty on and off  also will need to set corpse created after intro last til felmyst event starts
+SD%Complete: 85%
+SDComment: Intro ONLY Madrigosa  -> Supported here (look to felmyst for outro and transform)
 SDCategory: Sunwell Plateau
 EndScriptData */
 
@@ -63,7 +63,6 @@ enum MadrigosaSpells
 {
     SPELL_FROST_BLAST               = 45203,
     SPELL_ENCAPSULATE               = 44883,
-    //NPC_MADRIGOSA                 = 25160,  // should already be defined in sunwell_plateau.h but here to remind myself
 };
 
 struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
@@ -97,25 +96,19 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         m_uiBerserkTimer = 360000;
         m_uiLoveTimer = urand(10000, 17000);
 
-// intro stuff
+// Intro stuff
         m_uiIntroTimer = 5000;
         m_uiIntroCount = 0;
         m_uiMadrigosaGuid.Clear();
 
-        //TODO: correct me when pre-event implemented
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BRUTALLUS, NOT_STARTED);
     }
 
     void Aggro(Unit* pWho)
     {
-        //if(pWho->GetTypeId() != TYPEID_PLAYER)
-			//return;
-
-        DoScriptText(YELL_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_BRUTALLUS, IN_PROGRESS);
+        if (m_pInstance->GetData(TYPE_BRUTALLUS) == IN_PROGRESS && !m_bIsIntroNow)
+           DoScriptText(YELL_AGGRO, m_creature);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -144,42 +137,33 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if(m_pInstance->GetData(TYPE_BRUTALLUS) == SPECIAL && m_bIsIntroNow)
+        if (m_pInstance->GetData(TYPE_BRUTALLUS) == SPECIAL && m_bIsIntroNow)
         {
-            if(m_uiIntroTimer < uiDiff)
+            if (m_uiIntroTimer < uiDiff)
             {
                 switch(m_uiIntroCount)
                 {
                 case 0:
                     m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    if(Creature* Madrigosa = m_creature->SummonCreature(NPC_MADRIGOSA, 1465.831f, 647.065f, m_creature->GetPositionZ(), 4.729f, TEMPSUMMON_CORPSE_TIMED_DESPAWN, 300000))
-                       m_uiMadrigosaGuid = Madrigosa->GetObjectGuid();
+                    if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+                        m_uiMadrigosaGuid = pMadrigosa->GetObjectGuid();
                     m_uiIntroTimer = 3000;
                     break;
                 case 1:
-                    if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
+                    if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
                         DoScriptText(YELL_MADR_ICE_BARRIER, pMadrigosa);
                         m_creature->SetGuidValue(UNIT_FIELD_TARGET, pMadrigosa->GetObjectGuid());
                     }
                     m_uiIntroTimer = 6000;
                     break;
-                 case 2:
-                     if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
-                         DoScriptText(YELL_MADR_INTRO, pMadrigosa);
-                      m_uiIntroTimer = 5000;
-                    break;
-                 case 3:
-                    DoScriptText(YELL_INTRO, m_creature);
+                case 2:
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
-                    {
-                        //m_creature->SetInCombatWith(pMadrigosa);
-                        //m_creature->AI()->AttackStart(pMadrigosa);
-                        //m_creature->AddThreat(pMadrigosa, 10000.0f);
-                        //pMadrigosa->SetInCombatWith(m_creature);
-                        //pMadrigosa->AI()->AttackStart(m_creature);
-                        //pMadrigosa->AddThreat(m_creature, 10000.0f);
-                    }
+                        DoScriptText(YELL_MADR_INTRO, pMadrigosa);
+                    m_uiIntroTimer = 5000;
+                    break;
+                case 3:
+                    DoScriptText(YELL_INTRO, m_creature);
                     m_uiIntroTimer = 10000;
                     break;
                 case 4:
@@ -191,12 +175,22 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     m_uiIntroTimer = 2000;
                     break;
                 case 5:
+                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
-                        pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
+                    {
+                            m_creature->SetInCombatWith(pMadrigosa);
+                            m_creature->AI()->AttackStart(pMadrigosa);
+                            m_creature->AddThreat(pMadrigosa, 10000.0f);
+                            pMadrigosa->SetInCombatWith(m_creature);
+                            pMadrigosa->AI()->AttackStart(m_creature);
+                            pMadrigosa->AddThreat(m_creature, 10000.0f);
+                            m_creature->GetMotionMaster()->MoveChase(pMadrigosa);
+                            pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
+                    }
                     m_uiIntroTimer = 2000;
                     break;
                 case 6:
-                    if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
+                    if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                        pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
                        m_uiIntroTimer = 2000;
                     break;
@@ -205,7 +199,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     m_uiIntroTimer = 5000;
                     break;
                 case 8:
-                    if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
+                    if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
                         pMadrigosa->CastSpell(m_creature, SPELL_ENCAPSULATE, true);
                         DoScriptText(YELL_MADR_TRAP, pMadrigosa);
@@ -214,16 +208,14 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     break;
                 case 9:
                     DoScriptText(YELL_INTRO_CHARGE, m_creature);
-                    //if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
-                    // m_creature->GetMotionMaster()->MoveChase(pMadrigosa);
                     m_uiIntroTimer = 3000;
                     break;
                 case 10:
-                    if(Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
+                    if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
                         DoScriptText(YELL_MADR_DEATH, pMadrigosa);
-                        //pMadrigosa->setDeathState(CORPSE);  either this or line below
-                        pMadrigosa->DealDamage(pMadrigosa, pMadrigosa->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                        pMadrigosa->SetDeathState(JUST_DIED);
+                        pMadrigosa->SetHealth(0);
                     }
                     m_uiIntroTimer = 5000;
                     break;
@@ -233,10 +225,11 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     break;
                 case 12:
                     DoScriptText(YELL_INTRO_TAUNT, m_creature);
-                    // should doing something with ice barrier right here or be handled in instance script
+  // should doing something with ice barrier right here or be handled in instance script  .... Not 100% sure
                     m_creature->GetMotionMaster()->Clear();
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                     m_bIsIntroNow = false;
+                    if (m_pInstance)
+                        m_pInstance->SetData(TYPE_BRUTALLUS, IN_PROGRESS);
                     break;
                 }
                 ++m_uiIntroCount;
@@ -332,7 +325,7 @@ bool AreaTrigger_at_madrigosa(Player* pPlayer, AreaTriggerEntry const* pAt)
         //this simply set encounter state, and trigger ice barrier become active
         //bosses can start pre-event based on this new state
         if (pInstance->GetData(TYPE_BRUTALLUS) == NOT_STARTED)
-            pInstance->SetData(TYPE_BRUTALLUS, SPECIAL);
+            pInstance->SetData(TYPE_BRUTALLUS, SPECIAL); // in use in script above
     }
 
     return false;

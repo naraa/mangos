@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2_ScriptDev2
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -33,18 +34,18 @@ enum
     NPC_KILJAEDEN_CONTROLLER    = 25608,            // kiljaeden event controller
     NPC_ANVEENA                 = 26046,            // related to kiljaeden event
     NPC_KALECGOS                = 25319,            // related to kiljaeden event
-    NPC_MADRIGOSA               = 24895,
+    NPC_MADRIGOSA               = 25160,            // Alive and flying one 
 
     GO_FORCEFIELD               = 188421,           // kalecgos door + collisions
     GO_BOSS_COLLISION_1         = 188523,
     GO_BOSS_COLLISION_2         = 188524,
-    GO_ICE_BARRIER              = 188119,           // use unk; related to brutallus intro
+    GO_ICE_BARRIER              = 188119,           // madri or felmyst cast this after or during the fire wall is up to; related to brutallus intro
     GO_FIRE_BARRIER             = 188075,           // door after felmyst
     GO_FIRST_GATE               = 187766,           // door between felmyst and eredar twins
     GO_SECOND_GATE              = 187764,           // door after eredar twins
     GO_MURU_ENTER_GATE          = 187990,           // muru gates
-    GO_MURU_EXIT_GATE           = 188118,
-    GO_THIRD_GATE               = 187765,           // door after muru; why another?
+    GO_MURU_EXIT_GATE           = 188118,           // muru gates
+    GO_THIRD_GATE               = 187765,           // muru gates
 
     SAY_TWINS_INTRO             = -1580044,
 
