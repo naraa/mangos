@@ -88,11 +88,11 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
         case GO_BOSS_COLLISION_1:
         case GO_BOSS_COLLISION_2:
         case GO_ICE_BARRIER:
-            //if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == DONE)
+            //if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == SPECIAL)
               //  pGo->SetGoState(GO_STATE_ACTIVE);   // IceWall not working yet  but also not in use yet
             break;
         case GO_FIRE_BARRIER:
-            if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE)
+            if (m_auiEncounter[TYPE_KALECGOS] == DONE && m_auiEncounter[TYPE_BRUTALLUS] == DONE && m_auiEncounter[TYPE_FELMYST] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_FIRST_GATE:
