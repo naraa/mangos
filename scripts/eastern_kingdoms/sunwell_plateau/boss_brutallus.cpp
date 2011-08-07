@@ -63,6 +63,9 @@ enum MadrigosaSpells
 {
     SPELL_FROST_BLAST               = 45203,
     SPELL_ENCAPSULATE               = 44883,
+    //SPELL_BREAK_ICE                 = 46650,  // Grpahic of spell when Ice Barrier Breaks
+    //SPELL_OPEN_DOOR              = 46652, // outro
+    //SPELL_FELMYST_SUMMON         = 45069, //  Madrigosa uses this spell to summon invis base of felmyst --- Invis base needs to hide(spawn in center of madri corpse) he shouldnt be a static spawn
 };
 
 struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
