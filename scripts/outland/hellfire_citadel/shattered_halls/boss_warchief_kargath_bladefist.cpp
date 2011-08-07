@@ -131,6 +131,11 @@ struct MANGOS_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
     {
         DoScriptText(SAY_DEATH, m_creature);
         removeAdds();
+
+        if (Creature * Executioner = m_creature->GetClosestCreatureWithEntry(m_creature, 17301, 60.0f))
+        {
+            Executioner->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE + UNIT_FLAG_PASSIVE);
+        }
     }
 
     void MovementInform(uint32 type, uint32 id)

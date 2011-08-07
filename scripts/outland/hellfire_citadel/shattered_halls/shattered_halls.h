@@ -26,6 +26,7 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
 
         void Initialize();
 
+        void OnPlayerEnter(Player* pPlayer);
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
 
@@ -36,6 +37,7 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         void Load(const char* chrIn);
 
     private:
+        bool m_bIsRegularMode;
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 };

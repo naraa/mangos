@@ -26,6 +26,7 @@ EndScriptData */
 
 instance_shattered_halls::instance_shattered_halls(Map* pMap) : ScriptedInstance(pMap)
 {
+    m_bIsRegularMode = pMap->IsRegularDifficulty();
     Initialize();
 }
 
@@ -52,6 +53,27 @@ void instance_shattered_halls::OnObjectCreate(GameObject* pGo)
     }
 
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+}
+
+void instance_shattered_halls::OnPlayerEnter(Player* pPlayer)
+{
+    if (!m_bIsRegularMode)
+    {
+        if (pPlayer->GetTeam() == HORDE)
+        {
+            pPlayer->SummonCreature(17294, 119.609f, 256.127f, -45.254f, 5.133f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17297, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17295, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17296, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+        }
+        if (pPlayer->GetTeam() == ALLIANCE)
+        {
+            pPlayer->SummonCreature(17288, 131.106f, 254.520f, -45.236f, 3.951f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17292, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17289, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+            pPlayer->SummonCreature(17290, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+        }
+    }
 }
 
 void instance_shattered_halls::OnCreatureCreate(Creature* pCreature)
