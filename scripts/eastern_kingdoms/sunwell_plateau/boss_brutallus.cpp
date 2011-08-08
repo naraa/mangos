@@ -65,7 +65,7 @@ enum MadrigosaSpells
     SPELL_ENCAPSULATE               = 44883,
     //SPELL_BREAK_ICE                 = 46650,  // Grpahic of spell when Ice Barrier Breaks
     //SPELL_OPEN_DOOR              = 46652, // outro
-    //SPELL_FELMYST_SUMMON         = 45069, //  Madrigosa uses this spell to summon invis base of felmyst --- Invis base needs to hide(spawn in center of madri corpse) he shouldnt be a static spawn
+    SPELL_FELMYST_SUMMON         = 45069, //  Madrigosa uses this spell to summon invis base of felmyst --- Invis base needs to hide(spawn in center of madri corpse) he shouldnt be a static spawn
 };
 
 struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
@@ -130,6 +130,11 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BRUTALLUS, DONE);
+
+// should spawn felmyst Invis base inside madrigosa corpse
+// Upon Brutallus Death his bloods runs over to madrigosa corpse and felmyst is borneds
+        if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+            pMadrigosa->CastSpell(m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),SPELL_FELMYST_SUMMON, true);
     }
 
     void SpellHitTarget(Unit* pCaster, const SpellEntry* pSpell)

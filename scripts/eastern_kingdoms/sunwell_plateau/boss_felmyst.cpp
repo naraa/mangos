@@ -27,14 +27,63 @@ EndScriptData */
 
 enum Texts
 {
-    SAY_INTRO           = -1580036,
-    SAY_KILL_1          = -1580037,
-    SAY_KILL_2          = -1580038,
-    SAY_DEATH           = -1580042,
-    SAY_TAKEOFF         = -1580040,
-    SAY_BREATH          = -1580039,
-    SAY_BERSERK         = -1580041,
-    SAY_KALECGOS_OUTRO  = -1580043,
+    YELL_REBIRTH        = -1580036,
+    YELL_SLAY1          = -1580037,
+    YELL_SLAY2          = -1580038,
+    YELL_DEATH          = -1580042,
+    YELL_TAKEOFF        = -1580040,
+    YELL_BREATH         = -1580039,
+    YELL_BERSERK        = -1580041,
+    YELL_KALECGOS       = -1580043,
+};
+
+enum NpcsUsed
+{
+    NPC_KALECGOS          = 25319,  //summon after fight
+
+    NPC_UNYELDING_DEAD    = 25268,
+
+    NPC_FELMYST_VISUAL    = 25041,
+    NPC_FLIGHT_LEFT       = 25357,
+    NPC_FLIGHT_RIGHT      = 25358,
+
+    NPC_VAPOR             = 25265,
+    NPC_VAPOR_TRAIL       = 25267,
+    NPC_DEATH_CLOUD       = 25703,
+};
+
+enum Phasezs
+{
+    PHASE_IDLE       = 0,
+    PHASE_GROUND     = 1,
+    PHASE_AIR        = 2,
+};
+
+enum SpellsUsed
+{
+    //Mics
+    SPELL_NOXIOUSFUMES			= 47002,
+	SPELL_ENRAGE                = 26662,
+ 
+    //Land Phase
+    SPELL_CLEAVE                = 19983, 
+    SPELL_CORROSION             = 45866,
+    SPELL_GASNOVA               = 45855,
+	SPELL_ENCAPSULATE			= 45665,
+    SPELL_ENCAPSULATE_CHANNEL   = 45661,
+   
+    //Flight Phase
+    SPELL_DEMONIC_VAPOR_TRIGG   = 45399,	
+    SPELL_FOG_OF_CORRUPTION     = 45582,
+    SPELL_FOG_CHARM             = 45717,
+    SPELL_SOUL_SEVER            = 45917,
+    SPELL_SUMMON_VAPOR          = 45391,
+    SPELL_SUMMON_VAPOR_TRIAL    = 45410,
+    SPELL_VAPOR_BEAM            = 45389,
+
+    // fog
+    SPELL_DEATH_COULD_VISUAL    = 45212,
+    SPELL_SUMMON_DEATH_CLOUD    = 45884,
 };
 
 enum TransformFelmystOutro
@@ -43,6 +92,23 @@ enum TransformFelmystOutro
     SPELL_TRANSFORM_VISUAL         = 46350,   // 46411stun?
     SPELL_TRANSFORM_FELMYST        = 45068,   // become fel
     SPELL_FELMYST_SUMMON           = 45069,
+};
+
+//Positional defines 
+struct LocationsXY
+{
+    float x, y, z;
+    uint32 id;
+};
+
+// Movement coordinates
+static LocationsXY MoveLoc[]=
+{
+	{1489.307f, 701.451f, 40.5f},	// right - 0
+	{1447.672f, 649.917f, 40.5f},
+	{1430.092f, 604.318f, 40.5f},	// center - 2
+	{1462.899f, 536.334f, 40.5f},
+	{1537.197f, 522.199f, 40.5f},	// left - 4
 };
 
 void AddSC_boss_felmyst()
