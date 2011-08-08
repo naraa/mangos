@@ -19,6 +19,7 @@
 SDName: Boss_Brutallus
 SD%Complete: 85%
 SDComment: Intro ONLY Madrigosa  -> Supported here (look to felmyst for outro and transform)
+GO_ICE_Barrier needs work
 SDCategory: Sunwell Plateau
 EndScriptData */
 
@@ -63,9 +64,9 @@ enum MadrigosaSpells
 {
     SPELL_FROST_BLAST               = 45203,
     SPELL_ENCAPSULATE               = 44883,
-    //SPELL_BREAK_ICE                 = 46650,  // Grpahic of spell when Ice Barrier Breaks
-    //SPELL_OPEN_DOOR              = 46652, // outro
-    SPELL_FELMYST_SUMMON         = 45069, //  Madrigosa uses this spell to summon invis base of felmyst --- Invis base needs to hide(spawn in center of madri corpse) he shouldnt be a static spawn
+    //SPELL_BREAK_ICE               = 46650,  // Graphic of spell when Ice Barrier Breaks
+    //SPELL_OPEN_DOOR               = 46652, // outro
+    SPELL_FELMYST_SUMMON            = 45069, //  Madrigosa uses this spell to summon invis base of felmyst --- Invis base needs to hide(spawn in center of madri corpse) he shouldnt be a static spawn
 };
 
 struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
@@ -229,11 +230,11 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     break;
                 case 11:
                     DoScriptText(YELL_INTRO_KILL_MADRIGOSA, m_creature);
+// His Yell here suppose to break Ice Barrier players by the barrier arent hit and knocked back in room  == 0 damge its all for show
                     m_uiIntroTimer = 6000;
                     break;
                 case 12:
                     DoScriptText(YELL_INTRO_TAUNT, m_creature);
-  // should doing something with ice barrier right here or be handled in instance script  .... Not 100% sure
                     m_creature->GetMotionMaster()->Clear();
                     m_bIsIntroNow = false;
                     if (m_pInstance)
@@ -251,6 +252,9 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        m_creature->GetMotionMaster()->Clear();
+        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
 
         if (m_uiLoveTimer < uiDiff)
         {

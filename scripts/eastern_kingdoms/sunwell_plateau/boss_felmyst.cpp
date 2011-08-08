@@ -39,7 +39,7 @@ enum Texts
 
 enum NpcsUsed
 {
-    NPC_KALECGOS          = 25319,  //summon after fight
+    //NPC_KALECGOS          = 25319,  //summon after fight
 
     NPC_UNYELDING_DEAD    = 25268,
 

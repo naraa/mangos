@@ -18,7 +18,9 @@
 /* ScriptData
 SDName: Boss_Kalecgos
 SD%Complete: 40
+NEEDED:: Spectral Realm Fixed to Correctly Finish this
 SDComment: Script must be considered not complete.
+Sathrovarr corpse will need to be spawn w/loot state active so players can loot after event
 SDCategory: Sunwell Plateau
 EndScriptData */
 

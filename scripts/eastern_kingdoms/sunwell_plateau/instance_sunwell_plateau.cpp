@@ -87,7 +87,7 @@ void instance_sunwell_plateau::OnObjectCreate(GameObject* pGo)
                 pGo->SetGoState(GO_STATE_ACTIVE);   // maybe needs despawn
         case GO_BOSS_COLLISION_1:
         case GO_BOSS_COLLISION_2:
-        case GO_ICE_BARRIER:      // before brutallas intro event
+        case GO_ICE_BARRIER:      // spawned at madrigosa yell_ice_barrier
               //  pGo->SetGoState(GO_STATE_ACTIVE);   // IceWall not working yet  but also not in use yet
             break;
         case GO_FIRE_BARRIER:
