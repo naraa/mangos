@@ -38,9 +38,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- -------------
 
 -- Felmyst
-UPDATE creature_template SET `ScriptName` = 'boss_felmyst', `modelid_2` = 22838 WHERE `entry` = 25038; 
-UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  
-UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703; 
+
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44883', '1', '24882');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('45063', '1', '24882');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44885', '1', '25038');
@@ -51,48 +49,6 @@ UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 
 DELETE FROM `creature` WHERE `id`=25038; -- remove static spawn as she is summoned when needed
 -- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 -- (57715, 25038, 580, 1, 1, 0, 0, 1459.35, 636.81, 19.9428, 4.93474, 604800, 0, 0, 4903346, 3387, 0, 0);
-
--- ------------------
-/* felmyst fight fixes
-
-	Demonic Vampor
-    - unit flags (not attackable, pacified, not selectable)
-    - bosslevel, fractions
-    - speed
-    - spawn/dmg aura
-*/
--- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `speed_run` = '0.95', `minlevel` = '73', `maxlevel` = '73', `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;
--- DELETE FROM `creature_template_addon` WHERE `entry` = '25265';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES ('25265', '0', '0', '0', '0', '0', '45411 0 45411 1');
-/*
-	Demonic Vampor Trail
-    - unit flags (not attackable, pacified, not selectable)
-    - bosslevel, fractions
-    - dmg auras
-*/
--- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `minlevel` = '73', `maxlevel` = '73', `ScriptName` = 'mob_felmyst_vapor_trail' WHERE `entry` = '25267';
--- DELETE FROM `creature_template_addon` WHERE `entry` = '25267';
---INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES
---(25267, 0, 0, 0, 0, 0, '45399 0');
-/*
-    Unyielding Death:
-    - EventAI (Combat Pulse),"aggro range"
-    - Grüne Aura
-*/
--- UPDATE `creature_template` SET `AIName` = 'EventAI' WHERE `creature_template`.`entry` = 25268;
--- DELETE FROM `creature_template_addon` WHERE `entry` = '25268';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES
--- ('25268', '0', '0', '0', '0', '0', '45415 0');
--- DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
--- INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
--- ('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'Unyielding Death - zone combat pulse if ooc');
-/* scipt targets */
--- DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
--- INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
-('45388', '1', '25038');
-/* Felmyst, bounding radius */
--- UPDATE `creature_model_info` SET `bounding_radius` = '8', `combat_reach` = '5' WHERE `creature_model_info`.`modelid` = 22838;
-
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
