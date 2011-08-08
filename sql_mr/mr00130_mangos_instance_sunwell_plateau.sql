@@ -57,13 +57,10 @@ DELETE FROM `creature` WHERE `id`=25038; -- remove static spawn as she is summon
 
 UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 25038;  -- Felmyst doesnt attack til attacked
 UPDATE creature_template SET `ScriptName` = 'boss_felmyst', `modelid_2` = 22838 WHERE `entry` = 25038; 
-UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  
-UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703; 
-
--- UPDATE `creature_template` SET `ScriptName`="boss_felmyst", `AIName` = ''   WHERE `entry` = 25038;
--- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor", `AIName` = ''  WHERE `entry` = 25265;
+UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  -- trail 25267
+UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  --DeathCloud
 -- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor_trail", `AIName` = ''  WHERE `entry` = 25267;
--- UPDATE `creature_template` SET `ScriptName`="mob_deathcloud", `AIName` = '' WHERE `entry` = 25703;
+
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="", WHERE `entry` = 25268;
 
 /* scipt targets*/
@@ -94,9 +91,10 @@ INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
 -- -
 -- Unyielding Death: - EventAI (Combat Pulse), and Aura
 -- -
-DELETE FROM `creature_template_addon` WHERE `entry` = '25268';
-INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES
-('25268', '0', '0', '0', '0', '0', '45415 0');
+DELETE FROM `creature_template_addon` WHERE (`entry` = 25268);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES 
+(25268, 0, 0, 0, 0, 0, 0, '45415');
+
 DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
 INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
 ('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');

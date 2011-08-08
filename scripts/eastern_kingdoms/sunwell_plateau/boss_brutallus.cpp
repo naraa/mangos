@@ -105,6 +105,12 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         m_uiIntroCount = 0;
         m_uiMadrigosaGuid.Clear();
 
+        if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+        {
+            pMadrigosa->SetDeathState(ALIVE);
+            pMadrigosa->SetHealth(424900);
+        }
+
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BRUTALLUS, NOT_STARTED);
     }
@@ -117,12 +123,24 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
+        //won't yell killing pet/other unit
+        if (pVictim->GetTypeId() != TYPEID_PLAYER)
+            return;
+
         switch(urand(0, 2))
         {
             case 0: DoScriptText(YELL_KILL1, m_creature); break;
             case 1: DoScriptText(YELL_KILL2, m_creature); break;
             case 2: DoScriptText(YELL_KILL3, m_creature); break;
         }
+    }
+
+    void AttackStart(Unit* pWho)
+    {
+         if (m_pInstance->GetData(TYPE_BRUTALLUS == IN_PROGRESS))
+             return;
+
+         ScriptedAI::AttackStart(pWho);
     }
 
     void JustDied(Unit* pKiller)
@@ -135,7 +153,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 // should spawn felmyst Invis base inside madrigosa corpse
 // Upon Brutallus Death his bloods runs over to madrigosa corpse and felmyst is borneds
         if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
-            pMadrigosa->CastSpell(m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),SPELL_FELMYST_SUMMON, true);
+            pMadrigosa->CastSpell(pMadrigosa->GetPositionX(),pMadrigosa->GetPositionY(),pMadrigosa->GetPositionZ(),SPELL_FELMYST_SUMMON, true);
     }
 
     void SpellHitTarget(Unit* pCaster, const SpellEntry* pSpell)
@@ -210,7 +228,8 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                 case 8:
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
-                        pMadrigosa->CastSpell(m_creature, SPELL_ENCAPSULATE, true);
+                        //pMadrigosa->CastSpell(m_creature, SPELL_ENCAPSULATE, true);
+                        m_creature->AI()->AttackStart(pMadrigosa);
                         DoScriptText(YELL_MADR_TRAP, pMadrigosa);
                     }
                     m_uiIntroTimer = 15000;
@@ -253,8 +272,8 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        m_creature->GetMotionMaster()->Clear();
-        m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
+        if (Creature* pBrutallus = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUTALLUS))
+            pBrutallus->AI()->AttackStart(m_creature->getVictim());
 
         if (m_uiLoveTimer < uiDiff)
         {
