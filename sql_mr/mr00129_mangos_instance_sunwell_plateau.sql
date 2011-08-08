@@ -23,7 +23,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- Brutallus --
 -- ------------
 
--- madrigosa spawn fixes
+-- madrigosa fixes
 DELETE FROM `creature` WHERE `id`=24895;  -- origanl YTDB Data
 -- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 -- (80778, 24895, 580, 1, 1, 0, 0, 1459.35, 636.81, 19.9428, 4.93474, 604800, 0, 0, 424900, 3387, 0, 0);
@@ -32,6 +32,10 @@ DELETE FROM `creature` WHERE `id`=25160; -- new data for madrigosa
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (4456501, 25160, 580, 1, 1, 0, 0, 1461.27, 647.103, 38.6641, 5.05014, 60000, 0, 0, 424900, 3387, 0, 0),
 (100738, 25160, 530, 1, 1, 0, 0, 12164.9, -7066.29, 72.0305, 1.32201, 14400, 0, 0, 424900, 3387, 0, 0);
+
+-- he was damging brutallus to much during intro 8P
+UPDATE `creature_template` SET `mindmg` = 1, `maxdmg` = 1, `attackpower` = 1, `dmg_multiplier` = 1 WHERE `entry` = 25160;
+-- UPDATE `creature_template` SET `mindmg` = 226, `maxdmg` = 339, `attackpower` = 85, `dmg_multiplier` = 4.1 WHERE `entry` = 25160; -- Restore what YTDB(605) had
 
 -- -------------
 -- Felmyst -----
