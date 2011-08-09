@@ -105,19 +105,22 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
         m_uiIntroCount = 0;
         m_uiMadrigosaGuid.Clear();
 
-        if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
-        {
-            pMadrigosa->SetDeathState(ALIVE);
-            pMadrigosa->SetHealth(424900);
-        }
+        //if (m_pInstance)
+          //  m_pInstance->SetData(TYPE_BRUTALLUS, NOT_STARTED);
 
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_BRUTALLUS, NOT_STARTED);
+        if (m_pInstance->GetData(TYPE_BRUTALLUS) == NOT_STARTED)
+        {
+            if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+            {
+                pMadrigosa->SetDeathState(ALIVE);
+                pMadrigosa->SetHealth(424900);
+            }
+        }
     }
 
     void Aggro(Unit* pWho)
     {
-        if (m_pInstance->GetData(TYPE_BRUTALLUS) == IN_PROGRESS && !m_bIsIntroNow)
+        if (m_pInstance->GetData(TYPE_BRUTALLUS) == IN_PROGRESS)
            DoScriptText(YELL_AGGRO, m_creature);
     }
 
@@ -133,14 +136,6 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
             case 1: DoScriptText(YELL_KILL2, m_creature); break;
             case 2: DoScriptText(YELL_KILL3, m_creature); break;
         }
-    }
-
-    void AttackStart(Unit* pWho)
-    {
-         if (m_pInstance->GetData(TYPE_BRUTALLUS == IN_PROGRESS))
-             return;
-
-         ScriptedAI::AttackStart(pWho);
     }
 
     void JustDied(Unit* pKiller)
@@ -228,11 +223,9 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                 case 8:
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
-                        //pMadrigosa->CastSpell(m_creature, SPELL_ENCAPSULATE, true);
-                        m_creature->AI()->AttackStart(pMadrigosa);
                         DoScriptText(YELL_MADR_TRAP, pMadrigosa);
                     }
-                    m_uiIntroTimer = 15000;
+                    m_uiIntroTimer = 3000;
                     break;
                 case 9:
                     DoScriptText(YELL_INTRO_CHARGE, m_creature);
@@ -271,9 +264,6 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
 
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        if (Creature* pBrutallus = m_pInstance->GetSingleCreatureFromStorage(NPC_BRUTALLUS))
-            pBrutallus->AI()->AttackStart(m_creature->getVictim());
 
         if (m_uiLoveTimer < uiDiff)
         {
