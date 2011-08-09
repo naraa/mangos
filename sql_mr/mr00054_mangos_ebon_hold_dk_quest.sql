@@ -328,7 +328,7 @@ INSERT INTO `creature_ai_texts` VALUES
 (-286092, "DIE!", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "Citizen of Heavenshire - Say Enrage2");
 
 -- EVENTAI scripts
-DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (28834, 28856, 28936, 28850, 29104, 28941, 28942, 28577, 28576, 28557);
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` IN (28834, 28856, 28936, 28850, 29104, 28941, 28942, 28577, 28576, 28557, 28892);
 INSERT INTO `creature_ai_scripts` VALUES
 
 -- Scarlet Defender

@@ -96,7 +96,7 @@ DELETE FROM `creature_ai_scripts` WHERE (`id`='2932953');
 INSERT INTO `creature_ai_scripts` VALUES ('2932953', '29329', '0', '0', '100', '0', '7000', '9000', '13000', '16000', '11', '32774', '1', '4', '0', '0', '0', '0', '0', '0', '0', '0', 'R2 - cast Avengers shield');
 
 -- onslaught gryphon rider
-UPDATE `creature_template` SET `spell2` = 40652, `spell3` = '' WHERE `entry` = 29333; -- removed incorrect and dupe throw spear spell
+UPDATE `creature_template` SET `spell2` = 40652, `spell3` = '0' WHERE `entry` = 29333; -- removed incorrect and dupe throw spear spell
 UPDATE `creature_template` SET `maxmana` = 7988 WHERE `entry` = 29333;
 UPDATE `creature_template` SET `maxhealth` = 12600 WHERE `entry` = 29333;
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2933351');
