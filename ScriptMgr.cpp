@@ -113,7 +113,8 @@ void InitScriptLibrary()
     outstring_log("   MM M   M MMMM");
     outstring_log("MM  M M  M ");
     outstring_log(" MMM  MMM  http://www.scriptdev2.com");
-    outstring_log("");
+    outstring_log("R2 modifications included (https://github.com/mangosR2/scriptdev2)");
+    outstring_log(_VERSION);
 
     // Get configuration file
     if (!SD2Config.SetSource(_SCRIPTDEV2_CONFIG))
