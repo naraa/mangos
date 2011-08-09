@@ -58,10 +58,10 @@ DELETE FROM `creature` WHERE `id`=25038; -- remove static spawn as she is summon
 UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 25038;  -- Felmyst doesnt attack til attacked
 UPDATE creature_template SET `ScriptName` = 'boss_felmyst', `modelid_2` = 22838 WHERE `entry` = 25038; 
 UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  -- trail 25267
-UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  --DeathCloud
+UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  -- DeathCloud
 -- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor_trail", `AIName` = ''  WHERE `entry` = 25267;
 
-UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="", WHERE `entry` = 25268;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entry` = 25268;
 
 /* scipt targets*/
 DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
