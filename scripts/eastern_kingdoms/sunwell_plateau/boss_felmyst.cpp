@@ -166,8 +166,8 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         // Nothing Yet
 
 //ect Resets
-        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))
-            DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE))
+            DoCast(m_creature, SPELL_SUNWELL_RADIANCE);
     }
 
     void JustReachedHome()
