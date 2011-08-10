@@ -23,7 +23,7 @@ SDCategory: Sunwell Plateau
 EndScriptData */
 
 /* Status
-GroundPhase = 60%
+GroundPhase = 65%
 FlyingPhase = 0%
 DeathCloud  = 0%
 Demonic Vapor = 0%
@@ -78,6 +78,7 @@ enum SpellsUsed
     SPELL_CORROSION             = 45866,
     SPELL_GASNOVA               = 45855,
     SPELL_ENCAPSULATE           = 45665,
+    SPELL_ENCAPSULATE_AOE       = 45662,
     SPELL_ENCAPSULATE_CHANNEL   = 45661,
 
     //Flight Phase
@@ -284,6 +285,8 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
                 {
                     m_uiEncapsulateGUID = pTarget->GetObjectGuid();
                     DoCastSpellIfCan(pTarget, SPELL_ENCAPSULATE_CHANNEL);
+                    pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, true);
+                    pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE_AOE, true);
                 }
                 m_uiEncapsulateTimer = 30000;
             }
