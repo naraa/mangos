@@ -59,7 +59,7 @@ enum
     SPELL_SPECTRAL_REALM_FORCE_FACTION  = 44852,
 
     // used by ALOT of mobs and bosses in sunwell plateau
-    SPELL_SUNWELL_RADIANCE				= 45769,
+    SPELL_SUNWELL_RADIANCE_AURA         = 45769,
 };
 
 class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance

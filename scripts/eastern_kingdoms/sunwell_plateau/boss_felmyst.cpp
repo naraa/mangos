@@ -141,6 +141,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 // Ground Phase
     uint32 m_uiCorrosionTimer;
     uint32 m_uiCleaveTimer;
+    ObjectGuid m_uiEncapsulateGUID;
     uint32 m_uiEncapsulateTimer;
     uint32 m_uiGasNovaTimer;
 //Flying phase
@@ -162,12 +163,13 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
         m_uiCleaveTimer         = 4000;
         m_uiGasNovaTimer        = 20000;
         m_uiEncapsulateTimer    = 15000;
+        m_uiEncapsulateGUID.Clear();
 //Flying Phase
         // Nothing Yet
 
 //ect Resets
-        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE))
-            DoCast(m_creature, SPELL_SUNWELL_RADIANCE);
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))
+            DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
     }
 
     void JustReachedHome()
@@ -179,6 +181,7 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
     void Aggro(Unit *pWho)
     {
         m_uiPhase = PHASE_GROUND;
+        m_creature->SetInCombatWithZone();
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
         m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
         m_creature->SetLevitate(false);
@@ -277,17 +280,18 @@ struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
 
             if (m_uiEncapsulateTimer < uiDiff)
             {
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 {
-                    pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, false);
-                    DoCast(pTarget, SPELL_ENCAPSULATE_CHANNEL);
+                    m_uiEncapsulateGUID = pTarget->GetObjectGuid();
+                    DoCastSpellIfCan(pTarget, SPELL_ENCAPSULATE_CHANNEL);
                 }
-                m_uiEncapsulateTimer = urand(30000,40000);
+                m_uiEncapsulateTimer = 30000;
             }
             else m_uiEncapsulateTimer -= uiDiff;
 
             DoMeleeAttackIfReady();
         }
+// Flying Phase
     }
 };
 
