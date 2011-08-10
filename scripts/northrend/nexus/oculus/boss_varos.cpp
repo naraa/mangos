@@ -53,7 +53,7 @@ enum
 
     SPELL_CORE_VISUAL                             = 50798,
     SPELL_CORE_MISSILE                            = 61407, //need core fix max target 4, and spell script on 28183
-    SPELL_BEAM                                    = 51024, //need spell scrip on 28239
+    SPELL_BEAM                                    = 51024, //need spell script on 28239
     SPELL_BEAM_DMG_AURA                           = 51019,
     SPELL_BEAM_VISUAL_SOUND                       = 51022, //need script target 28239
     SPELL_SUMMON_BEAM                             = 51017
