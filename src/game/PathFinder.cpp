@@ -64,8 +64,9 @@ bool PathFinder::calculate(float destX, float destY, float destZ, bool forceDest
     DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ PathFinder::calculate() for %u \n", m_sourceUnit->GetGUIDLow());
 
     // make sure navMesh works - we can run on map w/o mmap
-    if (!m_navMesh || !m_navMeshQuery || !HaveTiles(dest) ||
-            m_sourceUnit->hasUnitState(UNIT_STAT_IGNORE_PATHFINDING))
+    // check if the start and end point have a .mmtile loaded (can we pass via not loaded tile on the way?)
+    if (!m_navMesh || !m_navMeshQuery || m_sourceUnit->hasUnitState(UNIT_STAT_IGNORE_PATHFINDING) ||
+        !HaveTile(start) || !HaveTile(dest))
     {
         BuildShortcut();
         m_type = PathType(PATHFIND_NORMAL | PATHFIND_NOT_USING_PATH);
@@ -543,12 +544,11 @@ NavTerrain PathFinder::getNavTerrain(float x, float y, float z)
     }
 }
 
-bool PathFinder::HaveTiles(const Vector3 &p) const
+bool PathFinder::HaveTile(const Vector3 &p) const
 {
     int tx, ty;
     float point[VERTEX_SIZE] = {p.y, p.z, p.x};
 
-    // check if the start and end point have a .mmtile loaded
     m_navMesh->calcTileLoc(point, &tx, &ty);
     return (m_navMesh->getTileAt(tx, ty) != NULL);
 }

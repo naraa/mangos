@@ -112,7 +112,7 @@ class PathFinder
 
         dtPolyRef getPathPolyByPosition(const dtPolyRef *polyPath, uint32 polyPathSize, const float* point, float *distance = NULL) const;
         dtPolyRef getPolyByLocation(const float* point, float *distance) const;
-        bool HaveTiles(const Vector3 &p) const;
+        bool HaveTile(const Vector3 &p) const;
 
         void BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos);
         void BuildPointPath(const float *startPoint, const float *endPoint);

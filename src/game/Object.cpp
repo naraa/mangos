@@ -1703,7 +1703,7 @@ void WorldObject::GetNearPoint(WorldObject const* searcher, float &x, float &y, 
         else
             UpdateGroundPositionZ(x, y, z);
 
-        if (IsWithinLOS(x, y, z) && fabs(init_z - z) < dist)
+        if (fabs(init_z - z) < dist && IsWithinLOS(x, y, z))
             return;
 
         first_los_conflict = true;                          // first point have LOS problems
@@ -1725,7 +1725,7 @@ void WorldObject::GetNearPoint(WorldObject const* searcher, float &x, float &y, 
         else
             UpdateGroundPositionZ(x, y, z);
 
-        if (IsWithinLOS(x, y, z) && fabs(init_z - z) < dist)
+        if (fabs(init_z - z) < dist && IsWithinLOS(x, y, z))
             return;
     }
 
@@ -1757,7 +1757,7 @@ void WorldObject::GetNearPoint(WorldObject const* searcher, float &x, float &y, 
         else
             UpdateGroundPositionZ(x, y, z);
 
-        if (IsWithinLOS(x, y, z) && fabs(init_z - z) < dist)
+        if (fabs(init_z - z) < dist && IsWithinLOS(x, y, z))
             return;
     }
 
