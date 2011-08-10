@@ -46,7 +46,7 @@ EndContentData */
 #include "ObjectMgr.h"
 #include "TemporarySummon.h"
 #include "WorldPacket.h"
-
+#include "Vehicle.h"
 // not inuse yet but will be
 //#define LESS_LAG // if you do not have a good server and do not want it to be laggy as hell -- uncomment this if you do
 
@@ -3473,7 +3473,7 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
         return;
     }
 
-    void SetScarletMinerGuid(const uint64 &guid)  //hum  ObjectGuid   here ????
+    void SetScarletMinerGuid(const ObjectGuid &guid)
     {
         m_scarletMinerGuid = guid;
     }
@@ -3493,12 +3493,16 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
 
     void ExitMineCar()
     {
-        if(Creature* pMiner = m_creature->GetMap()->GetCreature(m_scarletMinerGuid))
+        if (Creature* pMiner = m_creature->GetMap()->GetCreature(m_scarletMinerGuid))
             pMiner->ForcedDespawn();
     }
 
-    void UpdateAI(const uint32 /*uiDiff*/)
+    void UpdateAI(const uint32 uiDiff)
     {
+        if (m_creature->GetVehicleKit()->HasEmptySeat(0))
+        {
+            m_creature->ForcedDespawn();
+        }
     }
 };
 
@@ -3508,8 +3512,8 @@ struct MANGOS_DLL_DECL npc_mine_carAI : public ScriptedAI
 
 enum
 {
-    SPELL_CAR_DRAG    =    52465,
-    SPELL_CAR_CHECK    =    54173
+    SPELL_CAR_DRAG  = 52465,
+    SPELL_CAR_CHECK = 54173
 };
 
 #define SAY_SCARLET_MINER1  "Where'd this come from? I better get this down to the ships before the foreman sees it!"
@@ -3546,8 +3550,6 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
 
     void StartCarEvent(Player *pPlayer)
     {
-        pPlayer->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-
         if (pPlayer->GetVehicle())
         {
             m_mineCarGuid = pPlayer->GetVehicle()->GetBase()->GetObjectGuid();
@@ -3561,7 +3563,7 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
         switch(uiWp)
         {
             case 0:
-                if (Unit *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
+                if (Unit* pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
                     m_creature->SetInFront(pMineCar);
 
                 SetRun(true);
@@ -3594,7 +3596,7 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
                 }
                 else
                 {
-                    if (Creature *pMineCar = m_creature->GetMap()->GetCreature( m_mineCarGuid))
+                    if (Creature *pMineCar = m_creature->GetMap()->GetCreature(m_mineCarGuid))
                     {
                         if(npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
                         {
@@ -3623,12 +3625,11 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
 
                     if (Player *pPlayer = m_creature->GetMap()->GetPlayer(ObjectGuid(m_playerGuid)))
                     {
-                        pPlayer->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                         if (pPlayer->GetVehicle())
                             pPlayer->ExitVehicle();
                     }
 
-                    if(npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
+                    if (npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
                     {
                         pMineCarAI->ExitMineCar();
                     }
@@ -3644,34 +3645,35 @@ struct MANGOS_DLL_DECL npc_scarlet_minerAI : public npc_escortAI
 };
 
 /*######
-## GO_inconspicous_mine_car
+## go_inconspicous_mine_car
 ######*/
 
 enum
 {
-    QUEST_MASSACRE_AT_LIGHTS_POINT    =    12701,
-    ENTRY_SCARLET_MINER               =    28841,
-    ENTRY_MINE_CAR                    =    28817,
+    QUEST_MASSACRE_AT_LIGHTS_POINT  = 12701,
 
-    SPELL_MINE_CAR_SUMM               =    52463
+    ENTRY_SCARLET_MINER             = 28841,
+    ENTRY_MINE_CAR                  = 28817,
+
+    SPELL_MINE_CAR_SUMM             = 52463
 };
 
-bool GOUse_inconspicous_mine_car(Player *pPlayer, GameObject* /*pGo*/)
+bool GOUse_go_inconspicous_mine_car(Player* pPlayer, GameObject* pGO)
 {
     if (pPlayer->GetQuestStatus(QUEST_MASSACRE_AT_LIGHTS_POINT) == QUEST_STATUS_INCOMPLETE)
     {
         if (pPlayer->GetVehicle())
             return false;
 
-        if (Creature *pMiner = pPlayer->SummonCreature(ENTRY_SCARLET_MINER, 2383.869629f, -5900.312500f, 107.996086f, pPlayer->GetOrientation(),TEMPSUMMON_DEAD_DESPAWN, 1))
+        if (Creature* pMiner = pPlayer->SummonCreature(ENTRY_SCARLET_MINER, 2383.869f, -5900.312f, 107.996f, pPlayer->GetOrientation(),TEMPSUMMON_DEAD_DESPAWN, 1))
         {
             pPlayer->CastSpell(pPlayer, SPELL_MINE_CAR_SUMM, true);
-            if (Creature *pMineCar = (Creature*)pPlayer->GetVehicle()->GetBase())
+            if (Creature* pMineCar = (Creature*)pPlayer->GetVehicle()->GetBase())
             {
                 if (npc_mine_carAI* pMineCarAI = dynamic_cast<npc_mine_carAI*>(pMineCar->AI()))
                 {
                     pMineCarAI->SetScarletMinerGuid(pMiner->GetObjectGuid());
-                    if(npc_scarlet_minerAI* pMinerAI = dynamic_cast<npc_scarlet_minerAI*>(pMiner->AI()))
+                    if (npc_scarlet_minerAI* pMinerAI = dynamic_cast<npc_scarlet_minerAI*>(pMiner->AI()))
                     {
                         pMinerAI->StartCarEvent(pPlayer);
                     }
@@ -4107,7 +4109,7 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name = "npc_highlord_darion_mograine";
     pNewScript->GetAI = &GetAI_npc_highlord_darion_mograine;
-    pNewScript->pGossipHello =  &GossipHello_npc_highlord_darion_mograine;
+    pNewScript->pGossipHello = &GossipHello_npc_highlord_darion_mograine;
     pNewScript->pGossipSelect = &GossipSelect_npc_highlord_darion_mograine;
     pNewScript->RegisterSelf();
 
@@ -4138,7 +4140,7 @@ void AddSC_ebon_hold()
 
     pNewScript = new Script;
     pNewScript->Name = "go_inconspicous_mine_car";
-    pNewScript->pGOUse = &GOUse_inconspicous_mine_car;
+    pNewScript->pGOUse = &GOUse_go_inconspicous_mine_car;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
