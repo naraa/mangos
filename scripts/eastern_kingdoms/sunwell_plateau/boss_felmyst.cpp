@@ -17,10 +17,18 @@
 
 /* ScriptData
 SDName: boss_felmyst
-SD%Complete:
-SDComment: END_OUTRO not made. Script for Outro Madrigosa to be added here and the transform
+SD%Complete: 30%
+SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
+
+/* Status
+GroundPhase = 60%
+FlyingPhase = 0%
+DeathCloud  = 0%
+Demonic Vapor = 0%
+Madrigosa_transform/outro = 95%  // missing graphics and minor
+*/
 
 #include "precompiled.h"
 #include "sunwell_plateau.h"
@@ -106,13 +114,194 @@ struct LocationsXY
 // Movement coordinates
 static LocationsXY MoveLoc[]=
 {
-	{1489.307f, 701.451f, 40.5f},	// right - 0
-	{1447.672f, 649.917f, 40.5f},
-	{1430.092f, 604.318f, 40.5f},	// center - 2
-	{1462.899f, 536.334f, 40.5f},
-	{1537.197f, 522.199f, 40.5f},	// left - 4
+    {1489.307f, 701.451f, 40.5f},   // right - 0
+    {1447.672f, 649.917f, 40.5f},   // right - 1
+    {1430.092f, 604.318f, 40.5f},   // center - 2
+    {1462.899f, 536.334f, 40.5f},   //left - 3
+    {1537.197f, 522.199f, 40.5f},   // left - 4
 };
+
+/*######
+## boss_felmyst
+######*/
+
+struct MANGOS_DLL_DECL boss_felmystAI : public ScriptedAI
+{
+    boss_felmystAI(Creature *pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
+        m_bHasChecked = false;
+        Reset();
+    }
+
+    ScriptedInstance* m_pInstance;
+
+    //timers,bools,ect\\
+
+// Ground Phase
+    uint32 m_uiCorrosionTimer;
+    uint32 m_uiCleaveTimer;
+    uint32 m_uiEncapsulateTimer;
+    uint32 m_uiGasNovaTimer;
+//Flying phase
+
+    // Nothing Yet
+
+// Special Timers and Stuff
+    uint8 m_uiPhase;
+    uint32 m_uiEncounterCheckTimer;
+    bool m_bHasChecked;
+
+    void Reset()
+    {
+// Special Timers and Stuff Reset
+        m_uiPhase               = PHASE_IDLE;
+        m_uiEncounterCheckTimer = 10000;
+//Ground Phase Timers Reset
+        m_uiCorrosionTimer      = 10000;
+        m_uiCleaveTimer         = 4000;
+        m_uiGasNovaTimer        = 20000;
+        m_uiEncapsulateTimer    = 15000;
+//Flying Phase
+        // Nothing Yet
+
+//ect Resets
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))
+            DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+           m_pInstance->SetData(TYPE_FELMYST, NOT_STARTED);
+    }
+
+    void Aggro(Unit *pWho)
+    {
+        m_uiPhase = PHASE_GROUND;
+        m_creature->SetUInt32Value(UNIT_FIELD_BYTES_0, 0);
+        m_creature->SetUInt32Value(UNIT_FIELD_BYTES_1, 0);
+        m_creature->SetLevitate(false);
+        DoCast(m_creature, SPELL_NOXIOUSFUMES);    // needs to not target boss only players from raid
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_FELMYST, IN_PROGRESS);
+    }
+
+    void AttackStart(Unit* pWho)
+    {
+        if (m_pInstance->GetData(TYPE_BRUTALLUS) != DONE)
+            return;
+
+        if (!pWho)
+            return;
+
+        if (m_creature->Attack(pWho, true))
+        {
+            m_creature->AddThreat(pWho);
+            m_creature->SetInCombatWith(pWho);
+            pWho->SetInCombatWith(m_creature);
+            DoStartMovement(pWho);
+        }
+    }
+
+    void KilledUnit(Unit* victim)
+    {
+        switch(rand()%2)
+        {
+            case 0: DoScriptText(YELL_SLAY1, m_creature); break;
+            case 1: DoScriptText(YELL_SLAY2, m_creature); break;
+        }
+    }
+
+    void JustDied(Unit* Killer)
+    {
+        DoScriptText(YELL_DEATH, m_creature);
+
+        //if (Creature* pKalecgos = m_creature->SummonCreature(NPC_KALECGOS, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 30, m_creature->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN, 20000))
+            //DoScriptText(YELL_KALECGOS, pKalecgos);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_FELMYST, DONE);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (m_uiPhase == PHASE_IDLE)
+        {
+            // make boss visible & Transform after brutallus is defeated
+            if (m_pInstance && m_pInstance->GetData(TYPE_BRUTALLUS) == DONE && m_pInstance->GetData(TYPE_FELMYST) == NOT_STARTED)
+            {
+                if (m_uiEncounterCheckTimer < uiDiff && !m_bHasChecked)
+                {
+                    //m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                    DoScriptText(YELL_REBIRTH, m_creature);
+// need to figure out how the graphic and brutal blood graphics and ect work ere
+                   // DoCast(m_creature, SPELL_TRANSFORM_TRIGGER);
+                   // DoCast(m_creature, SPELL_TRANSFORM_VISUAL);
+                    DoCast(m_creature, SPELL_TRANSFORM_FELMYST);
+                    if (Creature* pMadrigosa = m_pInstance->GetSingleCreatureFromStorage(NPC_MADRIGOSA))
+                        pMadrigosa->ForcedDespawn();
+                    m_bHasChecked = true;
+                }
+                else m_uiEncounterCheckTimer -= uiDiff;
+            }
+        }
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+// Ground Phase
+        if (m_uiPhase == PHASE_GROUND)
+        {
+            if (m_uiCleaveTimer < uiDiff)
+            {
+                DoCast(m_creature->getVictim(), SPELL_CLEAVE);
+                m_uiCleaveTimer = urand(4000, 6000);
+            }
+            else m_uiCleaveTimer -= uiDiff;
+
+            if (m_uiCorrosionTimer < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0))
+                    DoCast(pTarget, SPELL_CORROSION);
+                m_uiCorrosionTimer = urand(15000, 20000);
+            }
+            else m_uiCorrosionTimer -= uiDiff;
+
+            if (m_uiGasNovaTimer < uiDiff)
+            {
+                DoCast(m_creature, SPELL_GASNOVA);
+                m_uiGasNovaTimer = urand(3000, 35000);
+            }
+            else m_uiGasNovaTimer -= uiDiff;
+
+            if (m_uiEncapsulateTimer < uiDiff)
+            {
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                {
+                    pTarget->CastSpell(pTarget, SPELL_ENCAPSULATE, false);
+                    DoCast(pTarget, SPELL_ENCAPSULATE_CHANNEL);
+                }
+                m_uiEncapsulateTimer = urand(30000,40000);
+            }
+            else m_uiEncapsulateTimer -= uiDiff;
+
+            DoMeleeAttackIfReady();
+        }
+    }
+};
+
+CreatureAI* GetAI_boss_felmyst(Creature *pCreature)
+{
+    return new boss_felmystAI(pCreature);
+}
 
 void AddSC_boss_felmyst()
 {
+    Script *pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_felmyst";
+    pNewScript->GetAI = &GetAI_boss_felmyst;
+    pNewScript->RegisterSelf();
 }

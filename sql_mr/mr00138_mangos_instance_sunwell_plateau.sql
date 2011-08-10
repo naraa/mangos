@@ -57,14 +57,14 @@ DELETE FROM `creature` WHERE `id`=25038; -- remove static spawn as she is summon
 
 UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 25038;  -- Felmyst doesnt attack til attacked
 UPDATE creature_template SET `ScriptName` = 'boss_felmyst', `modelid_2` = 22838 WHERE `entry` = 25038; 
-UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  -- trail 25267
-UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  -- DeathCloud
--- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor_trail", `AIName` = ''  WHERE `entry` = 25267;
+-- UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  --  npc thats spawns randomly along the beam and spawn unyielding death if players get to close ( gonna use interact_distance might need more )
+-- UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  -- DeathCloud/breath attack
+-- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor_trail", `AIName` = ''  WHERE `entry` = 25267; -- invis beam npc that chases player
 
-UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entry` = 25268;
-
+-- UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entry` = 25268;  -- data might be needed will know when i get that far
+UPDATE `creature_template` SET `AIName` = '', `ScriptName`="" WHERE `entry` = 25268;  -- restore for those who run it
 /* scipt targets*/
-DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
+-- DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
 -- INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
 -- ('45388', '1', '25038');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44883', '1', '24882');
