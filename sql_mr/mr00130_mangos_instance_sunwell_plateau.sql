@@ -65,8 +65,8 @@ UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entr
 
 /* scipt targets*/
 DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
-INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
-('45388', '1', '25038');
+-- INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
+-- ('45388', '1', '25038');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44883', '1', '24882');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('45063', '1', '24882');
 -- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44885', '1', '25038');
@@ -77,27 +77,23 @@ INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
 -- Demonic Vampor :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, speed, spawn/dmg aura
 -- -
 -- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `speed_run` = '0.95', `minlevel` = '73', `maxlevel` = '73' WHERE `entry` = '25265';
--- DELETE FROM `creature_template_addon` WHERE `entry` = '25265';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES ('25265', '0', '0', '0', '0', '0', '45411 0 45411 1');
-
+DELETE FROM `creature_template_addon` WHERE `entry` = '25265';
 -- -
 -- Demonic Vampor Trail :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, dmg auras
 -- -
 -- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `minlevel` = '73', `maxlevel` = '73' WHERE `entry` = '25267';
--- DELETE FROM `creature_template_addon` WHERE `entry` = '25267';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `bytes2`, `emote`, `moveflags`, `auras`) VALUES
--- (25267, 0, 0, 0, 0, 0, '45399 0');
+DELETE FROM `creature_template_addon` WHERE `entry` = '25267';
 
 -- -
 -- Unyielding Death: - EventAI (Combat Pulse), and Aura
 -- -
-DELETE FROM `creature_template_addon` WHERE (`entry` = 25268);
-INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES 
-(25268, 0, 0, 0, 0, 0, 0, '45415');
+DELETE FROM `creature_template_addon` WHERE (`entry` = 25268);  -- Optional to use these aura it doesnt help with lag
+-- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES 
+-- (25268, 0, 0, 0, 0, 0, 0, '45415');
 
 DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
-INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
-('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');
+-- INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
+-- ('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------

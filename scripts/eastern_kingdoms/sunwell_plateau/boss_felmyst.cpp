@@ -64,22 +64,24 @@ enum SpellsUsed
     //Mics
     SPELL_NOXIOUSFUMES			= 47002,
 	SPELL_ENRAGE                = 26662,
- 
+
     //Land Phase
-    SPELL_CLEAVE                = 19983, 
+    SPELL_CLEAVE                = 19983,
     SPELL_CORROSION             = 45866,
     SPELL_GASNOVA               = 45855,
-	SPELL_ENCAPSULATE			= 45665,
+    SPELL_ENCAPSULATE           = 45665,
     SPELL_ENCAPSULATE_CHANNEL   = 45661,
-   
+
     //Flight Phase
-    SPELL_DEMONIC_VAPOR_TRIGG   = 45399,	
-    SPELL_FOG_OF_CORRUPTION     = 45582,
-    SPELL_FOG_CHARM             = 45717,
+    SPELL_DEMONIC_VAPOR_TRIGG   = 45399,
+    SPELL_FOG_OF_CORRUPTION     = 45582,  // Visual Effect
+    SPELL_FOG_CHARM             = 45717,  // Damage, Speed Increased
     SPELL_SOUL_SEVER            = 45917,
-    SPELL_SUMMON_VAPOR          = 45391,
+    SPELL_SUMMON_VAPOR          = 45391,  // demonic vapor start spell
     SPELL_SUMMON_VAPOR_TRIAL    = 45410,
+    SPELL_SUMMON_DEATH          = 45400, // demonic vapor, unyielding death summon
     SPELL_VAPOR_BEAM            = 45389,
+    SPELL_FELMYST_FORCE_BEAM    = 45388, // demonic vapor, force beam cast spell
 
     // fog
     SPELL_DEATH_COULD_VISUAL    = 45212,
@@ -94,7 +96,7 @@ enum TransformFelmystOutro
     SPELL_FELMYST_SUMMON           = 45069,
 };
 
-//Positional defines 
+//Positional defines
 struct LocationsXY
 {
     float x, y, z;

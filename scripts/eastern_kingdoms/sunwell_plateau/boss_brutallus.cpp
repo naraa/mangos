@@ -237,11 +237,13 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                         DoScriptText(YELL_MADR_DEATH, pMadrigosa);
                         pMadrigosa->SetDeathState(JUST_DIED);
                         pMadrigosa->SetHealth(0);
+                        m_creature->GetMotionMaster()->Clear();
                     }
                     m_uiIntroTimer = 5000;
                     break;
                 case 11:
                     DoScriptText(YELL_INTRO_KILL_MADRIGOSA, m_creature);
+                    m_creature->GetMotionMaster()->Clear();
 // His Yell here suppose to break Ice Barrier players by the barrier arent hit and knocked back in room  == 0 damge its all for show
                     m_uiIntroTimer = 6000;
                     break;
