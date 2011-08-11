@@ -57,12 +57,11 @@ DELETE FROM `creature` WHERE `id`=25038; -- remove static spawn as she is summon
 
 UPDATE `creature_template` SET `faction_A` = 7, `faction_H` = 7 WHERE `entry` = 25038;  -- Felmyst doesnt attack til attacked
 UPDATE creature_template SET `ScriptName` = 'boss_felmyst', `modelid_2` = 22838 WHERE `entry` = 25038; 
--- UPDATE creature_template SET `ScriptName` = 'mob_felmyst_vapor' WHERE `entry` = 25265;  --  npc thats spawns randomly along the beam and spawn unyielding death if players get to close ( gonna use interact_distance might need more )
--- UPDATE creature_template SET `ScriptName` = 'mob_fog_of_corruption' WHERE `entry` = 25703;  -- DeathCloud/breath attack
--- UPDATE `creature_template` SET `ScriptName`="mob_felmyst_vapor_trail", `AIName` = ''  WHERE `entry` = 25267; -- invis beam npc that chases player
+UPDATE creature_template SET `ScriptName` = 'npc_felmyst_vapor' WHERE `entry` = 25265;  --  npc thats spawns randomly along the beam and spawn unyielding death if players get to close ( gonna use interact_distance might need more )
+UPDATE creature_template SET `ScriptName` = 'npc_fog_of_corruption' WHERE `entry` = 25703;  -- DeathCloud/breath attack
+UPDATE `creature_template` SET `ScriptName` = 'npc_felmyst_vapor_cloud', `AIName` = ''  WHERE `entry` = 25267; -- invis beam npc that chases player
 
--- UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entry` = 25268;  -- data might be needed will know when i get that far
-UPDATE `creature_template` SET `AIName` = '', `ScriptName`="" WHERE `entry` = 25268;  -- restore for those who run it
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName`="" WHERE `entry` = 25268;
 
 -- -
 -- scipt targets
@@ -71,41 +70,47 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName`="" WHERE `entry` = 25
 -- DELETE FROM `spell_script_target` WHERE `entry` IN (45388);
 -- INSERT INTO `spell_script_target` (`entry` ,`type` ,`targetEntry`)VALUES
 -- ('45388', '1', '25038');
--- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44883', '1', '24882');
--- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('45063', '1', '24882');
--- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44885', '1', '25038');
--- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('46350', '1', '25038');
+-- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44883', '1', '24882'); -- cast at brutallus
+-- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('45063', '1', '24882'); -- cast at brutallus
+-- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('44885', '1', '25038'); -- 
+-- REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('46350', '1', '25038'); -- 
 
 
 -- -
--- Demonic Vampor :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, speed, spawn/dmg aura
+-- Demonic Vapor :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, speed, spawn/dmg aura
 -- -
 
--- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `speed_run` = '0.95', `minlevel` = '73', `maxlevel` = '73' WHERE `entry` = '25265';
+UPDATE `creature_template` SET `modelid_2` = 11686, `minlevel` = 73, `maxlevel` = 73, `faction_A` = 16, `faction_H` = 16, `unit_flags` = 33685506 WHERE `entry` = 25265;
 DELETE FROM `creature_template_addon` WHERE `entry` = '25265';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
--- (25265, 0, 0, 0, 0, 0, 0, '45411 0 45411 1');
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
+(25265, 0, 0, 0, 0, 0, 0, '45411');
 
 -- -
--- Demonic Vampor Trail :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, dmg auras
+-- Demonic Vapor Cloud :: unit flags (not attackable, pacified, not selectable), bosslevel, factions, dmg auras
 -- -
 
--- UPDATE `creature_template` SET `unit_flags` = 0x2020002, `faction_A` = '16', `faction_H` = '16', `minlevel` = '73', `maxlevel` = '73' WHERE `entry` = '25267';
+UPDATE `creature_template` SET `modelid_2` = 11686, `minlevel` = 73, `maxlevel` = 73, `faction_A` = 16, `faction_H` = 16, `unit_flags` = 33685506 WHERE `entry` = 25267;
 DELETE FROM `creature_template_addon` WHERE `entry` = '25267';
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
--- (25267, 0, 0, 0, 0, 0, 0, '45399 0');
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
+(25267, 0, 0, 0, 0, 0, 0, '45399');
+
+-- -
+-- Death cloud
+-- -
+
+UPDATE `creature_template` SET `modelid_1` = 11686, `modelid_2` = 11686, `faction_A` = 14, `faction_H` = 14, `unit_flags` = 33554434 WHERE `entry` = 25703;
 
 -- -
 -- Unyielding Death: - EventAI (Combat Pulse), and Aura
 -- -
 
 DELETE FROM `creature_template_addon` WHERE (`entry` = 25268);
--- INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES 
--- (25268, 0, 0, 0, 0, 0, 0, '45415');
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES 
+(25268, 0, 0, 0, 0, 0, 0, '45415');
 
--- DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
--- INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
--- ('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');
+DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
+('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
