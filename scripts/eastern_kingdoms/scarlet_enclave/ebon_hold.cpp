@@ -3658,7 +3658,7 @@ enum
     SPELL_MINE_CAR_SUMM             = 52463
 };
 
-bool GOUse_go_inconspicous_mine_car(Player* pPlayer, GameObject* pGO)
+bool GOUse_go_inconspicous_mine_car(Player* pPlayer, GameObject* /*pGo*/)
 {
     if (pPlayer->GetQuestStatus(QUEST_MASSACRE_AT_LIGHTS_POINT) == QUEST_STATUS_INCOMPLETE)
     {

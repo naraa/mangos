@@ -26,7 +26,6 @@ EndScriptData */
 
 instance_shattered_halls::instance_shattered_halls(Map* pMap) : ScriptedInstance(pMap)
 {
-    m_bIsRegularMode = pMap->IsRegularDifficulty();
     Initialize();
 }
 
@@ -55,31 +54,22 @@ void instance_shattered_halls::OnObjectCreate(GameObject* pGo)
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
-void instance_shattered_halls::OnPlayerEnter(Player* pPlayer)
-{
-    if (!m_bIsRegularMode)
-    {
-        if (pPlayer->GetTeam() == HORDE)
-        {
-            pPlayer->SummonCreature(17294, 119.609f, 256.127f, -45.254f, 5.133f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17297, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17295, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17296, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-        }
-        if (pPlayer->GetTeam() == ALLIANCE)
-        {
-            pPlayer->SummonCreature(17288, 131.106f, 254.520f, -45.236f, 3.951f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17292, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17289, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-            pPlayer->SummonCreature(17290, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
-        }
-    }
-}
-
 void instance_shattered_halls::OnCreatureCreate(Creature* pCreature)
 {
-    if (pCreature->GetEntry() == NPC_NETHEKURSE)
-        m_mNpcEntryGuidStore[NPC_NETHEKURSE] = pCreature->GetObjectGuid();
+    switch(pCreature->GetEntry())
+    {
+        case NPC_NETHEKURSE:
+        case NPC_DRISELLA:
+        case NPC_RANDY_WHIZZLESPROCKET:
+        case NPC_SCOUT_ORGARR:
+        case NPC_KORAG_PROUDMANE:
+        case NPC_CAPTAINBONESHATTER:
+        case NPC_PRIVATE_JACINT:
+        case NPC_RIFLEMAN_BROWNBEARD:
+        case NPC_CAPTAIN_ALINA:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            break;
+    }
 }
 
 void instance_shattered_halls::SetData(uint32 uiType, uint32 uiData)
@@ -146,6 +136,81 @@ InstanceData* GetInstanceData_instance_shattered_halls(Map* pMap)
     return new instance_shattered_halls(pMap);
 }
 
+enum
+{
+    QUEST_IMPRISONED_IN_THE_CITADEL_A   = 9524,
+    QUEST_IMPRISONED_IN_THE_CITADEL_H   = 9525,
+
+    AREATRIGGER_ENTER_1                 = 4183,
+    AREATRIGGER_ENTER_2                 = 4182,
+    AREATRIGGER_AFTER_NETHEKURSE        = 4524,
+
+    SPELL_KARGATHS_EXECUTIONER_1        = 39288, //55min
+    SPELL_KARGATHS_EXECUTIONER_2        = 39289, //10min
+    SPELL_KARGATHS_EXECUTIONER_3        = 39290, //15min
+};
+
+bool AreaTrigger_at_shattered_halls(Player* pPlayer, AreaTriggerEntry const* pAt)
+{
+    if (instance_shattered_halls* pInstance = (instance_shattered_halls*)pPlayer->GetInstanceData())
+    {
+        if (!pInstance->instance->IsRegularDifficulty())
+        {
+            if (pPlayer->isGameMaster() || pPlayer->isDead())
+                return false;
+
+            if (pInstance->GetData(TYPE_NETHEKURSE) == DONE)
+            {
+                if (pPlayer->GetQuestStatus(QUEST_IMPRISONED_IN_THE_CITADEL_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_IMPRISONED_IN_THE_CITADEL_H) == QUEST_STATUS_INCOMPLETE)
+                {
+                    if (pAt->id == AREATRIGGER_AFTER_NETHEKURSE)
+                    {
+                        if (!pPlayer->HasAura(SPELL_KARGATHS_EXECUTIONER_1) || !pPlayer->HasAura(SPELL_KARGATHS_EXECUTIONER_2) || !pPlayer->HasAura(SPELL_KARGATHS_EXECUTIONER_3))
+                        {
+                            pPlayer->CastSpell(pPlayer, SPELL_KARGATHS_EXECUTIONER_1, true);
+                            if (pInstance->GetSingleCreatureFromStorage(NPC_SCOUT_ORGARR) || pInstance->GetSingleCreatureFromStorage(NPC_KORAG_PROUDMANE)  || pInstance->GetSingleCreatureFromStorage(NPC_CAPTAINBONESHATTER) || pInstance->GetSingleCreatureFromStorage(NPC_PRIVATE_JACINT) || pInstance->GetSingleCreatureFromStorage(NPC_RIFLEMAN_BROWNBEARD) || pInstance->GetSingleCreatureFromStorage(NPC_CAPTAIN_ALINA))
+                                return false;
+
+                            if (pPlayer->GetTeam() == HORDE)
+                            {
+                                pPlayer->SummonCreature(NPC_SCOUT_ORGARR, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                pPlayer->SummonCreature(NPC_KORAG_PROUDMANE, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                pPlayer->SummonCreature(NPC_CAPTAINBONESHATTER, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                            }
+                            if (pPlayer->GetTeam() == ALLIANCE)
+                            {
+                                pPlayer->SummonCreature(NPC_PRIVATE_JACINT, 151.040f, -91.558f, 1.936f, 1.559f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                pPlayer->SummonCreature(NPC_RIFLEMAN_BROWNBEARD, 150.669f, -77.015f, 1.933f, 4.705f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                                pPlayer->SummonCreature(NPC_CAPTAIN_ALINA, 138.241f, -84.198f, 1.907f, 0.055f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                            }
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            if (pAt->id == AREATRIGGER_ENTER_1 || AREATRIGGER_ENTER_2)
+            {
+                if (pInstance->GetSingleCreatureFromStorage(NPC_DRISELLA) || pInstance->GetSingleCreatureFromStorage(NPC_RANDY_WHIZZLESPROCKET))
+                    return false;
+
+                if (pPlayer->GetTeam() == HORDE)
+                {
+                    pPlayer->SummonCreature(NPC_DRISELLA, 119.609f, 256.127f, -45.254f, 5.133f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                }
+                if (pPlayer->GetTeam() == ALLIANCE)
+                {
+                    pPlayer->SummonCreature(NPC_RANDY_WHIZZLESPROCKET, 131.106f, 254.520f, -45.236f, 3.951f, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 24*HOUR*IN_MILLISECONDS);
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
+    return false;
+};
+
 void AddSC_instance_shattered_halls()
 {
     Script* pNewScript;
@@ -153,5 +218,10 @@ void AddSC_instance_shattered_halls()
     pNewScript = new Script;
     pNewScript->Name = "instance_shattered_halls";
     pNewScript->GetInstanceData = &GetInstanceData_instance_shattered_halls;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "at_shattered_halls";
+    pNewScript->pAreaTrigger = &AreaTrigger_at_shattered_halls;
     pNewScript->RegisterSelf();
 }
