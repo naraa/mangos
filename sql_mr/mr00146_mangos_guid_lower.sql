@@ -1,79 +1,172 @@
--- Alterac Valley: Stats (by lanc)
-UPDATE creature_template SET KillCredit1 = 11946, minlevel = 75, rangeattacktime = 2000 WHERE entry = 31819;
-UPDATE creature_template SET difficulty_entry_3 = 37283, rangeattacktime = 2000 WHERE entry = 11946;
-UPDATE creature_template SET KillCredit1 = 11946, minlevel = 83, maxlevel = 83, minhealth = 471835, maxhealth = 471835, armor = 10627, faction_A = 1214, faction_H = 1214, npcflag = 1, mindmg = 468, maxdmg = 702, attackpower = 175, dmg_multiplier = 63.4, baseattacktime = 2000, rangeattacktime = 2000, unit_class = 1, unit_flags = 4096, minrangedmg = 374, maxrangedmg = 562, rangedattackpower = 140, pickpocketloot = 11946, equipment_id = 2153, mechanic_immune_mask = 650854235 WHERE entry = 37283;
-UPDATE creature_template SET KillCredit1 = 11947, minlevel = 75, rangeattacktime = 2000 WHERE entry = 31055;
-UPDATE creature_template SET difficulty_entry_3 = 37244, rangeattacktime = 2000 WHERE entry = 11947;
-UPDATE creature_template SET KillCredit1 = 11947, minlevel = 83, maxlevel = 83, minhealth = 456155, maxhealth = 456155, armor = 10627, faction_A = 1214, faction_H = 1214, mindmg = 468, maxdmg = 702, attackpower = 175, dmg_multiplier = 38, baseattacktime = 2000, rangeattacktime = 2000, unit_class = 1, unit_flags = 4160, minrangedmg = 374, maxrangedmg = 562, rangedattackpower = 140, lootid = 11947, pickpocketloot = 11947, mingold = 1918, maxgold = 1918, mechanic_immune_mask = 650854235, flags_extra = 1 WHERE entry = 37244;
-UPDATE creature_template SET KillCredit1 = 11948, minhealth = 825966, minlevel = 75, rangeattacktime = 2000, pickpocketloot = 11948 WHERE entry = 31818;
-UPDATE creature_template SET difficulty_entry_3 = 37444, rangeattacktime = 1500 WHERE entry = 11948;
-UPDATE creature_template SET KillCredit1 = 11948, minlevel = 83, maxlevel = 83, minhealth = 684582, maxhealth = 684582, armor = 10627, faction_A = 1216, faction_H = 1216, mindmg = 468, maxdmg = 702, attackpower = 175, dmg_multiplier = 65, baseattacktime = 2000, rangeattacktime = 2000, unit_class = 1, minrangedmg = 374, maxrangedmg = 562, rangedattackpower = 140, pickpocketloot = 11948, equipment_id = 2154, mechanic_immune_mask = 650854235 WHERE entry = 37444;
-UPDATE creature_template SET KillCredit1 = 11949, minlevel = 75, rangeattacktime = 2000, lootid = 11949, pickpocketloot = 11949, flags_extra = 1 WHERE entry = 31820;
-UPDATE creature_template SET difficulty_entry_3 = 37243, rangeattacktime = 2000 WHERE entry = 11949;
-UPDATE creature_template SET minlevel = 83, maxlevel = 83, minhealth = 521320, maxhealth = 521320, armor = 10521, faction_A = 1216, faction_H = 1216, mindmg = 435, maxdmg = 653, attackpower = 163, dmg_multiplier = 40.9, baseattacktime = 2000, rangeattacktime = 2000, unit_class = 2, unit_flags = 4096, minrangedmg = 348, maxrangedmg = 522, rangedattackpower = 130, lootid = 11949, pickpocketloot = 11949, mingold = 1917, maxgold = 1917, equipment_id = 325, mechanic_immune_mask = 650854235, flags_extra = 1 WHERE entry = 37243;
-UPDATE creature_template SET KillCredit1 = 12050, minlevel = 75, rangeattacktime = 1500, lootid = 12050, pickpocketloot = 12050, spell1 = 12169, spell2 = 19130 WHERE entry = 32091;
-UPDATE creature_template SET difficulty_entry_3 = 37412, rangeattacktime = 1500, spell1 = 12169, spell2 = 19130 WHERE entry = 12050;
-UPDATE creature_template SET KillCredit1 = 12050, minlevel = 80, maxlevel = 80, minhealth = 6120, maxhealth = 6120, armor = 9730, faction_A = 1216, faction_H = 1216, mindmg = 367, maxdmg = 546, attackpower = 118, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 268, maxrangedmg = 412, rangedattackpower = 94, lootid = 12050, pickpocketloot = 12050, spell1 = 12169, spell2 = 19130, mingold = 547, maxgold = 547, equipment_id = 2156 WHERE entry = 37412;
-UPDATE creature_template SET KillCredit1 = 12051, minlevel = 75, rangeattacktime = 1500, lootid = 12051, pickpocketloot = 12051 WHERE entry = 31983;
-UPDATE creature_template SET difficulty_entry_3 = 37302, rangeattacktime = 1500 WHERE entry = 12051;
-UPDATE creature_template SET KillCredit1 = 12051, minlevel = 80, maxlevel = 80, minhealth = 6614, maxhealth = 6614, armor = 9730, faction_A = 1214, faction_H = 1214, mindmg = 315, maxdmg = 472, attackpower = 118, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 252, maxrangedmg = 378, rangedattackpower = 94, lootid = 12051, pickpocketloot = 12051, spell1 = 11977, mingold = 524, maxgold = 524, equipment_id = 2157 WHERE entry = 37302;
-UPDATE creature_template SET KillCredit1 = 12053, minlevel = 75, rangeattacktime = 1500, lootid = 12053, pickpocketloot = 12053, spell1 = 12169, spell2 = 19130 WHERE entry = 31981;
-UPDATE creature_template SET difficulty_entry_3 = 37300, rangeattacktime = 1500, spell1 = 12169, spell2 = 19130 WHERE entry = 12053;
-UPDATE creature_template SET KillCredit1 = 12053, minlevel = 80, maxlevel = 80, minhealth = 6120, maxhealth = 6120, armor = 9730, faction_A = 1214, faction_H = 1214, mindmg = 367, maxdmg = 502, attackpower = 118, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 252, maxrangedmg = 378, rangedattackpower = 94, lootid = 12053, pickpocketloot = 12053, spell1 = 12169, spell2 = 19130, mingold = 543, maxgold = 543, MovementType = 1, equipment_id = 2158 WHERE entry = 37300;
-UPDATE creature_template SET KillCredit1 = 12121, minlevel = 75, rangeattacktime = 1500, unit_flags = 4096, lootid = 12121, skinloot = 12121, spell1 = 8599, mechanic_immune_mask = 1 WHERE entry = 31964;
-UPDATE creature_template SET difficulty_entry_3 = 37282, rangeattacktime = 1500, spell1 = 8599, mechanic_immune_mask = 1 WHERE entry = 12121;
-UPDATE creature_template SET KillCredit1 = 12121, minlevel = 81, maxlevel = 81, minhealth = 35938, maxhealth = 35938, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 218, maxdmg = 327, attackpower = 82, dmg_multiplier = 7.5, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, lootid = 12121, skinloot = 12121, spell1 = 8599, MovementType = 1, mechanic_immune_mask = 1 WHERE entry = 37282;
-UPDATE creature_template SET KillCredit1 = 12122, minlevel = 75, rangeattacktime = 1500, unit_flags = 4096, lootid = 12122, skinloot = 12122, spell1 = 8599, mechanic_immune_mask = 1 WHERE entry = 31970;
-UPDATE creature_template SET difficulty_entry_3 = 37289, rangeattacktime = 1500 WHERE entry = 12122;
-UPDATE creature_template SET KillCredit1 = 12122, minlevel = 81, maxlevel = 81, minhealth = 35938, maxhealth = 35938, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 218, maxdmg = 327, attackpower = 82, dmg_multiplier = 7.5, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, lootid = 12122, skinloot = 12122, spell1 = 8599, mechanic_immune_mask = 1 WHERE entry = 37289;
-UPDATE creature_template SET KillCredit1 = 12127, minlevel = 75, rangeattacktime = 1500, lootid = 12127, pickpocketloot = 12127, spell1 = 11976, spell2 = 22120 WHERE entry = 32094;
-UPDATE creature_template SET difficulty_entry_3 = 37415, rangeattacktime = 1500, spell1 = 11976, spell2 = 22120 WHERE entry = 12127;
-UPDATE creature_template SET KillCredit1 = 12127, minlevel = 80, maxlevel = 80, minhealth = 6614, maxhealth = 6614, armor = 9730, faction_A = 1216, faction_H = 1216, mindmg = 315, maxdmg = 472, attackpower = 118, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 252, maxrangedmg = 378, rangedattackpower = 94, lootid = 12127, pickpocketloot = 12127, spell1 = 11976, spell2 = 22120, equipment_id = 2161 WHERE entry = 37415;
-UPDATE creature_template SET KillCredit1 = 13358, minlevel = 75, rangeattacktime = 2000, lootid = 13358, pickpocketloot = 13358, spell1 = 22121 WHERE entry = 32089;
-UPDATE creature_template SET difficulty_entry_3 = 37410, rangeattacktime = 2000 WHERE entry = 13358;
-UPDATE creature_template SET KillCredit1 = 13358, minlevel = 80, maxlevel = 80, minhealth = 17969, maxhealth = 17969, armor = 9730, faction_A = 1216, faction_H = 1216, mindmg = 420, maxdmg = 630, attackpower = 157, baseattacktime = 2000, rangeattacktime = 2000, unit_flags = 4608, minrangedmg = 336, maxrangedmg = 504, rangedattackpower = 126, lootid = 13358, pickpocketloot = 13358, spell1 = 22121, mingold = 580, maxgold = 580, equipment_id = 170 WHERE entry = 37410;
-UPDATE creature_template SET KillCredit1 = 13359, minlevel = 75, rangeattacktime = 2000, lootid = 13359, pickpocketloot = 13359, spell1 = 22121 WHERE entry = 31978;
-UPDATE creature_template SET difficulty_entry_3 = 37297, rangeattacktime = 2000 WHERE entry = 13359;
-UPDATE creature_template SET KillCredit1 = 13359, minlevel = 80, maxlevel = 80, minhealth = 17969, maxhealth = 17969, armor = 9730, faction_A = 1214, faction_H = 1214, mindmg = 420, maxdmg = 630, attackpower = 157, baseattacktime = 2000, rangeattacktime = 2000, unit_class = 1, unit_flags = 4608, minrangedmg = 336, maxrangedmg = 504, rangedattackpower = 126, lootid = 13359, pickpocketloot = 13359, spell1 = 22121, mingold = 576, maxgold = 576, equipment_id = 954 WHERE entry = 37297;
-UPDATE creature_template SET KillCredit1 = 14762, minlevel = 75, rangeattacktime = 1500, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511 WHERE entry = 31966;
-UPDATE creature_template SET difficulty_entry_3 = 37285, rangeattacktime = 1500, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511 WHERE entry = 14762;
-UPDATE creature_template SET KillCredit1 = 14762, minlevel = 81, maxlevel = 81, minhealth = 511875, maxhealth = 511875, armor = 10029, faction_A = 1534, faction_H = 1534, mindmg = 218, maxdmg = 327, attackpower = 82, dmg_multiplier = 13.8, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 32768, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, equipment_id = 2178, mechanic_immune_mask = 1 WHERE entry = 37285;
-UPDATE creature_template SET KillCredit1 = 14763, minlevel = 75, rangeattacktime = 1500, lootid = 14763, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, mechanic_immune_mask = 1 WHERE entry = 31968;
-UPDATE creature_template SET difficulty_entry_3 = 37287, rangeattacktime = 1500, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, mechanic_immune_mask = 1 WHERE entry = 14763;
-UPDATE creature_template SET KillCredit1 = 14763, minlevel = 81, maxlevel = 81, minhealth = 511875, maxhealth = 511875, armor = 10029, faction_A = 1534, faction_H = 1534, mindmg = 218, maxdmg = 327, attackpower = 82, dmg_multiplier = 13.8, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 32768, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, lootid = 14763, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, equipment_id = 2178, mechanic_immune_mask = 1 WHERE entry = 37287;
-UPDATE creature_template SET KillCredit1 = 14764, minlevel = 75, rangeattacktime = 1500, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, mechanic_immune_mask = 1 WHERE entry = 32008;
-UPDATE creature_template SET difficulty_entry_3 = 37327, rangeattacktime = 1500, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, mechanic_immune_mask = 1 WHERE entry = 14764;
-UPDATE creature_template SET KillCredit1 = 14764, minlevel = 81, maxlevel = 81, minhealth = 799805, maxhealth = 799805, armor = 10029, faction_A = 1534, faction_H = 1534, mindmg = 218, maxdmg = 327, dmg_multiplier = 13.8, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, MovementType = 1, equipment_id = 2178, mechanic_immune_mask = 1 WHERE entry = 37327;
-UPDATE creature_template SET KillCredit1 = 14765, minlevel = 75, rangeattacktime = 1500, lootid = 14765, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, mechanic_immune_mask = 1 WHERE entry = 32086;
-UPDATE creature_template SET difficulty_entry_3 = 37407, rangeattacktime = 1500, mechanic_immune_mask = 1 WHERE entry = 14765;
-UPDATE creature_template SET KillCredit1 = 14765, minlevel = 81, maxlevel = 81, minhealth = 799805, maxhealth = 799805, armor = 10029, faction_A = 1534, faction_H = 1534, mindmg = 218, maxdmg = 327, attackpower = 82, dmg_multiplier = 13.8, baseattacktime = 200, rangeattacktime = 1500, unit_flags = 32768, minrangedmg = 174, maxrangedmg = 262, rangedattackpower = 66, lootid = 14765, spell1 = 13736, spell2 = 15589, spell3 = 22911, spell4 = 23511, equipment_id = 2178, mechanic_immune_mask = 1 WHERE entry = 37407;
-UPDATE creature_template SET KillCredit1 = 14772, minlevel = 75, rangeattacktime = 1500, lootid = 14772 WHERE entry = 31972;
-UPDATE creature_template SET difficulty_entry_3 = 37291, rangeattacktime = 1500 WHERE entry = 14772;
-UPDATE creature_template SET KillCredit1 = 14772, minlevel = 81, maxlevel = 81, minhealth = 418312, maxhealth = 418312, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 436, maxdmg = 654, attackpower = 163, dmg_multiplier = 51.4, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 349, maxrangedmg = 523, rangedattackpower = 130, lootid = 14772, MovementType = 1, equipment_id = 2179 WHERE entry = 37291;
-UPDATE creature_template SET KillCredit1 = 14773, minlevel = 75, rangeattacktime = 1500 WHERE entry = 32007;
-UPDATE creature_template SET difficulty_entry_3 = 37326, rangeattacktime = 1500 WHERE entry = 14773;
-UPDATE creature_template SET minlevel = 81, maxlevel = 81, minhealth = 409500, maxhealth = 409500, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 436, maxdmg = 654, attackpower = 163, dmg_multiplier = 51.4, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, minrangedmg = 349, maxrangedmg = 523, rangedattackpower = 130, equipment_id = 2179 WHERE entry = 37326;
-UPDATE creature_template SET KillCredit1 = 14776, minlevel = 75, rangeattacktime = 1500, lootid = 14776, mingold = 150, maxgold = 150 WHERE entry = 31909;
-UPDATE creature_template SET difficulty_entry_3 = 37435, rangeattacktime = 1500 WHERE entry = 14776;
-UPDATE creature_template SET KillCredit1 = 14776, minlevel = 81, maxlevel = 81, minhealth = 409500, maxhealth = 409500, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 436, maxdmg = 654, attackpower = 163, dmg_multiplier = 51.4, baseattacktime = 200, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 349, maxrangedmg = 523, rangedattackpower = 130, lootid = 14776, mingold = 150, maxgold = 150, MovementType = 1, equipment_id = 2179 WHERE entry = 37435;
-UPDATE creature_template SET KillCredit1 = 14777, minlevel = 75, rangeattacktime = 1500, lootid = 14777 WHERE entry = 31829;
-UPDATE creature_template SET difficulty_entry_3 = 37468, maxlevel = 61, rangeattacktime = 1500, unk16 = 20 WHERE entry = 14777;
-UPDATE creature_template SET KillCredit1 = 14777, minlevel = 81, maxlevel = 81, minhealth = 492188, maxhealth = 492188, armor = 10029, faction_A = 1214, faction_H = 1214, mindmg = 436, maxdmg = 654, attackpower = 163, dmg_multiplier = 51.4, baseattacktime = 2000, rangeattacktime = 1500, unit_class = 1, unit_flags = 4096, minrangedmg = 349, maxrangedmg = 529, rangedattackpower = 130, lootid = 14777, equipment_id = 2179 WHERE entry = 37468;
+DELETE FROM `creature` WHERE `id` in (27915, 26499, 26497, 26528, 27891, 27892, 32273, 28439);
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(600000, 27915, 595, 3, 1, 0, 0, 1812.49, 1284.81, 142.248, 4.03364, 300, 0, 0, 17010, 0, 0, 0),
+(600001, 26499, 595, 3, 1, 0, 1613, 1920.87, 1287.12, 142.935, 6.25562, 43200, 0, 0, 44100, 7988, 0, 0),
+(600002, 26497, 595, 3, 1, 0, 1221, 1896.39, 1292.91, 143.711, 0.016332, 25, 0, 0, 100800, 88140, 0, 0),
+(600003, 26528, 595, 3, 1, 0, 1819, 1761.42, 1285.75, 139.945, 4.93874, 25, 0, 0, 126000, 59910, 0, 0),
+(600004, 27891, 595, 3, 1, 0, 0, 1603.38, 805.988, 123.272, 1.90688, 25, 0, 0, 8982, 0, 0, 0),
+(600005, 27892, 595, 3, 1, 0, 0, 1602.3, 809.385, 123.454, 5.02884, 25, 0, 0, 8982, 0, 0, 0),
+(600006, 32273, 595, 2, 1, 0, 1839, 2330.93, 1275.59, 132.848, 3.60489, 86400, 0, 0, 417911, 0, 0, 0),
+(600007, 28439, 595, 2, 1, 0, 0, 2336.56, 1277.9, 132.885, 3.47923, 25, 0, 0, 1, 0, 0, 0);
+DELETE FROM creature WHERE id IN (17301);
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(600008, 17301, 540, 2, 1, 0, 2184, 160.99, -83.5436, 1.92994, 6.28004, 300, 0, 0, 27350, 0, 0, 0);
 
--- Alterac Valley: add missing NPC and movement at Alliance start location (by Bastek)
--- Stormpike Batteguard (with owls)
-UPDATE creature SET position_x = 805.184082, position_y = -494.273804, position_z = 99.953552, orientation = 6.120978 WHERE guid = 150139;
+DELETE FROM `creature` WHERE `id`=29330;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(120868, 29330, 571, 1, 1, 0, 0, 7524.52, 4846.26, 54.1595, 0.0303891, 600, 0, 0, 12175, 0, 0, 0),
+(120869, 29330, 571, 1, 1, 0, 0, 7524.35, 4849.76, 54.1595, 0.0343194, 600, 0, 0, 12175, 0, 0, 0),
+(120870, 29330, 571, 1, 1, 0, 0, 7505.04, 4845.96, 54.1604, 0.0186107, 600, 0, 0, 12175, 0, 0, 0),
+(120871, 29330, 571, 1, 1, 0, 0, 7505.39, 4849.73, 54.1604, 0.0421631, 600, 0, 0, 12175, 0, 0, 0),
+(120874, 29330, 571, 1, 1, 0, 0, 7698.62, 4863.31, 8.10987, 0.0421443, 600, 0, 0, 12175, 0, 0, 0),
+(120875, 29330, 571, 1, 1, 0, 0, 7698.12, 4852.14, 8.2296, 0.0264354, 600, 0, 0, 12175, 0, 0, 0),
+(56765, 29330, 571, 1, 1, 0, 0, 7822.03, 5065.76, 1.34168, 3.19317, 600, 0, 0, 12175, 0, 0, 0),
+(56764, 29330, 571, 1, 1, 0, 0, 7826.57, 5022.96, 2.33828, 1.49592, 600, 0, 0, 12175, 0, 0, 0),
+(56763, 29330, 571, 1, 1, 0, 0, 7893.25, 4991.14, 6.24547, 0.0986963, 600, 0, 0, 12175, 0, 0, 0),
+(56762, 29330, 571, 1, 1, 0, 0, 7890.09, 4918.48, 1.80733, 0.177237, 600, 0, 0, 12175, 0, 0, 0),
+(56761, 29330, 571, 1, 1, 0, 0, 7905.39, 4864.59, 1.58049, 5.86509, 600, 0, 0, 12175, 0, 0, 0),
+(56760, 29330, 571, 1, 1, 0, 0, 7900.21, 4824.12, 2.04582, 2.19414, 600, 0, 0, 12175, 0, 0, 0),
+(56759, 29330, 571, 1, 1, 0, 0, 7845.14, 4863.29, 4.0894, 5.96169, 600, 0, 0, 12175, 0, 0, 0),
+(56766, 29330, 571, 1, 1, 0, 0, 7836.08, 5117.19, 1.62269, 1.46293, 600, 0, 0, 12175, 0, 0, 0),
+(56767, 29330, 571, 1, 1, 0, 0, 7622.53, 4814.38, 20.3294, 0.700302, 600, 0, 0, 12175, 0, 0, 0),
+(56768, 29330, 571, 1, 1, 0, 0, 7625.13, 4889.11, 19.9184, 4.97915, 600, 0, 0, 12175, 0, 0, 0),
+(600009, 29330, 571, 1, 1, 0, 989, 7459.84, 4851.9, 54.1595, 0.00143623, 600, 0, 0, 12600, 0, 0, 0),
+(600010, 29330, 571, 1, 1, 0, 989, 7459.58, 4840.95, 54.1595, 0.0367786, 600, 0, 0, 12387, 0, 0, 0);
 
--- Stormpike Guardsman (with owls at road)
-UPDATE creature SET position_x = 394.125031, position_y = -391.657776, position_z = -1.243851, orientation = 3.204396 WHERE guid = 150095;
+DELETE FROM `gameobject` WHERE `id`=300209;
+INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
+(42417, 300209, 571, 1, 1, 4105.65, -404.624, 117.868, 5.27991, 0, 0, 0.480862, -0.876796, -300, 0, 1),
+(600011, 300209, 571, 1, 1, 4102.71, -444.36, 124.134, 1.774, 0, 0, 0.775178, 0.631742, -300, 0, 1),
+(600012, 300209, 571, 1, 1, 4076.75, -441.368, 120.635, 0.995666, 0, 0, 0.477523, 0.878619, -300, 0, 1),
+(600013, 300209, 571, 1, 1, 4070.94, -418.43, 120.234, 6.23349, 0, 0, 0.0248472, -0.999691, -300, 0, 1),
+(600014, 300209, 571, 1, 1, 4128.17, -436.042, 125.947, 3.17357, 0, 0, 0.999872, -0.0159903, -300, 0, 1),
+(600015, 300209, 571, 1, 1, 4145.28, -419.433, 124.344, 3.38956, 0, 0, 0.992324, -0.123666, -300, 0, 1),
+(600016, 300209, 571, 1, 1, 4150.45, -390.681, 120.723, 3.66602, 0, 0, 0.965819, -0.259218, -300, 0, 1),
+(600017, 300209, 571, 1, 1, 4126.18, -391.728, 119.142, 5.33813, 0, 0, 0.455137, -0.890421, -300, 0, 1);
 
--- Owls (inside)
-UPDATE creature SET position_x = 805.777222, position_y = -491.144531, position_z = 100.065727, orientation = 6.095846 WHERE guid = 150130;
-UPDATE creature SET position_x = 804.536072, position_y = -497.691895, position_z = 100.019020, orientation = 6.095846 WHERE guid = 150131;
+DELETE FROM creature where id=28537;
+INSERT INTO creature VALUES
+(600018,28537,571,1,1,0,0,5550.404,5768.214,-78.02,1.278,300,0,0,0,0,0,0);
 
--- Owls (at road)
-UPDATE creature SET position_x = 393.981384, position_y = -389.373291, position_z = -1.243851, orientation = 3.204396 WHERE guid = 150128;
-UPDATE creature SET position_x = 394.327148, position_y = -394.871399, position_z = -1.031908, orientation = 3.204396 WHERE guid = 150129;
+DELETE FROM `creature` WHERE `id`=25092;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(100708, 25092, 530, 1, 1, 0, 0, 13272.2, -7144.51, 4.93783, 3.72311, 300, 0, 0, 1, 0, 0, 0),
+(600019, 25092, 530, 1, 1, 0, 0, 13261.8, -7144.76, 29.6207, 3.73767, 25, 0, 0, 1, 0, 0, 0),
+(600020, 25092, 530, 1, 1, 0, 0, 13313.5, -7149.11, 23.029, 0.326681, 25, 0, 0, 1, 0, 0, 0),
+(600021, 25092, 530, 1, 1, 0, 0, 13263.9, -7144.98, 18.0722, 2.95227, 25, 0, 0, 1, 0, 0, 0),
+(600022, 25092, 530, 1, 1, 0, 0, 13271.3, -7146.79, 19.1243, 5.98391, 25, 0, 0, 1, 0, 0, 0),
+(600023, 25092, 530, 1, 1, 0, 0, 13289.9, -7151.84, 20.5758, 2.77005, 25, 0, 0, 1, 0, 0, 0),
+(600024, 25092, 530, 1, 1, 0, 0, 13300.4, -7149.66, 3.98094, 1.67521, 25, 0, 0, 1, 0, 0, 0),
+(600025, 25092, 530, 1, 1, 0, 0, 13305.6, -7147.99, 19.165, 2.99467, 25, 0, 0, 1, 0, 0, 0),
+(600026, 25092, 530, 1, 1, 0, 0, 13331.7, -7150.1, 25.3583, 3.09835, 25, 0, 0, 1, 0, 0, 0),
+(600027, 25092, 530, 1, 1, 0, 0, 13348.8, -7151.36, 29.4228, 3.06536, 25, 0, 0, 1, 0, 0, 0);
+
+DELETE FROM `creature` WHERE `id`=25090;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(100709, 25090, 530, 1, 1, 0, 0, 13200.6, -7048.38, 3.82285, 3.17961, 300, 0, 0, 1, 0, 0, 0),
+(600028, 25090, 530, 1, 1, 0, 0, 13252.6, -7054.9, 22.4681, 3.5688, 25, 0, 0, 1, 0, 0, 0),
+(600029, 25090, 530, 1, 1, 0, 0, 13229.6, -7052.88, 4.3433, 2.60276, 25, 0, 0, 1, 0, 0, 0),
+(600030, 25090, 530, 1, 1, 0, 0, 13213.4, -7053.09, 18.7827, 1.69955, 25, 0, 0, 1, 0, 0, 0),
+(600031, 25090, 530, 1, 1, 0, 0, 13226.3, -7052.35, 17.7073, 2.66795, 25, 0, 0, 1, 0, 0, 0),
+(600032, 25090, 530, 1, 1, 0, 0, 13256.7, -7056.42, 23.4799, 6.09779, 25, 0, 0, 1, 0, 0, 0),
+(600033, 25090, 530, 1, 1, 0, 0, 13241, -7054.83, 19.4747, 3.12191, 25, 0, 0, 1, 0, 0, 0),
+(600034, 25090, 530, 1, 1, 0, 0, 13272, -7058.13, 27.1397, 2.9664, 25, 0, 0, 1, 0, 0, 0);
+
+DELETE FROM `creature` WHERE `id`=25091;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(100710, 25091, 530, 1, 1, 0, 0, 13317.5, -6988.85, 4.13809, 3.11521, 300, 0, 0, 1, 0, 0, 0),
+(600035, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0),
+(600036, 25091, 530, 1, 1, 0, 0, 13346, -6993.5, 3.21209, 1.40346, 25, 0, 0, 1, 0, 0, 0),
+(600037, 25091, 530, 1, 1, 0, 0, 13323, -6989.96, 18.1137, 5.29668, 25, 0, 0, 1, 0, 0, 0),
+(600038, 25091, 530, 1, 1, 0, 0, 13309.5, -6987.26, 16.2246, 4.39818, 25, 0, 0, 1, 0, 0, 0),
+(600039, 25091, 530, 1, 1, 0, 0, 13354.3, -6990.59, 19.2655, 1.4121, 25, 0, 0, 1, 0, 0, 0),
+(600040, 25091, 530, 1, 1, 0, 0, 13360.6, -6991.35, 20.7843, 6.2588, 25, 0, 0, 1, 0, 0, 0),
+(600041, 25091, 530, 1, 1, 0, 0, 13339.9, -6989.69, 17.719, 6.27843, 25, 0, 0, 1, 0, 0, 0),
+(600045, 25091, 530, 1, 1, 0, 0, 13379.1, -6991.55, 25.1392, 3.19418, 25, 0, 0, 1, 0, 0, 0),
+(600046, 25091, 530, 1, 1, 0, 0, 13328.7, -6993.48, 11.8975, 1.60531, 25, 0, 0, 1, 0, 0, 0);
+
+
+DELETE FROM `creature` WHERE `map` = 619 AND `id` IN (30391);
+INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
+(600047, 30391, 619, 2, 1, 0, 0, 358.386, -885.553, -76.1054, 3.06235, 30, 0, 0, 1, 0, 0, 0),
+(600048, 30391, 619, 2, 1, 0, 0, 355.893, -871.712, -76.1473, 2.37356, 30, 0, 0, 1, 0, 0, 0),
+(600049, 30391, 619, 2, 1, 0, 0, 350.343, -874.985, -76.7057, 3.40793, 30, 0, 0, 1, 0, 0, 0),
+(600050, 30391, 619, 2, 1, 0, 0, 339.429, -875.16, -75.6668, 2.76233, 30, 0, 0, 1, 0, 0, 0),
+(600051, 30391, 619, 2, 1, 0, 0, 333.095, -874.652, -73.8099, 3.95457, 30, 0, 0, 1, 0, 0, 0),
+(600052, 30391, 619, 2, 1, 0, 0, 324.208, -878.923, -70.915, 3.95457, 30, 0, 0, 1, 0, 0, 0),
+(600053, 30391, 619, 2, 1, 0, 0, 319.612, -893.614, -66.4438, 6.25892, 30, 0, 0, 1, 0, 0, 0),
+(600054, 30391, 619, 2, 1, 0, 0, 335.775, -899.115, -76.1423, 0.282045, 30, 0, 0, 1, 0, 0, 0),
+(600055, 30391, 619, 2, 1, 0, 0, 344.644, -898.122, -77.6435, 0.282045, 30, 0, 0, 1, 0, 0, 0),
+(600056, 30391, 619, 2, 1, 0, 0, 353.341, -894.159, -77.208, 0.282045, 30, 0, 0, 1, 0, 0, 0),
+(600057, 30391, 619, 2, 1, 0, 0, 363.279, -897.252, -79.5129, 0.282045, 30, 0, 0, 1, 0, 0, 0),
+(600058, 30391, 619, 2, 1, 0, 0, 364.47, -903.557, -80.3345, 4.7651, 30, 0, 0, 1, 0, 0, 0),
+(600059, 30391, 619, 2, 1, 0, 0, 366.219, -915.939, -82.5392, 5.04784, 30, 0, 0, 1, 0, 0, 0),
+(600060, 30391, 619, 2, 1, 0, 0, 368.297, -920.562, -82.5588, 5.59919, 30, 0, 0, 1, 0, 0, 0),
+(600061, 30391, 619, 2, 1, 0, 0, 381.647, -923.685, -82.4737, 0.190153, 30, 0, 0, 1, 0, 0, 0),
+(600062, 30391, 619, 2, 1, 0, 0, 389.079, -916.929, -81.4451, 1.40831, 30, 0, 0, 1, 0, 0, 0),
+(600063, 30391, 619, 2, 1, 0, 0, 386.916, -909.718, -79.9835, 1.40831, 30, 0, 0, 1, 0, 0, 0),
+(600064, 30391, 619, 2, 1, 0, 0, 386.976, -898.374, -79.2561, 2.5652, 30, 0, 0, 1, 0, 0, 0),
+(600065, 30391, 619, 2, 1, 0, 0, 390.349, -882.168, -76.0919, 1.56146, 30, 0, 0, 1, 0, 0, 0),
+(600066, 30391, 619, 2, 1, 0, 0, 387.136, -871.625, -75.4158, 2.15051, 30, 0, 0, 1, 0, 0, 0),
+(600067, 30391, 619, 2, 1, 0, 0, 378.056, -864.542, -73.8699, 3.01759, 30, 0, 0, 1, 0, 0, 0),
+(600068, 30391, 619, 2, 1, 0, 0, 363.749, -858.04, -75.1185, 3.01759, 30, 0, 0, 1, 0, 0, 0),
+(600069, 30391, 619, 2, 1, 0, 0, 352.564, -862.387, -74.7834, 3.01759, 30, 0, 0, 1, 0, 0, 0),
+(600070, 30391, 619, 2, 1, 0, 0, 343.924, -860.44, -74.5909, 2.23533, 30, 0, 0, 1, 0, 0, 0),
+(600071, 30391, 619, 2, 1, 0, 0, 339.94, -852.104, -74.3732, 0.995972, 30, 0, 0, 1, 0, 0, 0),
+(600072, 30391, 619, 2, 1, 0, 0, 347.839, -848.228, -73.7097, 6.23065, 30, 0, 0, 1, 0, 0, 0),
+(600073, 30391, 619, 2, 1, 0, 0, 324.306, -858.725, -75.0947, 3.68596, 30, 0, 0, 1, 0, 0, 0),
+(600074, 30391, 619, 2, 1, 0, 0, 347.971, -882.318, -75.884, 3.55872, 30, 0, 0, 1, 0, 0, 0),
+(600075, 30391, 619, 2, 1, 0, 0, 347.965, -889.829, -76.747, 3.55872, 30, 0, 0, 1, 0, 0, 0),
+(600076, 30391, 619, 2, 1, 0, 0, 368.578, -877.354, -75.676, 1.46878, 30, 0, 0, 1, 0, 0, 0),
+(600077, 30391, 619, 2, 1, 0, 0, 378.003, -852.353, -73.5427, 0.519235, 30, 0, 0, 1, 0, 0, 0),
+(600078, 30391, 619, 2, 1, 0, 0, 361.828, -841.2, -70.86, 2.94298, 30, 0, 0, 1, 0, 0, 0),
+(600079, 30391, 619, 2, 1, 0, 0, 346.972, -839.523, -73.5286, 2.94298, 30, 0, 0, 1, 0, 0, 0),
+(600080, 30391, 619, 2, 1, 0, 0, 337.009, -843.074, -74.3865, 2.94298, 30, 0, 0, 1, 0, 0, 0),
+(600081, 30391, 619, 2, 1, 0, 0, 330.036, -847.017, -74.318, 3.25321, 30, 0, 0, 1, 0, 0, 0),
+(600082, 30391, 619, 2, 1, 0, 0, 328.839, -838.69, -72.921, 1.8929, 30, 0, 0, 1, 0, 0, 0),
+(600083, 30391, 619, 2, 1, 0, 0, 322.452, -829.799, -73.5624, 2.6563, 30, 0, 0, 1, 0, 0, 0),
+(600084, 30391, 619, 2, 1, 0, 0, 316.367, -822.016, -73.1033, 1.71618, 30, 0, 0, 1, 0, 0, 0),
+(600085, 30391, 619, 2, 1, 0, 0, 320.592, -812.011, -73.8038, 0.957487, 30, 0, 0, 1, 0, 0, 0),
+(600086, 30391, 619, 2, 1, 0, 0, 322.619, -803.898, -72.9384, 2.07668, 30, 0, 0, 1, 0, 0, 0),
+(600087, 30391, 619, 2, 1, 0, 0, 331.481, -811.702, -72.9227, 5.46332, 30, 0, 0, 1, 0, 0, 0),
+(600088, 30391, 619, 2, 1, 0, 0, 341.894, -826.849, -73.049, 5.46332, 30, 0, 0, 1, 0, 0, 0),
+(600089, 30391, 619, 2, 1, 0, 0, 387.58, -856.341, -71.0935, 5.72486, 30, 0, 0, 1, 0, 0, 0),
+(600090, 30391, 619, 2, 1, 0, 0, 401.977, -867.49, -73.3215, 5.27247, 30, 0, 0, 1, 0, 0, 0),
+(600091, 30391, 619, 2, 1, 0, 0, 408.72, -872.115, -73.0256, 6.03823, 30, 0, 0, 1, 0, 0, 0),
+(600092, 30391, 619, 2, 1, 0, 0, 416.438, -875.336, -70.4833, 5.08397, 30, 0, 0, 1, 0, 0, 0),
+(600093, 30391, 619, 2, 1, 0, 0, 403.004, -895.527, -75.561, 5.60391, 30, 0, 0, 1, 0, 0, 0),
+(600094, 30391, 619, 2, 1, 0, 0, 409.35, -902.562, -77.2837, 5.22927, 30, 0, 0, 1, 0, 0, 0),
+(600095, 30391, 619, 2, 1, 0, 0, 414.538, -911.69, -79.8006, 5.22927, 30, 0, 0, 1, 0, 0, 0),
+(600096, 30391, 619, 2, 1, 0, 0, 419.727, -920.818, -80.7403, 5.22927, 30, 0, 0, 1, 0, 0, 0),
+(600097, 30391, 619, 2, 1, 0, 0, 428.151, -920.833, -79.0992, 0.892305, 30, 0, 0, 1, 0, 0, 0),
+(600098, 30391, 619, 2, 1, 0, 0, 436.712, -911.759, -78.8367, 0.0605679, 30, 0, 0, 1, 0, 0, 0),
+(600099, 30391, 619, 2, 1, 0, 0, 461.167, -910.276, -77.4777, 0.0605679, 30, 0, 0, 1, 0, 0, 0),
+(600100, 30391, 619, 2, 1, 0, 0, 419.827, -930.386, -77.7951, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600101, 30391, 619, 2, 1, 0, 0, 418.017, -939.624, -80.2493, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600102, 30391, 619, 2, 1, 0, 0, 417.247, -948.532, -79.3315, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600103, 30391, 619, 2, 1, 0, 0, 409.236, -952.042, -80.6495, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600104, 30391, 619, 2, 1, 0, 0, 410.077, -959.059, -78.9977, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600105, 30391, 619, 2, 1, 0, 0, 403.871, -964.208, -77.8873, 4.29465, 30, 0, 0, 1, 0, 0, 0),
+(600106, 30391, 619, 2, 1, 0, 0, 401.693, -970.428, -77.3012, 4.90255, 30, 0, 0, 1, 0, 0, 0),
+(600107, 30391, 619, 2, 1, 0, 0, 402.379, -980.099, -75.4585, 4.60567, 30, 0, 0, 1, 0, 0, 0),
+(600108, 30391, 619, 2, 1, 0, 0, 399.272, -984.535, -75.9494, 3.15425, 30, 0, 0, 1, 0, 0, 0),
+(600109, 30391, 619, 2, 1, 0, 0, 380.102, -984.145, -74.2926, 2.13402, 30, 0, 0, 1, 0, 0, 0),
+(600110, 30391, 619, 2, 1, 0, 0, 369.565, -973.481, -77.4914, 2.56756, 30, 0, 0, 1, 0, 0, 0),
+(600111, 30391, 619, 2, 1, 0, 0, 360.748, -967.779, -79.832, 2.56756, 30, 0, 0, 1, 0, 0, 0),
+(600112, 30391, 619, 2, 1, 0, 0, 350.138, -958.988, -79.4422, 2.16229, 30, 0, 0, 1, 0, 0, 0),
+(600113, 30391, 619, 2, 1, 0, 0, 342.879, -944.352, -79.8533, 1.64157, 30, 0, 0, 1, 0, 0, 0);
+
+DELETE FROM `creature` WHERE `id`=25160; -- new data for madrigosa
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(600114, 25160, 580, 1, 1, 0, 0, 1461.27, 647.103, 38.6641, 5.05014, 60000, 0, 0, 424900, 3387, 0, 0),
+(100738, 25160, 530, 1, 1, 0, 0, 12164.9, -7066.29, 72.0305, 1.32201, 14400, 0, 0, 424900, 3387, 0, 0);
+
+DELETE FROM creature WHERE id IN (32933, 32934);
+
+INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES 
+(600123, 32933, 603, 3, 1, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
+INSERT INTO creature (guid, id, map, spawnMask, phaseMask, modelid, equipment_id, position_x, position_y, position_z, orientation, spawntimesecs, spawndist, currentwaypoint, curhealth, curmana, DeathState, MovementType) VALUES 
+(600124, 32934, 603, 3, 1, 0, 0, 1799.68, -24.3599, 452.227, 3.14747, 604800, 0, 0, 543855, 0, 0, 0);
 
 -- Stormpike Battleguard (inside)
 -- Existing NPC's
@@ -493,4 +586,3 @@ INSERT INTO creature_movement VALUES
 (150129, 12, 371.606, -393.877, -0.495769, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2.80847, 0, 0),
 (150129, 13, 394.327, -394.871, -1.03191, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3.23258, 0, 0);
 
-UPDATE `creature_template` SET `minhealth` = 4100 WHERE `entry` = 14284;
