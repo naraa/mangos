@@ -64,7 +64,7 @@ enum MadrigosaSpells
 {
     SPELL_FROST_BLAST               = 44843,
     SPELL_ENCAPSULATE               = 44883,    // gotta be the wrong encapsulate for intro
-    SPELL_FROST_DOOR              = 45203,   Starting to think madrigosa casthis at game object ice barrier doodad to make the ice barrier door at intro
+    SPELL_FROST_DOOR              = 45203,      // Starting to think madrigosa casthis at game object ice barrier doodad to make the ice barrier door at intro
     //SPELL_BREAK_ICE               = 46650,  // Graphic of spell when Ice Barrier Breaks
     //SPELL_OPEN_DOOR               = 46652, // outro
     //SPELL_INTRO_ENCAPSULATE            =   45665,   used in intro

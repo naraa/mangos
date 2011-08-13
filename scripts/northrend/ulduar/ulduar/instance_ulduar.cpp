@@ -1074,8 +1074,12 @@ struct MANGOS_DLL_DECL instance_ulduar : public ScriptedInstance
     {
         switch(criteria_id)
         {
-        case ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET:
-            break;
+            case ACHIEV_CRIT_SARONITE_N:
+            case ACHIEV_CRIT_SARONITE_H:
+                return GetData(TYPE_VEZAX_HARD) == DONE;
+
+            case ACHIEVEMENT_CRITERIA_TYPE_BE_SPELL_TARGET:
+                break;
         }
         return false;
     }

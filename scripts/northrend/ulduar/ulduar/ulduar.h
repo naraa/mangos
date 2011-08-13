@@ -208,6 +208,14 @@ enum
     ACHIEV_CELESTIAL_DEFENDER   = 3259,     // realm first algalon
     SPELL_ALGALON_ACHIEV_TRIGG  = 65184,
     ACHIEV_DEATHS_DEMISE        = 3117,     // realm first yogg
+
+    // Achievement related
+    ACHIEV_CRIT_SARONITE_N      = 10451,                    // General Vezax, achievs 3181, 3188
+    ACHIEV_CRIT_SARONITE_H      = 10462,
+
+    // World state used for algalon timer
+    WORLD_STATE_TIMER           = 4132,
+    WORLD_STATE_TIMER_COUNT     = 4131,
 };
 
 #endif

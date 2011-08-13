@@ -16,9 +16,9 @@
 
 /* ScriptData
 SDName: boss_bronjahm
-SD%Complete: 10%
-SDComment: by /dev/rsa
-SDCategory: Icecrown - forge of souls
+SD%Complete: 90%
+SDComment: Small unknown behaviour for his Shadow Bold use in phase 1; Soulstorm needs additional handling in core
+SDCategory: The Forge of Souls
 EndScriptData */
 
 #include "precompiled.h"
