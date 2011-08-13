@@ -631,7 +631,7 @@ struct MANGOS_DLL_DECL npc_fog_of_corruptionAI : public Scripted_NoMovementAI
     void Reset()
     {
         m_FoglifeTimer = 25000;
-		DoCast(m_creature, SPELL_FOG_OF_CORRUPTION);
+        DoCast(m_creature, SPELL_FOG_OF_CORRUPTION);
     }
 
 	void AttackStart(Unit* pWho)
@@ -643,7 +643,7 @@ struct MANGOS_DLL_DECL npc_fog_of_corruptionAI : public Scripted_NoMovementAI
 	{
         if(pWho->GetTypeId() == TYPEID_PLAYER && !pWho->HasAura(SPELL_FOG_CHARM, EFFECT_INDEX_0) && pWho->IsWithinDist2d(m_creature->GetPositionX(), m_creature->GetPositionY(), 20.0f))
         {
-            pWho->CastSpell(pWho, SPELL_FOG_CHARM, false);
+            //pWho->CastSpell(pWho, SPELL_FOG_CHARM, false);
            // pWho->CastSpell(pWho, SPELL_SOUL_SEVER, false);
         }
     }
