@@ -10465,6 +10465,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
     switch(flag)
     {
         case ACT_COMMAND:                                   //0x07
+        {
        // Maybe exists some flag that disable it at client side
             if (petGuid.IsVehicle())
                 return;
@@ -10472,16 +10473,20 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
             switch(spellid)
             {
                 case COMMAND_STAY:                          //flat=1792  //STAY
+                {
                     StopMoving();
                     GetMotionMaster()->Clear(false);
                     GetMotionMaster()->MoveIdle();
                     GetCharmInfo()->SetCommandState( COMMAND_STAY );
                     break;
+                }
                 case COMMAND_FOLLOW:                        //spellid=1792  //FOLLOW
+                {
                     AttackStop();
                     GetMotionMaster()->MoveFollow(owner,PET_FOLLOW_DIST,((Pet*)this)->GetPetFollowAngle());
                     GetCharmInfo()->SetCommandState( COMMAND_FOLLOW );
                     break;
+                }
                 case COMMAND_ATTACK:                        //spellid=1792  //ATTACK
                 {
                     Unit *TargetUnit = owner->GetMap()->GetUnit(targetGuid);
@@ -10527,6 +10532,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
                     break;
                 }
                 case COMMAND_ABANDON:                       // abandon (hunter pet) or dismiss (summoned pet)
+                {
                     if(((Creature*)this)->IsPet())
                     {
                         Pet* p = (Pet*)this;
@@ -10539,11 +10545,14 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
                     else                                    // charmed
                         owner->Uncharm();
                     break;
+                }
                 default:
-                    sLog.outError("WORLD: unknown PET flag Action %i and spellid %i.", uint32(flag), spellid);
+                    sLog.outError("WORLD: unknown PET command Action %i and spellid %i.", uint32(flag), spellid);
             }
             break;
+        }
         case ACT_REACTION:                                  // 0x6
+        {
             switch(spellid)
             {
                 case REACT_PASSIVE:                         //passive
@@ -10553,6 +10562,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
                     break;
             }
             break;
+        }
         case ACT_DISABLED:                                  // 0x81    spell (disabled), ignore
         case ACT_CASTABLE:                                  // 0x80    spell (disabled), toggle state
         case ACT_PASSIVE:                                   // 0x01
@@ -10568,7 +10578,7 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
                 InterruptNonMeleeSpells(false);
 
             DoPetCastSpell(unit_target, spellid);
-
+            break;
         }
         default:
             sLog.outError("WORLD: unknown PET flag Action %i and spellid %i.", uint32(flag), spellid);
@@ -10617,6 +10627,10 @@ void Unit::DoPetCastSpell(Player *owner, uint8 cast_count, SpellCastTargets* tar
         return;
 
     Creature* pet = dynamic_cast<Creature*>(this);
+
+    // auto target selection for some pet spells
+    if (spellInfo->IsFitToFamily<SPELLFAMILY_WARLOCK, CF_WARLOCK_VOIDWALKER_SPELLS>() && spellInfo->SpellIconID == 693)
+        targets->setUnitTarget((Unit*)owner);
 
     Unit* unit_target = targets ? targets->getUnitTarget() : NULL;
     if (!unit_target)
