@@ -116,6 +116,9 @@ INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inv
 -- The Twins
 -- -
 
+-- go 187366 Blaze fix
+UPDATE `gameobject_template` SET `data5` = 0, `data7` = 0 WHERE `entry` = 187366;
+
 -- Shadowy Image fixes
 UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 25214;
 

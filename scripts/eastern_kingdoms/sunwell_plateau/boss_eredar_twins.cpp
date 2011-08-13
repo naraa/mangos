@@ -53,10 +53,13 @@ enum
     // Shared spells
     SPELL_TWINS_ENRAGE                      = 46587,
     SPELL_EMPOWER                           = 45366,        // Cast on self when the twin sister dies
-    SPELL_DARK_FLAME                        = 45345,
+
+    // touch spells
+    SPELL_DARK_FLAME                        = 45345,       // makes u immune to either touched spell for 3 secs casted at every switch
+    SPELL_DARK_TOUCHED  /*Sacrolash*/       = 45347,        // TODO NYI  - Player debuff; removed by shadow damage
+    SPELL_FLAME_TOUCHED /*Alythess*/        = 45348,        // TODO NYI  - Player debuff; removed by shadow damage
 
     // Sacrolash spells
-    SPELL_DARK_TOUCHED                      = 45347,        // TODO NYI  - Player debuff; removed by shadow damage
     SPELL_SHADOW_BLADES                     = 45248,        // 10 secs
     SPELL_DARK_STRIKE                       = 45271,
     SPELL_SHADOW_NOVA                       = 45329,        // 30-35 secs
@@ -70,11 +73,10 @@ enum
 
     // Alythess spells
     SPELL_PYROGENICS                        = 45230,        // Self buff; 15secs
-    SPELL_FLAME_TOUCHED                     = 45348,        // TODO NYI  - Player debuff; removed by shadow damage
     SPELL_CONFLAGRATION                     = 45342,        // 30-35 secs
     SPELL_BLAZE                             = 45235,        // On main target every 3 secs; should trigger 45236 which leaves a fire on the ground
-    //SPELL_BLAZE_SUMMON                      = 45236,        //187366 GO
-    //SPELL_BLAZE_BURN                        = 45246         // used by upon GO i think
+    SPELL_BLAZE_SUMMON                      = 45236,        //187366 GO  // firepatch
+    SPELL_BLAZE_BURN                        = 45246,        // used by upon GO i think
     SPELL_FLAME_SEAR                        = 46771,        // A few random targets debuff
     SPELL_CONFLAGRATION_UNK                 = 45333,        // Unknown
 
@@ -115,11 +117,15 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     DialogueHelper m_introDialogue;
 
+    ObjectGuid m_uiBlazeTargetGUID;
     uint32 m_uiEnrageTimer;
     uint32 m_uiPyrogenicsTimer;
     uint32 m_uiFlameTouchedTimer;
     uint32 m_uiConflagrationTimer;
     uint32 m_uiBlazeTimer;
+    bool m_bIsBlaze;
+    bool m_bIsBlazeDone;
+    uint32 m_uiBlaTimer;
     uint32 m_uiFlameSearTimer;
 // if sister is dead she cast shadownova
     uint32 m_uiShadowNovaTimer;
@@ -129,10 +135,13 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     {
         m_uiEnrageTimer = 6*MINUTE*IN_MILLISECONDS;
         m_uiPyrogenicsTimer     = 20000;
-        m_uiFlameTouchedTimer   = 30000;
         m_uiConflagrationTimer  = urand(25000, 30000);
         m_uiBlazeTimer          = 1000;
         m_uiFlameSearTimer      = 5000;
+        m_uiBlazeTargetGUID.Clear();
+        m_uiBlaTimer = 2600;
+        m_bIsBlaze = false;
+        m_bIsBlazeDone = false;
         m_bDidIntro = false;
         m_uiShadowNovaTimer      = 15000;
         bAlythessDead = false;
@@ -239,15 +248,6 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         else
             m_uiPyrogenicsTimer -= uiDiff;
 
-        /* // Spell needs research of fix; it shoudn't be cast on self
-        if (m_uiFlameTouchedTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_FLAME_TOUCHED) == CAST_OK)
-                m_uiFlameTouchedTimer = urand(10000, 13000);
-        }
-        else
-            m_uiFlameTouchedTimer -= uiDiff;
-        */
 // conflagration while sacrolash alive
         if (!bSacrolashDead)
         {
@@ -295,11 +295,31 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
 
         if (m_uiBlazeTimer < uiDiff)
         {
-            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_BLAZE) == CAST_OK)
+            if (Unit* pVictim = m_creature->getVictim())
+            {
+                m_uiBlazeTargetGUID = pVictim->GetObjectGuid();
+
+                if (DoCastSpellIfCan(pVictim,SPELL_BLAZE)==CAST_OK)
+                m_bIsBlazeDone = true;
                 m_uiBlazeTimer = 3000;
-        }
-        else
-            m_uiBlazeTimer -= uiDiff;
+                
+                m_bIsBlaze = true;
+            }
+        } else m_uiBlazeTimer -= uiDiff;
+        if (m_bIsBlaze) 
+            if (m_uiBlaTimer < uiDiff)
+            {
+                if (Unit* pVictim = m_creature->GetMap()->GetUnit(m_uiBlazeTargetGUID))
+                {
+                    if (m_bIsBlazeDone)
+                    {
+                        pVictim->CastSpell(pVictim,SPELL_BLAZE_SUMMON,true);
+                        m_bIsBlazeDone = false;
+                    }
+                }
+                m_bIsBlaze = false;
+                m_uiBlaTimer = 2600;
+            }else m_uiBlaTimer -= uiDiff;		
     }
 };
 
@@ -328,7 +348,6 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
     void Reset()
     {
         m_uiEnrageTimer = 6*MINUTE*IN_MILLISECONDS;
-        m_uiDarkTouchedTimer     = 30000;
         m_uiShadowNovaTimer      = 15000;
         m_uiConfoundingBlowTimer = 30000;
         m_uiShadowBladesTimer    = 15000;
@@ -439,16 +458,6 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
         }
         else
             m_uiEnrageTimer -= uiDiff;
-
-        /* // Spell needs research of fix; it shoudn't be cast on self
-        if (m_uiDarkTouchedTimer < uiDiff)
-        {
-            if (DoCastSpellIfCan(m_creature, SPELL_DARK_TOUCHED) == CAST_OK)
-                m_uiDarkTouchedTimer = urand(10000, 13000);
-        }
-        else
-            m_uiDarkTouchedTimer -= uiDiff;
-        */
 
         if (m_uiShadowBladesTimer < uiDiff)
         {
