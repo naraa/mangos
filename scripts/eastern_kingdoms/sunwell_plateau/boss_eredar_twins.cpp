@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_eredar_twins
-SD%Complete: 75
+SD%Complete: 90%
 SDComment: A few spells are not working proper yet
 SDCategory: Sunwell Plateau
 EndScriptData */
