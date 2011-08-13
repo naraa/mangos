@@ -56,8 +56,8 @@ enum
 
     // touch spells
     SPELL_DARK_FLAME                        = 45345,       // makes u immune to either touched spell for 3 secs casted at every switch
-    SPELL_DARK_TOUCHED  /*Sacrolash*/       = 45347,        // TODO NYI  - Player debuff; removed by shadow damage
-    SPELL_FLAME_TOUCHED /*Alythess*/        = 45348,        // TODO NYI  - Player debuff; removed by shadow damage
+    SPELL_DARK_TOUCHED  /*Sacrolash*/       = 45347,
+    SPELL_FLAME_TOUCHED /*Alythess*/        = 45348,
 
     // Sacrolash spells
     SPELL_SHADOW_BLADES                     = 45248,        // 10 secs
@@ -76,7 +76,7 @@ enum
     SPELL_CONFLAGRATION                     = 45342,        // 30-35 secs
     SPELL_BLAZE                             = 45235,        // On main target every 3 secs; should trigger 45236 which leaves a fire on the ground
     SPELL_BLAZE_SUMMON                      = 45236,        //187366 GO  // firepatch
-    SPELL_BLAZE_BURN                        = 45246,        // used by upon GO i think
+    SPELL_BLAZE_BURN                        = 45246,        // used by GO
     SPELL_FLAME_SEAR                        = 46771,        // A few random targets debuff
     SPELL_CONFLAGRATION_UNK                 = 45333,        // Unknown
 
@@ -214,6 +214,49 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         }
     }
 
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* spell)
+    {
+         switch(spell->Id)
+         {
+         case SPELL_BLAZE:
+         case SPELL_BLAZE_BURN:
+         case SPELL_CONFLAGRATION:
+         case SPELL_FLAME_SEAR:
+              HandleTouchedSpells(pTarget, SPELL_FLAME_TOUCHED);
+              break;
+         case SPELL_SHADOW_NOVA:
+              HandleTouchedSpells(pTarget, SPELL_DARK_TOUCHED);
+              break;
+         }
+    }
+
+    void HandleTouchedSpells(Unit* pTarget, uint32 TouchedType)
+    {
+         switch(TouchedType)
+         {
+         case SPELL_FLAME_TOUCHED:
+              if (!pTarget->HasAura(SPELL_DARK_FLAME))
+              {
+                  if (pTarget->HasAura(SPELL_DARK_TOUCHED))
+                  {
+                      pTarget->RemoveAurasDueToSpell(SPELL_DARK_TOUCHED);
+                      pTarget->CastSpell(pTarget, SPELL_DARK_FLAME, true);
+                  }else pTarget->CastSpell(pTarget, SPELL_FLAME_TOUCHED, true);
+              }
+              break;
+         case SPELL_DARK_TOUCHED:
+              if (!pTarget->HasAura(SPELL_DARK_FLAME))
+              {
+                  if (pTarget->HasAura(SPELL_FLAME_TOUCHED))
+                  {
+                      pTarget->RemoveAurasDueToSpell(SPELL_FLAME_TOUCHED);
+                      pTarget->CastSpell(pTarget, SPELL_DARK_FLAME, true);
+                  } else pTarget->CastSpell(pTarget, SPELL_DARK_TOUCHED, true);
+              }
+                break;
+          }
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (m_pInstance && m_pInstance->GetData(TYPE_EREDAR_TWINS) == SPECIAL)
@@ -302,11 +345,11 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
                 if (DoCastSpellIfCan(pVictim,SPELL_BLAZE)==CAST_OK)
                 m_bIsBlazeDone = true;
                 m_uiBlazeTimer = 3000;
-                
+
                 m_bIsBlaze = true;
             }
         } else m_uiBlazeTimer -= uiDiff;
-        if (m_bIsBlaze) 
+        if (m_bIsBlaze)
             if (m_uiBlaTimer < uiDiff)
             {
                 if (Unit* pVictim = m_creature->GetMap()->GetUnit(m_uiBlazeTargetGUID))
@@ -319,7 +362,7 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
                 }
                 m_bIsBlaze = false;
                 m_uiBlaTimer = 2600;
-            }else m_uiBlaTimer -= uiDiff;		
+            }else m_uiBlaTimer -= uiDiff;
     }
 };
 
@@ -441,6 +484,50 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
             if (Unit* pTarget = GetRandomTargetAtDist(10.0f))
                 pSummoned->AI()->AttackStart(pTarget);
         }
+    }
+
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* spell)
+    {
+         switch(spell->Id)
+         {
+         case SPELL_SHADOW_BLADES:
+         case SPELL_SHADOW_NOVA:
+         case SPELL_CONFOUNDING_BLOW:
+         case SPELL_SHADOWFURY:
+         case SPELL_DARK_STRIKE:
+              HandleTouchedSpells(pTarget, SPELL_DARK_TOUCHED);
+              break;
+         case SPELL_CONFLAGRATION:
+              HandleTouchedSpells(pTarget, SPELL_FLAME_TOUCHED);
+              break;
+         }
+    }
+
+    void HandleTouchedSpells(Unit* pTarget, uint32 TouchedType)
+    {
+         switch(TouchedType)
+         {
+         case SPELL_FLAME_TOUCHED:
+              if (!pTarget->HasAura(SPELL_DARK_FLAME))
+              {
+                  if (pTarget->HasAura(SPELL_DARK_TOUCHED))
+                  {
+                      pTarget->RemoveAurasDueToSpell(SPELL_DARK_TOUCHED);
+                      pTarget->CastSpell(pTarget, SPELL_DARK_FLAME, true);
+                  } else pTarget->CastSpell(pTarget, SPELL_FLAME_TOUCHED, true);
+              }
+              break;
+         case SPELL_DARK_TOUCHED:
+              if (!pTarget->HasAura(SPELL_DARK_FLAME))
+              {
+                  if (pTarget->HasAura(SPELL_FLAME_TOUCHED))
+                  {
+                      pTarget->RemoveAurasDueToSpell(SPELL_FLAME_TOUCHED);
+                      pTarget->CastSpell(pTarget, SPELL_DARK_FLAME, true);
+                  } else pTarget->CastSpell(pTarget, SPELL_DARK_TOUCHED, true);
+              }
+              break;
+         }
     }
 
     void UpdateAI(const uint32 uiDiff)
