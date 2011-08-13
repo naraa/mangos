@@ -64,7 +64,7 @@ enum MadrigosaSpells
 {
     SPELL_FROST_BLAST               = 44843,
     SPELL_ENCAPSULATE               = 44883,    // gotta be the wrong encapsulate for intro
-    //SPELL_FROST_DOOR              = 45203,   Starting to think madrigosa casthis at game object ice barrier doodad to make the ice barrier door at intro
+    SPELL_FROST_DOOR              = 45203,   Starting to think madrigosa casthis at game object ice barrier doodad to make the ice barrier door at intro
     //SPELL_BREAK_ICE               = 46650,  // Graphic of spell when Ice Barrier Breaks
     //SPELL_OPEN_DOOR               = 46652, // outro
     //SPELL_INTRO_ENCAPSULATE            =   45665,   used in intro
@@ -195,7 +195,7 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
                     {
                         DoScriptText(YELL_MADR_ICE_BLOCK, pMadrigosa);
-                        pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
+                        pMadrigosa->CastSpell(m_creature, SPELL_FROST_DOOR, true);
                     }
                     m_uiIntroTimer = 2000;
                     break;
@@ -212,11 +212,11 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
                             m_creature->GetMotionMaster()->MoveChase(pMadrigosa);
                             pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
                     }
-                    m_uiIntroTimer = 2000;
+                    m_uiIntroTimer = 4000;
                     break;
                 case 6:
                     if (Creature* pMadrigosa = m_pInstance->instance->GetCreature(m_uiMadrigosaGuid))
-                       pMadrigosa->CastSpell(m_creature, SPELL_FROST_BLAST, true);
+                       pMadrigosa->CastSpell(m_creature, SPELL_FROST_DOOR, true);
                        m_uiIntroTimer = 2000;
                     break;
                 case 7:

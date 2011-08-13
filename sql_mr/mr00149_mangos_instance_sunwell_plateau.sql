@@ -112,6 +112,13 @@ DELETE FROM `creature_ai_scripts` WHERE `id` = 2526801;
 INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `comment`) VALUES
 ('2526801', '25268', '1', '0', '100', '2', '500', '500', '10000', '10000', '38', '0', '0', '0', 'R2 - Unyielding Death - zone combat pulse if ooc');
 
+-- -
+-- The Twins
+-- -
+
+-- Shadowy Image fixes
+UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 25214;
+
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
 -- ---------------------------------------------
