@@ -43,7 +43,7 @@ enum
     SAY_SACROLASH_DEAD                      = -1580056,
     SAY_SACROLASH_BERSERK                   = -1580057,
 
-    SAY_ALYTHESS_CANFLAGRATION              = -1580058,
+    SAY_ALYTHESS_CONFLAGRATION              = -1580058,
     SAY_ALYTHESS_EMPOWER                    = -1580059,
     SAY_ALYTHESS_KILL_1                     = -1580060,
     SAY_ALYTHESS_KILL_2                     = -1580061,
@@ -73,8 +73,13 @@ enum
     SPELL_FLAME_TOUCHED                     = 45348,        // TODO NYI  - Player debuff; removed by shadow damage
     SPELL_CONFLAGRATION                     = 45342,        // 30-35 secs
     SPELL_BLAZE                             = 45235,        // On main target every 3 secs; should trigger 45236 which leaves a fire on the ground
+    //SPELL_BLAZE_SUMMON                      = 45236,        //187366 GO
+    //SPELL_BLAZE_BURN                        = 45246         // used by upon GO i think
     SPELL_FLAME_SEAR                        = 46771,        // A few random targets debuff
     SPELL_CONFLAGRATION_UNK                 = 45333,        // Unknown
+
+    //other
+    //SPELL_BANISH                            = 44836,
 };
 
 static const DialogueEntry aIntroDialogue[] =
@@ -89,6 +94,13 @@ static const DialogueEntry aIntroDialogue[] =
     {SAY_INTRO_8, NPC_ALYTHESS,  0},
     {0, 0, 0},
 };
+
+bool bAlythessDead;
+bool bSacrolashDead;
+
+/*####
+# Alythess
+####*/
 
 struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
 {
@@ -109,6 +121,8 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     uint32 m_uiConflagrationTimer;
     uint32 m_uiBlazeTimer;
     uint32 m_uiFlameSearTimer;
+// if sister is dead she cast shadownova
+    uint32 m_uiShadowNovaTimer;
     bool m_bDidIntro;
 
     void Reset()
@@ -120,6 +134,8 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         m_uiBlazeTimer          = 1000;
         m_uiFlameSearTimer      = 5000;
         m_bDidIntro = false;
+        m_uiShadowNovaTimer      = 15000;
+        bAlythessDead = false;
     }
 
     void JustReachedHome()
@@ -167,6 +183,7 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
+        bAlythessDead = true;
         if (m_pInstance)
         {
             if (Creature* pSacrolash = m_pInstance->GetSingleCreatureFromStorage(NPC_SACROLASH))
@@ -231,21 +248,42 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
         else
             m_uiFlameTouchedTimer -= uiDiff;
         */
-
-        if (m_uiConflagrationTimer < uiDiff)
+// conflagration while sacrolash alive
+        if (!bSacrolashDead)
         {
-            Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 3);
-            if (!pTarget)
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-
-            if (DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION) == CAST_OK)
+            if (m_uiConflagrationTimer < uiDiff)
             {
-                DoScriptText(SAY_ALYTHESS_CANFLAGRATION, m_creature);
-                m_uiConflagrationTimer = urand(20000, 25000);
+                Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 3);
+                if (!pTarget)
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+                if (DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION) == CAST_OK)
+                {
+                    DoScriptText(SAY_ALYTHESS_CONFLAGRATION, m_creature);
+                    m_uiConflagrationTimer = urand(20000, 25000);
+                }
             }
+            else
+                m_uiConflagrationTimer -= uiDiff;
         }
+// shadow nova while sacrolash dead
         else
-            m_uiConflagrationTimer -= uiDiff;
+        {
+            if (m_uiShadowNovaTimer < uiDiff)
+            {
+                Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 2);
+                if (!pTarget)
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+                if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_NOVA) == CAST_OK)
+                {
+                    DoScriptText(SAY_ALYTHESS_CONFLAGRATION, m_creature);
+                    m_uiShadowNovaTimer = urand(20000, 25000);
+                }
+            }
+            else
+                m_uiShadowNovaTimer -= uiDiff;
+        }
 
         if (m_uiFlameSearTimer < uiDiff)
         {
@@ -265,6 +303,10 @@ struct MANGOS_DLL_DECL boss_alythessAI : public ScriptedAI
     }
 };
 
+/*####
+# sacrolash
+####*/
+
 struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
 {
     boss_sacrolashAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -281,6 +323,7 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
     uint32 m_uiConfoundingBlowTimer;
     uint32 m_uiShadowBladesTimer;
     uint32 m_uiSummonShadowImage;
+    uint32 m_uiConflagrationTimer;
 
     void Reset()
     {
@@ -290,6 +333,8 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
         m_uiConfoundingBlowTimer = 30000;
         m_uiShadowBladesTimer    = 15000;
         m_uiSummonShadowImage    = 10000;
+        m_uiConflagrationTimer  = urand(20000, 25000);
+        bSacrolashDead = false;
     }
 
     void JustReachedHome()
@@ -324,6 +369,8 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
+
+        bSacrolashDead = true;
         if (m_pInstance)
         {
             if (Creature* pAlythess = m_pInstance->GetSingleCreatureFromStorage(NPC_ALYTHESS))
@@ -410,21 +457,42 @@ struct MANGOS_DLL_DECL boss_sacrolashAI : public ScriptedAI
         }
         else
             m_uiShadowBladesTimer -= uiDiff;
-
-        if (m_uiShadowNovaTimer < uiDiff)
+// shadow nova while alythess alive
+        if (!bAlythessDead)
         {
-            Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 2);
-            if (!pTarget)
-                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-
-            if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_NOVA) == CAST_OK)
+            if (m_uiShadowNovaTimer < uiDiff)
             {
-                DoScriptText(SAY_SACROLASH_SHADOW_NOVA, m_creature);
-                m_uiShadowNovaTimer = urand(30000, 35000);
+                Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 2);
+                if (!pTarget)
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+                if (DoCastSpellIfCan(pTarget, SPELL_SHADOW_NOVA) == CAST_OK)
+                {
+                    DoScriptText(SAY_SACROLASH_SHADOW_NOVA, m_creature);
+                    m_uiShadowNovaTimer = urand(30000, 35000);
+                }
             }
+            else
+                m_uiShadowNovaTimer -= uiDiff;
         }
+//conflagration when alythess dead
         else
-            m_uiShadowNovaTimer -= uiDiff;
+        {
+            if (m_uiConflagrationTimer < uiDiff)
+            {
+                Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 3);
+                if (!pTarget)
+                    pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
+
+                if (DoCastSpellIfCan(pTarget, SPELL_CONFLAGRATION) == CAST_OK)
+                {
+                    DoScriptText(SAY_SACROLASH_SHADOW_NOVA, m_creature);
+                    m_uiConflagrationTimer = urand(20000, 25000);
+                }
+            }
+            else
+                m_uiConflagrationTimer -= uiDiff;
+        }
 
         if (m_uiConfoundingBlowTimer < uiDiff)
         {
