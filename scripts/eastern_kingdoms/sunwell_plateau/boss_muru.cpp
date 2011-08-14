@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_muru
-SD%Complete: 15
+SD%Complete: 25
 SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -27,6 +27,7 @@ EndScriptData */
 
 enum spells // Boss spells
 {
+    SPELL_OPEN_PORTAL_VISUAL     = 45977,
     ENRAGE                      = 26662,
     SPELL_NEGATIVE              = 46285, //negative energy -> deals damage
     SPELL_NEGATIVEENERGY        = 46008, //negative energy -> black beams
@@ -144,6 +145,9 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     uint8  m_uiPhaseCount;
     uint32 m_uiNegativeEnergyTimer;
     uint32 m_uiSummonTrashTimer;
+    uint32 m_uiSummonVoidTimer;
+    ObjectGuid m_uiPortalGUID;
+    uint32 m_uiPortalDelayTimer;
     uint32 m_uiDarknessTimer;
     uint32 m_uiDarkFiendTimer;
 
@@ -153,6 +157,9 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
         m_uiSummonTrashTimer     = 10000;
         m_uiDarknessTimer        = 45000;
         m_uiDarkFiendTimer		 = 50000;
+        m_uiSummonVoidTimer      = 30000;
+        m_uiPortalGUID.Clear();
+        m_uiPortalDelayTimer     = 60000;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU,NOT_STARTED);
@@ -186,6 +193,36 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
             m_pInstance->SetData(TYPE_MURU, DONE);
     }
 
+    void OpenAllPortals()
+    {
+        std::list<Creature*> lPortals;
+        GetCreatureListWithEntryInGrid(lPortals, m_creature, NPC_PORTAL_TARGET, 40.0f);
+        if (!lPortals.empty())
+        {
+            for(std::list<Creature*>::iterator iter = lPortals.begin(); iter != lPortals.end(); ++iter)
+            {
+                if ((*iter) && (*iter)->isAlive())
+                    (*iter)->CastSpell((*iter), SPELL_OPEN_PORTAL_VISUAL, false);
+            }
+        }
+    }
+
+    Creature* SelectRandomPortal()
+    {
+        std::list<Creature* > lPortalList;
+        GetCreatureListWithEntryInGrid(lPortalList, m_creature, NPC_PORTAL_TARGET, 40.0f);
+
+        if (lPortalList.empty()){
+            m_uiSummonVoidTimer = 30000;
+            return NULL;
+        }
+
+        std::list<Creature* >::iterator iter = lPortalList.begin();
+        advance(iter, urand(0, lPortalList.size()-1));
+
+        return *iter;
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -214,6 +251,27 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
                  m_uiDarkFiendTimer = 60000;
             }
             else m_uiDarkFiendTimer -= uiDiff;
+
+            if (m_uiSummonVoidTimer < uiDiff)
+            {
+                if (Creature* pPortal = SelectRandomPortal())
+                {
+                    m_uiPortalGUID = pPortal->GetObjectGuid();
+                    pPortal->CastSpell(pPortal, SPELL_OPEN_PORTAL_VISUAL, false);
+                }
+                m_uiPortalDelayTimer = 5000;
+                m_uiSummonVoidTimer = 30000;
+            }
+            else m_uiSummonVoidTimer -= uiDiff;
+
+            if (m_uiPortalDelayTimer < uiDiff)
+            {
+                if (Creature* pPortal = m_creature->GetMap()->GetCreature(m_uiPortalGUID))
+                m_creature->SummonCreature(NPC_VOID_SENTINEL, pPortal->GetPositionX(), pPortal->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+                m_uiPortalDelayTimer = 60000;
+            }
+            else m_uiPortalDelayTimer -= uiDiff;
+
             //Summon 6 humanoids every 1min (1mage & 2berserkers)
             if (m_uiSummonTrashTimer < uiDiff)
             {
