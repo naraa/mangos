@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_muru
-SD%Complete:
+SD%Complete: 10
 SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -111,6 +111,13 @@ enum summons
     ID_SPAWN                    = 25824, // void spawn
 };
 
+enum Phasez
+{
+    //PHASE_IDLE_MURU  = 0,  // 10SEC FREE FOR ALL DMG ON MU RU -- MIGHT NOT NEED THIS
+    PHASE_MURU       = 0,
+    PHASE_ENTROP     = 1,
+};
+
 //Boss sounds
 #define SOUND_CHANGE_PHASE 12560
 //#define SAY_ENTROPIUS_SUMMON	??????
@@ -163,6 +170,106 @@ float Humanoides[6][5] =
 };
 */
 
+/*######
+## Mu'ru
+######*/
+struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
+{
+    boss_muruAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
+        SetCombatMovement(false);
+        m_uiPhaseCount = PHASE_MURU;
+        Reset();
+    }
+
+    ScriptedInstance* m_pInstance;
+
+// Timers/\Bools/\ Ect \\
+
+    uint8  m_uiPhaseCount;
+    uint32 m_uiNegativeEnergyTimer;
+    uint32 m_uiSummonTrashTimer;
+    uint32 m_uiDarknessTimer;
+
+    void Reset()
+    {
+        m_uiNegativeEnergyTimer  = 4000;
+        m_uiSummonTrashTimer     = 10000;
+        m_uiDarknessTimer        = 45000;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_MURU,NOT_STARTED);
+    }
+
+    void Aggro(Unit *pWho)
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_MURU,IN_PROGRESS);
+    }
+
+    void JustDied(Unit* Killer)
+    {
+        m_uiPhaseCount = PHASE_ENTROP;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_MURU, DONE);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiPhaseCount == PHASE_MURU)
+        {
+            //Summon 6 humanoids every 1min (1mage & 2berserkers)
+            if (m_uiSummonTrashTimer < uiDiff)
+            {
+                for (uint8 i = 0; i < 6; i++)
+                {
+                     uint32 ID;
+
+                     if ((i == 1) | (i == 2))
+                        ID = ID_SWFuryMage;
+                     else
+                        ID = ID_SWBerserker;
+
+                     Creature* sTrash = m_creature->SummonCreature(ID, Trash[i][0], Trash[i][1], m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
+
+                     if (Unit* sTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                         if (sTrash)
+                             sTrash->AI()->AttackStart(sTarget);
+                }
+                m_uiSummonTrashTimer = 60000;
+            }else m_uiSummonTrashTimer -= uiDiff;
+
+            //negative energy on 4-5 targets
+            if (m_uiNegativeEnergyTimer < uiDiff)
+            {	//choose 4-5 targets
+                for(uint8 i=rand()%2; i<5; ++i)
+                {
+                    if(Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                        m_creature->CastSpell(pTarget, SPELL_NEGATIVE, false);
+                }
+                m_uiNegativeEnergyTimer = 4000;
+            }else m_uiNegativeEnergyTimer -= uiDiff;
+        }
+        //else // entrop phase
+    }
+};
+
+CreatureAI* GetAI_boss_muru(Creature *_Creature)
+{
+    return new boss_muruAI(_Creature);
+}
+
 void AddSC_boss_muru()
 {
+    Script* pNewScript;
+
+    pNewScript = new Script;
+    pNewScript->Name="boss_muru";
+    pNewScript->GetAI = &GetAI_boss_muru;
+    pNewScript->RegisterSelf();
 }

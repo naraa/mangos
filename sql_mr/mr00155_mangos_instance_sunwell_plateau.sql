@@ -122,6 +122,13 @@ UPDATE `gameobject_template` SET `data5` = 0, `data7` = 0 WHERE `entry` = 187366
 -- Shadowy Image fixes
 UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 25214;
 
+-- ------
+-- mu'ru-
+-- ------
+UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = ''  WHERE `entry` = 25741;
+
+
+
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
 -- ---------------------------------------------
