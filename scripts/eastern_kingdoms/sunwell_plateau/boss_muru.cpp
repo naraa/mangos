@@ -27,7 +27,7 @@ EndScriptData */
 
 enum spells // Boss spells
 {
-    SPELL_OPEN_PORTAL_VISUAL     = 45977,
+    SPELL_OPEN_PORTAL_VISUAL    = 45977,
     ENRAGE                      = 26662,
     SPELL_NEGATIVE              = 46285, //negative energy -> deals damage
     SPELL_NEGATIVEENERGY        = 46008, //negative energy -> black beams
@@ -168,12 +168,6 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
             DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
     }
 
-    void Aggro(Unit *pWho)
-    {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_MURU,IN_PROGRESS);
-    }
-
 // not in use yet
 /*  void JustSummoned(Creature* pSummon)
     {
@@ -185,12 +179,10 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     }
 */ // not in use yet
 
-    void JustDied(Unit* Killer)
+    void Aggro(Unit *pWho)
     {
-        m_uiPhaseCount = PHASE_ENTROP;
-
         if (m_pInstance)
-            m_pInstance->SetData(TYPE_MURU, DONE);
+            m_pInstance->SetData(TYPE_MURU,IN_PROGRESS);
     }
 
     void OpenAllPortals()
@@ -205,6 +197,20 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
                     (*iter)->CastSpell((*iter), SPELL_OPEN_PORTAL_VISUAL, false);
             }
         }
+    }
+
+    void JustDied(Unit* pKiller)
+    {
+        DoCast(m_creature, SPELL_OPEN_ALL_PORTALS);
+        OpenAllPortals();
+        DoCast(m_creature, ENTROPIUS_EFFECT);
+        m_creature->CastSpell(m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),SPELL_ENTROPIUS_SUMMON, true);
+        //DoCast(m_creature, SPELL_ENTROPIUS_SUMMON);
+
+        m_uiPhaseCount = PHASE_ENTROP;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_MURU, DONE);
     }
 
     Creature* SelectRandomPortal()
