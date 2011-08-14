@@ -127,7 +127,8 @@ UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 1
 -- ------
 UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = ''  WHERE `entry` = 25741;
 
-
+-- clean up of M'uru ACID
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25741;
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
