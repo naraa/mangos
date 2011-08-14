@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_muru
-SD%Complete: 10
+SD%Complete: 15
 SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -34,10 +34,9 @@ enum spells // Boss spells
     SPELL_NEGATIVEENERGY_CHAIN  = 46289, //negative energy ->
 
     AURA_SINGULARITY            = 46228, //black hole passive  visual effect
-    AURA_SUNWELL_RADIANCE       = 45769,
 
-    DARKNESS                    = 45996, // darkness
-    //SPELL_DARKNESS              = 45999,
+    //DARKNESS                  = 45996, // darkness
+    SPELL_DARKNESS              = 45999,
     SPELL_ENTROPIUS_SUMMON      = 46217,
     ENTROPIUS_EFFECT            = 46223, // entropius cosmetic spawn
 
@@ -67,18 +66,14 @@ enum spells // Boss spells
     SPELL_VOID_ZONE_PERIODIC    = 46262,
     SPELL_VOID_ZONE_PREEFFECT   = 46265,
 
-/* NPC list refenece
-	NPC_PORTAL_TARGET           = 25770,
-
-    NPC_ENTROPIUS               = 25840,
-    NPC_SHADOW_FURY_MAGE        = 25799,
-    NPC_SHADOW_BERSERKER        = 25798,
+//NPC list
+    CREATURE_PORTAL_TARGET      = 25770,
+    CREATURE_ENTROPIUS          = 25840,
     NPC_VOID_SENTINEL           = 25772,
     NPC_VOID_SPAWN              = 25824,
     NPC_DARK_FIEND              = 25744,
     NPC_SINGULARITY             = 25855,
     NPC_DARKNESS                = 25879,
-*/
 
 //Dark Fiend
     DARK_FIEND_AURA             = 45934, // summon dark fiend
@@ -105,15 +100,10 @@ enum summons
 {
     ID_SWFuryMage	            = 25799, // shadowsword fury mage
     ID_SWBerserker              = 25798, // shadowsword berserker
-    ID_DARK_FIEND               = 25744, // dark fiend
-    ID_VOID_SENTINEL            = 25772, // void sentinel
-    ID_SINGULARITY              = 25855, // visual effect
-    ID_SPAWN                    = 25824, // void spawn
 };
 
 enum Phasez
 {
-    //PHASE_IDLE_MURU  = 0,  // 10SEC FREE FOR ALL DMG ON MU RU -- MIGHT NOT NEED THIS
     PHASE_MURU       = 0,
     PHASE_ENTROP     = 1,
 };
@@ -132,47 +122,11 @@ float Trash[6][2] =
         {1781.502f,659.254f},
         {1781.502f,659.254f},
 };
-// Dark Fiend spawn coordinates
-float DarkFiendSpawn[8][2] =
-{
-	{1825.39f,620.36f},
-	{1827.11f,628.24f},
-	{1821.82f,636.50f},
-	{1812.42f,637.12f},
-	{1805.03f,632.02f},
-	{1804.04f,623.09f},
-	{1809.85f,615.46f},
-	{1818.69f,614.17f},
-};
-float DarkFiendSpawnZ = 69.7f;
-
-/*  -- might use these locs
-float DarkFiends[8][4] =
-{
-    {1819.9f,    609.80f,    69.74f,    1.94f},
-    {1829.39f,   617.89f,    69.73f,    2.61f},
-    {1801.98f,   633.62f,    69.74f,    5.71f},
-    {1830.88f,   629.99f,    69.73f,    3.52f},
-    {1800.38f,   621.41f,    69.74f,    0.22f},
-    {1808.3f ,   612.45f,    69.73f,    1.02f},
-    {1823.9f ,   639.69f,    69.74f,    4.12f},
-    {1811.85f,   640.46f,    69.73f,    4.97f}
-};
-
-float Humanoides[6][5] =
-{
-    {CREATURE_FURY_MAGE, 1780.16f,    666.83f,    71.19f,    5.21f},
-    {CREATURE_FURY_MAGE, 1847.93f,    600.30f,    71.30f,    2.57f},
-    {CREATURE_BERSERKER, 1779.97f,    660.64f,    71.19f,    5.28f},
-    {CREATURE_BERSERKER, 1786.2f ,    661.01f,    71.19f,    4.51f},
-    {CREATURE_BERSERKER, 1845.17f,    602.63f,    71.28f,    2.43f},
-    {CREATURE_BERSERKER, 1842.91f,    599.93f,    71.23f,    2.44f}
-};
-*/
 
 /*######
 ## Mu'ru
 ######*/
+
 struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
 {
     boss_muruAI(Creature* pCreature) : ScriptedAI(pCreature)
@@ -191,15 +145,20 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     uint32 m_uiNegativeEnergyTimer;
     uint32 m_uiSummonTrashTimer;
     uint32 m_uiDarknessTimer;
+    uint32 m_uiDarkFiendTimer;
 
     void Reset()
     {
         m_uiNegativeEnergyTimer  = 4000;
         m_uiSummonTrashTimer     = 10000;
         m_uiDarknessTimer        = 45000;
+        m_uiDarkFiendTimer		 = 50000;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU,NOT_STARTED);
+
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))
+            DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
     }
 
     void Aggro(Unit *pWho)
@@ -207,6 +166,17 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU,IN_PROGRESS);
     }
+
+// not in use yet
+/*  void JustSummoned(Creature* pSummon)
+    {
+        pSummon->SetInCombatWithZone();
+        if (pSummon->GetEntry() == CREATURE_ENTROPIUS)
+        {
+            pSummon->CastSpell(pSummon, SPELL_ENTROPIUS_SPAWN, false);
+        }
+    }
+*/ // not in use yet
 
     void JustDied(Unit* Killer)
     {
@@ -223,6 +193,27 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
 
         if (m_uiPhaseCount == PHASE_MURU)
         {
+            if (m_uiDarknessTimer < uiDiff)
+            {
+                DoCast(m_creature, SPELL_DARKNESS);
+                m_uiDarkFiendTimer = 5000;
+                m_uiDarknessTimer = 45000;
+            }
+            else m_uiDarknessTimer -= uiDiff;
+
+            if (m_uiDarkFiendTimer < uiDiff)
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                     float angle = (float) rand()*360/RAND_MAX + 1;
+                     float homeX = m_creature->GetPositionX() + 10*cos(angle*(M_PI/180));
+                     float homeY = m_creature->GetPositionY() + 10*sin(angle*(M_PI/180));
+                     if (Creature* pTemp = m_creature->SummonCreature(NPC_DARK_FIEND, homeX, homeY, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 11000))
+                         pTemp->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                }
+                 m_uiDarkFiendTimer = 60000;
+            }
+            else m_uiDarkFiendTimer -= uiDiff;
             //Summon 6 humanoids every 1min (1mage & 2berserkers)
             if (m_uiSummonTrashTimer < uiDiff)
             {

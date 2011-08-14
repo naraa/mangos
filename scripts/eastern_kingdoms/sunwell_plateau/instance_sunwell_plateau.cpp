@@ -68,6 +68,7 @@ void instance_sunwell_plateau::OnCreatureCreate(Creature* pCreature)
         case NPC_FELMYST:
         case NPC_ALYTHESS:
         case NPC_SACROLASH:
+        case NPC_PORTAL_TARGET:
         case NPC_MURU:
         case NPC_KILJAEDEN:
         case NPC_KILJAEDEN_CONTROLLER:

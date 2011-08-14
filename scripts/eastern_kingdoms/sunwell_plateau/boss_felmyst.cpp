@@ -86,7 +86,7 @@ enum SpellsUsed
 //fog(deathcloud)
     SPELL_FOG_OF_CORRUPTION     = 45582, // Visual Effect (fog to self, trigger 45782)
     SPELL_FOG_CHARM             = 45717, // fel to player
-    PELL_FOG_BREATH             = 45495,   // fel to self, speed burst
+    SPELL_FOG_BREATH             = 45495,   // fel to self, speed burst
     SPELL_FOG_TRIGGER           = 45582,   // fog to self, trigger 45782
     SPELL_FOG_FORCE             = 45782,   // fog to player, force cast 45714
     SPELL_FOG_INFORM            = 45714,   // player let fel cast 45717, script effect

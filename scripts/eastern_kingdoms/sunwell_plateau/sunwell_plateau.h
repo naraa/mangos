@@ -29,6 +29,7 @@ enum
     NPC_FELMYST                 = 25038,
     NPC_ALYTHESS                = 25166,
     NPC_SACROLASH               = 25165,
+    NPC_PORTAL_TARGET           = 25770,
     NPC_MURU                    = 25741,
     NPC_KILJAEDEN               = 25315,
     NPC_KILJAEDEN_CONTROLLER    = 25608,            // kiljaeden event controller
