@@ -245,7 +245,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
                         if (Unit* pTarget = doSelectRandomPlayerAtRange(60.0f))
                         {
                             pTarget->GetPosition(targetPosX, targetPosY, targetPosZ);
-                            m_creature->GetMotionMaster()->MovePoint(0, targetPosX, targetPosY, targetPosZ, false);
+                            m_creature->GetMotionMaster()->MovePoint(0, targetPosX, targetPosY, targetPosZ);
                             m_bIsColdFlameXCast = false;
                             m_uiBoneStormChargeTimer = 3000;
                         }
