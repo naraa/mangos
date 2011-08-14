@@ -203,13 +203,13 @@ INSERT INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `content
 -- Lord Marrowgar
 DELETE FROM `boss_spell_table` WHERE `entry` = 36612;
 INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `spellID_N25`, `spellID_H10`, `spellID_H25`, `timerMin_N10`, `timerMin_N25`, `timerMin_H10`, `timerMin_H25`, `timerMax_N10`, `timerMax_N25`, `timerMax_H10`, `timerMax_H25`, `locData_x`, `locData_y`, `locData_z`, `CastType`, `isVisualEffect`, `isBugged`) VALUES
-(36612, 71021, 0, 0, 0, 10000, 0, 0, 0, 25000, 0, 0, 0, 0, 0, 0, 3, 0, 0),
+(36612, 69055, 70814, 69055, 70814, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0), -- handled by dynamic timer in script
 (36612, 69138, 0, 0, 0, 6000, 0, 0, 0, 12000, 0, 0, 0, 0, 0, 0, 1, 0, 0),
 (36612, 71580, 0, 0, 0, 6000, 0, 0, 0, 12000, 0, 0, 0, 0, 0, 0, 1, 0, 0),
 (36612, 69146, 0, 0, 0, 15000, 0, 0, 0, 25000, 0, 0, 0, 0, 0, 0, 1, 0, 0),
 (36612, 69057, 0, 0, 0, 17000, 0, 0, 0, 27000, 0, 0, 0, 0, 0, 0, 6, 0, 0),
-(36612, 69076, 0, 0, 0, 60000, 0, 0, 0, 60000, 0, 0, 0, 0, 0, 0, 1, 0, 0),
-(36612, 69075, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0, 5, 0, 0, 12, 0, 1),
+(36612, 69076, 0, 0, 0, 45000, 0, 0, 0, 60000, 0, 0, 0, 0, 0, 0, 1, 0, 0),
+(36612, 69075, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0, 5, 0, 0, 12, 0, 0),
 (36612, 47008, 0, 0, 0, 600000, 0, 0, 0, 600000, 0, 0, 0, 0, 0, 0, 1, 0, 0);
 -- summons
 INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `timerMin_N10`, `timerMax_N10`,  `data1`, `data2`, `data3`, `data4`, `locData_x`, `locData_y`, `locData_z`, `CastType` ) VALUES
@@ -218,8 +218,8 @@ INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `timerMin_N10`, `timerMa
 -- Cold flame
 DELETE FROM `boss_spell_table` WHERE `entry` = 36672;
 INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `spellID_N25`, `spellID_H10`, `spellID_H25`, `timerMin_N10`, `timerMin_N25`, `timerMin_H10`, `timerMin_H25`, `timerMax_N10`, `timerMax_N25`, `timerMax_H10`, `timerMax_H25`, `data1`, `data2`, `data3`, `data4`, `locData_x`, `locData_y`, `locData_z`, `CastType`, `isVisualEffect`, `isBugged`) VALUES
-(36672, 69145, 0, 0, 0, 15000, 0, 0, 0, 15000, 0, 0, 0, 15, 15, 15, 15, 0, 0, 0, 1, 0, 0),
-(36672, 69147, 0, 0, 0, 2000, 0, 0, 0, 2000, 0, 0, 0, 15000, 15000, 30000, 30000, 0, 0, 0, 1, 0, 0),
+(36672, 69145, 0, 0, 0, 3000, 3000, 8000, 8000, 3000, 3000, 8000, 8000, 15, 15, 15, 15, 0, 0, 0, 1, 0, 0),
+(36672, 69147, 0, 0, 0, 700, 0, 0, 0, 700, 0, 0, 0, 15000, 15000, 30000, 30000, 0, 0, 0, 1, 0, 0),
 (36672, 69146, 0, 0, 0, 1000, 0, 0, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0);
 INSERT INTO `boss_spell_table` (`entry`, `spellID_N10`, `timerMin_N10`, `timerMax_N10`,  `data1`, `data2`, `data3`, `data4`, `locData_x`, `locData_y`, `locData_z`, `CastType` ) VALUES
 (36672, 36672, 30000, 30000, 1, 1, 1, 1, 0, 0, 0, 11);
