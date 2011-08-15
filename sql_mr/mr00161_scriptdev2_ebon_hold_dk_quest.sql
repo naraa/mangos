@@ -8,7 +8,7 @@ INSERT INTO script_texts (entry, content_default, content_loc8, sound, type, lan
 
 -- ------------------------------
 -- Quest:: ambush at the overlook
----------------------------------
+-- ------------------------------
 DELETE FROM `script_texts` WHERE `entry` IN ('-1609531','-1609532');
 INSERT INTO `script_texts`
     (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`)
