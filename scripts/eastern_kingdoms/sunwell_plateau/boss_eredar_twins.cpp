@@ -17,8 +17,8 @@
 
 /* ScriptData
 SDName: boss_eredar_twins
-SD%Complete: 90%
-SDComment: A few spells are not working proper yet
+SD%Complete: 75
+SDComment: A few spells are not working proper yet; Shadow image script needs improvement
 SDCategory: Sunwell Plateau
 EndScriptData */
 
@@ -87,12 +87,12 @@ enum
 static const DialogueEntry aIntroDialogue[] =
 {
     {SAY_INTRO_1, NPC_SACROLASH, 1000},
-    {SAY_INTRO_2, NPC_ALYTHESS,  1000},
-    {SAY_INTRO_3, NPC_SACROLASH, 1000},
-    {SAY_INTRO_4, NPC_ALYTHESS,  1000},
-    {SAY_INTRO_5, NPC_SACROLASH, 1000},
-    {SAY_INTRO_6, NPC_ALYTHESS,  1000},
-    {SAY_INTRO_7, NPC_SACROLASH, 3000},
+    {SAY_INTRO_2, NPC_ALYTHESS,  1500},
+    {SAY_INTRO_3, NPC_SACROLASH, 1500},
+    {SAY_INTRO_4, NPC_ALYTHESS,  1500},
+    {SAY_INTRO_5, NPC_SACROLASH, 1500},
+    {SAY_INTRO_6, NPC_ALYTHESS,  1500},
+    {SAY_INTRO_7, NPC_SACROLASH, 2500},
     {SAY_INTRO_8, NPC_ALYTHESS,  0},
     {0, 0, 0},
 };
