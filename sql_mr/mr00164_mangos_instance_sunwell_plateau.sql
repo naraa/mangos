@@ -142,8 +142,6 @@ UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `speed_walk` 
 -- added no movement to template as well
 UPDATE `creature_template` SET `unit_flags` = 33554692 WHERE `entry` = 25770;
 
--- UPDATE `creature_template` SET `modelid_1` = 169, `modelid_2` = 23377 WHERE `entry` = 25770; -- restore to invis ( for my testing right now)
-
 DELETE FROM `creature` WHERE `id`=25770; -- so far only movement ( there not suppose to needs somes twinks to a few locs )
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (81074, 25770, 580, 1, 1, 0, 0, 1802.91, 591.566, 78.5747, 1.25664, 604800, 0, 0, 1, 0, 0, 0),
