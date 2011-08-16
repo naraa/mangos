@@ -182,7 +182,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     void OpenAllPortals()
     {
         std::list<Creature*> lPortals;
-        GetCreatureListWithEntryInGrid(lPortals, m_creature, NPC_PORTAL_TARGET, 40.0f);
+        GetCreatureListWithEntryInGrid(lPortals, m_creature, NPC_PORTAL_TARGET, 60.0f);
         if (!lPortals.empty())
         {
             for(std::list<Creature*>::iterator iter = lPortals.begin(); iter != lPortals.end(); ++iter)
@@ -205,7 +205,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     Creature* SelectRandomPortal()
     {
         std::list<Creature* > lPortalList;
-        GetCreatureListWithEntryInGrid(lPortalList, m_creature, NPC_PORTAL_TARGET, 40.0f);
+        GetCreatureListWithEntryInGrid(lPortalList, m_creature, NPC_PORTAL_TARGET, 60.0f);
 
         if (lPortalList.empty()){
             m_uiSummonVoidTimer = 30000;
