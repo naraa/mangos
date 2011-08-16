@@ -126,6 +126,13 @@ UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 1
 -- mu'ru-
 -- ------
 UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = ''  WHERE `entry` = 25741;
+UPDATE `creature_template` SET `ScriptName` = 'boss_entropius', `modelid_2` = 23428, `modelid_4` = 23428 WHERE `entry` = 25840;
+
+-- Dark fiend fixes
+UPDATE `creature_template` SET `speed_walk` = 0.6, `speed_run` = 0.6 WHERE `entry` = 25744; -- move slower then the player they are suppose run away from then 8)
+
+-- Singularity
+UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `speed_walk` = 0.8, `speed_run` = 0.8 WHERE `entry` = 25855; -- move slower then the player they are suppose run away from then 8)
 
 -- clean up of M'uru ACID
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25741;
