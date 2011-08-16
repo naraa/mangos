@@ -222,7 +222,8 @@ void instance_shattered_halls::Update(uint32 uiDiff)
         switch(m_uiExecutionStage)
         {
             case 0:
-                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_SOLDIER_ALLIANCE_2 : NPC_SOLDIER_HORDE_2))
+                // Kill the officer
+                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
                     pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 // Make Kargath yell
@@ -241,8 +242,7 @@ void instance_shattered_halls::Update(uint32 uiDiff)
                 m_uiExecutionTimer = 15*MINUTE*IN_MILLISECONDS;
                 break;
             case 2:
-                // Kill the officer
-                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
+                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_SOLDIER_ALLIANCE_2 : NPC_SOLDIER_HORDE_2))
                     pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 SetData(TYPE_EXECUTION, FAIL);
