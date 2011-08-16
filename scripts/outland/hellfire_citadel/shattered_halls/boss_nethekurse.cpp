@@ -415,9 +415,9 @@ struct MANGOS_DLL_DECL mob_fel_orc_convertAI : public ScriptedAI
 };
 
 // NOTE: this creature are also summoned by other spells, for different creatures - comment may be wrong
-struct MANGOS_DLL_DECL mob_lesser_shadow_fissureAI : public ScriptedAI
+struct MANGOS_DLL_DECL mob_lesser_shadow_fissureAI : public Scripted_NoMovementAI
 {
-    mob_lesser_shadow_fissureAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+    mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {Reset();}
 
     void Reset() { }
     void MoveInLineOfSight(Unit* pWho) { }
