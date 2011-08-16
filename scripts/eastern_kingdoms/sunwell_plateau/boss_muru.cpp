@@ -158,7 +158,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
 
     void Reset()
     {
-        m_uiNegativeEnergyTimer  = 4000;
+        m_uiNegativeEnergyTimer  = 2000;
         m_uiSummonTrashTimer     = 10000;
         m_uiDarknessTimer        = 45000;
         m_uiDarkFiendTimer		 = 50000;
@@ -294,7 +294,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     m_creature->CastSpell(pTarget, SPELL_NEGATIVE, false);
             }
-            m_uiNegativeEnergyTimer = 4000;
+            m_uiNegativeEnergyTimer = 2000;
         }else m_uiNegativeEnergyTimer -= uiDiff;
     }
 };

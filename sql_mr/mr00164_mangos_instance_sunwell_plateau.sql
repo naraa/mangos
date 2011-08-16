@@ -126,16 +126,44 @@ UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 1
 -- mu'ru-
 -- ------
 UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = ''  WHERE `entry` = 25741;
-UPDATE `creature_template` SET `ScriptName` = 'boss_entropius', `modelid_2` = 23428, `modelid_4` = 23428 WHERE `entry` = 25840;
+UPDATE `creature_template` SET `ScriptName` = 'boss_entropius', `modelid_2` = 23428, `modelid_3` = 23428, `modelid_4` = 23428 , `AIName` = '' WHERE `entry` = 25840;
 
+-- ----------------
 -- Dark fiend fixes
 UPDATE `creature_template` SET `speed_walk` = 0.6, `speed_run` = 0.6 WHERE `entry` = 25744; -- move slower then the player they are suppose run away from then 8)
 
+-- -----------
 -- Singularity
 UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `speed_walk` = 0.8, `speed_run` = 0.8 WHERE `entry` = 25855; -- move slower then the player they are suppose run away from then 8)
 
+-- ---------------------------
+-- fixes to the portal targets
+
+-- added no movement to template as well
+UPDATE `creature_template` SET `unit_flags` = 33554692 WHERE `entry` = 25770;
+
+-- UPDATE `creature_template` SET `modelid_1` = 169, `modelid_2` = 23377 WHERE `entry` = 25770; -- restore to invis ( for my testing right now)
+
+DELETE FROM `creature` WHERE `id`=25770; -- so far only movement ( there not suppose to needs somes twinks to a few locs )
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(81074, 25770, 580, 1, 1, 0, 0, 1802.91, 591.566, 78.5747, 1.25664, 604800, 0, 0, 1, 0, 0, 0),
+(81075, 25770, 580, 1, 1, 0, 0, 1803.18, 657.192, 78.5476, 4.06662, 604800, 0, 0, 1, 0, 0, 0),
+(81076, 25770, 580, 1, 1, 0, 0, 1775.98, 635.201, 78.5586, 0.069813, 604800, 0, 0, 1, 0, 0, 0),
+(81077, 25770, 580, 1, 1, 0, 0, 1849.18, 641.002, 78.6183, 3.56047, 604800, 0, 0, 1, 0, 0, 0),
+(81089, 25770, 580, 1, 1, 0, 0, 1852.49, 623.461, 78.6198, 3.03687, 604800, 0, 0, 1, 0, 0, 0),
+(81090, 25770, 580, 1, 1, 0, 0, 1839.93, 652.875, 78.5929, 3.9619, 604800, 0, 0, 1, 0, 0, 0),
+(81091, 25770, 580, 1, 1, 0, 0, 1824.05, 653.748, 78.5587, 5.044, 604800, 0, 0, 1, 0, 0, 0),
+(81092, 25770, 580, 1, 1, 0, 0, 1794.84, 604.343, 78.549, 0.087266, 604800, 0, 0, 1, 0, 0, 0),
+(81093, 25770, 580, 1, 1, 0, 0, 1824.17, 588.977, 78.621, 1.79769, 604800, 0, 0, 1, 0, 0, 0),
+(81094, 25770, 580, 1, 1, 0, 0, 1781.65, 621.09, 78.5541, 1.15192, 604800, 0, 0, 1, 0, 0, 0);
+
+-- ----------------------
 -- clean up of M'uru ACID
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25741;
+
+-- -----------------------
+-- clean up of Entrop ACID
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25840;
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------
