@@ -125,9 +125,10 @@ UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 1
 -- ------
 -- mu'ru-
 -- ------
-UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = ''  WHERE `entry` = 25741;
+UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = '' WHERE `entry` = 25741;
 UPDATE `creature_template` SET `ScriptName` = 'boss_entropius', `modelid_2` = 23428, `modelid_3` = 23428, `modelid_4` = 23428 , `AIName` = '' WHERE `entry` = 25840;
-
+UPDATE `creature_template` SET `ScriptName` = 'mob_dark_fiend', `AIName` = '' WHERE `entry` = 25744; 
+UPDATE `creature_template` SET `ScriptName` = 'mob_voidsentinel', `AIName` = '' WHERE `entry` = 25772; 
 -- ----------------
 -- Dark fiend fixes
 UPDATE `creature_template` SET `speed_walk` = 0.6, `speed_run` = 0.6 WHERE `entry` = 25744; -- move slower then the player they are suppose run away from then 8)
@@ -162,6 +163,11 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25741;
 -- -----------------------
 -- clean up of Entrop ACID
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25840;
+
+-- -----------------------
+-- trash ACID clean up
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25744; -- dark fiend
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25772; -- void sentinel
 
 -- ---------------------------------------------
 -- InstanceFixes and Related Data --------------

@@ -87,7 +87,7 @@ enum spells // Boss spells
 // void sentinel
     SPELL_SHADOW_PULSE          = 46086,
     VOID_AURA                   = 46087, // shadow pulse
-    VOID_BLAST                  = 46161, // void blast
+    SPELL_VOID_BLAST            = 46161, // void blast
 // Shadowsword Berserker's spells
     SPELL_FLURRY                = 46160,
     SPELL_DUAL_WIELD            = 29651,
@@ -390,6 +390,107 @@ CreatureAI* GetAI_boss_entropius(Creature *pCreature)
     return new boss_entropiusAI(pCreature);
 }
 
+/*######
+## mob_dark_fiend    // slowly chases a player and exlodes causing AOE to raid when its close to a player
+######*/
+
+struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
+{
+    mob_dark_fiendAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    void Reset()
+    {
+    }
+
+    void AttackStart(Unit* pWho)
+    {
+    }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        // dispell will cause them to despawn
+        switch(pSpell->Id)
+        {
+        case 32375:
+        case 72734:
+        case 32592:
+        case 39897:
+        case 988:
+        case 8012:
+            m_creature->ForcedDespawn();
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        //will ignore threat list but still chase a random close to spawn point player -- DONT FORGET THESE DONT MELEE I BELIEVE
+        if (!m_creature->getVictim())
+        {
+            Unit* pTarget =  GetClosestAttackableUnit(m_creature, 75.0f);  // they should choose a random player close to there spawn
+            AttackStart(pTarget);
+        }
+
+        // use if mob is in interact or 0.5 or 0.3 distance from player before explode
+    }
+};
+
+CreatureAI* GetAI_mob_dark_fiend(Creature *pCreature)
+{
+    return new mob_dark_fiendAI(pCreature);
+}
+
+/*######
+## mob_voidsentinel
+######*/
+
+struct MANGOS_DLL_DECL mob_voidsentinelAI : public ScriptedAI
+{
+    mob_voidsentinelAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 m_uiVoidBlastTimer;
+
+    void Reset()
+    {
+        DoCast(m_creature, SPELL_SHADOW_PULSE);
+        m_uiVoidBlastTimer = 15000;
+    }
+
+    void JustDied(Unit* pKiller)
+    {
+        for(uint8 i = 0; i < 8; ++i)
+        {
+            if (Creature* pTrash = m_creature->SummonCreature(NPC_VOID_SPAWN, m_creature->GetPositionX()+rand()%2, m_creature->GetPositionY()+rand()%2, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000))
+                pTrash->SetInCombatWithZone();
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                return;
+
+        if (m_uiVoidBlastTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_VOID_BLAST);
+            m_uiVoidBlastTimer = urand(1000, 20000);
+        }
+        else m_uiVoidBlastTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_mob_voidsentinel(Creature *pCreature)
+{
+    return new mob_voidsentinelAI(pCreature);
+}
+
 void AddSC_boss_muru()
 {
     Script* pNewScript;
@@ -402,5 +503,15 @@ void AddSC_boss_muru()
     pNewScript = new Script;
     pNewScript->Name="boss_entropius";
     pNewScript->GetAI = &GetAI_boss_entropius;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name="mob_dark_fiend";
+    pNewScript->GetAI = &GetAI_mob_dark_fiend;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name="mob_voidsentinel";
+    pNewScript->GetAI = &GetAI_mob_voidsentinel;
     pNewScript->RegisterSelf();
 }
