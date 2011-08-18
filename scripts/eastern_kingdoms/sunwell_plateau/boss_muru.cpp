@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_muru
-SD%Complete: 25
+SD%Complete: 60
 SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -42,7 +42,7 @@ enum spells // Boss spells
     ENTROPIUS_EFFECT            = 46223, // entropius cosmetic spawn
 
     SUMMON_VOID_SENTINEL        = 45988, // visual effect & summon void sentinel
-    SUMMON_VOID_SENTINEL_IMAGE  = 45989, // summon void sentine - summoning visual effect
+    SUMMON_VOID_SENTINEL_IMAGE  = 45989, // summon void sentinel - summoning visual effect
     SUMMON_VOID_SENTINEL_SUMMON = 45978, //
     SUMMON_VOID_SENTINEL_PORTAL = 45977, // portal visual effect
 
@@ -75,9 +75,11 @@ enum spells // Boss spells
     NPC_DARK_FIEND              = 25744,
     NPC_SINGULARITY             = 25855,
     NPC_DARKNESS                = 25879,
+    NPC_BLACKHOLE               = 34296,
 
 //Dark Fiend
     DARK_FIEND_AURA             = 45934, // summon dark fiend
+    SPELL_DARK_FIEND_DMG        = 45944,
     SPELL_DARKFIEND_VISUAL      = 45936,
     DARK_FIEND_DEBUFF           = 45944, // dark fiend debuff AOE
     SPELL_DISPELL               = 32375, // mass dispell
@@ -88,19 +90,12 @@ enum spells // Boss spells
     SPELL_SHADOW_PULSE          = 46086,
     VOID_AURA                   = 46087, // shadow pulse
     SPELL_VOID_BLAST            = 46161, // void blast
-// Shadowsword Berserker's spells
-    SPELL_FLURRY                = 46160,
-    SPELL_DUAL_WIELD            = 29651,
-// Shadowsword Fury Mage's spells
-    SPELL_FEL_FIREBALL          = 46101,
-    SPELL_SPELL_FURY            = 46102,
-
 };
 
 enum summons
 {
-    ID_SWFuryMage	            = 25799, // shadowsword fury mage
-    ID_SWBerserker              = 25798, // shadowsword berserker
+    SWFuryMage              = 25799, // shadowsword fury mage
+    SWBerserker             = 25798, // shadowsword berserker
 };
 
 //Boss sounds
@@ -169,7 +164,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
         if (m_pInstance)
             m_pInstance->SetData(TYPE_MURU,NOT_STARTED);
 
-        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA))    // move to DB
             DoCast(m_creature, SPELL_SUNWELL_RADIANCE_AURA);
     }
 
@@ -182,7 +177,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     void OpenAllPortals()
     {
         std::list<Creature*> lPortals;
-        GetCreatureListWithEntryInGrid(lPortals, m_creature, NPC_PORTAL_TARGET, 60.0f);
+        GetCreatureListWithEntryInGrid(lPortals, m_creature, NPC_PORTAL_TARGET, 120.0f);
         if (!lPortals.empty())
         {
             for(std::list<Creature*>::iterator iter = lPortals.begin(); iter != lPortals.end(); ++iter)
@@ -205,7 +200,7 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
     Creature* SelectRandomPortal()
     {
         std::list<Creature* > lPortalList;
-        GetCreatureListWithEntryInGrid(lPortalList, m_creature, NPC_PORTAL_TARGET, 60.0f);
+        GetCreatureListWithEntryInGrid(lPortalList, m_creature, NPC_PORTAL_TARGET, 120.0f);
 
         if (lPortalList.empty()){
             m_uiSummonVoidTimer = 30000;
@@ -273,9 +268,9 @@ struct MANGOS_DLL_DECL boss_muruAI : public ScriptedAI
                  uint32 ID;
 
                  if ((i == 1) | (i == 2))
-                     ID = ID_SWFuryMage;
+                     ID = SWFuryMage;
                  else
-                     ID = ID_SWBerserker;
+                     ID = SWBerserker;
 
                  Creature* sTrash = m_creature->SummonCreature(ID, Trash[i][0], Trash[i][1], m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 15000);
 
@@ -322,15 +317,17 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
     uint32 m_uiTargetsCountTimer;
     uint32 m_uiNegativeEnergyTimer;
     uint32 m_uiBerserkTimer;
+    uint32 m_uiBlackHoleTimer;
 
     void Reset()
     {
         m_uiNegativeEnergyTimer = 1000;
         m_uiBerserkTimer        = 300000;
-        m_uiTargetsCount        = 0;
+        m_uiTargetsCount        = 1;
         m_uiTargetsCountTimer   = 1500;
+        m_uiBlackHoleTimer      = 10000;
 
-        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA, EFFECT_INDEX_0))
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA, EFFECT_INDEX_0))  // moved to DB
             m_creature->CastSpell(m_creature, SPELL_SUNWELL_RADIANCE_AURA, true);
 	}
 
@@ -381,8 +378,19 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
              m_uiNegativeEnergyTimer = 1000;
          }else m_uiNegativeEnergyTimer -= uiDiff;
 
+         if (m_uiBlackHoleTimer < uiDiff)
+         {   //summon black hole visual
+            if (Unit* pBlackHole = m_creature->SummonCreature(NPC_BLACKHOLE,1790+rand()%50,599+rand()%50,m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,2000))
+            {
+                m_creature->SummonCreature(NPC_DARK_FIEND,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,60000);
+                m_creature->SummonCreature(NPC_SINGULARITY,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,60000);
+                m_creature->ForcedDespawn();
+            }
+            m_uiBlackHoleTimer = 10000;
+        }else m_uiBlackHoleTimer -= uiDiff;
+
          DoMeleeAttackIfReady();
-	}
+    }
 };
 
 CreatureAI* GetAI_boss_entropius(Creature *pCreature)
@@ -399,19 +407,23 @@ struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
     mob_dark_fiendAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         Reset();
+        Reached = false;
     }
+
+    bool Reached;
 
     void Reset()
     {
-    }
+        if (!m_creature->HasAura(DARK_FIEND_AURA,EFFECT_INDEX_0))     // this data to be moved to DB
+            m_creature->CastSpell(m_creature, DARK_FIEND_AURA, true);
 
-    void AttackStart(Unit* pWho)
-    {
+        if(Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            AttackStart(pTarget);
     }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        // dispell will cause them to despawn
+        // dispell & and should be purge -- will cause them to despawn
         switch(pSpell->Id)
         {
         case 32375:
@@ -426,14 +438,16 @@ struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        //will ignore threat list but still chase a random close to spawn point player -- DONT FORGET THESE DONT MELEE I BELIEVE
-        if (!m_creature->getVictim())
-        {
-            Unit* pTarget =  GetClosestAttackableUnit(m_creature, 75.0f);  // they should choose a random player close to there spawn
-            AttackStart(pTarget);
-        }
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                return;
 
-        // use if mob is in interact or 0.5 or 0.3 distance from player before explode
+        //Are we with in melee attack distance
+        if (!Reached)
+            if (m_creature->IsWithinDistInMap(m_creature->getVictim(), ATTACK_DISTANCE))
+            {
+                m_creature->CastSpell(m_creature->getVictim(), SPELL_DARK_FIEND_DMG, true);
+                m_creature->ForcedDespawn();
+            }
     }
 };
 
@@ -457,7 +471,10 @@ struct MANGOS_DLL_DECL mob_voidsentinelAI : public ScriptedAI
 
     void Reset()
     {
-        DoCast(m_creature, SPELL_SHADOW_PULSE);
+        if (!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA, EFFECT_INDEX_0))  // moved to DB
+            m_creature->CastSpell(m_creature, SPELL_SUNWELL_RADIANCE_AURA, true);
+
+        DoCast(m_creature, SPELL_SHADOW_PULSE);    //moved to DB
         m_uiVoidBlastTimer = 15000;
     }
 
@@ -491,6 +508,54 @@ CreatureAI* GetAI_mob_voidsentinel(Creature *pCreature)
     return new mob_voidsentinelAI(pCreature);
 }
 
+/*######
+## mob_singularity
+######*/
+
+struct MANGOS_DLL_DECL mob_singularityAI : public ScriptedAI
+{
+    mob_singularityAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+ 
+    uint32 m_uiChangeTargetTimer;
+    uint32 m_uiLifeTime;
+
+    void Reset()                    
+    {
+        m_uiChangeTargetTimer = 5000;
+        m_uiLifeTime = 22000;
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            AttackStart(pTarget);
+    }
+
+    //nullAI
+    void Aggro(Unit* pWho)           {} 
+    void JustDied(Unit* pKiller)     {}
+    void KilledUnit(Unit* pVictim)   {}
+      
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+                return;
+
+        if (m_uiChangeTargetTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                AttackStart(pTarget);
+            m_uiChangeTargetTimer = 5000;
+        }else m_uiChangeTargetTimer -= uiDiff;
+
+        if(m_uiLifeTime < uiDiff)
+        {
+            m_creature->ForcedDespawn();
+        }else m_uiLifeTime -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_mob_singularity(Creature *_Creature)
+{
+    return new mob_singularityAI(_Creature);
+}
+
 void AddSC_boss_muru()
 {
     Script* pNewScript;
@@ -513,5 +578,10 @@ void AddSC_boss_muru()
     pNewScript = new Script;
     pNewScript->Name="mob_voidsentinel";
     pNewScript->GetAI = &GetAI_mob_voidsentinel;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name="mob_singularity";
+    pNewScript->GetAI = &GetAI_mob_singularity;
     pNewScript->RegisterSelf();
 }

@@ -123,19 +123,36 @@ UPDATE `gameobject_template` SET `data5` = 0, `data7` = 0 WHERE `entry` = 187366
 UPDATE `creature_template` SET `minlevel` = 73, `maxlevel` = 73, `faction_A` = 14, `faction_H` = 14 WHERE `entry` = 25214;
 
 -- ------
--- mu'ru-
+-- M'uru-
 -- ------
 UPDATE `creature_template` SET `ScriptName` = 'boss_muru', `AIName` = '' WHERE `entry` = 25741;
 UPDATE `creature_template` SET `ScriptName` = 'boss_entropius', `modelid_2` = 23428, `modelid_3` = 23428, `modelid_4` = 23428 , `AIName` = '' WHERE `entry` = 25840;
 UPDATE `creature_template` SET `ScriptName` = 'mob_dark_fiend', `AIName` = '' WHERE `entry` = 25744; 
 UPDATE `creature_template` SET `ScriptName` = 'mob_voidsentinel', `AIName` = '' WHERE `entry` = 25772; 
+
 -- ----------------
 -- Dark fiend fixes
-UPDATE `creature_template` SET `speed_walk` = 0.6, `speed_run` = 0.6 WHERE `entry` = 25744; -- move slower then the player they are suppose run away from then 8)
+UPDATE `creature_template` SET `speed_walk` = 0.7, `speed_run` = 0.7 WHERE `entry` = 25744; -- move slower then the player they are suppose run away from then 8)
+
+-- shorter attack range ( needs to be for chase explode )
+DELETE FROM `creature_model_info` WHERE (`modelid`=1126);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (1126, 2, 0.5, 2, 0, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=23842);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (23842, 2, 0.5, 2, 0, 0);
 
 -- -----------
 -- Singularity
-UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `speed_walk` = 0.8, `speed_run` = 0.8 WHERE `entry` = 25855; -- move slower then the player they are suppose run away from then 8)
+UPDATE `creature_template` SET `faction_A` = 14, `faction_H` = 14, `speed_walk` = 0.7, `speed_run` = 0.7 WHERE `entry` = 25855; -- move slower then the player they are suppose run away from then 8)
+UPDATE `creature_template` SET `unit_flags` = 33554434, `ScriptName` = 'mob_singularity' WHERE `entry` = 25855;  -- non attackable and selectable
+UPDATE `creature_template` SET `modelid_1` = 25206, `modelid_2` = 25206 WHERE `entry` = 25855;
+
+-- added throw character aura if they get to close and acrance form aura
+DELETE FROM `creature_template_addon` WHERE (`entry`=25855);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (25855, 0, 0, 0, 0, 0, 0, '46228 48019');
+
+-- short their attack range to they have to be close before effect iss triggered
+DELETE FROM `creature_model_info` WHERE (`modelid`=25206);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (25206, 0.75, 0.5, 2, 0, 0);
 
 -- ---------------------------
 -- fixes to the portal targets
