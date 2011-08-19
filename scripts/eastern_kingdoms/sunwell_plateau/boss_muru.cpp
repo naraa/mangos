@@ -380,11 +380,11 @@ struct MANGOS_DLL_DECL boss_entropiusAI : public ScriptedAI
 
          if (m_uiBlackHoleTimer < uiDiff)
          {   //summon black hole visual
-            if (Unit* pBlackHole = m_creature->SummonCreature(NPC_BLACKHOLE,1790+rand()%50,599+rand()%50,m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,2000))
+            if (Unit* pBlackHole = m_creature->SummonCreature(NPC_BLACKHOLE,1790+rand()%50,599+rand()%50,m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_DESPAWN,4000))
             {
                 m_creature->SummonCreature(NPC_DARK_FIEND,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,60000);
                 m_creature->SummonCreature(NPC_SINGULARITY,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),0,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,60000);
-                m_creature->ForcedDespawn();
+                DoCast(m_creature, SPELL_VOID_ZONE_PERIODIC);
             }
             m_uiBlackHoleTimer = 10000;
         }else m_uiBlackHoleTimer -= uiDiff;
