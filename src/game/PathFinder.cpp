@@ -127,7 +127,7 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
     if (distance)
         *distance = dtSqrt(minDist3d);
 
-    return (minDist2d < 4.0f) ? nearestPoly : INVALID_POLYREF;
+    return (minDist2d < 3.0f) ? nearestPoly : INVALID_POLYREF;
 }
 
 dtPolyRef PathFinder::getPolyByLocation(const float* point, float *distance) const
@@ -697,10 +697,11 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
         npolys = fixupCorridor(polys, npolys, MAX_PATH_LENGTH, visited, nvisited);
 
         m_navMeshQuery->getPolyHeight(polys[0], result, &result[1]);
+        result[1] += 0.2f;
         dtVcopy(iterPos, result);
 
         // Handle end of path and off-mesh links when close enough.
-        if (endOfPath && inRangeYZX(iterPos, steerPos, SMOOTH_PATH_SLOP, 2.0f))
+        if (endOfPath && inRangeYZX(iterPos, steerPos, SMOOTH_PATH_SLOP, 1.0f))
         {
             // Reached end of path.
             dtVcopy(iterPos, targetPos);
@@ -711,7 +712,7 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
             }
             break;
         }
-        else if (offMeshConnection && inRangeYZX(iterPos, steerPos, SMOOTH_PATH_SLOP, 2.0f))
+        else if (offMeshConnection && inRangeYZX(iterPos, steerPos, SMOOTH_PATH_SLOP, 1.0f))
         {
             // Reached off-mesh connection.
             usedOffmesh = true;
@@ -743,7 +744,9 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
                 }
                 // Move position at the other side of the off-mesh link.
                 dtVcopy(iterPos, endPos);
+
                 m_navMeshQuery->getPolyHeight(polys[0], iterPos, &iterPos[1]);
+                iterPos[1] += 0.2f;
             }
         }
 
