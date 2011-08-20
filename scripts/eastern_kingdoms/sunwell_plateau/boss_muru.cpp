@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: boss_muru
-SD%Complete: 60
+SD%Complete: 80
 SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
@@ -32,44 +32,28 @@ enum spells // Boss spells
     SPELL_NEGATIVE              = 46285, //negative energy -> deals damage
     SPELL_NEGATIVEENERGY        = 46008, //negative energy -> black beams
     SPELL_NEGATIVE_ENERGY       = 46009, //(this trigger 46008)
-    SPELL_NEGATIVEENERGY_CHAIN  = 46289, //negative energy ->
 
     AURA_SINGULARITY            = 46228, //black hole passive  visual effect
 
-    //DARKNESS                  = 45996, // darkness
     SPELL_DARKNESS              = 45999,
     SPELL_ENTROPIUS_SUMMON      = 46217,
     ENTROPIUS_EFFECT            = 46223, // entropius cosmetic spawn
 
     SUMMON_VOID_SENTINEL        = 45988, // visual effect & summon void sentinel
-    SUMMON_VOID_SENTINEL_IMAGE  = 45989, // summon void sentinel - summoning visual effect
-    SUMMON_VOID_SENTINEL_SUMMON = 45978, //
-    SUMMON_VOID_SENTINEL_PORTAL = 45977, // portal visual effect
-
-    SPELL_SUMMON_BERSERKER      = 46037,
-    SPELL_SUMMON_FURY_MAGE      = 46038,
 
 // entropius spells
-    SPELL_NEGATIVE_ENERGY_ENT   = 46284,
     SPELL_NEGATIVE_ENERGY_DMG   = 46285,
-    SPELL_SINGULARITY           = 46282,
-    //SPELL_BLACKHOLE           = 46282,
     SPELL_SUMMON_DARKNESS		= 46269,
 
 //Portals
     SPELL_OPEN_ALL_PORTALS      = 46177,
     SPELL_OPEN_PORTAL           = 45977,
-    SPELL_OPEN_PORTAL_2         = 45976,
 
 // black hole
-    SPELL_BLACK_HOLE_PASSIVE    = 46228,  //grow
-    SPELL_BLACKHOLE_SPAWN       = 46242,
     SPELL_VOID_ZONE_PERIODIC    = 46262,
-    SPELL_VOID_ZONE_PREEFFECT   = 46265,
 
 //NPC list
     CREATURE_PORTAL_TARGET      = 25770,
-    CREATURE_ENTROPIUS          = 25840,
     NPC_VOID_SENTINEL           = 25772,
     NPC_VOID_SPAWN              = 25824,
     NPC_DARK_FIEND              = 25744,
@@ -80,15 +64,12 @@ enum spells // Boss spells
 //Dark Fiend
     DARK_FIEND_AURA             = 45934, // summon dark fiend
     SPELL_DARK_FIEND_DMG        = 45944,
-    SPELL_DARKFIEND_VISUAL      = 45936,
-    DARK_FIEND_DEBUFF           = 45944, // dark fiend debuff AOE
     SPELL_DISPELL               = 32375, // mass dispell
     SPELL_PURGE                 = 8012,  // purge (reinigung)
 
     SPELL_ARCANEFORM            = 48019, // arcaneform   -- Chaotic Rift visual
 // void sentinel
     SPELL_SHADOW_PULSE          = 46086,
-    VOID_AURA                   = 46087, // shadow pulse
     SPELL_VOID_BLAST            = 46161, // void blast
 };
 
@@ -417,7 +398,7 @@ struct MANGOS_DLL_DECL mob_dark_fiendAI : public ScriptedAI
         if (!m_creature->HasAura(DARK_FIEND_AURA,EFFECT_INDEX_0))     // this data to be moved to DB
             m_creature->CastSpell(m_creature, DARK_FIEND_AURA, true);
 
-        if(Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+        if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
             AttackStart(pTarget);
     }
 
@@ -515,11 +496,11 @@ CreatureAI* GetAI_mob_voidsentinel(Creature *pCreature)
 struct MANGOS_DLL_DECL mob_singularityAI : public ScriptedAI
 {
     mob_singularityAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
- 
+
     uint32 m_uiChangeTargetTimer;
     uint32 m_uiLifeTime;
 
-    void Reset()                    
+    void Reset()
     {
         m_uiChangeTargetTimer = 5000;
         m_uiLifeTime = 22000;
@@ -528,10 +509,10 @@ struct MANGOS_DLL_DECL mob_singularityAI : public ScriptedAI
     }
 
     //nullAI
-    void Aggro(Unit* pWho)           {} 
+    void Aggro(Unit* pWho)           {}
     void JustDied(Unit* pKiller)     {}
     void KilledUnit(Unit* pVictim)   {}
-      
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -544,7 +525,7 @@ struct MANGOS_DLL_DECL mob_singularityAI : public ScriptedAI
             m_uiChangeTargetTimer = 5000;
         }else m_uiChangeTargetTimer -= uiDiff;
 
-        if(m_uiLifeTime < uiDiff)
+        if (m_uiLifeTime < uiDiff)
         {
             m_creature->ForcedDespawn();
         }else m_uiLifeTime -= uiDiff;
