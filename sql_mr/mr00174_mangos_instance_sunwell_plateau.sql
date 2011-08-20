@@ -215,7 +215,7 @@ UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187764;
 DELETE FROM `gameobject` WHERE `id`=187764;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (43428, 187764, 585, 3, 1, -15.9065, -421.996, -47.1748, 3.0456, 0, 0, 0.998848, 0.0479779, 180, 100, 1),
-(972582, 187764, 580, 1, 1, 1832.99, 671.026, 42.7647, 4.45321, 0, 0, 0.792556, -0.609799, 25, 255, 1);
+(300003, 187764, 580, 1, 1, 1832.99, 671.026, 42.7647, 4.45321, 0, 0, 0.792556, -0.609799, 25, 255, 1);
 
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187765;
 
