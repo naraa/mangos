@@ -1020,7 +1020,7 @@ struct MANGOS_DLL_DECL npc_time_riftCSAI : public ScriptedAI
               Step++;
               break;
            case 2:
-              m_creature->RemoveFromWorld();
+              m_creature->ForcedDespawn();
               Step++; 
               break;
          }

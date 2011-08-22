@@ -118,6 +118,7 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
       m_creature->CombatStop(true);
       m_creature->LoadCreatureAddon();
 
+      m_creature->SetLootRecipient(NULL);
       if(m_pInstance->GetData(TYPE_PHASE) > 9)
       {
         KillCreditMalganis();
@@ -126,9 +127,8 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
            m_creature->SetInCombatWith(pArthas);
       }
       else
-         m_creature->RemoveFromWorld();
+         m_creature->ForcedDespawn();
 
-      m_creature->SetLootRecipient(NULL);
     }
 
    void Aggro(Unit* who)
