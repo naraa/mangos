@@ -9374,7 +9374,7 @@ bool Unit::SelectHostileTarget()
 
     MANGOS_ASSERT(GetTypeId() == TYPEID_UNIT);
 
-    if (!this->isAlive())
+    if (!GetMap() || !isAlive())
         return false;
 
     //This function only useful once AI has been initialized
@@ -9435,8 +9435,8 @@ bool Unit::SelectHostileTarget()
                     // next iteration we will select next possible target
                     m_HostileRefManager.deleteReference(target);
                     m_ThreatManager.modifyThreatPercent(target, -101);
-                    
-                    _removeAttacker(target->GetObjectGuid());
+
+                    GetMap()->RemoveAttackerFor(GetObjectGuid(),target->GetObjectGuid());
                 }
 
                 return false;
