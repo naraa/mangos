@@ -55,7 +55,8 @@ bool GOGossipSelect_go_icecrown_teleporter(Player *pPlayer, GameObject* pGo, uin
 {
     if(sender != GOSSIP_SENDER_MAIN) return false;
 
-    if(!pPlayer->getAttackers().empty()) return false;
+    if(pPlayer->IsInCombat()) 
+        return false;
 
     if(action >= 0 && action < PORTALS_COUNT)
     pPlayer->TeleportTo(PortalLoc[action].map_num, PortalLoc[action].x, PortalLoc[action].y, PortalLoc[action].z, PortalLoc[action].o);

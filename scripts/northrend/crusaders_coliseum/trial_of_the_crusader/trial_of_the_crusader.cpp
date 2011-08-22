@@ -200,7 +200,7 @@ bool GossipHello_npc_toc_announcer(Player* pPlayer, Creature* pCreature)
 
     if (!pInstance) return false;
 
-    if( !pPlayer->getAttackers().empty() ||
+    if( pPlayer->IsInCombat() ||
         pInstance->IsEncounterInProgress() ||
         pInstance->GetData(TYPE_EVENT)) 
            return true;

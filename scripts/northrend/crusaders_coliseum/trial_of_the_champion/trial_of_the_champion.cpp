@@ -84,7 +84,8 @@ bool GossipHello_npc_toc5_announcer(Player* pPlayer, Creature* pCreature)
 
     if (!m_pInstance) return false;
 
-    if(!pPlayer->getAttackers().empty()) return true;
+    if(pPlayer->IsInCombat()) 
+        return true;
 
     for(uint8 i = 0; i < MAX_ENCOUNTER+1; i++) {
     if (!_GossipMessage[i].state && (m_pInstance->GetData(_GossipMessage[i].encounter) == NOT_STARTED || m_pInstance->GetData(_GossipMessage[i].encounter) == IN_PROGRESS))

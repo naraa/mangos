@@ -37,7 +37,7 @@ bool GossipHello_mob_teleguy(Player *player, Creature *_Creature)
 
 void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 action )
 {
-    if(!player->getAttackers().empty())
+    if(player->IsInCombat())
     {
         player->CLOSE_GOSSIP_MENU();
         _Creature->MonsterSay("You are in combat!", LANG_UNIVERSAL);
