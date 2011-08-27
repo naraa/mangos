@@ -7726,16 +7726,6 @@ uint32 Unit::SpellHealingBonusDone(Unit *pVictim, SpellEntry const *spellProto, 
         }
     }
 
-    // Glyph of Rejuvenation
-    else if (spellProto->SpellFamilyName == SPELLFAMILY_DRUID && spellProto->SpellFamilyFlags.test<CF_DRUID_REJUVENATION>())
-    {
-        if (Aura* aura = GetAura(54754, EFFECT_INDEX_0))
-        {
-            if (pVictim->GetHealth() < pVictim->GetMaxHealth() / 2)
-                DoneTotalMod *= (aura->GetModifier()->m_amount + 100.0f) / 100.0f;
-        }
-    }
-
     // Done fixed damage bonus auras
     int32 DoneAdvertisedBenefit  = SpellBaseHealingBonusDone(GetSpellSchoolMask(spellProto));
 
@@ -9572,8 +9562,18 @@ int32 Unit::CalculateAuraDuration(SpellEntry const* spellProto, uint32 effectMas
 
     int32 dispelMod = 0;
     int32 dmgClassMod = 0;
+    bool  isAffectedByModifier = !IsPositiveSpell(spellProto);
 
-    if (!IsPositiveSpell(spellProto))
+    for (uint8 eff = 0; eff < MAX_EFFECT_INDEX; ++eff)
+    {
+        if (effectMask & (1 << eff))
+        {
+            if (IsAuraApplyEffect(spellProto, SpellEffectIndex(eff)) && IsPositiveEffect(spellProto, SpellEffectIndex(eff)))
+                isAffectedByModifier = false;
+        }
+    }
+
+    if (isAffectedByModifier)
     {
         dispelMod   = GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_DURATION_OF_EFFECTS_BY_DISPEL, spellProto->Dispel);
         dmgClassMod = GetTotalAuraModifierByMiscValue(SPELL_AURA_MOD_DURATION_OF_MAGIC_EFFECTS, spellProto->DmgClass);
@@ -10466,14 +10466,14 @@ void CharmInfo::SetSpellAutocast( uint32 spell_id, bool state )
 
 void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid petGuid, ObjectGuid targetGuid)
 {
-    if (GetTypeId() != TYPEID_UNIT || !IsInWorld() || (((Creature*)this)->IsPet() && !((Pet*)this)->IsInWorld()) || !GetCharmInfo())
+    if (GetTypeId() != TYPEID_UNIT || !IsInWorld() || !isAlive() || (((Creature*)this)->IsPet() && !((Pet*)this)->IsInWorld()) || !GetCharmInfo())
         return;
 
     switch(flag)
     {
         case ACT_COMMAND:                                   //0x07
         {
-       // Maybe exists some flag that disable it at client side
+        // Maybe exists some flag that disable it at client side
             if (petGuid.IsVehicle())
                 return;
 
@@ -10595,6 +10595,9 @@ void Unit::DoPetAction( Player* owner, uint8 flag, uint32 spellid, ObjectGuid pe
 
 void Unit::DoPetCastSpell(Unit* target, uint32 spellId)
 {
+    if (!IsInWorld() || !isAlive())
+        return;
+
     // do not cast unknown spells
     SpellEntry const *spellInfo = sSpellStore.LookupEntry(spellId);
     if(!spellInfo)
@@ -10619,15 +10622,19 @@ void Unit::DoPetCastSpell(Unit* target, uint32 spellId)
 
 void Unit::DoPetCastSpell(Player *owner, uint8 cast_count, SpellCastTargets* targets, SpellEntry const* spellInfo )
 {
+    if (!IsInWorld() || !isAlive())
+        return;
+
     if (!spellInfo)
         return;
 
     if (GetCharmInfo() && GetCharmInfo()->GetGlobalCooldownMgr().HasGlobalCooldown(spellInfo))
         return;
 
-    // do not cast not learned spells
+    // do not cast passive and not learned spells
     if (IsPassiveSpell(spellInfo->Id))
         return;
+
     if((GetObjectGuid().IsPet() && !((Pet*)this)->HasSpell(spellInfo->Id)))
         return;
     else if ((GetObjectGuid().IsCreatureOrVehicle() && !((Creature*)this)->HasSpell(spellInfo->Id)))
