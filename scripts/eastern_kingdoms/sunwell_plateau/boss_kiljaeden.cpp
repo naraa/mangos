@@ -108,8 +108,8 @@ enum UsedSpells
 
     //Orb Spells
     SPELL_SHADOW_ORB_BOLT_TRIGG = 45679,
-    //SPELL_ORB_BOLT_DEV          = 45680, 
-    //SPELL_ORB_BOLT              = 53086, 
+    //SPELL_ORB_BOLT_DEV          = 45680,
+    //SPELL_ORB_BOLT              = 53086,
     //SPELL_SHADOW_BOLT           = 45680,  //45679 would be correct but triggers to often //TODO fix console error
 
     //Reflections Spells  TODO
@@ -334,10 +334,10 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 
     void AttackStart(Unit* pWho)
     {
-         if (m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_IDLE || m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_ONE)
+        if (m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_IDLE || m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_ONE)
             return;
 
-         if (!pWho)
+        if (!pWho)
             return;
 
         if (m_creature->Attack(pWho, true))
@@ -373,7 +373,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
         {
             for(std::list<Creature*>::iterator iter = lDecievers.begin(); iter != lDecievers.end(); ++iter)
             {
-	           if ((*iter) && !(*iter)->isAlive())
+                if ((*iter) && !(*iter)->isAlive())
                    (*iter)->Respawn();
             }
       }
@@ -471,7 +471,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     {
                         DoCast(pTarget, SPELL_SINISTER_REFLECTION);
-                         DoSinisterReflection(pTarget->GetObjectGuid());
+                        DoSinisterReflection(pTarget->GetObjectGuid());
                     }
                 }
             }
@@ -1015,8 +1015,8 @@ struct MANGOS_DLL_DECL mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
 
     ObjectGuid m_uiVelenGUID;
     ObjectGuid m_uiLiadrinGUID;
-	ObjectGuid m_uiKalecGUID;
-	ObjectGuid m_uiMuruGUID;
+    ObjectGuid m_uiKalecGUID;
+    ObjectGuid m_uiMuruGUID;
 
     void Reset()
     {
@@ -1037,8 +1037,8 @@ struct MANGOS_DLL_DECL mob_kiljaeden_controllerAI : public Scripted_NoMovementAI
 
         m_uiVelenGUID.Clear();
         m_uiLiadrinGUID.Clear();
-		m_uiKalecGUID.Clear();
-		m_uiMuruGUID.Clear();
+        m_uiKalecGUID.Clear();
+        m_uiMuruGUID.Clear();
 
         if (m_pInstance)
         {
@@ -1578,7 +1578,7 @@ void AddSC_boss_kiljaeden()
     pNewScript->GetAI = &GetAI_mob_shield_orb;
     pNewScript->RegisterSelf();
 
-	pNewScript = new Script;
+    pNewScript = new Script;
     pNewScript->Name="mob_felfire_portal";
     pNewScript->GetAI = &GetAI_mob_felfire_portal;
     pNewScript->RegisterSelf();
@@ -1593,8 +1593,8 @@ void AddSC_boss_kiljaeden()
     pNewScript->GetAI = &GetAI_mob_deceiver;
     pNewScript->RegisterSelf();
 
-	pNewScript = new Script;
+    pNewScript = new Script;
     pNewScript->Name = "go_orb_of_the_blue_flight";
-	pNewScript->pGOUse = &GOUse_go_orb_of_the_blue_flight;
+    pNewScript->pGOUse = &GOUse_go_orb_of_the_blue_flight;
     pNewScript->RegisterSelf();
 }
