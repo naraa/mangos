@@ -39,6 +39,8 @@ void instance_blackfathom_deeps::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
     memset(&m_uiSpawnMobsTimer, 0, sizeof(m_uiSpawnMobsTimer));
+    for (uint8 i = 0; i < MAX_FIRES; ++i)
+        m_lWaveMobsGuids[i].clear();
 }
 
 void instance_blackfathom_deeps::OnCreatureCreate(Creature* pCreature)
@@ -100,7 +102,7 @@ void instance_blackfathom_deeps::DoSpawnMobs(uint8 uiWaveIndex)
                 if (Creature* pSummoned = pKelris->SummonCreature(aWaveSummonInformation[i].m_uiNpcEntry, fPosX, fPosY, fPosZ, fPosO, TEMPSUMMON_DEAD_DESPAWN, 0))
                 {
                     pSummoned->GetMotionMaster()->MovePoint(0, fX_resp, fY_resp, fZ_resp);
-                    m_lWaveMobsGuids[uiWaveIndex].push_back(pSummoned->GetGUIDLow());
+                    m_lWaveMobsGuids[uiWaveIndex].push_back(pSummoned->GetObjectGuid());
                 }
             }
         }
@@ -183,16 +185,22 @@ void instance_blackfathom_deeps::OnCreatureDeath(Creature* pCreature)
     switch (pCreature->GetEntry())
     {
         case NPC_AKUMAI_SERVANT:
-            m_lWaveMobsGuids[1].remove(pCreature->GetGUIDLow());
+            if (!m_lWaveMobsGuids[1].empty())
+                m_lWaveMobsGuids[1].remove(pCreature->GetObjectGuid());
             break;
         case NPC_AKUMAI_SNAPJAW:
-            m_lWaveMobsGuids[0].remove(pCreature->GetGUIDLow());
+            if (!m_lWaveMobsGuids[0].empty())
+                m_lWaveMobsGuids[0].remove(pCreature->GetObjectGuid());
             break;
         case NPC_BARBED_CRUSTACEAN:
-            m_lWaveMobsGuids[2].remove(pCreature->GetGUIDLow());
+            if (!m_lWaveMobsGuids[2].empty())
+                m_lWaveMobsGuids[2].remove(pCreature->GetObjectGuid());
             break;
         case NPC_MURKSHALLOW_SOFTSHELL:
-            m_lWaveMobsGuids[3].remove(pCreature->GetGUIDLow());
+            if (!m_lWaveMobsGuids[3].empty())
+                m_lWaveMobsGuids[3].remove(pCreature->GetObjectGuid());
+            break;
+        default:
             break;
     }
 
