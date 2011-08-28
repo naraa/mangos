@@ -716,8 +716,6 @@ struct MANGOS_DLL_DECL mob_halion_controlAI : public BSWScriptedAI
     }
 
     ScriptedInstance* pInstance;
-    Creature* pHalionReal;
-    Creature* pHalionTwilight;
     uint32 m_lastBuffReal, m_lastBuffTwilight;
     bool m_detectplayers;
 
@@ -774,8 +772,11 @@ struct MANGOS_DLL_DECL mob_halion_controlAI : public BSWScriptedAI
 
             if (pInstance->GetData(TYPE_HALION_EVENT) != SPECIAL) return;
 
-            pHalionReal = pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL);
-            pHalionTwilight = pInstance->GetSingleCreatureFromStorage(NPC_HALION_TWILIGHT);
+            Creature* pHalionReal = pInstance->GetSingleCreatureFromStorage(NPC_HALION_REAL);
+            Creature* pHalionTwilight = pInstance->GetSingleCreatureFromStorage(NPC_HALION_TWILIGHT);
+
+            if (!pHalionTwilight || !pHalionReal)
+                return;
 
             //pHalionReal->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             pHalionTwilight->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
