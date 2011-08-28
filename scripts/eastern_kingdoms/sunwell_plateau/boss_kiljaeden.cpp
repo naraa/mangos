@@ -22,12 +22,6 @@ SDComment:
 SDCategory: Sunwell Plateau
 EndScriptData */
 
-/* ScriptData
-SDName: boss_kiljaeden
-SD%Complete: 90%
-SDComment:
-EndScriptData */
-
 #include "precompiled.h"
 #include "sunwell_plateau.h"
 
@@ -38,8 +32,8 @@ enum UsedSpells
     //Kilajden Spells
     // generic
     SPELL_TRANS                 = 23188, // Surprisingly, this seems to be the right spell.. (Where is it used?)
-    SPELL_REBIRTH               = 45464, // Emerge from the Sunwell Epick :D
-    //SPELL_REBIRTH             = 44200, // Emerge from the Sunwell
+    //SPELL_REBIRTH               = 45464, // Emerge from the Sunwell Epick :D
+    SPELL_REBIRTH             = 44200, // Emerge from the Sunwell
     SPELL_DESTROY_DRAKES        = 46707,
 
     // phase 2
@@ -241,6 +235,8 @@ enum Phazes
     PHASE_OUTRO = 6,
 };
 
+uint8 m_uiDecieverDead;
+
 /*######
 ## boss_kiljaeden
 ######*/
@@ -259,11 +255,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
     uint32 m_uiOrdersTimer;
 
     // phase one
-    uint32 m_uiDecieverDead;
-    ObjectGuid m_uiTargetGuid;
-    uint32 m_uiEmergeTimer;
-    bool m_bHasStarted;
-
+     /////////////
     // phase two
     uint32 m_uiSoulFlyTimer;
     uint32 m_uiLegionLightingTimer;
@@ -290,9 +282,6 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 
         // phase one
         m_uiDecieverDead       = 0;
-        m_bHasStarted          = false;
-        m_uiTargetGuid.Clear();
-        m_uiEmergeTimer        = 1000;
 
         // phase two
         m_uiSoulFlyTimer          = 5000;
@@ -313,16 +302,22 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
         m_uiAramageddonTimer		 = 23000;
 
         m_creature->SetVisibility(VISIBILITY_OFF);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        m_creature->setFaction(35);
+        //m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+        //m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
 
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_KILJAEDEN_PHASE, PHASE_IDLE);
+        if(!m_creature->HasAura(SPELL_SUNWELL_RADIANCE_AURA,  EFFECT_INDEX_0))
+            m_creature->CastSpell(m_creature, SPELL_SUNWELL_RADIANCE_AURA, true);
+
+        if (m_creature->HasAura(SPELL_SACRIFICE_OF_ANVEENA,  EFFECT_INDEX_0))
+            m_creature->RemoveAurasDueToSpell(SPELL_SACRIFICE_OF_ANVEENA,0);
     }
 
     void Aggro(Unit* pWho)
     {
         m_creature->SetInCombatWithZone();
+        DoCast(m_creature, SPELL_REBIRTH);
+        DoScriptText(SAY_EMERGE, m_creature);
         m_pInstance->SetData(TYPE_KILJAEDEN_PHASE, PHASE_TWO);
     }
 
@@ -334,7 +329,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 
     void AttackStart(Unit* pWho)
     {
-        if (m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_IDLE || m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_ONE)
+        if (m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_ONE)
             return;
 
         if (!pWho)
@@ -354,6 +349,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
     {
          if (m_pInstance)
              m_pInstance->SetData(TYPE_KILJAEDEN, NOT_STARTED);
+             m_pInstance->SetData(TYPE_KILJAEDEN_PHASE, PHASE_IDLE);
 
         if (Creature* pAnveena = m_pInstance->GetSingleCreatureFromStorage(NPC_ANVEENA))
         {
@@ -388,7 +384,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
         }
     }
 
-    void DoSinisterReflection(uint64 uiVictimGUID)
+    void DoSinisterReflection(ObjectGuid uiVictimGUID)
     {
         Unit* pVictim = m_creature->GetMap()->GetUnit(uiVictimGUID);
         if (!pVictim)
@@ -431,13 +427,11 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) &&
-            m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) != PHASE_IDLE && m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) != PHASE_ONE)
+         if ((!m_creature->SelectHostileTarget() || !m_creature->getVictim()) && m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_TWO)
             return;
 
         switch(m_pInstance->GetData(TYPE_KILJAEDEN_PHASE))
         {
-
         case PHASE_FIVE:
              // nothing here, but the timers are reduced
             // no break;
@@ -620,28 +614,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 
             break;
         case PHASE_ONE:
-
-            if (m_uiDecieverDead == 3 && !m_bHasStarted)
-            {
-                m_creature->SetVisibility(VISIBILITY_ON);
-                m_uiEmergeTimer = 500;
-                m_bHasStarted = true;
-            }
-
-            if (m_uiEmergeTimer < uiDiff && m_bHasStarted)
-            {
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
-                m_creature->SetInCombatWithZone();
-                if (Unit* pTarget = m_creature->GetMap()->GetUnit(m_uiTargetGuid))
-                {
-                    m_creature->AddThreat(pTarget, 1000.0f);
-                    m_creature->SetInCombatWith(pTarget);
-                    m_creature->AI()->AttackStart(pTarget);
-                }
-            }
-            else m_uiEmergeTimer -= uiDiff;
-
+        ///
             // no break
         case PHASE_IDLE:
 
@@ -692,6 +665,11 @@ struct MANGOS_DLL_DECL mob_deceiverAI : public ScriptedAI
         m_uiShadowBoltTimer = 10000;
         m_bHasPortal        = false;
         m_uiPortalGUID.Clear();
+        m_uiDecieverDead    = 0;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_KILJAEDEN_PHASE, PHASE_IDLE);
+            m_pInstance->SetData(TYPE_KILJAEDEN, NOT_STARTED);
     }
 
     void Aggro(Unit* pWho)
@@ -705,7 +683,7 @@ struct MANGOS_DLL_DECL mob_deceiverAI : public ScriptedAI
         m_creature->CastStop();
 
         std::list<Creature*> lDecievers;
-        GetCreatureListWithEntryInGrid(lDecievers, m_creature, NPC_DECIVER, 40.0f);
+        GetCreatureListWithEntryInGrid(lDecievers, m_creature, NPC_DECIVER, 20.0f);
         if (!lDecievers.empty())
         {
             for(std::list<Creature*>::iterator iter = lDecievers.begin(); iter != lDecievers.end(); ++iter)
@@ -718,16 +696,29 @@ struct MANGOS_DLL_DECL mob_deceiverAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (Creature* pKiljaeden = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
+        if (++m_uiDecieverDead == 3)
+        {
+            if (m_pInstance)
+            {
+                if (Unit* pKilJaeden = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
+                {
+                    pKilJaeden->setFaction(14);
+					pKilJaeden->SetVisibility(VISIBILITY_ON);
+                }
+            }
+        }
+
+        if (Creature* pPortal = m_creature->GetMap()->GetCreature(m_uiPortalGUID))
+            pPortal->ForcedDespawn();
+
+        /*if (Creature* pKiljaeden = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
         {
             if (pKiljaeden->isAlive())
             {
-                ((boss_kiljaedenAI*)pKiljaeden->AI())->m_uiDecieverDead += 1;
+                //((boss_kiljaedenAI*)pKiljaeden->AI())->m_uiDecieverDead++;
                 ((boss_kiljaedenAI*)pKiljaeden->AI())->m_uiTargetGuid = pKiller->GetObjectGuid();
             }
-        }
-        if (Creature* pPortal = m_creature->GetMap()->GetCreature(m_uiPortalGUID))
-            pPortal->ForcedDespawn();
+        }*/
     }
 
     void JustReachedHome()
