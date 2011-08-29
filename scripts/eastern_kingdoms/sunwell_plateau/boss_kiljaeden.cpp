@@ -32,8 +32,7 @@ enum UsedSpells
     //Kilajden Spells
     // generic
     SPELL_TRANS                 = 23188, // Surprisingly, this seems to be the right spell.. (Where is it used?)
-    //SPELL_REBIRTH               = 45464, // Emerge from the Sunwell Epick :D
-    SPELL_REBIRTH             = 44200, // Emerge from the Sunwell
+    SPELL_REBIRTH               = 44200, // Emerge from the Sunwell
     SPELL_DESTROY_DRAKES        = 46707,
 
     // phase 2
@@ -226,8 +225,8 @@ enum Texts
 
 enum Phazes
 {
-    PHASE_IDLE  = 0,
-    PHASE_ONE   = 1,
+    PHASE_IDLE  = 0,  // phase which kil jaedan is yelling awhile players goes thur instance
+    PHASE_ONE   = 1,  //  unsure how im gonna use this might have to rewrite the phase layout
     PHASE_TWO   = 2,
     PHASE_THREE = 3,
     PHASE_FOUR  = 4,
@@ -327,7 +326,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
              pSummon->SetInCombatWithZone();
     }
 
-    void AttackStart(Unit* pWho)
+    /*void AttackStart(Unit* pWho)
     {
         if (m_pInstance->GetData(TYPE_KILJAEDEN_PHASE) == PHASE_ONE)
             return;
@@ -343,7 +342,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
             DoCast(m_creature, SPELL_REBIRTH);
             DoScriptText(SAY_EMERGE, m_creature);
         }
-    }
+    }*/
 
     void JustReachedHome()
     {
@@ -683,7 +682,7 @@ struct MANGOS_DLL_DECL mob_deceiverAI : public ScriptedAI
         m_creature->CastStop();
 
         std::list<Creature*> lDecievers;
-        GetCreatureListWithEntryInGrid(lDecievers, m_creature, NPC_DECIVER, 20.0f);
+        GetCreatureListWithEntryInGrid(lDecievers, m_creature, NPC_DECIVER, 40.0f);
         if (!lDecievers.empty())
         {
             for(std::list<Creature*>::iterator iter = lDecievers.begin(); iter != lDecievers.end(); ++iter)
@@ -703,22 +702,13 @@ struct MANGOS_DLL_DECL mob_deceiverAI : public ScriptedAI
                 if (Unit* pKilJaeden = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
                 {
                     pKilJaeden->setFaction(14);
-					pKilJaeden->SetVisibility(VISIBILITY_ON);
+                    pKilJaeden->SetVisibility(VISIBILITY_ON);
                 }
             }
         }
 
         if (Creature* pPortal = m_creature->GetMap()->GetCreature(m_uiPortalGUID))
             pPortal->ForcedDespawn();
-
-        /*if (Creature* pKiljaeden = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
-        {
-            if (pKiljaeden->isAlive())
-            {
-                //((boss_kiljaedenAI*)pKiljaeden->AI())->m_uiDecieverDead++;
-                ((boss_kiljaedenAI*)pKiljaeden->AI())->m_uiTargetGuid = pKiller->GetObjectGuid();
-            }
-        }*/
     }
 
     void JustReachedHome()
