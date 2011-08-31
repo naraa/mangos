@@ -153,7 +153,7 @@ void LFGGroupState::Clear()
     update = true;
     m_status = LFG_STATUS_NOT_SAVED;
     m_votesNeeded = 3;
-    m_kicksLeft = 5;
+    m_kicksLeft = sWorld.getConfig(CONFIG_UINT32_LFG_MAXKICKS);
     m_flags = LFG_MEMBER_FLAG_NONE |
               LFG_MEMBER_FLAG_COMMENT |
               LFG_MEMBER_FLAG_ROLES |
@@ -181,7 +181,7 @@ void LFGGroupState::SetVotesNeeded(uint8 votes)
     m_votesNeeded = votes;
 }
 
-uint8 LFGGroupState::GetKicksLeft() const
+uint8 const LFGGroupState::GetKicksLeft() const
 {
     return m_kicksLeft;
 }
@@ -308,6 +308,7 @@ LFGProposal::LFGProposal(LFGDungeonEntry const* _dungeon)
     m_cancelTime = 0;
     declinerGuids.clear();
     playerGuids.clear();
+    m_deleted = false;
 }
 
 void LFGProposal::Start()
@@ -356,7 +357,8 @@ bool LFGProposal::IsMember(ObjectGuid guid)
 LFGQueueSet const LFGProposal::GetMembers()
 {
     LFGMgr::ReadGuard Guard(sLFGMgr.GetLock());
-    return playerGuids;
+    LFGQueueSet tmpGuids = playerGuids;
+    return tmpGuids;
 };
 
 bool LFGProposal::IsDecliner(ObjectGuid guid)
