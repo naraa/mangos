@@ -26,7 +26,7 @@ EndScriptData */
 
 instance_shattered_halls::instance_shattered_halls(Map* pMap) : ScriptedInstance(pMap),
     m_uiExecutionTimer(55*MINUTE*IN_MILLISECONDS),
-    m_uiTeamInInstance(0),
+    m_uiTeam(0),
     m_uiExecutionStage(0)
 {
     Initialize();
@@ -40,16 +40,15 @@ void instance_shattered_halls::Initialize()
 void instance_shattered_halls::OnPlayerEnter(Player* pPlayer)
 {
     // Only on heroic
-    if (instance->IsRegularDifficulty())
+    if (instance->IsRegularDifficulty() || m_uiTeam)
         return;
 
-    // Because on 2.2.0 we didn't have phasing we need to summon the npc depending on the faction of the players
-    if (!GetSingleCreatureFromStorage(pPlayer->GetTeam() == ALLIANCE ? NPC_SOLDIER_ALLIANCE_1 : NPC_SOLDIER_HORDE_1))
-    {
-        uint8 m_uiLoc = pPlayer->GetTeam() == ALLIANCE ? 1 : 0;
-        m_uiTeamInInstance = pPlayer->GetTeam() == ALLIANCE ? ALLIANCE : HORDE;
-        pPlayer->SummonCreature(pPlayer->GetTeam() == ALLIANCE ? m_aSoldiersLocs[m_uiLoc].m_uiAllianceEntry : m_aSoldiersLocs[m_uiLoc].m_uiHordeEntry, m_aSoldiersLocs[m_uiLoc].m_fX, m_aSoldiersLocs[m_uiLoc].m_fY, m_aSoldiersLocs[m_uiLoc].m_fZ, m_aSoldiersLocs[m_uiLoc].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
-    }
+     m_uiTeam = pPlayer->GetTeam();
+
+     if (m_uiTeam == ALLIANCE)
+        pPlayer->SummonCreature(aSoldiersLocs[1].m_uiAllianceEntry, aSoldiersLocs[1].m_fX, aSoldiersLocs[1].m_fY, aSoldiersLocs[1].m_fZ, aSoldiersLocs[1].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+     else
+         pPlayer->SummonCreature(aSoldiersLocs[0].m_uiHordeEntry, aSoldiersLocs[0].m_fX, aSoldiersLocs[0].m_fY, aSoldiersLocs[0].m_fZ, aSoldiersLocs[0].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
 }
 
 void instance_shattered_halls::OnObjectCreate(GameObject* pGo)
@@ -74,16 +73,14 @@ void instance_shattered_halls::OnObjectCreate(GameObject* pGo)
 
 void instance_shattered_halls::OnCreatureCreate(Creature* pCreature)
 {
-    switch(pCreature->GetEntry())
+    switch (pCreature->GetEntry())
     {
         case NPC_NETHEKURSE:
         case NPC_KARGATH_BLADEFIST:
         case NPC_EXECUTIONER:
-        case NPC_SOLDIER_ALLIANCE_1:
         case NPC_SOLDIER_ALLIANCE_2:
         case NPC_SOLDIER_ALLIANCE_3:
         case NPC_OFFICER_ALLIANCE:
-        case NPC_SOLDIER_HORDE_1:
         case NPC_SOLDIER_HORDE_2:
         case NPC_SOLDIER_HORDE_3:
         case NPC_OFFICER_HORDE:
@@ -118,10 +115,26 @@ void instance_shattered_halls::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_EXECUTION:
             m_auiEncounter[uiType] = uiData;
+            if (uiData == IN_PROGRESS)
+            {
+                if (Player* pPlayer = GetPlayerInMap())
+                {
+                    // summon the 3 npcs for execution
+                    for (uint8 i = 2; i < 5; ++i)
+                        pPlayer->SummonCreature(m_uiTeam == ALLIANCE ? aSoldiersLocs[i].m_uiAllianceEntry : aSoldiersLocs[i].m_uiHordeEntry, aSoldiersLocs[i].m_fX, aSoldiersLocs[i].m_fY, aSoldiersLocs[i].m_fZ, aSoldiersLocs[i].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
+
+                    // Summon the executioner for 80 min; ToDo: set the flags in DB
+                    if (Creature* pExecutioner = pPlayer->SummonCreature(NPC_EXECUTIONER, afExecutionerLoc[0], afExecutionerLoc[1], afExecutionerLoc[2], afExecutionerLoc[3], TEMPSUMMON_TIMED_DESPAWN, 80*MINUTE*IN_MILLISECONDS, true))
+                        pExecutioner->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
+
+                    // cast the execution spell
+                    DoCastGroupDebuff(SPELL_KARGATH_EXECUTIONER_1);
+                }
+            }
             if (uiData == DONE)
             {
                 // Allow playes to complete the quest only after the executioner is dead
-                if (Creature* pOfficer = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
+                if (Creature* pOfficer = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
                     pOfficer->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP | UNIT_NPC_FLAG_QUESTGIVER);
             }
             break;
@@ -171,26 +184,6 @@ uint32 instance_shattered_halls::GetData(uint32 uiType)
     return 0;
 }
 
-bool instance_shattered_halls::CheckConditionCriteriaMeet(Player const* pSource, uint32 uiMapId, uint32 uiInstanceConditionId)
-{
-    if (uiMapId != instance->GetId())
-        return false;
-
-// Change the executioner loot depending on the prisoners alive (m_uiExecutionStage)
-// This is similar to Dire Maul - Gordok tribute or Sartharion - Obsidian Sanctum or Ulduar hard mode bosses
-    switch (uiInstanceConditionId)
-    {
-        case TYPE_EXECUTION:
-            {
-                //case 1: // full loot
-                //case 2: // less loot
-                //case 3: // less less loot
-            }
-            break;
-    }
-    return false;
-}
-
 void instance_shattered_halls::OnCreatureDeath(Creature* pCreature)
 {
     if (pCreature->GetEntry() == NPC_EXECUTIONER)
@@ -214,7 +207,7 @@ void instance_shattered_halls::OnCreatureEvade(Creature* pCreature)
 
 void instance_shattered_halls::Update(uint32 uiDiff)
 {
-    if (GetData(TYPE_EXECUTION) != IN_PROGRESS)
+    if (m_auiEncounter[TYPE_EXECUTION] != IN_PROGRESS)
         return;
 
     if (m_uiExecutionTimer < uiDiff)
@@ -223,61 +216,46 @@ void instance_shattered_halls::Update(uint32 uiDiff)
         {
             case 0:
                 // Kill the officer
-                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
+                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_OFFICER_ALLIANCE : NPC_OFFICER_HORDE))
                     pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 // Make Kargath yell
-                if (Creature* pKargath = GetSingleCreatureFromStorage(NPC_KARGATH_BLADEFIST))
-                    DoOrSimulateScriptTextForThisInstance(m_uiTeamInInstance == ALLIANCE ? SAY_KARGATH_EXECUTE_ALLY : SAY_KARGATH_EXECUTE_HORDE, NPC_KARGATH_BLADEFIST);
+                DoOrSimulateScriptTextForThisInstance(m_uiTeam == ALLIANCE ? SAY_KARGATH_EXECUTE_ALLY : SAY_KARGATH_EXECUTE_HORDE, NPC_KARGATH_BLADEFIST);
 
                 // Set timer for the next execution
                 DoCastGroupDebuff(SPELL_KARGATH_EXECUTIONER_2);
                 m_uiExecutionTimer = 10*MINUTE*IN_MILLISECONDS;
                 break;
             case 1:
-                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_SOLDIER_ALLIANCE_3 : NPC_SOLDIER_HORDE_3))
+                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_SOLDIER_ALLIANCE_2 : NPC_SOLDIER_HORDE_2))
                     pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 DoCastGroupDebuff(SPELL_KARGATH_EXECUTIONER_3);
                 m_uiExecutionTimer = 15*MINUTE*IN_MILLISECONDS;
                 break;
             case 2:
-                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeamInInstance == ALLIANCE ? NPC_SOLDIER_ALLIANCE_2 : NPC_SOLDIER_HORDE_2))
+                if (Creature* pSoldier = GetSingleCreatureFromStorage(m_uiTeam == ALLIANCE ? NPC_SOLDIER_ALLIANCE_3 : NPC_SOLDIER_HORDE_3))
                     pSoldier->DealDamage(pSoldier, pSoldier->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
 
                 SetData(TYPE_EXECUTION, FAIL);
                 m_uiExecutionTimer = 0;
                 break;
         }
-
         ++m_uiExecutionStage;
     }
     else
         m_uiExecutionTimer -= uiDiff;
 }
 
-// Add debuff to all party members
+// Add debuff to all players in the instance
 void instance_shattered_halls::DoCastGroupDebuff(uint32 uiSpellId)
 {
-    Player* pPlayer = GetPlayerInMap();
-    if (!pPlayer)
-        return;
+    Map::PlayerList const& lPlayers = instance->GetPlayers();
 
-    if (Group *pGroup = pPlayer->GetGroup())
+    for (Map::PlayerList::const_iterator itr = lPlayers.begin(); itr != lPlayers.end(); ++itr)
     {
-        for(GroupReference *itr = pGroup->GetFirstMember(); itr != NULL; itr = itr->next())
-        {
-            Player* pGroupie = itr->getSource();
-            if (!pGroupie)
-                continue;
-
-            if (!pGroupie->HasAura(uiSpellId))
-                pGroupie->CastSpell(pGroupie, uiSpellId, true);
-        }
-    }
-    else
-    {
-        if (!pPlayer->HasAura(uiSpellId))
+        Player* pPlayer = itr->getSource();
+        if (pPlayer && !pPlayer->HasAura(uiSpellId))
             pPlayer->CastSpell(pPlayer, uiSpellId, true);
     }
 }
@@ -306,25 +284,10 @@ bool AreaTrigger_at_shattered_halls(Player* pPlayer, AreaTriggerEntry const* pAt
         return false;
 
     if (pInstance->GetData(TYPE_EXECUTION) == NOT_STARTED)
-    {
         pInstance->SetData(TYPE_EXECUTION, IN_PROGRESS);
 
-        // summon the 3 npcs for execution
-        for (uint8 i = 2; i < 5; ++i)
-            pPlayer->SummonCreature(pPlayer->GetTeam() == ALLIANCE ? m_aSoldiersLocs[i].m_uiAllianceEntry : m_aSoldiersLocs[i].m_uiHordeEntry, m_aSoldiersLocs[i].m_fX, m_aSoldiersLocs[i].m_fY, m_aSoldiersLocs[i].m_fZ, m_aSoldiersLocs[i].m_fO, TEMPSUMMON_DEAD_DESPAWN, 0);
-
-        // Summon the executioner for 80 min; ToDo: set the flags in DB
-        if (Creature* pExecutioner = pPlayer->SummonCreature(NPC_EXECUTIONER, m_fExecutionerLoc[0], m_fExecutionerLoc[1], m_fExecutionerLoc[2], m_fExecutionerLoc[3], TEMPSUMMON_TIMED_DESPAWN, 80*MINUTE*IN_MILLISECONDS))
-            pExecutioner->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE | UNIT_FLAG_NON_ATTACKABLE);
-
-        // cast the execution spell
-        pInstance->DoCastGroupDebuff(SPELL_KARGATH_EXECUTIONER_1);
-
-        return true;
-    }
-
-    return false;
-};
+    return true;
+}
 
 void AddSC_instance_shattered_halls()
 {

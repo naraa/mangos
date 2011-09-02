@@ -28,8 +28,8 @@ enum
     NPC_SOLDIER_HORDE_3         = 17297,
     NPC_OFFICER_HORDE           = 17296,                    // quest objective
 
-    GO_NETHEKURSE_DOOR              = 182540,
-    GO_NETHEKURSE_ENTER_DOOR       = 182539,               // TODO Currently unhandled
+    GO_NETHEKURSE_DOOR          = 182540,
+    GO_NETHEKURSE_ENTER_DOOR    = 182539,
 
     SPELL_KARGATH_EXECUTIONER_1 = 39288,                    // 55 min - first prisoner - officer
     SPELL_KARGATH_EXECUTIONER_2 = 39289,                    // 10 min - second prisoner
@@ -42,32 +42,23 @@ enum
     //AT_NETHEKURSE               = 4524,                     // Area trigger used for the execution event
 };
 
-/*
- *  Notes about the executioner event:
- *  The party gains a debuff at the area trigger after Nethekurse
- *  The players have a 55 min timer for the quest 9524 / 9525
- *  If they fail this timer they will get another 10 min + another 15 min. After that the executioner despawns
- *  After each timers expires a prisoner is killed.
- *  They need to kill the executioner with as many prisoners alive as possible to get better loot
- */
-
-struct sSpawnLocation
+struct SpawnLocation
 {
     uint32 m_uiAllianceEntry, m_uiHordeEntry;
     float m_fX, m_fY, m_fZ, m_fO;
 };
 
-const float m_fExecutionerLoc[4] = {151.443f, -84.439f, 1.938f, 6.283f};
+const float afExecutionerLoc[4] = {151.443f, -84.439f, 1.938f, 6.283f};
 
-static sSpawnLocation m_aSoldiersLocs[] =
+static SpawnLocation aSoldiersLocs[] =
 {
-    {0, NPC_SOLDIER_HORDE_1, 119.609f, 256.127f, -45.254f, 5.133f},
-    {NPC_SOLDIER_ALLIANCE_1, 0, 131.106f, 254.520f, -45.236f, 3.951f},
+    {0,                      NPC_SOLDIER_HORDE_1, 119.609f, 256.127f, -45.254f, 5.133f},
+    {NPC_SOLDIER_ALLIANCE_1, 0,                   131.106f, 254.520f, -45.236f, 3.951f},
     {NPC_SOLDIER_ALLIANCE_3, NPC_SOLDIER_HORDE_3, 151.040f, -91.558f, 1.936f, 1.559f},
     {NPC_SOLDIER_ALLIANCE_2, NPC_SOLDIER_HORDE_2, 150.669f, -77.015f, 1.933f, 4.705f},
-    {NPC_OFFICER_ALLIANCE, NPC_OFFICER_HORDE, 138.241f, -84.198f, 1.907f, 0.055f}
+    {NPC_OFFICER_ALLIANCE,   NPC_OFFICER_HORDE,   138.241f, -84.198f, 1.907f, 0.055f}
 };
- 
+
 class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
 {
     public:
@@ -76,8 +67,10 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         void Initialize();
 
         void OnPlayerEnter(Player* pPlayer);
+
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
+
         void OnCreatureDeath(Creature* pCreature);
         void OnCreatureEvade(Creature* pCreature);
         void OnCreatureEnterCombat(Creature* pCreature);
@@ -88,9 +81,6 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
 
-        // Used to change the Executioner loot depending on the prisoners alive
-        bool CheckConditionCriteriaMeet(Player const* pSource, uint32 uiMapId, uint32 uiInstanceConditionId);
-
         void Update(uint32 uiDiff);
 
         void DoCastGroupDebuff(uint32 uiSpellId);
@@ -100,7 +90,7 @@ class MANGOS_DLL_DECL instance_shattered_halls : public ScriptedInstance
         std::string m_strInstData;
 
         uint32 m_uiExecutionTimer;
-        uint32 m_uiTeamInInstance;
+        uint32 m_uiTeam;
         uint8 m_uiExecutionStage;
 };
 

@@ -138,7 +138,6 @@ struct MANGOS_DLL_DECL boss_warchief_kargath_bladefistAI : public ScriptedAI
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BLADEFIST, DONE);
-
     }
 
     void JustReachedHome()

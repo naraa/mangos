@@ -66,7 +66,7 @@ enum
 
     SPELL_DEATH_COIL       = 30500,
     SPELL_DARK_SPIN        = 30502,                         // core bug spell attack caster :D
-    SPELL_SHADOW_FISSURE   = 30496,                         // Summon the ShadowFissure NPC - 17471
+    SPELL_SHADOW_FISSURE   = 30496,                         // Summon the ShadowFissure NPC
 
     SPELL_SHADOW_CLEAVE    = 30495,
     SPELL_SHADOW_SLAM_H    = 35953,
@@ -206,11 +206,8 @@ struct MANGOS_DLL_DECL boss_grand_warlock_nethekurseAI : public ScriptedAI
 
     void MoveInLineOfSight(Unit* pWho)
     {
-        if (!m_bIntroOnce && m_creature->IsWithinDistInMap(pWho, 50.0f) && m_creature->IsWithinLOSInMap(pWho))
+        if (!m_bIntroOnce && pWho->GetTypeId() == TYPEID_PLAYER && !((Player*)pWho)->isGameMaster() && m_creature->IsWithinDistInMap(pWho, 50.0f) && m_creature->IsWithinLOSInMap(pWho))
         {
-            if (pWho->GetTypeId() != TYPEID_PLAYER)
-                return;
-
             DoScriptText(SAY_INTRO, m_creature);
             m_bIntroOnce = true;
             m_bIsIntroEvent = true;
@@ -239,7 +236,6 @@ struct MANGOS_DLL_DECL boss_grand_warlock_nethekurseAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        pSummoned->setFaction(16);
         // ToDo: this should be done in DB
         pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         pSummoned->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
@@ -414,10 +410,10 @@ struct MANGOS_DLL_DECL mob_fel_orc_convertAI : public ScriptedAI
     }
 };
 
-// NOTE: this creature are also summoned by other spells, for different creatures - comment may be wrong
+// NOTE: this creature are also summoned by other spells, for different creatures
 struct MANGOS_DLL_DECL mob_lesser_shadow_fissureAI : public Scripted_NoMovementAI
 {
-    mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) {Reset();}
+    mob_lesser_shadow_fissureAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature) { Reset(); }
 
     void Reset() { }
     void MoveInLineOfSight(Unit* pWho) { }
