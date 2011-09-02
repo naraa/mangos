@@ -176,6 +176,7 @@ void PlayerTaxi::InitTaxiNodesForLevel(uint32 race, uint32 chrClass, uint32 leve
     {
         case ALLIANCE: SetTaximaskNode(100); break;
         case HORDE:    SetTaximaskNode(99);  break;
+        default: break;
     }
     // level dependent taxi hubs
     if (level>=68)
@@ -1817,7 +1818,7 @@ bool Player::TeleportTo(uint32 mapid, float x, float y, float z, float orientati
     // We have to perform this check before the teleport, otherwise the
     // ObjectAccessor won't find the flag.
     if (duel && GetMapId() != mapid)
-        if (GameObject* obj = GetMap()->GetGameObject(GetGuidValue(PLAYER_DUEL_ARBITER)))
+        if (GetMap()->GetGameObject(GetGuidValue(PLAYER_DUEL_ARBITER)))
             DuelComplete(DUEL_FLED);
 
     // reset movement flags at teleport, because player will continue move with these flags after teleport
@@ -2648,7 +2649,7 @@ void Player::GiveXP(uint32 xp, Unit* victim)
     if (CheckRAFConditions())
     {
         // RAF bonus exp don't decrease rest exp
-        bool ReferAFriend = true;
+        ReferAFriend = true;
         bonus_xp = xp * (sWorld.getConfig(CONFIG_FLOAT_RATE_RAF_XP) - 1);
     }
     else
@@ -3513,7 +3514,7 @@ bool Player::IsNeedCastPassiveLikeSpellAtLearn(SpellEntry const* spellInfo) cons
 
     // note: form passives activated with shapeshift spells be implemented by HandleShapeshiftBoosts instead of spell_learn_spell
     // talent dependent passives activated at form apply have proper stance data
-    bool need_cast = (!spellInfo->Stances || !form && (spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT));
+    bool need_cast = (!spellInfo->Stances || (!form && (spellInfo->AttributesEx2 & SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT)));
 
     // Check CasterAuraStates
     return need_cast && (!spellInfo->CasterAuraState || HasAuraState(AuraState(spellInfo->CasterAuraState)));
@@ -5818,6 +5819,8 @@ void Player::UpdateWeaponSkill (WeaponAttackType attType)
                 UpdateSkill(tmpitem->GetSkill(),weapon_skill_gain);
             break;
         }
+        default:
+            break;
     }
     UpdateAllCritPercentages();
 }
@@ -11650,7 +11653,7 @@ Item* Player::StoreNewItem(ItemPosCountVec const& dest, uint32 item, bool update
             for (AllowedLooterSet::iterator itr = allowedLooters->begin(); itr != allowedLooters->end(); ++itr)
                 ss << *itr << " ";
             ss << "');";
-            CharacterDatabase.PExecute(ss.str().c_str());
+            CharacterDatabase.Execute(ss.str().c_str());
         }
     }
     return pItem;
@@ -17196,36 +17199,51 @@ void Player::LoadPet()
     // just not added to the map
     if (IsInWorld())
     {
-        Pet* pet = new Pet;
-        pet->SetPetCounter(0);
-        if(!pet->LoadPetFromDB(this, 0, 0, true))
+        if (!sWorld.getConfig(CONFIG_BOOL_PET_SAVE_ALL))
         {
-            delete pet;
-            return;
+            Pet* pet = new Pet;
+            pet->SetPetCounter(0);
+            if(!pet->LoadPetFromDB(this, 0, 0, true))
+            {
+                delete pet;
+                return;
+            }
         }
-
-        if (sWorld.getConfig(CONFIG_BOOL_PET_SAVE_ALL))
+        else
         {
-            uint32 pet_entry = pet->GetEntry();
-            uint32 pet_num = pet->GetCharmInfo()->GetPetNumber();
-            QueryResult* result = CharacterDatabase.PQuery("SELECT id FROM character_pet WHERE owner = '%u' AND entry = '%u' AND id != '%u'",
-                GetGUIDLow(), pet_entry, pet_num);
+
+            QueryResult* result = CharacterDatabase.PQuery("SELECT id, PetType, CreatedBySpell FROM character_pet WHERE owner = '%u' AND entry = (SELECT entry FROM character_pet WHERE owner = '%u' AND slot = '%u') ORDER BY slot ASC",
+                GetGUIDLow(), GetGUIDLow(),PET_SAVE_AS_CURRENT);
 
             std::vector<uint32> petnumber;
+            uint32 _PetType = 0;
+            uint32 _CreatedBySpell = 0;
+
             if (result)
             {
                 do
                 {
                     Field* fields = result->Fetch();
                     uint32 petnum = fields[0].GetUInt32();
-                    if (petnum && petnum != pet_num)
+                    if (petnum)
                         petnumber.push_back(petnum);
+                    if (!_PetType)
+                        _PetType = fields[1].GetUInt32();
+                    if (!_CreatedBySpell)
+                        _CreatedBySpell = fields[2].GetUInt32();
                 }
                 while (result->NextRow());
                 delete result;
             }
             else
                 return;
+
+            if (petnumber.empty())
+                return;
+
+            // temporary fix for count of pets (need correct size by spell basepoints)
+            if ((_PetType != SUMMON_PET) || (_CreatedBySpell != 51533 && _CreatedBySpell != 33831))
+                petnumber.resize(1);
 
             if (!petnumber.empty())
             {
@@ -17235,8 +17253,8 @@ void Player::LoadPet()
                         continue;
 
                     Pet* _pet = new Pet;
-                    _pet->SetPetCounter(i+1);
-                    if (!_pet->LoadPetFromDB(this, pet_entry, petnumber[i], true))
+                    _pet->SetPetCounter(petnumber.size() - i - 1);
+                    if (!_pet->LoadPetFromDB(this, 0, petnumber[i], true))
                         delete _pet;
                 }
             }
@@ -22515,6 +22533,9 @@ void Player::AutoStoreLoot(Loot& loot, bool broadcast, uint8 bag, uint8 slot)
     {
         LootItem* lootItem = loot.LootItemInSlot(i,this);
 
+        if (!lootItem)
+            continue;
+
         ItemPosCountVec dest;
         InventoryResult msg = CanStoreNewItem(bag,slot,dest,lootItem->itemid,lootItem->count);
         if (msg != EQUIP_ERR_OK && slot != NULL_SLOT)
@@ -24111,17 +24132,17 @@ void Player::LoadAccountLinkedState()
     m_referredAccounts = sAccountMgr.GetRAFAccounts(GetSession()->GetAccountId(), true);
 
     if (m_referredAccounts.size() > sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERERS))
-        sLog.outError("Player:RAF:Warning: loaded %u referred accounts instead of %u for player %u",m_referredAccounts.size(),sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERERS),GetObjectGuid().GetCounter());
+        sLog.outError("Player:RAF:Warning: loaded " SIZEFMTD " referred accounts instead of %u for player %u",m_referredAccounts.size(),sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERERS),GetObjectGuid().GetCounter());
     else
-        DEBUG_LOG("Player:RAF: loaded %u referred accounts for player %u",m_referredAccounts.size(),GetObjectGuid().GetCounter());
+        DEBUG_LOG("Player:RAF: loaded " SIZEFMTD " referred accounts for player %u",m_referredAccounts.size(),GetObjectGuid().GetCounter());
 
     m_referalAccounts.clear();
     m_referalAccounts  = sAccountMgr.GetRAFAccounts(GetSession()->GetAccountId(), false);
 
     if (m_referalAccounts.size() > sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERALS))
-        sLog.outError("Player:RAF:Warning: loaded %u referal accounts instead of %u for player %u",m_referalAccounts.size(),sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERALS),GetObjectGuid().GetCounter());
+        sLog.outError("Player:RAF:Warning: loaded " SIZEFMTD " referal accounts instead of %u for player %u",m_referalAccounts.size(),sWorld.getConfig(CONFIG_UINT32_RAF_MAXREFERALS),GetObjectGuid().GetCounter());
     else
-        DEBUG_LOG("Player:RAF: loaded %u referal accounts for player %u",m_referalAccounts.size(),GetObjectGuid().GetCounter());
+        DEBUG_LOG("Player:RAF: loaded " SIZEFMTD " referal accounts for player %u",m_referalAccounts.size(),GetObjectGuid().GetCounter());
 }
 
 bool Player::IsReferAFriendLinked(Player* target)

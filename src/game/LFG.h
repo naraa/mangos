@@ -237,7 +237,7 @@ public:
 
 protected:
     LFGStateStructure()
-        : m_state(LFG_STATE_NONE), m_type(LFG_TYPE_NONE), m_proposal(NULL) {};
+        : m_type(LFG_TYPE_NONE), m_flags(0), update(false), m_state(LFG_STATE_NONE), m_proposal(NULL) {};
     LFGType          m_type;
     uint32           m_flags;
     bool             update;
@@ -324,8 +324,8 @@ public:
     time_t GetBootCancelTime() { return m_bootCancelTime; };
     uint8 GetVotesNeeded() const;
     void  SetVotesNeeded(uint8 votes);
-    uint8 GetKicksLeft() const;
-    void  DecreaseKicksLeft() {--m_kicksLeft;};
+    uint8 const GetKicksLeft() const;
+    void  DecreaseKicksLeft();
 
     // Role checks
     LFGRoleCheckState GetRoleCheckState() const { return m_roleCheckState;};

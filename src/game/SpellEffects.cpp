@@ -393,6 +393,12 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                     // Positive Charge
                     case 28062:
                     {
+                        // remove pet from damage and buff list
+                        if (unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        {
+                              damage = 0;
+                              break;
+                        }
                         // If target is not (+) charged, then just deal dmg
                         if (!unitTarget->HasAura(28059))
                             break;
@@ -406,6 +412,12 @@ void Spell::EffectSchoolDMG(SpellEffectIndex effect_idx)
                     // Negative Charge
                     case 28085:
                     {
+                        // remove pet from damage and buff list
+                        if (unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        {
+                              damage = 0;
+                              break;
+                        }
                         // If target is not (-) charged, then just deal dmg
                         if (!unitTarget->HasAura(28084))
                             break;
@@ -1465,13 +1477,16 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     if (!unitTarget)
                         return;
 
+                    if (unitTarget->GetTypeId() != TYPEID_PLAYER)
+                        return;
+
                     // neutralize the target
                     if (unitTarget->HasAura(28059)) unitTarget->RemoveAurasDueToSpell(28059);
                     if (unitTarget->HasAura(29659)) unitTarget->RemoveAurasDueToSpell(29659);
                     if (unitTarget->HasAura(28084)) unitTarget->RemoveAurasDueToSpell(28084);
                     if (unitTarget->HasAura(29660)) unitTarget->RemoveAurasDueToSpell(29660);
 
-                    unitTarget->CastSpell(unitTarget, roll_chance_i(50) ? 28059 : 28084, true);
+                    unitTarget->CastSpell(unitTarget, roll_chance_i(50) ? 28059 : 28084, true, 0, 0, m_caster->GetObjectGuid());
                     break;
                 }
                 case 29200:                                 // Purify Helboar Meat
@@ -2587,6 +2602,28 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     unitTarget->CastSpell(unitTarget, 48275, true);    // Target Summon Banshee
                     return;
                 }
+                case 54245:                                 // Enough - Drakuru Overlord, Kill Trolls
+                {
+                    m_caster->DealDamage(unitTarget, unitTarget->GetMaxHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    return;
+                }
+                case 54250:                                 // Skull Missile - Drakuru Overlord
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 54253, true);    // Summon Skull
+                    return;
+                }
+                case 54209:                                 // Portal Missile - Drakuru Overlord
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 51807, true);    // Cast Portal Visual
+                    return;
+                }
+
                 case 54577:                                 // Throw U.D.E.D.
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT)
@@ -2711,20 +2748,14 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     m_caster->RemoveSpellsCausingAura(SPELL_AURA_MOD_FLIGHT_SPEED_MOUNTED);
                     return;
                 }
-                case 58689:                                 // Rock Shards
-                {                                           // (Archavon the Stone Watcher: Left Hand)
-                    if (!unitTarget || roll_chance_i(90))   // only 10% of spikes `proc` dmg (about 1 spike per sec)
-                        return;
-
-                    m_caster->CastSpell(unitTarget, m_caster->GetMap()->IsRegularDifficulty() ? 58695 : 60883, true);
+                case 58689:                                 // Rock Shards (Vault of Archavon, Archavon)
+                {
+                    m_caster->CastSpell(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, m_caster->GetMap()->IsRegularDifficulty() ? 58696 : 60884, true);
                     return;
                 }
-                case 58692:                                 // Rock Shards
-                {                                           // (Archavon the Stone Watcher: Right Hand)
-                    if (!unitTarget || roll_chance_i(90))   // only 10% of spikes `proc` dmg (about 1 spike per sec)
-                        return;
-
-                    m_caster->CastSpell(unitTarget, m_caster->GetMap()->IsRegularDifficulty() ? 58696 : 60884, true);
+                case 58692:                                 // Rock Shards (Vault of Archavon, Archavon)
+                {
+                    m_caster->CastSpell(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ, m_caster->GetMap()->IsRegularDifficulty() ? 58695 : 60883, true);
                     return;
                 }
                 case 59640:                                 // Underbelly Elixir
@@ -3999,6 +4030,16 @@ void Spell::EffectForceCast(SpellEffectIndex eff_idx)
         return;
     }
 
+    // if triggered spell has SPELL_AURA_CONTROL_VEHICLE, it must be casted on caster
+    for (uint32 i = 0; i < MAX_EFFECT_INDEX; ++i)
+    {
+        if (spellInfo->EffectApplyAuraName[i] == SPELL_AURA_CONTROL_VEHICLE)
+        {
+            unitTarget->CastSpell(m_caster, spellInfo, true, NULL, NULL, NULL, m_spellInfo);
+            return;
+        }
+    }
+
     unitTarget->CastSpell(unitTarget, spellInfo, true, NULL, NULL, m_originalCasterGUID, m_spellInfo);
 }
 
@@ -5022,10 +5063,10 @@ void Spell::EffectEnergize(SpellEffectIndex eff_idx)
             level_diff = m_caster->getLevel() - 60;
             level_multiplier = 4;
             break;
-        case 31930:                                         // Judgements of the Wise
         case 48542:                                         // Revitalize (mana restore case)
             damage = damage * unitTarget->GetMaxPower(POWER_MANA) / 100;
             break;
+        case 31930:                                         // Judgements of the Wise
         case 63375:                                         // Improved Stormstrike
         case 67545:                                         // Empowered Fire
         case 68082:                                         // Glyph of Seal of Command
@@ -5149,7 +5190,7 @@ void Spell::SendLoot(ObjectGuid guid, LootType loottype, LockType lockType)
                 sLog.outError("Spell::SendLoot unhandled locktype %u for GameObject trap (entry %u) for spell %u.", lockType, gameObjTarget->GetEntry(), m_spellInfo->Id);
                 return;
             default:
-                sLog.outError("Spell::SendLoot unhandled GameObject type %u (entry %u).", gameObjTarget->GetGoType(), gameObjTarget->GetEntry(), m_spellInfo->Id);
+                sLog.outError("Spell::SendLoot unhandled GameObject type %u (entry %u) for spell %u.", gameObjTarget->GetGoType(), gameObjTarget->GetEntry(), m_spellInfo->Id);
                 return;
         }
     }
@@ -5471,7 +5512,7 @@ void Spell::DoSummonGroupPets(SpellEffectIndex eff_idx)
         return;
     }
 
-    uint32 level = m_caster->getLevel();
+    //uint32 level = m_caster->getLevel();
 
     if (pet_entry == 37994)    // Mage: Water Elemental from Glyph
         m_duration = 86400000; // 24 hours
@@ -5523,7 +5564,7 @@ void Spell::DoSummonGroupPets(SpellEffectIndex eff_idx)
                     pet->SetDuration(m_duration);
                     pet->SetCreateSpellID(originalSpellID);
                     pet->SetPetCounter(amount-1);
-                    bool _summoned = false;
+                    //bool _summoned = false;
 
                     if (pet->LoadPetFromDB((Player*)m_caster,pet_entry, petnumber[i], false, &pos))
                     {
@@ -5603,7 +5644,7 @@ void Spell::EffectSummonPossessed(SpellEffectIndex eff_idx)
     {
         summon->SetLevel(m_caster->getLevel());
 
-        if (CreatureAI* scriptedAI = sScriptMgr.GetCreatureAI(summon))
+        if (sScriptMgr.GetCreatureAI(summon))
         {
             // Prevent from ScriptedAI reinitialized
             summon->LockAI(true);
@@ -6715,7 +6756,7 @@ void Spell::EffectWeaponDmg(SpellEffectIndex eff_idx)
                 // and no need to cast over max stack amount
                 if (!sunder || sunder->GetStackAmount() < sunder->GetSpellProto()->StackAmount)
                     m_caster->CastSpell(unitTarget, 58567, true);
-                    if (Aura *aura = m_caster->GetDummyAura(58388))
+                    if (m_caster->GetDummyAura(58388))
                         m_caster->CastSpell (unitTarget, 58567, true);
             }
             break;
@@ -8283,7 +8324,7 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         m_caster->CastSpell(m_caster, spellId, true);
                     break;
                 }
-                case 53110:									// Devour Humanoid
+                case 53110:                                 // Devour Humanoid
                 {
                     unitTarget->CastSpell(m_caster, m_spellInfo->CalculateSimpleValue(eff_idx),true, NULL, NULL, m_caster->GetObjectGuid());
                     return;
@@ -8303,6 +8344,20 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
 
                     // Remove aura (Mojo of Rhunok) given at quest accept / gossip
                     unitTarget->RemoveAurasDueToSpell(51967);
+                    return;
+                }
+                case 54248:                                 // Drakuru Overlord Death
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 52578, true); // Meat
+                    unitTarget->CastSpell(unitTarget, 52580, true); // Bones
+                    unitTarget->CastSpell(unitTarget, 52575, true); // Bones II
+                    unitTarget->CastSpell(unitTarget, 52578, true); // Meat
+                    unitTarget->CastSpell(unitTarget, 52580, true); // Bones
+                    unitTarget->CastSpell(unitTarget, 52575, true); // Bones II
+                    unitTarget->CastSpell(unitTarget, 54250, true); // Skull Missile
                     return;
                 }
                 case 54581:                                 // Mammoth Explosion Spell Spawner
@@ -8445,13 +8500,16 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         unitTarget->CastSpell(unitTarget, spellID, true);
                     return;
                 }
-                case 58941:                                 // Rock Shards
+                case 58941:                                 // Rock Shards (Vault of Archavon, Archavon)
                 {
-                    if (!unitTarget)
-                        return;
-
-                    m_originalCaster->CastSpell(unitTarget, 58689, true); // Left hand dummy visual
-                    m_originalCaster->CastSpell(unitTarget, 58692, true); // Right hand dummy visual
+                    if (Unit* pTarget = m_caster->GetMap()->GetUnit(m_caster->GetChannelObjectGuid()))
+                    {
+                        for (uint8 i = 0; i < 3; ++i)   // Trigger three spikes from each hand
+                        {
+                            m_caster->CastSpell(pTarget, 58689, true);
+                            m_caster->CastSpell(pTarget, 58692, true);
+                        }
+                    }
                     return;
                 }
                 case 59317:                                 // Teleporting
@@ -8596,12 +8654,12 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
 
                     switch(entry)
                     {
-                        case 31897: spellID = 7001; break;   // Lightwell Renew	Rank 1
-                        case 31896: spellID = 27873; break;  // Lightwell Renew	Rank 2
-                        case 31895: spellID = 27874; break;  // Lightwell Renew	Rank 3
-                        case 31894: spellID = 28276; break;  // Lightwell Renew	Rank 4
-                        case 31893: spellID = 48084; break;  // Lightwell Renew	Rank 5
-                        case 31883: spellID = 48085; break;  // Lightwell Renew	Rank 6
+                        case 31897: spellID = 7001; break;   // Lightwell Renew Rank 1
+                        case 31896: spellID = 27873; break;  // Lightwell Renew Rank 2
+                        case 31895: spellID = 27874; break;  // Lightwell Renew Rank 3
+                        case 31894: spellID = 28276; break;  // Lightwell Renew Rank 4
+                        case 31893: spellID = 48084; break;  // Lightwell Renew Rank 5
+                        case 31883: spellID = 48085; break;  // Lightwell Renew Rank 6
                         default:
                             sLog.outError("Unknown Lightwell spell caster %u", m_caster->GetEntry());
                             return;
@@ -10133,6 +10191,11 @@ void Spell::EffectResurrect(SpellEffectIndex /*eff_idx*/)
                 return;
             }
             break;
+        // Defibrillate (Gnomish Army Knife) has 67% chance of success
+        case 54732:
+            if (roll_chance_i(33))
+                return;
+            break;
         default:
             break;
     }
@@ -10705,7 +10768,7 @@ void Spell::EffectTransmitted(SpellEffectIndex eff_idx)
             m_caster->GetNearPoint2D(fx, fy, dis, m_caster->GetOrientation() + angle_offset);
 
             GridMapLiquidData liqData;
-            if (!m_caster->GetTerrain()->IsInWater(fx, fy, m_caster->GetPositionZ() + 1.f, &liqData))
+            if (!m_caster->GetTerrain()->IsInWater(fx, fy, m_caster->GetPositionZ() - 1.0f, &liqData))
             {
                 SendCastResult(SPELL_FAILED_NOT_FISHABLE);
                 SendChannelUpdate(0);
