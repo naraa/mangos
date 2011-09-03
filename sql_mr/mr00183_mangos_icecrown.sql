@@ -251,6 +251,11 @@ DELETE FROM `spell_proc_event` WHERE entry IN (70871);
 INSERT INTO `spell_proc_event` VALUES
 (70871, 0x7F,  0, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0.000000, 0.000000, 0);
 
+DELETE FROM `creature_model_info` WHERE (`modelid`=31165);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31165, 3, 2, 2, 0, 0);
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=31093);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (31093, 1.24, 2, 1, 0, 0);
 -- ---------------------
 -- Valithria dreamwalker
 -- ---------------------
