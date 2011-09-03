@@ -10571,14 +10571,6 @@ void SpellAuraHolder::HandleSpellSpecificBoosts(bool apply)
                         return;
                     break;
                 }
-                case 74396:                                 // Fingers of Frost (remove main aura)
-                {
-                    if (!apply)
-                        spellId1 = 44544;
-                    else
-                        return;
-                    break;
-                }
                 default:
                     return;
             }
@@ -11357,7 +11349,8 @@ void SpellAuraHolder::Update(uint32 diff)
         Unit* caster = GetCaster();
         if(!caster)
         {
-            m_target->RemoveAurasByCasterSpell(GetId(), GetCasterGuid());
+            if (m_target)
+                m_target->RemoveAurasByCasterSpell(GetId(), GetCasterGuid());
             return;
         }
 

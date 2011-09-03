@@ -3365,8 +3365,6 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     if (!item)
                         return;
 
-                    m_caster->AddComboPoints(unitTarget, 1);
-
                     // all poison enchantments is temporary
                     uint32 enchant_id = item->GetEnchantmentId(TEMP_ENCHANTMENT_SLOT);
                     if (!enchant_id)
@@ -10769,9 +10767,9 @@ void Spell::EffectTransmitted(SpellEffectIndex eff_idx)
             float max_angle = (max_dis - min_dis)/(max_dis + m_caster->GetObjectBoundingRadius());
             float angle_offset = max_angle * (rand_norm_f() - 0.5f);
             m_caster->GetNearPoint2D(fx, fy, dis, m_caster->GetOrientation() + angle_offset);
-
+            float waterZ = m_caster->GetTerrain()->GetWaterOrGroundLevel(fx, fy, m_caster->GetPositionZ());
             GridMapLiquidData liqData;
-            if (!m_caster->GetTerrain()->IsInWater(fx, fy, m_caster->GetPositionZ() - 1.0f, &liqData))
+            if (!m_caster->GetTerrain()->IsInWater(fx, fy, waterZ - 1.0f, &liqData))
             {
                 SendCastResult(SPELL_FAILED_NOT_FISHABLE);
                 SendChannelUpdate(0);
