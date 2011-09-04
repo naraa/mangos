@@ -47,6 +47,8 @@ UPDATE `creature_template` SET `mindmg` = 1, `maxdmg` = 1, `attackpower` = 1, `d
 -- ('45141', '0', '15', '46394', '2', '0', '0', '0', '0', '0',""),
 -- ('45185', '0', '14', '46394', '1', '0', '0', '0', '0', '0',"");
 
+UPDATE `creature_template` SET `InhabitType` = 1 WHERE `entry` = 24882; -- brutallus should be a ground only walker
+
 -- -------------
 -- Felmyst -----
 -- -------------

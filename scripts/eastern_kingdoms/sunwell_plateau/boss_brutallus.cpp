@@ -127,15 +127,6 @@ struct MANGOS_DLL_DECL boss_brutallusAI : public ScriptedAI
            DoScriptText(YELL_AGGRO, m_creature);
     }
 
-/* todo fail/wipe suppor
-    void JustReachedHome()
-	{
-		if (m_pInstance)
-            m_pInstance->SetData(TYPE_BRUTALLUS, NOT_STARTED);
-
-	}
-todo fail/wipe support*/
-
     void KilledUnit(Unit* pVictim)
     {
         //won't yell killing pet/other unit
