@@ -884,12 +884,6 @@ struct MANGOS_DLL_DECL boss_blood_queen_lanathel_introAI : public BSWScriptedAI
         }
         else
         {
-            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_TALDARAM))
-                doCast(SPELL_FAKE_DEATH,pPrince);
-            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_KELESETH))
-                doCast(SPELL_FAKE_DEATH,pPrince);
-            if (Creature* pPrince = pInstance->GetSingleCreatureFromStorage(NPC_VALANAR))
-                doCast(SPELL_FAKE_DEATH,pPrince);
             pInstance->SetData(TYPE_BLOOD_COUNCIL, NOT_STARTED);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
         }
