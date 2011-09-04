@@ -156,12 +156,12 @@ struct MANGOS_DLL_DECL boss_sindragosaAI : public BSWScriptedAI
         ScriptedAI::EnterEvadeMode();
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         if(!pInstance)
             return;
 
-        DoScriptText(-1631420,m_creature,who);
+        DoScriptText(-1631420,m_creature,pWho);
         doCast(SPELL_FROST_AURA_1);
 
         if (Unit* pTarget = doSelectRandomPlayer(SPELL_SHADOWS_EDGE, true, 100.0f))

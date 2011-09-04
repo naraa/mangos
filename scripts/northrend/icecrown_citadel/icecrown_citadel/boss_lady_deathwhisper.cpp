@@ -156,10 +156,11 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public BSWScriptedAI
         }
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         if (!pInstance)
             return;
+
         pInstance->SetData(TYPE_DEATHWHISPER, IN_PROGRESS);
         doCast(SPELL_MANA_BARRIER );
         MovementStarted = true;

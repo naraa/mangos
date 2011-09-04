@@ -157,10 +157,9 @@ struct MANGOS_DLL_DECL boss_professor_putricideAI : public BSWScriptedAI
         }
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* pWho)
     {
-        if (!pInstance) return;
-        if (!pWho || pWho->GetTypeId() != TYPEID_PLAYER)
+        if (!pInstance)
             return;
 
         pInstance->SetData(TYPE_PUTRICIDE, IN_PROGRESS);

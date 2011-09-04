@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_deathbringer_saurfangAI : public BSWScriptedAI
         ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         if(!pInstance)
             return;

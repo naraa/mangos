@@ -260,9 +260,11 @@ struct MANGOS_DLL_DECL boss_the_lich_king_iccAI : public BSWScriptedAI
     }
 
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
-        if(!pInstance) return;
+        if (!pInstance)  
+            return;
+
         pInstance->SetData(TYPE_LICH_KING, IN_PROGRESS);
     }
 

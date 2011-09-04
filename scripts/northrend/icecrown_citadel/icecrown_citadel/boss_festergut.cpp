@@ -149,10 +149,9 @@ struct MANGOS_DLL_DECL boss_festergutAI : public BSWScriptedAI
         }
     }
 
-    void Aggro(Unit *pWho)
+    void Aggro(Unit* pWho)
     {
-        if(!pInstance) return;
-        if (pWho->GetTypeId() != TYPEID_PLAYER)
+        if (!pInstance)
             return;
 
         Creature* pBlightTarget = m_creature->GetMap()->GetCreature(blightTargetGUID);

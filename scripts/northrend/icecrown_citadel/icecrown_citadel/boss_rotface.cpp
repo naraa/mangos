@@ -109,11 +109,13 @@ struct MANGOS_DLL_DECL boss_rotfaceAI : public BSWScriptedAI
         }
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
-        if(!pInstance) return;
+        if (!pInstance) 
+            return;
+
         pInstance->SetData(TYPE_ROTFACE, IN_PROGRESS);
-        DoScriptText(-1631221,m_creature,who);
+        DoScriptText(-1631221,m_creature,pWho);
     }
 
     void JustDied(Unit *killer)

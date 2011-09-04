@@ -105,7 +105,7 @@ struct MANGOS_DLL_DECL boss_lord_marrowgarAI : public BSWScriptedAI
             m_pInstance->SetData(TYPE_MARROWGAR, FAIL);
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         if(!m_pInstance)
             return;
