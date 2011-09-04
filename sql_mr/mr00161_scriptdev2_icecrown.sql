@@ -176,7 +176,7 @@ INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, 
 
 -- Adds
 ('-1631590','Р-р-р-рота, подъем!','P-rr-company, the rise of','0','6','0','0','custom message'),
-('-1631591','Хилы, не спать!','Gila, do not sleep','0','6','0','0','custom message'),
+('-1631591','Хилы, не спать!','Heals, do not sleep','0','6','0','0','custom message'),
 ('-1631592','ДД поднажали!','DD put pressure','0','6','0','0','custom message'),
 ('-1631593','Лидер, гони лентяев из рейда! А то еще час возиться будете!','Leader, get lazy from a raid! And then another hour to tinker will','0','6','0','0','custom message'),
 ('-1631594','Ну вот вы и прикончили Артаса. Теперь будем ждать Катаклизм.','Well, you finished off Arthas. Now we wait for the cataclysm','0','6','0','0','custom message');
