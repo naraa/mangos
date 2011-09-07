@@ -1842,8 +1842,6 @@
     <ClCompile Include="..\scripts\world\spell_scripts.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
-<<<<<<< HEAD
-=======
     <ClCompile Include="..\scripts\world\world_map_scripts.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
@@ -1859,7 +1857,6 @@
     <ClCompile Include="..\include\sc_instance.cpp">
       <Filter>include</Filter>
     </ClCompile>
->>>>>>> 8f0dfbf2b23806d78a342d3f50a95cf7d236cb90
     <ClCompile Include="..\system\MangosdRev.cpp">
       <Filter>system</Filter>
     </ClCompile>
