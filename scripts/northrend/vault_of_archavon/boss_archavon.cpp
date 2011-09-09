@@ -61,7 +61,7 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
     uint32 m_uiRockShardsProgressTimer;
     uint32 m_uiRockShardTimer;
     bool m_bRLRockShard;
-    Unit* m_pRockShardsTarget;
+    ObjectGuid m_pRockShardsTargetGuid;
     uint32 m_uiCrushingLeapTimer;
     Unit* m_pCrushingLeapTarget;
     bool m_bCrushingLeapInProgress;
@@ -80,7 +80,7 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
         m_uiRockShardsProgressTimer = 3000;
         m_uiRockShardTimer = 0;
         m_bRLRockShard = true;
-        m_pRockShardsTarget = NULL;
+        m_pRockShardsTargetGuid.Clear();
         m_uiCrushingLeapTimer = 30000;
         m_pCrushingLeapTarget = NULL;
         m_bCrushingLeapInProgress = false;
@@ -170,8 +170,9 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
             if (m_uiRockShardsProgressTimer < uiDiff)
             {
                 m_bRockShardsInProgress = false;
-                if (m_pRockShardsTarget)
-                    m_creature->getThreatManager().addThreat(m_pRockShardsTarget, -100000000.0f);
+                if (!m_pRockShardsTargetGuid.IsEmpty())
+                    if (Unit* m_pRockShardsTarget = m_creature->GetMap()->GetUnit(m_pRockShardsTargetGuid))
+                        m_creature->getThreatManager().addThreat(m_pRockShardsTarget, -100000000.0f);
                 return;
             }
             else
@@ -179,12 +180,13 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
 
             if (m_uiRockShardTimer < uiDiff)
             {
-                if (m_pRockShardsTarget && m_pRockShardsTarget->isAlive())
-                {
-                    DoCast(m_pRockShardsTarget, m_bIsRegularMode ? (m_bRLRockShard ? SPELL_ROCK_SHARDS_LEFT_N : SPELL_ROCK_SHARDS_RIGHT_N) : (m_bRLRockShard ? SPELL_ROCK_SHARDS_LEFT_H : SPELL_ROCK_SHARDS_RIGHT_H));
-                    m_bRLRockShard = !m_bRLRockShard;
-                }
-                m_uiRockShardTimer = 100;
+                if (Unit* m_pRockShardsTarget = m_creature->GetMap()->GetUnit(m_pRockShardsTargetGuid))
+                    if (m_pRockShardsTarget->isAlive())
+                    {
+                        DoCast(m_pRockShardsTarget, m_bIsRegularMode ? (m_bRLRockShard ? SPELL_ROCK_SHARDS_LEFT_N : SPELL_ROCK_SHARDS_RIGHT_N) : (m_bRLRockShard ? SPELL_ROCK_SHARDS_LEFT_H : SPELL_ROCK_SHARDS_RIGHT_H));
+                        m_bRLRockShard = !m_bRLRockShard;
+                    }
+                    m_uiRockShardTimer = 100;
             }
             else
                 m_uiRockShardsTimer -= uiDiff;
@@ -197,9 +199,11 @@ struct MANGOS_DLL_DECL boss_archavonAI : public ScriptedAI
             m_bRockShardsInProgress = true;
             m_uiRockShardsProgressTimer = 3000;
             m_bRLRockShard = true;
-            m_pRockShardsTarget = NULL;
-            if (m_pRockShardsTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* m_pRockShardsTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                m_pRockShardsTargetGuid = m_pRockShardsTarget->GetObjectGuid();
                 m_creature->getThreatManager().addThreat(m_pRockShardsTarget, 100000000.0f);
+            }
             m_uiRockShardsTimer = 15000+rand()%15000;
             return;
         }

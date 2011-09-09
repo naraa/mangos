@@ -128,22 +128,28 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (!pInstance) return;
+        if (!pInstance) 
+            return;
 
-        if (pDummyTarget) pDummyTarget->ForcedDespawn();
         DoScriptText(SAY_BALTHARUS_DEATH,m_creature);
+        if (pInstance->GetData(TYPE_BALTHARUS) != DONE)
+        {
+            if (pDummyTarget) 
+                pDummyTarget->ForcedDespawn();
+        }
         pInstance->SetData(TYPE_BALTHARUS, DONE);
     }
 
     void KilledUnit(Unit* pVictim)
     {
-    switch (urand(0,1)) {
-        case 0:
-               DoScriptText(SAY_BALTHARUS_SLAY_1,m_creature,pVictim);
-               break;
-        case 1:
-               DoScriptText(SAY_BALTHARUS_SLAY_2,m_creature,pVictim);
-               break;
+        switch (urand(0,1)) 
+        {
+            case 0:
+                DoScriptText(SAY_BALTHARUS_SLAY_1,m_creature,pVictim);
+                break;
+            case 1:
+                DoScriptText(SAY_BALTHARUS_SLAY_2,m_creature,pVictim);
+                break;
         };
     }
 
