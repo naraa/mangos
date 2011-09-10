@@ -3710,7 +3710,6 @@ void Unit::_UpdateSpells( uint32 time )
         ++m_spellAuraHoldersUpdateIterator;                            // need shift to next for allow update if need into aura update
         if (i_holder && !i_holder->IsDeleted() && !i_holder->IsEmptyHolder() && !i_holder->IsInUse())
         {
-            MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
             i_holder->UpdateHolder(time);
         }
     }
@@ -4502,7 +4501,10 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolder *holder)
 
     // add aura, register in lists and arrays
     holder->_AddSpellAuraHolder();
-    m_spellAuraHolders.insert(SpellAuraHolderMap::value_type(holder->GetId(), holder));
+    {
+        MAPLOCK_WRITE(this,MAP_LOCK_TYPE_AURAS);
+        m_spellAuraHolders.insert(SpellAuraHolderMap::value_type(holder->GetId(), holder));
+    }
 
     for (int32 i = 0; i < MAX_EFFECT_INDEX; ++i)
         if (Aura *aur = holder->GetAuraByEffectIndex(SpellEffectIndex(i)))
@@ -4523,6 +4525,7 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolder *holder)
 
 void Unit::AddAuraToModList(Aura *aura)
 {
+    MAPLOCK_WRITE(this,MAP_LOCK_TYPE_AURAS);
     if (aura->GetModifier()->m_auraname < TOTAL_AURAS)
         m_modAuras[aura->GetModifier()->m_auraname].push_back(aura);
 }
@@ -5148,6 +5151,7 @@ void Unit::RemoveSpellAuraHolder(SpellAuraHolder *holder, AuraRemoveMode mode)
     {
         if (itr->second == holder)
         {
+            MAPLOCK_WRITE(this,MAP_LOCK_TYPE_AURAS);
             m_spellAuraHolders.erase(itr);
             break;
         }
@@ -5202,6 +5206,7 @@ void Unit::RemoveAura(Aura *Aur, AuraRemoveMode mode)
     // remove from list before mods removing (prevent cyclic calls, mods added before including to aura list - use reverse order)
     if (Aur->GetModifier()->m_auraname < TOTAL_AURAS)
     {
+        MAPLOCK_WRITE(this,MAP_LOCK_TYPE_AURAS);
         m_modAuras[Aur->GetModifier()->m_auraname].remove(Aur);
     }
 
@@ -6800,7 +6805,7 @@ uint32 Unit::SpellDamageBonusDone(Unit *pVictim, SpellEntry const *spellProto, u
     if (spellProto->IsFitToFamily<SPELLFAMILY_WARLOCK, CF_WARLOCK_CONFLAGRATE>())
         return pdamage;
 
-    if (!IsInWorld() || !GetMap())
+    if (!IsInWorld())
         return pdamage;
 
     MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
@@ -6809,7 +6814,10 @@ uint32 Unit::SpellDamageBonusDone(Unit *pVictim, SpellEntry const *spellProto, u
     if ( GetTypeId()==TYPEID_UNIT && ((Creature*)this)->IsTotem() && ((Totem*)this)->GetTotemType()!=TOTEM_STATUE)
     {
         if (Unit* owner = GetOwner())
+        {
+            MAPLOCK_READ1(owner,MAP_LOCK_TYPE_AURAS);
             return owner->SpellDamageBonusDone(pVictim, spellProto, pdamage, damagetype);
+        }
     }
 
     float DoneTotalMod = 1.0f;
@@ -6826,48 +6834,48 @@ uint32 Unit::SpellDamageBonusDone(Unit *pVictim, SpellEntry const *spellProto, u
     for(AuraList::const_iterator i = mModDamagePercentDone.begin(); i != mModDamagePercentDone.end(); ++i)
     {
         Aura* aura = *i;
-        if (!aura || !aura->GetModifier())
+        if (!aura || !aura->GetModifier() || !(aura->GetModifier()->m_miscvalue & GetSpellSchoolMask(spellProto)))
             continue;
 
+        int32 calculatedBonus = aura->GetModifier()->m_amount;
+
         SpellAuraHolder* holder = aura->GetHolder();
+
         if (!holder || holder->IsDeleted())
             continue;
 
-        if ( (aura->GetModifier()->m_miscvalue & GetSpellSchoolMask(spellProto)) &&
-            aura->GetSpellProto()->EquippedItemClass == -1 &&
+        if (holder->GetSpellProto()->EquippedItemClass != -1 ||
                                                             // -1 == any item class (not wand then)
-            aura->GetSpellProto()->EquippedItemInventoryTypeMask == 0 )
+            holder->GetSpellProto()->EquippedItemInventoryTypeMask != 0 )
                                                             // 0 == any inventory type (not wand then)
-        {
-            float calculatedBonus = aura->GetModifier()->m_amount;
+            continue;
 
-            // bonus stored in another auras basepoints
-            if (calculatedBonus == 0)
+        // bonus stored in another auras basepoints
+        if (calculatedBonus == 0)
+        {
+            // Clearcasting - bonus from Elemental Oath
+            if (aura->GetSpellProto()->Id == 16246)
             {
-                // Clearcasting - bonus from Elemental Oath
-                if (aura->GetSpellProto()->Id == 16246)
+                AuraList const& aurasCrit = GetAurasByType(SPELL_AURA_MOD_SPELL_CRIT_CHANCE);
+                for (AuraList::const_iterator itr = aurasCrit.begin(); itr != aurasCrit.end(); itr++)
                 {
-                    AuraList const& aurasCrit = GetAurasByType(SPELL_AURA_MOD_SPELL_CRIT_CHANCE);
-                    for (AuraList::const_iterator itr = aurasCrit.begin(); itr != aurasCrit.end(); itr++)
+                    if ((*itr)->GetSpellProto()->SpellIconID == 3053)
                     {
-                        if ((*itr)->GetSpellProto()->SpellIconID == 3053)
-                        {
-                            calculatedBonus = (*itr)->GetSpellProto()->CalculateSimpleValue(EFFECT_INDEX_1);
-                            break;
-                        }
+                        calculatedBonus = (*itr)->GetSpellProto()->CalculateSimpleValue(EFFECT_INDEX_1);
+                        break;
                     }
                 }
             }
+        }
 
-            if (aura->IsStacking())
-                DoneTotalMod *= (calculatedBonus+100.0f)/100.0f;
-            else
-            {
-                if(calculatedBonus > nonStackingPos)
-                    nonStackingPos = calculatedBonus;
-                else if(calculatedBonus < nonStackingNeg)
-                    nonStackingNeg = calculatedBonus;
-            }
+        if (aura->IsStacking())
+            DoneTotalMod *= ((float)calculatedBonus+100.0f)/100.0f;
+        else
+        {
+            if((float)calculatedBonus > nonStackingPos)
+                nonStackingPos = (float)calculatedBonus;
+            else if((float)calculatedBonus < nonStackingNeg)
+                nonStackingNeg = (float)calculatedBonus;
         }
     }
     DoneTotalMod *= ((nonStackingPos + 100.0f) / 100.0f) * ((nonStackingNeg + 100.0f) / 100.0f);
@@ -8902,7 +8910,7 @@ void Unit::UpdateVisibilityAndView()
     static const AuraType auratypes[] = {SPELL_AURA_BIND_SIGHT, SPELL_AURA_FAR_SIGHT, SPELL_AURA_NONE};
     for (AuraType const* type = &auratypes[0]; *type != SPELL_AURA_NONE; ++type)
     {
-        AuraList& alist = m_modAuras[*type];
+        AuraList alist = m_modAuras[*type];
         if (alist.empty())
             continue;
 
@@ -10200,6 +10208,7 @@ void Unit::ApplyMaxPowerMod(Powers power, uint32 val, bool apply)
 
 void Unit::ApplyAuraProcTriggerDamage( Aura* aura, bool apply )
 {
+    MAPLOCK_WRITE(this,MAP_LOCK_TYPE_AURAS);
     AuraList& tAuraProcTriggerDamage = m_modAuras[SPELL_AURA_PROC_TRIGGER_DAMAGE];
     if (apply)
         tAuraProcTriggerDamage.push_back(aura);
@@ -12459,7 +12468,10 @@ bool Unit::HasMorePoweredBuff(uint32 spellId)
             )
             continue;
 
+        MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
+
         AuraType auraType = AuraType(spellInfo->EffectApplyAuraName[SpellEffectIndex(i)]);
+
         if (!auraType || auraType >= TOTAL_AURAS)
             continue;
 
