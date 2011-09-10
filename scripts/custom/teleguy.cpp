@@ -5,33 +5,33 @@ int costo;
 bool GossipHello_mob_teleguy(Player *player, Creature *_Creature)
 {
     if (player->GetTeam() == ALLIANCE ) {
-        player->ADD_GOSSIP_ITEM( 5, "Darnassus. 5 Silver"       	 	  , GOSSIP_SENDER_MAIN, 1203);
-        player->ADD_GOSSIP_ITEM( 5, "Exodar. 5 Silver"            		  , GOSSIP_SENDER_MAIN, 1216);
-        player->ADD_GOSSIP_ITEM( 5, "Stormwind. 5 Silver"       		  , GOSSIP_SENDER_MAIN, 1206);
-        player->ADD_GOSSIP_ITEM( 5, "Ironforge. 5 Silver"        		  , GOSSIP_SENDER_MAIN, 1224);
-        player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"        		  , GOSSIP_SENDER_MAIN, 1222);
-        player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"            , GOSSIP_SENDER_MAIN, 1287);
-        player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"                   , GOSSIP_SENDER_MAIN, 1205);
-        player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver"        , GOSSIP_SENDER_MAIN, 1288);
-        player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"               , GOSSIP_SENDER_MAIN, 5550);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"                   , GOSSIP_SENDER_MAIN, 5553);
-        player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"                , GOSSIP_SENDER_MAIN, 5554);
-		player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"                    , GOSSIP_SENDER_MAIN, 5555);
-        } else {
-        player->ADD_GOSSIP_ITEM( 5, "Orgrimmar. 5 Silver"       		  , GOSSIP_SENDER_MAIN, 1215);
-        player->ADD_GOSSIP_ITEM( 5, "Silvermoon. 5 Silver"       		  , GOSSIP_SENDER_MAIN, 1217);
-        player->ADD_GOSSIP_ITEM( 5, "Undercity. 5 Silver"        		  , GOSSIP_SENDER_MAIN, 1213);
-        player->ADD_GOSSIP_ITEM( 5, "Thunder Bluff. 5 Silver"    		  , GOSSIP_SENDER_MAIN, 1225);
-        player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"        		  , GOSSIP_SENDER_MAIN, 1222);
-        player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"            , GOSSIP_SENDER_MAIN, 1287);
-        player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"            		  , GOSSIP_SENDER_MAIN, 1205);
-        player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver"        , GOSSIP_SENDER_MAIN, 1288);
-        player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"               , GOSSIP_SENDER_MAIN, 5550);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"                   , GOSSIP_SENDER_MAIN, 5553);
-        player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"                , GOSSIP_SENDER_MAIN, 5554);
-		player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"                    , GOSSIP_SENDER_MAIN, 5555);
-        }
-	player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
+    player->ADD_GOSSIP_ITEM( 5, "Darnassus. 5 Silver"          , GOSSIP_SENDER_MAIN, 1203);
+    player->ADD_GOSSIP_ITEM( 5, "Exodar. 5 Silver"             , GOSSIP_SENDER_MAIN, 1216);
+    player->ADD_GOSSIP_ITEM( 5, "Stormwind. 5 Silver"          , GOSSIP_SENDER_MAIN, 1206);
+    player->ADD_GOSSIP_ITEM( 5, "Ironforge. 5 Silver"          , GOSSIP_SENDER_MAIN, 1224);
+    player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"         , GOSSIP_SENDER_MAIN, 1222);
+    player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"     , GOSSIP_SENDER_MAIN, 1287);
+    player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"            , GOSSIP_SENDER_MAIN, 1205);
+    player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver" , GOSSIP_SENDER_MAIN, 1288);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"        , GOSSIP_SENDER_MAIN, 5550);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"            , GOSSIP_SENDER_MAIN, 5553);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"         , GOSSIP_SENDER_MAIN, 5554);
+    player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"             , GOSSIP_SENDER_MAIN, 5555);
+    } else {
+    player->ADD_GOSSIP_ITEM( 5, "Orgrimmar. 5 Silver"          , GOSSIP_SENDER_MAIN, 1215);
+    player->ADD_GOSSIP_ITEM( 5, "Silvermoon. 5 Silver"         , GOSSIP_SENDER_MAIN, 1217);
+    player->ADD_GOSSIP_ITEM( 5, "Undercity. 5 Silver"          , GOSSIP_SENDER_MAIN, 1213);
+    player->ADD_GOSSIP_ITEM( 5, "Thunder Bluff. 5 Silver"      , GOSSIP_SENDER_MAIN, 1225);
+    player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"         , GOSSIP_SENDER_MAIN, 1222);
+    player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"     , GOSSIP_SENDER_MAIN, 1287);
+    player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"            , GOSSIP_SENDER_MAIN, 1205);
+    player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver" , GOSSIP_SENDER_MAIN, 1288);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"        , GOSSIP_SENDER_MAIN, 5550);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"            , GOSSIP_SENDER_MAIN, 5553);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"         , GOSSIP_SENDER_MAIN, 5554);
+    player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"             , GOSSIP_SENDER_MAIN, 5555);
+    }
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
     return true;
 }
 
@@ -64,11 +64,11 @@ void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 act
     switch(action)
     {
         case 5550: //Normal Instances
-			if (player->GetTeam() == ALLIANCE ) {
+            if (player->GetTeam() == ALLIANCE ) {
             player->ADD_GOSSIP_ITEM( 5, "The Stockade. 10 Silver"            , GOSSIP_SENDER_MAIN, 1253);
-			} else {
+            } else {
             player->ADD_GOSSIP_ITEM( 5, "Ragefire Chasm. 10 Silver"          , GOSSIP_SENDER_MAIN, 1248);
-			}
+            }
             player->ADD_GOSSIP_ITEM( 5, "The Wailing Caverns. 10 Silver"     , GOSSIP_SENDER_MAIN, 1249);
             player->ADD_GOSSIP_ITEM( 5, "Deadmines. 10 Silver"               , GOSSIP_SENDER_MAIN, 1250);
             player->ADD_GOSSIP_ITEM( 5, "Shadowfang Keep. 10 Silver"         , GOSSIP_SENDER_MAIN, 1251);
@@ -92,6 +92,8 @@ void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 act
             player->ADD_GOSSIP_ITEM( 5, "Blackrock Spire. 50 Silver"           , GOSSIP_SENDER_MAIN, 1264);
             player->ADD_GOSSIP_ITEM( 5, "Stratholme. 50 Silver"                , GOSSIP_SENDER_MAIN, 1265);
             player->ADD_GOSSIP_ITEM( 5, "Scholomance. 50 Silver"               , GOSSIP_SENDER_MAIN, 1266);
+            player->ADD_GOSSIP_ITEM( 5, "Ahn'Qiraj. 50 Silver"                 , GOSSIP_SENDER_MAIN, 1267);
+            player->ADD_GOSSIP_ITEM( 5, "Zul'Gurub. 50 Silver"                 , GOSSIP_SENDER_MAIN, 1268);
             player->ADD_GOSSIP_ITEM( 7, "<- [Back]"                            , GOSSIP_SENDER_MAIN, 5550);
             player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"                       , GOSSIP_SENDER_MAIN, 5552);
 
@@ -99,78 +101,78 @@ void SendDefaultMenu_mob_teleguy(Player *player, Creature *_Creature, uint32 act
         break;
 
 case 5553: //Instances 60-70 BC
-	player->ADD_GOSSIP_ITEM( 5, "Auchindoun. 1 Gold"                            , GOSSIP_SENDER_MAIN, 4006);
-	player->ADD_GOSSIP_ITEM( 5, "Karazhan. 1 Gold"                              , GOSSIP_SENDER_MAIN, 4007);
-	player->ADD_GOSSIP_ITEM( 5, "Gruul's Lair. 1 Gold"                          , GOSSIP_SENDER_MAIN, 4008);
-	player->ADD_GOSSIP_ITEM( 5, "Hellfire Citadel. 1 Gold"                      , GOSSIP_SENDER_MAIN, 4009);
-	player->ADD_GOSSIP_ITEM( 5, "Coilfang Reservoir. 1 Gold"                    , GOSSIP_SENDER_MAIN, 4010);
-	player->ADD_GOSSIP_ITEM( 5, "Tempest Keep. 1 Gold"                          , GOSSIP_SENDER_MAIN, 4011);
-	player->ADD_GOSSIP_ITEM( 5, "Zul'Aman. 1 Gold"                              , GOSSIP_SENDER_MAIN, 4016);
-	player->ADD_GOSSIP_ITEM( 5, "Black Temple. 1 Gold"                          , GOSSIP_SENDER_MAIN, 4013);
-	player->ADD_GOSSIP_ITEM( 5, "Magister's Terrace. 2 Gold"                    , GOSSIP_SENDER_MAIN, 4017);
-	player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"                                , GOSSIP_SENDER_MAIN, 5552);
+    player->ADD_GOSSIP_ITEM( 5, "Auchindoun. 1 Gold"         , GOSSIP_SENDER_MAIN, 4006);
+    player->ADD_GOSSIP_ITEM( 5, "Karazhan. 1 Gold"           , GOSSIP_SENDER_MAIN, 4007);
+    player->ADD_GOSSIP_ITEM( 5, "Gruul's Lair. 1 Gold"       , GOSSIP_SENDER_MAIN, 4008);
+    player->ADD_GOSSIP_ITEM( 5, "Hellfire Citadel. 1 Gold"   , GOSSIP_SENDER_MAIN, 4009);
+    player->ADD_GOSSIP_ITEM( 5, "Coilfang Reservoir. 1 Gold" , GOSSIP_SENDER_MAIN, 4010);
+    player->ADD_GOSSIP_ITEM( 5, "Tempest Keep. 1 Gold"       , GOSSIP_SENDER_MAIN, 4011);
+    player->ADD_GOSSIP_ITEM( 5, "Zul'Aman. 1 Gold"           , GOSSIP_SENDER_MAIN, 4016);
+    player->ADD_GOSSIP_ITEM( 5, "Black Temple. 1 Gold"       , GOSSIP_SENDER_MAIN, 4013);
+    player->ADD_GOSSIP_ITEM( 5, "Magister's Terrace. 2 Gold" , GOSSIP_SENDER_MAIN, 4017);
+    player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"             , GOSSIP_SENDER_MAIN, 5552);
 
-	player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 break;
 
 case 5554: //Instances 70-80 WotLK
-	player->ADD_GOSSIP_ITEM( 5, "Caverns of Time. 20 Gold"                     , GOSSIP_SENDER_MAIN, 4012);
-	player->ADD_GOSSIP_ITEM( 5, "Utgarde Keep. 20 Gold"                        , GOSSIP_SENDER_MAIN, 4019);
-	player->ADD_GOSSIP_ITEM( 5, "Azjol-Nerub. 20 Gold"                         , GOSSIP_SENDER_MAIN, 4021);
-	player->ADD_GOSSIP_ITEM( 5, "The Old Kingdom. 20 Gold"                     , GOSSIP_SENDER_MAIN, 4022);
-	player->ADD_GOSSIP_ITEM( 5, "Drak'Tharon Keep. 20 Gold"                    , GOSSIP_SENDER_MAIN, 4023);
-	player->ADD_GOSSIP_ITEM( 5, "Gundrak. 20 Gold"                             , GOSSIP_SENDER_MAIN, 4025);
-	player->ADD_GOSSIP_ITEM( 5, "Utgarde Pinnacle. 20 Gold"                    , GOSSIP_SENDER_MAIN, 4026);
-	player->ADD_GOSSIP_ITEM( 5, "Halls of Stone. 20 Gold"                      , GOSSIP_SENDER_MAIN, 4032);
-	player->ADD_GOSSIP_ITEM( 5, "Halls of Lightning. 20 Gold"                  , GOSSIP_SENDER_MAIN, 4033);
-	player->ADD_GOSSIP_ITEM( 5, "Frozen Halls. 20 Gold"                        , GOSSIP_SENDER_MAIN, 4034);
-	player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"                               , GOSSIP_SENDER_MAIN, 5552);
+    player->ADD_GOSSIP_ITEM( 5, "Caverns of Time. 20 Gold"    , GOSSIP_SENDER_MAIN, 4012);
+    player->ADD_GOSSIP_ITEM( 5, "Utgarde Keep. 20 Gold"       , GOSSIP_SENDER_MAIN, 4019);
+    player->ADD_GOSSIP_ITEM( 5, "Azjol-Nerub. 20 Gold"        , GOSSIP_SENDER_MAIN, 4021);
+    player->ADD_GOSSIP_ITEM( 5, "The Old Kingdom. 20 Gold"    , GOSSIP_SENDER_MAIN, 4022);
+    player->ADD_GOSSIP_ITEM( 5, "Drak'Tharon Keep. 20 Gold"   , GOSSIP_SENDER_MAIN, 4023);
+    player->ADD_GOSSIP_ITEM( 5, "Gundrak. 20 Gold"            , GOSSIP_SENDER_MAIN, 4025);
+    player->ADD_GOSSIP_ITEM( 5, "Utgarde Pinnacle. 20 Gold"   , GOSSIP_SENDER_MAIN, 4026);
+    player->ADD_GOSSIP_ITEM( 5, "Halls of Stone. 20 Gold"     , GOSSIP_SENDER_MAIN, 4032);
+    player->ADD_GOSSIP_ITEM( 5, "Halls of Lightning. 20 Gold" , GOSSIP_SENDER_MAIN, 4033);
+    player->ADD_GOSSIP_ITEM( 5, "Frozen Halls. 20 Gold"       , GOSSIP_SENDER_MAIN, 4034);
+    player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"              , GOSSIP_SENDER_MAIN, 5552);
 
-	player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 break;
 
 case 5555: //Raids 80 WotLK
-	player->ADD_GOSSIP_ITEM( 5, "The Nexus. 20 Gold"                           , GOSSIP_SENDER_MAIN, 4020);
-	player->ADD_GOSSIP_ITEM( 5, "Coliseum Vanguard. 20 Gold"                   , GOSSIP_SENDER_MAIN, 4024);
-	player->ADD_GOSSIP_ITEM( 5, "Ulduar. 20 Gold"                              , GOSSIP_SENDER_MAIN, 4027);
-	player->ADD_GOSSIP_ITEM( 5, "Wyrmrest Temple. 20 Gold"                     , GOSSIP_SENDER_MAIN, 4028);
-	player->ADD_GOSSIP_ITEM( 5, "Naxxramas. 20 Gold"                           , GOSSIP_SENDER_MAIN, 4029);
-	player->ADD_GOSSIP_ITEM( 5, "Icecrown Citadel. 20 Gold"                    , GOSSIP_SENDER_MAIN, 4030);
-	player->ADD_GOSSIP_ITEM( 5, "Vault of Archavon. 20 Gold"                   , GOSSIP_SENDER_MAIN, 4031);
-	player->ADD_GOSSIP_ITEM( 5, "Onyxia's Lair. 20 Gold"                       , GOSSIP_SENDER_MAIN, 4035);
-	player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"                               , GOSSIP_SENDER_MAIN, 5552);
+    player->ADD_GOSSIP_ITEM( 5, "The Nexus. 20 Gold"         , GOSSIP_SENDER_MAIN, 4020);
+    player->ADD_GOSSIP_ITEM( 5, "Coliseum Vanguard. 20 Gold" , GOSSIP_SENDER_MAIN, 4024);
+    player->ADD_GOSSIP_ITEM( 5, "Ulduar. 20 Gold"            , GOSSIP_SENDER_MAIN, 4027);
+    player->ADD_GOSSIP_ITEM( 5, "Wyrmrest Temple. 20 Gold"   , GOSSIP_SENDER_MAIN, 4028);
+    player->ADD_GOSSIP_ITEM( 5, "Naxxramas. 20 Gold"         , GOSSIP_SENDER_MAIN, 4029);
+    player->ADD_GOSSIP_ITEM( 5, "Icecrown Citadel. 20 Gold"  , GOSSIP_SENDER_MAIN, 4030);
+    player->ADD_GOSSIP_ITEM( 5, "Vault of Archavon. 20 Gold" , GOSSIP_SENDER_MAIN, 4031);
+    player->ADD_GOSSIP_ITEM( 5, "Onyxia's Lair. 20 Gold"     , GOSSIP_SENDER_MAIN, 4035);
+    player->ADD_GOSSIP_ITEM( 7, "<- [Main Menu]"             , GOSSIP_SENDER_MAIN, 5552);
 
-	player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 break;
-	
+
 case 5552: //Back To Main Menu
     if (player->GetTeam() == ALLIANCE ) {
-		player->ADD_GOSSIP_ITEM( 5, "Darnassus. 5 Silver"                 , GOSSIP_SENDER_MAIN, 1203);
-		player->ADD_GOSSIP_ITEM( 5, "Exodar. 5 Silver"               	  , GOSSIP_SENDER_MAIN, 1216);
-		player->ADD_GOSSIP_ITEM( 5, "Stormwind. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1206);
-		player->ADD_GOSSIP_ITEM( 5, "Ironforge. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1224);
-		player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1222);
-		player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"            , GOSSIP_SENDER_MAIN, 1287);
-		player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"                   , GOSSIP_SENDER_MAIN, 1205);
-		player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver"        , GOSSIP_SENDER_MAIN, 1288);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"               , GOSSIP_SENDER_MAIN, 5550);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"                   , GOSSIP_SENDER_MAIN, 5553);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"          	  , GOSSIP_SENDER_MAIN, 5554);
-		player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"          	      , GOSSIP_SENDER_MAIN, 5555);
-		} else {
-		player->ADD_GOSSIP_ITEM( 5, "Orgrimmar. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1215);
-		player->ADD_GOSSIP_ITEM( 5, "Silvermoon. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1217);
-		player->ADD_GOSSIP_ITEM( 5, "Undercity. 5 Silver"           	  , GOSSIP_SENDER_MAIN, 1213);
-		player->ADD_GOSSIP_ITEM( 5, "Thunder Bluff. 5 Silver"             , GOSSIP_SENDER_MAIN, 1225);
-		player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"          	  , GOSSIP_SENDER_MAIN, 1222);
-		player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"            , GOSSIP_SENDER_MAIN, 1287);
-		player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"                   , GOSSIP_SENDER_MAIN, 1205);
-		player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver"        , GOSSIP_SENDER_MAIN, 1288);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"               , GOSSIP_SENDER_MAIN, 5550);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"                   , GOSSIP_SENDER_MAIN, 5553);
-		player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"          	  , GOSSIP_SENDER_MAIN, 5554);
-		player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"           	      , GOSSIP_SENDER_MAIN, 5555);
-		}
+    player->ADD_GOSSIP_ITEM( 5, "Darnassus. 5 Silver"          , GOSSIP_SENDER_MAIN, 1203);
+    player->ADD_GOSSIP_ITEM( 5, "Exodar. 5 Silver"             , GOSSIP_SENDER_MAIN, 1216);
+    player->ADD_GOSSIP_ITEM( 5, "Stormwind. 5 Silver"          , GOSSIP_SENDER_MAIN, 1206);
+    player->ADD_GOSSIP_ITEM( 5, "Ironforge. 5 Silver"          , GOSSIP_SENDER_MAIN, 1224);
+    player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"         , GOSSIP_SENDER_MAIN, 1222);
+    player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"     , GOSSIP_SENDER_MAIN, 1287);
+    player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"            , GOSSIP_SENDER_MAIN, 1205);
+    player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver" , GOSSIP_SENDER_MAIN, 1288);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"        , GOSSIP_SENDER_MAIN, 5550);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"            , GOSSIP_SENDER_MAIN, 5553);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"         , GOSSIP_SENDER_MAIN, 5554);
+    player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"             , GOSSIP_SENDER_MAIN, 5555);
+    } else {
+    player->ADD_GOSSIP_ITEM( 5, "Orgrimmar. 5 Silver"          , GOSSIP_SENDER_MAIN, 1215);
+    player->ADD_GOSSIP_ITEM( 5, "Silvermoon. 5 Silver"         , GOSSIP_SENDER_MAIN, 1217);
+    player->ADD_GOSSIP_ITEM( 5, "Undercity. 5 Silver"          , GOSSIP_SENDER_MAIN, 1213);
+    player->ADD_GOSSIP_ITEM( 5, "Thunder Bluff. 5 Silver"      , GOSSIP_SENDER_MAIN, 1225);
+    player->ADD_GOSSIP_ITEM( 5, "Gnomeregan. 5 Silver"         , GOSSIP_SENDER_MAIN, 1222);
+    player->ADD_GOSSIP_ITEM( 5, "Shattrath City. 5 Silver"     , GOSSIP_SENDER_MAIN, 1287);
+    player->ADD_GOSSIP_ITEM( 5, "Dalaran. 5 Silver"            , GOSSIP_SENDER_MAIN, 1205);
+    player->ADD_GOSSIP_ITEM( 5, "Isle Of Quel'Danas. 5 Silver" , GOSSIP_SENDER_MAIN, 1288);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances Normal] ->"        , GOSSIP_SENDER_MAIN, 5550);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances BC] ->"            , GOSSIP_SENDER_MAIN, 5553);
+    player->ADD_GOSSIP_ITEM( 7, "[Instances WotLK] ->"         , GOSSIP_SENDER_MAIN, 5554);
+    player->ADD_GOSSIP_ITEM( 7, "[Raids WotLK] ->"             , GOSSIP_SENDER_MAIN, 5555);
+    }
     player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,_Creature->GetObjectGuid());
 break;
 
@@ -471,6 +473,30 @@ case 1266:// Scholomance
     }
 break;
 
+case 1267:// Ahn'Qiraj
+    if (player->getLevel() >= 50)
+    {
+        player->CLOSE_GOSSIP_MENU();
+        player->TeleportTo(1, -8169.81f, 1528.11f, 4.195f, 2.948f);
+        player->ModifyMoney(-10*costo);
+    } else {
+        player->CLOSE_GOSSIP_MENU();
+        _Creature->MonsterSay("You must be at least level 50!", LANG_UNIVERSAL);
+    }
+break;
+
+case 1268:// Zul'Gurub
+    if (player->getLevel() >= 50)
+    {
+        player->CLOSE_GOSSIP_MENU();
+        player->TeleportTo(0, -11916.1f, -1223.97f, 92.288f, 4.707f);
+        player->ModifyMoney(-10*costo);
+    } else {
+        player->CLOSE_GOSSIP_MENU();
+        _Creature->MonsterSay("You must be at least level 50!", LANG_UNIVERSAL);
+    }
+break;
+
 case 1287:// Shattrath City
 if(player->getLevel() >= 58)
     {
@@ -534,9 +560,9 @@ break;
 case 4009:// Hellfire Citadel
     if (player->getLevel() >= 58)
     {
-		player->CLOSE_GOSSIP_MENU();
-		player->TeleportTo(530, -305.816223f, 3056.401611f, -2.473183f, 2.01f);
-		player->ModifyMoney(-20*costo);
+        player->CLOSE_GOSSIP_MENU();
+        player->TeleportTo(530, -305.816223f, 3056.401611f, -2.473183f, 2.01f);
+        player->ModifyMoney(-20*costo);
     } else {
         player->CLOSE_GOSSIP_MENU();
         _Creature->MonsterSay("You must be at least level 58!", LANG_UNIVERSAL);
