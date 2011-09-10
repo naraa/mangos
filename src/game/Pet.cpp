@@ -56,6 +56,8 @@ m_petFollowAngle(PET_FOLLOW_ANGLE), m_needSave(true), m_petCounter(0), m_PetScal
 
 Pet::~Pet()
 {
+    CleanupsBeforeDelete();
+
     delete m_declinedname;
 
     if (m_PetScalingData)
@@ -539,7 +541,7 @@ void Pet::SetDeathState(DeathState s)                       // overwrite virtual
 
 void Pet::Update(uint32 update_diff, uint32 diff)
 {
-    if (m_removed)                                          // pet already removed, just wait in remove queue, no updates
+    if (!IsInWorld() || m_removed)                          // pet already removed, just wait in remove queue, no updates
         return;
 
     if (m_updated)                                          // pet now already upated (in other thread?)
@@ -1764,6 +1766,20 @@ void Pet::InitPetCreateSpells()
 
     LearnPetPassives();
 
+    if (!isControlled())
+    {
+        for(uint32 x = 0; x <= GetSpellMaxIndex(); ++x)
+        {
+            if (uint32 spellId = GetSpell(x))
+            {
+                if (IsPassiveSpell(spellId))
+                    CastSpell(this, spellId, true);
+                else
+                    addSpell(spellId, ACT_ENABLED);
+            }
+        }
+    }
+
     CastPetAuras(false);
 }
 
@@ -1952,7 +1968,7 @@ uint8 Pet::GetMaxTalentPointsForLevel(uint32 level)
 
 void Pet::ToggleAutocast(uint32 spellid, bool apply)
 {
-    if(IsPassiveSpell(spellid) || !isControlled())
+    if (IsPassiveSpell(spellid))
         return;
 
     PetSpellMap::iterator itr = m_spells.find(spellid);
@@ -2904,6 +2920,7 @@ bool Pet::Summon()
         case GUARDIAN_PET:
         case PROTECTOR_PET:
         {
+            GetCharmInfo()->InitCharmCreateSpells();
             LoadCreatureAddon(true);
             RemoveByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP | UNIT_BYTE2_FLAG_SANCTUARY | UNIT_BYTE2_FLAG_PVP);
             SetUInt32Value(UNIT_NPC_FLAGS, GetCreatureInfo()->npcflag);

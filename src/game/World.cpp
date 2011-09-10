@@ -65,6 +65,7 @@
 #include "Util.h"
 #include "AuctionHouseBot/AuctionHouseBot.h"
 #include "CharacterDatabaseCleaner.h"
+#include "CreatureLinkingMgr.h"
 #include "LFGMgr.h"
 #include "WardenDataStorage.h"
 
@@ -1096,9 +1097,6 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Loading SpellsScriptTarget...");
     sSpellMgr.LoadSpellScriptTarget();                      // must be after LoadCreatureTemplates and LoadGameobjectInfo
 
-    sLog.outString("Loading Instance encounters data...");  // must be after creature templates
-    sObjectMgr.LoadInstanceEncounters();
-
     sLog.outString( "Loading ItemRequiredTarget...");
     sObjectMgr.LoadItemRequiredTarget();
 
@@ -1137,6 +1135,9 @@ void World::SetInitialWorldSettings()
 
     sLog.outString( "Loading Gameobject Data..." );
     sObjectMgr.LoadGameobjects();
+
+    sLog.outString( "Loading CreatureLinking Data..." );    // must be after Creatures
+    sCreatureLinkingMgr.LoadFromDB();
 
     sLog.outString( "Loading Objects Pooling Data...");
     sPoolMgr.LoadFromDB();
@@ -1258,6 +1259,9 @@ void World::SetInitialWorldSettings()
     sAchievementMgr.LoadCompletedAchievements();
     sLog.outString( ">>> Achievements loaded" );
     sLog.outString();
+
+    sLog.outString( "Loading Instance encounters data..." );  // must be after Creature loading
+    sObjectMgr.LoadInstanceEncounters();
 
     sLog.outString( "Loading Npc Text Id..." );
     sObjectMgr.LoadNpcGossips();                            // must be after load Creature and LoadGossipText

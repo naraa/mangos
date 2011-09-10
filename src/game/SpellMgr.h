@@ -256,6 +256,15 @@ inline bool IsDeathOnlySpell(SpellEntry const *spellInfo)
         || spellInfo->Id == 2584;
 }
 
+inline bool IsCrowdControlAura(AuraType aura)
+{
+    return (aura == SPELL_AURA_MOD_CONFUSE ||
+            aura == SPELL_AURA_MOD_FEAR    ||
+            aura == SPELL_AURA_MOD_STUN    ||
+            aura == SPELL_AURA_MOD_ROOT    ||
+            aura == SPELL_AURA_TRANSFORM   );
+}
+
 inline bool IsDeathPersistentSpell(SpellEntry const *spellInfo)
 {
     return spellInfo->AttributesEx3 & SPELL_ATTR_EX3_DEATH_PERSISTENT;
@@ -561,6 +570,8 @@ inline bool IsSpellAllowDeadTarget(SpellEntry const* spellInfo)
 {
     return spellInfo ? spellInfo->AttributesEx2 & SPELL_ATTR2_ALLOW_DEAD_TARGET : false;
 }
+
+bool IsSpellAffectedBySpellMods(SpellEntry const* spellInfo);
 
 // Diminishing Returns interaction with spells
 DiminishingGroup GetDiminishingReturnsGroupForSpell(SpellEntry const* spellproto, bool triggered);
