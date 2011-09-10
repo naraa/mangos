@@ -697,7 +697,7 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
         npolys = fixupCorridor(polys, npolys, MAX_PATH_LENGTH, visited, nvisited);
 
         m_navMeshQuery->getPolyHeight(polys[0], result, &result[1]);
-        result[1] += 0.2f;
+        result[1] += 0.5f;
         dtVcopy(iterPos, result);
 
         // Handle end of path and off-mesh links when close enough.
@@ -746,7 +746,7 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
                 dtVcopy(iterPos, endPos);
 
                 m_navMeshQuery->getPolyHeight(polys[0], iterPos, &iterPos[1]);
-                iterPos[1] += 0.2f;
+                iterPos[1] += 0.5f;
             }
         }
 
