@@ -203,6 +203,17 @@ UPDATE creature_template SET npcflag = 2 WHERE entry = 28788;
 
 DELETE FROM spell_script_target WHERE entry = 52349;
 
+-- original YTDB scripts here
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28768;
+INSERT INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+(2876803, 28768, 0, 0, 100, 1, 3000, 7000, 6000, 9000, 11, 50688, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Rider of Acherus - Cast Plague Strike'),
+(2876806, 28768, 6, 0, 100, 0, 0, 0, 0, 0, 12, 28782, 0, 10000, 15, 12687, 6, 0, 43, 0, 0, 0, 'Dark Rider of Acherus - Spawn Deathcharger of Acherus and Set Quest Event Complete and Dismount on Death'),
+(2876801, 28768, 4, 0, 100, 0, 0, 0, 0, 0, 1, -780, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Rider of Acherus - Yell on Aggro'),
+(2876804, 28768, 0, 0, 100, 1, 6000, 10000, 6000, 9000, 11, 52374, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Rider of Acherus - Cast Blood Strike'),
+(2876802, 28768, 0, 0, 100, 1, 0, 1500, 6000, 9000, 11, 52372, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Rider of Acherus - Cast Icy Touch'),
+(2876805, 28768, 9, 0, 100, 1, 5, 30, 2000, 2000, 11, 52356, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dark Rider of Acherus - Cast Throw');
+
+-- replace for one action
 UPDATE creature_ai_scripts SET 
 action1_type   = '11',
 action1_param1 = '52361',
@@ -213,7 +224,7 @@ action2_param1 = '52357',
 action2_param2 = '6',
 action2_param3 = '16',
 action3_type   = '0'
-WHERE id = 2876805;
+WHERE id = 2876806;
 
 DELETE FROM creature WHERE id = 28782;
 
