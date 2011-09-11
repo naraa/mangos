@@ -23,6 +23,7 @@ EndScriptData */
 
 #include "precompiled.h"
 #include "pit_of_saron.h"
+
 enum saysSD2
 {
     SAY_AGGRO                           = -1658014,
@@ -38,17 +39,33 @@ enum saysSD2
     EMOTE_DEEP_FREEZE                   = -1658023,
 
     SPELL_PERMAFROST                    = 70326,
+    SPELL_PERMAFROST_AURA               = 68786,
     SPELL_THROW_SARONITE                = 68788,
     SPELL_THUNDERING_STOMP              = 68771,
     SPELL_FORGE_FROZEN_BLADE            = 68774,
     SPELL_CHILLING_WAVE                 = 68778,
+    SPELL_CHILLING_WAVE_H               = 70333,
     SPELL_FORGE_FROSTBORN_MACE          = 68785,
     SPELL_DEEP_FREEZE                   = 70381,
+    SPELL_DEEP_FREEZE_H                 = 72930,
+    SPELL_FORGE_MACE                    = 68785,
+    SPELL_FORGE_MACE_H                  = 70335,
+    SPELL_FORGE_BLADE                   = 68774,
+    SPELL_FORGE_BLADE_H                 = 70334,
+    
 
     PHASE_NO_ENCHANTMENT                = 1,
     PHASE_BLADE_ENCHANTMENT             = 2,
     PHASE_MACE_ENCHANTMENT              = 3,
     PHASE_MOVEMENT                      = 4,
+
+    EQUIP_ID_SWORD  = 49345,
+    EQUIP_ID_MACE   = 49344,
+
+    //SAY_FREE_SLAVE                     = ??????,
+    //SAY_TYRANNUS_OUTRO                 = ??????,
+
+    ACHIEV_DOESNT_GO_TO_ELEVEN         = 4524,
 };
 
 static const float aGarfrostMoveLocs[2][3] =
