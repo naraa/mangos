@@ -17,7 +17,7 @@ enum
     DATA_SOULFRAGMENT_REMOVE    = 4,                        // on Death and on Use
 
     NPC_BRONJAHM                = 36497,
-    NPC_DEVOURER                = 36502,
+    NPC_DEVOURER_OF_SOULS       = 36502,
     NPC_CORRUPTED_SOUL_FRAGMENT = 36535,
 
     // Event NPCs
