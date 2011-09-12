@@ -79,9 +79,8 @@ bool GOGossipSelect_go_ulduar_teleporter(Player *pPlayer, GameObject* pGo, uint3
     if (PortalLoc[action].spellID != 0 )
         if (SpellEntry const* spell = (SpellEntry *)GetSpellStore()->LookupEntry(PortalLoc[action].spellID))
         {
-            SpellAuraHolder *holder = CreateSpellAuraHolder(spell, pPlayer, pPlayer);
-            Aura *aura = CreateAura(spell, EFFECT_INDEX_2, NULL, holder, pPlayer);
-            holder->AddAura(aura, EFFECT_INDEX_2);
+            SpellAuraHolder* holder = CreateSpellAuraHolder(spell, pPlayer, pPlayer);
+            Aura *aura = holder->CreateAura(spell, EFFECT_INDEX_2, NULL, pPlayer, pPlayer, NULL);
             pPlayer->AddSpellAuraHolder(holder);
         }
 
