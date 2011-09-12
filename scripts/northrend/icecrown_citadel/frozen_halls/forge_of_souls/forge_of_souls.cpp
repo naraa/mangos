@@ -66,7 +66,7 @@ bool StartEvent;
     void Reset()
     {
             if(m_pInstance)
-               if(m_pInstance->GetData(TYPE_DEVOURER) == DONE)
+               if(m_pInstance->GetData(TYPE_DEVOURER_OF_SOULS) == DONE)
                    m_creature->SetVisibility(VISIBILITY_OFF);
             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
             m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -242,9 +242,9 @@ uint32 uiSummon_counter;
     void Reset()
     {
             if (m_pInstance)
-               if (m_pInstance->GetData(TYPE_DEVOURER) != DONE)
+               if (m_pInstance->GetData(TYPE_DEVOURER_OF_SOULS) != DONE)
                   {
-                   m_pInstance->SetData(TYPE_DEVOURER, NOT_STARTED);
+                   m_pInstance->SetData(TYPE_DEVOURER_OF_SOULS, NOT_STARTED);
                    Step = 0;
                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
                    m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -259,7 +259,7 @@ uint32 uiSummon_counter;
 
         if (!m_pInstance) return;
 
-        if (m_pInstance->GetData(TYPE_DEVOURER) == DONE)
+        if (m_pInstance->GetData(TYPE_DEVOURER_OF_SOULS) == DONE)
         {
 
          if(StepTimer < diff)

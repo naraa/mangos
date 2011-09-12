@@ -133,12 +133,14 @@ void instance_nexus::SetData(uint32 uiType, uint32 uiData)
         // release Keristrasza from her prison here
         m_auiEncounter[TYPE_KERISTRASZA] = SPECIAL;
 
-        if (Creature* pCreature = GetSingleCreatureFromStorage(NPC_KERISTRASZA))
+        Creature* pCreature = GetSingleCreatureFromStorage(NPC_KERISTRASZA);
+        if (pCreature && pCreature->isAlive())
         {
             if (pCreature->isAlive())
+            {
+                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
                 pCreature->RemoveAurasDueToSpell(SPELL_FROZEN_PRISON);
-                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+            }
         }
     }
 

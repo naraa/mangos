@@ -116,7 +116,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
     void Reset()
     {
       if(!m_pInstance) return;
-      m_pInstance->SetData(TYPE_DEVOURER, NOT_STARTED);
+      m_pInstance->SetData(TYPE_DEVOURER_OF_SOULS, NOT_STARTED);
       DespawnAllSummons();
       Summon = false;
       Step = 0;
@@ -131,7 +131,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
     void Aggro(Unit *who)
     {
        if(!m_pInstance) return;
-       m_pInstance->SetData(TYPE_DEVOURER, IN_PROGRESS);
+       m_pInstance->SetData(TYPE_DEVOURER_OF_SOULS, IN_PROGRESS);
        m_creature->PlayDirectSound(Battle01);
        BattleMusicTimer = 48000;
        DoScriptText(SAY_DEVOURER_AGGRO_MALE_01, m_creature);
@@ -175,7 +175,7 @@ struct MANGOS_DLL_DECL boss_devourer_of_soulsAI : public ScriptedAI
     void JustDied(Unit* pKiller)
     {
        if(!m_pInstance) return;
-       m_pInstance->SetData(TYPE_DEVOURER, DONE);
+       m_pInstance->SetData(TYPE_DEVOURER_OF_SOULS, DONE);
        DoScriptText(SAY_DEVOURER_DEATH_MALE_01, m_creature);
        DespawnAllSummons();
     }
@@ -325,7 +325,7 @@ uint32 DeathTimer;
     {
       if(!m_pInstance) return;
 
-      if(m_pInstance && m_pInstance->GetData(TYPE_DEVOURER) != IN_PROGRESS)
+      if(m_pInstance && m_pInstance->GetData(TYPE_DEVOURER_OF_SOULS) != IN_PROGRESS)
           m_creature->ForcedDespawn();
 
       if (DeathTimer < diff)
@@ -368,7 +368,7 @@ struct MANGOS_DLL_DECL npc_unleashed_soulAI : public ScriptedAI
     {
      if(!m_pInstance) return;
 
-     if(m_pInstance && m_pInstance->GetData(TYPE_DEVOURER) != IN_PROGRESS)
+     if(m_pInstance && m_pInstance->GetData(TYPE_DEVOURER_OF_SOULS) != IN_PROGRESS)
           m_creature->ForcedDespawn();
 
      if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())

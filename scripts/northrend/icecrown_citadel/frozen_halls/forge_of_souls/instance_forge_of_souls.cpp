@@ -133,7 +133,7 @@ void instance_forge_of_souls::SetData(uint32 uiType, uint32 uiData)
             }
             m_luiSoulFragmentAliveGUIDs.clear();
             break;
-        case TYPE_DEVOURER:
+        case TYPE_DEVOURER_OF_SOULS:
             m_auiEncounter[1] = uiData;
             if (uiData == DONE)
                 ProcessEventNpcs(GetPlayerInMap(), true);
@@ -185,7 +185,7 @@ uint32 instance_forge_of_souls::GetData(uint32 uiType)
     {
         case TYPE_BRONJAHM:
             return m_auiEncounter[0];
-        case TYPE_DEVOURER:
+        case TYPE_DEVOURER_OF_SOULS:
             return m_auiEncounter[1];
         default:
             return 0;
