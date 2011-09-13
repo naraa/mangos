@@ -416,14 +416,6 @@ static VisionLocXY SkullIcecrownLoc[]=
 // brain room portal loc: 
 // sara -> type_flags = 108; original
 
-// SanityAura, needs core support, not used here
-class MANGOS_DLL_DECL SanityAura : public Aura
-{
-public:
-    SanityAura(const SpellEntry *spell, SpellEffectIndex eff, int32 *bp, SpellAuraHolder *holder, Unit *target, Unit *caster) : Aura(spell, eff, bp, holder, target, caster, NULL)
-    {}
-};
-
 // Yogg Saron, main event controller
 struct MANGOS_DLL_DECL boss_yogg_saronAI : public ScriptedAI
 {
