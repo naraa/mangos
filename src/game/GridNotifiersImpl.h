@@ -166,8 +166,7 @@ inline void MaNGOS::DynamicObjectUpdater::VisitHelper(Unit* target)
     {
         if (!holder->GetAuraByEffectIndex(eff_index))
         {
-            PersistentAreaAura* Aur = new PersistentAreaAura(spellInfo, eff_index, NULL, holder, target, i_dynobject.GetCaster());
-            holder->AddAura(Aur, eff_index);
+            Aura* Aur = holder->CreateAura(AURA_CLASS_PERSISTENT_AREA_AURA, eff_index, NULL, target, i_dynobject.GetCaster(), NULL);
             target->AddAuraToModList(Aur);
             holder->SetInUse(true);
             Aur->ApplyModifier(true,true);
@@ -182,8 +181,7 @@ inline void MaNGOS::DynamicObjectUpdater::VisitHelper(Unit* target)
     else
     {
         holder = CreateSpellAuraHolder(spellInfo, target, i_dynobject.GetCaster());
-        PersistentAreaAura* Aur = new PersistentAreaAura(spellInfo, eff_index, NULL, holder, target, i_dynobject.GetCaster());
-        holder->AddAura(Aur, eff_index);
+        holder->CreateAura(AURA_CLASS_PERSISTENT_AREA_AURA, eff_index, NULL, target, i_dynobject.GetCaster(),NULL);
         target->AddSpellAuraHolder(holder);
     }
 
