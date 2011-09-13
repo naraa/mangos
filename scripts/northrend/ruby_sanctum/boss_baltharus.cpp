@@ -134,10 +134,10 @@ struct MANGOS_DLL_DECL boss_baltharusAI : public BSWScriptedAI
         DoScriptText(SAY_BALTHARUS_DEATH,m_creature);
         if (pInstance->GetData(TYPE_BALTHARUS) != DONE)
         {
-            if (pDummyTarget) 
+            pInstance->SetData(TYPE_BALTHARUS, DONE);
+            if (pDummyTarget && pDummyTarget->IsInWorld())
                 pDummyTarget->ForcedDespawn();
         }
-        pInstance->SetData(TYPE_BALTHARUS, DONE);
     }
 
     void KilledUnit(Unit* pVictim)
