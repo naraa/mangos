@@ -11,13 +11,13 @@ enum
     MAX_ENCOUNTER               = 2,
     TYPE_INTRO                  = 0,
     TYPE_BRONJAHM               = 1,
-    TYPE_DEVOURER               = 2,
+    TYPE_DEVOURER_OF_SOULS      = 2,
     TYPE_ACHIEV_PHANTOM_BLAST   = 3,
 
     DATA_SOULFRAGMENT_REMOVE    = 4,                        // on Death and on Use
 
     NPC_BRONJAHM                = 36497,
-    NPC_DEVOURER                = 36502,
+    NPC_DEVOURER_OF_SOULS       = 36502,
     NPC_CORRUPTED_SOUL_FRAGMENT = 36535,
 
     // Event NPCs

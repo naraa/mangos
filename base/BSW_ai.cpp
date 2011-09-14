@@ -751,9 +751,8 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
             }
             else
             {
-                aura = CreateAura(spell, index, &_basepoint, holder, pTarget);
+                aura = holder->CreateAura(spell, index, &_basepoint, pTarget, m_creature, NULL);
                 holder->SetAuraDuration(aura->GetAuraMaxDuration());
-                holder->AddAura(aura, index);
             }
 
             if (addedToExisting)
