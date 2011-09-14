@@ -1282,6 +1282,7 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
                 m_creature->CastSpell(m_creature, SPELL_EYE_VISUAL, true);
                 //m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
                 //m_creature->SetLevitate(true);   // will be uncommented if any troubles with flying inhabit 4
+                m_creature->SetWalk(false);
                 m_creature->SetSpeedRate(MOVE_RUN, 5.0f);
                 DoScriptText(TEXT_EYE_LAUNCHED, m_creature);
                 m_creature->GetMotionMaster()->MovePoint(0,1750.8276f, -5873.788f, 147.2266f);
