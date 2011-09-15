@@ -39,13 +39,38 @@ EndScriptData */
 
 enum
 {
-    SPELL_ACID_CLOUD                              = 53400, // Victim
-    SPELL_LEECH_POISON                            = 53030, // Victim
-    SPELL_PIERCE_ARMOR                            = 53418, // Victim
-    SPELL_WEB_GRAB                                = 57731, // Victim
-    SPELL_WEB_FRONT_DOORS                         = 53177, // Self
-    SPELL_WEB_SIDE_DOORS                          = 53185, // Self
+    SPELL_PIERCE_ARMOR          = 53418,
+    SPELL_ACID_CLOUD            = 53400,
+    SPELL_ACID_CLOUD_H          = 59419,
+    SPELL_LEECH_POISON          = 53030,
+    SPELL_LEECH_POISON_H        = 59417,
+    SPELL_WEB_GRAB              = 57731,
+    SPELL_WEB_GRAB_H            = 59421,
+    SPELL_WEB_FRONT_DOORS       = 53177, // Self
+    SPELL_WEB_SIDE_DOORS        = 53185, // Self
+
+    // Gauntlet end spells - send events 19101 and 19102
+    //SPELL_WEB_FRONT_DOORS     = 53177,
+    //SPELL_WEB_SIDE_DOORS      = 53185,
+
+    // Gauntlet summoned npcs
+    //NPC_ANUBAR_CHAMPION_1     = 29062,
+    //NPC_ANUBAR_CRYPT_FIEND_1  = 29063,
+    //NPC_ANUBAR_NECROMANCER_1  = 29064,
+    //NPC_ANUBAR_CHAMPION_2     = 29096,
+    //NPC_ANUBAR_CRYPT_FIEND_2  = 29097,
+    //NPC_ANUBAR_NECROMANCER_2  = 29098,
 };
+
+ /* ##### Gauntlet description #####
+  * This is the timed gauntlet - waves of non-elite spiders will spawn from the 3 doors located a little above the main room
+  * They will make their way down to fight Hadronox but she will head to the main room, fighting the spiders
+  * When Hadronox enters the main room, she will web the doors, and no more spiders will spawn.
+  */
+
+/*######
+## boss_hadronox
+######*/
 
 struct MANGOS_DLL_DECL boss_hadronoxAI : public ScriptedAI
 {
@@ -68,6 +93,11 @@ struct MANGOS_DLL_DECL boss_hadronoxAI : public ScriptedAI
     bool bFirstTime;
 
     float fMaxDistance;
+
+    uint32 m_uiAcidTimer;
+    uint32 m_uiLeechTimer;
+    uint32 m_uiPierceTimer;
+    uint32 m_uiGrabTimer;
 
     void Reset()
     {

@@ -28,9 +28,6 @@ enum
     NPC_TRIGGER_TARGET            = 26714,
     NPC_NOVOS                     = 26631,
 
-    NPC_CRYSTAL_HANDLER           = 26627,
-    NPC_HULKING_CORPSE            = 27597,
-    NPC_FETID_TROLL_CORPSE        = 27598,
     NPC_RISEN_SHADOWCASTER        = 27600,
 
     // Adds of King Dred Encounter - deaths counted for achievement
