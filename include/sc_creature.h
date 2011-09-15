@@ -6,6 +6,7 @@
 #define SC_CREATURE_H
 
 #include "CreatureAI.h"
+#include "CreatureAIImpl.h"
 #include "Creature.h"
 #include "Chat.h"
 
@@ -219,9 +220,12 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
         bool EnterEvadeIfOutOfCombatArea(const uint32 uiDiff);
 
+        EventMap& Events() { return m_events; };
+
     private:
         bool   m_bCombatMovement;
         uint32 m_uiEvadeCheckCooldown;
+        EventMap m_events;
 };
 
 struct MANGOS_DLL_DECL Scripted_NoMovementAI : public ScriptedAI
