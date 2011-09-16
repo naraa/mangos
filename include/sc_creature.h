@@ -6,9 +6,10 @@
 #define SC_CREATURE_H
 
 #include "CreatureAI.h"
-#include "CreatureAIImpl.h"
 #include "Creature.h"
 #include "Chat.h"
+
+class EventManager;
 
 //Spell targets used by SelectSpell
 enum SelectTarget
@@ -47,7 +48,7 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 {
     public:
         explicit ScriptedAI(Creature* pCreature);
-        ~ScriptedAI() {}
+        ~ScriptedAI();
 
         // *************
         // CreatureAI Functions
@@ -220,12 +221,12 @@ struct MANGOS_DLL_DECL ScriptedAI : public CreatureAI
 
         bool EnterEvadeIfOutOfCombatArea(const uint32 uiDiff);
 
-        EventMap& Events() { return m_events; };
+        EventManager& Events();
 
     private:
         bool   m_bCombatMovement;
         uint32 m_uiEvadeCheckCooldown;
-        EventMap m_events;
+        EventManager* m_events;
 };
 
 struct MANGOS_DLL_DECL Scripted_NoMovementAI : public ScriptedAI

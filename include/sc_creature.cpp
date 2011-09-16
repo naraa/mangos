@@ -17,8 +17,15 @@ struct TSpellSummary
 
 ScriptedAI::ScriptedAI(Creature* pCreature) : CreatureAI(pCreature),
     m_bCombatMovement(true),
-    m_uiEvadeCheckCooldown(2500)
+    m_uiEvadeCheckCooldown(2500),
+    m_events(NULL)
 {}
+
+ScriptedAI::~ScriptedAI()
+{
+    if (m_events)
+        delete m_events;
+}
 
 /// This function shows if combat movement is enabled, overwrite for more info
 void ScriptedAI::GetAIInformation(ChatHandler& reader)
@@ -563,6 +570,15 @@ bool ScriptedAI::EnterEvadeIfOutOfCombatArea(const uint32 uiDiff)
 
     EnterEvadeMode();
     return true;
+}
+
+EventManager& ScriptedAI::Events()
+{
+    // use lazy initialization to save memory
+    if (!m_events)
+        m_events = new EventManager();
+
+    return *m_events;
 }
 
 void Scripted_NoMovementAI::GetAIInformation(ChatHandler& reader)
