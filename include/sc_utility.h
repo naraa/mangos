@@ -6,7 +6,7 @@
 #define SC_UTILITY_H
 
 // class for handling timed events
-class EventManager
+class MANGOS_DLL_DECL EventManager
 {
 protected:
     struct Event
