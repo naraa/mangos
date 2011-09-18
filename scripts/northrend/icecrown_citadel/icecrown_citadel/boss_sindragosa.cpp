@@ -426,7 +426,8 @@ struct MANGOS_DLL_DECL mob_ice_tombAI : public BSWScriptedAI
     void UpdateAI(const uint32 uiDiff)
     {
         if ((m_pInstance && m_pInstance->GetData(TYPE_SINDRAGOSA) != IN_PROGRESS)
-           || (victimGUID && !m_creature->GetMap()->GetPlayer(victimGUID)->HasAura(SPELL_ICY_TOMB)))
+            || (victimGUID && 
+            (!m_creature->GetMap()->GetPlayer(victimGUID) || !m_creature->GetMap()->GetPlayer(victimGUID)->HasAura(SPELL_ICY_TOMB))))
         {
             if (Player* pVictim = m_creature->GetMap()->GetPlayer(victimGUID))
                 doRemove(SPELL_ICY_TOMB,pVictim);
