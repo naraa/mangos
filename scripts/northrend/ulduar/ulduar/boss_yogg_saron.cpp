@@ -2040,7 +2040,7 @@ struct MANGOS_DLL_DECL mob_immortal_guardianAI : public ScriptedAI
             return;
 
         // hacky way of stacking aura, needs fixing
-        if(SpellAuraHolder* empoweredAura = m_creature->GetSpellAuraHolder(SPELL_EMPOWERED))
+        if(SpellAuraHolderPtr empoweredAura = m_creature->GetSpellAuraHolder(SPELL_EMPOWERED))
         {
             if(empoweredAura->GetStackAmount() < 9 && !m_bHasAura)
             {
@@ -2053,7 +2053,7 @@ struct MANGOS_DLL_DECL mob_immortal_guardianAI : public ScriptedAI
         {
             if(m_creature->GetHealthPercent() < m_uiHealth)
             {
-                if(SpellAuraHolder* empoweredAura = m_creature->GetSpellAuraHolder(SPELL_EMPOWERED))
+                if(SpellAuraHolderPtr empoweredAura = m_creature->GetSpellAuraHolder(SPELL_EMPOWERED))
                 {
                     if(empoweredAura->ModStackAmount(-1))
                         m_creature->RemoveAurasDueToSpell(SPELL_EMPOWERED);

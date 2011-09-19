@@ -263,7 +263,7 @@ struct MANGOS_DLL_DECL mob_feral_defenderAI : public ScriptedAI
             if (m_creature->HasAura(SPELL_FERAL_ESSENCE))
             {
                 // remove 1 stack of the aura
-                if(SpellAuraHolder* strenght = m_creature->GetSpellAuraHolder(SPELL_FERAL_ESSENCE))
+                if(SpellAuraHolderPtr strenght = m_creature->GetSpellAuraHolder(SPELL_FERAL_ESSENCE))
                 {
                     if(strenght->ModStackAmount(-1))
                         m_creature->RemoveAurasDueToSpell(SPELL_FERAL_ESSENCE);
@@ -284,7 +284,7 @@ struct MANGOS_DLL_DECL mob_feral_defenderAI : public ScriptedAI
             return;
 
         // hacky way of stacking aura, needs fixing
-        if(SpellAuraHolder* essence = m_creature->GetSpellAuraHolder(SPELL_FERAL_ESSENCE))
+        if(SpellAuraHolderPtr essence = m_creature->GetSpellAuraHolder(SPELL_FERAL_ESSENCE))
         {
             if(essence->GetStackAmount() < 9 && !m_bHasAura)
             {

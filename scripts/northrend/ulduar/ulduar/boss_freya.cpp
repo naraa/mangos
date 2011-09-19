@@ -857,7 +857,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                 return;
 
             // hacky way of stacking aura. Please remove when fixed in core!
-            if(SpellAuraHolder* natureAura = m_creature->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
+            if(SpellAuraHolderPtr natureAura = m_creature->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
             {
                 if(natureAura->GetStackAmount() < 150 && !m_bHasAura)
                 {
@@ -881,7 +881,7 @@ struct MANGOS_DLL_DECL boss_freyaAI : public ScriptedAI
                     if(!pWaterSpirit->isAlive() && !pStormLasher->isAlive() && !pSnapLasher->isAlive())
                     {
                         m_bWaveCheck = false;
-                        if(SpellAuraHolder* natureAura = m_creature->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
+                        if(SpellAuraHolderPtr natureAura = m_creature->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
                         {
                             if(natureAura->ModStackAmount(-30))
                                 m_creature->RemoveAurasDueToSpell(SPELL_ATTUNED_TO_NATURE);
@@ -1343,7 +1343,7 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
         {
             if (Creature* pFreya = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_FREYA)))
             {
-                if(SpellAuraHolder* natureAura = pFreya->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
+                if(SpellAuraHolderPtr natureAura = pFreya->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
                 {
                     if(natureAura->ModStackAmount(-25))
                         m_creature->RemoveAurasDueToSpell(SPELL_ATTUNED_TO_NATURE);
@@ -1355,7 +1355,7 @@ struct MANGOS_DLL_DECL mob_freya_spawnedAI : public ScriptedAI
         {
             if (Creature* pFreya = m_creature->GetMap()->GetCreature( m_pInstance->GetData64(NPC_FREYA)))
             {
-                if(SpellAuraHolder* natureAura = pFreya->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
+                if(SpellAuraHolderPtr natureAura = pFreya->GetSpellAuraHolder(SPELL_ATTUNED_TO_NATURE))
                 {
                     if(natureAura->ModStackAmount(-2))
                         m_creature->RemoveAurasDueToSpell(SPELL_ATTUNED_TO_NATURE);

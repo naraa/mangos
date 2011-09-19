@@ -309,7 +309,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
             m_creature->CastSpell(m_creature, SPELL_SUNWELL_RADIANCE_AURA, true);
 
         if (m_creature->HasAura(SPELL_SACRIFICE_OF_ANVEENA,  EFFECT_INDEX_0))
-            m_creature->RemoveAurasDueToSpell(SPELL_SACRIFICE_OF_ANVEENA,0);
+            m_creature->RemoveAurasDueToSpell(SPELL_SACRIFICE_OF_ANVEENA);
     }
 
     void Aggro(Unit* pWho)

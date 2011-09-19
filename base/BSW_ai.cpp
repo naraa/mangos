@@ -620,7 +620,7 @@ bool BSWScriptedAI::_doRemove(uint32 SpellID, Unit* pTarget, uint8 index)
         }
         else if (_auraCount(SpellID,pTarget,(SpellEffectIndex)index) > 1)
         {
-            if (SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid()))
+            if (SpellAuraHolderPtr holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid()))
             {
                 if (holder->ModStackAmount(-1))
                 {
@@ -733,7 +733,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
 
             bool addedToExisting = true;
 
-            SpellAuraHolder* holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid());
+            SpellAuraHolderPtr holder = pTarget->GetSpellAuraHolder(SpellID, pTarget->GetObjectGuid());
 
             Aura* aura = NULL;
 
@@ -751,7 +751,7 @@ bool BSWScriptedAI::_doAura(uint32 SpellID, Unit* pTarget, SpellEffectIndex inde
             }
             else
             {
-                aura = holder->CreateAura(spell, index, &_basepoint, pTarget, m_creature, NULL);
+                aura = holder->CreateAura(spell, index, &_basepoint, holder, pTarget, m_creature, NULL);
                 holder->SetAuraDuration(aura->GetAuraMaxDuration());
             }
 
