@@ -197,28 +197,6 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public BSWScriptedAI
         doSummon(urand(0,1) ? NPC_FANATIC : NPC_ADHERENT, SpawnLoc[3*place+2].x, SpawnLoc[3*place+2].y, SpawnLoc[3*place+2].z);
     }
 
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
-    {
-        if (!m_creature || !m_creature->isAlive())
-            return;
-
-        if (hasAura(SPELL_MANA_BARRIER, m_creature))
-        {
-            if (m_creature->GetPower(POWER_MANA) > uiDamage)
-            {
-                m_creature->SetPower(POWER_MANA,m_creature->GetPower(POWER_MANA)-uiDamage);
-                uiDamage = 0;
-            }
-            else
-            {
-                m_creature->SetPower(POWER_MANA,0);
-                doRemove(SPELL_MANA_BARRIER);
-            };
-        }
-        else
-            return;
-    }
-
     void UpdateAI(const uint32 diff)
     {
         if (intro && timedQuery(SPELL_SHADOW_BOLT,diff))
@@ -239,20 +217,6 @@ struct MANGOS_DLL_DECL boss_lady_deathwhisperAI : public BSWScriptedAI
                        break;
                 default:
                        break;
-            }
-        }
-
-        if (hasAura(SPELL_MANA_BARRIER, m_creature))
-        {
-            if(m_creature->GetHealth() <= m_creature->GetMaxHealth())
-            {
-                if (m_creature->GetPower(POWER_MANA) > (m_creature->GetMaxHealth() - m_creature->GetHealth()))
-                {
-                    m_creature->SetPower(POWER_MANA,m_creature->GetPower(POWER_MANA)-(m_creature->GetMaxHealth() - m_creature->GetHealth()));
-                    m_creature->SetHealth(m_creature->GetMaxHealth());
-                }
-                else
-                    m_creature->SetPower(POWER_MANA,0);
             }
         }
 
