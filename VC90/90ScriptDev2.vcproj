@@ -427,7 +427,7 @@
 					RelativePath="..\scripts\custom\npc_arena_honor.cpp"
 					>
 				</File>
-				<File
+ 				<File
 					RelativePath="..\scripts\custom\teleguy.cpp"
 					>
 				</File>
@@ -3194,6 +3194,14 @@
 			</File>
 			<File
 				RelativePath="..\include\sc_creature.h"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_utility.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\include\sc_utility.h"
 				>
 			</File>
 			<File

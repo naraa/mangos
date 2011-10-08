@@ -324,6 +324,9 @@
     <ClCompile Include="..\include\sc_creature.cpp">
       <Filter>include</Filter>
     </ClCompile>
+    <ClCompile Include="..\include\sc_utility.cpp">
+      <Filter>include</Filter>
+    </ClCompile>
     <ClCompile Include="..\include\sc_grid_searchers.cpp">
       <Filter>include</Filter>
     </ClCompile>
@@ -1845,18 +1848,6 @@
     <ClCompile Include="..\scripts\world\world_map_scripts.cpp">
       <Filter>scripts\world</Filter>
     </ClCompile>
-    <ClCompile Include="..\include\precompiled.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\sc_creature.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\sc_grid_searchers.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
-    <ClCompile Include="..\include\sc_instance.cpp">
-      <Filter>include</Filter>
-    </ClCompile>
     <ClCompile Include="..\system\MangosdRev.cpp">
       <Filter>system</Filter>
     </ClCompile>
@@ -1897,6 +1888,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\sc_creature.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\sc_utility.h">
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\include\sc_gossip.h">
