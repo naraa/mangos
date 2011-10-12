@@ -5045,16 +5045,21 @@ void Unit::RemoveAurasDueToItemSpell(Item* castItem,uint32 spellId)
 
 void Unit::RemoveAurasWithInterruptFlags(uint32 flags)
 {
-    for (SpellAuraHolderMap::iterator iter = m_spellAuraHolders.begin(); iter != m_spellAuraHolders.end(); )
+    std::set<SpellAuraHolderPtr> holdersToRemove;
     {
-        SpellAuraHolderPtr holder = iter->second;
-        if (holder && holder->GetSpellProto()->AuraInterruptFlags & flags)
+        MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
+        for (SpellAuraHolderMap::iterator iter = m_spellAuraHolders.begin(); iter != m_spellAuraHolders.end(); ++iter)
         {
-            RemoveSpellAuraHolder(holder);
-            iter = m_spellAuraHolders.begin();
+            SpellAuraHolderPtr holder = iter->second;
+            if (holder && !holder->IsDeleted() &&  holder->GetSpellProto()->AuraInterruptFlags & flags)
+                holdersToRemove.insert(holder);
         }
-        else
-            ++iter;
+    }
+
+    if (!holdersToRemove.empty())
+    {
+        for(std::set<SpellAuraHolderPtr>::const_iterator i = holdersToRemove.begin(); i != holdersToRemove.end(); ++i)
+            RemoveSpellAuraHolder((*i));
     }
 }
 
@@ -6295,9 +6300,20 @@ bool Unit::Attack(Unit *victim, bool meleeAttack)
 
 void Unit::AttackedBy(Unit *attacker)
 {
+    if (IsFriendlyTo(attacker) || attacker->IsFriendlyTo(this))
+        return;
+
     // trigger AI reaction
     if (GetTypeId() == TYPEID_UNIT && ((Creature*)this)->AI())
+    {
         ((Creature*)this)->AI()->AttackedBy(attacker);
+        if (!isInCombat())
+        {
+            AddThreat(attacker);
+            SetInCombatWith(attacker);
+            attacker->SetInCombatWith(this);
+        }
+    }
 
     // trigger pet AI reaction
     if (attacker->IsHostileTo(this))
@@ -11062,25 +11078,28 @@ void Unit::ProcDamageAndSpellFor( bool isVictim, Unit * pTarget, uint32 procFlag
     RemoveSpellList removedSpells;
     ProcTriggeredList procTriggered;
     // Fill procTriggered list
-    for(SpellAuraHolderMap::const_iterator itr = GetSpellAuraHolderMap().begin(); itr!= GetSpellAuraHolderMap().end(); ++itr)
     {
-        // skip deleted auras (possible at recursive triggered call
-        if (itr->second->IsDeleted())
-            continue;
+        MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
+        for(SpellAuraHolderMap::const_iterator itr = GetSpellAuraHolderMap().begin(); itr!= GetSpellAuraHolderMap().end(); ++itr)
+        {
+            // skip deleted auras (possible at recursive triggered call
+            if (itr->second->IsDeleted())
+                continue;
 
-        SpellProcEventEntry const* spellProcEvent = NULL;
-        if(!IsTriggeredAtSpellProcEvent(pTarget, itr->second, procSpell, procFlag, procExtra, attType, isVictim, spellProcEvent))
-           continue;
+            SpellProcEventEntry const* spellProcEvent = NULL;
+            if(!IsTriggeredAtSpellProcEvent(pTarget, itr->second, procSpell, procFlag, procExtra, attType, isVictim, spellProcEvent))
+               continue;
 
-        // Frost Nova: prevent to remove root effect on self damage
-        if (itr->second->GetCaster() == pTarget)
-           if (SpellEntry const* spellInfo = itr->second->GetSpellProto())
-              if (procSpell && spellInfo->SpellFamilyName == SPELLFAMILY_MAGE && spellInfo->SpellFamilyFlags.test<CF_MAGE_FROST_NOVA>()
-                 && procSpell->SpellFamilyName == SPELLFAMILY_MAGE && procSpell->SpellFamilyFlags.test<CF_MAGE_FROST_NOVA>())
-                    continue;
+            // Frost Nova: prevent to remove root effect on self damage
+            if (itr->second->GetCaster() == pTarget)
+               if (SpellEntry const* spellInfo = itr->second->GetSpellProto())
+                  if (procSpell && spellInfo->SpellFamilyName == SPELLFAMILY_MAGE && spellInfo->SpellFamilyFlags.test<CF_MAGE_FROST_NOVA>()
+                     && procSpell->SpellFamilyName == SPELLFAMILY_MAGE && procSpell->SpellFamilyFlags.test<CF_MAGE_FROST_NOVA>())
+                        continue;
 
-        itr->second->SetInUse(true);                        // prevent holder deletion
-        procTriggered.push_back( ProcTriggeredData(spellProcEvent, itr->second) );
+            itr->second->SetInUse(true);                        // prevent holder deletion
+            procTriggered.push_back( ProcTriggeredData(spellProcEvent, itr->second) );
+        }
     }
 
     // Nothing found
@@ -11337,6 +11356,14 @@ void Unit::SetConfused(bool apply, ObjectGuid casterGuid, uint32 spellID)
         RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_CONFUSED);
 
         GetMotionMaster()->MovementExpired(false);
+
+        if (GetTypeId() == TYPEID_PLAYER)
+        {
+            //Clear unit movement flags
+            ((Player*)this)->m_movementInfo.SetMovementFlags(MOVEFLAG_NONE);
+        }
+        else
+            StopMoving();
 
         if (GetTypeId() != TYPEID_PLAYER && isAlive())
         {
@@ -12127,6 +12154,7 @@ void Unit::KnockBackPlayerWithAngle(float angle, float horizontalSpeed, float ve
     // Effect propertly implemented only for players
     if (GetTypeId()==TYPEID_PLAYER)
     {
+        ((Player*)this)->GetAntiCheat()->SetImmune(2 * verticalSpeed / Movement::gravity);
         WorldPacket data(SMSG_MOVE_KNOCK_BACK, 9+4+4+4+4+4);
         data << GetPackGUID();
         data << uint32(0);                                  // Sequence

@@ -5549,14 +5549,16 @@ void Spell::DoSummonGroupPets(SpellEffectIndex eff_idx)
         return;
     }
 
-    //uint32 level = m_caster->getLevel();
-
-    if (pet_entry == 37994)    // Mage: Water Elemental from Glyph
-        m_duration = 86400000; // 24 hours
-
     if (m_duration > 0)
+    {
         if (Player* modOwner = m_caster->GetSpellModOwner())
             modOwner->ApplySpellMod(m_spellInfo->Id, SPELLMOD_DURATION, m_duration);
+    }
+    else if (m_duration < 0)
+    {
+        DEBUG_LOG("Spell::DoSummonGroupPets: attempt to summon pet with negative duration (%i)",m_duration);
+        m_duration = 0;
+    }
 
     uint32 amount = damage;
 
@@ -6919,12 +6921,20 @@ void Spell::EffectWeaponDmg(SpellEffectIndex eff_idx)
 
                 if (count)
                 {
-                    // Effect 1(for Blood-Caked Strike)/3(other) damage is bonus
-                    float bonus = count * CalculateDamage(m_spellInfo->SpellIconID == 1736 ? EFFECT_INDEX_0 : EFFECT_INDEX_2, unitTarget) / 100.0f;
-                    // Blood Strike, Blood-Caked Strike and Obliterate store bonus*2
-                    if (m_spellInfo->SpellFamilyFlags.test<CF_DEATHKNIGHT_BLOOD_STRIKE, CF_DEATHKNIGHT_OBLITERATE>() ||
-                        m_spellInfo->SpellIconID == 1736)
-                        bonus /= 2.0f;
+                    float bonus;
+                    if (m_spellInfo->SpellIconID != 1736) // Blood Strike, Heart Strike, Obliterate
+                    {
+                        // Effect 3 damage is bonus
+                        bonus = count * CalculateDamage(EFFECT_INDEX_2, unitTarget) / 100.0f;
+                        // Blood Strike and Obliterate store bonus*2
+                        if (m_spellInfo->SpellFamilyFlags.test<CF_DEATHKNIGHT_BLOOD_STRIKE, CF_DEATHKNIGHT_OBLITERATE>())
+                            bonus /= 2.0f;
+                           if (Aura* dummy = m_caster->GetDummyAura(64736)) // Item - Death Knight T8 Melee 4P Bonus
+                               bonus *= ((float)dummy->GetModifier()->m_amount+100.0f)/100.0f;
+                    }
+                    else // Blood-Caked Blade damage info taken from http://www.wowhead.com/forums&topic=54152.2 and Dr.Damage addon.
+                       bonus= count * 0.5f;//Blood-Caked Blade damage = (0.25(base) + diseaseCount * 0.125)= 0.25*(1+diseaseCount * 0.5)
+
 
                     totalDamagePercentMod *= 1.0f + bonus;
                 }
@@ -8721,14 +8731,6 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         ((Player*)m_caster)->learnSpell(discoveredSpell, false);
                     return;
                 }
-                case 69200:                                 // Raging Spirit
-                {
-                    if (!unitTarget)
-                        return;
-
-                    unitTarget->CastSpell(unitTarget, 69201, true);
-                    return;
-                }
                 case 60123: // Lightwell
                 {
                    if (m_caster->GetTypeId() != TYPEID_UNIT)
@@ -8942,6 +8944,15 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         charmer->CastSpell(charmer, damage, true);
                     return;
                 }
+                case 64456:                                 // Feral Essence Application Removal
+                {
+                    if (!unitTarget)
+                        return;
+
+                    uint32 spellId = m_spellInfo->CalculateSimpleValue(eff_idx);
+                    unitTarget->RemoveAuraHolderFromStack(spellId);
+                    return;
+                }
                 case 66477:                                 // Bountiful Feast
                 {
                     if (!unitTarget)
@@ -9057,6 +9068,14 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
 
                     // Actually this spell should be sent with SMSG_SPELL_START
                     unitTarget->CastSpell(m_caster, 69023, true);
+                    return;
+                }
+                case 69200:                                 // Raging Spirit
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->CastSpell(unitTarget, 69201, true);
                     return;
                 }
                 case 69377:                                 // Fortitude
@@ -11082,9 +11101,34 @@ void Spell::EffectStealBeneficialBuff(SpellEffectIndex eff_idx)
         {
             // Random select buff for dispel
             SpellAuraHolderPtr holder = steal_list[urand(0, list_size-1)];
-            // Not use chance for steal
-            // TODO possible need do it
-            success_list.push_back(SuccessList::value_type(holder->GetId(),holder->GetCasterGuid()));
+
+            int32 miss_chance = 0;
+            // Apply dispel mod from aura caster
+            Unit* caster = holder->GetCaster();
+            Unit* target = holder->GetTarget();
+
+            if(!caster || !target)
+                continue;
+
+            if (Player* modOwner = caster->GetSpellModOwner())
+            {
+                modOwner->ApplySpellMod(holder->GetSpellProto()->Id, SPELLMOD_RESIST_DISPEL_CHANCE, miss_chance, this);
+                miss_chance += modOwner->GetTotalAuraModifier(SPELL_AURA_MOD_DISPEL_RESIST);
+            }
+
+            if (caster != target)
+            {
+                if (Player* modOwner = target->GetSpellModOwner())
+                {
+                    modOwner->ApplySpellMod(holder->GetSpellProto()->Id, SPELLMOD_RESIST_DISPEL_CHANCE, miss_chance, this);
+                    miss_chance += modOwner->GetTotalAuraModifier(SPELL_AURA_MOD_DISPEL_RESIST);
+                }
+            }
+
+            // Try dispel
+            if (!roll_chance_i(miss_chance))
+                success_list.push_back(SuccessList::value_type(holder->GetId(),holder->GetCasterGuid()));
+            else m_caster->SendSpellMiss(unitTarget, holder->GetSpellProto()->Id, SPELL_MISS_RESIST);
 
             // Remove buff from list for prevent doubles
             for (StealList::iterator j = steal_list.begin(); j != steal_list.end(); )
