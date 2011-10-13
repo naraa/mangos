@@ -4396,12 +4396,13 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
         return false;
     }
 
+    std::set<SpellAuraHolderPtr> holdersToRemove;
+    SpellAuraHolderPtr holderToStackAdd;
     // passive and persistent auras can stack with themselves any number of times
     if ((!holder->IsPassive() && !holder->IsPersistent()) || holder->IsAreaAura())
     {
-        SpellAuraHolderMap tmpMap = GetSpellAuraHolderMap();
-        SpellAuraHolderBounds spair = tmpMap.equal_range(aurSpellInfo->Id);
-
+        MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
+        SpellAuraHolderBounds spair = GetSpellAuraHolderBounds(aurSpellInfo->Id);
         // take out same spell
         for (SpellAuraHolderMap::iterator iter = spair.first; iter != spair.second; ++iter)
         {
@@ -4413,10 +4414,8 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
                 // Aura can stack on self -> Stack it;
                 if (aurSpellInfo->StackAmount)
                 {
-                    // can be created with >1 stack by some spell mods
-                    foundHolder->ModStackAmount(holder->GetStackAmount());
-                    foundHolder->HandleSpellSpecificBoostsForward(true);
-                    return false;
+                    holderToStackAdd = foundHolder;
+                    break;
                 }
 
                 // Check for coexisting Weapon-proced Auras
@@ -4453,7 +4452,7 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
                 // only one holder per caster on same target
                 if (foundHolder->GetCasterGuid() == holder->GetCasterGuid())
                 {
-                    RemoveSpellAuraHolder(foundHolder, AURA_REMOVE_BY_STACK);
+                    holdersToRemove.insert(foundHolder);
                     break;
                 }
             }
@@ -4461,8 +4460,21 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
             // stacking of holders from different casters
             // some holders stack, but their auras dont (i.e. only strongest aura effect works)
             if (!sSpellMgr.IsStackableSpellAuraHolder(aurSpellInfo))
-                RemoveSpellAuraHolder(foundHolder,AURA_REMOVE_BY_STACK);
+                holdersToRemove.insert(foundHolder);
         }
+    }
+
+    if (!holdersToRemove.empty())
+    {
+        for(std::set<SpellAuraHolderPtr>::const_iterator i = holdersToRemove.begin(); i != holdersToRemove.end(); ++i)
+            RemoveSpellAuraHolder((*i),AURA_REMOVE_BY_STACK);
+    }
+    else if (holderToStackAdd)
+    {
+        // can be created with >1 stack by some spell mods
+        holderToStackAdd->ModStackAmount(holder->GetStackAmount());
+        holderToStackAdd->HandleSpellSpecificBoostsForward(true);
+        return false;
     }
 
     // passive auras not stackable with other ranks
@@ -5311,14 +5323,16 @@ void Unit::HandleArenaPreparation(bool apply)
         SetPower(POWER_MANA, GetMaxPower(POWER_MANA));
         SetPower(POWER_ENERGY, GetMaxPower(POWER_ENERGY));
 
-        // Remove all buffs with duration < 25 sec.
+        // Remove all buffs with duration < 25 sec (actually depends on config value)
+        // and auras, which have SPELL_ATTR_EX5_REMOVE_AT_ENTER_ARENA (former SPELL_ATTR_EX5_UNK2 = 0x00000004).
         for(SpellAuraHolderMap::iterator iter = m_spellAuraHolders.begin(); iter != m_spellAuraHolders.end();)
         {
-            if (!(iter->second->GetSpellProto()->AttributesEx4 & SPELL_ATTR_EX4_UNK21) &&
+            if ((!(iter->second->GetSpellProto()->AttributesEx4 & SPELL_ATTR_EX4_UNK21) &&
                                                             // don't remove stances, shadowform, pally/hunter auras
             !iter->second->IsPassive() &&                   // don't remove passive auras
             iter->second->GetAuraMaxDuration() > 0 &&
-            iter->second->GetAuraDuration() <= sWorld.getConfig(CONFIG_UINT32_ARENA_AURAS_DURATION)*IN_MILLISECONDS)
+            iter->second->GetAuraDuration() <= sWorld.getConfig(CONFIG_UINT32_ARENA_AURAS_DURATION)*IN_MILLISECONDS) ||
+            iter->second->GetSpellProto()->AttributesEx5 & SPELL_ATTR_EX5_REMOVE_AT_ENTER_ARENA)
             {
                 RemoveSpellAuraHolder(iter->second, AURA_REMOVE_BY_CANCEL);
                 iter = m_spellAuraHolders.begin();
