@@ -38,6 +38,11 @@ UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37444;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 31818;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37283;
 
+DELETE FROM `gameobject` WHERE `id`=190643;
+INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
+(200000, 190643, 571, 1, 1, 5545.45, 5767.53, -77.8042, 5.39307, 0, 0, 0.959937, 0.280215, -25, 0, 1),
+(47391, 190643, 571, 1, 1, 5547.61, 5767.75, -78.0231, 4.08966, 0, 0, 0.889734, -0.456479, -120, 100, 1);
+
 -- EAI Text clean up for quests/sd2
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
