@@ -212,15 +212,15 @@ void AddSC_stranglethorn_vale()
 {
     Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "mob_yenniku";
-    newscript->GetAI = &GetAI_mob_yenniku;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_yenniku";
+    pNewScript->GetAI = &GetAI_mob_yenniku;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_riggle_bassbait";
-    newscript->GetAI = &GetAI_npc_riggle_bassbait;
-    newscript->pGossipHello = &GossipHello_npc_riggle_bassbait;
-    newscript->pQuestRewardedNPC = &ChooseReward_npc_riggle_bassbait;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_riggle_bassbait";
+    pNewScript->GetAI = &GetAI_npc_riggle_bassbait;
+    pNewScript->pGossipHello = &GossipHello_npc_riggle_bassbait;
+    pNewScript->pQuestRewardedNPC = &ChooseReward_npc_riggle_bassbait;
+    pNewScript->RegisterSelf();
 }

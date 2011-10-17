@@ -2197,12 +2197,6 @@ void AddSC_npcs_special()
     newscript->RegisterSelf(false);                         // script and error report disabled, but script can be used for custom needs, adding ScriptName
 
     newscript = new Script;
-    newscript->Name = "npc_kingdom_of_dalaran_quests";
-    newscript->pGossipHello =  &GossipHello_npc_kingdom_of_dalaran_quests;
-    newscript->pGossipSelect = &GossipSelect_npc_kingdom_of_dalaran_quests;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
     newscript->Name = "npc_lunaclaw_spirit";
     newscript->pGossipHello =  &GossipHello_npc_lunaclaw_spirit;
     newscript->pGossipSelect = &GossipSelect_npc_lunaclaw_spirit;
