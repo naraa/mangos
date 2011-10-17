@@ -344,20 +344,20 @@ bool GOUse_go_nerubian_device(Player* pPlayer, GameObject* pGo)
 
 void AddSC_boss_taldaram()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_taldaram";
-    newscript->GetAI = &GetAI_boss_taldaram;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_taldaram";
+    pNewScript->GetAI = &GetAI_boss_taldaram;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_nerubian_device";
-    newscript->pGOUse = &GOUse_go_nerubian_device;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_nerubian_device";
+    pNewScript->pGOUse = &GOUse_go_nerubian_device;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_flame_orb";
-    newscript->GetAI = &GetAI_mob_flame_orb;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_flame_orb";
+    pNewScript->GetAI = &GetAI_mob_flame_orb;
+    pNewScript->RegisterSelf();
 }

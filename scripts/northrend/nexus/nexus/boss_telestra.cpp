@@ -350,7 +350,7 @@ CreatureAI* GetAI_boss_telestra(Creature* pCreature)
 
 void AddSC_boss_telestra()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "boss_telestra";

@@ -26,7 +26,6 @@ npc_archmage_malin
 npc_bartleby
 npc_dashel_stonefist
 npc_lady_katrana_prestor
-King Varian
 EndContentData */
 
 #include "precompiled.h"
@@ -239,92 +238,31 @@ bool GossipSelect_npc_lady_katrana_prestor(Player* pPlayer, Creature* pCreature,
     return true;
 }
 
-/*######
- ## King Varian
- ######*/
-
-enum
-{
-    SPELL_HEROIC_LEAP               = 59688,
-    SPELL_WHIRLWIND                 = 41056,
-    SPELL_WHIRLWIND_TRIG            = 41057,
-};
-
-struct MANGOS_DLL_DECL boss_king_varian_wrynnAI : public ScriptedAI
-{
-    boss_king_varian_wrynnAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 m_uiHeroicLeapTimer;
-    uint32 m_uiWhirlwind;
-
-    void Reset()
-    {
-        m_uiHeroicLeapTimer = 6000;
-        m_uiWhirlwind       = 15000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        //Return since we have no target
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
-
-        if (m_uiWhirlwind < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_WHIRLWIND);
-            m_uiWhirlwind = urand(15000, 18000);
-        }
-        else
-            m_uiWhirlwind -= uiDiff;
-
-        if (m_uiHeroicLeapTimer < uiDiff)
-        {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                DoCast(pTarget, SPELL_HEROIC_LEAP);
-            m_uiHeroicLeapTimer = urand(6000, 9000);
-        }
-        else
-            m_uiHeroicLeapTimer -= uiDiff;
-
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_boss_king_varian_wrynn(Creature* pCreature)
-{
-    return new boss_king_varian_wrynnAI(pCreature);
-}
-
 void AddSC_stormwind_city()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_archmage_malin";
-    newscript->pGossipHello = &GossipHello_npc_archmage_malin;
-    newscript->pGossipSelect = &GossipSelect_npc_archmage_malin;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_archmage_malin";
+    pNewScript->pGossipHello = &GossipHello_npc_archmage_malin;
+    pNewScript->pGossipSelect = &GossipSelect_npc_archmage_malin;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_bartleby";
-    newscript->GetAI = &GetAI_npc_bartleby;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_bartleby;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_bartleby";
+    pNewScript->GetAI = &GetAI_npc_bartleby;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_bartleby;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_dashel_stonefist";
-    newscript->GetAI = &GetAI_npc_dashel_stonefist;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_dashel_stonefist;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_dashel_stonefist";
+    pNewScript->GetAI = &GetAI_npc_dashel_stonefist;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_dashel_stonefist;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_lady_katrana_prestor";
-    newscript->pGossipHello = &GossipHello_npc_lady_katrana_prestor;
-    newscript->pGossipSelect = &GossipSelect_npc_lady_katrana_prestor;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "boss_king_varian_wrynn";
-    newscript->GetAI = &GetAI_boss_king_varian_wrynn;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_lady_katrana_prestor";
+    pNewScript->pGossipHello = &GossipHello_npc_lady_katrana_prestor;
+    pNewScript->pGossipSelect = &GossipSelect_npc_lady_katrana_prestor;
+    pNewScript->RegisterSelf();
 }

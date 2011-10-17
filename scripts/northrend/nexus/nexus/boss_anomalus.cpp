@@ -274,7 +274,7 @@ CreatureAI* GetAI_npc_chaotic_rift(Creature* pCreature)
 
 void AddSC_boss_anomalus()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "boss_anomalus";
@@ -282,7 +282,7 @@ void AddSC_boss_anomalus()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_chaotic_rift";
-    pNewScript->GetAI = &GetAI_npc_chaotic_rift;
+    pNewScript->Name = "mob_chaotic_rift";
+    pNewScript->GetAI = &GetAI_mob_chaotic_rift;
     pNewScript->RegisterSelf();
 }

@@ -210,7 +210,7 @@ CreatureAI* GetAI_npc_riggle_bassbait(Creature* pCreature)
 
 void AddSC_stranglethorn_vale()
 {
-    Script *newscript;
+    Script* pNewScript;
 
     newscript = new Script;
     newscript->Name = "mob_yenniku";

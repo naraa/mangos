@@ -27,7 +27,6 @@ npc_engineer_spark_overgrind
 npc_injured_draenei
 npc_magwin
 npc_susurrus
-boss_prophet_velen
 EndContentData */
 
 #include "precompiled.h"
@@ -104,7 +103,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (pSpell->SpellFamilyFlags.test<CF_ALL_GIFT_OF_THE_NAARU>())
+        if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
         {
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -427,119 +426,39 @@ bool GossipSelect_npc_susurrus(Player* pPlayer, Creature* pCreature, uint32 uiSe
 }
 
 /*######
-##boss_prophet_velen
+##
 ######*/
-
-enum
-{
-    SPELL_HOLY_BLAST                = 59700,
-    SPELL_HOLY_NOVA                 = 59701,
-    SPELL_HOLY_SMITE                = 59703,
-    //SPELL_PRAYER_OF_HEALING         = 59698, //on friendly
-    SPELL_STAFF_STRIKE              = 33542,
-};
-
-struct MANGOS_DLL_DECL boss_prophet_velenAI : public ScriptedAI
-{
-    boss_prophet_velenAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
-
-    uint32 m_uiHolyBlastTimer;
-    uint32 m_uiHolyNovaTimer;
-    uint32 m_uiHolySmiteTimer;
-    uint32 m_uiStaffStrikeTimer;
-    //uint32 m_uiPrayerOfHealingTimer;
-
-    void Reset()
-    {
-        m_uiHolyBlastTimer      = 7000;
-        m_uiHolyNovaTimer       = 12000;
-        m_uiHolySmiteTimer      = 9000;
-        m_uiStaffStrikeTimer    = 5000;
-       //m_uiPrayerOfHealingTimer= 10000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;
-
-        if (m_uiHolyBlastTimer < uiDiff)
-        {
-            Unit* pTarget = (m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0));
-                DoCast(pTarget, SPELL_HOLY_BLAST);
-            m_uiHolyBlastTimer = urand(7000, 11000);
-        }
-        else
-            m_uiHolyBlastTimer -= uiDiff;
-
-        if (m_uiHolyNovaTimer < uiDiff)
-        {
-            DoCast(m_creature, SPELL_HOLY_NOVA);
-            m_uiHolyNovaTimer = urand(12000, 17000);
-        }
-        else
-            m_uiHolyNovaTimer -= uiDiff;
-
-        if (m_uiHolySmiteTimer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_HOLY_SMITE);
-            m_uiHolySmiteTimer = urand(8000, 12000);
-        }
-        else
-            m_uiHolySmiteTimer -= uiDiff;
-
-        if (m_uiStaffStrikeTimer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_STAFF_STRIKE);
-            m_uiStaffStrikeTimer = urand(5000, 8000);
-        }
-        else
-            m_uiStaffStrikeTimer -= uiDiff;
-
-        DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_boss_prophet_velen(Creature* pCreature)
-{
-    return new boss_prophet_velenAI(pCreature);
-}
 
 void AddSC_azuremyst_isle()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_draenei_survivor";
-    newscript->GetAI = &GetAI_npc_draenei_survivor;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_draenei_survivor";
+    pNewScript->GetAI = &GetAI_npc_draenei_survivor;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_engineer_spark_overgrind";
-    newscript->GetAI = &GetAI_npc_engineer_spark_overgrind;
-    newscript->pGossipHello =  &GossipHello_npc_engineer_spark_overgrind;
-    newscript->pGossipSelect = &GossipSelect_npc_engineer_spark_overgrind;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_engineer_spark_overgrind";
+    pNewScript->GetAI = &GetAI_npc_engineer_spark_overgrind;
+    pNewScript->pGossipHello =  &GossipHello_npc_engineer_spark_overgrind;
+    pNewScript->pGossipSelect = &GossipSelect_npc_engineer_spark_overgrind;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_injured_draenei";
-    newscript->GetAI = &GetAI_npc_injured_draenei;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_injured_draenei";
+    pNewScript->GetAI = &GetAI_npc_injured_draenei;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_magwin";
-    newscript->GetAI = &GetAI_npc_magwinAI;
-    newscript->pQuestAcceptNPC = &QuestAccept_npc_magwin;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_magwin";
+    pNewScript->GetAI = &GetAI_npc_magwinAI;
+    pNewScript->pQuestAcceptNPC = &QuestAccept_npc_magwin;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_susurrus";
-    newscript->pGossipHello =  &GossipHello_npc_susurrus;
-    newscript->pGossipSelect = &GossipSelect_npc_susurrus;
-    newscript->RegisterSelf();
-
-    newscript = new Script;
-    newscript->Name = "boss_prophet_velen";
-    newscript->GetAI = &GetAI_boss_prophet_velen;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_susurrus";
+    pNewScript->pGossipHello =  &GossipHello_npc_susurrus;
+    pNewScript->pGossipSelect = &GossipSelect_npc_susurrus;
+    pNewScript->RegisterSelf();
 }

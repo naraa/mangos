@@ -408,7 +408,7 @@ CreatureAI* GetAI_mob_anubarak_spike(Creature* pCreature)
 
 void AddSC_boss_anubarak_trial()
 {
-    Script* newscript;
+    Script* pNewScript;
 
     newscript = new Script;
     newscript->Name = "boss_anubarak_trial";

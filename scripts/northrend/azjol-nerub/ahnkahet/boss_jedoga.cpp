@@ -590,15 +590,15 @@ CreatureAI* GetAI_npc_twilight_volunteer(Creature* pCreature)
 
 void AddSC_boss_jedoga()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_jedoga";
-    newscript->GetAI = &GetAI_boss_jedoga;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_jedoga";
+    pNewScript->GetAI = &GetAI_boss_jedoga;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_twilight_volunteer";
-    newscript->GetAI = &GetAI_npc_twilight_volunteer;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_twilight_volunteer";
+    pNewScript->GetAI = &GetAI_npc_twilight_volunteer;
+    pNewScript->RegisterSelf();
 }

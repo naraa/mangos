@@ -154,30 +154,30 @@ bool ItemUse_item_jungle_punch_sample(Player* pPlayer, Item* pItem, const SpellC
 
 void AddSC_item_scripts()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "item_arcane_charges";
-    newscript->pItemUse = &ItemUse_item_arcane_charges;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "item_arcane_charges";
+    pNewScript->pItemUse = &ItemUse_item_arcane_charges;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "item_flying_machine";
-    newscript->pItemUse = &ItemUse_item_flying_machine;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "item_flying_machine";
+    pNewScript->pItemUse = &ItemUse_item_flying_machine;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "item_gor_dreks_ointment";
-    newscript->pItemUse = &ItemUse_item_gor_dreks_ointment;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "item_gor_dreks_ointment";
+    pNewScript->pItemUse = &ItemUse_item_gor_dreks_ointment;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "item_petrov_cluster_bombs";
-    newscript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "item_petrov_cluster_bombs";
+    pNewScript->pItemUse = &ItemUse_item_petrov_cluster_bombs;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "item_jungle_punch_sample";
-    newscript->pItemUse = &ItemUse_item_jungle_punch_sample;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "item_jungle_punch_sample";
+    pNewScript->pItemUse = &ItemUse_item_jungle_punch_sample;
+    pNewScript->RegisterSelf();
 }

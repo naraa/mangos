@@ -283,7 +283,7 @@ CreatureAI* GetAI_mob_crystalline_tangler(Creature* pCreature)
 
 void AddSC_boss_ormorok()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name= "boss_ormorok";

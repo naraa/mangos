@@ -489,20 +489,20 @@ CreatureAI* GetAI_mob_ancient_void(Creature* pCreature)
 
 void AddSC_boss_volazj()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_volazj";
-    newscript->GetAI = &GetAI_boss_volazj;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_volazj";
+    pNewScript->GetAI = &GetAI_boss_volazj;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_twisted_visage";
-    newscript->GetAI = &GetAI_mob_twisted_visage;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_twisted_visage";
+    pNewScript->GetAI = &GetAI_mob_twisted_visage;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_ancient_void";
-    newscript->GetAI = &GetAI_mob_ancient_void;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_ancient_void";
+    pNewScript->GetAI = &GetAI_mob_ancient_void;
+    pNewScript->RegisterSelf();
 }
