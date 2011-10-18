@@ -59,6 +59,19 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- ----------------------------------------------------------------
 
 -- ------------------
+-- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
+-- ------------------
+
+DELETE FROM creature_ai_texts WHERE entry = -335621;
+DELETE FROM creature_ai_scripts WHERE creature_id IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
+UPDATE gossip_scripts SET datalong2 = 0 WHERE command = 22 AND id IN (10469,10468,10470,10472,10473,10466,10464,10471,10465,10467);
+UPDATE `creature_template` SET `gossip_menu_id` = 10470 WHERE `entry` = 33382;
+UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiant' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
+UPDATE creature_template SET spell1 = 63010, spell2 = 64342 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
+UPDATE creature_template SET spell3 = 0,spell4 = 0,spell5 = 0,spell6 = 0 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
+-- DELETE FROM creature_spell WHERE guid IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);  -- why??
+
+-- ------------------
 -- Quest 12065/12066
 -- ------------------
 -- Just a side note i dont think the mobs are correctly spawned/Placed around this area need to research or get someone to screen shot in live

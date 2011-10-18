@@ -54,3 +54,9 @@ INSERT INTO script_texts (entry,content_default,sound,type,language,emote,commen
 (-1000596,'I can\'t hear the screams anymore. Is this the end?',0,0,0,0,'hero spirit SAY_BLESS_3'),
 (-1000597,'My nightmare, is it finally over?',0,0,0,0,'hero spirit SAY_BLESS_4'),
 (-1000598,'It was awful... I dreamt I was fighting against my friends.',0,0,0,0,'hero spirit SAY_BLESS_5');
+
+-- -------
+-- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
+-- ------
+DELETE FROM script_texts WHERE entry -1667788;
+INSERT INTO script_texts (`entry`,`content_default`,`comment`) values (-1667788,'I have been defeated. Good fight!','');
