@@ -37,6 +37,8 @@ UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHE
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37444;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 31818;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37283;
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 20159;
+
 
 DELETE FROM `gameobject` WHERE `id`=190643;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
@@ -49,10 +51,24 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-696') OR (`entry`='-697');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492') OR (`entry`='-312493');
 
+-- Official Sd2 Clean up
+DELETE FROM scripted_event_id WHERE id = 9735;
 
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
+
+-- ------------------
+-- Quest 12065/12066
+-- ------------------
+-- Just a side note i dont think the mobs are correctly spawned/Placed around this area need to research or get someone to screen shot in live
+
+-- Added Quest credit
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26773';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2677351');
+INSERT INTO `creature_ai_scripts` VALUES ('2677351', '26773', '8', '0', '100', '1', '50546', '-1', '1000', '1000', '11', '47390', '6', '6', '33', '26773', '6', '0', '0', '0', '0', '0', 'ytdb/R2');
+-- npc 26773 -- not selectable -- kill bunny credit
+UPDATE `creature_template` SET `unit_flags` = 33554688 WHERE `entry` = 26773;
 
 -- ------------------
 -- Quest 12860/12927-
