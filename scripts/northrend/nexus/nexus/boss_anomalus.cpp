@@ -282,7 +282,7 @@ void AddSC_boss_anomalus()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "mob_chaotic_rift";
+    pNewScript->Name = "npc_chaotic_rift";
     pNewScript->GetAI = &GetAI_npc_chaotic_rift;
     pNewScript->RegisterSelf();
 }

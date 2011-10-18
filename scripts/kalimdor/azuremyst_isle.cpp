@@ -103,7 +103,7 @@ struct MANGOS_DLL_DECL npc_draenei_survivorAI : public ScriptedAI
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
-        if (pSpell->IsFitToFamilyMask(UI64LIT(0x0000000000000000), 0x080000000))
+        if (pSpell->SpellFamilyFlags.test<CF_ALL_GIFT_OF_THE_NAARU>())
         {
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PVP_ATTACKABLE);
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
@@ -426,8 +426,83 @@ bool GossipSelect_npc_susurrus(Player* pPlayer, Creature* pCreature, uint32 uiSe
 }
 
 /*######
-##
+## boss_prophet_velen
 ######*/
+
+enum
+{
+    SPELL_HOLY_BLAST                = 59700,
+    SPELL_HOLY_NOVA                 = 59701,
+    SPELL_HOLY_SMITE                = 59703,
+    //SPELL_PRAYER_OF_HEALING         = 59698, //on friendly
+    SPELL_STAFF_STRIKE              = 33542,
+};
+
+struct MANGOS_DLL_DECL boss_prophet_velenAI : public ScriptedAI
+{
+    boss_prophet_velenAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
+
+    uint32 m_uiHolyBlastTimer;
+    uint32 m_uiHolyNovaTimer;
+    uint32 m_uiHolySmiteTimer;
+    uint32 m_uiStaffStrikeTimer;
+    //uint32 m_uiPrayerOfHealingTimer;
+
+    void Reset()
+    {
+        m_uiHolyBlastTimer      = 7000;
+        m_uiHolyNovaTimer       = 12000;
+        m_uiHolySmiteTimer      = 9000;
+        m_uiStaffStrikeTimer    = 5000;
+       //m_uiPrayerOfHealingTimer= 10000;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiHolyBlastTimer < uiDiff)
+        {
+            Unit* pTarget = (m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0));
+                DoCast(pTarget, SPELL_HOLY_BLAST);
+            m_uiHolyBlastTimer = urand(7000, 11000);
+        }
+        else
+            m_uiHolyBlastTimer -= uiDiff;
+
+        if (m_uiHolyNovaTimer < uiDiff)
+        {
+            DoCast(m_creature, SPELL_HOLY_NOVA);
+            m_uiHolyNovaTimer = urand(12000, 17000);
+        }
+        else
+            m_uiHolyNovaTimer -= uiDiff;
+
+        if (m_uiHolySmiteTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_HOLY_SMITE);
+            m_uiHolySmiteTimer = urand(8000, 12000);
+        }
+        else
+            m_uiHolySmiteTimer -= uiDiff;
+
+        if (m_uiStaffStrikeTimer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_STAFF_STRIKE);
+            m_uiStaffStrikeTimer = urand(5000, 8000);
+        }
+        else
+            m_uiStaffStrikeTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_prophet_velen(Creature* pCreature)
+{
+   return new boss_prophet_velenAI(pCreature);
+}
 
 void AddSC_azuremyst_isle()
 {
@@ -460,5 +535,10 @@ void AddSC_azuremyst_isle()
     pNewScript->Name = "npc_susurrus";
     pNewScript->pGossipHello =  &GossipHello_npc_susurrus;
     pNewScript->pGossipSelect = &GossipSelect_npc_susurrus;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_prophet_velen";
+    pNewScript->GetAI = &GetAI_boss_prophet_velen;
     pNewScript->RegisterSelf();
 }

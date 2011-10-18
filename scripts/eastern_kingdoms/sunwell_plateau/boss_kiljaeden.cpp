@@ -18,7 +18,7 @@
 /* ScriptData
 SDName: boss_kiljaeden
 SD%Complete:
-SDComment:
+SDComment: Firebloom needs implented // 
 SDCategory: Sunwell Plateau
 EndScriptData */
 
@@ -254,10 +254,6 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 // All Phases
     uint32 m_uiSoulFlayTimer;
     uint32 m_uiLegionLightingTimer;
-    uint32 m_uiFireBloomCheck;
-    uint32 m_uiFireBloomTimer;
-    uint32 m_uiFireBloomCount;
-    ObjectGuid m_uiFireBloomTarget[5];
 
 //phase holder
     uint8 m_uiPhase;
@@ -282,14 +278,11 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 // All Phases
         m_uiSoulFlayTimer         = 5000;
         m_uiLegionLightingTimer   = 10000;
-        m_uiFireBloomCheck        = 2000;
-        m_uiFireBloomTimer        = 30000;
-        m_uiFireBloomCount        = 10;
 
 // Phase Idle
         m_uiOrdersTimer           = 10000;
 
-// Phase One 
+// Phase One
         m_uiShieldOrbTimer        = 25000;
         m_uiMaxShieldOrbs         = 1;
 
@@ -386,40 +379,14 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-  // soul flay all phases
+  // Legion Lighting all phases
         if (m_uiLegionLightingTimer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_LEGION_LIGHTING);
             m_uiLegionLightingTimer = 11000;
         }else m_uiLegionLightingTimer -= uiDiff;
 
-        //FireBloom Damage WorkArround
-        if (m_uiFireBloomCheck < uiDiff)
-        {
-            if (m_uiFireBloomCount < 10)
-                for (uint8 i=0; i<5; ++i)
-                {
-                    if (Unit* FireTarget = m_creature->GetMap()->GetUnit(m_uiFireBloomTarget[i]))
-                        FireTarget->CastSpell(FireTarget, SPELL_FIREBLOOM_EFF, true);
-                }
-            ++m_uiFireBloomCount;
-            m_uiFireBloomCheck = 2000;
-        }else m_uiFireBloomCheck -= uiDiff;
-
-		// fire bloom all phases
-        if (m_uiFireBloomTimer < uiDiff)
-        {
-            for (uint8 i=0; i<5; ++i)
-            {
-                Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0);
-                m_uiFireBloomTarget[i] = target->GetObjectGuid();
-                m_uiFireBloomCount = 0;
-                DoCast(target, SPELL_FIREBLOOM, true);
-            }
-            m_uiFireBloomTimer = 25000;
-        }else m_uiFireBloomTimer -= uiDiff;
-
-		// soul flay all phases
+  // soul flay all phases
         if (m_uiSoulFlayTimer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_SOULFLAY);
@@ -429,7 +396,7 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
 // Phase_One
         if (m_uiPhase == PHASE_ONE)
         {
-            if (m_uiShieldOrbTimer < uiDiff)
+            if (m_uiShieldOrbTimer < uiDiff)  // needs a trigger like a bool that keeps it from casting at everytime the bool would reset every phase or something not sure yet 8)
             {
                 for(uint8 i = 0; i < m_uiMaxShieldOrbs; ++i)
                 {
@@ -445,8 +412,8 @@ struct MANGOS_DLL_DECL boss_kiljaedenAI : public Scripted_NoMovementAI
             //if (m_creature->GetHealthPercent() < 85.0f)
                 //m_uiPhase = PHASE_TWO;
         }
-            
-        
+
+
     }
 };
 
@@ -666,7 +633,7 @@ struct MANGOS_DLL_DECL mob_felfire_portalAI : public Scripted_NoMovementAI
     }
 
 	ScriptedInstance* m_pInstance;
- 
+
     void Reset()
     {
 		DoCast(m_creature, SPELL_SUMMON_FELFIRE_FIEND);
@@ -679,7 +646,7 @@ struct MANGOS_DLL_DECL mob_felfire_portalAI : public Scripted_NoMovementAI
 	}
 
     void UpdateAI(const uint32 uiDiff)
-    { 
+    {
 		if(m_pInstance->GetData(TYPE_KILJAEDEN) != IN_PROGRESS)
 			m_creature->ForcedDespawn();
 	}
@@ -695,15 +662,15 @@ CreatureAI* GetAI_mob_felfire_portal(Creature *pCreature)
 ######*/
 struct MANGOS_DLL_DECL mob_felfire_fiendAI : public ScriptedAI
 {
-    mob_felfire_fiendAI(Creature* pCreature) : ScriptedAI(pCreature) 
+    mob_felfire_fiendAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-	    Reset(); 
+	    Reset();
     }
 
     bool m_bMustDie;
 	uint32 m_uiDieTimer;
 
-    void Reset() 
+    void Reset()
     {
         m_bMustDie = false;
     }
