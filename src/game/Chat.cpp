@@ -842,6 +842,7 @@ ChatCommand * ChatHandler::getCommandTable()
         { "bot",            SEC_PLAYER,         false, &ChatHandler::HandlePlayerbotCommand,           "", NULL },
         { "quit",           SEC_CONSOLE,        true,  &ChatHandler::HandleQuitCommand,                "", NULL },
         { "mmap",           SEC_GAMEMASTER,     false, NULL,                                           "", mmapCommandTable },
+        { "gearscore",      SEC_ADMINISTRATOR,  false, &ChatHandler::HandleShowGearScoreCommand,       "", NULL },
 
         { NULL,             0,                  false, NULL,                                           "", NULL }
     };
