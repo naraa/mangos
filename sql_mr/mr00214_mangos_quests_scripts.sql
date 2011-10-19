@@ -42,7 +42,7 @@ UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `en
 
 DELETE FROM `gameobject` WHERE `id`=190643;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
-(200000, 190643, 571, 1, 1, 5545.45, 5767.53, -77.8042, 5.39307, 0, 0, 0.959937, 0.280215, -25, 0, 1),
+(310000, 190643, 571, 1, 1, 5545.45, 5767.53, -77.8042, 5.39307, 0, 0, 0.959937, 0.280215, -25, 0, 1),
 (47391, 190643, 571, 1, 1, 5547.61, 5767.75, -78.0231, 4.08966, 0, 0, 0.889734, -0.456479, -120, 100, 1);
 
 -- EAI Text clean up for quests/sd2
@@ -57,6 +57,18 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
+
+-- ------------
+-- Quest 13663
+-- ------------
+
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_black_knights_gryphon' WHERE `entry` = 33519;
+UPDATE creature_template SET vehicle_id = 402 WHERE entry = 33519; -- vehicle_id can be 88 107 108 112 143 etc.
+UPDATE creature_template SET KillCredit1 = 33341 WHERE entry = 33229;
+UPDATE creature_template SET KillCredit1 = 38595 WHERE entry = 33448;
+
+UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33513;
+UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33519;
 
 -- ------------------
 -- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
@@ -266,7 +278,7 @@ ScriptName='npc_tipsy_mcmanus'
 WHERE entry=28566;
 
 DELETE FROM `gameobject` WHERE guid = '200000';
-INSERT INTO `gameobject` VALUES ('200000','190643','571','3','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
+INSERT INTO `gameobject` VALUES ('200000','190643','571','1','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
 
 DELETE FROM creature where id=28537;
 INSERT INTO creature VALUES
