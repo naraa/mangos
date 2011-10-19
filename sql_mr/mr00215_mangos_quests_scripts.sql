@@ -81,7 +81,7 @@ UPDATE `creature_template` SET `gossip_menu_id` = 10470 WHERE `entry` = 33382;
 UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiant' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
 UPDATE creature_template SET spell1 = 63010, spell2 = 64342 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
 UPDATE creature_template SET spell3 = 0,spell4 = 0,spell5 = 0,spell6 = 0 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
--- DELETE FROM creature_spell WHERE guid IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);  -- why??
+DELETE FROM creature_spell WHERE guid IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
 
 -- ------------------
 -- Quest 12065/12066
