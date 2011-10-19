@@ -1247,14 +1247,14 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
     {
     }
 
-    void MoveInLineOfSight(Unit *)
+    void MoveInLineOfSight(Unit* pWho)
     {
     }
 
-    void JustDied(Unit *)
+    void JustDied(Unit* pKiller)
     {
-        if (Unit* charmer = m_creature->GetCharmer())
-            charmer->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
+        if (Unit* pCharmer = m_creature->GetCharmer())
+            pCharmer->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
     }
 
     void MovementInform(uint32 uiType, uint32 uiPointId)
@@ -1267,12 +1267,12 @@ struct MANGOS_DLL_DECL npc_eye_of_acherusAI : public ScriptedAI
         m_creature->CastSpell(m_creature, SPELL_EYE_FL_BOOST_FLY, true);
     }
 
-    void AttackedBy(Unit * attacker)
+    void AttackedBy(Unit* pAttacker)
     {
         // called on remove SPELL_AURA_MOD_POSSESS
-        if (!m_creature->isCharmed() && attacker->GetTypeId() == TYPEID_PLAYER)
+        if (!m_creature->isCharmed() && pAttacker->GetTypeId() == TYPEID_PLAYER)
         {
-            attacker->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
+            pAttacker->RemoveAurasDueToSpell(SPELL_EYE_CONTROL);
 //            m_creature->ForcedDespawn();
         }
     }
