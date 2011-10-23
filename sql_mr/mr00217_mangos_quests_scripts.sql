@@ -71,7 +71,7 @@ UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33513;
 UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33519;
 
 -- ------------------
--- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
+-- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787, 13790, 13793, 13811, 13814
 -- ------------------
 -- DK Fix For these quest
 UPDATE quest_template SET PrevQuestId = 13794 WHERE entry IN (13793,13814,13791,13813);
@@ -134,11 +134,11 @@ DELETE FROM creature_ai_scripts WHERE creature_id IN (33285,33306,33382,33383,33
 UPDATE gossip_scripts SET datalong2 = 0 WHERE command = 22 AND id IN (10469,10468,10470,10472,10473,10466,10464,10471,10465,10467);
 UPDATE `creature_template` SET `gossip_menu_id` = 10470 WHERE `entry` = 33382;
 
--- valinats
-UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiants_n_champions' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
+-- valiants
+UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiants' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
 
 -- Champions
-UPDATE creature_template SET ScriptName = 'npc_valiants_n_champions', AIName = '' WHERE entry IN
+UPDATE creature_template SET ScriptName = 'npc_champions', AIName = '' WHERE entry IN
 (33738,33739,33740,33743,33744,33745,33746,33747,33748,33749);
 
 UPDATE creature_template SET spell1 = 63010, spell2 = 64342 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
