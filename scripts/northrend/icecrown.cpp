@@ -26,7 +26,7 @@ EndScriptData */
 npc_dame_evniki_kapsalis
 npc_scourge_conventor
 npc_fallen_hero_spirit
-npc_valiant
+npc_valiants_n_champions
 npc_black_knights_gryphon
 EndContentData */
 
@@ -262,7 +262,7 @@ CreatureAI* GetAI_npc_fallen_hero_spirit(Creature* pCreature)
 }
 
 /*#####
-## npc_valiant
+## npc_valiants_n_champions
 #####*/
 
 enum
@@ -274,9 +274,9 @@ enum
     SPELL_MOUNTED_MELEE_VICTORY = 62724,
 };
 
-struct MANGOS_DLL_DECL npc_valiantAI : public ScriptedAI
+struct MANGOS_DLL_DECL npc_valiants_n_championsAI : public ScriptedAI
 {
-    npc_valiantAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+   npc_valiants_n_championsAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
     //uint32 m_uiVCHARGE_Timer;
     //uint32 m_uiVSHIELDBREAKER_Timer;
@@ -312,9 +312,9 @@ struct MANGOS_DLL_DECL npc_valiantAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_npc_valiant(Creature* pCreature)
+CreatureAI* GetAI_npc_valiants_n_champions(Creature* pCreature)
 {
-    return new npc_valiantAI(pCreature);
+    return new npc_valiants_n_championsAI(pCreature);
 }
 
 void AddSC_icecrown()
@@ -343,7 +343,7 @@ void AddSC_icecrown()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_valiant";
-    pNewScript->GetAI = &GetAI_npc_valiant;
+    pNewScript->Name = "npc_valiants_n_champions";
+    pNewScript->GetAI = &GetAI_npc_valiants_n_champions;
     pNewScript->RegisterSelf();
 }

@@ -73,12 +73,74 @@ UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33519;
 -- ------------------
 -- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
 -- ------------------
+-- DK Fix For these quest
+UPDATE quest_template SET PrevQuestId = 13794 WHERE entry IN (13793,13814,13791,13813);
+
+-- it is also necessary (otherwise spell=63010 do not work)
+UPDATE creature_template SET unit_flags = 8 WHERE entry IN
+(33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
+
+-- The Valiant's Challenge (10 quests)
+DELETE FROM creature WHERE id = 33707; -- Argent Champion
+DELETE FROM creature_addon WHERE guid = 129089;
+UPDATE creature_template SET faction_A = 7, faction_H = 7, npcflag = 0, KillCredit1 = 33708 WHERE entry = 33707;
+REPLACE INTO creature_template_addon (`entry`,`mount`,`auras`) VALUES (33707,14337,63501);
+UPDATE gossip_scripts SET datalong = 33707 WHERE id IN (33518,50102);
+UPDATE creature_template SET npcflag = 0 WHERE entry = 33448; -- Argent Valiant
+ 
+-- Among the Champions (4 quests)
+DELETE FROM gossip_scripts WHERE id IN (10453,10454,10455,10456,10457,10458,10459,10460,10461,10462);
+DELETE FROM gossip_menu_option WHERE menu_id IN (10453,10454,10455,10456,10457,10458,10459,10460,10461,10462);
+ 
+INSERT INTO `gossip_menu_option`(`menu_id`,`id`,`option_icon`,`option_text`,`option_id`,`npc_option_npcflag`,
+`action_menu_id`,`action_poi_id`,`action_script_id`,`box_coded`,`box_money`,`box_text`,`cond_1`,`cond_1_val_1`,
+`cond_1_val_2`,`cond_2`,`cond_2_val_1`,`cond_2_val_2`,`cond_3`,`cond_3_val_1`,`cond_3_val_2`) VALUES
+(10453,0,0,'I am ready to fight!',1,1,-1,0,10453,0,0,NULL,1,62853,0,6,469,0,0,0,0),
+(10454,0,0,'I am ready to fight!',1,1,-1,0,10454,0,0,NULL,1,62853,0,6,469,0,0,0,0),
+(10455,0,0,'I am ready to fight!',1,1,-1,0,10455,0,0,NULL,1,62853,0,6,469,0,0,0,0),
+(10456,0,0,'I am ready to fight!',1,1,-1,0,10456,0,0,NULL,1,62853,0,6,469,0,0,0,0),
+(10457,0,0,'I am ready to fight!',1,1,-1,0,10457,0,0,NULL,1,62853,0,6,67,0,0,0,0),
+(10458,0,0,'I am ready to fight!',1,1,-1,0,10458,0,0,NULL,1,62853,0,6,67,0,0,0,0),
+(10459,0,0,'I am ready to fight!',1,1,-1,0,10459,0,0,NULL,1,62853,0,6,67,0,0,0,0),
+(10460,0,0,'I am ready to fight!',1,1,-1,0,10460,0,0,NULL,1,62853,0,6,469,0,0,0,0),
+(10461,0,0,'I am ready to fight!',1,1,-1,0,10461,0,0,NULL,1,62853,0,6,67,0,0,0,0),
+(10462,0,0,'I am ready to fight!',1,1,-1,0,10462,0,0,NULL,1,62853,0,6,67,0,0,0,0);
+ 
+INSERT INTO `gossip_scripts`(`id`,`delay`,`command`,`datalong`,`datalong2`,`datalong3`,`datalong4`,
+`data_flags`,`dataint`,`dataint2`,`dataint3`,`dataint4`,`x`,`y`,`z`,`o`,`comments`) VALUES
+(10453,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10453,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10454,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10454,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10455,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10455,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10456,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10456,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10457,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10457,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10458,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10458,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10459,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10459,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10460,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10460,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10461,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10461,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,''),
+(10462,1,22,14,0,0,0,2,0,0,0,0,0,0,0,0,''),
+(10462,0,0,0,0,0,0,4,2000000449,2000000450,2000000451,0,0,0,0,0,'');
 
 DELETE FROM creature_ai_texts WHERE entry = -335621;
 DELETE FROM creature_ai_scripts WHERE creature_id IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
 UPDATE gossip_scripts SET datalong2 = 0 WHERE command = 22 AND id IN (10469,10468,10470,10472,10473,10466,10464,10471,10465,10467);
 UPDATE `creature_template` SET `gossip_menu_id` = 10470 WHERE `entry` = 33382;
-UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiant' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
+
+-- valinats
+UPDATE creature_template SET unit_flags = 0, AIName = '', ScriptName = 'npc_valiants_n_champions' WHERE entry IN (33285,33306,33382,33383,33384,33558,33559,33561,33562,33564);
+
+-- Champions
+UPDATE creature_template SET ScriptName = 'npc_valiants_n_champions', AIName = '' WHERE entry IN
+(33738,33739,33740,33743,33744,33745,33746,33747,33748,33749);
+
 UPDATE creature_template SET spell1 = 63010, spell2 = 64342 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
 UPDATE creature_template SET spell3 = 0,spell4 = 0,spell5 = 0,spell6 = 0 WHERE entry IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
 DELETE FROM creature_spell WHERE guid IN (33217,33316,33317,33318,33319,33320,33321,33322,33323,33324);
