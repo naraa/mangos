@@ -75,6 +75,7 @@ UPDATE `creature_template` SET `modelid_2` = 28652 WHERE `entry` = 33519;
 -- ------------------
 -- DK Fix For these quest
 UPDATE quest_template SET PrevQuestId = 13794 WHERE entry IN (13793,13814,13791,13813);
+UPDATE quest_template SET RequiredClasses = '1503' WHERE entry =13794;
 
 -- it is also necessary (otherwise spell=63010 do not work)
 UPDATE creature_template SET unit_flags = 8 WHERE entry IN

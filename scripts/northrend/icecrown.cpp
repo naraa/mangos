@@ -273,7 +273,6 @@ enum
     SPELL_VSHIELDBREAKER  = 65147,
 
     SPELL_MOUNTED_MELEE_VICTORY = 62724,
-    SPELL_CHAMP_MOUNTED_MELEE_VICTORY = 63596,
 };
 
 struct MANGOS_DLL_DECL npc_valiantsAI : public ScriptedAI
@@ -296,12 +295,7 @@ struct MANGOS_DLL_DECL npc_valiantsAI : public ScriptedAI
             uiDamage = 5;
 
             if (Unit* pPlayer = pDoneBy->GetCharmerOrOwnerPlayerOrPlayerItself())
-            {
-                if (((Player*)pDoneBy)->GetQuestStatus(QUEST_AMONG_CHAMP_1 || QUEST_AMONG_CHAMP_2 || QUEST_AMONG_CHAMP_3 || QUEST_AMONG_CHAMP_4) == QUEST_STATUS_INCOMPLETE)
-	                pPlayer->CastSpell(pPlayer, SPELL_CHAMP_MOUNTED_MELEE_VICTORY, true);
-                else
-                    pPlayer->CastSpell(pPlayer, SPELL_MOUNTED_MELEE_VICTORY, true);
-            }
+                pPlayer->CastSpell(pPlayer, SPELL_MOUNTED_MELEE_VICTORY, true);
 
             DoScriptText(SAY_DEFEATED, m_creature);
             EnterEvadeMode();
@@ -330,10 +324,7 @@ CreatureAI* GetAI_npc_valiants(Creature* pCreature)
 
 enum
 {
-    SAY_DEFEATED          = -1667788,
-    SPELL_VCHARGE         = 63010,
-    SPELL_VSHIELDBREAKER  = 65147,
-
+    // spells are defined above
     SPELL_CHAMP_MOUNTED_MELEE_VICTORY = 63596,
 };
 
