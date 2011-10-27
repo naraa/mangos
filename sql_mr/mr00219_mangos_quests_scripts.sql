@@ -54,6 +54,13 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492')
 -- Official Sd2 Clean up
 DELETE FROM scripted_event_id WHERE id = 9735;
 
+-- ------------------------------------
+-- -   Events, Holidays & Ect  Area ---
+-- -------------------------------- ---
+
+-- Fixed Correct spell on bobbing apples ( Hallo Event )
+UPDATE `item_template` SET `spellid_1` = 24707 WHERE `entry` = 20516;
+
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
