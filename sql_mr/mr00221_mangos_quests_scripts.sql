@@ -65,6 +65,13 @@ UPDATE `item_template` SET `spellid_1` = 24707 WHERE `entry` = 20516;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- ---
+-- -Quest 8468
+-- ---
+
+-- Thaelis has wrong faction was gettting killed by his own kind 8P
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 15949;
+
 -- ------------
 -- Quest 13663
 -- ------------
