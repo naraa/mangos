@@ -442,94 +442,92 @@ CreatureAI* GetAI_npc_apprentice_mirvedaAI(Creature* pCreature)
 
 enum
 {
-    QUEST_POWERING_OUR_DEFENSES     = 8490,
-    SAY_DEFENSE_FINISH              = -1000668,
-    NPC_ENRAGED_WRAITH              = 17086,
+    NPC_ENRAGED_WRATH           = 17086,
+    QUEST_POWERING_OUR_DEFENSES = 8490,
+    INFUSED_CRYSTAL_EMOTE       = -1000668,
 };
 
-static const float aSummonPos[6][4] =
+float fEnragedWrathPosition[3][4] =
 {
-    {8250.539f, -7239.028f, 139.7099f, 0.8975816f},
-    {8263.437f, -7181.188f, 139.4102f, 5.237229f},
-    {8317.124f, -7210.098f, 140.1064f, 3.022202f},
-    {8293.848f, -7179.062f, 138.6693f, 4.153376f},
-    {8239.229f, -7207.673f, 139.1196f, 0.06059111f},
-    {8301.548f, -7247.548f, 139.974f, 1.828518f}
+    {8259.375977f, -7202.288574f, 139.287430f, 5.0f},
+    {8255.425781f, -7222.026367f, 139.607162f, 5.0f},
+    {8267.902344f, -7193.510742f, 139.430374f, 5.0f}
 };
 
-struct MANGOS_DLL_DECL npc_infused_crystalAI : public Scripted_NoMovementAI
+struct MANGOS_DLL_DECL npc_infused_crystalAI : public ScriptedAI
 {
-    npc_infused_crystalAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
+    npc_infused_crystalAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_bFirstWave = true;
-        m_uiWaveTimer = 1000;
-        m_uiKilledCount = 0;
-        m_uiFinishTimer = 60*IN_MILLISECONDS;
+        SetCombatMovement(false);
         Reset();
     }
+    
+    uint32 m_uiQuestTimer;
+    uint32 m_uiSpawnTimer;
+    ObjectGuid m_uiPlayerGUID;
 
-    bool m_bFirstWave;
-    uint32 m_uiWaveTimer;
-    uint8 m_uiKilledCount;
-    uint32 m_uiFinishTimer;
-
-    void Reset() {}
-
-    void JustSummoned(Creature* pSummoned)
+    bool bCompleted;
+            
+    void Reset()
     {
-        pSummoned->AI()->AttackStart(m_creature);
+        m_uiQuestTimer = 60000;
+        m_uiSpawnTimer  = 1000;
+        m_uiPlayerGUID.Clear();
+        bCompleted = false;
     }
 
-    void SummonedCreatureJustDied(Creature* pSummoned)
+    void MoveInLineOfSight(Unit* pWho)
     {
-        ++m_uiKilledCount;
+        if (pWho->GetTypeId() != TYPEID_PLAYER)
+            return;
+        Player* pPlayer = (Player*)pWho;
+            
+        if (pPlayer->GetQuestStatus(QUEST_POWERING_OUR_DEFENSES) != QUEST_STATUS_INCOMPLETE)
+            return;
+            
+        m_uiPlayerGUID = pPlayer->GetObjectGuid();
+    }
 
-        if (m_uiKilledCount == 3)
-            m_uiWaveTimer = std::min(m_uiWaveTimer, (uint32)10000);
+    void Aggro(Unit* pWho){}
+
+    void JustDied(Unit* pWho) 
+    {
+        if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
+            if (pPlayer->GetQuestStatus(QUEST_POWERING_OUR_DEFENSES) == QUEST_STATUS_INCOMPLETE)
+                pPlayer->FailQuest(QUEST_POWERING_OUR_DEFENSES);
     }
 
     void UpdateAI(const uint32 uiDiff)
-    {
-        if (m_uiWaveTimer)
+    {    
+        if (bCompleted) 
+            return;
+
+        if (m_uiSpawnTimer < uiDiff)
         {
-            if (m_uiWaveTimer <= uiDiff)
+            for (uint8 i = 0; i < 3; ++i)
             {
-                if (m_bFirstWave)
+                if (Creature* pEnragedWrath = m_creature->SummonCreature(NPC_ENRAGED_WRATH, fEnragedWrathPosition[i][0], fEnragedWrathPosition[i][1], fEnragedWrathPosition[i][2], fEnragedWrathPosition[i][3], TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
                 {
-                    for (uint8 i = 0; i < 3; ++i)
-                        m_creature->SummonCreature(NPC_ENRAGED_WRAITH, aSummonPos[i][0], aSummonPos[i][1], aSummonPos[i][2], aSummonPos[i][3], TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 5*MINUTE);
-                    m_uiWaveTimer = 29000;
-                    m_bFirstWave = false;
-                }
-                else
-                {
-                    for (uint8 i = 3; i < 6; ++i)
-                        m_creature->SummonCreature(NPC_ENRAGED_WRAITH, aSummonPos[i][0], aSummonPos[i][1], aSummonPos[i][2], aSummonPos[i][3], TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 5*MINUTE);
-                    m_uiWaveTimer = 0;
+                    pEnragedWrath->AI()->AttackStart(m_creature);
                 }
             }
-            else
-                m_uiWaveTimer -= uiDiff;
+            m_uiSpawnTimer = 40000;
         }
+        else
+            m_uiSpawnTimer -= uiDiff;
 
-        if (m_uiFinishTimer)
+        if (m_uiQuestTimer < uiDiff)
         {
-            if (m_uiFinishTimer <= uiDiff)
+            if(Player* pPlayer = m_creature->GetMap()->GetPlayer(m_uiPlayerGUID))
             {
-                DoScriptText(SAY_DEFENSE_FINISH, m_creature);
-                if (m_creature->IsTemporarySummon())
-                {
-                    TemporarySummon* pTemporary = (TemporarySummon*)m_creature;
-
-                    if (Player* pPlayer = m_creature->GetMap()->GetPlayer(pTemporary->GetSummonerGuid()))
-                        pPlayer->KilledMonsterCredit(m_creature->GetEntry(), m_creature->GetObjectGuid());
-                }
-                m_uiFinishTimer = 0;
-                m_creature->ForcedDespawn(1000);
+                pPlayer->KilledMonsterCredit(m_creature->GetEntry());
+                DoScriptText(INFUSED_CRYSTAL_EMOTE , m_creature);
+                m_creature->ForcedDespawn(5000);
             }
-            else
-                m_uiFinishTimer -= uiDiff;
+            bCompleted = true;          
         }
+        else
+            m_uiQuestTimer -= uiDiff;
     }
 };
 
