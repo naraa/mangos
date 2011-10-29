@@ -353,11 +353,16 @@ pAuraProcHandler AuraProcHandler[TOTAL_AURAS]=
 
 bool Unit::IsTriggeredAtSpellProcEvent(Unit *pVictim, SpellAuraHolderPtr holder, SpellEntry const* procSpell, uint32 procFlag, uint32 procExtra, WeaponAttackType attType, bool isVictim, SpellProcEventEntry const*& spellProcEvent )
 {
+    if (!holder || holder->IsDeleted())
+        return false;
+
+    SpellEntry const* spellProto = holder->GetSpellProto();
+
+    if (!spellProto)
+        return false;
 
     if (IsTriggeredAtCustomProcEvent(pVictim, holder, procSpell, procFlag, procExtra, attType, isVictim, spellProcEvent))
         return true;
-
-    SpellEntry const* spellProto = holder->GetSpellProto();
 
     // Get proc Event Entry
     spellProcEvent = sSpellMgr.GetSpellProcEvent(spellProto->Id);
@@ -1449,20 +1454,6 @@ SpellAuraProcResult Unit::HandleDummyAuraProc(Unit *pVictim, uint32 damage, Aura
                     return SPELL_AURA_PROC_FAILED;
 
                 triggered_spell_id = 26654;
-                break;
-            }
-            // Glyph of Sunder Armor
-            if (dummySpell->Id == 58387)
-            {
-                if (!procSpell)
-                    return SPELL_AURA_PROC_FAILED;
-
-                target = SelectRandomUnfriendlyTarget(pVictim);
-
-                if (!target)
-                    return SPELL_AURA_PROC_FAILED;
-
-                triggered_spell_id = 58567;
                 break;
             }
             break;
