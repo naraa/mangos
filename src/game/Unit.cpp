@@ -841,10 +841,6 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
             {
                 // FIXME: kept by compatibility. don't know in BG if the restriction apply.
                 bg->UpdatePlayerScore(killer, SCORE_DAMAGE_DONE, damage);
-                /** World of Warcraft Armory **/
-                if (BattleGround *bgV = ((Player*)pVictim)->GetBattleGround())
-                    bgV->UpdatePlayerScore(((Player*)pVictim), SCORE_DAMAGE_TAKEN, damage);
-                /** World of Warcraft Armory **/
             }
         }
 
@@ -1050,13 +1046,7 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
                     if (m->IsRaidOrHeroicDungeon())
                     {
                         if (cVictim->GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_INSTANCE_BIND)
-                        {
                             ((DungeonMap *)m)->PermBindAllPlayers(creditedPlayer);
-                            /** World of Warcraft Armory **/
-                            if (sWorld.getConfig(CONFIG_BOOL_ARMORY_SUPPORT))
-                                creditedPlayer->WriteWowArmoryDatabaseLog(3, cVictim->GetCreatureInfo()->Entry); // Difficulty will be defined in Player::WriteWowArmoryDatabaseLog();
-                            /** World of Warcraft Armory **/
-                        }
                     }
                     else
                     {
@@ -5140,7 +5130,10 @@ void Unit::RemoveAurasWithInterruptFlags(uint32 flags)
         for (SpellAuraHolderMap::const_iterator iter = holdersMap.begin(); iter != holdersMap.end(); ++iter)
         {
             SpellAuraHolderPtr holder = iter->second;
-            if (holder && !holder->IsDeleted() && (holder->GetSpellProto()->AuraInterruptFlags & flags))
+            if (!holder || holder->IsDeleted() || !holder->GetSpellProto())
+                continue;
+
+            if (holder->GetSpellProto()->AuraInterruptFlags & flags)
                 spellsToRemove.insert(iter->first);
         }
     }
@@ -6882,10 +6875,6 @@ int32 Unit::DealHeal(Unit *pVictim, uint32 addhealth, SpellEntry const *spellPro
     {
         ((Player*)pVictim)->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_TOTAL_HEALING_RECEIVED, gain);
         ((Player*)pVictim)->GetAchievementMgr().UpdateAchievementCriteria(ACHIEVEMENT_CRITERIA_TYPE_HIGHEST_HEALING_RECEIVED, addhealth);
-        /** World of Warcraft Armory **/
-        if (BattleGround *bgV = ((Player*)pVictim)->GetBattleGround())
-            bgV->UpdatePlayerScore(((Player*)pVictim), SCORE_HEALING_TAKEN, gain);
-        /** World of Warcraft Armory **/
     }
 
     return gain;
@@ -11448,15 +11437,14 @@ void Unit::SetConfused(bool apply, ObjectGuid casterGuid, uint32 spellID)
     {
         RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_CONFUSED);
 
-        GetMotionMaster()->MovementExpired(false);
+        StopMoving();
+        GetMotionMaster()->MovementExpired(true);
 
         if (GetTypeId() == TYPEID_PLAYER)
         {
             //Clear unit movement flags
             ((Player*)this)->m_movementInfo.SetMovementFlags(MOVEFLAG_NONE);
         }
-        else
-            StopMoving();
 
         if (GetTypeId() != TYPEID_PLAYER && isAlive())
         {
@@ -11591,13 +11579,14 @@ void Unit::UpdateModelData()
     if (CreatureModelInfo const* modelInfo = sObjectMgr.GetCreatureModelInfo(GetDisplayId()))
     {
         // we expect values in database to be relative to scale = 1.0
-        SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, GetObjectScale() * modelInfo->bounding_radius);
+        float scaled_radius = GetObjectScale() * modelInfo->bounding_radius;
+        SetFloatValue(UNIT_FIELD_BOUNDINGRADIUS, scaled_radius < 2.0f ? scaled_radius : 2.0f );
 
         // never actually update combat_reach for player, it's always the same. Below player case is for initialization
         if (GetTypeId() == TYPEID_PLAYER)
             SetFloatValue(UNIT_FIELD_COMBATREACH, 1.5f);
         else
-            SetFloatValue(UNIT_FIELD_COMBATREACH, GetObjectScale() * modelInfo->combat_reach);
+            SetFloatValue(UNIT_FIELD_COMBATREACH, GetObjectScale() * ( modelInfo->bounding_radius < 2.0 ? modelInfo->combat_reach : modelInfo->combat_reach / modelInfo->bounding_radius ));
     }
 }
 
@@ -11882,10 +11871,17 @@ float Unit::GetAPMultiplier(WeaponAttackType attType, bool normalized)
 
 Aura* Unit::GetDummyAura( uint32 spell_id ) const
 {
+    MAPLOCK_READ(const_cast<Unit*>(this),MAP_LOCK_TYPE_AURAS);
     Unit::AuraList const& mDummy = GetAurasByType(SPELL_AURA_DUMMY);
-    for(Unit::AuraList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
-        if ((*itr)->GetId() == spell_id)
+    for (Unit::AuraList::const_iterator itr = mDummy.begin(); itr != mDummy.end(); ++itr)
+    {
+        SpellAuraHolderPtr holder = (*itr)->GetHolder();
+        if (!holder || holder->IsDeleted())
+            continue;
+
+        if (holder->GetId() == spell_id)
             return *itr;
+    }
 
     return NULL;
 }
