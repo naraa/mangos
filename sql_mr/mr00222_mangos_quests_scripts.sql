@@ -633,12 +633,12 @@ INSERT INTO creature_ai_texts (entry, content_default, type, comment) VALUES
 (-270021,'I\'ll consume your flesh and pick my teeth with your bones!',1,'R2 - Grom\'thar the Thunderbringer yell1'),
 (-270022,'You\'re no magnataur! Where... did you... find... such strength?',1,'R2 - Grom\'thar the Thunderbringer yell2');
 
--- --------------------------------------------------------------
--- aldaron the reckless loc fix Blood elf starting area Quest fix
--- --------------------------------------------------------------
+-- ----------
+-- Quest 9076
+-- ----------
 DELETE FROM `creature` WHERE `id`=16294;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-(67521, 16294, 530, 1, 1, 0, 0, 8747.7, -6116.85, 68.5645, 5.28401, 300, 0, 0, 148, 825, 0, 0);
+(67521, 16294, 530, 1, 1, 0, 160, 8777.19, -6101.27, 72.6775, 3.21199, 300, 0, 0, 148, 825, 0, 0);
 
 -- -------------------------------------------------
 -- Support for quest A Necessary Distraction (10637)
