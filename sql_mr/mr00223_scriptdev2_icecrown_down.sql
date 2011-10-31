@@ -223,13 +223,13 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc8`,`sound`,`ty
 (-1668533, 'And since the ship with Offa will not, here\'s a portal to Dalaran', 'И, поскольку корабля с оффа не будет, вот вам портал в Даларан.', 0,0,0,0, '67234');
 
 -- Gossips
-DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3594540 AND -3594530;
-INSERT INTO `gossip_texts` (`entry`, `content_default`, `content_loc8`, `comment`) VALUES
-(-3668536, 'Lady Jaina, we are ready for next mission!', 'Джайна, мы готовы!',''),
-(-3668537, 'Lady Jaina, Let\'s go!', 'Давай быстрее!', ''),
-(-3668538, 'Lady Sylvanas, we are ready for next mission!', 'Сильвана, мы готовы!', ''),
-(-3668539, 'Lady Sylvanas, Let\'s go!', 'Поехали!', ''),
-(-3668540, 'Let\'s go!', 'Побежали!', '');
+DELETE FROM gossip_texts WHERE entry BETWEEN -3594540 AND -3594536;
+REPLACE INTO gossip_texts (entry, content_default, content_loc8, comment) VALUES
+(-3594536, 'Lady Jaina, we are ready for next mission!', 'Джайна, мы готовы!',''),
+(-3594537, 'Lady Jaina, Let\'s go!', 'Давай быстрее!', ''),
+(-3594538, 'Lady Sylvanas, we are ready for next mission!', 'Сильвана, мы готовы!', ''),
+(-3594539, 'Lady Sylvanas, Let\'s go!', 'Поехали!', ''),
+(-3594540, 'Let\'s go!', 'Побежали!', '');
 
 -- Waypoints to escort event on Halls of reflection
 
