@@ -1,5 +1,5 @@
 -- -1 608 000 VIOLET HOLD
-DELETE FROM `script_texts` WHERE entry BETWEEN -1608000 AND -1608066;
+DELETE FROM `script_texts` WHERE entry BETWEEN -1608066 AND -1608000;
 INSERT IGNORE INTO `script_texts` (`entry`,`content_default`,`sound`,`type`,`language`,`comment`) VALUES
 -- common
 (-1608008,'Ichoron\'s Protective Bubble shatters!',0,3,0,'EMOTE_ICHORON_PROTECTIVE_BUBBLE'),
