@@ -106,7 +106,14 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
 
     for (uint32 i = 0; i < polyPathSize; ++i)
     {
-        MANGOS_ASSERT(polyPath[i] != INVALID_POLYREF);
+        // skip DT_POLYTYPE_OFFMESH_CONNECTION they aren't handled in closestPointOnPoly
+        const dtMeshTile* tile = 0;
+        const dtPoly* poly = 0;
+        if (m_navMesh->getTileAndPolyByRef(polyPath[i], &tile, &poly) != DT_SUCCESS)
+            continue;
+
+        if (poly->getType() == DT_POLYTYPE_OFFMESH_CONNECTION)
+            continue;
 
         float closestPoint[VERTEX_SIZE];
         if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(polyPath[i], point, closestPoint))
@@ -394,7 +401,6 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
     float pathPoints[MAX_POINT_PATH_LENGTH*VERTEX_SIZE];
     uint32 pointCount = 0;
     dtStatus dtResult = DT_FAILURE;
-    bool usedOffmesh = false;
     if (m_useStraightPath)
     {
         dtResult = m_navMeshQuery->findStraightPath(
@@ -417,7 +423,6 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
                 m_polyLength,       // length of current path
                 pathPoints,         // [out] path corner points
                 (int*)&pointCount,
-                usedOffmesh,
                 m_pointPathLimit);    // maximum number of points
     }
 
@@ -431,11 +436,6 @@ void PathFinder::BuildPointPath(const float *startPoint, const float *endPoint)
         m_type = PATHFIND_NOPATH;
         return;
     }
-
-    // we need to flash our poly path to prevent it being used as subpath next cycle
-    // in case of off mesh connection was used
-    if(usedOffmesh)
-        m_polyLength = 0;
 
     m_pathPoints.resize(pointCount);
     for (uint32 i = 0; i < pointCount; ++i)
@@ -638,12 +638,10 @@ bool PathFinder::getSteerTarget(const float* startPos, const float* endPos,
 
 dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
                                      const dtPolyRef* polyPath, uint32 polyPathSize,
-                                     float* smoothPath, int* smoothPathSize,
-                                     bool &usedOffmesh, uint32 maxSmoothPathSize)
+                                     float* smoothPath, int* smoothPathSize, uint32 maxSmoothPathSize)
 {
     *smoothPathSize = 0;
     uint32 nsmoothPath = 0;
-    usedOffmesh = false;
 
     dtPolyRef polys[MAX_PATH_LENGTH];
     memcpy(polys, polyPath, sizeof(dtPolyRef)*polyPathSize);
@@ -714,9 +712,6 @@ dtStatus PathFinder::findSmoothPath(const float* startPos, const float* endPos,
         }
         else if (offMeshConnection && inRangeYZX(iterPos, steerPos, SMOOTH_PATH_SLOP, 1.0f))
         {
-            // Reached off-mesh connection.
-            usedOffmesh = true;
-
             // Advance the path up to and over the off-mesh connection.
             dtPolyRef prevRef = INVALID_POLYREF;
             dtPolyRef polyRef = polys[0];
