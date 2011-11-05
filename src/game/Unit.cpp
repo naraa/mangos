@@ -1182,9 +1182,8 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
                     if (holder->GetSpellProto()->procFlags)
                         continue;
 
-                    if (SpellProcEventEntry const* spellProcEvent = sSpellMgr.GetSpellProcEvent(holder->GetId()))
-                        if (spellProcEvent->procFlags)
-                            continue;
+                    if (GetProcFlag(holder->GetSpellProto()))
+                        continue;
 
                     if (holder->GetSpellProto()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_DAMAGE)
                     {
@@ -5486,6 +5485,21 @@ bool Unit::HasAuraType(AuraType auraType) const
     return !GetAurasByType(auraType).empty();
 }
 
+bool Unit::HasNegativeAuraType(AuraType auraType) const
+{
+    Unit::AuraList const& auras = GetAurasByType(auraType);
+
+    if (auras.empty())
+        return false;
+
+    for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+    {
+        if (!(*itr)->GetHolder()->IsPositive())
+            return true;
+    }
+    return false;
+}
+
 bool Unit::HasAffectedAura(AuraType auraType, SpellEntry const* spellProto) const
 {
     Unit::AuraList const& auras = GetAurasByType(auraType);
@@ -5554,6 +5568,8 @@ Aura* Unit::GetScalingAura(AuraType type, uint32 stat)
                     if (aura->GetModifier()->m_miscvalue == Stats(stat))
                         return aura;
                     break;
+                case SPELL_AURA_HASTE_ALL:
+                    return aura;
                 default:
                     break;
             }
@@ -11557,6 +11573,15 @@ bool Unit::IsPolymorphed() const
     return GetSpellSpecific(getTransForm())==SPELL_MAGE_POLYMORPH;
 }
 
+bool Unit::IsCrowdControlled() const
+{
+    return  HasNegativeAuraType(SPELL_AURA_MOD_CONFUSE) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_FEAR) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_STUN) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_ROOT) ||
+            HasNegativeAuraType(SPELL_AURA_TRANSFORM);
+}
+
 void Unit::SetDisplayId(uint32 modelId)
 {
     SetUInt32Value(UNIT_FIELD_DISPLAYID, modelId);
@@ -11808,6 +11833,8 @@ void Unit::ApplyAttackTimePercentMod( WeaponAttackType att,float val, bool apply
         ApplyPercentModFloatVar(m_modAttackSpeedPct[att], -val, apply);
         ApplyPercentModFloatValue(UNIT_FIELD_BASEATTACKTIME+att,-val,apply);
     }
+    if (GetTypeId() == TYPEID_PLAYER && IsInWorld())
+        ((Player*)this)->CallForAllControlledUnits(ApplyScalingBonusWithHelper(SCALING_TARGET_ATTACKSPEED, 0, false),CONTROLLED_PET|CONTROLLED_GUARDIANS);
 }
 
 void Unit::ApplyCastTimePercentMod(float val, bool apply )
