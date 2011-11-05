@@ -265,6 +265,7 @@
     <ClCompile Include="..\scripts\eastern_kingdoms\blasted_lands.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\boss_kruul.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\burning_steppes.cpp" />
+    <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\boss_mr_smite.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\deadmines.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\deadmines\instance_deadmines.cpp" />
     <ClCompile Include="..\scripts\eastern_kingdoms\dun_morogh.cpp" />
