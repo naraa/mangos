@@ -58,6 +58,25 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- ------------
+-- quest 9164 -
+-- ------------
+
+UPDATE `creature_template` SET `modelid_2` = 18682 WHERE `entry` = 16206;
+DELETE FROM `creature` WHERE `id`=16206;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(75331, 16206, 530, 1, 1, 0, 0, 6435.93, -6636.06, 108.881, 0.270366, 600, 0, 0, 247, 0, 0, 0);
+
+UPDATE `creature_template` SET `modelid_2` = 16113 WHERE `entry` = 16208;
+DELETE FROM `creature` WHERE `id`=16208;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(81222, 16208, 530, 1, 1, 0, 0, 6640.26, -6343.53, 8.94499, 4.61578, 600, 0, 0, 247, 0, 0, 0);
+
+UPDATE `creature_template` SET `modelid_2` = 18683 WHERE `entry` = 16209;
+DELETE FROM `creature` WHERE `id`=16209;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(81221, 16209, 530, 1, 1, 0, 0, 6287.23, -6365.73, 79.4685, 4.04323, 600, 0, 0, 247, 0, 0, 0);
+
 -- ---
 -- -Quest 8468
 -- ---
