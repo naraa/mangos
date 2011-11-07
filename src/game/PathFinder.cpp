@@ -106,15 +106,6 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
 
     for (uint32 i = 0; i < polyPathSize; ++i)
     {
-        // skip DT_POLYTYPE_OFFMESH_CONNECTION they aren't handled in closestPointOnPoly
-        const dtMeshTile* tile = 0;
-        const dtPoly* poly = 0;
-        if (m_navMesh->getTileAndPolyByRef(polyPath[i], &tile, &poly) != DT_SUCCESS)
-            continue;
-
-        if (poly->getType() == DT_POLYTYPE_OFFMESH_CONNECTION)
-            continue;
-
         float closestPoint[VERTEX_SIZE];
         if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(polyPath[i], point, closestPoint))
             continue;
@@ -123,7 +114,7 @@ dtPolyRef PathFinder::getPathPolyByPosition(const dtPolyRef *polyPath, uint32 po
         if (d < minDist2d)
         {
             minDist2d = d;
-            nearestPoly = m_pathPolyRefs[i];
+            nearestPoly = polyPath[i];
             minDist3d = dtVdistSqr(point, closestPoint);
         }
 
@@ -322,12 +313,17 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
         float suffixEndPoint[VERTEX_SIZE];
         if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint))
         {
-            // suffixStartPoly is invalid somehow, or the navmesh is broken => error state
-            sLog.outError("%u's Path Build failed: invalid polyRef in path", m_sourceUnit->GetGUIDLow());
-
-            BuildShortcut();
-            m_type = PATHFIND_NOPATH;
-            return;
+            // we can hit offmesh connection as last poly - closestPointOnPoly() don't like that
+            // try to recover by using prev polyref
+            --prefixPolyLength;
+            suffixStartPoly = m_pathPolyRefs[prefixPolyLength-1];
+            if (DT_SUCCESS != m_navMeshQuery->closestPointOnPoly(suffixStartPoly, endPoint, suffixEndPoint))
+            {
+                // suffixStartPoly is still invalid, error state
+                BuildShortcut();
+                m_type = PATHFIND_NOPATH;
+                return;
+            }
         }
 
         // generate suffix
