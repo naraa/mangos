@@ -48,7 +48,6 @@ enum
 
     TYPE_UNDYING_FAILED         = 15,                       // Achievements Undying and Immortal, needs to be saved to database
 
-    MAX_HEIGAN_TRAP_AREAS       = 4,
     TYPE_MAX_HEIGAN_TRAPS_1     = 18,
     TYPE_MAX_HEIGAN_TRAPS_2     = 19,
     TYPE_MAX_HEIGAN_TRAPS_3     = 20,
@@ -62,6 +61,8 @@ enum
     TYPE_ACHIEV_SHOCKING        = 3,
     TYPE_ACHIEV_SPORE_LOSER     = 4,
     TYPE_ACHIEV_GET_ENOUGH      = 5,
+
+    MAX_HEIGAN_TRAP_AREAS       = 4,
 
     NPC_ANUB_REKHAN             = 15956,
     NPC_FAERLINA                = 15953,
@@ -219,6 +220,9 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
 
         void Update(uint32 uiDiff);
 
+        // Heigan
+        void DoTriggerHeiganTraps(Creature* pHeigan, uint32 uiAreaIndex);
+
         // goth
         void SetGothTriggers();
         Creature* GetClosestAnchorForGoth(Creature* pSource, bool bRightSide);
@@ -242,11 +246,11 @@ class MANGOS_DLL_DECL instance_naxxramas : public ScriptedInstance
         std::string m_strInstData;
 
         GUIDList m_lThadTeslaCoilList;
-
         GUIDList m_lFaerlinaAddGUIDs;
-
         GUIDList m_lGothTriggerList;
+
         UNORDERED_MAP<ObjectGuid, GothTrigger> m_mGothTriggerMap;
+        GUIDList m_alHeiganTrapGuids[MAX_HEIGAN_TRAP_AREAS];
 
         std::vector<uint64> m_avuiHeiganTraps[MAX_HEIGAN_TRAP_AREAS];
 

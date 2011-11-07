@@ -940,7 +940,6 @@ INSERT INTO scripted_event_id VALUES
 (5623,'event_spell_gandling_shadow_portal');
 
 /* SEARING GORGE */
-UPDATE creature_template SET ScriptName='npc_kalaran_windblade' WHERE entry=8479;
 UPDATE creature_template SET ScriptName='npc_lothos_riftwaker' WHERE entry=14387;
 UPDATE creature_template SET ScriptName='npc_zamael_lunthistle' WHERE entry=8436;
 
@@ -981,7 +980,6 @@ UPDATE creature_template SET ScriptName='npc_shattrathflaskvendors' WHERE entry 
 UPDATE creature_template SET ScriptName='npc_helice' WHERE entry=28787;
 UPDATE creature_template SET ScriptName='npc_injured_rainspeaker' WHERE entry=28217;
 UPDATE creature_template SET ScriptName='npc_mosswalker_victim' WHERE entry=28113;
-UPDATE creature_template SET ScriptName='npc_vekjik' WHERE entry=28315;
 
 /* SILITHUS */
 UPDATE creature_template SET ScriptName='npc_highlord_demitrian' WHERE entry=14347;
