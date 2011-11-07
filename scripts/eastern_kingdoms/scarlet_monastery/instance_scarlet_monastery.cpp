@@ -1,4 +1,5 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+   Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -38,6 +39,15 @@ void instance_scarlet_monastery::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
+// headles horseman stuff not all these will be used will need clean up after i know which is really needed here
+        case NPC_HEAD:
+        case NPC_PUMPKIN_FIEND:
+        case NPC_HEADLESS_HORSEMAN:
+        case NPC_HH_UNHORSED:
+        case NPC_PULSING_PUMPKIN:
+        case NPC_HELPER:
+        case NPC_WISP_INVIS:
+// end of headless dude
         case NPC_MOGRAINE:
         case NPC_WHITEMANE:
         case NPC_VORREL:
@@ -54,22 +64,30 @@ void instance_scarlet_monastery::OnObjectCreate(GameObject* pGo)
 
 void instance_scarlet_monastery::SetData(uint32 uiType, uint32 uiData)
 {
-    if (uiType == TYPE_MOGRAINE_AND_WHITE_EVENT)
+    switch(uiType)
     {
-        if (uiData == IN_PROGRESS)
-            DoUseDoorOrButton(GO_WHITEMANE_DOOR);
-        if (uiData == FAIL)
-            DoUseDoorOrButton(GO_WHITEMANE_DOOR);
-
-        m_auiEncounter[0] = uiData;
+        case TYPE_MOGRAINE_AND_WHITE_EVENT:
+            if (uiData == IN_PROGRESS)
+                DoUseDoorOrButton(GO_WHITEMANE_DOOR);
+            if (uiData == FAIL)
+                DoUseDoorOrButton(GO_WHITEMANE_DOOR);
+                m_auiEncounter[0] = uiData;
+                break;
+        case TYPE_HALLOWSEND_EVENT:
+                m_auiEncounter[1] = uiData;
+                break;
     }
 }
 
 uint32 instance_scarlet_monastery::GetData(uint32 uiData)
 {
-    if (uiData == TYPE_MOGRAINE_AND_WHITE_EVENT)
-        return m_auiEncounter[0];
-
+    switch(uiData)
+    {
+        case TYPE_MOGRAINE_AND_WHITE_EVENT:
+            return m_auiEncounter[0];
+        case TYPE_HALLOWSEND_EVENT:
+            return m_auiEncounter[1];
+    }
     return 0;
 }
 

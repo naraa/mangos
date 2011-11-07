@@ -197,15 +197,15 @@ CreatureAI* GetAI_pet_greater_earth_elemental(Creature* pCreature)
 
 void AddSC_pet_scripts()
 {
-    Script* newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "pet_greater_fire_elemental";
-    newscript->GetAI = &GetAI_pet_greater_fire_elemental;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "pet_greater_fire_elemental";
+    pNewScript->GetAI = &GetAI_pet_greater_fire_elemental;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "pet_greater_earth_elemental";
-    newscript->GetAI = &GetAI_pet_greater_earth_elemental;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "pet_greater_earth_elemental";
+    pNewScript->GetAI = &GetAI_pet_greater_earth_elemental;
+    pNewScript->RegisterSelf();
 }
