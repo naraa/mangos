@@ -29,14 +29,9 @@ enum
     NPC_WHITEMANE                   = 3977,
     NPC_VORREL                      = 3981,
 
-    // headless horseman ( not all these will be needed but here for now) you can find this list in script right now as well)
     NPC_HEAD                        = 23775,
     NPC_PUMPKIN_FIEND               = 23545,
     NPC_HEADLESS_HORSEMAN           = 23682,
-    NPC_HH_UNHORSED                 = 23800,
-    NPC_PULSING_PUMPKIN             = 23694,
-    NPC_HELPER                      = 23686,
-    NPC_WISP_INVIS                  = 24034,
 
     GO_WHITEMANE_DOOR               = 104600,
 };

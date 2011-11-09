@@ -39,15 +39,9 @@ void instance_scarlet_monastery::OnCreatureCreate(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
-// headles horseman stuff not all these will be used will need clean up after i know which is really needed here
         case NPC_HEAD:
         case NPC_PUMPKIN_FIEND:
         case NPC_HEADLESS_HORSEMAN:
-        case NPC_HH_UNHORSED:
-        case NPC_PULSING_PUMPKIN:
-        case NPC_HELPER:
-        case NPC_WISP_INVIS:
-// end of headless dude
         case NPC_MOGRAINE:
         case NPC_WHITEMANE:
         case NPC_VORREL:

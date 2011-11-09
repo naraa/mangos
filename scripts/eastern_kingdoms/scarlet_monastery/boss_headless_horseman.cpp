@@ -17,12 +17,15 @@
 
 /* ScriptData
 SDName: boss_headless_horseman
-SD%Complete: 75
+SD%Complete: 80
 SDComment: 
-// TODO: fix phase change when body heals to full 
-// head to body switching and vice versa could use improving 
+
+TODO: 
+// only get one chance per summon to win  if u wipe or lose aggro he despawns
+// fix phase change when body heals to full 
 // his little flight entrace needs to have spawn creature movement in DB or script
-// during whirlwind his sword display is missing or invisible
+// could use a little tweaking
+
 SDCategory: Scarlet Monastery
 EndScriptData */
 
@@ -92,94 +95,15 @@ enum HorsemanSpells
 
 enum Phazes
 {
-    PHASE_ONE   = 1,
-    PHASE_TWO   = 2,
-    PHASE_THREE = 3,
+    PHASE_ZERO  = 0,   // summon the npc head  ( invis at first til phase 2
+    PHASE_ONE   = 1,   // just summoned once aggro starts off with cleave and summons head buff at aggro
+    PHASE_TWO   = 2,   // head and body split
+    PHASE_THREE = 3,   // head and body rejoin  start conflartion
+    PHASE_FOUR  = 4,   // head and body split again
+    PHASE_FIVE  = 5,   // head and body rejoin he cast conf and summons pumkin .. if body damaged enough repeat phase 4
 };
 
-/*######
-## npc_horsemans_head
-######*/
-
-struct MANGOS_DLL_DECL npc_horsemans_headAI : public ScriptedAI
-{
-    npc_horsemans_headAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
-        Reset();
-    }
-    ScriptedInstance* m_pInstance;
-
-    void Reset()
-    {
-        if (!m_creature->HasAura(SPELL_HEAD_INVIS))
-            m_creature->CastSpell(m_creature,SPELL_HEAD_INVIS,false);
-        if (m_creature->HasAura(SPELL_HEAD))
-            m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
-    }
-
-    void JustDied(Unit* pKiller)
-    {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,6);
-    }
-
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
-    {
-        if (!pSpell)
-            return;
-
-        if (pSpell->Id == SPELL_SEND_HEAD)
-        {
-            m_creature->CastSpell(m_creature,SPELL_HEAD,false);
-            DoScriptText(SAY_LOST_HEAD,m_creature);
-        }
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_pInstance)
-            return;
-
-        Creature* pHorseman = m_pInstance->GetSingleCreatureFromStorage(NPC_HEADLESS_HORSEMAN);
-        if (!pHorseman)
-            return;
-
-        switch(m_pInstance->GetData(TYPE_HALLOWSEND_EVENT))
-        {
-            case 0:
-            case 2:
-            case 4:
-                if (m_creature->HasAura(SPELL_HEAD))
-                {
-                    DoCast(pHorseman,SPELL_SEND_HEAD,true);
-                    m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
-                }
-                if (!m_creature->HasAura(SPELL_HEAD_INVIS))
-                    m_creature->CastSpell(m_creature,SPELL_HEAD_INVIS,false);
-                break;
-            case 1:
-            case 3:
-            case 5:
-                if (m_creature->HasAura(SPELL_HEAD_INVIS))
-                    m_creature->RemoveAurasDueToSpell(SPELL_HEAD_INVIS);
-
-                DoMeleeAttackIfReady();
-                break;
-            // Head or body died
-            case 6:
-                if (m_creature->isAlive())
-                    m_creature->ForcedDespawn();
-                break;
-            default: break;
-        }
-    }
-
-};
-CreatureAI* GetAI_npc_horsemans_head(Creature* pCreature)
-{
-    return new npc_horsemans_headAI(pCreature);
-}
+uint8 m_uiPhase;      // golbal phase counter
 
 /*######
 ## boss_headless_horseman
@@ -191,14 +115,13 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
     {
         m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
         Reset();
+        m_uiPhase = PHASE_ZERO;
         pEntered = false;
     }
-
+    
     ScriptedInstance* m_pInstance;
 
     bool pEntered;
-
-    uint8 point_id;
 
     uint32 m_uiCleave_Timer;
     uint32 m_uiConflageration_Timer;
@@ -211,11 +134,15 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         m_uiCleave_Timer = 5000;
         m_uiConflageration_Timer = 5000;
         m_uiPumpkinSprout_Timer = 5000;
+    }
 
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,0);
-        if (m_pInstance)
-            m_pInstance->GetSingleCreatureFromStorage(NPC_HEADLESS_HORSEMAN);
+    void Aggro(Unit* pWho)
+    {
+        if (!pWho)
+            return;
+
+        if (pEntered)
+            m_creature->SetInCombatWithZone();
     }
 
     void Laugh()
@@ -228,15 +155,6 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
         }
     }
 
-    void Aggro(Unit* pWho)
-    {
-        if (!pWho)
-            return;
-
-        if (pEntered)
-            m_creature->SetInCombatWithZone();
-    }
-
     void KilledUnit(Unit* pVictim)
     {
         DoScriptText(SAY_SLAY, m_creature);
@@ -244,22 +162,7 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,6);
-
         DoScriptText(SAY_DEATH, m_creature);
-    }
-
-    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
-    {
-        if (!pSpell)
-            return;
-
-        if (pSpell->Id == SPELL_SEND_HEAD)
-        {
-            DoScriptText(SAY_REJOINED,m_creature);
-            m_creature->CastSpell(m_creature,SPELL_HEAD,false);
-        }
     }
 
     void RemoveRegenAuras()
@@ -286,9 +189,21 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
             DoCast(m_creature,SPELL_WHIRLWIND,true);
     }
 
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        if (!pSpell)
+            return;
+
+        if (pSpell->Id == SPELL_SEND_HEAD)
+        {
+            DoScriptText(SAY_REJOINED,m_creature);
+            //m_creature->CastSpell(m_creature,SPELL_HEAD,false);
+        }
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!pEntered)
+        if (!pEntered) // should also be in phase zero
         {
             float x,y,z;
             m_creature->GetClosePoint(x, y, z, m_creature->GetObjectBoundingRadius(), 15.0f, 0.0f);
@@ -296,31 +211,28 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                 HeadGUID = pTemp->GetObjectGuid();
 
             pEntered = true;
+            m_uiPhase = PHASE_ONE;
 
         }
+
+       Creature* pHead = m_pInstance->GetSingleCreatureFromStorage(NPC_HEAD);
 
         if (!m_pInstance)
             return;
 
-        Creature* pHead = m_pInstance->GetSingleCreatureFromStorage(NPC_HEAD);
-        if (pEntered && !pHead)
-        {
-            error_log("Debug: Headless Horseman aggroed but no Head of Horseman found so abording!");
-            m_creature->ForcedDespawn();
-        }
-
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        switch (m_pInstance->GetData(TYPE_HALLOWSEND_EVENT))
+        
+        switch (m_uiPhase)
         {
-            //Phase 1a
-            case 0:
+            case PHASE_ONE:
+            {
+                // he gets his head
                 if (!m_creature->HasAura(SPELL_HEAD))
                     DoCast(m_creature,SPELL_HEAD,false);
 
                 if (((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth())) <= 1)
-                    m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,1);
+                     m_uiPhase = PHASE_TWO;
 
                 if (m_uiCleave_Timer <= uiDiff)
                 {
@@ -328,15 +240,16 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                     m_uiCleave_Timer = 5000;
                 }else m_uiCleave_Timer -= uiDiff;
                 DoMeleeAttackIfReady();
-                break;
 
-            //Phase 1b
-            case 1:
-				
+                break;
+            }
+            case PHASE_TWO:
+            {
                 if (m_creature->HasAura(SPELL_HEAD))
                 {
                     m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
-                    m_creature->CastSpell(pHead,SPELL_SEND_HEAD,false);
+// visual of head flying off body ( really head flying at target which in this case needs to be the head npc )
+                    DoCast(pHead,SPELL_SEND_HEAD,true);
                 }
 
                 ApplyRegenAuras();
@@ -345,22 +258,22 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                     if (pHead->AI())
                         pHead->AI()->AttackStart(pTarget);
 
-                if ((pHead->GetHealth()*100) / (pHead->GetMaxHealth()) <= 66)
+                if ((pHead->GetHealth()*100) / (pHead->GetMaxHealth()) <= 66) /*|| (m_creature->GetHealth()*100) / (m_creature->GetMaxHealth()) <= 100)*/
                 {
                     RemoveRegenAuras();
-
-                    if ((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth()) < 100)
-                        m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,2);
-                    else
-                        m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,0);
-                    pHead->SetHealth(pHead->GetMaxHealth()*0.7);
+                    m_uiPhase = PHASE_THREE;
                 }
-                break;
 
-            //Phase 2a
-            case 2:
+                break;
+            }
+            case PHASE_THREE:
+            {
+// give him his head back ( the head will target and cast spell send head at the body will look like head flying back on to body
+                if (!m_creature->HasAura(SPELL_HEAD))
+                    DoCast(m_creature,SPELL_HEAD,false);
+
                 if (((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth())) <= 1)
-                    m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,3);
+                    m_uiPhase = PHASE_FOUR;
 
                 if (m_uiConflageration_Timer <= uiDiff)
                 {
@@ -374,13 +287,14 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
 
                 DoMeleeAttackIfReady();
                 break;
-
-            //Phase 2b
-            case 3:
+            }
+            case PHASE_FOUR:
+            {
                 if (m_creature->HasAura(SPELL_HEAD))
                 {
                     m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
-                    m_creature->CastSpell(pHead,SPELL_SEND_HEAD,false);
+// visual of head flying off body ( really head flying at target which in this case needs to be the head npc )
+                    DoCast(pHead,SPELL_SEND_HEAD,true);
                 }
 
                 ApplyRegenAuras();
@@ -389,27 +303,24 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                     if (pHead->AI())
                         pHead->AI()->AttackStart(pTarget);
 
-                if ((pHead->GetHealth()*100) / (pHead->GetMaxHealth()) <= 33)
+                if ((pHead->GetHealth()*100) / (pHead->GetMaxHealth()) <= 33) /*|| (m_creature->GetHealth()*100) / (m_creature->GetMaxHealth()) <= 100)*/
                 {
                     RemoveRegenAuras();
-
-                    if ((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth()) < 100)
-                        m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,4);
-                    else
-                        m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,2);
-                    pHead->SetHealth(pHead->GetMaxHealth()*0.4);
+                    m_uiPhase = PHASE_FIVE;
                 }
+
                 break;
-            //Phase 3a
-            case 4:
-                if ((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth()) <= 100)
-                {
-                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                        if (pHead->AI())
-                            pHead->AI()->AttackStart(pTarget);
+            }
+            case PHASE_FIVE:
+            {
 
-                    m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,5);
-                }
+                if (!m_creature->HasAura(SPELL_HEAD))
+                    DoCast(m_creature,SPELL_HEAD,false);
+
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    if (pHead->AI())
+                        pHead->AI()->AttackStart(pTarget);
+
                 if (m_uiPumpkinSprout_Timer <= uiDiff)
                 {
                     if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -420,31 +331,26 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
                     m_uiPumpkinSprout_Timer = 30000;
                 }else m_uiPumpkinSprout_Timer -= uiDiff;
 
+                if (m_uiConflageration_Timer <= uiDiff)
+                {
+                    if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    {
+                        DoScriptText(SAY_CONFLAGRATION,m_creature);
+                        pTarget->CastSpell(pTarget,SPELL_CONFLAGRATION,false);
+                    }
+                    m_uiConflageration_Timer = 15000;
+                }else m_uiConflageration_Timer -= uiDiff;
+
+                if (((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth())) <= 1)
+                {
+                    m_uiPhase = PHASE_FOUR;
+                    DoCast(pHead,SPELL_SEND_HEAD,true);
+                }
+
                 DoMeleeAttackIfReady();
                 break;
-            //Phase 3b
-            case 5:
-                if (m_creature->HasAura(SPELL_HEAD))
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
-                    m_creature->CastSpell(pHead,SPELL_SEND_HEAD,false);
-                }
-
-                ApplyRegenAuras();
-
-                if (((m_creature->GetHealth()*100) / (m_creature->GetMaxHealth())) == 100)
-                {
-                    RemoveRegenAuras();
-                    m_pInstance->SetData(TYPE_HALLOWSEND_EVENT,4);
-                }
-                break;
-            // Head or body died
-            case 6:
-                if (m_creature->isAlive())
-                    m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-                break;
-
-            default: break;
+                //default: break;
+            }
         }
     }
 };
@@ -452,6 +358,92 @@ struct MANGOS_DLL_DECL boss_headless_horsemanAI : public ScriptedAI
 CreatureAI* GetAI_boss_headless_horseman(Creature* pCreature)
 {
     return new boss_headless_horsemanAI(pCreature);
+}
+
+/*######
+## npc_horsemans_head
+######*/
+
+struct MANGOS_DLL_DECL npc_horsemans_headAI : public ScriptedAI
+{
+    npc_horsemans_headAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
+        Reset();
+    }
+    ScriptedInstance* m_pInstance;
+
+    void Reset()
+    {
+        if (!m_creature->HasAura(SPELL_HEAD_INVIS))
+            m_creature->CastSpell(m_creature,SPELL_HEAD_INVIS,false);
+        if (m_creature->HasAura(SPELL_HEAD))
+            m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
+    }
+
+    void Aggro(Unit* pWho)
+    {
+        if (!pWho)
+            return;
+
+        DoCast(m_creature,SPELL_HEAD,false);
+        //m_creature->SetInCombatWithZone();
+    }
+
+    void JustDied(Unit* pKiller)
+    {
+    }
+
+    void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
+    {
+        if (!pSpell)
+            return;
+
+        if (pSpell->Id == SPELL_SEND_HEAD)
+        {
+            m_creature->CastSpell(m_creature,SPELL_HEAD,true);
+            DoScriptText(SAY_LOST_HEAD,m_creature);
+        }
+
+        if (m_creature->HasAura(SPELL_HEAD_INVIS))
+            m_creature->RemoveAurasDueToSpell(SPELL_HEAD_INVIS);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_pInstance)
+            return;
+
+        Creature* pHorseman = m_pInstance->GetSingleCreatureFromStorage(NPC_HEADLESS_HORSEMAN);
+
+        switch (m_uiPhase)
+        {
+            case 0:
+            case 1:
+            case 3:
+            case 5:
+                if (m_creature->HasAura(SPELL_HEAD))
+                {
+                    DoCast(pHorseman,SPELL_SEND_HEAD,true);
+                    m_creature->RemoveAurasDueToSpell(SPELL_HEAD);
+                }
+                if (!m_creature->HasAura(SPELL_HEAD_INVIS))
+                    m_creature->CastSpell(m_creature,SPELL_HEAD_INVIS,true);
+                break;
+            case 2:
+            case 4:
+                if (m_creature->HasAura(SPELL_HEAD_INVIS))
+                    m_creature->RemoveAurasDueToSpell(SPELL_HEAD_INVIS);
+
+                DoMeleeAttackIfReady();
+                break;
+        }
+    }
+
+};
+CreatureAI* GetAI_npc_horsemans_head(Creature* pCreature)
+{
+    return new npc_horsemans_headAI(pCreature);
 }
 
 /*######
@@ -486,16 +478,6 @@ struct MANGOS_DLL_DECL mob_pulsing_pumpkinAI : public ScriptedAI
             return;
 
         Creature* pHorseman = m_pInstance->GetSingleCreatureFromStorage(NPC_HEADLESS_HORSEMAN);
-        if (!pHorseman)
-            return;
-
-        // Case horseman or his head died
-        if (m_pInstance->GetData(TYPE_HALLOWSEND_EVENT) == 6)
-            m_creature->DealDamage(m_creature, m_creature->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-
-        // Case event reset
-        if (m_pInstance->GetData(TYPE_HALLOWSEND_EVENT) == 0)
-            m_creature->ForcedDespawn();
 
         // Apply squash after landing
         if (!bSquashed && m_creature->HasAura(SPELL_PUMPKIN_AURA))
@@ -533,20 +515,19 @@ CreatureAI* GetAI_mob_pulsing_pumpkin(Creature* pCreature)
     return new mob_pulsing_pumpkinAI(pCreature);
 }
 
-
 void AddSC_boss_headless_horseman()
 {
     Script* pNewScript;
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_horsemans_head";
-    pNewScript->GetAI = GetAI_npc_horsemans_head;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
     pNewScript->Name = "boss_headless_horseman";
     pNewScript->GetAI = GetAI_boss_headless_horseman;
     pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_horsemans_head";
+    pNewScript->GetAI = GetAI_npc_horsemans_head;
+    pNewScript->RegisterSelf(); 
 
     pNewScript = new Script;
     pNewScript->Name = "mob_pulsing_pumpkin";

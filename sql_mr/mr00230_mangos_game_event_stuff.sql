@@ -25,6 +25,9 @@ UPDATE `creature_template` SET `modelid_2` = 21822, `faction_A` = 14, `faction_H
 -- Pulsing pumkin template fixes
 UPDATE `creature_template` SET `modelid_2` = 24720, `faction_A` = 14, `faction_H` = 14, `type` = 6, `mechanic_immune_mask` = 8388624, `flags_extra` = 0 WHERE `entry` = 23694;
 
+-- head of the horseman fixes
+UPDATE `creature_template` SET `modelid_2` = 21908, `faction_A` = 7, `faction_H` = 7, `mechanic_immune_mask` = 787202047 WHERE `entry` = 23775;
+
 -- Fixes to his template ( smart to wiped clean and replaced data)
 -- Headless Horseman fixes and ect
 DELETE FROM `creature_template` WHERE (`entry`=23682);
@@ -53,6 +56,9 @@ UPDATE `quest_template` SET `PrevQuestId` = 0 WHERE `entry` = 11401;
 -- built new equip_template for him
 DELETE FROM `creature_equip_template` WHERE (`entry`=10400);
 INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES (10400, 38175, 0, 0);
+
+-- fix no sword showing on regen/whirlwinding headless dude
+UPDATE `creature_template` SET `equipment_id` = 10400 WHERE `entry` = 23800;
 
 -- --------------------------------------------------------------------------------------------------------------------------------------------
 
