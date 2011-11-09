@@ -131,7 +131,6 @@ void ScriptedAI::EnterEvadeMode()
     m_creature->RemoveAllAuras();
     m_creature->DeleteThreatList();
     m_creature->CombatStop(true);
-    m_creature->LoadCreatureAddon();
 
     if (m_creature->isAlive())
         m_creature->GetMotionMaster()->MoveTargetedHome();
