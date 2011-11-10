@@ -288,11 +288,6 @@ void instance_sunwell_plateau::Load(const char* in)
     OUT_LOAD_INST_DATA_COMPLETE;
 }
 
-InstanceData* GetInstanceData_instance_sunwell_plateau(Map* pMap)
-{
-    return new instance_sunwell_plateau(pMap);
-}
-
 bool AreaTrigger_at_sunwell_plateau(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
     if (pAt->id == AREATRIGGER_TWINS)
@@ -307,6 +302,11 @@ bool AreaTrigger_at_sunwell_plateau(Player* pPlayer, AreaTriggerEntry const* pAt
     }
 
     return false;
+}
+
+InstanceData* GetInstanceData_instance_sunwell_plateau(Map* pMap)
+{
+    return new instance_sunwell_plateau(pMap);
 }
 
 void AddSC_instance_sunwell_plateau()
