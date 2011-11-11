@@ -161,6 +161,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
                          pCreature->SetPhaseMask(0, true);
                          break;
         }
+        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
     }
 
     void OnObjectCreate(GameObject* pGo)
