@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,9 +18,8 @@
 
 /* ScriptData
 SDName: instance_culling_of_stratholme
-SD%Complete: ?%
-SDComment: by MaxXx2021
-SDCategory: Culling of Stratholme
+SD%Complete: %
+SDComment:
 EndScriptData */
 
 #include "precompiled.h"
@@ -30,67 +30,6 @@ EndScriptData */
 /*###
 ## npc_chromi_start
 ###*/
-
-#define GOSSIP_ITEM_CHROMI1 "Why have I been sent back to this particular place and time?"
-#define GOSSIP_ITEM_CHROMI2 "What was this decision?"
-#define GOSSIP_ITEM_CHROMI3 "So how does the infinite Dragonflight plan to Interfere?"
-
-enum
-{
-  GOSSIP_TEXTID_CHROMI1            = 12939,
-  GOSSIP_TEXTID_CHROMI2            = 12949,
-  GOSSIP_TEXTID_CHROMI3            = 12950,
-  GOSSIP_TEXTID_CHROMI4            = 12952
-};
-
-bool GossipHello_npc_chromi_start(Player* pPlayer, Creature* pCreature)
-{
-    if(pCreature->isQuestGiver())
-        pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
-
-    ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-    if (pPlayer && pPlayer->GetQuestStatus(QUEST_DISPELLING_ILLUSIONS) == QUEST_STATUS_COMPLETE && pInstance && pInstance->GetData(TYPE_QUEST) == NOT_STARTED)
-        pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CHROMI1, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
-
-    pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_CHROMI1, pCreature->GetObjectGuid()); 
-
-    return true; 
-}
-
-bool GossipSelect_npc_chromi_start(Player* pPlayer, Creature* pCreature, uint32 uiSender, uint32 uiAction)
-{
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+1) 
-    {
-       pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CHROMI2, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2); 
-
-       pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_CHROMI2, pCreature->GetObjectGuid()); 
-    }
-
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+2) 
-    {
-       pPlayer->ADD_GOSSIP_ITEM(GOSSIP_ICON_CHAT, GOSSIP_ITEM_CHROMI3, GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+3); 
-
-       pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_CHROMI3, pCreature->GetObjectGuid()); 
-    }
-
-    if (uiAction == GOSSIP_ACTION_INFO_DEF+3) 
-    {
-       // START COUNTER HERE 
-        if (ScriptedInstance* pInstance = (ScriptedInstance*)pCreature->GetInstanceData())
-        {
-            pInstance->DoUpdateWorldState(WORLD_STATE_COS_CRATE_ON, 1);
-            pInstance->SetData(TYPE_QUEST, IN_PROGRESS);
-        }
-
-        if (pPlayer)
-            if (Item* pItem = pPlayer->StoreNewItemInInventorySlot(ITEM_ARCANE_DISRUPTOR, 1)) 
-                pPlayer->SendNewItem(pItem, 1, true, false); 
-
-       pPlayer->SEND_GOSSIP_MENU(GOSSIP_TEXTID_CHROMI4, pCreature->GetObjectGuid()); 
-    }
-
-    return true;
-}
 
 struct MANGOS_DLL_DECL npc_chromi_startAI : public ScriptedAI
 {
@@ -1230,47 +1169,45 @@ CreatureAI* GetAI_npc_stratholme_crates(Creature* pCreature)
 
 void AddSC_culling_of_stratholmeAI()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_chromi_start";
-    newscript->pGossipHello =  &GossipHello_npc_chromi_start;
-    newscript->pGossipSelect = &GossipSelect_npc_chromi_start;
-    newscript->GetAI = &GetAI_npc_chromi_start;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_chromi_start";
+    pNewScript->GetAI = &GetAI_npc_chromi_start;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_mike";
-    newscript->GetAI = &GetAI_npc_mike;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_mike";
+    pNewScript->GetAI = &GetAI_npc_mike;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_roger";
-    newscript->GetAI = &GetAI_npc_roger;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_roger";
+    pNewScript->GetAI = &GetAI_npc_roger;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_morigan";
-    newscript->GetAI = &GetAI_npc_morigan;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_morigan";
+    pNewScript->GetAI = &GetAI_npc_morigan;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_jena";
-    newscript->GetAI = &GetAI_npc_jena;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_jena";
+    pNewScript->GetAI = &GetAI_npc_jena;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_malcolm";
-    newscript->GetAI = &GetAI_npc_malcolm;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_malcolm";
+    pNewScript->GetAI = &GetAI_npc_malcolm;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_bartleby_cs";
-    newscript->GetAI = &GetAI_npc_bartleby_cs;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_bartleby_cs";
+    pNewScript->GetAI = &GetAI_npc_bartleby_cs;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_stratholme_crates";
-    newscript->GetAI = &GetAI_npc_stratholme_crates;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_stratholme_crates";
+    pNewScript->GetAI = &GetAI_npc_stratholme_crates;
+    pNewScript->RegisterSelf();
 }

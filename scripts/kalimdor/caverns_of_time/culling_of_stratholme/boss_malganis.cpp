@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,9 +18,8 @@
 
 /* ScriptData
 SDName: instance_culling_of_stratholme
-SD%Complete: ?%
-SDComment: by MaxXx2021
-SDCategory: Culling of Stratholme
+SD%Complete: %
+SDComment:
 EndScriptData */
 
 #include "precompiled.h"
@@ -235,11 +235,11 @@ CreatureAI* GetAI_boss_malganis(Creature* pCreature)
 
 void AddSC_boss_malganis()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_malganis";
-    newscript->GetAI = &GetAI_boss_malganis;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_malganis";
+    pNewScript->GetAI = &GetAI_boss_malganis;
+    pNewScript->RegisterSelf();
 
 }

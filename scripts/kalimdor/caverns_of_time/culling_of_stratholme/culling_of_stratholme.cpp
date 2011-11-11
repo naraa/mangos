@@ -1,4 +1,5 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,9 +18,8 @@
 
 /* ScriptData
 SDName: instance_culling_of_stratholme
-SD%Complete: ?%
-SDComment: by MaxXx2021
-SDCategory: Culling of Stratholme
+SD%Complete: %
+SDComment:
 EndScriptData */
 
 #include "precompiled.h"
@@ -1732,39 +1732,39 @@ CreatureAI* GetAI_npc_dark_conversion(Creature* pCreature)
 
 void AddSC_culling_of_stratholme()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_chromi_middle";
-    newscript->pGossipHello =  &GossipHello_npc_chromi_middle;
-    newscript->pGossipSelect = &GossipSelect_npc_chromi_middle;
-    newscript->GetAI = &GetAI_npc_chromi_middle;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_chromi_middle";
+    pNewScript->pGossipHello =  &GossipHello_npc_chromi_middle;
+    pNewScript->pGossipSelect = &GossipSelect_npc_chromi_middle;
+    pNewScript->GetAI = &GetAI_npc_chromi_middle;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_uther";
-    newscript->GetAI = &GetAI_npc_uther;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_uther";
+    pNewScript->GetAI = &GetAI_npc_uther;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_arthas";
-    newscript->GetAI = &GetAI_npc_arthas;
-    newscript->pGossipHello =  &GossipHello_npc_arthas;
-    newscript->pGossipSelect = &GossipSelect_npc_arthas;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_arthas";
+    pNewScript->GetAI = &GetAI_npc_arthas;
+    pNewScript->pGossipHello =  &GossipHello_npc_arthas;
+    pNewScript->pGossipSelect = &GossipSelect_npc_arthas;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_arthas_priest";
-    newscript->GetAI = &GetAI_npc_arthas_priest;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_arthas_priest";
+    pNewScript->GetAI = &GetAI_npc_arthas_priest;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_arthas_marine";
-    newscript->GetAI = &GetAI_npc_arthas_marine;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_arthas_marine";
+    pNewScript->GetAI = &GetAI_npc_arthas_marine;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_dark_conversion";
-    newscript->GetAI = &GetAI_npc_dark_conversion;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_dark_conversion";
+    pNewScript->GetAI = &GetAI_npc_dark_conversion;
+    pNewScript->RegisterSelf();
 }
