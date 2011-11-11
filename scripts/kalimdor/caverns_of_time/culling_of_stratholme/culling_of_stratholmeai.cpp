@@ -1145,7 +1145,7 @@ struct MANGOS_DLL_DECL npc_stratholme_cratesAI : public ScriptedAI
                }
             }
 
-            if(Creature* pMorigan = m_pInstance->instance->GetCreature(m_pInstance->GetData64(NPC_MORIGAN)))
+            if(Creature* pMorigan = m_pInstance->GetSingleCreatureFromStorage(NPC_MORIGAN))
             { 
                if(m_creature->GetDistance2d(pMorigan->GetPositionX(), pMorigan->GetPositionY()) < 50.0f)
                {
