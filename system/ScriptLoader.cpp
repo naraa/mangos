@@ -13,16 +13,6 @@ extern void AddSC_battlegroundIC();
 extern void AddSC_mob_teleguy();
 extern void AddSC_npc_arena_honor();
 
-// OutdoorPvP zone scripts
-extern void AddSC_outdoor_pvp_eastern_plaguelands();
-extern void AddSC_outdoor_pvp_silithus();
-
-// OutdoorPvP
-extern void AddSC_outdoor_pvp_eastern_kingdoms();
-extern void AddSC_outdoor_pvp_kalimdor();
-extern void AddSC_outdoor_pvp_northrend();
-extern void AddSC_outdoor_pvp_outland();
-
 // examples
 extern void AddSC_example_creature();
 extern void AddSC_example_escort();
@@ -548,12 +538,6 @@ void AddScripts()
     // custom
     AddSC_mob_teleguy();
     AddSC_npc_arena_honor();
-    AddSC_outdoor_pvp_eastern_plaguelands();                // OutdoorPvP zone scripts. Must be _before_ map scripts call!
-    AddSC_outdoor_pvp_silithus();
-    AddSC_outdoor_pvp_eastern_kingdoms();                   // OutdoorPvP
-    AddSC_outdoor_pvp_kalimdor();
-    AddSC_outdoor_pvp_northrend();
-    AddSC_outdoor_pvp_outland();
 
     // examples
     AddSC_example_creature();
