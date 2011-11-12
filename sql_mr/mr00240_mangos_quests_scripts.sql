@@ -58,6 +58,16 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+
+-- -------------
+-- Quest 11560 -
+-- -------------
+UPDATE `gameobject_template` SET `ScriptName` = "", `data2` = 11560 WHERE `entry` = 187373;
+UPDATE `creature_template` SET `ScriptName` = "npc_tadpole" WHERE `entry` = 25201;
+UPDATE `creature` SET `MovementType` = 0 WHERE `id` = 25201;
+DELETE FROM `scripted_event_id` WHERE `id` = 11560;
+INSERT INTO `scripted_event_id` (`id`,`ScriptName`) VALUES (11560,"go_tadpole_cage"); 
+
 -- --------------
 -- Quest 12240  -
 -- --------------

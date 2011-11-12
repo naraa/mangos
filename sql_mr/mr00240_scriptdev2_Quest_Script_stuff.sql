@@ -85,3 +85,17 @@ INSERT INTO `script_waypoint` (`entry`,`pointid`,`location_x`,
 (33519, 14, 9086.074, 2058.25, 82.827, 0, ''),
 (33519, 15, 9066.61, 2114.63, 67.966, 0, ''),
 (33519, 16, 9052.65, 2115.8, 57.863, 3000, '');
+
+-- -------------
+-- Quest 11560 -
+-- -------------
+
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1039999 AND -1039993;
+INSERT INTO `script_texts` (`entry`,`content_default`,`comment`) VALUES
+(-1039999, "Eww.. $r!", "tadpole SAY_RACE"),
+(-1039998, "No go with stranger!", "tadpole SAY_2"),
+(-1039997, "Close!", "tadpole SAY_3"),
+(-1039996, "Me go home?", "tadpole SAY_4"),
+(-1039995, "Play!", "tadpole SAY_5"),
+(-1039994, "Alurglgl!", "tadpole SAY_6"),
+(-1039993, "da-da?", "tadpole SAY_7");

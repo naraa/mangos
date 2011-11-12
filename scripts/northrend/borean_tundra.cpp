@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +18,7 @@
 /* ScriptData
 SDName: Borean_Tundra
 SD%Complete: 100
-SDComment: Quest support: 11865, 11728, 11897, 11570
+SDComment: Quest support: 11865, 11728, 11897, 11560, 11570
 SDCategory: Borean Tundra
 EndScriptData */
 
@@ -30,6 +31,8 @@ npc_nexus_drake
 go_scourge_cage
 npc_beryl_sorcerer
 npc_seaforium_depth_charge
+npc_tad_pole
+Go_tadpole_cage
 EndContentData */
 
 #include "precompiled.h"
@@ -798,7 +801,7 @@ struct npc_seaforium_depth_chargeAI : public ScriptedAI
     {
         if (uiExplosionTimer < uiDiff)
         {
-            DoCast(m_creature, SPELL_SEAFORIUM_DEPTH_CHARGE_EXPLOSION);          
+            DoCast(m_creature, SPELL_SEAFORIUM_DEPTH_CHARGE_EXPLOSION);
             for(uint8 i = 0; i < 4; ++i)
             {
                 if(Creature* cCredit = GetClosestCreatureWithEntry(m_creature, 25402 + i, 10.0f))//25402-25405 credit markers
@@ -807,7 +810,7 @@ struct npc_seaforium_depth_chargeAI : public ScriptedAI
                     {
                         if(pPlayer->GetQuestStatus(QUEST_BURY_THOSE_COCKROACHES) == QUEST_STATUS_INCOMPLETE)
                             pPlayer->KilledMonsterCredit(cCredit->GetEntry(),cCredit->GetObjectGuid());
-                    }                    
+                    }
                 }
             }
             m_creature->ForcedDespawn(1000);
@@ -818,6 +821,75 @@ struct npc_seaforium_depth_chargeAI : public ScriptedAI
 CreatureAI* GetAI_npc_seaforium_depth_charge(Creature* pCreature)
 {
     return new npc_seaforium_depth_chargeAI(pCreature);
+}
+
+/*#####
+## go_tadpole_cage
+#####*/
+
+enum
+{
+    NPC_TADPOLE = 25201,
+    QUEST_TADPOLES = 11560
+};
+
+const int32 textNotOnQuest[3] =
+{
+-1039999, -1039998, -1039997
+};
+
+const int32 textOnQuest[4] =
+{
+   -1039996, -1039995, -1039994, -1039993
+};
+
+bool ProcessEventId_go_tadpole_cage(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (Player* pPlayer = (Player*) pSource)
+        if (GameObject* pGo = (GameObject*) pTarget)
+        {
+            if (Creature* pTadpole = GetClosestCreatureWithEntry(pGo,NPC_TADPOLE,0.5))
+                if (pPlayer->GetQuestStatus(QUEST_TADPOLES) == QUEST_STATUS_INCOMPLETE)
+                {
+                    DoScriptText(textOnQuest[urand(0,3)],pTadpole,pPlayer);
+                    ((FollowerAI*)pTadpole->AI())->StartFollow(pPlayer);
+                    pPlayer->KilledMonsterCredit(NPC_TADPOLE);
+                }
+                else
+                    DoScriptText(textNotOnQuest[urand(0,2)],pTadpole,pPlayer);
+        }
+    return true;
+}
+
+/*#####
+## npc_tadpole
+#####*/
+
+struct MANGOS_DLL_DECL npc_tadpoleAI : public FollowerAI
+{
+    npc_tadpoleAI(Creature* pCreature) : FollowerAI(pCreature) { Reset(); }
+
+    uint32 m_uiDespawnTimer;
+
+    void Reset(){ m_uiDespawnTimer = 60000; }
+
+    void UpdateFollowerAI(const uint32 uiDiff)
+    {
+        // despawn after following 1 minute
+        if (HasFollowState(STATE_FOLLOW_INPROGRESS))
+            if (m_uiDespawnTimer < uiDiff)
+            {
+                SetFollowComplete(false);
+                m_creature->ForcedDespawn();
+            }
+
+        FollowerAI::UpdateFollowerAI(uiDiff);
+    }
+};
+
+CreatureAI* GetAI_npc_tadpole(Creature* pCreature)
+{
+    return new npc_tadpoleAI(pCreature);
 }
 
 void AddSC_borean_tundra()
@@ -870,5 +942,15 @@ void AddSC_borean_tundra()
     pNewScript = new Script;
     pNewScript->Name = "npc_seaforium_depth_charge";
     pNewScript->GetAI = &GetAI_npc_seaforium_depth_charge;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_tadpole_cage";
+    pNewScript->pProcessEventId = &ProcessEventId_go_tadpole_cage;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_tadpole";
+    pNewScript->GetAI = &GetAI_npc_tadpole;
     pNewScript->RegisterSelf();
 }
