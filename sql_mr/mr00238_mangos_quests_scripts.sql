@@ -58,6 +58,17 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- -------------
+-- Quest 14104 -
+-- -------------
+DELETE FROM `event_scripts` WHERE `id` = 22030;
+INSERT INTO `event_scripts` (`id`,`delay`,`command`,`datalong`,`datalong2`,`x`,`y`,`z`,`o`,`comments`) VALUES (22030,3,10,35012,300000,10006.4,650.6,10.34,4.542,"");
+
+DELETE FROM `creature_equip_template` WHERE (`entry`=110000);
+INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `equipentry3`) VALUES (110000, 34816, 34816, 0);
+
+UPDATE `creature_template` SET `equipment_id` = 110000 WHERE `entry` = 35012;
+
 -- ------------
 -- quest 9164 -
 -- ------------
