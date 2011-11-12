@@ -58,6 +58,15 @@ DELETE FROM scripted_event_id WHERE id = 9735;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- --------------
+-- Quest 12240  -
+-- --------------
+
+UPDATE `creature_template` SET `modelid_1` = 17612 WHERE `entry` = 27353;
+DELETE FROM `creature` WHERE `id`=27238;
+UPDATE `creature_template` SET `armor` = 7618, `faction_A` = 67, `faction_H` = 67 WHERE `entry` = 27238;
+
+
 -- -------------
 -- Quest 14104 -
 -- -------------
