@@ -36,20 +36,6 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
 
     uint64 m_uiChromi01GUID;
     uint64 m_uiChromi02GUID;
-    uint64 m_uiMikeGUID;
-    uint64 m_uiMalCoricsGUID;
-    uint64 m_uiGrianStoneGUID;
-    uint64 m_uiJamesGUID;
-    uint64 m_uiFrasCiabiGUID;
-    uint64 m_uiForrestenGUID;
-    uint64 m_uiRogerGUID;
-    uint64 m_uiMoriganGUID;
-    uint64 m_uiPerelliGUID;
-    uint64 m_uiJenaGUID;
-    uint64 m_uiMarthaGUID;
-    uint64 m_uiMalcolmGUID;
-    uint64 m_uiDogGUID;
-    uint64 m_uiBartlebyGUID;
     uint64 m_uiArthasGUID;
     uint64 m_uiUtherGUID;
     uint64 m_uiJainaGUID;
@@ -82,22 +68,9 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
        DoUpdateWorldState(WORLD_STATE_COS_TIME_ON, 0);
 
        m_uiCratesCount = 0;
-       m_uiMikeGUID = 0;
        m_uiChromi01GUID = 0;
        m_uiChromi02GUID = 0;
-       m_uiMalCoricsGUID = 0;
-       m_uiGrianStoneGUID = 0;
-       m_uiJamesGUID = 0;
-       m_uiFrasCiabiGUID = 0;
-       m_uiForrestenGUID = 0;
-       m_uiRogerGUID = 0;
-       m_uiMoriganGUID = 0;
-       m_uiPerelliGUID = 0;
-       m_uiJenaGUID = 0;
-       m_uiMarthaGUID = 0;
-       m_uiMalcolmGUID = 0;
-       m_uiDogGUID = 0;
-       m_uiBartlebyGUID = 0;
+     
        m_uiArthasGUID = 0;
        m_uiUtherGUID = 0;
        m_uiJainaGUID = 0;

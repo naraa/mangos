@@ -144,6 +144,9 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594186, 'You seem tired.', 'Ты выглядишь усталым!',14415,1,0,0, '26499'),
 (-1594187, 'ENOUGH! I waste my time here...I must gather my strength on the home world...', 'Я лишь зря трачу тут свое время. Мне нужно собраться силами в моем родном мире.',14428,1,0,0, '26499');
 
+-- for official Sd2 --> DB clean up query
+DELETE FROM gossip_texts WHERE entry BETWEEN -3595005 AND -3595000;
+
 DELETE FROM script_waypoint WHERE entry=26528;
 DELETE FROM script_waypoint WHERE entry=26499;
 INSERT INTO script_waypoint VALUES

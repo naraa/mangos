@@ -39,9 +39,15 @@ enum Data
 
     DATA_TEMPSUMMON      = 10,
 
+///-> First quest stuff for CoS
     QUEST_DISPELLING_ILLUSIONS  = 13149,
-    QUEST_A_ROYAL_ESCORT        = 13151,
+    NPC_CRATE_KC_BUNNY          = 30996,
+    SPELL_ARCANE_DISRUPTION     = 49590,
+    SPELL_CRATES_KILL_CREDIT    = 58109,
     ITEM_ARCANE_DISRUPTOR       = 37888,
+///-> end
+
+    QUEST_A_ROYAL_ESCORT        = 13151,
 
     NPC_CHROMI01            = 26527,
     NPC_CHROMI02            = 27915,
@@ -56,7 +62,6 @@ enum Data
     NPC_FRAS_FRASIABI       = 30552,
     NPC_FORRESTER           = 30551,
     NPC_ROGER               = 27903,
-    NPC_CRATE               = 30996,
     NPC_MORIGAN             = 27877,
     NPC_PERELLI             = 27876,
     NPC_JENA                = 27885,
