@@ -154,6 +154,7 @@ struct MANGOS_DLL_DECL npc_mikeAI : public ScriptedAI
            case 5:
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_FRAS_FRASIABI))
                  pTemp->HandleEmoteCommand(EMOTE_SHOT);
+              m_creature->SetStandState(UNIT_STAND_STATE_STAND);
               m_uiStepTimer = 5000;
               break;
            case 6:
@@ -277,15 +278,15 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_uiStepTimer = 7000;
               break;
            case 1:
-              MoveToPoint(m_creature, 1590.055f, 615.727f, 99.795f, 7000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1590.055f, 615.727f, 99.795f);
               m_uiStepTimer = 6900;
               break;
            case 2:
-              MoveToPoint(m_creature, 1584.039f, 622.049f, 99.907f, 4000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1584.039f, 622.049f, 99.907f);
               m_uiStepTimer = 3900;
               break;
            case 3:
-              MoveToPoint(m_creature, 1578.787f, 623.924f, 99.855f, 2000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1578.787f, 623.924f, 99.855f);
               m_uiStepTimer = 2500;
               break;
            case 4:
@@ -293,7 +294,7 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_uiStepTimer = 6000;
               break;
            case 5:
-              MoveToPoint(m_creature, 1579.393f, 624.018f, 99.886f, 900);
+              m_creature->GetMotionMaster()->MovePoint(0, 1579.393f, 624.018f, 99.886f);
               m_uiStepTimer = 2000;
               break;
            case 6:
@@ -301,7 +302,7 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_uiStepTimer = 6000;
               break;
            case 7:
-              MoveToPoint(m_creature, 1579.387f, 623.198f, 99.837f, 300);
+              m_creature->GetMotionMaster()->MovePoint(0, 1579.387f, 623.198f, 99.837f);
               m_uiStepTimer = 1000;
               break;
            case 8:
@@ -309,11 +310,11 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_uiStepTimer = 4000;
               break;
            case 9:
-              MoveToPoint(m_creature, 1575.576f, 619.935f, 99.422f, 1500);
+              m_creature->GetMotionMaster()->MovePoint(0, 1575.576f, 619.935f, 99.422f);
               m_uiStepTimer = 2000;
               break;
            case 10:
-              MoveToPoint(m_creature, 1575.833f, 620.471f, 99.466f, 300);
+              m_creature->GetMotionMaster()->MovePoint(0, 1575.833f, 620.471f, 99.466f);
               m_uiStepTimer = 1000;
               break;
            case 11:
@@ -321,15 +322,15 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_uiStepTimer = 6000;
               break;
            case 12:
-              MoveToPoint(m_creature, 1580.215f, 624.368f, 99.924f, 2000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1580.215f, 624.368f, 99.924f);
               m_uiStepTimer = 1900;
               break;
            case 13:
-              MoveToPoint(m_creature, 1587.471f, 618.181f, 99.850f, 4000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1587.471f, 618.181f, 99.850f);
               m_uiStepTimer = 3900;
               break;
            case 14:
-              MoveToPoint(m_creature, 1592.646f, 590.888f, 99.151f, 11000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1592.646f, 590.888f, 99.151f);
               m_uiStepTimer = 13000;
               break;
            case 15:
@@ -337,13 +338,6 @@ struct MANGOS_DLL_DECL npc_rogerAI : public ScriptedAI
               m_creature->SetVisibility(VISIBILITY_OFF);
               break;
         }
-    }
-
-    void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
-    {
-        unit->GetMotionMaster()->MovementExpired(false);
-        unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -429,7 +423,6 @@ struct MANGOS_DLL_DECL npc_moriganAI : public ScriptedAI
               m_uiStepTimer = 1500;
               break;
            case 4:
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1569.615f, 668.859f, 102.180f);
               m_uiStepTimer = 2000;
               break;
@@ -472,15 +465,15 @@ struct MANGOS_DLL_DECL npc_moriganAI : public ScriptedAI
               m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_PERELLI))
                  pTemp->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              MoveToPoint(m_creature, 1576.119f, 657.675f, 102.09f, 5000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1576.119f, 657.675f, 102.09f);
               m_uiStepTimer = 4900;
               break;
            case 13:
-              MoveToPoint(m_creature, 1586.040f, 646.113f, 100.910f, 6000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1586.040f, 646.113f, 100.910f);
               m_uiStepTimer = 5900;
               break;
            case 14:
-              MoveToPoint(m_creature, 1609.189f, 697.134f, 106.902f, 23000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1609.189f, 697.134f, 106.902f);
               m_uiStepTimer = 24900;
               break;
            case 15:
@@ -488,12 +481,6 @@ struct MANGOS_DLL_DECL npc_moriganAI : public ScriptedAI
               m_creature->SetVisibility(VISIBILITY_OFF);
               break;
         }
-    }
-
-    void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
-    {
-        unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -561,22 +548,18 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
         switch(m_uiStep)
         {
            case 0:
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1605.546f, 744.869f, 114.731f);
               m_uiStepTimer = 1900;
               break;
            case 1:
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1614.967f, 743.673f, 114.063f);
               m_uiStepTimer = 4900;
               break;
            case 2:
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1623.848f, 729.251f, 112.410f);
               m_uiStepTimer = 6900;
               break;
            case 3:
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1633.460f, 726.261f, 113.518f);
               m_uiStepTimer = 4000;
               break;
@@ -597,7 +580,6 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
            case 6:
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_MARTHA))
               {
-                 pTemp->GetMotionMaster()->MovementExpired(false);
                  pTemp->GetMotionMaster()->MovePoint(0, 1636.721f, 725.88f, 113.561f);
                  pTemp->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
               }
@@ -624,7 +606,6 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
                  pTemp->GetMap()->CreatureRelocation(pTemp, 1640.089f, 725.766f, 113.561f, 4.77f);
                  pTemp->MonsterMoveWithSpeed(1640.089f, 725.766f, 113.561f, 26);
               }
-              m_creature->GetMotionMaster()->MovementExpired(false);
               m_creature->GetMotionMaster()->MovePoint(0, 1629.452f, 729.416f, 112.712f);
               m_uiStepTimer = 1000;
               break;
@@ -657,15 +638,15 @@ struct MANGOS_DLL_DECL npc_jenaAI : public ScriptedAI
                  MoveToPoint(pTemp, 1638.196f, 726.171f, 113.561f, 1000);
               }
               m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              MoveToPoint(m_creature, 1615.590f, 719.509f, 110.311f, 2000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1615.590f, 719.509f, 110.311f);
               m_uiStepTimer = 2000;
               break;
            case 16:
-              MoveToPoint(m_creature, 1596.436f, 670.809f, 103.747f, 7000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1596.436f, 670.809f, 103.747f);
               m_uiStepTimer = 6900;
               break;
            case 17:
-              MoveToPoint(m_creature, 1571.549f, 609.837f, 99.767f, 9000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1571.549f, 609.837f, 99.767f);
               m_uiStepTimer = 11000;
               break;
            case 18:
@@ -748,26 +729,26 @@ struct MANGOS_DLL_DECL npc_malcolmAI : public ScriptedAI
         switch(m_uiStep)
         {
            case 0:
-              MoveToPoint(m_creature, 1614.066f, 796.722f, 121.739f, 5500);
+              m_creature->GetMotionMaster()->MovePoint(0, 1614.066f, 796.722f, 121.739f);
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_DOG))
                  MoveToPoint(pTemp, 1611.459f, 793.274f, 121.928f, 5500);
               m_uiStepTimer = 5400;
               break;
            case 1:
               DoScriptText(SAY_MALCOLM01, m_creature);
-              MoveToPoint(m_creature, 1622.820f, 798.816f, 120.570f, 3500);
+              m_creature->GetMotionMaster()->MovePoint(0, 1622.820f, 798.816f, 120.570f);
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_DOG))
                  MoveToPoint(pTemp, 1621.467f, 794.323f, 120.323f, 3500);
               m_uiStepTimer = 3400;
               break;
            case 2:
-              MoveToPoint(m_creature, 1626.574f, 806.781f, 120.270f, 3500);
+              m_creature->GetMotionMaster()->MovePoint(0, 1626.574f, 806.781f, 120.270f);
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_DOG))
                  MoveToPoint(pTemp, 1629.232f, 803.629f, 120.011f, 3500);
               m_uiStepTimer = 3400;
               break;
            case 3:
-              MoveToPoint(m_creature, 1622.782f, 808.533f, 121.249f, 1500);
+              m_creature->GetMotionMaster()->MovePoint(0, 1622.782f, 808.533f, 121.249f);
               if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_DOG))
                  MoveToPoint(pTemp, 1629.265f, 805.245f, 120.070f, 300);
               m_uiStepTimer = 300;
@@ -798,15 +779,15 @@ struct MANGOS_DLL_DECL npc_malcolmAI : public ScriptedAI
               break;
            case 8:
               m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              MoveToPoint(m_creature, 1629.922f, 807.799f, 120.122f, 3000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1629.922f, 807.799f, 120.122f);
               m_uiStepTimer = 2900;
               break;
            case 9:
-              MoveToPoint(m_creature, 1632.169f, 809.851f, 120.047f, 1000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1632.169f, 809.851f, 120.047f);
               m_uiStepTimer = 900;
               break;
            case 10:
-              MoveToPoint(m_creature, 1630.651f, 811.149f, 120.307f, 800);
+              m_creature->GetMotionMaster()->MovePoint(0, 1630.651f, 811.149f, 120.307f);
               m_uiStepTimer = 800;
               break;
            case 11:
@@ -830,31 +811,31 @@ struct MANGOS_DLL_DECL npc_malcolmAI : public ScriptedAI
              if(Creature* pTemp = m_pInstance->GetSingleCreatureFromStorage(NPC_DOG))
                 pTemp->SetStandState(UNIT_STAND_STATE_SIT);
               m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              MoveToPoint(m_creature, 1641.452f, 812.600f, 119.948f, 4000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1641.452f, 812.600f, 119.948f);
               m_uiStepTimer = 3900;
               break;
            case 15:
-              MoveToPoint(m_creature, 1657.975f, 857.352f, 119.097f, 18000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1657.975f, 857.352f, 119.097f);
               m_uiStepTimer = 17900;
               break;
            case 16:
-              MoveToPoint(m_creature, 1679.852f, 912.245f, 120.533f, 23000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1679.852f, 912.245f, 120.533f);
               m_uiStepTimer = 22900;
               break;
            case 17:
-              MoveToPoint(m_creature, 1699.915f, 967.110f, 121.643f, 23000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1699.915f, 967.110f, 121.643f);
               m_uiStepTimer = 22900;
               break;
            case 18:
-              MoveToPoint(m_creature, 1678.393f, 1026.890f, 125.431f, 25000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1678.393f, 1026.890f, 125.431f);
               m_uiStepTimer = 24900;
               break;
            case 19:
-              MoveToPoint(m_creature, 1678.943f, 1093.130f, 126.899f, 26000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1678.943f, 1093.130f, 126.899f);
               m_uiStepTimer = 25900;
               break;
            case 20:
-              MoveToPoint(m_creature, 1700.042f, 1103.880f, 130.872f, 9000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1700.042f, 1103.880f, 130.872f);
               m_uiStepTimer = 10900;
               break;
            case 21:
@@ -948,7 +929,7 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
         {
            case 0:
               DoScriptText(SAY_BARTLEBY03, m_creature);
-              MoveToPoint(m_creature, 1672.539f, 872.277f, 120.113f, 1000); 
+              m_creature->GetMotionMaster()->MovePoint(0, 1672.539f, 872.277f, 120.113f); 
               m_uiStepTimer = 1000;
               break;
            case 1:
@@ -965,27 +946,27 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
               break;
            case 4:
               DoScriptText(SAY_BARTLEBY05, m_creature);
-              MoveToPoint(m_creature, 1663.054f, 869.959f, 119.734f, 3000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1663.054f, 869.959f, 119.734f);
               m_uiStepTimer = 2900; 
               break;
            case 5:
-              MoveToPoint(m_creature, 1640.732f, 812.422f, 119.933f, 24000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1640.732f, 812.422f, 119.933f);
               m_uiStepTimer = 23900; 
               break;
            case 6:
-              MoveToPoint(m_creature, 1623.704f, 755.741f, 115.710f, 23000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1623.704f, 755.741f, 115.710f);
               m_uiStepTimer = 22900; 
               break;
            case 7:
-              MoveToPoint(m_creature, 1607.108f, 699.637f, 106.971f, 23000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1607.108f, 699.637f, 106.971f);
               m_uiStepTimer = 22900; 
               break;
            case 8:
-              MoveToPoint(m_creature, 1587.750f, 646.929f, 100.990f, 21000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1587.750f, 646.929f, 100.990f);
               m_uiStepTimer = 20900; 
               break;
            case 9:
-              MoveToPoint(m_creature, 1571.103f, 660.949f, 102.084f, 8000);
+              m_creature->GetMotionMaster()->MovePoint(0, 1571.103f, 660.949f, 102.084f);
               m_uiStepTimer = 10900; 
               break;
            case 10:
@@ -1009,12 +990,6 @@ struct MANGOS_DLL_DECL npc_bartleby_csAI : public ScriptedAI
                  m_uiPhase = 2;
               break;
         }
-    }
-
-    void MoveToPoint(Creature* unit, float X, float Y, float Z, uint32 Timer)
-    {
-        unit->GetMap()->CreatureRelocation(unit, X, Y, Z, unit->GetOrientation());
-        unit->MonsterMoveWithSpeed(X, Y, Z, 26);
     }
 
     void UpdateAI(const uint32 uiDiff)
