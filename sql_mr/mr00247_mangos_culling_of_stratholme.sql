@@ -60,7 +60,7 @@ DELETE FROM `creature` WHERE `id` IN (27731,27734,28249,27736,27915,30571,26499,
 DELETE FROM `creature_movement` WHERE (`id`='138237' AND `point`='1') OR (`id`='138237' AND `point`='2') OR (`id`='138238' AND `point`='1') OR (`id`='138238' AND `point`='2') OR (`id`='138239' AND `point`='1') OR (`id`='138239' AND `point`='2') OR (`id`='138239' AND `point`='3') OR (`id`='138239' AND `point`='4');
 DELETE FROM `creature_movement` WHERE (`id`='138288' AND `point`='1') OR (`id`='138288' AND `point`='2') OR (`id`='138289' AND `point`='1') OR (`id`='138289' AND `point`='2');
 
--- Add Whats needed -- most of this is already in ytdb ... but we already have ALOT of users already using this data
+-- Add Whats needed -- corrected whoever had this all messed up
 DELETE FROM `creature` WHERE `id` in (27915, 26499, 26497, 26528, 27891, 27892, 32273, 28439, 30571);
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (700000, 27915, 595, 3, 1, 0, 0, 1812.49, 1284.81, 142.248, 4.03364, 300, 0, 0, 17010, 0, 0, 0),
@@ -71,5 +71,6 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 (700005, 27892, 595, 3, 1, 0, 0, 1602.3, 809.385, 123.454, 5.02884, 300, 0, 0, 8982, 0, 0, 0),
 (700006, 32273, 595, 3, 1, 0, 1839, 2330.93, 1275.59, 132.848, 3.60489, 300, 0, 0, 417911, 0, 0, 0),
 (700007, 28439, 595, 3, 1, 0, 0, 2336.56, 1277.9, 132.885, 3.47923, 300, 0, 0, 1, 0, 0, 0),
-(700008, 30571, 595, 3, 1, 0, 0, 1553.37, 578.078, 99.7624, 5.83105, 300, 0, 0, 8982, 0, 0, 0);
+(700008, 30571, 595, 3, 1, 0, 0, 1553.37, 578.078, 99.7624, 5.83105, 300, 0, 0, 8982, 0, 0, 0),
+(700009, 27884, 595, 3, 1, 0, 0, 1636.7, 725.642, 113.662, 0.893359, 300, 0, 0, 8982, 0, 0, 0);
 

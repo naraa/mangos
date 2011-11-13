@@ -1,14 +1,14 @@
 REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
 -- TAVERN EVENT
-(-1597270, 'Hey! Stop rooting around in my cellar! Clear out!', 'Эй! А ну, хорош рыться в моей кладовке! Проваливайте!', 0,0,0,1, '34587'),
+(-1597270, 'Hey! Stop rooting around down there in my cellar! Clear out!', 'Эй! А ну, хорош рыться в моей кладовке! Проваливайте!', 0,0,0,1, '34587'),
 (-1597271, 'This whole situation seems a bit paranoid, don\'t you think?', 'По-моему, все это сильно смахивает на паранойю, вы не находите?', 0,0,0,25, '34587'),
 (-1597272, 'Orders are orders, if prince says jump...', 'Приказ есть приказ. Если принц говорит прыгать...', 0,0,0,1, '34587'),
-(-1597273, 'It\'s strange order, you cant deny Suspicious food? Under that definition, you should arrest Belfast!', 'Странный приказ, что верно, то верно. Подозрительная пища? Тогда уж и Белфаста арестовывайте!', 0,0,0,1, '34587'),
+(-1597273, 'It\'s a strange order, you can not deny Suspicious food? Under that definition, you should arrest the chef Michael!', 'Странный приказ, что верно, то верно. Подозрительная пища? Тогда уж и Белфаста арестовывайте!', 0,0,0,1, '34587'),
 (-1597274, 'I HEARD THAT! No more ale for you! Not a drop!', 'Я ВСЕ СЛЫШАЛ! Больше эля ты не получишь! Ни капли!', 0,0,0,25, '34587'),
 (-1597275, 'Enough, Michael. Business is hurting enough with this scare as it is. We can use every copper.', 'Довольно, Майкл. Наши дела и так страдают из-за этой угрозы. Сейчас каждый медяк на счету.', 0,0,0,274, '34587'),
-(-1597276, 'The soldiers are doing important work. The safely of the people is more important, Mal, if you\'re interested in your customers living to spend another day.', 'Солдаты заняты очень важным делом, Мал. Если ты хочешь, чтобы твои покупатели дожили до завтрашнего дня - надо обеспечить их безопасность.', 0,0,0,1, '34587'),
+(-1597276, 'The soldiers are doing important work. The safely of the people is more important, now, if you\'re interested in your customers living to spend another day.', 'Солдаты заняты очень важным делом, Мал. Если ты хочешь, чтобы твои покупатели дожили до завтрашнего дня - надо обеспечить их безопасность.', 0,0,0,1, '34587'),
 (-1597277, 'I can\'t argue with that.', 'С этим не поспоришь.', 0,0,0,1, '34587'),
-(-1597278, 'Don\'t worry too much. By the time I went odd duty, we hadnt a scrap of befouled grain here.', 'Не стоит так сильно волноваться. К тому времени, как я сдал пост, мы не нашли здесь и следа этого мерзского зерна.', 0,0,0,274, '34587'),
+(-1597278, 'Don\'t worry too much. By the time I went off duty, we had not found a scrap of befouled grain here.', 'Не стоит так сильно волноваться. К тому времени, как я сдал пост, мы не нашли здесь и следа этого мерзского зерна.', 0,0,0,274, '34587'),
 (-1597279, 'Thank the Light for that.', 'Скажи спасибо Свету.', 0,0,0,1, '34587'),
 -- ROGER EVENT
 (-1597280, 'Wait, what\'s that smell?', 'Стоп, что за вонь?', 0,0,0,1, '34587'),
