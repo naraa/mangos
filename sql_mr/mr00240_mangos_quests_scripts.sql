@@ -1,7 +1,6 @@
--- For YTDB s
-DELETE FROM scripted_areatrigger WHERE entry=3626;
-INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
-
+-- ----------------------
+-- QUEST && Ect Support -
+-- ----------------------
 -- temp fix need to find true fix
 -- help fix quest 12813 currently
 -- insert been commented out til i figure out how to handle this guy in this area  he shouldn't be here like this or in this form or something
@@ -10,9 +9,9 @@ DELETE FROM `creature` WHERE `id`=29560;
 -- (88692, 29560, 571, 1, 1, 0, 0, 7458.74, 4846.24, 54.1606, 0.0676441, 300, 0, 0, 63000, 19970, 0, 0);
 
 
--- -----------------------------------
--- mangosR2 EAI CleanUp for quests/sd2
--- -----------------------------------
+-- ----------------------------------------
+-- mangosR2 EAI CleanUp for Quests && SD2 -
+-- ----------------------------------------
 
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25316;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 26127;
@@ -29,6 +28,24 @@ DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32149;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32257;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 36626;
 DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 36678;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29395;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30660;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30661;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30662;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30663;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30664;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30666;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30667;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30668;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32191;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 30695;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31011;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31079;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 32191;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31118;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29395;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 31513;
+
 
 -- fixes for YTDB DB update
 UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771, 35766);
@@ -53,6 +70,11 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-312491') OR (`entry`='-312492')
 
 -- Official Sd2 Clean up
 DELETE FROM scripted_event_id WHERE id = 9735;
+UPDATE creature_template SET ScriptName='' WHERE entry IN (30679,32174);
+UPDATE gameobject_template SET ScriptName='' WHERE entry = 193611;
+
+DELETE FROM scripted_areatrigger WHERE entry=3626;	  	
+INSERT INTO scripted_areatrigger VALUES (3626, 'at_vaelastrasz');
 
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
@@ -71,11 +93,9 @@ INSERT INTO `scripted_event_id` (`id`,`ScriptName`) VALUES (11560,"go_tadpole_ca
 -- --------------
 -- Quest 12240  -
 -- --------------
-
 UPDATE `creature_template` SET `modelid_1` = 17612 WHERE `entry` = 27353;
 DELETE FROM `creature` WHERE `id`=27238;
 UPDATE `creature_template` SET `armor` = 7618, `faction_A` = 67, `faction_H` = 67 WHERE `entry` = 27238;
-
 
 -- -------------
 -- Quest 14104 -
@@ -89,9 +109,8 @@ INSERT INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentry2`, `e
 UPDATE `creature_template` SET `equipment_id` = 110000 WHERE `entry` = 35012;
 
 -- ------------
--- quest 9164 -
+-- Quest 9164 -
 -- ------------
-
 UPDATE `creature_template` SET `modelid_2` = 18682 WHERE `entry` = 16206;
 DELETE FROM `creature` WHERE `id`=16206;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
@@ -110,14 +129,12 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- ---
 -- -Quest 8468
 -- ---
-
 -- Thaelis has wrong faction was gettting killed by his own kind 8P
 UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 15949;
 
 -- ------------
 -- Quest 13663
 -- ------------
-
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_black_knights_gryphon' WHERE `entry` = 33519;
 UPDATE creature_template SET vehicle_id = 402 WHERE entry = 33519; -- vehicle_id can be 88 107 108 112 143 etc.
 UPDATE creature_template SET KillCredit1 = 33341 WHERE entry = 33229;
