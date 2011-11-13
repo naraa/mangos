@@ -10,7 +10,6 @@
 #include "sc_gossip.h"
 #include "sc_grid_searchers.h"
 #include "sc_instance.h"
-#include "sc_outdoor_pvp.h"
 #include "sc_utility.h"
 
 #ifdef WIN32
