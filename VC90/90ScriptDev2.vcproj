@@ -415,8 +415,12 @@
 					RelativePath="..\scripts\battlegrounds\battleground.cpp"
 					>
 				</File>
-                <File
+                                <File
 					RelativePath="..\scripts\battlegrounds\battlegroundSA.cpp"
+					>
+				</File>
+                                <File
+					RelativePath="..\scripts\battlegrounds\battlegroundIC.cpp"
 					>
 				</File>
 			</Filter>

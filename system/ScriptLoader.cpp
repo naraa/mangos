@@ -7,6 +7,7 @@
 // battlegrounds
 extern void AddSC_battleground();
 extern void AddSC_battlegroundSA();
+extern void AddSC_battlegroundIC();
 
 // custom
 extern void AddSC_mob_teleguy();
@@ -542,6 +543,7 @@ void AddScripts()
     // battlegrounds
     AddSC_battleground();
     AddSC_battlegroundSA();
+    AddSC_battlegroundIC();
 
     // custom
     AddSC_mob_teleguy();
