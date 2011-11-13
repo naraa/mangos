@@ -216,12 +216,12 @@ insert into creature values (800110,25608,580,1,1,0,0,1698.61,628.414,27.5395,3.
 DELETE FROM `gameobject` WHERE `id`=188118;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (20935, 188118, 585, 3, 1, -71.2025, -523.017, 0.144581, 3.13287, 0, 0, 0.99999, 0.00436133, 180, 100, 0),
-(300000, 188118, 580, 1, 1, 1777.03, 674.714, 71.1903, 2.31614, 0, 0, 0.916031, 0.401107, 25, 255, 1);
+(400000, 188118, 580, 1, 1, 1777.03, 674.714, 71.1903, 2.31614, 0, 0, 0.916031, 0.401107, 25, 255, 1);
 
 DELETE FROM `gameobject` WHERE `id`=187990;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (43416, 187990, 585, 3, 1, 3.43601, -448.192, -5.71188, -2.27765, 0, 0, -0.908142, 0.418662, 180, 100, 0),
-(300001, 187990, 580, 1, 1, 1849.54, 597.848, 81.9718, 5.59911, 0, 0, 0.335408, -0.942073, 25, 255, 1);
+(400001, 187990, 580, 1, 1, 1849.54, 597.848, 81.9718, 5.59911, 0, 0, 0.335408, -0.942073, 25, 255, 1);
 
 -- fix to Agamath, The First Gate
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187766;
@@ -229,7 +229,7 @@ UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187766;
 DELETE FROM `gameobject` WHERE `id`=187766;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (43450, 187766, 585, 3, 1, 72.4223, -587.322, 1.59501, 2.69653, 0, 0, 0.975342, 0.220699, 180, 100, 1),
-(300002, 187766, 580, 1, 1, 1710.29, 531.319, 93.3079, 4.30948, 0, 0, 0.834295, -0.551318, 25, 255, 1);
+(400002, 187766, 580, 1, 1, 1710.29, 531.319, 93.3079, 4.30948, 0, 0, 0.834295, -0.551318, 25, 255, 1);
 
 -- fix to Rohendor, The Second
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187764;
@@ -237,7 +237,7 @@ UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187764;
 DELETE FROM `gameobject` WHERE `id`=187764;
 INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
 (43428, 187764, 585, 3, 1, -15.9065, -421.996, -47.1748, 3.0456, 0, 0, 0.998848, 0.0479779, 180, 100, 1),
-(300003, 187764, 580, 1, 1, 1832.99, 671.026, 42.7647, 4.45321, 0, 0, 0.792556, -0.609799, 25, 255, 1);
+(400003, 187764, 580, 1, 1, 1832.99, 671.026, 42.7647, 4.45321, 0, 0, 0.792556, -0.609799, 25, 255, 1);
 
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 187765;
 
