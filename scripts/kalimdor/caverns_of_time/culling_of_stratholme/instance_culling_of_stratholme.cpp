@@ -114,6 +114,9 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
             case NPC_JAINA:
                          pCreature->SetActiveObjectState(true);
                          break;
+            case NPC_UTHER:
+                         pCreature->SetActiveObjectState(true);
+                         break;
             case NPC_INFINITE_CORRUPTOR: 
                          pCreature->SetPhaseMask(0, true);
                          break;
