@@ -1182,9 +1182,8 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
                     if (holder->GetSpellProto()->procFlags)
                         continue;
 
-                    if (SpellProcEventEntry const* spellProcEvent = sSpellMgr.GetSpellProcEvent(holder->GetId()))
-                        if (spellProcEvent->procFlags)
-                            continue;
+                    if (GetProcFlag(holder->GetSpellProto()))
+                        continue;
 
                     if (holder->GetSpellProto()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_DAMAGE)
                     {
@@ -2103,8 +2102,8 @@ void Unit::CalculateDamageAbsorbAndResist(Unit *pCaster, SpellSchoolMask schoolM
     // Magic damage, check for resists
     if ((schoolMask & SPELL_SCHOOL_MASK_NORMAL)==0)
     {
-        // Get base victim resistance for school
-        float tmpvalue2 = (float)GetResistance(GetFirstSchoolInMask(schoolMask));
+        // Get base resistance for schoolmask
+        float tmpvalue2 = (float)GetResistance(schoolMask);
         // Ignore resistance by self SPELL_AURA_MOD_TARGET_RESISTANCE aura
         tmpvalue2 += (float)pCaster->GetTotalAuraModifierByMiscMask(SPELL_AURA_MOD_TARGET_RESISTANCE, schoolMask);
 
@@ -3257,6 +3256,9 @@ SpellMissInfo Unit::MeleeSpellHitResult(Unit *pVictim, SpellEntry const *spell)
         // only if in front or special ability
         if (!from_behind || pVictim->HasAuraType(SPELL_AURA_MOD_PARRY_FROM_BEHIND_PERCENT))
         {
+            if (spell->AttributesEx3 & SPELL_ATTR_EX3_CANT_MISS)
+                return SPELL_MISS_NONE;
+
             int32 deflect_chance = pVictim->GetTotalAuraModifier(SPELL_AURA_DEFLECT_SPELLS)*100;
 
             //if (from_behind) -- only 100% currently and not 100% sure way value apply
@@ -5486,6 +5488,21 @@ bool Unit::HasAuraType(AuraType auraType) const
     return !GetAurasByType(auraType).empty();
 }
 
+bool Unit::HasNegativeAuraType(AuraType auraType) const
+{
+    Unit::AuraList const& auras = GetAurasByType(auraType);
+
+    if (auras.empty())
+        return false;
+
+    for (Unit::AuraList::const_iterator itr = auras.begin(); itr != auras.end(); ++itr)
+    {
+        if (!(*itr)->GetHolder()->IsPositive())
+            return true;
+    }
+    return false;
+}
+
 bool Unit::HasAffectedAura(AuraType auraType, SpellEntry const* spellProto) const
 {
     Unit::AuraList const& auras = GetAurasByType(auraType);
@@ -5554,6 +5571,8 @@ Aura* Unit::GetScalingAura(AuraType type, uint32 stat)
                     if (aura->GetModifier()->m_miscvalue == Stats(stat))
                         return aura;
                     break;
+                case SPELL_AURA_HASTE_ALL:
+                    return aura;
                 default:
                     break;
             }
@@ -11168,7 +11187,7 @@ void Unit::ProcDamageAndSpellFor( bool isVictim, Unit * pTarget, uint32 procFlag
             if (!holder || holder->IsDeleted())
                 continue;
 
-            SpellProcEventEntry const* spellProcEvent = NULL;
+            SpellProcEventEntry const* spellProcEvent = sSpellMgr.GetSpellProcEvent(holder->GetId());
             if(!IsTriggeredAtSpellProcEvent(pTarget, holder, procSpell, procFlag, procExtra, attType, isVictim, spellProcEvent))
                continue;
 
@@ -11557,6 +11576,15 @@ bool Unit::IsPolymorphed() const
     return GetSpellSpecific(getTransForm())==SPELL_MAGE_POLYMORPH;
 }
 
+bool Unit::IsCrowdControlled() const
+{
+    return  HasNegativeAuraType(SPELL_AURA_MOD_CONFUSE) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_FEAR) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_STUN) ||
+            HasNegativeAuraType(SPELL_AURA_MOD_ROOT) ||
+            HasNegativeAuraType(SPELL_AURA_TRANSFORM);
+}
+
 void Unit::SetDisplayId(uint32 modelId)
 {
     SetUInt32Value(UNIT_FIELD_DISPLAYID, modelId);
@@ -11808,6 +11836,8 @@ void Unit::ApplyAttackTimePercentMod( WeaponAttackType att,float val, bool apply
         ApplyPercentModFloatVar(m_modAttackSpeedPct[att], -val, apply);
         ApplyPercentModFloatValue(UNIT_FIELD_BASEATTACKTIME+att,-val,apply);
     }
+    if (GetTypeId() == TYPEID_PLAYER && IsInWorld())
+        ((Player*)this)->CallForAllControlledUnits(ApplyScalingBonusWithHelper(SCALING_TARGET_ATTACKSPEED, 0, false),CONTROLLED_PET|CONTROLLED_GUARDIANS);
 }
 
 void Unit::ApplyCastTimePercentMod(float val, bool apply )
@@ -12827,4 +12857,20 @@ void Unit::DisableSpline()
 {
     m_movementInfo.RemoveMovementFlag(MovementFlags(MOVEFLAG_SPLINE_ENABLED|MOVEFLAG_FORWARD));
     movespline->_Interrupt();
+}
+
+uint32 Unit::GetResistance(SpellSchoolMask schoolMask) const
+{
+    uint32 resistance = 0;
+
+    for (int i = SPELL_SCHOOL_NORMAL; i < MAX_SPELL_SCHOOL; ++i)
+    {
+        if (schoolMask & (1 << i))
+        {
+            if (resistance < GetResistance(SpellSchools(i)))
+                resistance = GetResistance(SpellSchools(i));
+                // by some sources, may be resistance += GetResistance(SpellSchools(i)), but i not sure (/dev/rsa)
+        }
+    }
+    return resistance;
 }

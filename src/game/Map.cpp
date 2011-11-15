@@ -323,6 +323,8 @@ bool Map::Add(Player *player)
     if (i_data)
         i_data->OnPlayerEnter(player);
 
+    sLFGMgr.OnPlayerEnterMap(player, this);
+
     return true;
 }
 
@@ -590,6 +592,8 @@ void Map::Remove(Player *player, bool remove)
 {
     if (i_data)
         i_data->OnPlayerLeave(player);
+
+    sLFGMgr.OnPlayerLeaveMap(player, this);
 
     if(remove)
         player->CleanupsBeforeDelete();
@@ -3080,6 +3084,8 @@ void Map::ScriptsProcess()
                     else
                         pBuddy->SetFlag(UNIT_NPC_FLAGS, step.script->npcFlag.flag);
                 }
+
+                break;
             }
             default:
                 sLog.outError("Unknown SCRIPT_COMMAND_ %u called for script id %u.", step.script->command, step.script->id);
@@ -3468,7 +3474,15 @@ void Map::RemoveAttackersStorageFor(ObjectGuid targetGuid)
 void Map::ForcedUnload()
 {
     sLog.outError("Map::ForcedUnload called for map %u instance %u. Map crushed. Cleaning up...", GetId(), GetInstanceId());
-    Map::PlayerList const& pList = GetPlayers();
+
+    // Immediately cleanup update sets/queues
+    i_objectsToClientUpdate.clear();
+    i_objectsToClientNotUpdate.clear();
+    while (!i_objectsToClientUpdateQueue.empty())
+        i_objectsToClientUpdateQueue.pop();
+
+
+    Map::PlayerList const pList = GetPlayers();
     for (PlayerList::const_iterator itr = pList.begin(); itr != pList.end(); ++itr)
     {
         Player* player = itr->getSource();
