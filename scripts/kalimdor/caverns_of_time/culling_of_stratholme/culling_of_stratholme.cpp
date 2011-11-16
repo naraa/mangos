@@ -333,7 +333,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
               SetEscortPaused(true);
               m_pInstance->SetData(TYPE_PHASE, 2);
               ResetStep(2000);
-              if(Unit* Cityman = m_creature->GetMap()->GetUnit( m_uiPeople01GUID))
+              if(Unit* Cityman = m_creature->GetMap()->GetUnit(m_uiPeople01GUID))
               {
                  m_creature->SetGuidValue(UNIT_FIELD_TARGET, Cityman->GetObjectGuid());
                  Cityman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
@@ -942,7 +942,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
                         }
 
                 if (bNeedSpawn)
-                    m_creature->SummonCreature(30997, 2311.61f, 1497.85f, 128.01f, 4.14f, TEMPSUMMON_TIMED_DESPAWN, 1800000);
+                    m_creature->SummonCreature(NPC_CHROMI03, 2311.61f, 1497.85f, 128.01f, 4.14f, TEMPSUMMON_TIMED_DESPAWN, 1800000);
                 JumpNextStep(11000);
                 break;
             case 8:
@@ -1187,7 +1187,8 @@ bool GossipHello_npc_chromi_middle(Player* pPlayer, Creature* pCreature)
     if (pCreature->isQuestGiver())
         pPlayer->PrepareQuestMenu(pCreature->GetObjectGuid());
 
-    //if (pPlayer->GetQuestStatus(QUEST_ROYAL_ESCORT) == QUEST_STATUS_INCOMPLETE) return true;
+    //if (pPlayer->GetQuestStatus(QUEST_DISPELLING_ILLUSIONS) == QUEST_STATUS_INCOMPLETE) 
+    //return false;
 
     ScriptedInstance* pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
     if(pInstance && pInstance->GetData(TYPE_INTRO) == NOT_STARTED)
