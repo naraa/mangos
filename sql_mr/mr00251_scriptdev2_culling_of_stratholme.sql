@@ -52,7 +52,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594079, 'You are not my king yet, boy! Nor would I obey that command even if you were!', 'Пока ты еще не король, юноша. Но этот приказ я не выполнил бы, будь ты хоть трижды королем!', 12842,1,0,22, '34587'),
 (-1594080, 'Then I must consider this an act of treason.', 'Тогда я буду расценивать это как измену.', 12833,0,0,0, '34587'),
 (-1594081, 'Treason? Have you lost your mind, Arthas?', 'Измену? Ты совсем лишился рассудка, Артас?', 12843,0,0,5, '34587'),
-(-1594082, 'Have I? Lord Uther, by my right of succession and the sovereignty of my crown, I hereby relieve you of your commnad and suspend your paladins from service.', 'Неужели? Лорд Утер, властью, данной мне по праву наследования, я отстраняю вас от командования и освобождаю от службы ваших паладинов.', 12834,0,0,1, '34587'),
+(-1594082, 'Have I? Lord Uther, by my right of succession and the sovereignty of my crown, I hereby relieve you of your command and suspend your paladins from service.', 'Неужели? Лорд Утер, властью, данной мне по праву наследования, я отстраняю вас от командования и освобождаю от службы ваших паладинов.', 12834,0,0,1, '34587'),
 (-1594083, 'Arthas! You cant just...', 'Артас! Ты не можешь так просто...', 12837,0,0,1, '34587'),
 (-1594084, 'It\'s done! those of you who have the will to save this land, follow me! The rest of you... get out of my sight!', 'Это уже сделано! Те из вас, кто действительно хочет спасти эту землю - за мной! Остальные - прочь с глаз моих!', 12835,0,0,0, '34587'),
 (-1594085, 'You\'ve just crossed a terrible inreshold, Arthas!', 'Ты пересек опасную черту, Артас.', 12844,0,0,25, '34587'),

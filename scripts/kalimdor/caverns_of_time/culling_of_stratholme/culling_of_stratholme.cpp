@@ -106,11 +106,6 @@ enum
     SPELL_HOLY_LIGHT          = 52444,
     SPELL_ARTHAS_AURA         = 52442,
 
-    /*NPC*/
-    NPC_CITYMAN                    = 28167,
-    NPC_CRAZYMAN                   = 28169,
-    NPC_MALGANIS_INTRO             = 26533,
-
     /*OTHER*/
     POINT_LAST_POINT    = 0xFFFFFF,
     FACTION             = 2076

@@ -108,6 +108,23 @@ enum Data
     WORLD_STATE_COS_CRATE_ON      = 3479,
     WORLD_STATE_COS_CRATE_COUNT   = 3480,
 
+    //NPC_CITYMAN                    = 28167,
+    NPC_CRAZYMAN                   = 28169,
+    NPC_MALGANIS_INTRO             = 26533,
+    NPC_LORDAERON_FOOTMAN          = 27745,
+    NPC_LORDAERON_PRIEST           = 27747,
+
+    NPC_MAGISTRATE_BARTHILAS        = 30994,
+    NPC_STEPHANIE_SINDREE           = 31019,
+    NPC_LEEKA_TURNER                = 31027,
+    NPC_SOPHIE_AAREN                = 31021,
+    NPC_ROBERT_PIERCE               = 31025,
+    NPC_GEORGE_GOODMAN              = 31022,
+
+    NPC_EMERY_NEILL                 = 30570,
+    NPC_EDWARD_ORRICK               = 31018,
+    NPC_OLIVIA_ZENITH               = 31020,
+
     RIGHT               = 1,
     LEFT                = 2
 };
