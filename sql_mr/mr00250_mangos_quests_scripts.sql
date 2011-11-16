@@ -54,8 +54,9 @@ UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHE
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37444;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 31818;
 UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37283;
-UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 11948;
-UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 11946;
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 31818;
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37283;
+UPDATE `creature_template` SET `pickpocketloot` = 0 WHERE `entry` = 37444;
 UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = 20159;
 
 
