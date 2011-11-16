@@ -55,7 +55,6 @@ enum
     // spells related to kalecgos event
     SPELL_SPECTRAL_REALM                = 46021,
     SPELL_TELEPORT_NORMAL_REALM         = 46020,
-    SPELL_TELEPORT_TO_SPECTRAL_REALM    = 46019,
     SPELL_SPECTRAL_EXHAUSTION           = 44867,
     SPELL_SPECTRAL_REALM_FORCE_FACTION  = 44852,
 
@@ -85,14 +84,13 @@ class MANGOS_DLL_DECL instance_sunwell_plateau : public ScriptedInstance
         void Load(const char* chrIn);
 
     protected:
-        void EjectPlayer(Player* pPlayer);
-        void EjectPlayers();
+        void DoEjectSpectralRealmPlayers();
 
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
         // Misc
         uint32 m_uiSpectralRealmTimer;
-        GUIDList SpectralRealmList;
+        GUIDList m_lSpectralRealmList;
 };
 #endif
