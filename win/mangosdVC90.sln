@@ -39,6 +39,7 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ACE_Wrappers", "VC90\ACE_vc9.vcproj", "{BD537C9A-FECA-1BAD-6757-8A6300006755}"
 EndProject
 <<<<<<< HEAD
+<<<<<<< HEAD
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tbb", "VC90\tbb.vcproj", "{F62787DD-1327-448B-9818-030062BCFAA5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tbbmalloc", "VC90\tbbmalloc.vcproj", "{B15F131E-328A-4D42-ADC2-9FF4CA6306D8}"
@@ -50,6 +51,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detour", "..\dep\recastnavi
 EndProject
 =======
 >>>>>>> master
+=======
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Detour", "..\dep\recastnavigation\Detour\win\VC90\Detour.vcproj", "{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}"
+EndProject
+>>>>>>> 4d86f31131bcfcff0d3b590a7a7939753e7614d0
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_NoPCH|Win32 = Debug_NoPCH|Win32
@@ -166,6 +171,7 @@ Global
 		{BD537C9A-FECA-1BAD-6757-8A6300006755}.Release|x64.ActiveCfg = Release|x64
 		{BD537C9A-FECA-1BAD-6757-8A6300006755}.Release|x64.Build.0 = Release|x64
 <<<<<<< HEAD
+<<<<<<< HEAD
 		{F62787DD-1327-448B-9818-030062BCFAA5}.Debug_NoPCH|Win32.ActiveCfg = Debug_NoPCH|Win32
 		{F62787DD-1327-448B-9818-030062BCFAA5}.Debug_NoPCH|Win32.Build.0 = Debug_NoPCH|Win32
 		{F62787DD-1327-448B-9818-030062BCFAA5}.Debug_NoPCH|x64.ActiveCfg = Debug_NoPCH|x64
@@ -190,6 +196,8 @@ Global
 		{B15F131E-328A-4D42-ADC2-9FF4CA6306D8}.Release|Win32.Build.0 = Release|Win32
 		{B15F131E-328A-4D42-ADC2-9FF4CA6306D8}.Release|x64.ActiveCfg = Release|x64
 		{B15F131E-328A-4D42-ADC2-9FF4CA6306D8}.Release|x64.Build.0 = Release|x64
+=======
+>>>>>>> 4d86f31131bcfcff0d3b590a7a7939753e7614d0
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Debug_NoPCH|Win32.ActiveCfg = Debug|Win32
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Debug_NoPCH|Win32.Build.0 = Debug|Win32
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Debug_NoPCH|x64.ActiveCfg = Debug|x64
@@ -202,8 +210,11 @@ Global
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Release|Win32.Build.0 = Release|Win32
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Release|x64.ActiveCfg = Release|x64
 		{5FDC0EBC-3F80-4518-A5DF-1CD5BBEB64F7}.Release|x64.Build.0 = Release|x64
+<<<<<<< HEAD
 =======
 >>>>>>> master
+=======
+>>>>>>> 4d86f31131bcfcff0d3b590a7a7939753e7614d0
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
