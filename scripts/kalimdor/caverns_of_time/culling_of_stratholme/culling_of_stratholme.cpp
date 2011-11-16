@@ -134,12 +134,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     ObjectGuid m_uiPeople01GUID;
     ObjectGuid m_uiPeople02GUID;
     ObjectGuid m_uiMalganisGUID;   ///-> holds a vaule
-    ObjectGuid m_uiMarine01GUID;
-    ObjectGuid m_uiMarine02GUID;
-    ObjectGuid m_uiMarine03GUID;
-    ObjectGuid m_uiMarine04GUID;
-    ObjectGuid m_uiPriest01GUID;
-    ObjectGuid m_uiPriest02GUID;
     ObjectGuid m_uiHuman01GUID;
     ObjectGuid m_uiHuman02GUID;
     ObjectGuid m_uiHuman03GUID;
@@ -188,35 +182,35 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
     void MoveSoldiers()
     {
-         if(Unit* Marine01 = m_creature->GetMap()->GetUnit( m_uiMarine01GUID))
+         if (Creature* pMarine01 = m_pInstance->GetSingleCreatureFromStorage(NPC_MARINE_1))
          {
-            Marine01->GetMotionMaster()->MovePoint(0, 2083.483f,1282.313f,141.198f);
-            Marine01->setFaction(culling_faction);
+            pMarine01->GetMotionMaster()->MovePoint(0, 2083.483f,1282.313f,141.198f);
+            pMarine01->setFaction(culling_faction);
          }
-         if(Unit* Marine02 = m_creature->GetMap()->GetUnit( m_uiMarine02GUID))
+         if (Creature* pMarine02 = m_pInstance->GetSingleCreatureFromStorage(NPC_MARINE_2))
          {
-            Marine02->GetMotionMaster()->MovePoint(0, 2083.681f,1292.809f,141.141f);
-            Marine02->setFaction(culling_faction);
+            pMarine02->GetMotionMaster()->MovePoint(0, 2083.681f,1292.809f,141.141f);
+            pMarine02->setFaction(culling_faction);
          }
-         if(Unit* Marine03 = m_creature->GetMap()->GetUnit( m_uiMarine03GUID))
+         if (Creature* pMarine03 = m_pInstance->GetSingleCreatureFromStorage(NPC_MARINE_3))
          {
-            Marine03->GetMotionMaster()->MovePoint(0, 2082.158f,1290.406f,141.261f);
-            Marine03->setFaction(culling_faction);
+            pMarine03->GetMotionMaster()->MovePoint(0, 2082.158f,1290.406f,141.261f);
+            pMarine03->setFaction(culling_faction);
          }
-         if(Unit* Marine04 = m_creature->GetMap()->GetUnit( m_uiMarine04GUID))
+         if (Creature* pMarine04 = m_pInstance->GetSingleCreatureFromStorage(NPC_MARINE_4))
          {
-            Marine04->GetMotionMaster()->MovePoint(0, 2081.899f,1285.122f,141.302f);
-            Marine04->setFaction(culling_faction);
+            pMarine04->GetMotionMaster()->MovePoint(0, 2081.899f,1285.122f,141.302f);
+            pMarine04->setFaction(culling_faction);
          }
-         if(Unit* Priest01 = m_creature->GetMap()->GetUnit( m_uiPriest01GUID))
+         if (Creature* pPriest01 = m_pInstance->GetSingleCreatureFromStorage(NPC_PRIEST_1))
          {
-            Priest01->GetMotionMaster()->MovePoint(0, 2081.072f,1292.233f,141.329f);
-            Priest01->setFaction(culling_faction);
+            pPriest01->GetMotionMaster()->MovePoint(0, 2081.072f,1292.233f,141.329f);
+            pPriest01->setFaction(culling_faction);
          }
-         if(Unit* Priest02 = m_creature->GetMap()->GetUnit( m_uiPriest02GUID))
+         if (Creature* pPriest02 = m_pInstance->GetSingleCreatureFromStorage(NPC_PRIEST_2))
          {
-            Priest02->GetMotionMaster()->MovePoint(0, 2080.632f,1283.004f,141.358f);
-            Priest02->setFaction(culling_faction);
+            pPriest02->GetMotionMaster()->MovePoint(0, 2080.632f,1283.004f,141.358f);
+            pPriest02->setFaction(culling_faction);
          }
     }
 
@@ -317,7 +311,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
               SetRun(true);
               break;
            case 8:
-              GetSoldier();
               SetEscortPaused(true);
               m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
               m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
@@ -434,45 +427,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     {
         m_uiStepTimer = Timer;
         m_uiStep++;
-    }
-
-    void GetSoldier() //huck
-    {
-        //Marine Close Left
-        if(Creature* pEscort01 = GetClosestCreatureWithEntry(m_creature, NPC_MARINE_1, 50.0f))
-        {
-           m_uiMarine01GUID = pEscort01->GetObjectGuid();
-           pEscort01->UpdateEntry(NPC_CITY);
-           if(Creature* pEscort02 = GetClosestCreatureWithEntry(m_creature, NPC_MARINE_2, 50.0f))
-           {
-              m_uiMarine02GUID = pEscort02->GetObjectGuid();
-              pEscort02->UpdateEntry(NPC_CITY);
-              // Right marine 2
-              if(Creature* pEscort03 = GetClosestCreatureWithEntry(m_creature, NPC_MARINE_3, 50.0f))
-              {
-                 m_uiMarine03GUID = pEscort03->GetObjectGuid();
-                 pEscort03->UpdateEntry(NPC_CITY);
-                 if(Creature* pEscort04 = GetClosestCreatureWithEntry(m_creature, NPC_MARINE_4, 50.0f))
-                 {
-                    m_uiMarine04GUID = pEscort04->GetObjectGuid();
-                    pEscort01->UpdateEntry(NPC_MARINE);
-                    pEscort02->UpdateEntry(NPC_MARINE);
-                    pEscort03->UpdateEntry(NPC_MARINE);
-                 }
-              }
-           }
-        }
-
-        if(Creature* pEscort05 = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_1, 50.0f))
-        {
-           m_uiPriest01GUID = pEscort05->GetObjectGuid();
-           pEscort05->UpdateEntry(NPC_CITY);
-           if(Creature* pEscort06 = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_2, 50.0f))
-           {
-              m_uiPriest02GUID = pEscort06->GetObjectGuid();
-              pEscort05->UpdateEntry(NPC_PRIEST);
-           }
-        }
     }
 
     void ResetStep(uint32 Timer)
