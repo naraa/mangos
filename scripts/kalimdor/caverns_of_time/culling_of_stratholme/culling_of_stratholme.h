@@ -108,7 +108,7 @@ enum Data
     WORLD_STATE_COS_CRATE_ON      = 3479,
     WORLD_STATE_COS_CRATE_COUNT   = 3480,
 
-    //NPC_CITYMAN                    = 28167,
+    NPC_CITYMAN                    = 28167,
     NPC_CRAZYMAN                   = 28169,
     NPC_MALGANIS_INTRO             = 26533,
     NPC_LORDAERON_FOOTMAN          = 27745,
