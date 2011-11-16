@@ -44,7 +44,7 @@ enum say
     SAY_ENERGY_TOWER    = -1603215,
     SAY_NATURE_TOWER    = -1603216,
 
-    EMOTE_PURSUE        = -1603352,
+    EMOTE_PURSUE        = -1603217,
 };
 
 enum spells

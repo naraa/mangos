@@ -494,18 +494,18 @@ CreatureAI* GetAI_mob_taste_test(Creature* pCreature)
 enum
 {
     QUEST_STILL_AT_IT = 12644,
-    SAY_EVENT_STARTED = -1760000,
-    SAY_ADD_BANNANAS  = -1760001,
-    SAY_ADD_PAPAYA    = -1760002,
-    SAY_GOOD_JOB_1    = -1760003,
-    SAY_BRAZIER       = -1760004,
-    SAY_GOOD_JOB_2    = -1760005,
-    SAY_OPEN_VALVE    = -1760006,
-    SAY_GOOD_JOB_3    = -1760007,
-    SAY_GOOD_JOB_4    = -1760008,
-    SAY_EVENT_END     = -1760009,
-    SAY_ADD_ORANGE    = -1760010,
-    SAY_FAIL        = -1760011,
+    SAY_EVENT_STARTED = -1999792,
+    SAY_ADD_BANNANAS  = -1999793,
+    SAY_ADD_PAPAYA    = -1999794,
+    SAY_GOOD_JOB_1    = -1999795,
+    SAY_BRAZIER       = -1999796,
+    SAY_GOOD_JOB_2    = -1999797,
+    SAY_OPEN_VALVE    = -1999798,
+    SAY_GOOD_JOB_3    = -1999799,
+    SAY_GOOD_JOB_4    = -1999800,
+    SAY_EVENT_END     = -1999801,
+    SAY_ADD_ORANGE    = -1999802,
+    SAY_FAIL          = -1999803,
     GO_JUNGLE_PUNCH   =  190643
 };
 #define GOSSIP_TIPSY_MCMANUS "I am ready to start the event."

@@ -1,5 +1,5 @@
 -- Pit of saron
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1658100 AND -1658000;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1658069 AND -1658001;
 INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Garfrost
 (-1658001,'Tiny creatures under feet, you bring Garfrost something good to eat!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16912,1,0,0,'garfrost SAY_AGGRO'),
@@ -64,7 +64,7 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_lo
 (-1658069,'I... I could not save them... Damn you, Arthas! DAMN YOU!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,16616,0,0,0,'Jaina SAY_JAYNA_OUTRO_5');
 
 -- Forge of souls
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1632099 AND -1632000;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1632055 AND -1632001;
 INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_loc2`,`content_loc3`,`content_loc4`,`content_loc5`,`content_loc6`,`content_loc7`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- Bronjham
 (-1632001,'Finally...a captive audience!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Наконец то! Гости пожаловали!',16595,6,0,0,'Bronjham SAY_AGGRO'),
@@ -116,7 +116,7 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc1`,`content_lo
 (-1632055,'The Dark Lady watches over you. Make haste!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Темная госпожа будет наблюдать за вами, спешите!',17043,0,0,0,'Sylvanas SAY_INTRO_6');
 
 -- Halls of reflection (from MaxXx2021 aka Mioka)
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1668533 AND -1668433;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1668523 AND -1668433;
 INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc8`,`sound`,`type`,`language`,`emote`,`comment`) VALUES
 -- SCENE - Hall Of Reflection (Intro) - PreUther
 (-1668433, 'The chill of this place freezes the marrow of my bones!', 'Как же тут холодно... Кровь стынет в жилах.', 16631,0,0,1, '67234'),
@@ -218,9 +218,9 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`content_loc8`,`sound`,`ty
 (-1668520, 'Master, I have failed...', 'Господин... Я подвел вас...', 16922,1,0,0, '67234'),
 
 -- add
-(-1668531, 'Well, now it\'s time to just a dump', 'Ну теперь-то точно пора сваливать.', 0,0,0,0, '67234'),
-(-1668532, 'Here\'s a chest behind the work', 'Вот вам сундук за работу.', 0,0,0,0, '67234'),
-(-1668533, 'And since the ship with Offa will not, here\'s a portal to Dalaran', 'И, поскольку корабля с оффа не будет, вот вам портал в Даларан.', 0,0,0,0, '67234');
+(-1668521, 'Well, now it\'s time to just a dump', 'Ну теперь-то точно пора сваливать.', 0,0,0,0, '67234'),
+(-1668522, 'Here\'s a chest behind the work', 'Вот вам сундук за работу.', 0,0,0,0, '67234'),
+(-1668523, 'And since the ship with Offa will not, here\'s a portal to Dalaran', 'И, поскольку корабля с оффа не будет, вот вам портал в Даларан.', 0,0,0,0, '67234');
 
 -- Gossips
 DELETE FROM gossip_texts WHERE entry BETWEEN -3594540 AND -3594536;

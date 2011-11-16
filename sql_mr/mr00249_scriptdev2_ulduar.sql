@@ -1,26 +1,10 @@
 /* ULDUAR from Xfurry*/
+-- -1 603 000 ULDUAR
 -- ids may need to be rewritten
-DELETE from `script_texts` where `entry` between -1603500 and -1603000;
+
+DELETE from `script_texts` where `entry` between -1603400 and -1603000;
 -- translate from lanc
 REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2, content_loc3, content_loc4, content_loc5, content_loc6, content_loc7, content_loc8, sound, type, language, emote, comment) VALUES 
--- Leviathan: needs intro & outro
-(-1603201,"Threat assessment routine modified. Current target threat level: zero. Acquiring new target.","","","","","","","","Изменение в протоколе оценки угрозы. Уровень угрозы текущей цели: нулевой. Поиск новой цели.",15521,1,0,0,"Flame Leviathan Slay"),
-(-1603202,"Total systems failure. Defense protocols breached. Leviathan Unit shutting down.","","","","","","","","Общий системный сбой. Отказ защитных протоколов. Боевая единица Левиафан завершает свою работу.",15520,1,0,0,"Flame Leviathan Death"),
-(-1603203,"Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus thirty seconds to re-evaluation.","","","","","","","","Обнаружены противники. Запуск протокола оценки угрозы. Главная цель выявлена. Повторный анализ через тридцать секунд.",15506,1,0,0,"Flame Leviathan Aggro"),
-(-1603204,"Threat re-evaluated. Target assessment complete. Changing course.","","","","","","","","Повторный анализ угрозы - завершен. Оценка цели - проведена. Смена курса.",15507,1,0,0,"Flame Leviathan change1"),
-(-1603205,"Pursuit objective modified. Changing course.","","","","","","","","Изменение цели преследования. Смена курса.",15508,1,0,0,"Flame Leviathan change2"),
-(-1603206,"Hostile entity stratagem predicted. Rerouting battle function. Changing course.","","","","","","","","Вражеский маневр предупрежден. Перерасчет параметра боевых функций. Смена курса.",15509,1,0,0,"Flame Leviathan change3"),
-(-1603207,"Unauthorized entity attempting circuit overload. Activating anti-personnel countermeasures.","","","","","","","","Несанкционированное вмешательство в работу. Активация системы подавления живой силы.",15516,1,0,0,"Flame Leviathan player on top"),
-(-1603208,"System malfunction. Diverting power to support systems.","","","","","","","","Функциональный сбой. Активация резервных систем.",15517,1,0,0,"Flame Leviathan overload1"),
-(-1603209,"Combat matrix overload. Powering do-o-o-own...","","","","","","","","Боевая матрица перегружена. Отключи....",15518,1,0,0,"Flame Leviathan overload2"),
-(-1603210,"System restart required. Deactivating weapon systems.","","","","","","","","Требуется перезапуск. Отключение систем вооружения.",15519,1,0,0,"Flame Leviathan overload3"),
-(-1603211,"Orbital countermeasures enabled.","","","","","","","","Система орбитального подавления - включена.",15510,1,0,0,"Flame Leviathan hard mode"),
-(-1603212,"Alert! Static defense system failure. Orbital countermeasures disabled.","","","","","","","","Тревога! Сбой стационарных средств защиты. Система орбитального подавления - отключена.",15511,1,0,0,"Flame Leviathan towers down"),
-(-1603213,"'Hodir's Fury' online. Acquiring target.","","","","","","","","Ярость Ходира - активирована. Поиск цели.",15512,1,0,0,"Flame Leviathan frost"),
-(-1603214,"'Mimiron's Inferno' online. Acquiring target.","","","","","","","","Адский огонь Мимирона - активировано. Поиск цели.",15513,1,0,0,"Flame Leviathan fire"),
-(-1603215,"'Thorim's Hammer' online. Acquiring target.","","","","","","","","Молот Торима - активирован. Поиск цели.",15515,1,0,0,"Flame Leviathan energy"),
-(-1603216,"'Freya's Ward' online. Acquiring target.","","","","","","","","Оберег Фреи - активировано. Поиск цели.",15514,1,0,0,"Flame Leviathan nature"),
-(-1603352,'PursueWarn' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_pursue'),
 
 -- Ignis:
 (-1603010, "Insolent whelps! Your blood will temper the weapons used to reclaim this world!", "","","","","","","","Мерзкие глупцы! Ваша кровь закалит оружие, которым был завоеван этот мир!",15564, 1, 0, 0, 'IgnisAggro'),
@@ -42,8 +26,8 @@ REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2,
 (-1603024,'Move! Quickly! She won\'t remain grounded for long.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,"Быстрее! Она скоро снова взлетит.",0,1,0,0,'razor ground - commander'),
 (-1603025,'Razorscale takes a deep breath...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'razor deep breath'),
 (-1603026,'Fires out! Let\'s rebuild those turrets!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,1,0,0,'razor extinguish fires'),
-(-1603353,'Harpoon Turret is ready for use!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_harpoon'),
-(-1603354,'Razorscale grounded permanently!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_ground'),
+(-1603027,'Harpoon Turret is ready for use!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_harpoon'),
+(-1603028,'Razorscale grounded permanently!' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_ground'),
 
 -- Xt002
 (-1603030,"You are bad... Toys... Very... Baaaaad!","","","","","","","","Плохие игрушки... Очень... Плохие!",15731,1,0,0,"XT-002 Death"),
@@ -151,6 +135,25 @@ REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2,
 (-1603181,"<Angry roar>","","","","","","","","",15501,1,0,0,"stonebark slay1"),
 (-1603182,"Such a waste.","","","","","","","","",15502,1,0,0,"stonebark slay2"),
 (-1603183,"Matron, flee! They are ruthless....","","","","","","","","",15503,1,0,0,"stonebark death"),
+
+-- Leviathan: needs intro & outro
+(-1603201,"Threat assessment routine modified. Current target threat level: zero. Acquiring new target.","","","","","","","","Изменение в протоколе оценки угрозы. Уровень угрозы текущей цели: нулевой. Поиск новой цели.",15521,1,0,0,"Flame Leviathan Slay"),
+(-1603202,"Total systems failure. Defense protocols breached. Leviathan Unit shutting down.","","","","","","","","Общий системный сбой. Отказ защитных протоколов. Боевая единица Левиафан завершает свою работу.",15520,1,0,0,"Flame Leviathan Death"),
+(-1603203,"Hostile entities detected. Threat assessment protocol active. Primary target engaged. Time minus thirty seconds to re-evaluation.","","","","","","","","Обнаружены противники. Запуск протокола оценки угрозы. Главная цель выявлена. Повторный анализ через тридцать секунд.",15506,1,0,0,"Flame Leviathan Aggro"),
+(-1603204,"Threat re-evaluated. Target assessment complete. Changing course.","","","","","","","","Повторный анализ угрозы - завершен. Оценка цели - проведена. Смена курса.",15507,1,0,0,"Flame Leviathan change1"),
+(-1603205,"Pursuit objective modified. Changing course.","","","","","","","","Изменение цели преследования. Смена курса.",15508,1,0,0,"Flame Leviathan change2"),
+(-1603206,"Hostile entity stratagem predicted. Rerouting battle function. Changing course.","","","","","","","","Вражеский маневр предупрежден. Перерасчет параметра боевых функций. Смена курса.",15509,1,0,0,"Flame Leviathan change3"),
+(-1603207,"Unauthorized entity attempting circuit overload. Activating anti-personnel countermeasures.","","","","","","","","Несанкционированное вмешательство в работу. Активация системы подавления живой силы.",15516,1,0,0,"Flame Leviathan player on top"),
+(-1603208,"System malfunction. Diverting power to support systems.","","","","","","","","Функциональный сбой. Активация резервных систем.",15517,1,0,0,"Flame Leviathan overload1"),
+(-1603209,"Combat matrix overload. Powering do-o-o-own...","","","","","","","","Боевая матрица перегружена. Отключи....",15518,1,0,0,"Flame Leviathan overload2"),
+(-1603210,"System restart required. Deactivating weapon systems.","","","","","","","","Требуется перезапуск. Отключение систем вооружения.",15519,1,0,0,"Flame Leviathan overload3"),
+(-1603211,"Orbital countermeasures enabled.","","","","","","","","Система орбитального подавления - включена.",15510,1,0,0,"Flame Leviathan hard mode"),
+(-1603212,"Alert! Static defense system failure. Orbital countermeasures disabled.","","","","","","","","Тревога! Сбой стационарных средств защиты. Система орбитального подавления - отключена.",15511,1,0,0,"Flame Leviathan towers down"),
+(-1603213,"'Hodir's Fury' online. Acquiring target.","","","","","","","","Ярость Ходира - активирована. Поиск цели.",15512,1,0,0,"Flame Leviathan frost"),
+(-1603214,"'Mimiron's Inferno' online. Acquiring target.","","","","","","","","Адский огонь Мимирона - активировано. Поиск цели.",15513,1,0,0,"Flame Leviathan fire"),
+(-1603215,"'Thorim's Hammer' online. Acquiring target.","","","","","","","","Молот Торима - активирован. Поиск цели.",15515,1,0,0,"Flame Leviathan energy"),
+(-1603216,"'Freya's Ward' online. Acquiring target.","","","","","","","","Оберег Фреи - активировано. Поиск цели.",15514,1,0,0,"Flame Leviathan nature"),
+(-1603217,'PursueWarn' ,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,3,0,0,'EMOTE_pursue'),
 
 -- Thorim:
 (-1603221,"Interlopers! You mortals who dare to interfere with my sport will pay... Wait--you...","","","","","","","","",15733,1,0,0,"thorim aggro 1"),
@@ -300,7 +303,7 @@ REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2,
 -- Archivum
 
 -- teleporter from /dev/rsa
-DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3050010 AND -3050000;
+DELETE FROM `gossip_texts` WHERE `entry` BETWEEN -3050009 AND -3050000;
 INSERT INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `comment`) VALUES
 (-3050001, "Expedition Base Camp", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Лагерь экспедиции",  "Ulduar teleporter text 1"),
 (-3050002, "Formation Grounds", NULL, NULL, NULL, NULL, NULL, NULL, NULL, "Железный двор", "Ulduar teleporter text 2"),

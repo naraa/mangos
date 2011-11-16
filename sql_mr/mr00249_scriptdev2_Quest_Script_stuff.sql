@@ -14,20 +14,20 @@ INSERT INTO script_texts VALUES
 ('-1999784','Oh my...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Tamara Wobblesprocket - Taste Test (2)'),
 ('-1999783','Tastes like I\'m drinking... engine degreaser!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Tamara Wobblesprocket - Taste Test (3)');
 
-DELETE from script_texts WHERE entry IN  (-1760000,-1760001,-1760002,-1760003,-1760004,-1760005,-1760006,-1760007,-1760008,-1760009,-1760010,-1760011);
+DELETE FROM script_texts WHERE entry BETWEEN -1999792 AND -1999803;
 INSERT into script_texts (entry,content_default,type,comment) VALUES
-(-1760000,'Beginning the destillation in 5 seconds',0,'SAY_EVENT_STARTED'),
-(-1760001,'Add bannanas',0,'SAY_ADD_BANNANAS'),
-(-1760002,'Put a papaya in the still',0,'SAY_ADD_PAPAYA'),
-(-1760003,'Good job! Keep your eyes open now',0,'SAY_GOOD_JOB_1'),
-(-1760004,'The still needs heat! Light the brazier!',0,'SAY_BRAZIER'),
-(-1760005,'Well done, be ready for anything!',0,'SAY_GOOD_JOB_2'),
-(-1760006,'Pressuer\'s too high! Open the pressure valve!',0,'SAY_OPEN_VALVE'),
-(-1760007,'That\'ll do. Never know what it\'ll need next ...',0,'SAY_GOOD_JOB_3'),
-(-1760008,'Nicely handled! Stay on your toes',0,'SAY_GOOD_JOB_4'),
-(-1760009,'We\'ve done it! Come get the cask',0,'SAY_EVENT_END'),
-(-1760010,'Add orange, quickly !',0,'SAY_ADD_ORANGE'),
-(-1760011,'You failed! You will have to begin new destillation process if you still want cask',0,'SAY_FAIL');
+(-1999792,'Beginning the destillation in 5 seconds',0,'SAY_EVENT_STARTED'),
+(-1999793,'Add bannanas',0,'SAY_ADD_BANNANAS'),
+(-1999794,'Put a papaya in the still',0,'SAY_ADD_PAPAYA'),
+(-1999795,'Good job! Keep your eyes open now',0,'SAY_GOOD_JOB_1'),
+(-1999796,'The still needs heat! Light the brazier!',0,'SAY_BRAZIER'),
+(-1999797,'Well done, be ready for anything!',0,'SAY_GOOD_JOB_2'),
+(-1999798,'Pressuer\'s too high! Open the pressure valve!',0,'SAY_OPEN_VALVE'),
+(-1999799,'That\'ll do. Never know what it\'ll need next ...',0,'SAY_GOOD_JOB_3'),
+(-1999800,'Nicely handled! Stay on your toes',0,'SAY_GOOD_JOB_4'),
+(-1999801,'We\'ve done it! Come get the cask',0,'SAY_EVENT_END'),
+(-1999802,'Add orange, quickly !',0,'SAY_ADD_ORANGE'),
+(-1999803,'You failed! You will have to begin new destillation process if you still want cask',0,'SAY_FAIL');
 
 -- -----------
 -- Quest 11466
@@ -47,19 +47,21 @@ INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
 -- Quest texts 14107
 -- -----------------
 
-DELETE FROM script_texts WHERE entry BETWEEN -1000598 AND -1000594;
+DELETE FROM script_texts WHERE entry BETWEEN -1999819 AND -1999823;
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
-(-1000594,'At last... now I can rest.',0,0,0,0,'hero spirit SAY_BLESS_1'),
-(-1000595,'I\'m so tired. Just let me rest for a moment.',0,0,0,0,'hero spirit SAY_BLESS_2'),
-(-1000596,'I can\'t hear the screams anymore. Is this the end?',0,0,0,0,'hero spirit SAY_BLESS_3'),
-(-1000597,'My nightmare, is it finally over?',0,0,0,0,'hero spirit SAY_BLESS_4'),
-(-1000598,'It was awful... I dreamt I was fighting against my friends.',0,0,0,0,'hero spirit SAY_BLESS_5');
+(-1999819,'At last... now I can rest.',0,0,0,0,'hero spirit SAY_BLESS_1'),
+(-1999820,'I\'m so tired. Just let me rest for a moment.',0,0,0,0,'hero spirit SAY_BLESS_2'),
+(-1999821,'I can\'t hear the screams anymore. Is this the end?',0,0,0,0,'hero spirit SAY_BLESS_3'),
+(-1999822,'My nightmare, is it finally over?',0,0,0,0,'hero spirit SAY_BLESS_4'),
+(-1999823,'It was awful... I dreamt I was fighting against my friends.',0,0,0,0,'hero spirit SAY_BLESS_5');
 
 -- -------
 -- Quests 13665, 13745, 13750, 13756, 13761, 13767, 13772, 13777, 13782, 13787
 -- ------
-DELETE FROM script_texts WHERE entry = -1667788;
-INSERT INTO script_texts (`entry`,`content_default`,`comment`) values (-1667788,'I have been defeated. Good fight!','');
+DELETE FROM script_texts WHERE entry = -1999824;
+INSERT INTO script_texts (`entry`,`content_default`,`comment`) values 
+(-1999824,'I have been defeated. Good fight!','');
+
 
 -- ---------
 -- Quest 13663
@@ -90,12 +92,12 @@ INSERT INTO `script_waypoint` (`entry`,`pointid`,`location_x`,
 -- Quest 11560 -
 -- -------------
 
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1039999 AND -1039993;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1999824 AND -1999831;
 INSERT INTO `script_texts` (`entry`,`content_default`,`comment`) VALUES
-(-1039999, "Eww.. $r!", "tadpole SAY_RACE"),
-(-1039998, "No go with stranger!", "tadpole SAY_2"),
-(-1039997, "Close!", "tadpole SAY_3"),
-(-1039996, "Me go home?", "tadpole SAY_4"),
-(-1039995, "Play!", "tadpole SAY_5"),
-(-1039994, "Alurglgl!", "tadpole SAY_6"),
-(-1039993, "da-da?", "tadpole SAY_7");
+(-1999825, "Eww.. $r!", "tadpole SAY_RACE"),
+(-1999826, "No go with stranger!", "tadpole SAY_2"),
+(-1999827, "Close!", "tadpole SAY_3"),
+(-1999828, "Me go home?", "tadpole SAY_4"),
+(-1999829, "Play!", "tadpole SAY_5"),
+(-1999830, "Alurglgl!", "tadpole SAY_6"),
+(-1999831, "da-da?", "tadpole SAY_7");

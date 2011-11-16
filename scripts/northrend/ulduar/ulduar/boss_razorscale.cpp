@@ -34,27 +34,27 @@ enum
     SAY_GROUND              = -1603024,
     EMOTE_DEEP_BREATH       = -1603025,
     SAY_FIRES_EXTINGUISH    = -1603026,
-    EMOTE_HARPOON           = -1603353,
-    EMOTE_GROUNDED          = -1603354,
+    EMOTE_HARPOON           = -1603027,
+    EMOTE_GROUNDED          = -1603028,
 
     //razorscale air phase
     SPELL_FIREBALL                = 62796,
-    SPELL_FIREBALL_H            = 63815,
-    SPELL_WING_BUFFET            = 62666,
+    SPELL_FIREBALL_H              = 63815,
+    SPELL_WING_BUFFET             = 62666,
     SPELL_STUN                    = 62794,
-    SPELL_SUMMON_DWARF          = 62916,
+    SPELL_SUMMON_DWARF            = 62916,
     //both
-    SPELL_BERSERK                = 47008,
+    SPELL_BERSERK                 = 47008,
     DEVOURING_FLAME_VISUAL        = 63236,
     SPELL_FLAME_BREATH            = 63317,
-    SPELL_FLAME_BREATH_H        = 64021,
+    SPELL_FLAME_BREATH_H          = 64021,
     //ground
     SPELL_FLAME_BUFFET            = 64016,
-    SPELL_FLAME_BUFFET_H        = 64023,
-    SPELL_FUSE_ARMOR            = 64771,
+    SPELL_FLAME_BUFFET_H          = 64023,
+    SPELL_FUSE_ARMOR              = 64771,
 
     //devouring flame target
-    AURA_DEVOURING_FLAME        = 64709,
+    AURA_DEVOURING_FLAME          = 64709,
     AURA_DEVOURING_FLAME_H        = 64734,
 
     // mole machine
@@ -67,30 +67,30 @@ enum
     GO_HARPOON                  = 194543, // 41, 42, 194519
 
     //dark rune watcher
-    SPELL_LIGHTNING_BOLT        = 63809,
+    SPELL_LIGHTNING_BOLT          = 63809,
     SPELL_LIGHTNING_BOLT_H        = 64696,
-    SPELL_CHAIN_LIGHTNING        = 64758,
-    SPELL_CHAIN_LIGHTNING_H        = 64759,
+    SPELL_CHAIN_LIGHTNING         = 64758,
+    SPELL_CHAIN_LIGHTNING_H       = 64759,
 
     //dark rune sentinel
     SPELL_BATTLE_SHOUT            = 46763,
-    SPELL_BATTLE_SHOUT_H        = 64062,
-    SPELL_WHIRLWIND                = 63808,
+    SPELL_BATTLE_SHOUT_H          = 64062,
+    SPELL_WHIRLWIND               = 63808,
 
     //dark rune guardian
-    SPELL_STORMSTRIKE            = 64757,
+    SPELL_STORMSTRIKE             = 64757,
 
     //NPC ids
-    MOB_DARK_RUNE_WATCHER        = 33453,
+    MOB_DARK_RUNE_WATCHER         = 33453,
     MOB_DARK_RUNE_SENTINEL        = 33846,
     MOB_DARK_RUNE_GUARDIAN        = 33388, 
  
-    NPC_EXP_ENGINEER            = 33287,
+    NPC_EXP_ENGINEER              = 33287,
 
-    ACHIEV_QUICK_SHAVE          = 2919,
-    ACHIEV_QUICK_SHAVE_H        = 2921,
-    ACHIEV_MEDIUM_RARE          = 2923,
-    ACHIEV_MEDIUM_RARE_H        = 2924,
+    ACHIEV_QUICK_SHAVE            = 2919,
+    ACHIEV_QUICK_SHAVE_H          = 2921,
+    ACHIEV_MEDIUM_RARE            = 2923,
+    ACHIEV_MEDIUM_RARE_H          = 2924,
 };
 
 //Positional defines 

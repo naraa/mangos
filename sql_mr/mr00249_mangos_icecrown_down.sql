@@ -555,7 +555,7 @@ INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_invers
 #(3679106,36791,0,0,100,21,10000,15000,10000,15000,11,71730,0,0,0,0,0,0,0,0,0,0, 'Blazin skeleton - lay waste 10');
 -- Mana void
 -- UPDATE `creature_template` SET `AIName`='EventAI' WHERE `entry`=38068;
--- DELETE FROM `creature_ai_scripts` WHERE `id`=3806801;
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=38068);
 -- INSERT INTO `creature_ai_scripts` (`id`,`creature_id`,`event_type`,`event_inverse_phase_mask`,`event_chance`,`event_flags`,`event_param1`,`event_param2`,`event_param3`,`event_param4`,`action1_type`,`action1_param1`,`action1_param2`,`action1_param3`,`action2_type`,`action2_param1`,`action2_param2`,`action2_param3`,`action3_type`,`action3_param1`,`action3_param2`,`action3_param3`,`comment`) VALUES 
 -- (3806801,38068,4,0,100,31,0,0,0,0,11,71085,0,0,0,0,0,0,0,0,0,0, 'Mana void - mana void aura');
 #UPDATE `creature_template` SET `modelid1` = 11686 WHERE `entry` = 38068;

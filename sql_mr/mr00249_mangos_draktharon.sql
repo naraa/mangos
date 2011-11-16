@@ -58,6 +58,7 @@ UPDATE `creature_template` SET AIName = '', ScriptName = 'boss_trollgore' where 
 UPDATE `creature_template` SET AIName = '', ScriptName = 'boss_novos' where entry = 26631;
 UPDATE `creature_template` SET AIName = '', ScriptName = '' where entry = 26627;
 UPDATE `creature_template` SET `unit_class` = 0 WHERE `entry` = 26627;
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26627);
 UPDATE `creature_template` SET AIName = '', ScriptName = 'npc_crystal_channel_target' WHERE entry = 26712;
 UPDATE `creature_template` SET AIName = '', ScriptName = 'risen_shadowcaster' where entry = 27600;
 UPDATE `creature_template` SET AIName = '', ScriptName = 'boss_dred' where entry = 27483;
