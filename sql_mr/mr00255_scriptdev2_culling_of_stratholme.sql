@@ -55,7 +55,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594082, 'Have I? Lord Uther, by my right of succession and the sovereignty of my crown, I hereby relieve you of your command and suspend your paladins from service.', 'Неужели? Лорд Утер, властью, данной мне по праву наследования, я отстраняю вас от командования и освобождаю от службы ваших паладинов.', 12834,0,0,1, '34587'),
 (-1594083, 'Arthas! You cant just...', 'Артас! Ты не можешь так просто...', 12837,0,0,1, '34587'),
 (-1594084, 'It\'s done! those of you who have the will to save this land, follow me! The rest of you... get out of my sight!', 'Это уже сделано! Те из вас, кто действительно хочет спасти эту землю - за мной! Остальные - прочь с глаз моих!', 12835,0,0,0, '34587'),
-(-1594085, 'You\'ve just crossed a terrible inreshold, Arthas!', 'Ты пересек опасную черту, Артас.', 12844,0,0,25, '34587'),
+(-1594085, 'You\'ve just crossed a terrible threshold, Arthas!', 'Ты пересек опасную черту, Артас.', 12844,0,0,25, '34587'),
 (-1594086, 'Jaina?', 'Джайна?', 12836,0,0,1, '34587'),
 (-1594087, 'Im sorry Arthas. I can\'t watch you do this.', 'Прости, Артас. Я не могу на это смотреть.', 12838,0,0,1, '34587'),
 (-1594088, 'Take position here and I will lead a small force inside Stratholme to begin the culling. We must contain and purge the infected for the sake of all of Lordaeron!', 'Займите позицию, а я поведу небольшой отряд в Стратхольм и начну очищение. Мы должны изолировать и уничтожить зараженных жителей ради всего Лордерона!', 14327,1,0,1, '34587'),

@@ -2164,7 +2164,7 @@ CreatureAI* GetAI_npc_eye_of_kilrogg(Creature* pCreature)
 }
 
 /*########
-# npc_horseman_fire_bunnyAI
+# npc_fire_bunny
 #########*/
 
 enum
@@ -2236,7 +2236,7 @@ CreatureAI* GetAI_npc_horseman_fire_bunny(Creature* pCreature)
 };
 
 /*########
-npc_shade_of_horseman
+# npc_shade of horseman
 #########*/
 
 struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
@@ -2263,7 +2263,7 @@ struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
         m_uiEventTimer = 2.5*MINUTE*IN_MILLISECONDS;
 
         m_uiConflagrationTimer = 30000;
-        m_uiConflagrationProcTimer = 1500;
+        m_uiConflagrationProcTimer = 2000;
 
         DoCastSpellIfCan(m_creature, SPELL_HORSEMAN_MOUNT);
         DoCastSpellIfCan(m_creature, SPELL_HORSMAN_SHADE_VIS);
@@ -2335,7 +2335,7 @@ struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
             bIsConflagrating = !bIsConflagrating;
             m_creature->GetMotionMaster()->MovementExpired();
             m_creature->GetMotionMaster()->MoveTargetedHome();
-            m_uiConflagrationProcTimer = 1500;
+            m_uiConflagrationProcTimer = 2000;
             m_uiConflagrationTimer = bIsConflagrating ? 10000 : 30000;
             if (bIsConflagrating)
                 DoScriptText(YELL_CONFLAGRATION, m_creature);
@@ -2346,7 +2346,7 @@ struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
         if (bIsConflagrating)
             if (m_uiConflagrationProcTimer < uiDiff)
             {
-                m_uiConflagrationProcTimer = 1500;
+                m_uiConflagrationProcTimer = 2000;
                 if (lFireBunnies.empty())
                 {
                     std::list<Creature*> tempFireBunnies;
@@ -2370,15 +2370,12 @@ struct MANGOS_DLL_DECL npc_shade_of_horsemanAI : public ScriptedAI
                     if (Creature* pFireBunny = m_creature->GetMap()->GetCreature(*itr))
                         if (!pFireBunny->HasAura(SPELL_FLAMES_LARGE))
                         {
-                            if (m_creature->GetDistance(pFireBunny) > 25.0f)
+                            if (DoCastSpellIfCan(pFireBunny, SPELL_CONFLAGRATE) != CAST_OK)
                             {
                                 float x,y,z;
                                 pFireBunny->GetPosition(x,y,z);
-                                m_creature->GetMotionMaster()->MovePoint(0, x, y, z+20);
-                            }
-                            else
-                            {
-                                DoCastSpellIfCan(pFireBunny, SPELL_CONFLAGRATE, CAST_TRIGGERED);
+                                pFireBunny->GetClosePoint(x,y,z,0,5,0);
+                                m_creature->GetMotionMaster()->MovePoint(0, x,y,z+15);
                                 break;
                             }
                         }
@@ -2392,6 +2389,7 @@ CreatureAI* GetAI_npc_shade_of_horseman(Creature* pCreature)
 {
     return new npc_shade_of_horsemanAI (pCreature);
 };
+
 
 void AddSC_npcs_special()
 {

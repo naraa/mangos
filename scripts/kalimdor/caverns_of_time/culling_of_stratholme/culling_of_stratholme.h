@@ -72,8 +72,8 @@ enum Data
 ///-> Second Quest stuff
     QUEST_A_ROYAL_ESCORT    = 13151,
 
-    NPC_MARINE              = 27745,
-    NPC_PRIEST              = 27747,
+    NPC_MARINE              = 27745,   ///-> used to update entries
+    NPC_PRIEST              = 27747,   ///-> used to update entries
     NPC_MARINE_1            = 70000,
     NPC_MARINE_2            = 70001,
     NPC_MARINE_3            = 70002,
@@ -85,9 +85,9 @@ enum Data
     NPC_UTHER               = 26528,
     NPC_KNIGHT              = 28612,
     NPC_CHROMI02            = 27915,
-    NPC_CITYMAN             = 28167,
+    NPC_CITY                = 28167,
     NPC_CRAZYMAN            = 28169,
-
+    NPC_INVIS_STALKER       = 20562,
     WORLD_STATE_COS_WAVE_COUNT    = 3504,
 
 ///-> end
@@ -102,7 +102,7 @@ enum Data
     NPC_ZOMBIE              = 27737,
     NPC_GHOUL               = 28249,
     NPC_NECROMANCER         = 28200,
-    NPC_STALKER             = 28199,
+    NPC_STALKER             = 28199,  ///->??? might be typo for invis_stalker
     NPC_FIEND               = 27734,
     NPC_GOLEM               = 28201,
     NPC_EGHOUL              = 27729,
@@ -111,9 +111,7 @@ enum Data
     NPC_MEATHOOK            = 26529,
     NPC_SALRAMM             = 26530,
     NPC_EPOCH               = 26532,
-    NPC_MALGANIS_INTRO      = 26533,    ///i know theres a few doubles here ... working my fixes on top of our will remove when finished
     NPC_MALGANIS            = 26533,
-    NPC_CITY                = 28167,
     NPC_INFINITE_CORRUPTOR  = 32273,
 
     GO_SHKAF_GATE          = 188686,

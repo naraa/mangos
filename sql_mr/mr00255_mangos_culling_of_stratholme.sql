@@ -52,6 +52,21 @@ UPDATE `creature_template` SET `AIName` = '',`ScriptName`='boss_malganis' WHERE 
 UPDATE `creature_template` SET `AIName` = '',`ScriptName`='npc_time_riftCS' WHERE entry=28409;
 UPDATE `creature_template` SET `AIName` = '',`ScriptName`='boss_infinite_corruptor' WHERE entry=32273;
 
+-- ACID CLEAN UP
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26499);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26529);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26499);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26530);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26532);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26533);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27731);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27734);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27736);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=28200);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=28249);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=32273);
+
+
 -- Mal'Ganis completion of encounter
 DELETE FROM `achievement_criteria_requirement` WHERE `criteria_id` IN (6381, 6808);
 INSERT INTO `achievement_criteria_requirement` VALUES
