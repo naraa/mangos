@@ -104,7 +104,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1594151, 'Be on the alert. We were surrounded.', 'Будьте начеку. Нас окружили.',14304,0,0,0, '26499'),
 (-1594152, 'Mal\'Ganis doesn\'t want to make our life easier...', 'Мал\'Ганис не собирается облегчить нам жизнь.',14305,0,0,0, '26499'),
 (-1594153, 'They are stubborn.', 'Они упрямы.',14306,0,0,0, '26499'),
-(-1594154, 'What else he will put on my way?', 'Что еще он поставит у меня на пути?',14307,0,0,0, '26499'),
+(-1594154, 'What else he will put in my way?', 'Что еще он поставит у меня на пути?',14307,0,0,0, '26499'),
 (-1594155, 'Prince Arthas Menethil, in this day mighty evil devoured your soul. Death, which you had to bring to others, today will come for you.', 'Принц Артас Менетил, в этот самый день могущественное зло поглотило твою душу. Смерть, которую ты должен был принести другим, сегодня придет за тобой.',13408,0,0,0, '26499'),
 (-1594156, 'I do for Lordaeron that should, and words and deeds will not stop me.', 'Я делаю для Лордерона то, что должен, и никакие слова и поступки меня не остановят.',14309,0,0,5, '26499'),
 (-1594157, 'Let\'s see, young prince...', 'Ну что ж, посмотрим, юный принц.',13409,0,0,0, '26499'),

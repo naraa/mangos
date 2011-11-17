@@ -66,6 +66,48 @@ DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=28200);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=28249);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=32273);
 
+-- Clean up ACID texts
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-841;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-842;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-843;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-844;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-845;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-846;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-847;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-848;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-849;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-850;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-851;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-852;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-853;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-854;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-855;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-856;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-857;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-858;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-859;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-860;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-861;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-862;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-863;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-864;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-865;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-866;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-867;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-868;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-869;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-870;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-871;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-872;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-873;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-874;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-875;
+DELETE FROM `creature_ai_texts` WHERE  `entry`=-876;
+
+-- Quest fix  ( if you already had quest done should be able to do it again you can in off blizz ... soo)
+UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13151;
+UPDATE `quest_template` SET `SpecialFlags` = 1 WHERE `entry` = 13149;
+
 
 -- Mal'Ganis completion of encounter
 DELETE FROM `achievement_criteria_requirement` WHERE `criteria_id` IN (6381, 6808);
@@ -88,6 +130,7 @@ REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES ('588
 
 UPDATE `creature_template` SET `modelid_2` = 24769 WHERE `entry` = 27747;
 UPDATE `creature_template` SET `modelid_2` = 24768 WHERE `entry` = 27745;
+UPDATE `creature_template` SET `modelid_2` = 24949 WHERE `entry` = 26499;
 
 UPDATE `creature` SET `spawntimesecs`= 36000 WHERE `id` IN (31127, 31126, 28167, 28169);
 

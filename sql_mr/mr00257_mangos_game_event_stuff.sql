@@ -70,6 +70,14 @@ UPDATE `creature_template` SET `equipment_id` = 10400 WHERE `entry` = 23800;
 UPDATE creature_template SET unit_flags = 0, AIName = '', faction_a = 35, faction_h = 35, ScriptName = 'npc_horseman_fire_bunny' WHERE entry = 23686;
 UPDATE creature_template SET InhabitType = 4, ScriptName = 'npc_shade_of_horseman' WHERE entry = 23543;
 
+-- Headless Horseman fire bunny
+UPDATE creature_template SET unit_flags = 0, AIName = 'EventAI' WHERE entry = 23686;
+INSERT INTO creature_ai_scripts (id,creature_id,event_type,event_chance,action1_type,action1_param1) VALUES
+-- visual fire aura on initial spawn
+(2368601,23686,11,100,11,42075),
+-- evade immediately after receiving bucket hit
+(2368602,23686,4,100,24,0);
+
 DELETE FROM game_event WHERE entry = 101;
 INSERT INTO game_event (entry,start_time,end_time,occurence,LENGTH,description) VALUES
 (101,'2012-11-02 18:45:00','2020-12-31 09:00:00','15','6','Hallows End - Horseman Village Attack');

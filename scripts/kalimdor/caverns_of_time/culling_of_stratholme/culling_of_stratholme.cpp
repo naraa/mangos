@@ -141,7 +141,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     uint32 culling_faction;
     uint32 m_uiStep;
     uint32 m_uiStepTimer;
-    uint32 m_uiMoveTimer;
     uint32 m_uiHealTimer;
     uint32 m_uiExorcismTimer;
     uint32 m_uiSummonTimer;
@@ -150,7 +149,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     Creature* Malganis;
     Creature* pEpoch;
     bool StartEvent;
-    bool MoveSoldier;
 
     float LastX;
     float LastY;
@@ -319,11 +317,10 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
               break;
            case 9:
               DoScriptText(SAY_ENTER01, m_creature);
-              MoveSoldier = true;
-              m_uiMoveTimer = 12000;
               break;
            case 10:
               SetEscortPaused(true);
+              MoveSoldiers();
               m_pInstance->SetData(TYPE_PHASE, 2);
               ResetStep(2000);
               if(Unit* Cityman = m_creature->GetMap()->GetUnit(m_uiPeople01GUID))
@@ -927,16 +924,6 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
                EnterEvent();
             }
             else m_uiStepTimer -= uiDiff;
-         }
-
-         if(MoveSoldier == true)
-         {
-            if(m_uiMoveTimer < uiDiff)
-            {
-               MoveSoldiers();
-               MoveSoldier = false;
-            }
-            else m_uiMoveTimer -= uiDiff;
          }
 
          if(m_pInstance->GetData(TYPE_PHASE) == 3)
