@@ -1665,6 +1665,23 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                         m_caster->CastSpell(m_caster, 42288, true);
                     return;
                 }
+                case 42339:                                 // Bucket Lands
+                {
+                     // remove aura Has Bucket from caster
+                   m_caster->RemoveAurasDueToSpell(42336);
+                    if (!unitTarget)
+                        return;
+                    // if target has aura Has Bucket do nothing
+                    if (unitTarget->HasAura(42336))
+                         return;
+
+                    // apply aura Has Bucket
+                    unitTarget->CastSpell(unitTarget, 42336, true);
+                    // create new bucket for target
+                    m_caster->CastSpell(unitTarget, 42349, true);
+                    return;
+
+                }
                 case 42793:                                 // Burn Body
                 {
                     if (!unitTarget || unitTarget->GetTypeId() != TYPEID_UNIT || m_caster->GetTypeId() != TYPEID_PLAYER)
@@ -4363,7 +4380,12 @@ void Spell::EffectTeleportUnits(SpellEffectIndex eff_idx)
     if (!unitTarget || unitTarget->IsTaxiFlying())
         return;
 
-    switch (m_spellInfo->EffectImplicitTargetB[eff_idx])
+    // Target dependend on TargetB, if there is none provided, decide dependend on A
+    uint32 targetType = m_spellInfo->EffectImplicitTargetB[eff_idx];
+    if (!targetType)
+        targetType = m_spellInfo->EffectImplicitTargetA[eff_idx];
+
+    switch (targetType)
     {
         case TARGET_INNKEEPER_COORDINATES:
         {
