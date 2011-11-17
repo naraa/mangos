@@ -72,8 +72,6 @@ enum Data
 ///-> Second Quest stuff
     QUEST_A_ROYAL_ESCORT    = 13151,
 
-    NPC_MARINE              = 27745,   ///-> used to update entries
-    NPC_PRIEST              = 27747,   ///-> used to update entries
     NPC_MARINE_1            = 70000,
     NPC_MARINE_2            = 70001,
     NPC_MARINE_3            = 70002,
@@ -89,6 +87,8 @@ enum Data
     NPC_CRAZYMAN            = 28169,
     NPC_INVIS_STALKER       = 20562,
     WORLD_STATE_COS_WAVE_COUNT    = 3504,
+
+    MALGANIS_KC_BUNNY      = 31006,
 
 ///-> end
 

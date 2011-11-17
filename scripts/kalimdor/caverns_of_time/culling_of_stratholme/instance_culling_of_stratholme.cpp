@@ -34,8 +34,6 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
     uint32 m_uiHeroicTimer;
     uint32 m_uiLastTimer;
 
-    uint64 m_uiMalganisGUID;
-    uint64 m_uiSalrammGUID;
     uint64 m_uiMalGate1GUID;
     uint64 m_uiMalGate2GUID;
     uint64 m_uiMalChestGUID;
@@ -60,8 +58,6 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
        DoUpdateWorldState(WORLD_STATE_COS_TIME_ON, 0);
 
        m_uiCratesCount = 0;
-       m_uiSalrammGUID = 0;
-       m_uiMalganisGUID = 0;
        m_uiMalGate1GUID = 0;
        m_uiMalGate2GUID = 0;
        m_uiMalChestGUID = 0;
@@ -220,19 +216,6 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
                         pGo->SetGoState(GO_STATE_ACTIVE);
                 }
                 break;
-        }
-    }
-
-    void SetData64(uint32 uiData, uint64 uiGuid)
-    {
-        switch(uiData)
-        {
-            case NPC_SALRAMM:
-                m_uiSalrammGUID = uiGuid;
-                break; 
-            case NPC_MALGANIS:
-                m_uiMalganisGUID = uiGuid;
-                break; 
         }
     }
 

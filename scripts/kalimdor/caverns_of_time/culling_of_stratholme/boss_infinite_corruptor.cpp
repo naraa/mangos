@@ -47,20 +47,20 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
 
    void Reset() 
    {
-     m_uiCourseTimer = 7000;
-     m_uiStrikeTimer = 5000;
+       m_uiCourseTimer = 7000;
+       m_uiStrikeTimer = 5000;
    }
 
-   void Aggro(Unit* who)
+   void Aggro(Unit* pWho)
    {
-      if(m_pInstance)
-         m_pInstance->SetData(TYPE_BONUS, SPECIAL);
+       if (m_pInstance)
+           m_pInstance->SetData(TYPE_BONUS, SPECIAL);
    }
 
-   void JustDied(Unit *killer)
+   void JustDied(Unit *pKiller)
    {
-       if(m_pInstance)
-         m_pInstance->SetData(TYPE_BONUS, DONE);
+       if (m_pInstance)
+           m_pInstance->SetData(TYPE_BONUS, DONE);
    }
 
     void KilledUnit(Unit* pVictim)
@@ -75,44 +75,44 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
 
     void EnterEvadeMode()
     {
-       if(!m_pInstance) return;
+       if (!m_pInstance) return;
 
        m_creature->RemoveAllAuras();
        m_creature->DeleteThreatList();
        m_creature->CombatStop(true);
        m_creature->LoadCreatureAddon();
-       if(m_pInstance)
-         m_pInstance->SetData(TYPE_BONUS, IN_PROGRESS);
+       if (m_pInstance)
+           m_pInstance->SetData(TYPE_BONUS, IN_PROGRESS);
 
-       if(m_creature->isAlive())
-          m_creature->GetMotionMaster()->MoveTargetedHome();
+       if (m_creature->isAlive())
+           m_creature->GetMotionMaster()->MoveTargetedHome();
 
        m_creature->SetLootRecipient(NULL);
  
        Reset();
     }
 
-   void UpdateAI(const uint32 diff)
+   void UpdateAI(const uint32 uiDiff)
    {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         DoMeleeAttackIfReady();
 
-        if (m_uiCourseTimer < diff)
+        if (m_uiCourseTimer < uiDiff)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, SPELL_COURSE);
 
             m_uiCourseTimer = 17000;
-        }else m_uiCourseTimer -= diff;
+        }else m_uiCourseTimer -= uiDiff;
 
-        if (m_uiStrikeTimer < diff)
+        if (m_uiStrikeTimer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_STRIKE);
 
             m_uiStrikeTimer = 5000;
-        }else m_uiStrikeTimer -= diff;
+        }else m_uiStrikeTimer -= uiDiff;
   }
 };
 
