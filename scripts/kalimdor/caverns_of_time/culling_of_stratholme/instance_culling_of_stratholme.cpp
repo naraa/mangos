@@ -34,10 +34,8 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
     uint32 m_uiHeroicTimer;
     uint32 m_uiLastTimer;
 
-    uint64 m_uiMalGate1GUID;
-    uint64 m_uiMalGate2GUID;
-    uint64 m_uiMalChestGUID;
-    uint64 m_uiExitGUID;
+    ObjectGuid m_uiMalChestGUID;
+    ObjectGuid m_uiExitGUID;
 
     void Initialize()
     {
@@ -58,10 +56,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
        DoUpdateWorldState(WORLD_STATE_COS_TIME_ON, 0);
 
        m_uiCratesCount = 0;
-       m_uiMalGate1GUID = 0;
-       m_uiMalGate2GUID = 0;
-       m_uiMalChestGUID = 0;
-       m_uiExitGUID = 0;
+
     }
 
     void OnCreatureCreate(Creature* pCreature)
@@ -131,6 +126,9 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
             case NPC_PRIEST_2:
                          pCreature->SetActiveObjectState(true);
                          break;
+            case NPC_MALGANIS:
+                         pCreature->SetActiveObjectState(true);
+                         break;
             case NPC_INFINITE_CORRUPTOR: 
                          pCreature->SetPhaseMask(0, true);
                          break;
@@ -140,6 +138,15 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
 
     void OnObjectCreate(GameObject* pGo)
     {
+         switch(pGo->GetEntry())
+         {
+             case GO_MALGANIS_GATE1:
+             case GO_MALGANIS_GATE2:
+             case GO_MALGANIS_CHEST:
+             case GO_MALGANIS_CHEST_H:
+             case GO_EXIT:
+                 break;
+         }
          m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
@@ -163,6 +170,24 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
         }
         if (Creature* pChromi2 = GetSingleCreatureFromStorage(NPC_CHROMI02))
             pChromi2->SetVisibility(VISIBILITY_ON);
+    }
+
+    void KillMalginasCredit()
+    {
+
+       Map::PlayerList const &PlayerList = instance->GetPlayers();
+
+       if (PlayerList.isEmpty())
+           return;
+
+       if (Creature* pMalganis = GetSingleCreatureFromStorage(NPC_MALGANIS))
+       {
+           for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+           {
+                 pMalganis->SummonCreature(NPC_CHROMI03, 2311.61f, 1497.85f, 128.01f, 4.14f, TEMPSUMMON_TIMED_DESPAWN, 1800000);
+                 i->getSource()->KilledMonsterCredit(MALGANIS_KC_BUNNY, pMalganis->GetObjectGuid());
+            }
+        }
     }
 
     void SetData(uint32 uiType, uint32 uiData)
@@ -207,6 +232,7 @@ struct MANGOS_DLL_DECL instance_culling_of_stratholme : public ScriptedInstance
                 m_auiEncounter[6] = uiData;
                 if (uiData == DONE)
                 {
+                    KillMalginasCredit();
                     DoRespawnGameObject(m_uiMalChestGUID, 30*MINUTE);
                     if (GameObject* pGo = instance->GetGameObject(m_uiMalChestGUID))
                         pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_INTERACT_COND);

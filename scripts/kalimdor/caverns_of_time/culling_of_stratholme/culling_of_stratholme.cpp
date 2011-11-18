@@ -1492,7 +1492,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
                 return;
 
             float attackRadius = m_creature->GetAttackDistance(pWho);
-            if (m_creature->IsWithinDistInMap(pWho, attackRadius) && m_creature->IsWithinDistInMap(pWho, 45.0f))
+            if (m_creature->IsWithinDistInMap(pWho, attackRadius) && m_creature->IsWithinLOSInMap(pWho))
             {
                 if (!m_creature->getVictim())
                 {
@@ -1518,7 +1518,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
         {
            if (m_creature->GetHealthPercent() <= 40.0f)
            {
-              if (Creature* pHeal = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_1, 65.0f))
+              if (Creature* pHeal = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_1, 70.0f))
               {
                  if (pHeal->GetHealthPercent() > 40.0f)
                  {
@@ -1527,7 +1527,7 @@ struct MANGOS_DLL_DECL npc_arthas_marineAI : public ScriptedAI
                     m_uiHealTimer = 3000;
                  }
               }
-              else if (Creature* pHeal2 = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_2, 65.0f))
+              else if (Creature* pHeal2 = GetClosestCreatureWithEntry(m_creature, NPC_PRIEST_2, 70.0f))
               {
                  if (pHeal2->GetHealthPercent() > 40.0f)
                  {

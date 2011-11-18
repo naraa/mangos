@@ -38,7 +38,7 @@ REPLACE INTO script_texts (entry, content_default, content_loc8, sound, type, la
 (-1597300, 'I knew I should have secured the wagon lock better when I was in Andorhal.', 'Надо было получше запереть фургон в Андорале.', 0,0,0,1, '34587'),
 (-1597301, 'This grain shipmend has been nothing but trouble!', 'От этого зерна пока одни лишь хлопоты!', 0,0,0,1, '34587'),
 (-1597302, 'Well, guess I should load everything back into the cart.', 'Ну, наверное, мне нужно сложить все обратно в телегу.', 0,0,0,0, '34587'),
-(-1597303, 'Oh, come on! My cart broke, my horse a shoe, and now the cargo goes bad!', 'О, черт! Моя телега сломалась, моя лошадь потеряла подкову, а теперь еще и с грузом проблемы!', 0,0,0,1, '34587'),
+(-1597303, 'Oh, come on! My cart broke, my horse throws a shoe, and now the cargo goes bad!', 'О, черт! Моя телега сломалась, моя лошадь потеряла подкову, а теперь еще и с грузом проблемы!', 0,0,0,1, '34587'),
 (-1597304, 'I guess I\'ll go find the authorites. If I\'m lucky theyll tell me it\'s the plague and that were all to die!', 'Похоже, мне придется идти искать представителей закона. Если мне повезет, они скажут, что это чума и что скоро мы все умрем!', 0,0,0,1, '34587'),
 -- ARTHAS INTRO EVENT
 (-1594071, 'Glad you could make it, Uther.', 'Я рад, что ты пришел, Утер!', 12828,0,0,1, '34587'),
