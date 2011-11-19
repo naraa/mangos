@@ -66,7 +66,6 @@ struct MANGOS_DLL_DECL boss_malganisAI : public ScriptedAI
     Unit* pTarget;
     bool Sleep;
     bool Vampire;
-    uint32 Phase;
     Creature* Malganis;
     Creature* Arthas;
 
