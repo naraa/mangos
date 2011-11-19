@@ -1102,7 +1102,7 @@ void AddSC_mob_teleguy()
     Script* pNewScript;
 
     pNewScript = new Script;
-    pNewscript->Name = "mob_teleguy";
+    pNewScript->Name = "mob_teleguy";
     pNewScript->pGossipHello = &GossipHello_mob_teleguy;
     pNewScript->pGossipSelect = &GossipSelect_mob_teleguy;
     pNewScript->RegisterSelf();
