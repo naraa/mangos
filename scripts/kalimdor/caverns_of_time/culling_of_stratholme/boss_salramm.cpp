@@ -53,65 +53,64 @@ enum
 
 struct MANGOS_DLL_DECL boss_salrammAI : public ScriptedAI
 {
-   boss_salrammAI(Creature *pCreature) : ScriptedAI(pCreature)
-   {
+    boss_salrammAI(Creature *pCreature) : ScriptedAI(pCreature)
+    {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
         m_creature->SetActiveObjectState(true);
         m_creature->SetInCombatWithZone();
         Reset();
-   }
+    }
 
-   ScriptedInstance* m_pInstance;
-   bool m_bIsHeroic;
+    ScriptedInstance* m_pInstance;
+    bool m_bIsHeroic;
 
-   uint32 m_uiShadowBoltTimer;
-   uint32 m_uiFleshTimer;
-   uint32 m_uiStealTimer;
-   uint32 m_uiSummonTimer;
+    uint32 m_uiShadowBoltTimer;
+    uint32 m_uiFleshTimer;
+    uint32 m_uiStealTimer;
+    uint32 m_uiSummonTimer;
 
-   void Reset() 
-   {
-     m_uiShadowBoltTimer = 5000;
-     m_uiFleshTimer = (urand(7000, 9000));
-     m_uiStealTimer = (urand(9000, 17000));
-     m_uiSummonTimer = (urand(12000, 17000));
-   }
+    void Reset()
+    {
+        m_uiShadowBoltTimer = 5000;
+        m_uiFleshTimer = (urand(7000, 9000));
+        m_uiStealTimer = (urand(9000, 17000));
+        m_uiSummonTimer = (urand(12000, 17000));
+    }
 
-   void Aggro(Unit* pWho)
-   {
-      DoScriptText(SAY_SALRAMM_AGGRO, m_creature);
-   }
+    void Aggro(Unit* pWho)
+    {
+        DoScriptText(SAY_SALRAMM_AGGRO, m_creature);
+    }
 
-   void JustDied(Unit *pKiller)
-   {
-       DoScriptText(SAY_SALRAMM_DEATH, m_creature);
-       if (m_pInstance)
-          m_pInstance->SetData(TYPE_ENCOUNTER, DONE);
-   }
+    void JustDied(Unit *pKiller)
+    {
+        DoScriptText(SAY_SALRAMM_DEATH, m_creature);
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_ENCOUNTER, DONE);
+    }
 
-   void KilledUnit(Unit* pVictim)
-   {
-        switch(rand()%3)
-        {
-            case 0: DoScriptText(SAY_SALRAMM_SLAY01, m_creature); break;
-            case 1: DoScriptText(SAY_SALRAMM_SLAY02, m_creature); break;
-            case 2: DoScriptText(SAY_SALRAMM_SLAY03, m_creature); break;
-        }
-   }
+    void KilledUnit(Unit* pVictim)
+    {
+         switch(rand()%3)
+         {
+             case 0: DoScriptText(SAY_SALRAMM_SLAY01, m_creature); break;
+             case 1: DoScriptText(SAY_SALRAMM_SLAY02, m_creature); break;
+             case 2: DoScriptText(SAY_SALRAMM_SLAY03, m_creature); break;
+         }
+    }
 
-      void SpellHitTarget(Unit *pTarget, const SpellEntry *spell)
-   {
+    void SpellHitTarget(Unit *pTarget, const SpellEntry *spell)
+    {
         if (spell->Id == SPELL_GNOUL_BLOW)
-           if (pTarget->GetTypeId() != TYPEID_PLAYER && pTarget->GetEntry() == NPC_GNOUL)
-             pTarget->SetDisplayId(GNOUL_IMAGE);
-   }
+            if (pTarget->GetTypeId() != TYPEID_PLAYER && pTarget->GetEntry() == NPC_GNOUL)
+                pTarget->SetDisplayId(GNOUL_IMAGE);
+    }
 
-   void UpdateAI(const uint32 uiDiff)
-   {
-
-      if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-          return;
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
 
         if (m_uiShadowBoltTimer < uiDiff)
         {
@@ -158,7 +157,7 @@ struct MANGOS_DLL_DECL boss_salrammAI : public ScriptedAI
         }else m_uiSummonTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
-  }
+    }
 };
 
 /*###
@@ -167,28 +166,28 @@ struct MANGOS_DLL_DECL boss_salrammAI : public ScriptedAI
 
 struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
 {
-   npc_salramm_gnoulAI(Creature *pCreature) : ScriptedAI(pCreature)
-   {
-       m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-       m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
-       m_creature->SetActiveObjectState(true);
-       Reset();
-   }
+    npc_salramm_gnoulAI(Creature *pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
+        m_creature->SetActiveObjectState(true);
+        Reset();
+    }
 
-   ScriptedInstance* m_pInstance;
-   bool m_bIsHeroic;
+    ScriptedInstance* m_pInstance;
+    bool m_bIsHeroic;
 
-   uint32 m_uiBlowTimer;
+    uint32 m_uiBlowTimer;
 
-   void Reset() 
-   { 
-     m_uiBlowTimer = (urand(3000, 15000));
-   }
+    void Reset()
+    {
+        m_uiBlowTimer = (urand(3000, 15000));
+    }
 
-   void MoveInLineOfSight(Unit* pWho)
-   {
+    void MoveInLineOfSight(Unit* pWho)
+    {
         if (!pWho)
-            return;
+           return;
 
         if (!m_creature->hasUnitState(UNIT_STAT_STUNNED) && pWho->isTargetableForAttack() &&
             m_creature->IsHostileTo(pWho) && pWho->isInAccessablePlaceFor(m_creature))
@@ -211,10 +210,10 @@ struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
                 }
             }
         }
-   }
+    }
 
-   void UpdateAI(const uint32 uiDiff)
-   {
+    void UpdateAI(const uint32 uiDiff)
+    {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
@@ -222,7 +221,7 @@ struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
         {
             if (Creature* pSalramm = m_pInstance->GetSingleCreatureFromStorage(NPC_SALRAMM))
             {
-               if (pSalramm->isDead()) 
+               if (pSalramm->isDead())
                    return;
 
                switch(rand()%2)
@@ -237,7 +236,7 @@ struct MANGOS_DLL_DECL npc_salramm_gnoulAI : public ScriptedAI
         else m_uiBlowTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
-   }
+    }
 };
 
 CreatureAI* GetAI_boss_salramm(Creature* pCreature)

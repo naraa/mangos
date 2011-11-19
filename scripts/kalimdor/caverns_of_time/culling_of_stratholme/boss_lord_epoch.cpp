@@ -31,7 +31,7 @@ enum
     SPELL_TIME_STOP                = 58848,
     SPELL_TIME_WARP                = 52766,
     SPELL_SPIKE_N                  = 52771,
-    SPELL_SPIKE_H                  = 58830,  
+    SPELL_SPIKE_H                  = 58830,
 
     SAY_EPOCH_DEATH        = -1594119,
     SAY_EPOCH_SLAY01       = -1594120,
@@ -44,34 +44,34 @@ enum
 
 struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
 {
-   boss_lord_epochAI(Creature *pCreature) : ScriptedAI(pCreature)
-   {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
-        m_creature->SetActiveObjectState(true);
-        Reset();
-   }
+    boss_lord_epochAI(Creature *pCreature) : ScriptedAI(pCreature)
+    {
+         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+         m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
+         m_creature->SetActiveObjectState(true);
+         Reset();
+    }
 
-   ScriptedInstance* m_pInstance;
-   bool m_bIsHeroic;
+    ScriptedInstance* m_pInstance;
+    bool m_bIsHeroic;
 
-   uint32 m_uiSpike_Timer;
-   uint32 m_uiWarp_Timer;
-   uint32 m_uiStop_Timer;
-   uint32 m_uiCourse_Timer;
+    uint32 m_uiSpike_Timer;
+    uint32 m_uiWarp_Timer;
+    uint32 m_uiStop_Timer;
+    uint32 m_uiCourse_Timer;
 
-   void Reset() 
-   {
-     m_uiCourse_Timer = 9300;
-     m_uiStop_Timer = 21300;
-     m_uiWarp_Timer = 25300;
-     m_uiSpike_Timer = 5300;
-   }
+    void Reset()
+    {
+        m_uiCourse_Timer = 9300;
+        m_uiStop_Timer = 21300;
+        m_uiWarp_Timer = 25300;
+        m_uiSpike_Timer = 5300;
+    }
 
-   void JustDied(Unit *pKiller)
-   {
-       DoScriptText(SAY_EPOCH_DEATH, m_creature);
-   }
+    void JustDied(Unit *pKiller)
+    {
+        DoScriptText(SAY_EPOCH_DEATH, m_creature);
+    }
 
     void KilledUnit(Unit* pVictim)
     {
@@ -83,12 +83,10 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
         }
     }
 
-   void UpdateAI(const uint32 uiDiff)
-   {
+    void UpdateAI(const uint32 uiDiff)
+    {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        DoMeleeAttackIfReady();
 
         if (m_uiCourse_Timer < uiDiff)
         {
@@ -118,15 +116,17 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
         {
              if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
                 DoCast(target, SPELL_TIME_WARP);
-        switch(rand()%3)
-        {
-            case 0: DoScriptText(SAY_EPOCH_WARP01, m_creature); break;
-            case 1: DoScriptText(SAY_EPOCH_WARP02, m_creature); break;
-            case 2: DoScriptText(SAY_EPOCH_WARP03, m_creature); break;
-        }
+                switch(rand()%3)
+                {
+                    case 0: DoScriptText(SAY_EPOCH_WARP01, m_creature); break;
+                    case 1: DoScriptText(SAY_EPOCH_WARP02, m_creature); break;
+                    case 2: DoScriptText(SAY_EPOCH_WARP03, m_creature); break;
+                }
 
             m_uiWarp_Timer = 25300;
         }else m_uiWarp_Timer -= uiDiff;
+
+        DoMeleeAttackIfReady();
 
   }
 };

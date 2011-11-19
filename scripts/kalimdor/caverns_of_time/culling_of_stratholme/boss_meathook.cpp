@@ -42,40 +42,40 @@ enum
 
 struct MANGOS_DLL_DECL boss_meathookAI : public ScriptedAI
 {
-   boss_meathookAI(Creature *pCreature) : ScriptedAI(pCreature)
-   {
+    boss_meathookAI(Creature *pCreature) : ScriptedAI(pCreature)
+    {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
         m_creature->SetActiveObjectState(true);
         m_creature->SetInCombatWithZone();
         Reset();
-   }
+    }
 
-   ScriptedInstance* m_pInstance;
-   bool m_bIsHeroic;
+    ScriptedInstance* m_pInstance;
+    bool m_bIsHeroic;
 
-   uint32 m_uiChain_Timer;
-   uint32 m_uiExploded_Timer;
-   uint32 m_uiFrenzy_Timer;
+    uint32 m_uiChain_Timer;
+    uint32 m_uiExploded_Timer;
+    uint32 m_uiFrenzy_Timer;
 
-   void Reset()
-   {
-     m_uiChain_Timer = 6300;
-     m_uiExploded_Timer = 5000;
-     m_uiFrenzy_Timer = 22300;
-   }
+    void Reset()
+    {
+        m_uiChain_Timer = 6300;
+        m_uiExploded_Timer = 5000;
+        m_uiFrenzy_Timer = 22300;
+    }
 
-   void Aggro(Unit* pWho)
-   {
-     DoScriptText(SAY_MEATHOOK_AGGRO, m_creature);
-   }
+    void Aggro(Unit* pWho)
+    {
+        DoScriptText(SAY_MEATHOOK_AGGRO, m_creature);
+    }
 
-   void JustDied(Unit *pKiller)
-   {
-       DoScriptText(SAY_MEATHOOK_DEATH, m_creature);
-       if(m_pInstance)
-          m_pInstance->SetData(TYPE_PHASE, 3);
-   }
+    void JustDied(Unit *pKiller)
+    {
+        DoScriptText(SAY_MEATHOOK_DEATH, m_creature);
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_PHASE, 3);
+    }
 
     void KilledUnit(Unit* pVictim)
     {
@@ -87,9 +87,8 @@ struct MANGOS_DLL_DECL boss_meathookAI : public ScriptedAI
         }
     }
 
-   void UpdateAI(const uint32 uiDiff)
-   {
-
+    void UpdateAI(const uint32 uiDiff)
+    {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 

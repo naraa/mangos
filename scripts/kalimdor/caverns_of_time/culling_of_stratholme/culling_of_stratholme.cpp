@@ -179,26 +179,26 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
     void Reset()
     {
-       if (!m_pInstance) return;
+        if (!m_pInstance) return;
 
-       m_creature->SetSpeedRate(MOVE_RUN, 1);
+        m_creature->SetSpeedRate(MOVE_RUN, 1);
 
-       if (m_pInstance->GetData(TYPE_INTRO) == NOT_STARTED)
-       {
-         m_creature->setFaction(35);
-         RemoveGossip();
-       }
+        if (m_pInstance->GetData(TYPE_INTRO) == NOT_STARTED)
+        {
+            m_creature->setFaction(35);
+            RemoveGossip();
+        }
 
-       if (m_pInstance->GetData(TYPE_PHASE) == 11)
-       {
-         m_creature->SetVisibility(VISIBILITY_OFF);
-       }
+        if (m_pInstance->GetData(TYPE_PHASE) == 11)
+        {
+            m_creature->SetVisibility(VISIBILITY_OFF);
+        }
     }
 
     void RemoveGossip()
     {
-       m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-       m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+        m_creature->RemoveFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
     }
 
     void MoveSoldiers()
@@ -237,62 +237,63 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
     void EnableEscort()
     {
-       SetEscortPaused(false);
+        SetEscortPaused(false);
     }
 
     void SummonPeople()
     {
         if (Creature* pCityman = m_creature->SummonCreature(NPC_CITY,2091.977f,1275.021f,140.757f,0.558f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
-           m_uiPeople01GUID = pCityman->GetObjectGuid();
+            m_uiPeople01GUID = pCityman->GetObjectGuid();
         if (Creature* pCrazyman = m_creature->SummonCreature(NPC_CRAZYMAN,2093.514f,1275.842f,140.408f,3.801f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
-           m_uiPeople02GUID = pCrazyman->GetObjectGuid();
+            m_uiPeople02GUID = pCrazyman->GetObjectGuid();
     }
 
     void StartAI()
     {
-           SummonPeople();
-           m_uiStep = 0;
-           m_uiStepTimer = 100;
-           StartEvent = true;
+         SummonPeople();
+         m_uiStep = 0;
+         m_uiStepTimer = 100;
+         StartEvent = true;
     }
 
     void Aggro(Unit* who)
     {
-           DoCast(m_creature, SPELL_ARTHAS_AURA);
+        DoCast(m_creature, SPELL_ARTHAS_AURA);
     }
 
     void EnterEvadeMode()
     {
-       if (!m_pInstance) return;
+        if (!m_pInstance)
+            return;
 
-       m_creature->RemoveAllAuras();
-       m_creature->DeleteThreatList();
-       m_creature->CombatStop(true);
-       m_creature->LoadCreatureAddon();
-       m_uiExorcismTimer = 7400;
-       m_uiHealTimer = 100;
+        m_creature->RemoveAllAuras();
+        m_creature->DeleteThreatList();
+        m_creature->CombatStop(true);
+        m_creature->LoadCreatureAddon();
+        m_uiExorcismTimer = 7400;
+        m_uiHealTimer = 100;
 
-       m_creature->SetLootRecipient(NULL);
+        m_creature->SetLootRecipient(NULL);
 
-       if (m_pInstance->GetData(TYPE_PHASE) > 4)
-       {
+        if (m_pInstance->GetData(TYPE_PHASE) > 4)
+        {
             npc_escortAI::EnterEvadeMode();
-       }
+        }
 
-       if (m_pInstance->GetData(TYPE_PHASE) > 2 && m_pInstance->GetData(TYPE_PHASE) < 5)
-       {
+        if (m_pInstance->GetData(TYPE_PHASE) > 2 && m_pInstance->GetData(TYPE_PHASE) < 5)
+        {
             m_creature->GetMotionMaster()->MovePoint(POINT_LAST_POINT, Last5X, Last5Y, Last5Z);
-       }
+        }
     }
 
     void AttackStart(Unit* pWho)
     {
-      if (!pWho || pWho == m_creature)
+        if (!pWho || pWho == m_creature)
             return;
 
-      if (m_pInstance && m_pInstance->GetData(TYPE_PHASE) == 4) return;
+        if (m_pInstance && m_pInstance->GetData(TYPE_PHASE) == 4) return;
 
-      npc_escortAI::AttackStart(pWho);
+        npc_escortAI::AttackStart(pWho);
     }
 
     void MoveInLineOfSight(Unit* pWho)
@@ -327,119 +328,119 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     {
         switch(uiPointId)
         {
-           case 2:
-              DoScriptText(SAY_INTRO18, m_creature);
-              SetRun(true);
-              break;
-           case 8:
-              SetEscortPaused(true);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-              m_pInstance->SetData(TYPE_INTRO, DONE);
-              SetRun(false);
-              break;
-           case 9:
-              DoScriptText(SAY_ENTER01, m_creature);
-              break;
-           case 10:
-              SetEscortPaused(true);
-              MoveSoldiers();
-              m_pInstance->SetData(TYPE_PHASE, 2);
-              ResetStep(2000);
-              if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
-              {
-                 m_creature->SetGuidValue(UNIT_FIELD_TARGET, pCityman->GetObjectGuid());
-                 pCityman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                 pCityman->GetMotionMaster()->MovePoint(0, 2088.625f,1279.191f,140.743f);
-              }
-              break;
-           case 14:
-              if (Creature* pHuman01 = m_creature->SummonCreature(NPC_CITY,2397.308f,1207.565f,134.038f,5.593f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
-                m_uiHuman01GUID = pHuman01->GetObjectGuid();
-              if (Creature* pHuman02 = m_creature->SummonCreature(NPC_CITY,2400.770f,1207.362f,134.038f,3.454f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
-                m_uiHuman02GUID = pHuman02->GetObjectGuid();
-              if (Creature* pHuman03 = m_creature->SummonCreature(NPC_CITY,2400.547f,1204.892f,134.038f,2.479f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
-                m_uiHuman03GUID = pHuman03->GetObjectGuid();
-              break;
-           case 20:
-              SetEscortPaused(true);
-              m_creature->setFaction(35);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-              SetRun(false);
-              break;
-           case 21:
-              DoScriptText(SAY_PHASE502, m_creature);
-              break;
-           case 22:
-              SetEscortPaused(true);
-              m_pInstance->SetData(TYPE_PHASE, 6);
-              ResetStep(1000);
-              break;
-           case 25:
-              m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY1H);
-              m_creature->SummonCreature(NPC_TIME_RIFT,2428.901f, 1192.164f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              DoScriptText(SAY_PHASE508, m_creature);
-              break;
-           case 26:
-              m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_STAND);
-              DoScriptText(SAY_PHASE509, m_creature);
-              break;
-           case 29:
-              m_creature->SummonCreature(NPC_TIME_RIFT,2413.773f, 1137.820f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_TIME_RIFT,2404.990f, 1175.121f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              DoScriptText(SAY_PHASE510, m_creature);
-              break;
-           case 30:
-              DoScriptText(SAY_PHASE513, m_creature);
-              break;
-           case 31:
-              ResetStep(1000);
-              m_pInstance->SetData(TYPE_PHASE, 7);
-              break;
-           case 32:
-              SetEscortPaused(true);
-              m_pInstance->SetData(TYPE_PHASE, 8);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-              SetRun(false);
-              break;
-           case 36:
-              DoScriptText(SAY_PHASE514, m_creature);
-              break;
-           case 37:
-              if (GameObject* pGate = m_pInstance->GetSingleGameObjectFromStorage(GO_SHKAF_GATE))
-                 pGate->SetGoState(GO_STATE_ACTIVE);
-              SetRun(true);
-              DoScriptText(SAY_PHASE515, m_creature);
-              break;
-           case 45:
-              DoScriptText(SAY_PHASE601, m_creature);
-              break;
-           case 48:
-              DoScriptText(SAY_PHASE602, m_creature);
-              break;
-           case 51:
-              SetEscortPaused(true);
-              m_pInstance->SetData(TYPE_PHASE, 9);
-              DoScriptText(SAY_PHASE606, m_creature);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
-              m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
-              break;
-           case 53:
-              SetEscortPaused(true);
-              m_creature->StopMoving();
-              m_creature->GetMotionMaster()->MovementExpired(false);
-              m_creature->setFaction(FACTION);
-              DoScriptText(SAY_PHASE605, m_creature);
-              if (Creature* pMalganis = m_pInstance->GetSingleCreatureFromStorage(NPC_MALGANIS))
-              {
-                 m_pInstance->SetData(TYPE_MALGANIS, IN_PROGRESS);
-                 pMalganis->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                 m_creature->AI()->AttackStart(pMalganis);
-                 pMalganis->AI()->AttackStart(m_creature);
-              }
-              break;
+            case 2:
+                DoScriptText(SAY_INTRO18, m_creature);
+                SetRun(true);
+                break;
+            case 8:
+                SetEscortPaused(true);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                m_pInstance->SetData(TYPE_INTRO, DONE);
+                SetRun(false);
+                break;
+            case 9:
+                DoScriptText(SAY_ENTER01, m_creature);
+                break;
+            case 10:
+                SetEscortPaused(true);
+                MoveSoldiers();
+                m_pInstance->SetData(TYPE_PHASE, 2);
+                ResetStep(2000);
+                if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
+                {
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pCityman->GetObjectGuid());
+                    pCityman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    pCityman->GetMotionMaster()->MovePoint(0, 2088.625f,1279.191f,140.743f);
+                }
+                break;
+            case 14:
+                if (Creature* pHuman01 = m_creature->SummonCreature(NPC_CITY,2397.308f,1207.565f,134.038f,5.593f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
+                    m_uiHuman01GUID = pHuman01->GetObjectGuid();
+                if (Creature* pHuman02 = m_creature->SummonCreature(NPC_CITY,2400.770f,1207.362f,134.038f,3.454f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
+                    m_uiHuman02GUID = pHuman02->GetObjectGuid();
+                if (Creature* pHuman03 = m_creature->SummonCreature(NPC_CITY,2400.547f,1204.892f,134.038f,2.479f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,30000))
+                    m_uiHuman03GUID = pHuman03->GetObjectGuid();
+                break;
+            case 20:
+                SetEscortPaused(true);
+                m_creature->setFaction(35);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                SetRun(false);
+                break;
+            case 21:
+                DoScriptText(SAY_PHASE502, m_creature);
+                break;
+            case 22:
+                SetEscortPaused(true);
+                m_pInstance->SetData(TYPE_PHASE, 6);
+                ResetStep(1000);
+                break;
+            case 25:
+                m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_READY1H);
+                m_creature->SummonCreature(NPC_TIME_RIFT,2428.901f, 1192.164f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+                DoScriptText(SAY_PHASE508, m_creature);
+                break;
+            case 26:
+                m_creature->SetUInt32Value(UNIT_NPC_EMOTESTATE, EMOTE_STATE_STAND);
+                DoScriptText(SAY_PHASE509, m_creature);
+                break;
+            case 29:
+                m_creature->SummonCreature(NPC_TIME_RIFT,2413.773f, 1137.820f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+                m_creature->SummonCreature(NPC_TIME_RIFT,2404.990f, 1175.121f, 148.076f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+                DoScriptText(SAY_PHASE510, m_creature);
+                break;
+            case 30:
+                DoScriptText(SAY_PHASE513, m_creature);
+                break;
+            case 31:
+                ResetStep(1000);
+                m_pInstance->SetData(TYPE_PHASE, 7);
+                break;
+            case 32:
+                SetEscortPaused(true);
+                m_pInstance->SetData(TYPE_PHASE, 8);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                SetRun(false);
+                break;
+            case 36:
+                DoScriptText(SAY_PHASE514, m_creature);
+                break;
+            case 37:
+                if (GameObject* pGate = m_pInstance->GetSingleGameObjectFromStorage(GO_SHKAF_GATE))
+                    pGate->SetGoState(GO_STATE_ACTIVE);
+                SetRun(true);
+                DoScriptText(SAY_PHASE515, m_creature);
+                break;
+            case 45:
+                DoScriptText(SAY_PHASE601, m_creature);
+                break;
+            case 48:
+                DoScriptText(SAY_PHASE602, m_creature);
+                break;
+            case 51:
+                SetEscortPaused(true);
+                m_pInstance->SetData(TYPE_PHASE, 9);
+                DoScriptText(SAY_PHASE606, m_creature);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_QUESTGIVER);
+                m_creature->SetFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP);
+                break;
+            case 53:
+                SetEscortPaused(true);
+                m_creature->StopMoving();
+                m_creature->GetMotionMaster()->MovementExpired(false);
+                m_creature->setFaction(FACTION);
+                DoScriptText(SAY_PHASE605, m_creature);
+                if (Creature* pMalganis = m_pInstance->GetSingleCreatureFromStorage(NPC_MALGANIS))
+                {
+                    m_pInstance->SetData(TYPE_MALGANIS, IN_PROGRESS);
+                    pMalganis->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                    m_creature->AI()->AttackStart(pMalganis);
+                    pMalganis->AI()->AttackStart(m_creature);
+                }
+                break;
         }
     }
 
@@ -457,115 +458,115 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
     void IntroEvent()
     {
-       switch(m_uiStep)
-       {
-          case 0:
-             DoScriptText(SAY_INTRO01, m_creature);
-             JumpNextStep(2000);
-             break;
-          case 1:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+        switch(m_uiStep)
+        {
+            case 0:
+                DoScriptText(SAY_INTRO01, m_creature);
+                JumpNextStep(2000);
+                break;
+            case 1:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
                 DoScriptText(SAY_INTRO02, pUther);
-             JumpNextStep(8000);
-             break;
-          case 2:
-             m_creature->SetWalk(true);
-             DoScriptText(SAY_INTRO03, m_creature);
-             m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-             m_creature->GetMotionMaster()->MovePoint(0, 1908.334f, 1315.354f, 149.551f);
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                pUther->GetMotionMaster()->MovePoint(0, 1903.600f, 1296.678f, 143.383f);
-             JumpNextStep(2000);
-             break;
-          case 3:
-             if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
-                pJaina->GetMotionMaster()->MovePoint(0, 1899.641f, 1298.684f, 143.831f);
-             JumpNextStep(7000);
-             break;
-          case 4:
-             m_creature->GetMotionMaster()->MovementExpired(false);
-             m_creature->GetMotionMaster()->MovePoint(0, 1911.087f, 1314.263f, 150.026f);
-             JumpNextStep(1000);
-             break;
-          case 5:
-             DoScriptText(SAY_INTRO04, m_creature);
-             JumpNextStep(10000);
-             break;
-          case 6:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                DoScriptText(SAY_INTRO05, pUther);
-             JumpNextStep(1000);
-             break;
-          case 7:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                m_creature->SetGuidValue(UNIT_FIELD_TARGET, pUther->GetObjectGuid());
-             DoScriptText(SAY_INTRO06, m_creature);
-             JumpNextStep(4000);
-             break;
-          case 8:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                DoScriptText(SAY_INTRO07, pUther);
-             JumpNextStep(6000);
-             break;
-          case 9:
-             DoScriptText(SAY_INTRO08, m_creature);
-             JumpNextStep(4000);
-             break;
-          case 10:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                DoScriptText(SAY_INTRO09, pUther);
-             JumpNextStep(8000);
-             break;
-          case 11:
-             DoScriptText(SAY_INTRO10, m_creature);
-             JumpNextStep(4000);
-             break;
-          case 12:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                DoScriptText(SAY_INTRO11, pUther);
-             JumpNextStep(4000);
-             break;
-          case 13:
-             DoScriptText(SAY_INTRO12, m_creature);
-             JumpNextStep(11000);
-             break;
-          case 14:
-             if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
-                DoScriptText(SAY_INTRO13, pJaina);
-             JumpNextStep(3000);
-             break;
-          case 15:
-             DoScriptText(SAY_INTRO14, m_creature);
-             JumpNextStep(9000);
-             break;
-          case 16:
-             if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
-                DoScriptText(SAY_INTRO15, pUther);
-             JumpNextStep(5000);
-             break;
-          case 17:
-             if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
-             {
-                m_creature->SetGuidValue(UNIT_FIELD_TARGET, pJaina->GetObjectGuid());
-                pJaina->GetMotionMaster()->MovePoint(0, 1794.357f,1272.183f,140.558f);
-             }
-             JumpNextStep(1000);
-             break;
-          case 18:
-             DoScriptText(SAY_INTRO16, m_creature);
-             JumpNextStep(1000);
-             break;
-          case 19:
-             if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
-                DoScriptText(SAY_INTRO17, pJaina);
-             JumpNextStep(3000);
-             break;
-          case 20:
-             m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-             ((npc_arthasAI*)m_creature->AI())->Start(false);
-             JumpNextStep(3000);
-             break;
-       }
+                JumpNextStep(8000);
+                break;
+            case 2:
+                m_creature->SetWalk(true);
+                DoScriptText(SAY_INTRO03, m_creature);
+                m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                m_creature->GetMotionMaster()->MovePoint(0, 1908.334f, 1315.354f, 149.551f);
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    pUther->GetMotionMaster()->MovePoint(0, 1903.600f, 1296.678f, 143.383f);
+                JumpNextStep(2000);
+                break;
+            case 3:
+                if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
+                    pJaina->GetMotionMaster()->MovePoint(0, 1899.641f, 1298.684f, 143.831f);
+                JumpNextStep(7000);
+                break;
+            case 4:
+                m_creature->GetMotionMaster()->MovementExpired(false);
+                m_creature->GetMotionMaster()->MovePoint(0, 1911.087f, 1314.263f, 150.026f);
+                JumpNextStep(1000);
+                break;
+            case 5:
+                DoScriptText(SAY_INTRO04, m_creature);
+                JumpNextStep(10000);
+                break;
+            case 6:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    DoScriptText(SAY_INTRO05, pUther);
+                JumpNextStep(1000);
+                break;
+            case 7:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pUther->GetObjectGuid());
+                DoScriptText(SAY_INTRO06, m_creature);
+                JumpNextStep(4000);
+                break;
+            case 8:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    DoScriptText(SAY_INTRO07, pUther);
+                JumpNextStep(6000);
+                break;
+            case 9:
+                DoScriptText(SAY_INTRO08, m_creature);
+                JumpNextStep(4000);
+                break;
+            case 10:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    DoScriptText(SAY_INTRO09, pUther);
+                JumpNextStep(8000);
+                break;
+            case 11:
+                DoScriptText(SAY_INTRO10, m_creature);
+                JumpNextStep(4000);
+                break;
+            case 12:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    DoScriptText(SAY_INTRO11, pUther);
+                JumpNextStep(4000);
+                break;
+            case 13:
+               DoScriptText(SAY_INTRO12, m_creature);
+               JumpNextStep(11000);
+               break;
+            case 14:
+                if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
+                    DoScriptText(SAY_INTRO13, pJaina);
+                JumpNextStep(3000);
+                break;
+            case 15:
+                DoScriptText(SAY_INTRO14, m_creature);
+                JumpNextStep(9000);
+                break;
+            case 16:
+                if (Creature* pUther = m_pInstance->GetSingleCreatureFromStorage(NPC_UTHER))
+                    DoScriptText(SAY_INTRO15, pUther);
+                JumpNextStep(5000);
+                break;
+            case 17:
+                if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
+                {
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pJaina->GetObjectGuid());
+                    pJaina->GetMotionMaster()->MovePoint(0, 1794.357f,1272.183f,140.558f);
+                 }
+                 JumpNextStep(1000);
+                 break;
+            case 18:
+                DoScriptText(SAY_INTRO16, m_creature);
+                JumpNextStep(1000);
+                break;
+            case 19:
+                if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
+                    DoScriptText(SAY_INTRO17, pJaina);
+                JumpNextStep(3000);
+                break;
+            case 20:
+                m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                ((npc_arthasAI*)m_creature->AI())->Start(false);
+                JumpNextStep(3000);
+                break;
+        }
     }
 
     void EnterEvent()
@@ -573,8 +574,8 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
        switch(m_uiStep)
        {
           case 0:
-                 if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
-                 DoScriptText(SAY_ENTER02, pCityman);
+              if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
+              DoScriptText(SAY_ENTER02, pCityman);
               JumpNextStep(4000);
               break;
           case 1:
