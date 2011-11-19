@@ -1,8 +1,10 @@
--- achievement works ( some stuff will be added and fixed
+-- achievement works ( some stuff will be added and fixed  ---- !!!( deletetion can be out of number order but pls keep insert in number order )!!!
 
 DELETE FROM achievement_criteria_requirement WHERE criteria_id IN 
 (1242, 1803, 1804, 1805, 1806, 1807, 1808, 1809, 1810, 1811, 1812, 1813, 1814, 
  1815, 1816, 1817, 1818, 1819, 1920, 1921, 1922, 1923, 1825, 1826, 4227, 7020);
+
+INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1242, 11);
 
 
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1803, 11);
@@ -29,8 +31,8 @@ INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1825, 11);
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1826, 11);
 
-INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (1242, 11);
-
+INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`) VALUES (4227, 15, 3);
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`) VALUES (4227, 5, 26682);
+
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (7020, 11);
 

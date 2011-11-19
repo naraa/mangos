@@ -571,103 +571,103 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
     void EnterEvent()
     {
-       switch(m_uiStep)
-       {
-          case 0:
-              if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
-              DoScriptText(SAY_ENTER02, pCityman);
-              JumpNextStep(4000);
-              break;
-          case 1:
-              m_creature->GetMotionMaster()->MovePoint(0, 2087.689f,1280.344f,140.73f);
-              DoScriptText(SAY_ENTER03, m_creature);
-              JumpNextStep(3000);
-              break;
-          case 2:
-              if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
-                 DoScriptText(SAY_ENTER04, pCityman);
-              m_creature->HandleEmoteCommand(37);
-              JumpNextStep(1000);
-              break;
-          case 3:
-              if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
-                  m_creature->DealDamage(pCityman, pCityman->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-              if (Unit* pCrazyman = m_pInstance->GetSingleCreatureFromStorage(NPC_CRAZYMAN))
-              {
-                 DoScriptText(SAY_ENTER05, pCrazyman);
-                 pCrazyman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                 m_creature->SetGuidValue(UNIT_FIELD_TARGET, pCrazyman->GetObjectGuid());
-                 m_creature->GetMotionMaster()->MovePoint(0, 2092.154f,1276.645f,140.52f);
-              }
-              JumpNextStep(3000);
-              break;
-          case 4:
-              m_creature->HandleEmoteCommand(37);
-              JumpNextStep(1000);
-              break;
-          case 5:
-              if (Unit* pCrazyman = m_pInstance->GetSingleCreatureFromStorage(NPC_CRAZYMAN))
-                 pCrazyman->DealDamage(pCrazyman, pCrazyman->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
-              JumpNextStep(1000);
-              break;
-          case 6:
-              m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              m_creature->GetMotionMaster()->MovePoint(0, 2091.179f,1278.065f,140.476f);
-              DoScriptText(SAY_ENTER06, m_creature);
-              JumpNextStep(3000);
-              break;
-          case 7:
-              if (Creature* pStalkerM = m_creature->SummonCreature(NPC_INVIS_STALKER,2117.349f,1288.624f,136.271f,1.37f,TEMPSUMMON_TIMED_DESPAWN,60000))
-                 pStalkerM->CastSpell(pStalkerM,63793,false);
-              JumpNextStep(1000);
-              break;
-          case 8:
-              m_pInstance->SetData(TYPE_ENCOUNTER, IN_PROGRESS);
-              if (Creature* pTempMalganis = m_creature->SummonCreature(NPC_MALGANIS,2117.349f,1288.624f,136.271f,1.37f,TEMPSUMMON_TIMED_DESPAWN,29000))
-              {
-                m_uiMalganisGUID = pTempMalganis->GetObjectGuid();
-                DoScriptText(SAY_ENTER07, pTempMalganis);
-                m_creature->SetGuidValue(UNIT_FIELD_TARGET, pTempMalganis->GetObjectGuid());
-                pTempMalganis->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                pTempMalganis->setFaction(35);
-              }
-              JumpNextStep(11000);
-              break;
-          case 9:
-              if (Unit* pTempMalganis = m_creature->GetMap()->GetUnit(m_uiMalganisGUID))
-                  DoScriptText(SAY_ENTER08, pTempMalganis);
-              JumpNextStep(17000);
-              break;
-          case 10:
-              DoScriptText(SAY_ENTER09, m_creature);
-              JumpNextStep(7000);
-              break;
-          case 11:
-              m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-              DoScriptText(SAY_ENTER10, m_creature);
-              JumpNextStep(12000);
-              break;
-          case 12:
-              m_creature->GetMotionMaster()->MovePoint(0, 2084.584f,1278.331f,141.479f);
-              JumpNextStep(4000);
-              break;
-          case 13:
-              m_creature->GetMotionMaster()->MovePoint(0, 2087.414f,1279.293f,140.933f);
-              JumpNextStep(2000);
-              break;
-          case 14:
-              Last5X = m_creature->GetPositionX();
-              Last5Y = m_creature->GetPositionY();
-              Last5Z = m_creature->GetPositionZ();
-              if (m_bIsHeroic)
-                 m_pInstance->SetData(TYPE_BONUS, IN_PROGRESS);
-              m_uiWaveCount = 0;
-              SetRun(true);
-              m_pInstance->SetData(TYPE_WING, RIGHT);
-              m_creature->setFaction(FACTION);
-              m_uiSummonTimer = 100;
-              m_pInstance->SetData(TYPE_PHASE, 3);
-              break;
+        switch(m_uiStep)
+        {
+            case 0:
+                if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
+                DoScriptText(SAY_ENTER02, pCityman);
+                JumpNextStep(4000);
+                break;
+            case 1:
+                m_creature->GetMotionMaster()->MovePoint(0, 2087.689f,1280.344f,140.73f);
+                DoScriptText(SAY_ENTER03, m_creature);
+                JumpNextStep(3000);
+                break;
+            case 2:
+                if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
+                   DoScriptText(SAY_ENTER04, pCityman);
+                m_creature->HandleEmoteCommand(37);
+                JumpNextStep(1000);
+                break;
+            case 3:
+                if (Unit* pCityman = m_pInstance->GetSingleCreatureFromStorage(NPC_CITY))
+                    m_creature->DealDamage(pCityman, pCityman->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                if (Unit* pCrazyman = m_pInstance->GetSingleCreatureFromStorage(NPC_CRAZYMAN))
+                {
+                    DoScriptText(SAY_ENTER05, pCrazyman);
+                    pCrazyman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pCrazyman->GetObjectGuid());
+                    m_creature->GetMotionMaster()->MovePoint(0, 2092.154f,1276.645f,140.52f);
+                }
+                JumpNextStep(3000);
+                break;
+            case 4:
+                m_creature->HandleEmoteCommand(37);
+                JumpNextStep(1000);
+                break;
+            case 5:
+                if (Unit* pCrazyman = m_pInstance->GetSingleCreatureFromStorage(NPC_CRAZYMAN))
+                   pCrazyman->DealDamage(pCrazyman, pCrazyman->GetMaxHealth(),NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                JumpNextStep(1000);
+                break;
+            case 6:
+                m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                m_creature->GetMotionMaster()->MovePoint(0, 2091.179f,1278.065f,140.476f);
+                DoScriptText(SAY_ENTER06, m_creature);
+                JumpNextStep(3000);
+                break;
+            case 7:
+                if (Creature* pStalkerM = m_creature->SummonCreature(NPC_INVIS_STALKER,2117.349f,1288.624f,136.271f,1.37f,TEMPSUMMON_TIMED_DESPAWN,60000))
+                  pStalkerM->CastSpell(pStalkerM,63793,false);
+                JumpNextStep(1000);
+               break;
+            case 8:
+                m_pInstance->SetData(TYPE_ENCOUNTER, IN_PROGRESS);
+                if (Creature* pTempMalganis = m_creature->SummonCreature(NPC_MALGANIS,2117.349f,1288.624f,136.271f,1.37f,TEMPSUMMON_TIMED_DESPAWN,29000))
+                {
+                    m_uiMalganisGUID = pTempMalganis->GetObjectGuid();
+                    DoScriptText(SAY_ENTER07, pTempMalganis);
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pTempMalganis->GetObjectGuid());
+                    pTempMalganis->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    pTempMalganis->setFaction(35);
+                }
+                JumpNextStep(11000);
+                break;
+            case 9:
+                if (Unit* pTempMalganis = m_creature->GetMap()->GetUnit(m_uiMalganisGUID))
+                    DoScriptText(SAY_ENTER08, pTempMalganis);
+                JumpNextStep(17000);
+                break;
+            case 10:
+                DoScriptText(SAY_ENTER09, m_creature);
+                JumpNextStep(7000);
+                break;
+            case 11:
+                m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                DoScriptText(SAY_ENTER10, m_creature);
+                JumpNextStep(12000);
+                break;
+            case 12:
+                m_creature->GetMotionMaster()->MovePoint(0, 2084.584f,1278.331f,141.479f);
+                JumpNextStep(4000);
+                break;
+            case 13:
+                m_creature->GetMotionMaster()->MovePoint(0, 2087.414f,1279.293f,140.933f);
+                JumpNextStep(2000);
+                break;
+            case 14:
+                Last5X = m_creature->GetPositionX();
+                Last5Y = m_creature->GetPositionY();
+                Last5Z = m_creature->GetPositionZ();
+                if (m_bIsHeroic)
+                   m_pInstance->SetData(TYPE_BONUS, IN_PROGRESS);
+                m_uiWaveCount = 0;
+                SetRun(true);
+                m_pInstance->SetData(TYPE_WING, RIGHT);
+                m_creature->setFaction(FACTION);
+                m_uiSummonTimer = 100;
+                m_pInstance->SetData(TYPE_PHASE, 3);
+                break;
         }
     }
 
@@ -678,172 +678,172 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
 
         switch(m_uiWaveCount)
         {
-           case 1:
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 2:
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 3:
-              m_pInstance->SetData(TYPE_WING, LEFT);
-              m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 4:
-              m_pInstance->SetData(TYPE_WING, RIGHT);
-              m_creature->SummonCreature(NPC_ACOLYTE,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_ACOLYTE,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 5:
-              m_pInstance->SetData(TYPE_PHASE, 4);
-              if (Creature* pMeathook = m_creature->SummonCreature(NPC_MEATHOOK,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000))
-              {
-                 DoScriptText(SAY_MEATHOOK_SPAWN, pMeathook);
-              }
-              break;
-           case 6:
-              m_pInstance->SetData(TYPE_WING, LEFT);
-              m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 7:
-              m_pInstance->SetData(TYPE_WING, RIGHT);
-              m_creature->SummonCreature(NPC_CONSTRUCT,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 8:
-              m_pInstance->SetData(TYPE_WING, LEFT);
-              m_creature->SummonCreature(NPC_CONSTRUCT,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 9:
-              m_pInstance->SetData(TYPE_WING, RIGHT);
-              m_creature->SummonCreature(NPC_CONSTRUCT,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
-              break;
-           case 10:
-              m_pInstance->SetData(TYPE_PHASE, 4);
-              if (Creature* pSalramm = m_creature->SummonCreature(NPC_SALRAMM,2196.036f, 1328.818f, 129.997f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000))
-              {
-                 DoScriptText(SAY_SALRAMM_SPAWN, pSalramm);
-              }
-              break;
+            case 1:
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 2:
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 3:
+               m_pInstance->SetData(TYPE_WING, LEFT);
+               m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 4:
+               m_pInstance->SetData(TYPE_WING, RIGHT);
+               m_creature->SummonCreature(NPC_ACOLYTE,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_ACOLYTE,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 5:
+               m_pInstance->SetData(TYPE_PHASE, 4);
+               if (Creature* pMeathook = m_creature->SummonCreature(NPC_MEATHOOK,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000))
+               {
+                   DoScriptText(SAY_MEATHOOK_SPAWN, pMeathook);
+               }
+               break;
+            case 6:
+               m_pInstance->SetData(TYPE_WING, LEFT);
+               m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 7:
+               m_pInstance->SetData(TYPE_WING, RIGHT);
+               m_creature->SummonCreature(NPC_CONSTRUCT,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 8:
+               m_pInstance->SetData(TYPE_WING, LEFT);
+               m_creature->SummonCreature(NPC_CONSTRUCT,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2272.773f, 1331.824f, 124.171f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 9:
+               m_pInstance->SetData(TYPE_WING, RIGHT);
+               m_creature->SummonCreature(NPC_CONSTRUCT,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_FIEND,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_NECROMANCER,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               m_creature->SummonCreature(NPC_GHOUL,2340.058f, 1253.570f, 132.733f, 5.09f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000);
+               break;
+            case 10:
+               m_pInstance->SetData(TYPE_PHASE, 4);
+               if (Creature* pSalramm = m_creature->SummonCreature(NPC_SALRAMM,2196.036f, 1328.818f, 129.997f, 3.12f,TEMPSUMMON_CORPSE_TIMED_DESPAWN,29000))
+               {
+                   DoScriptText(SAY_SALRAMM_SPAWN, pSalramm);
+               }
+               break;
         }
     }
 
     void HouseEvent()
     {
-       switch(m_uiStep)
-       {
-          case 0:
-             if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
-             {
-                m_creature->SetGuidValue(UNIT_FIELD_TARGET, pHuman->GetObjectGuid());
-                pHuman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                DoScriptText(SAY_PHASE503, pHuman);
-             }
-             JumpNextStep(4000);
-             break;
-          case 1:
-             DoScriptText(SAY_PHASE504, m_creature);
-             m_creature->GetMotionMaster()->MovePoint(0, 2396.035f, 1206.942f, 134.038f);
-             JumpNextStep(3000);
-             break;
-          case 2:
-             m_creature->HandleEmoteCommand(37);
-             JumpNextStep(2000);
-             break;
-          case 3:
-             DoScriptText(SAY_PHASE505, m_creature);
-             JumpNextStep(2000);
-             break;
-          case 4:
-             if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
-                DoScriptText(SAY_PHASE506, pHuman);
-             JumpNextStep(6000);
-             break;
-          case 5:
-             m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
-             if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
-             {
-                pHuman->SetGuidValue(UNIT_FIELD_TARGET, 0);
-                pHuman->UpdateEntry(NPC_INFINITE_ADVERSARY);
-             }
-             if (Creature* pHuman2 = m_pInstance->instance->GetCreature(m_uiHuman02GUID))
-                pHuman2->UpdateEntry(NPC_INFINITE_HUNTER);
-             if (Creature* pHuman3 = m_pInstance->instance->GetCreature(m_uiHuman03GUID))
-                pHuman3->UpdateEntry(NPC_INFINITE_AGENT);
-             JumpNextStep(1000);
-             break;
-          case 6:
-             SetRun(true);
-             m_creature->GetMotionMaster()->MovePoint(0, 2384.320f, 1202.779f, 134.040f);
-             DoScriptText(SAY_PHASE507, m_creature);
-             JumpNextStep(5000);
-             break;
-          case 7:
-             SetEscortPaused(false);
-             m_creature->setFaction(FACTION);
-             m_pInstance->SetData(TYPE_PHASE, 5);
-             JumpNextStep(1000);
-             break;
-       }
+        switch(m_uiStep)
+        {
+            case 0:
+                if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
+                {
+                    m_creature->SetGuidValue(UNIT_FIELD_TARGET, pHuman->GetObjectGuid());
+                    pHuman->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    DoScriptText(SAY_PHASE503, pHuman);
+                }
+                JumpNextStep(4000);
+                break;
+            case 1:
+                DoScriptText(SAY_PHASE504, m_creature);
+                m_creature->GetMotionMaster()->MovePoint(0, 2396.035f, 1206.942f, 134.038f);
+                JumpNextStep(3000);
+                break;
+            case 2:
+                m_creature->HandleEmoteCommand(37);
+                JumpNextStep(2000);
+                break;
+            case 3:
+                DoScriptText(SAY_PHASE505, m_creature);
+                JumpNextStep(2000);
+                break;
+            case 4:
+                if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
+                    DoScriptText(SAY_PHASE506, pHuman);
+                JumpNextStep(6000);
+                break;
+            case 5:
+                m_creature->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                if (Creature* pHuman = m_pInstance->instance->GetCreature(m_uiHuman01GUID))
+                {
+                    pHuman->SetGuidValue(UNIT_FIELD_TARGET, 0);
+                    pHuman->UpdateEntry(NPC_INFINITE_ADVERSARY);
+                }
+                if (Creature* pHuman2 = m_pInstance->instance->GetCreature(m_uiHuman02GUID))
+                    pHuman2->UpdateEntry(NPC_INFINITE_HUNTER);
+                if (Creature* pHuman3 = m_pInstance->instance->GetCreature(m_uiHuman03GUID))
+                    pHuman3->UpdateEntry(NPC_INFINITE_AGENT);
+                JumpNextStep(1000);
+                break;
+            case 6:
+              SetRun(true);
+              m_creature->GetMotionMaster()->MovePoint(0, 2384.320f, 1202.779f, 134.040f);
+              DoScriptText(SAY_PHASE507, m_creature);
+              JumpNextStep(5000);
+              break;
+            case 7:
+              SetEscortPaused(false);
+              m_creature->setFaction(FACTION);
+              m_pInstance->SetData(TYPE_PHASE, 5);
+              JumpNextStep(1000);
+              break;
+        }
     }
 
     void EpochEvent()
     {
-       switch(m_uiStep)
-       {
-          case 0:
-             m_creature->SummonCreature(NPC_TIME_RIFT_2,2445.629f,1111.500f,148.076f,3.229f,TEMPSUMMON_TIMED_DESPAWN,9000);
-             JumpNextStep(2000);
-             break;
-          case 1:
-             pEpoch = m_creature->SummonCreature(NPC_EPOCH,2445.629f,1111.500f,148.076f,3.229f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,900000);
-             if (pEpoch)
-             {
-                pEpoch->setFaction(35);
-                DoScriptText(SAY_EPOCH_INTRO, pEpoch);
-                m_creature->SetGuidValue(UNIT_FIELD_TARGET, pEpoch->GetObjectGuid());
-             }
-             JumpNextStep(20000);
-             break;
-          case 2:
-             DoScriptText(SAY_ARTHAS_INTRO, m_creature);
-             JumpNextStep(6000);
-             break;
-          case 3:
-             if (pEpoch)
-             {
-                DoScriptText(SAY_EPOCH_AGGRO, pEpoch);
-                m_creature->AI()->AttackStart(pEpoch);
-                pEpoch->AI()->AttackStart(m_creature);
-                pEpoch->setFaction(14);
-             }
-             m_pInstance->SetData(TYPE_PHASE, 5);
-             SetRun(false);
-             JumpNextStep(6000);
-             break;
-         }
+        switch(m_uiStep)
+        {
+            case 0:
+                m_creature->SummonCreature(NPC_TIME_RIFT_2,2445.629f,1111.500f,148.076f,3.229f,TEMPSUMMON_TIMED_DESPAWN,9000);
+                JumpNextStep(2000);
+                break;
+            case 1:
+                pEpoch = m_creature->SummonCreature(NPC_EPOCH,2445.629f,1111.500f,148.076f,3.229f,TEMPSUMMON_TIMED_OR_DEAD_DESPAWN,900000);
+               if (pEpoch)
+               {
+                   pEpoch->setFaction(35);
+                   DoScriptText(SAY_EPOCH_INTRO, pEpoch);
+                   m_creature->SetGuidValue(UNIT_FIELD_TARGET, pEpoch->GetObjectGuid());
+               }
+               JumpNextStep(20000);
+               break;
+            case 2:
+                DoScriptText(SAY_ARTHAS_INTRO, m_creature);
+                JumpNextStep(6000);
+                break;
+            case 3:
+               if (pEpoch)
+               {
+                   DoScriptText(SAY_EPOCH_AGGRO, pEpoch);
+                   m_creature->AI()->AttackStart(pEpoch);
+                   pEpoch->AI()->AttackStart(m_creature);
+                   pEpoch->setFaction(14);
+               }
+               m_pInstance->SetData(TYPE_PHASE, 5);
+               SetRun(false);
+               JumpNextStep(6000);
+               break;
+        }
     }
 
     void MalganisEvent()
@@ -1070,23 +1070,23 @@ struct MANGOS_DLL_DECL npc_utherAI : public npc_escortAI
 
            if (Creature* pKnight01 = m_creature->SummonCreature(NPC_KNIGHT,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),m_creature->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,110000))
            {
-              m_uiKnightGUID01 = pKnight01->GetObjectGuid();
-              pKnight01->SetWalk(false);
-              pKnight01->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/2);
+               m_uiKnightGUID01 = pKnight01->GetObjectGuid();
+               pKnight01->SetWalk(false);
+               pKnight01->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/2);
            }
 
            if (Creature* pKnight02 = m_creature->SummonCreature(NPC_KNIGHT,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),m_creature->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,110000))
            {
-              m_uiKnightGUID02 = pKnight02->GetObjectGuid();
-              pKnight02->SetWalk(false);
-              pKnight02->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/4);
+               m_uiKnightGUID02 = pKnight02->GetObjectGuid();
+               pKnight02->SetWalk(false);
+               pKnight02->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/4);
            }
 
            if (Creature* pKnight03 = m_creature->SummonCreature(NPC_KNIGHT,m_creature->GetPositionX(),m_creature->GetPositionY(),m_creature->GetPositionZ(),m_creature->GetOrientation(),TEMPSUMMON_TIMED_DESPAWN,110000))
            {
-              m_uiKnightGUID03 = pKnight03->GetObjectGuid();
-              pKnight03->SetWalk(false);
-              pKnight03->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/3);
+               m_uiKnightGUID03 = pKnight03->GetObjectGuid();
+               pKnight03->SetWalk(false);
+               pKnight03->GetMotionMaster()->MoveFollow(m_creature,PET_FOLLOW_DIST,M_PI_F/3);
            }
     }
 
@@ -1095,23 +1095,23 @@ struct MANGOS_DLL_DECL npc_utherAI : public npc_escortAI
         switch(uiPointId)
         {
             case 3:
-               if (Creature* pArthas = m_pInstance->GetSingleCreatureFromStorage(NPC_ARTHAS))
-               {
-                 pArthas->SetWalk(false);
-                 pArthas->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
-                 pArthas->GetMotionMaster()->MovePoint(0, 1902.974f, 1291.635f, 143.337f);
-               }
-               break;
+                if (Creature* pArthas = m_pInstance->GetSingleCreatureFromStorage(NPC_ARTHAS))
+                {
+                    pArthas->SetWalk(false);
+                    pArthas->SetGuidValue(UNIT_FIELD_TARGET, m_creature->GetObjectGuid());
+                    pArthas->GetMotionMaster()->MovePoint(0, 1902.974f, 1291.635f, 143.337f);
+                }
+                break;
             case 4:
-               SetRun(false);
-               if (Creature *pArthas = m_pInstance->GetSingleCreatureFromStorage(NPC_ARTHAS))
-                  ((npc_arthasAI*)pArthas->AI())->StartAI();
-               break;
+                SetRun(false);
+                if (Creature *pArthas = m_pInstance->GetSingleCreatureFromStorage(NPC_ARTHAS))
+                   ((npc_arthasAI*)pArthas->AI())->StartAI();
+                break;
             case 6:
-               m_creature->SetVisibility(VISIBILITY_OFF);
-               if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
-                  pJaina->SetVisibility(VISIBILITY_OFF);
-               break;
+                m_creature->SetVisibility(VISIBILITY_OFF);
+                if (Creature* pJaina = m_pInstance->GetSingleCreatureFromStorage(NPC_JAINA))
+                   pJaina->SetVisibility(VISIBILITY_OFF);
+                break;
         }
     }
 

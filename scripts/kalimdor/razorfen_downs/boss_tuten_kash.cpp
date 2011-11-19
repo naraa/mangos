@@ -23,3 +23,27 @@ SDCategory:
 EndScriptData */
 
 #include "precompiled.h"
+
+enum
+{
+///-> TUTEN'KASH
+    SPELL_CURSE_OF_TUTEN   = 12255,
+    SPELL_VIRULENT_POISON  = 12251,
+    SPELL_WEB_SPARY        = 12252,
+    NPC_TUTEN              = 7355,
+///-> END
+
+///-> TOMB FIEND
+    SPELL_POISON   = 744,
+    NPC_TOMB_FIEND = 7349,
+///-> END
+
+///->  TOMB REAVER
+    /// USES VIRULENT POISON
+    SPELL_WEB       = 745,
+    NPC_TOMB_REAVER = 7351,
+///-> END
+
+///-> STUFF
+    GO_TUTEN_GONG   = 148917,
+};
