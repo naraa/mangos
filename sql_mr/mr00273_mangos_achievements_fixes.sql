@@ -54,7 +54,10 @@ INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (5
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (5809, 11);
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (5810, 11);
 
-INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (7020, 11);
+-- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (7020, 11); 
+INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`) VALUES (7020, 6, 4571);
+INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`) VALUES (7020, 7, 23335);
+
 
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (8587, 11);
 INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`) VALUES (8588, 11);
