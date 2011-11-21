@@ -23,39 +23,42 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_AGGRO               -1129000
-#define SAY_SUMMON60            -1129001
-#define SAY_SUMMON30            -1129002
-#define SAY_HP                  -1129003
-#define SAY_KILL                -1129004
+enum
+{
+    SAY_AGGRO              = -1129000,
+    SAY_SUMMON60           = -1129001,
+    SAY_SUMMON30           = -1129002,
+    SAY_HP                 = -1129003,
+    SAY_KILL               = -1129004,
 
-#define SPELL_AMNENNARSWRATH    13009
-#define SPELL_FROSTBOLT         15530
-#define SPELL_FROST_NOVA        15531
-#define SPELL_FROST_SPECTRES    12642
+    SPELL_AMNENNARSWRATH   = 13009,
+    SPELL_FROSTBOLT        = 15530,
+    SPELL_FROST_NOVA       = 15531,
+    SPELL_FROST_SPECTRES   = 12642,
+};
 
 struct MANGOS_DLL_DECL boss_amnennar_the_coldbringerAI : public ScriptedAI
 {
     boss_amnennar_the_coldbringerAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 AmnenarsWrath_Timer;
-    uint32 FrostBolt_Timer;
-    uint32 FrostNova_Timer;
+    uint32 m_uiAmnenarsWrath_Timer;
+    uint32 m_uiFrostBolt_Timer;
+    uint32 m_uiFrostNova_Timer;
     bool Spectrals60;
     bool Spectrals30;
     bool Hp;
 
     void Reset()
     {
-        AmnenarsWrath_Timer = 8000;
-        FrostBolt_Timer = 1000;
-        FrostNova_Timer = urand(10000, 15000);
+        m_uiAmnenarsWrath_Timer = 8000;
+        m_uiFrostBolt_Timer = 1000;
+        m_uiFrostNova_Timer = urand(10000, 15000);
         Spectrals30 = false;
         Spectrals60 = false;
         Hp = false;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit *pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
@@ -65,30 +68,30 @@ struct MANGOS_DLL_DECL boss_amnennar_the_coldbringerAI : public ScriptedAI
         DoScriptText(SAY_KILL, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //AmnenarsWrath_Timer
-        if (AmnenarsWrath_Timer < diff)
+        //m_uiAmnenarsWrath_Timer
+        if (m_uiAmnenarsWrath_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_AMNENNARSWRATH);
-            AmnenarsWrath_Timer = 12000;
-        } else AmnenarsWrath_Timer -= diff;
+            m_uiAmnenarsWrath_Timer = 12000;
+        } else m_uiAmnenarsWrath_Timer -= uiDiff;
 
-        //FrostBolt_Timer
-        if (FrostBolt_Timer < diff)
+        //m_uiFrostBolt_Timer
+        if (m_uiFrostBolt_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_FROSTBOLT);
-            FrostBolt_Timer = 8000;
-        } else FrostBolt_Timer -= diff;
+            m_uiFrostBolt_Timer = 8000;
+        } else m_uiFrostBolt_Timer -= uiDiff;
 
-        if (FrostNova_Timer < diff)
+        if (m_uiFrostNova_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_FROST_NOVA);
-            FrostNova_Timer = 15000;
-        } else FrostNova_Timer -= diff;
+            m_uiFrostNova_Timer = 15000;
+        } else m_uiFrostNova_Timer -= uiDiff;
 
         if (!Spectrals60 && m_creature->GetHealthPercent() < 60.0f)
         {

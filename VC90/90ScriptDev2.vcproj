@@ -1567,6 +1567,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\scripts\kalimdor\razorfen_downs\boss_tuten_kash.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp"
 						>
 					</File>
