@@ -20,7 +20,7 @@ DELETE FROM `creature` WHERE `id`=7355;
        -- OLD YTDB DATA
     -- DELETE FROM `creature` WHERE `id`=7355;
     -- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
-    --(49670, 7355, 129, 1, 1, 0, 0, 2485.29, 816.253, 43.2455, 1.78733, 43200, 5, 0, 10688, 0, 0, 1);
+    -- (49670, 7355, 129, 1, 1, 0, 0, 2485.29, 816.253, 43.2455, 1.78733, 43200, 5, 0, 10688, 0, 0, 1);
   -- Increase dmg ( might need more im being generous )
 UPDATE `creature_template` SET `mindmg` = 58, `maxdmg` = 82 WHERE `entry` = 7355;
   -- assigned script name
@@ -35,7 +35,7 @@ DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=7349);
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=7351);
 UPDATE `creature_template` SET `modelid_2` = 3004, `minlevel` = 44, `maxlevel` = 44, `maxhealth` = 7831, `mindmg` = 52, `maxdmg` = 72, `AIName` = '', `ScriptName` = 'npc_tomb_reaver' WHERE `entry` = 7351;
 
-UPDATE `creature_template` SET `modelid_2` = 6842, `minhealth` = 3342, `maxhealth` = 3342, AIName` = '', `ScriptName` = 'npc_tomb_fiend' WHERE `entry` = 7349;
+UPDATE `creature_template` SET `modelid_2` = 6842, `minhealth` = 3342, `maxhealth` = 3342, `AIName` = '', `ScriptName` = 'npc_tomb_fiend' WHERE `entry` = 7349;
 
 UPDATE `gameobject_template` SET `ScriptName` = 'go_gong_razor' WHERE `entry` = 148917;
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 148917;
