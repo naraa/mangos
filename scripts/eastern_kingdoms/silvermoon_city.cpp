@@ -32,11 +32,15 @@ EndContentData */
 # npc_blood_knight_stillblade
 #######*/
 
-#define SAY_HEAL                        -1000193
+enum
+{
+    SAY_HEAL                       = -1000193,
 
-#define QUEST_REDEEMING_THE_DEAD        9685
-#define SPELL_SHIMMERING_VESSEL         31225
-#define SPELL_REVIVE_SELF               32343
+    QUEST_REDEEMING_THE_DEAD       = 9685,
+    SPELL_SHIMMERING_VESSEL        = 31225,
+    SPELL_REVIVE_SELF              = 32343,
+    NPC_BLOOD_KNIGHT_STILLBLADE    = 17768,
+};
 
 struct MANGOS_DLL_DECL npc_blood_knight_stillbladeAI : public ScriptedAI
 {
@@ -53,30 +57,30 @@ struct MANGOS_DLL_DECL npc_blood_knight_stillbladeAI : public ScriptedAI
         spellHit = false;
     }
 
-    void MoveInLineOfSight(Unit *who) { }
+    void MoveInLineOfSight(Unit* pWho) { }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (m_creature->IsStandState())
         {
-            if (lifeTimer < diff)
+            if (lifeTimer < uiDiff)
                 m_creature->AI()->EnterEvadeMode();
             else
-                lifeTimer -= diff;
+                lifeTimer -= uiDiff;
         }
     }
 
-    void SpellHit(Unit *Hitter, const SpellEntry *Spellkind)
+    void SpellHit(Unit* pHitter, const SpellEntry* Spellkind)
     {
         if ((Spellkind->Id == SPELL_SHIMMERING_VESSEL) && !spellHit &&
-            (Hitter->GetTypeId() == TYPEID_PLAYER) && (((Player*)Hitter)->IsActiveQuest(QUEST_REDEEMING_THE_DEAD)))
+            (pHitter->GetTypeId() == TYPEID_PLAYER) && (((Player*)pHitter)->IsActiveQuest(QUEST_REDEEMING_THE_DEAD)))
         {
-            ((Player*)Hitter)->AreaExploredOrEventHappens(QUEST_REDEEMING_THE_DEAD);
+            ((Player*)pHitter)->KilledMonsterCredit(NPC_BLOOD_KNIGHT_STILLBLADE, m_creature->GetObjectGuid());
             DoCastSpellIfCan(m_creature,SPELL_REVIVE_SELF);
             m_creature->SetStandState(UNIT_STAND_STATE_STAND);
             m_creature->SetUInt32Value(UNIT_DYNAMIC_FLAGS, 0);
             //m_creature->RemoveAllAuras();
-            DoScriptText(SAY_HEAL, m_creature, Hitter);
+            DoScriptText(SAY_HEAL, m_creature, pHitter);
             spellHit = true;
         }
     }
@@ -123,13 +127,13 @@ struct MANGOS_DLL_DECL boss_lorthemar_theronAI : public ScriptedAI
 
         if (m_uiArcaneShockTimer < uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCast(pTarget, SPELL_ARCANE_SHOCK);
             m_uiArcaneShockTimer = urand(9000, 11000);
         }
         else
             m_uiArcaneShockTimer -= uiDiff;
- 
+
         if (m_uiCleaveTimer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_CLEAVE_LORTHEMAR);
@@ -137,16 +141,16 @@ struct MANGOS_DLL_DECL boss_lorthemar_theronAI : public ScriptedAI
         }
         else
             m_uiCleaveTimer -= uiDiff;
- 
+
         if (m_uiManaBurnTimer < uiDiff)
         {
-            if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                 DoCast(pTarget, SPELL_MANA_BURN);
             m_uiManaBurnTimer = urand(12000, 15000);
         }
         else
             m_uiManaBurnTimer -= uiDiff;
- 
+
         if (m_uiMassCharmTimer < uiDiff)
         {
             DoCast(m_creature, SPELL_MASS_CHARM);
@@ -154,7 +158,7 @@ struct MANGOS_DLL_DECL boss_lorthemar_theronAI : public ScriptedAI
         }
         else
             m_uiMassCharmTimer -= uiDiff;
- 
+
         DoMeleeAttackIfReady();
     }
 };
