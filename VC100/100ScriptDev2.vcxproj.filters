@@ -993,6 +993,8 @@
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\boss_amnennar_the_coldbringer.cpp">
       <Filter>scripts\kalimdor\razorfen_downs</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\kalimdor\razorfen_downs\boss_tuten_kash.cpp">
+      <Filter>scripts\kalimdor\razorfen_downs</Filter>
     <ClCompile Include="..\scripts\kalimdor\razorfen_downs\razorfen_downs.cpp">
       <Filter>scripts\kalimdor\razorfen_downs</Filter>
     </ClCompile>
