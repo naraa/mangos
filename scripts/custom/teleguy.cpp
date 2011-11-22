@@ -18,7 +18,7 @@
 /* ScriptData
 SDName: npc_teleguy
 SD%Complete: 100%
-SDComment: by /dev/rsa, modify by Asprorpsa
+SDComment: by tempura, modify by Asprorpsa
 SDCategory: custom
 EndScriptData */
 

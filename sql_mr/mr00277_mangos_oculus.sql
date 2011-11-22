@@ -1,5 +1,6 @@
+-- ---------------
 -- Oculus instance
-
+-- ---------------
 -- ---------------------- Script Names ----------------------
 UPDATE `creature_template` SET `AIName` = '', `vehicle_id` = 70, `ScriptName` = 'mob_oculus_dragon' WHERE `entry` IN (27692,27756,27755);
 UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 578;
@@ -16,6 +17,9 @@ UPDATE `creature_template` SET `ScriptName` = 'npc_belgar_image' WHERE entry = 2
 UPDATE `gameobject_template` SET `ScriptName` = 'go_oculus_portal' WHERE `entry` = 188715;
 
 -- -----------------------  Instance fixes DB -----------------------------
+
+-- Unstable Sphere Fixes
+UPDATE `creature_template` SET `minlevel` = 81, `maxlevel` = 81, `unit_flags` = 33587202 WHERE `entry` = 28166;
 
 -- from traponinet
 /* Belgaristrasz and his companions give Drake, after completed quest (13124) */

@@ -59,9 +59,17 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         m_auiEncounter[TYPE_UROM_PHASE] = 0;
     }
 
-    void OnObjectCreate(GameObject* pGO)
+    void OnObjectCreate(GameObject* pGo)
     {
-        m_mGoEntryGuidStore[pGO->GetEntry()] = pGO->GetObjectGuid();
+        switch(pGo->GetEntry())
+        {
+            case GO_DRAGON_CAGE_DOOR:
+                break;
+
+           default:
+                return;
+        }
+        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
     }
 
     void OnCreatureCreate(Creature* pCreature)
@@ -70,13 +78,17 @@ struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         {
             case NPC_VAROS:
                 pCreature->SetActiveObjectState(true);
+                break;
             case NPC_DRAKOS:
             case NPC_UROM:
             case NPC_EREGOS:
+            case NPC_BELGARISTRASZ:
+            case NPC_VERDISA:
+            case NPC_ETERNOS:
             case NPC_BALGAR_IMAGE:
-                m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
                 break;
         }
+        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
     }
 
     void SetData(uint32 type, uint32 data)
@@ -193,9 +205,9 @@ bool GOUse_go_oculus_portal(Player* pPlayer, GameObject* pGo)
 { 
     switch(pGo->GetEntry()) 
     {
-    case GO_ORB_OF_NEXUS: 
-        pPlayer->TeleportTo(571,3876.159912f,6984.439941f,106.32f,6.279f); 
-        return true; 
+        case GO_ORB_OF_NEXUS: 
+            pPlayer->TeleportTo(571,3876.159912f,6984.439941f,106.32f,6.279f); 
+            return true; 
     } 
     return false; 
 }

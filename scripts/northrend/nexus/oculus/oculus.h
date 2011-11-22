@@ -36,6 +36,9 @@ enum
 
     NPC_ROBOT              = 27641,
     NPC_BALGAR_IMAGE       = 28012,
+    NPC_VERDISA            = 27657,
+    NPC_BELGARISTRASZ      = 27658,
+    NPC_ETERNOS            = 27659,
     NPC_DRAKOS             = 27654,
     NPC_VAROS              = 27447,
     NPC_UROM               = 27655,
