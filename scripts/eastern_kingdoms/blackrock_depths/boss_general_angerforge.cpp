@@ -29,6 +29,9 @@ enum
     SPELL_MIGHTYBLOW           = 14099,
     SPELL_HAMSTRING            = 9080,
     SPELL_CLEAVE               = 20691,
+
+    NPC_RESERVIST              = 8901,
+    NPC_RAGE_MEDIC             = 8894,
 };
 
 struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
@@ -74,7 +77,7 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
             case 1: Rand1Y = 0 + Rand1; break;
         }
         Rand1 = 0;
-        pSummonedAdds = DoSpawnCreature(8901, Rand1X, Rand1Y, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000);
+        pSummonedAdds = DoSpawnCreature(NPC_RESERVIST, Rand1X, Rand1Y, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000);
         if (pSummonedAdds)
             pSummonedAdds->AI()->AttackStart(pVictim);
     }
@@ -95,7 +98,7 @@ struct MANGOS_DLL_DECL boss_general_angerforgeAI : public ScriptedAI
             case 1: Rand2Y = 0 + Rand2; break;
         }
         Rand2 = 0;
-        pSummonedMedics = DoSpawnCreature(8894, Rand2X, Rand2Y, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000);
+        pSummonedMedics = DoSpawnCreature(NPC_RAGE_MEDIC, Rand2X, Rand2Y, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 120000);
         if (pSummonedMedics)
             pSummonedMedics->AI()->AttackStart(pVictim);
     }
