@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -224,7 +225,6 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //ShadowVolley_Timer
         if (m_uiShadowVolley_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLTVOLLEY);
@@ -233,7 +233,6 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         else
             m_uiShadowVolley_Timer -= diff;
 
-        //Immolate_Timer
         if (m_uiImmolate_Timer < diff)
         {
             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
@@ -244,7 +243,6 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         else
             m_uiImmolate_Timer -= diff;
 
-        //CurseOfWeakness_Timer
         if (m_uiCurseOfWeakness_Timer < diff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFWEAKNESS);
@@ -253,7 +251,6 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         else
             m_uiCurseOfWeakness_Timer -= diff;
 
-        //DemonArmor_Timer
         if (m_uiDemonArmor_Timer < diff)
         {
             DoCastSpellIfCan(m_creature,SPELL_DEMONARMOR);
@@ -262,7 +259,6 @@ struct MANGOS_DLL_DECL boss_doomrelAI : public ScriptedAI
         else
             m_uiDemonArmor_Timer -= diff;
 
-        //Summon Voidwalkers
         if (!m_bHasSummoned && m_creature->GetHealthPercent() <= 50.0f)
         {
             m_creature->CastSpell(m_creature, SPELL_SUMMON_VOIDWALKERS, true);

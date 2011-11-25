@@ -292,7 +292,7 @@ struct MANGOS_DLL_DECL boss_king_varian_wrynnAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_king_varian_wrynn(Creature* pCreature)
 {
-   return new boss_king_varian_wrynnAI(pCreature);
+    return new boss_king_varian_wrynnAI(pCreature);
 }
 
 void AddSC_stormwind_city()

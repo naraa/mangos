@@ -122,13 +122,8 @@ struct MANGOS_DLL_DECL boss_thermapluggAI : public ScriptedAI
         // Remove remaining bombs
         for (GUIDList::const_iterator itr = m_lSummonedBombGUIDs.begin(); itr != m_lSummonedBombGUIDs.end(); ++itr)
         {
-            ObjectGuid guid = *itr;
-            if (!guid || !guid.IsCreature())
-                continue;
-
-            if (Creature* pBomb = m_creature->GetMap()->GetCreature(guid))
-                if (pBomb->IsInWorld())
-                    pBomb->ForcedDespawn();
+            if (Creature* pBomb = m_creature->GetMap()->GetCreature(*itr))
+                pBomb->ForcedDespawn();
         }
         m_lSummonedBombGUIDs.clear();
     }

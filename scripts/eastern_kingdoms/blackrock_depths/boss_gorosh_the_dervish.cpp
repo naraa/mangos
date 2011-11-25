@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,41 +24,41 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_WHIRLWIND             15589
-#define SPELL_MORTALSTRIKE          24573
+enum
+{
+    SPELL_WHIRLWIND            = 15589,
+    SPELL_MORTALSTRIKE         = 24573,
+};
 
 struct MANGOS_DLL_DECL boss_gorosh_the_dervishAI : public ScriptedAI
 {
     boss_gorosh_the_dervishAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 WhirlWind_Timer;
-    uint32 MortalStrike_Timer;
+    uint32 m_uiWhirlWind_Timer;
+    uint32 m_uiMortalStrike_Timer;
 
     void Reset()
     {
-        WhirlWind_Timer = 12000;
-        MortalStrike_Timer = 22000;
+        m_uiWhirlWind_Timer = 12000;
+        m_uiMortalStrike_Timer = 22000;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //WhirlWind_Timer
-        if (WhirlWind_Timer < diff)
+        if (m_uiWhirlWind_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_WHIRLWIND);
-            WhirlWind_Timer = 15000;
-        }else WhirlWind_Timer -= diff;
+            m_uiWhirlWind_Timer = 15000;
+        }else m_uiWhirlWind_Timer -= uiDiff;
 
-        //MortalStrike_Timer
-        if (MortalStrike_Timer < diff)
+        if (m_uiMortalStrike_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTALSTRIKE);
-            MortalStrike_Timer = 15000;
-        }else MortalStrike_Timer -= diff;
+            m_uiMortalStrike_Timer = 15000;
+        }else m_uiMortalStrike_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -69,11 +70,9 @@ struct MANGOS_DLL_DECL boss_magmusAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //FieryBurst_Timer
         if (m_uiFieryBurst_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_FIERYBURST);
@@ -82,7 +81,6 @@ struct MANGOS_DLL_DECL boss_magmusAI : public ScriptedAI
         else
             m_uiFieryBurst_Timer -= uiDiff;
 
-        //WarStomp_Timer
         if (m_creature->GetHealthPercent() < 51.0f)
         {
             if (m_uiWarStomp_Timer < uiDiff)

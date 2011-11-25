@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,26 +24,30 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_FIREBLAST            15573
+enum
+{
+    SPELL_FIREBLAST           = 15573,
+    NPC_BURNING_SPIRIT        = 9178,
+};
 
 struct MANGOS_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
 {
     boss_ambassador_flamelashAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 FireBlast_Timer;
-    uint32 Spirit_Timer;
+    uint32 m_uiFireBlast_Timer;
+    uint32 m_uiSpirit_Timer;
     int Rand;
     int RandX;
     int RandY;
-    Creature* Summoned;
+    Creature* pSummoned;
 
     void Reset()
     {
-        FireBlast_Timer = 2000;
-        Spirit_Timer = 24000;
+        m_uiFireBlast_Timer = 2000;
+        m_uiSpirit_Timer = 24000;
     }
 
-    void SummonSpirits(Unit* victim)
+    void SummonSpirits(Unit* pVictim)
     {
         Rand = rand()%10;
         switch(urand(0, 1))
@@ -57,34 +62,31 @@ struct MANGOS_DLL_DECL boss_ambassador_flamelashAI : public ScriptedAI
             case 0: RandY -= Rand; break;
             case 1: RandY += Rand; break;
         }
-        Summoned = DoSpawnCreature(9178, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
-        if (Summoned)
-            Summoned->AI()->AttackStart(victim);
+        pSummoned = DoSpawnCreature(NPC_BURNING_SPIRIT, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 60000);
+        if (pSummoned)
+            pSummoned->AI()->AttackStart(pVictim);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //FireBlast_Timer
-        if (FireBlast_Timer < diff)
+        if (m_uiFireBlast_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_FIREBLAST);
-            FireBlast_Timer = 7000;
-        }else FireBlast_Timer -= diff;
+            m_uiFireBlast_Timer = 7000;
+        }else m_uiFireBlast_Timer -= uiDiff;
 
-        //Spirit_Timer
-        if (Spirit_Timer < diff)
+        if (m_uiSpirit_Timer < uiDiff)
         {
             SummonSpirits(m_creature->getVictim());
             SummonSpirits(m_creature->getVictim());
             SummonSpirits(m_creature->getVictim());
             SummonSpirits(m_creature->getVictim());
 
-            Spirit_Timer = 30000;
-        }else Spirit_Timer -= diff;
+            m_uiSpirit_Timer = 30000;
+        }else m_uiSpirit_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

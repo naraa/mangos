@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,75 +24,72 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_SHADOWBOLT            17228
-#define SPELL_CURSEOFTONGUES        15470
-#define SPELL_CURSEOFWEAKNESS       17227
-#define SPELL_DEMONARMOR            11735
-#define SPELL_ENVELOPINGWEB         15471
+enum
+{
+    SPELL_SHADOWBOLT           = 17228,
+    SPELL_CURSEOFTONGUES       = 15470,
+    SPELL_CURSEOFWEAKNESS      = 17227,
+    SPELL_DEMONARMOR           = 11735,
+    SPELL_ENVELOPINGWEB        = 15471,
+};
 
 struct MANGOS_DLL_DECL boss_anubshiahAI : public ScriptedAI
 {
     boss_anubshiahAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 ShadowBolt_Timer;
-    uint32 CurseOfTongues_Timer;
-    uint32 CurseOfWeakness_Timer;
-    uint32 DemonArmor_Timer;
-    uint32 EnvelopingWeb_Timer;
+    uint32 m_uiShadowBolt_Timer;
+    uint32 m_uiCurseOfTongues_Timer;
+    uint32 m_uiCurseOfWeakness_Timer;
+    uint32 m_uiDemonArmor_Timer;
+    uint32 m_uiEnvelopingWeb_Timer;
 
     void Reset()
     {
-        ShadowBolt_Timer = 7000;
-        CurseOfTongues_Timer = 24000;
-        CurseOfWeakness_Timer = 12000;
-        DemonArmor_Timer = 3000;
-        EnvelopingWeb_Timer = 16000;
+        m_uiShadowBolt_Timer = 7000;
+        m_uiCurseOfTongues_Timer = 24000;
+        m_uiCurseOfWeakness_Timer = 12000;
+        m_uiDemonArmor_Timer = 3000;
+        m_uiEnvelopingWeb_Timer = 16000;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //ShadowBolt_Timer
-        if (ShadowBolt_Timer < diff)
+        if (m_uiShadowBolt_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_SHADOWBOLT);
-            ShadowBolt_Timer = 7000;
-        }else ShadowBolt_Timer -= diff;
+            m_uiShadowBolt_Timer = 7000;
+        }else m_uiShadowBolt_Timer -= uiDiff;
 
-        //CurseOfTongues_Timer
-        if (CurseOfTongues_Timer < diff)
+        if (m_uiCurseOfTongues_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target) DoCastSpellIfCan(target,SPELL_CURSEOFTONGUES);
-            CurseOfTongues_Timer = 18000;
-        }else CurseOfTongues_Timer -= diff;
+            Unit* pTarget = NULL;
+            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            if (pTarget) DoCastSpellIfCan(pTarget,SPELL_CURSEOFTONGUES);
+            m_uiCurseOfTongues_Timer = 18000;
+        }else m_uiCurseOfTongues_Timer -= uiDiff;
 
-        //CurseOfWeakness_Timer
-        if (CurseOfWeakness_Timer < diff)
+        if (m_uiCurseOfWeakness_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_CURSEOFWEAKNESS);
-            CurseOfWeakness_Timer = 45000;
-        }else CurseOfWeakness_Timer -= diff;
+            m_uiCurseOfWeakness_Timer = 45000;
+        }else m_uiCurseOfWeakness_Timer -= uiDiff;
 
-        //DemonArmor_Timer
-        if (DemonArmor_Timer < diff)
+        if (m_uiDemonArmor_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_DEMONARMOR);
-            DemonArmor_Timer = 300000;
-        }else DemonArmor_Timer -= diff;
+            m_uiDemonArmor_Timer = 300000;
+        }else m_uiDemonArmor_Timer -= uiDiff;
 
-        //EnvelopingWeb_Timer
-        if (EnvelopingWeb_Timer < diff)
+        if (m_uiEnvelopingWeb_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target) DoCastSpellIfCan(target,SPELL_ENVELOPINGWEB);
-            EnvelopingWeb_Timer = 12000;
-        }else EnvelopingWeb_Timer -= diff;
+            Unit* pTarget = NULL;
+            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            if (pTarget) DoCastSpellIfCan(pTarget,SPELL_ENVELOPINGWEB);
+            m_uiEnvelopingWeb_Timer = 12000;
+        }else m_uiEnvelopingWeb_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

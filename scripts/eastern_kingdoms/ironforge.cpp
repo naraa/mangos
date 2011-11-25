@@ -229,7 +229,7 @@ struct MANGOS_DLL_DECL boss_high_tinker_mekkatorqueAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_high_tinker_mekkatorque(Creature* pCreature)
 {
-   return new boss_high_tinker_mekkatorqueAI(pCreature);
+    return new boss_high_tinker_mekkatorqueAI(pCreature);
 }
 
 void AddSC_ironforge()
