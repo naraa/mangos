@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -27,6 +28,7 @@ npc_engineer_spark_overgrind
 npc_injured_draenei
 npc_magwin
 npc_susurrus
+boss_prophet_velen
 EndContentData */
 
 #include "precompiled.h"
@@ -304,12 +306,12 @@ struct MANGOS_DLL_DECL npc_injured_draeneiAI : public ScriptedAI
         }
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* pWho)
     {
         return;                                             //ignore everyone around them (won't aggro anything)
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         return;
     }
@@ -324,14 +326,16 @@ CreatureAI* GetAI_npc_injured_draenei(Creature* pCreature)
 ## npc_magwin
 ######*/
 
-#define SAY_START               -1000111
-#define SAY_AGGRO               -1000112
-#define SAY_PROGRESS            -1000113
-#define SAY_END1                -1000114
-#define SAY_END2                -1000115
-#define EMOTE_HUG               -1000116
-
-#define QUEST_A_CRY_FOR_HELP    9528
+enum
+{
+    SAY_START              = -1000111,
+    SAY_AGGRO              = -1000112,
+    SAY_PROGRESS           = -1000113,
+    SAY_END1               = -1000114,
+    SAY_END2               = -1000115,
+    EMOTE_HUG              = -1000116,
+    QUEST_A_CRY_FOR_HELP   = 9528,
+};
 
 struct MANGOS_DLL_DECL npc_magwinAI : public npc_escortAI
 {
@@ -363,9 +367,9 @@ struct MANGOS_DLL_DECL npc_magwinAI : public npc_escortAI
         }
     }
 
-    void Aggro(Unit* who)
+    void Aggro(Unit* pWho)
     {
-        DoScriptText(SAY_AGGRO, m_creature, who);
+        DoScriptText(SAY_AGGRO, m_creature, pWho);
     }
 
     void Reset() { }
@@ -501,7 +505,7 @@ struct MANGOS_DLL_DECL boss_prophet_velenAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_prophet_velen(Creature* pCreature)
 {
-   return new boss_prophet_velenAI(pCreature);
+    return new boss_prophet_velenAI(pCreature);
 }
 
 void AddSC_azuremyst_isle()

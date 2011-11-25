@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,33 +24,36 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_TOXICVOLLEY           21687
-#define SPELL_UPPERCUT              22916
+enum
+{
+    SPELL_TOXICVOLLEY          = 21687,
+    SPELL_UPPERCUT             = 22916,
+};
 
 struct MANGOS_DLL_DECL boss_noxxionAI : public ScriptedAI
 {
     boss_noxxionAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 ToxicVolley_Timer;
-    uint32 Uppercut_Timer;
-    uint32 Adds_Timer;
-    uint32 Invisible_Timer;
-    bool Invisible;
+    uint32 m_uiToxicVolley_Timer;
+    uint32 m_uiUppercut_Timer;
+    uint32 m_uiAdds_Timer;
+    uint32 m_uiInvisible_Timer;
+    bool m_bInvisible;
     int Rand;
     int RandX;
     int RandY;
-    Creature* Summoned;
+    Creature* pSummoned;
 
     void Reset()
     {
-        ToxicVolley_Timer = 7000;
-        Uppercut_Timer = 16000;
-        Adds_Timer = 19000;
-        Invisible_Timer = 15000;                            //Too much too low?
-        Invisible = false;
+        m_uiToxicVolley_Timer = 7000;
+        m_uiUppercut_Timer = 16000;
+        m_uiAdds_Timer = 19000;
+        m_uiInvisible_Timer = 15000;                            //Too much too low?
+        m_bInvisible = false;
     }
 
-    void SummonAdds(Unit* victim)
+    void SummonAdds(Unit* pVictim)
     {
         Rand = rand()%8;
         switch(urand(0, 1))
@@ -65,49 +69,45 @@ struct MANGOS_DLL_DECL boss_noxxionAI : public ScriptedAI
             case 1: RandY = 0 + Rand; break;
         }
         Rand = 0;
-        Summoned = DoSpawnCreature(13456, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 90000);
-        if (Summoned)
-            Summoned->AI()->AttackStart(victim);
+        pSummoned = DoSpawnCreature(13456, RandX, RandY, 0, 0, TEMPSUMMON_TIMED_OR_CORPSE_DESPAWN, 90000);
+        if (pSummoned)
+            pSummoned->AI()->AttackStart(pVictim);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
-        if (Invisible && Invisible_Timer < diff)
+        if (m_bInvisible && m_uiInvisible_Timer < uiDiff)
         {
             //Become visible again
             m_creature->setFaction(14);
             m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
             //Noxxion model
             m_creature->SetDisplayId(11172);
-            Invisible = false;
+            m_bInvisible = false;
             //m_creature->m_canMove = true;
-        } else if (Invisible)
+        } else if (m_bInvisible)
         {
-            Invisible_Timer -= diff;
+            m_uiInvisible_Timer -= uiDiff;
             //Do nothing while invisible
             return;
         }
 
-        //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //ToxicVolley_Timer
-        if (ToxicVolley_Timer < diff)
+        if (m_uiToxicVolley_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_TOXICVOLLEY);
-            ToxicVolley_Timer = 9000;
-        }else ToxicVolley_Timer -= diff;
+            m_uiToxicVolley_Timer = 9000;
+        }else m_uiToxicVolley_Timer -= uiDiff;
 
-        //Uppercut_Timer
-        if (Uppercut_Timer < diff)
+        if (m_uiUppercut_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
-            Uppercut_Timer = 12000;
-        }else Uppercut_Timer -= diff;
+            m_uiUppercut_Timer = 12000;
+        }else m_uiUppercut_Timer -= uiDiff;
 
-        //Adds_Timer
-        if (!Invisible && Adds_Timer < diff)
+        if (!m_bInvisible && m_uiAdds_Timer < uiDiff)
         {
             //Inturrupt any spell casting
             //m_creature->m_canMove = true;
@@ -121,11 +121,11 @@ struct MANGOS_DLL_DECL boss_noxxionAI : public ScriptedAI
             SummonAdds(m_creature->getVictim());
             SummonAdds(m_creature->getVictim());
             SummonAdds(m_creature->getVictim());
-            Invisible = true;
-            Invisible_Timer = 15000;
+            m_bInvisible = true;
+            m_uiInvisible_Timer = 15000;
 
-            Adds_Timer = 40000;
-        }else Adds_Timer -= diff;
+            m_uiAdds_Timer = 40000;
+        }else m_uiAdds_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

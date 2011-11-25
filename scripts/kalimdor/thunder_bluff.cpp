@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -27,72 +28,98 @@ EndScriptData */
 # npc_cairne_bloodhoof
 ######*/
 
-#define SPELL_BERSERKER_CHARGE  16636
-#define SPELL_CLEAVE            16044
-#define SPELL_MORTAL_STRIKE     16856
-#define SPELL_THUNDERCLAP       23931
-#define SPELL_UPPERCUT          22916
+enum
+{
+    SPELL_BERSERKER_CHARGE  = 16636,
+    SPELL_CLEAVE            = 16044,
+    SPELL_MORTAL_STRIKE     = 16856,
+    SPELL_THUNDERCLAP       = 23931,
+    SPELL_UPPERCUT          = 22916,
+    SPELL_WAR_STOMP         = 59705,
+};
 
 //TODO: verify abilities/timers
 struct MANGOS_DLL_DECL npc_cairne_bloodhoofAI : public ScriptedAI
 {
     npc_cairne_bloodhoofAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
 
-    uint32 BerserkerCharge_Timer;
-    uint32 Cleave_Timer;
-    uint32 MortalStrike_Timer;
-    uint32 Thunderclap_Timer;
-    uint32 Uppercut_Timer;
+    uint32 m_uiBerserkerCharge_Timer;
+    uint32 m_uiCleave_Timer;
+    uint32 m_uiMortalStrike_Timer;
+    uint32 m_uiThunderclap_Timer;
+    uint32 m_uiUppercut_Timer;
+	uint32 m_uiWarStompTimer;
 
     void Reset()
     {
-        BerserkerCharge_Timer = 30000;
-        Cleave_Timer = 5000;
-        MortalStrike_Timer = 10000;
-        Thunderclap_Timer = 15000;
-        Uppercut_Timer = 10000;
+        m_uiBerserkerCharge_Timer = 30000;
+        m_uiCleave_Timer = 5000;
+        m_uiMortalStrike_Timer = 10000;
+        m_uiThunderclap_Timer = 15000;
+        m_uiUppercut_Timer = 10000;
+        m_uiWarStompTimer  = 20000;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (BerserkerCharge_Timer < diff)
+        if (m_uiBerserkerCharge_Timer < uiDiff)
         {
-            Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target)
-                DoCastSpellIfCan(target,SPELL_BERSERKER_CHARGE);
-            BerserkerCharge_Timer = 25000;
-        }else BerserkerCharge_Timer -= diff;
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+            {
+                if (DoCastSpellIfCan(pTarget,SPELL_BERSERKER_CHARGE) == CAST_OK)
+                    m_uiBerserkerCharge_Timer = 25000;
+            }
+        }
+        else
+            m_uiBerserkerCharge_Timer -= uiDiff;
 
-        if (Uppercut_Timer < diff)
+        if (m_uiUppercut_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT);
-            Uppercut_Timer = 20000;
-        }else Uppercut_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(),SPELL_UPPERCUT) == CAST_OK)
+                m_uiUppercut_Timer = 20000;
+        }
+        else
+            m_uiUppercut_Timer -= uiDiff;
 
-        if (Thunderclap_Timer < diff)
+        if (m_uiThunderclap_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP);
-            Thunderclap_Timer = 15000;
-        }else Thunderclap_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(),SPELL_THUNDERCLAP) == CAST_OK)
+                m_uiThunderclap_Timer = 15000;
+        }
+        else
+            m_uiThunderclap_Timer -= uiDiff;
 
-        if (MortalStrike_Timer < diff)
+        if (m_uiMortalStrike_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTAL_STRIKE);
-            MortalStrike_Timer = 15000;
-        }else MortalStrike_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(),SPELL_MORTAL_STRIKE) == CAST_OK)
+                m_uiMortalStrike_Timer = 15000;
+        }
+        else
+            m_uiMortalStrike_Timer -= uiDiff;
 
-        if (Cleave_Timer < diff)
+        if (m_uiCleave_Timer < uiDiff)
         {
-            DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE);
-            Cleave_Timer = 7000;
-        }else Cleave_Timer -= diff;
+            if (DoCastSpellIfCan(m_creature->getVictim(),SPELL_CLEAVE) == CAST_OK)
+                m_uiCleave_Timer = 7000;
+        }
+        else
+            m_uiCleave_Timer -= uiDiff;
+
+        if (m_uiWarStompTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_WAR_STOMP) == CAST_OK)
+                m_uiWarStompTimer = urand(20000, 25000);
+        }
+        else
+            m_uiWarStompTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_npc_cairne_bloodhoof(Creature* pCreature)
 {
     return new npc_cairne_bloodhoofAI(pCreature);

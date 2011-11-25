@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,53 +24,53 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_KNOCKAWAY         18670
-#define SPELL_TRAMPLE           5568
-#define SPELL_LANDSLIDE         21808
+enum
+{
+    SPELL_KNOCKAWAY        = 18670,
+    SPELL_TRAMPLE          = 5568,
+    SPELL_LANDSLIDE        = 21808,
+};
 
 struct MANGOS_DLL_DECL boss_landslideAI : public ScriptedAI
 {
     boss_landslideAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 KnockAway_Timer;
-    uint32 Trample_Timer;
-    uint32 Landslide_Timer;
+    uint32 m_uiKnockAway_Timer;
+    uint32 m_uiTrample_Timer;
+    uint32 m_uiLandslide_Timer;
 
     void Reset()
     {
-        KnockAway_Timer = 8000;
-        Trample_Timer = 2000;
-        Landslide_Timer = 0;
+        m_uiKnockAway_Timer = 8000;
+        m_uiTrample_Timer = 2000;
+        m_uiLandslide_Timer = 0;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //KnockAway_Timer
-        if (KnockAway_Timer < diff)
+        if (m_uiKnockAway_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_KNOCKAWAY);
-            KnockAway_Timer = 15000;
-        }else KnockAway_Timer -= diff;
+            m_uiKnockAway_Timer = 15000;
+        }else m_uiKnockAway_Timer -= uiDiff;
 
-        //Trample_Timer
-        if (Trample_Timer < diff)
+        if (m_uiTrample_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_TRAMPLE);
-            Trample_Timer = 8000;
-        }else Trample_Timer -= diff;
+            m_uiTrample_Timer = 8000;
+        }else m_uiTrample_Timer -= uiDiff;
 
-        //Landslide
         if (m_creature->GetHealthPercent() < 50.0f)
         {
-            if (Landslide_Timer < diff)
+            if (m_uiLandslide_Timer < uiDiff)
             {
                 m_creature->InterruptNonMeleeSpells(false);
                 DoCastSpellIfCan(m_creature,SPELL_LANDSLIDE);
-                Landslide_Timer = 60000;
-            } else Landslide_Timer -= diff;
+                m_uiLandslide_Timer = 60000;
+            } else m_uiLandslide_Timer -= uiDiff;
         }
 
         DoMeleeAttackIfReady();

@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -178,7 +179,7 @@ struct MANGOS_DLL_DECL boss_tyrande_whisperwindAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_tyrande_whisperwind(Creature* pCreature)
 {
-   return new boss_tyrande_whisperwindAI(pCreature);
+    return new boss_tyrande_whisperwindAI(pCreature);
 }
 
 /*####
@@ -248,7 +249,7 @@ struct MANGOS_DLL_DECL boss_fandral_staghelmAI : public ScriptedAI
 
 CreatureAI* GetAI_boss_fandral_staghelm(Creature* pCreature)
 {
-   return new boss_fandral_staghelmAI(pCreature);
+    return new boss_fandral_staghelmAI(pCreature);
 }
 
 void AddSC_teldrassil()

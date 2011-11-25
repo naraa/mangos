@@ -42,6 +42,8 @@ enum
     SPELL_KNOCK_AWAY            = 19633,
     SPELL_FIREBALL              = 18392,
     SPELL_FIREBALL_H            = 68926,
+    SPELL_ERRUPTION             = 17731,                    // does not work
+    SPELL_ERRUPTION_H           = 69294,                    // does not work
 
     //Not much choise about these. We have to make own defintion on the direction/start-end point
     SPELL_BREATH_NORTH_TO_SOUTH = 17086,                    // 20x in "array"

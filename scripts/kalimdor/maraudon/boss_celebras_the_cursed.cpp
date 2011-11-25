@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,59 +24,60 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_WRATH                 21807
-#define SPELL_ENTANGLINGROOTS       12747
-#define SPELL_CORRUPT_FORCES        21968
+enum
+{
+    SPELL_WRATH                = 21807,
+    SPELL_ENTANGLINGROOTS      = 12747,
+    SPELL_CORRUPT_FORCES       = 21968,
+    NPC_CELEBRAS_THE_REDEEMED  = 13716,
+};
 
 struct MANGOS_DLL_DECL celebras_the_cursedAI : public ScriptedAI
 {
     celebras_the_cursedAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 Wrath_Timer;
-    uint32 EntanglingRoots_Timer;
-    uint32 CorruptForces_Timer;
+    uint32 m_uiWrath_Timer;
+    uint32 m_uiEntanglingRoots_Timer;
+    uint32 m_uiCorruptForces_Timer;
 
     void Reset()
     {
-        Wrath_Timer = 8000;
-        EntanglingRoots_Timer = 2000;
-        CorruptForces_Timer = 30000;
+        m_uiWrath_Timer = 8000;
+        m_uiEntanglingRoots_Timer = 2000;
+        m_uiCorruptForces_Timer = 30000;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
-        m_creature->SummonCreature(13716, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 600000);
+        m_creature->SummonCreature(NPC_CELEBRAS_THE_REDEEMED, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN, 600000);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Wrath
-        if (Wrath_Timer < diff)
+        if (m_uiWrath_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target)
-                DoCastSpellIfCan(target,SPELL_WRATH);
-            Wrath_Timer = 8000;
-        }else Wrath_Timer -= diff;
+            Unit* pTarget = NULL;
+            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            if (pTarget)
+                DoCastSpellIfCan(pTarget,SPELL_WRATH);
+            m_uiWrath_Timer = 8000;
+        }else m_uiWrath_Timer -= uiDiff;
 
-        //EntanglingRoots
-        if (EntanglingRoots_Timer < diff)
+        if (m_uiEntanglingRoots_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_ENTANGLINGROOTS);
-            EntanglingRoots_Timer = 20000;
-        }else EntanglingRoots_Timer -= diff;
+            m_uiEntanglingRoots_Timer = 20000;
+        }else m_uiEntanglingRoots_Timer -= uiDiff;
 
-        //CorruptForces
-        if (CorruptForces_Timer < diff)
+        if (m_uiCorruptForces_Timer < uiDiff)
         {
             m_creature->InterruptNonMeleeSpells(false);
             DoCastSpellIfCan(m_creature,SPELL_CORRUPT_FORCES);
-            CorruptForces_Timer = 20000;
-        }else CorruptForces_Timer -= diff;
+            m_uiCorruptForces_Timer = 20000;
+        }else m_uiCorruptForces_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

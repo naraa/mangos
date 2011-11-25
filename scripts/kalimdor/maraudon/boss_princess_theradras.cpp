@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -23,68 +24,68 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SPELL_DUSTFIELD             21909
-#define SPELL_BOULDER               21832
-#define SPELL_THRASH                3391
-#define SPELL_REPULSIVEGAZE         21869
+enum
+{
+    SPELL_DUSTFIELD            = 21909,
+    SPELL_BOULDER              = 21832,
+    SPELL_THRASH               = 3391,
+    SPELL_REPULSIVEGAZE        = 21869,
+    NPC_ZAETAR_SPIRIT          = 12238,
+};
 
 struct MANGOS_DLL_DECL boss_ptheradrasAI : public ScriptedAI
 {
     boss_ptheradrasAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    uint32 Dustfield_Timer;
-    uint32 Boulder_Timer;
-    uint32 Thrash_Timer;
-    uint32 RepulsiveGaze_Timer;
+    uint32 m_uiDustfield_Timer;
+    uint32 m_uiBoulder_Timer;
+    uint32 m_uiThrash_Timer;
+    uint32 m_uiRepulsiveGaze_Timer;
 
     void Reset()
     {
-        Dustfield_Timer = 8000;
-        Boulder_Timer = 2000;
-        Thrash_Timer = 5000;
-        RepulsiveGaze_Timer = 23000;
+        m_uiDustfield_Timer = 8000;
+        m_uiBoulder_Timer = 2000;
+        m_uiThrash_Timer = 5000;
+        m_uiRepulsiveGaze_Timer = 23000;
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
-        m_creature->SummonCreature(12238,28.067f, 61.875f, -123.405f, 4.67f, TEMPSUMMON_TIMED_DESPAWN, 600000);
+        m_creature->SummonCreature(NPC_ZAETAR_SPIRIT,28.067f, 61.875f, -123.405f, 4.67f, TEMPSUMMON_TIMED_DESPAWN, 600000);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        //Dustfield_Timer
-        if (Dustfield_Timer < diff)
+        if (m_uiDustfield_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_DUSTFIELD);
-            Dustfield_Timer = 14000;
-        }else Dustfield_Timer -= diff;
+            m_uiDustfield_Timer = 14000;
+        }else m_uiDustfield_Timer -= uiDiff;
 
-        //Boulder_Timer
-        if (Boulder_Timer < diff)
+        if (m_uiBoulder_Timer < uiDiff)
         {
-            Unit* target = NULL;
-            target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-            if (target)
-                DoCastSpellIfCan(target,SPELL_BOULDER);
-            Boulder_Timer = 10000;
-        }else Boulder_Timer -= diff;
+            Unit* pTarget = NULL;
+            pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+            if (pTarget)
+                DoCastSpellIfCan(pTarget,SPELL_BOULDER);
+            m_uiBoulder_Timer = 10000;
+        }else m_uiBoulder_Timer -= uiDiff;
 
-        //RepulsiveGaze_Timer
-        if (RepulsiveGaze_Timer < diff)
+        if (m_uiRepulsiveGaze_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_REPULSIVEGAZE);
-            RepulsiveGaze_Timer = 20000;
-        }else RepulsiveGaze_Timer -= diff;
+            m_uiRepulsiveGaze_Timer = 20000;
+        }else m_uiRepulsiveGaze_Timer -= uiDiff;
 
-        //Thrash_Timer
-        if (Thrash_Timer < diff)
+        if (m_uiThrash_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_THRASH);
-            Thrash_Timer = 18000;
-        }else Thrash_Timer -= diff;
+            m_uiThrash_Timer = 18000;
+        }else m_uiThrash_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
