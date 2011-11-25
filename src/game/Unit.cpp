@@ -5237,6 +5237,8 @@ void Unit::RemoveSpellAuraHolder(SpellAuraHolderPtr holder, AuraRemoveMode mode)
     if (!holder)
         return;
 
+    holder->SetRemoveMode(mode);
+
     if (mode != AURA_REMOVE_BY_DELETE)
         holder->HandleSpellSpecificBoostsForward(false);
 
@@ -5261,7 +5263,6 @@ void Unit::RemoveSpellAuraHolder(SpellAuraHolderPtr holder, AuraRemoveMode mode)
         }
     }
 
-    holder->SetRemoveMode(mode);
     holder->UnregisterSingleCastHolder();
 
     for (int32 i = 0; i < MAX_EFFECT_INDEX; ++i)
@@ -10981,7 +10982,7 @@ void Unit::DoPetCastSpell(Player *owner, uint8 cast_count, SpellCastTargets* tar
         targets->setUnitTarget((Unit*)owner);
 
     Unit* unit_target = targets ? targets->getUnitTarget() : NULL;
-    if (!unit_target)
+    if (!unit_target && !(targets->m_targetMask & TARGET_FLAG_DEST_LOCATION))
     {
         DEBUG_LOG("DoPetCastSpell: %s guid %u tryed to cast spell %u without target!.",GetObjectGuid().IsPet() ? "Pet" : "Creature",GetObjectGuid().GetCounter(), spellInfo->Id);
     }
