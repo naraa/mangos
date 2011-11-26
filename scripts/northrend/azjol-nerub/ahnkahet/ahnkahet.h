@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -26,7 +27,12 @@ enum
     GO_ANCIENT_DEVICE_R     = 193094,
     GO_VORTEX               = 193564,
 
-    NPC_ELDER_NADOX         = 29309,
+    NPC_ELDER_NADOX               = 29309,
+    NPC_AHNKAHAR_GUARDIAN_EGG     = 30173,
+    NPC_AHNKAHAR_SWARM_EGG        = 30172,
+    NPC_AHNKAHAR_GUARDIAN         = 30176,
+    NPC_AHNKAHAR_SWARMER          = 30178,
+
     NPC_TALDARAM            = 29308,
     NPC_JEDOGA_SHADOWSEEKER = 29310,
 };
