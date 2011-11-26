@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 MangosR2_ScriptDev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -28,17 +29,23 @@ EndScriptData */
 
 guardAI::guardAI(Creature* pCreature) : ScriptedAI(pCreature),
     m_uiGlobalCooldown(0),
-    m_uiBuffTimer(0)
+    m_uiBuffTimer(0),
+    m_uiZoneAttackMsgTimer(0),
+    m_uiHelp(0)
 {}
 
 void guardAI::Reset()
 {
     m_uiGlobalCooldown = 0;
-    m_uiBuffTimer = 0;                                      //Rebuff as soon as we can
+    m_uiBuffTimer = 0; 	//Rebuff as soon as we can
+    m_uiZoneAttackMsgTimer = 0;
+    m_uiHelp = 5000;
 }
 
 void guardAI::Aggro(Unit *pWho)
+
 {
+///-> texts for each guard here use switch between entry when we get more
     if (m_creature->GetEntry() == NPC_CENARION_INFANTRY)
     {
         switch(urand(0, 2))
@@ -48,9 +55,18 @@ void guardAI::Aggro(Unit *pWho)
             case 2: DoScriptText(SAY_GUARD_SIL_AGGRO3, m_creature, pWho); break;
         }
     }
+///-> end
+
 
     if (const SpellEntry *pSpellInfo = m_creature->ReachWithSpellAttack(pWho))
         DoCastSpell(pWho, pSpellInfo);
+
+///-> Send Zone Under Attack message to the LocalDefense and WorldDefense Channels
+    if (pWho->GetTypeId() == TYPEID_PLAYER && !m_uiZoneAttackMsgTimer)
+    {
+        m_creature->SendZoneUnderAttackMessage((Player*)pWho);
+        m_uiZoneAttackMsgTimer = 30000;
+    }
 }
 
 void guardAI::JustDied(Unit *pKiller)
@@ -60,6 +76,47 @@ void guardAI::JustDied(Unit *pKiller)
         m_creature->SendZoneUnderAttackMessage(pPlayer);
 }
 
+void guardAI::SummonGuardsHelpers()
+{
+       int entry = 0;
+       float x;
+       float y;
+       float z;
+       float X;
+       float Y;
+       float Z;
+       Creature* pHelper;
+       m_creature->GetPosition(x,y,z);
+       m_creature->getVictim()->GetPosition(X,Y,Z);
+       if(x > X)
+           X = x + urand(20, 30);
+       else
+           X = x - urand(20, 30);
+       if(y > Y)
+           Y = y + urand(20, 30);
+       else
+           Y = y - urand(20, 30);
+       m_creature->GetRespawnCoord(x,y,z);
+       if (m_creature->getFaction() == F_ORGRIMMAR)
+           entry = NPC_ORGRIMMAR_GRUNT;
+       if (m_creature->getFaction() == F_DARNASSUS)
+           entry = NPC_DARNASSUS_SENTINEL;
+       if (m_creature->getFaction() == F_STORMWIND)
+           entry = NPC_STORMWIND_GUARD;
+       if (m_creature->getFaction() == F_UNDERCITY)
+           entry = NPC_UNDERCITY_GUARD;
+       if (m_creature->getFaction() == F_IRONFORGE)
+           entry = NPC_IRONFORGE_GUARD;
+       if (m_creature->getFaction() == F_THUNDER_BLUFF)
+           entry = NPC_BLUFF_WATCHERS;
+       if (m_creature->getFaction() == F_EXODAR)
+           entry = NPC_EXODAR_PEACEKEEPER;
+       if (m_creature->getFaction() == F_SILVERMOON)
+           entry = NPC_SILVERMOON_CITYGUARD;
+       if (pHelper = DoSpawnCreature(entry, (float) (X - x), (float) (Y - y), (float) (Z -z), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 5000))
+           pHelper->SetInCombatWithZone();
+}
+
 void guardAI::UpdateAI(const uint32 uiDiff)
 {
     //Always decrease our global cooldown first
@@ -67,6 +124,11 @@ void guardAI::UpdateAI(const uint32 uiDiff)
         m_uiGlobalCooldown -= uiDiff;
     else
         m_uiGlobalCooldown = 0;
+
+    //Always decrease ZoneAttackMsgTimer
+    if (m_uiZoneAttackMsgTimer > uiDiff)
+        m_uiZoneAttackMsgTimer -= uiDiff;
+    else m_uiZoneAttackMsgTimer = 0;
 
     //Buff timer (only buff when we are alive and not in combat
     if (m_creature->isAlive() && !m_creature->isInCombat())
@@ -97,6 +159,37 @@ void guardAI::UpdateAI(const uint32 uiDiff)
     //Return since we have no target
     if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         return;
+
+    //Always decrease Help when in combat
+    if (m_uiHelp > uiDiff)
+        m_uiHelp -= uiDiff;
+    else m_uiHelp = 0;
+
+    if(!m_uiHelp && m_creature->GetEntry())
+    {
+       if (m_creature->getFaction() == F_ORGRIMMAR)
+           m_creature->MonsterSay("Orgrimmar is under Invasion! Guards!! Help me!",LANG_ORCISH);
+       if (m_creature->getFaction() == F_DARNASSUS)
+           m_creature->MonsterSay("Darnassus is under Invasion! Guards!! Help me!",LANG_DARNASSIAN);
+       if (m_creature->getFaction() == F_STORMWIND)
+           m_creature->MonsterSay("Stormwind is under Invasion! Guards!! Help me!",LANG_COMMON);
+       if (m_creature->getFaction() == F_UNDERCITY)
+           m_creature->MonsterSay("Undercity is under Invasion! Guards!! Help me!",LANG_GUTTERSPEAK);
+       if( m_creature->getFaction() == F_IRONFORGE)
+           m_creature->MonsterSay("Ironforge is under Invasion! Guards!! Help me!",LANG_DWARVISH);
+       if (m_creature->getFaction() == F_THUNDER_BLUFF)
+           m_creature->MonsterSay("Thunder Bluff is under Invasion! Guards!! Help me!",LANG_TAURAHE);
+       if (m_creature->getFaction() == F_EXODAR)
+           m_creature->MonsterSay("The Exodar is under Invasion! Guards!! Help me!",LANG_DRAENEI);
+       if (m_creature->getFaction() == F_SILVERMOON)
+           m_creature->MonsterSay("Silvermoon is under Invasion! Guards!! Help me!",LANG_THALASSIAN);
+       m_creature->HandleEmoteCommand(EMOTE_ONESHOT_BATTLEROAR);
+       for(int i = 0; i < 3;i++)
+       {
+            SummonGuardsHelpers();
+       }
+       m_uiHelp = urand(60000, 105000);
+    }
 
     // Make sure our attack is ready and we arn't currently casting
     if (m_creature->isAttackReady() && !m_creature->IsNonMeleeSpellCasted(false))
@@ -195,6 +288,12 @@ void guardAI::DoReplyToTextEmote(uint32 uiTextEmote)
         case TEXTEMOTE_RUDE:
         case TEXTEMOTE_CHICKEN: m_creature->HandleEmote(EMOTE_ONESHOT_POINT);  break;
     }
+}
+
+void guardAI_thunderbluff::ReceiveEmote(Player* pPlayer, uint32 uiTextEmote)
+{
+    if (pPlayer->GetTeam() == HORDE)
+        DoReplyToTextEmote(uiTextEmote);
 }
 
 void guardAI_orgrimmar::ReceiveEmote(Player* pPlayer, uint32 uiTextEmote)
