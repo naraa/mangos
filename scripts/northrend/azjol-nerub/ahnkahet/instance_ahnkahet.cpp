@@ -26,7 +26,7 @@ EndScriptData */
 #include "ahnkahet.h"
 
 instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
-    m_uiDevicesActivated(0),
+    m_uiDevicesActivated(0)
 {
     Initialize();
 }
