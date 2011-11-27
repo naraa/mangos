@@ -60,6 +60,7 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
     {
         m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        m_uiDeadGuardianCount = 0;
         Reset();
     }
 
@@ -71,6 +72,7 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
     uint32 m_uiBroodRageTimer;
     uint32 m_uiSwarmerSummonTimer;
     uint32 m_uiGuardianSummonTimer;
+    uint8 m_uiDeadGuardianCount;
 
     void Reset()
     {
@@ -126,6 +128,27 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
         if (m_pInstance)
             m_pInstance->SetData(TYPE_NADOX,DONE);
+
+ ///   achiv is going in heroic mode
+        if (!m_bIsRegularMode)
+        {
+            if (m_uiDeadGuardianCount == 0)
+		    {
+                Map* pMap = m_creature->GetMap();
+                if (pMap && pMap->IsDungeon())
+                {
+                    Map::PlayerList const &players = pMap->GetPlayers();
+                    for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
+                        itr->getSource()->CompletedAchievement(ACHIEV_CRITERIA_RESPECT_YOUR_ELDERS);
+                }
+            }
+        }
+    }
+
+    void SummonedCreatureJustDied(Creature* pSummoned)
+    {
+		if (pSummoned->GetEntry() == NPC_AHNKAHAR_GUARDIAN)
+			m_uiDeadGuardianCount++;			
     }
 
     void UpdateAI(const uint32 uiDiff)
