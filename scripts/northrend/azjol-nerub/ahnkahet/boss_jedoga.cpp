@@ -60,7 +60,7 @@ enum
     SAY_VOLUNTEER_1                     = -1619031,         //said by the volunteer image
     SAY_VOLUNTEER_2                     = -1619032,
 
-    NPC_TWILIGHT_INITIATE               = 30114,
+    //NPC_TWILIGHT_INITIATE               = 30114,
     NPC_TWILIGHT_VOLUNTEER              = 30385,
     NPC_JEDOGA                          = 29310,
 
@@ -138,11 +138,13 @@ struct MANGOS_DLL_DECL npc_twilight_volunteerAI : public ScriptedAI
 {
     npc_twilight_volunteerAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
+    bool m_bIsRegularMode;
 
     uint8 m_uiPhase;
     bool m_bIsVulunteerNear;
@@ -235,12 +237,12 @@ struct MANGOS_DLL_DECL boss_jedogaAI : public ScriptedAI
 {
     boss_jedogaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
     bool m_bIsVulunteerNear;
     bool m_bVolunteerDied;

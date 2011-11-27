@@ -121,12 +121,12 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
 {
     boss_volazjAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
     uint8 m_uiPhase;
     ObjectGuid m_uiLastShiverTargetGUID;
@@ -289,19 +289,21 @@ struct MANGOS_DLL_DECL boss_volazjAI : public ScriptedAI
 
     }
 };
+
 /*######
 ## mob_twisted_visage
 ######*/
+
 struct MANGOS_DLL_DECL mob_twisted_visageAI : public ScriptedAI
 {
     mob_twisted_visageAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
 
     void Reset()
@@ -336,20 +338,22 @@ struct MANGOS_DLL_DECL mob_twisted_visageAI : public ScriptedAI
 
     }
 };
+
 /*######
 ## mob_ancient_void
 ######*/
+
 struct MANGOS_DLL_DECL mob_ancient_voidAI : public ScriptedAI
 {
     mob_ancient_voidAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         defaultsize = m_creature->GetFloatValue(OBJECT_FIELD_SCALE_X);
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
     uint8 m_uiPhase;
     float defaultsize;
@@ -483,6 +487,7 @@ CreatureAI* GetAI_mob_twisted_visage(Creature* pCreature)
 {
     return new mob_twisted_visageAI(pCreature);
 }
+
 CreatureAI* GetAI_mob_ancient_void(Creature* pCreature)
 {
     return new mob_ancient_voidAI(pCreature);

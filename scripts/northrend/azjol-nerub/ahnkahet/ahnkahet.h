@@ -35,6 +35,41 @@ enum
 
     NPC_TALDARAM            = 29308,
     NPC_JEDOGA_SHADOWSEEKER = 29310,
+    NPC_TWILIGHT_INITIATE   = 30114,
+
+
+    ACHIEV_CRITERIA_VOLUNTEER_WORK      = 7359,
+    ACHIEV_CRITERIA_RESPECT_YOUR_ELDERS = 7317,
+};
+
+class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
+{
+    public:
+        instance_ahnkahet(Map* pMap);
+        ~instance_ahnkahet() {}
+
+        void Initialize();
+
+        void OnCreatureCreate(Creature* pCreature);
+        void OnObjectCreate(GameObject* pGo);
+
+        void SetData(uint32 uiType, uint32 uiData);
+        void SetAchiev(uint32 uiType, bool get);
+        uint32 GetData(uint32 uiType);
+
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+
+        const char* Save() { return strInstData.c_str(); }
+        void Load(const char* chrIn);
+
+    protected:
+        uint32 m_auiEncounter[MAX_ENCOUNTER];
+        std::string strInstData;
+
+        bool   m_bCriteriaVolunteerWork;
+        bool   m_bCriteriaRespectYourElders;
+
+        uint8  m_uiDevicesActivated;
 };
 
 #endif

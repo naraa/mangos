@@ -76,12 +76,12 @@ struct MANGOS_DLL_DECL boss_taldaramAI : public ScriptedAI
 {
     boss_taldaramAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
     uint8 m_uiVanishPhase;
     uint32 m_uiDamageTaken;
@@ -244,6 +244,7 @@ CreatureAI* GetAI_boss_taldaram(Creature* pCreature)
 {
     return new boss_taldaramAI(pCreature);
 }
+
 /*######
 ## mob_flame_orb
 ######*/
@@ -252,12 +253,12 @@ struct MANGOS_DLL_DECL mob_flame_orbAI : public ScriptedAI
 {
     mob_flame_orbAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
     bool m_bIsFlying;
     int8 direction;

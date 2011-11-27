@@ -58,12 +58,12 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
 {
     boss_nadoxAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
 
     bool   m_bBerserk;
@@ -80,11 +80,19 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
         m_uiBroodPlagueTimer = 15000;
         m_uiBroodRageTimer = 20000;
         m_creature->SetRespawnDelay(DAY);
+
+        if (m_pInstance)
+        {
+            m_pInstance->SetData(TYPE_NADOX,NOT_STARTED);
+            m_pInstance->SetAchiev(TYPE_NADOX, true);
+        }
     }
 
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_NADOX,IN_PROGRESS);
     }
 
     void KilledUnit(Unit* pVictim)
@@ -114,6 +122,8 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
     void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_DEATH, m_creature);
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_NADOX,DONE);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -200,20 +210,20 @@ struct MANGOS_DLL_DECL mob_nadox_guardianAI : public ScriptedAI
 {
     mob_nadox_guardianAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
 
     void Reset(){}
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
-        //if (m_pInstance)
-          //  m_pInstance->SetAchiev(TYPE_NADOX, false);
+        if (m_pInstance)
+            m_pInstance->SetAchiev(TYPE_NADOX, false);
     }
 
     void UpdateAI(const uint32 uiDiff)

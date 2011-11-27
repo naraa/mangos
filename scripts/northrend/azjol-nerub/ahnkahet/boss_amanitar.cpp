@@ -44,6 +44,7 @@ enum
     NPC_HEALTHY_MUSHROOM     = 30391,
     NPC_POISONOUS_MUSHROOM   = 30435,
 };
+
 /*######
 ## boss_amanitar
 ######*/
@@ -52,12 +53,12 @@ struct MANGOS_DLL_DECL boss_amanitarAI : public ScriptedAI
 {
     boss_amanitarAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiBashTimer;
@@ -161,6 +162,7 @@ CreatureAI* GetAI_boss_amanitar(Creature* pCreature)
 {
     return new boss_amanitarAI(pCreature);
 }
+
 /*######
 ## npc_amanitar_mushroom
 ######*/
@@ -169,12 +171,12 @@ struct MANGOS_DLL_DECL npc_amanitar_mushroomAI : public ScriptedAI
 {
     npc_amanitar_mushroomAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_ahnkahet*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_ahnkahet* m_pInstance;
     bool m_bIsRegularMode;
 
     uint8 m_uiMushroomType; //0 = healthy, 1 = poisinous
