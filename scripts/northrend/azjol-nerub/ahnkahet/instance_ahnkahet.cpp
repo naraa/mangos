@@ -26,9 +26,7 @@ EndScriptData */
 #include "ahnkahet.h"
 
 instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
-    //m_bCriteriaVolunteerWork(false),
-    m_bCriteriaRespectYourElders(false),
-    m_uiDevicesActivated(0)
+    m_uiDevicesActivated(0),
 {
     Initialize();
 }
@@ -129,27 +127,6 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA_COMPLETE;
     }
 }
-void instance_ahnkahet::SetAchiev(uint32 uiType, bool get)
-{
-    switch(uiType)
-    {
-        case TYPE_NADOX:
-            m_bCriteriaRespectYourElders = get;
-            break;
-        case TYPE_TALDARAM:
-            break;
-        //case TYPE_JEDOGA:
-          //  m_bCriteriaVolunteerWork = get;
-          //  break;
-        case TYPE_VOLAZJ:
-            break;
-        case TYPE_AMANITAR:
-            break;
-        default:
-            break;
-    }
-}
-
 
 void instance_ahnkahet::Load(const char* chrIn)
 {
@@ -189,20 +166,6 @@ uint32 instance_ahnkahet::GetData(uint32 uiType)
     }
     return 0;
 }
- 
-bool instance_ahnkahet::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
-{
-    switch (uiCriteriaId)
-    {
-        //case ACHIEV_CRITERIA_VOLUNTEER_WORK:
-          //  return m_bCriteriaVolunteerWork;
-        case ACHIEV_CRITERIA_RESPECT_YOUR_ELDERS:
-            return m_bCriteriaRespectYourElders;
-        default:
-            return 0;
-    }
-}
-
 
 InstanceData* GetInstanceData_instance_ahnkahet(Map* pMap)
 {

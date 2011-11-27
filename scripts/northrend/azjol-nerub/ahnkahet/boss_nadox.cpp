@@ -80,12 +80,14 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
         m_uiBroodPlagueTimer = 15000;
         m_uiBroodRageTimer = 20000;
         m_creature->SetRespawnDelay(DAY);
-
         if (m_pInstance)
-        {
-            m_pInstance->SetData(TYPE_NADOX,NOT_STARTED);
-            m_pInstance->SetAchiev(TYPE_NADOX, true);
-        }
+            m_pInstance->SetData(TYPE_NADOX, NOT_STARTED);
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_NADOX, FAIL);
     }
 
     void Aggro(Unit* pWho)
@@ -222,8 +224,6 @@ struct MANGOS_DLL_DECL mob_nadox_guardianAI : public ScriptedAI
 
     void JustDied(Unit* pKiller)
     {
-        if (m_pInstance)
-            m_pInstance->SetAchiev(TYPE_NADOX, false);
     }
 
     void UpdateAI(const uint32 uiDiff)

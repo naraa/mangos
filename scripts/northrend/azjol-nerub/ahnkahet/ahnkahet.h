@@ -12,7 +12,8 @@
  * Herald Volazj       = 4
  * Amanitar            = 5
 */
-enum
+
+enum AhnkahetInstance
 {
     MAX_ENCOUNTER           = 5,
 
@@ -54,10 +55,8 @@ class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         void SetData(uint32 uiType, uint32 uiData);
-        void SetAchiev(uint32 uiType, bool get);
-        uint32 GetData(uint32 uiType);
 
-        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        uint32 GetData(uint32 uiType);
 
         const char* Save() { return strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -65,9 +64,6 @@ class MANGOS_DLL_DECL instance_ahnkahet : public ScriptedInstance
     protected:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string strInstData;
-
-        bool   m_bCriteriaVolunteerWork;
-        bool   m_bCriteriaRespectYourElders;
 
         uint8  m_uiDevicesActivated;
 };
