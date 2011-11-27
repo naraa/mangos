@@ -24,6 +24,7 @@ EndScriptData */
 /* ContentData
 npcs_ashyen_and_keleth
 npc_cooshcoosh
+npc_elder_kuruti
 npc_kayra_longmane
 event_stormcrow
 EndContentData */
