@@ -40,8 +40,7 @@ enum
     EMOTE_IMPALED              = -1604030,
 
     ACHIEVEMENT_WHAT_THE_ECK   = 1864,
-    AURA_ECK_RESIDUE           = 55817,
-    ACHIEVEMENT_SHARE_THE_LOVE = 2152,   /// Defeat Gal'darah in Gundrak on Heroic Difficulty and have 5 unique party members get impaled throughout the fight.
+    ACHIEVEMENT_SHARE_THE_LOVE = 2152,
 
     NPC_RHINO_SPIRIT           = 29791,
     SPELL_STAMPEDE_RHINO       = 55220,
@@ -131,17 +130,6 @@ struct MANGOS_DLL_DECL boss_galdarahAI : public ScriptedAI
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_GALDARAH, DONE);
-
-        if (pKiller->HasAura(AURA_ECK_RESIDUE) && !m_bIsRegularMode)
-        {
-            Map* pMap = m_creature->GetMap();
-            if (pMap && pMap->IsDungeon())
-            {
-                Map::PlayerList const &players = pMap->GetPlayers();
-                for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-                itr->getSource()->CompletedAchievement(ACHIEVEMENT_WHAT_THE_ECK);
-            }
-        }
     }
 
     void JustSummoned(Creature* pSummoned)
