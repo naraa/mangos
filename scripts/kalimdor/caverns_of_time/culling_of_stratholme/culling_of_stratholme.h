@@ -137,7 +137,9 @@ enum Data
     NPC_OLIVIA_ZENITH               = 31020,
 
     RIGHT               = 1,
-    LEFT                = 2
+    LEFT                = 2,
+
+    ACHIEVEMENT_THE_CULLING_OF_TIME_H  = 1817,
 };
 
 #endif
