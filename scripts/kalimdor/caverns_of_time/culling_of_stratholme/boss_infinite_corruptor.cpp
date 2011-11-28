@@ -61,19 +61,6 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BONUS, DONE);
-
-///-> ACHIEV NEEDS TO ONLY BE IN HEROIC SUPPORT
-///-> UNCOMMENT WHEN HEROIC SUPPORT IS IMPLENTED
-        //if (!m_bIsRegularMode)
-        //{
-            Map* pMap = m_creature->GetMap();
-            if (pMap && pMap->IsDungeon())
-            {
-                Map::PlayerList const &players = pMap->GetPlayers();
-                for (Map::PlayerList::const_iterator itr = players.begin(); itr != players.end(); ++itr)
-                    itr->getSource()->CompletedAchievement(ACHIEVEMENT_THE_CULLING_OF_TIME_H);
-            }
-        //}
     }
 
     void KilledUnit(Unit* pVictim)
