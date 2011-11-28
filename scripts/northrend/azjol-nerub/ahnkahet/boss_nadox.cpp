@@ -133,7 +133,7 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
         if (!m_bIsRegularMode)
         {
             if (m_uiDeadGuardianCount == 0)
-            {
+		    {
                 Map* pMap = m_creature->GetMap();
                 if (pMap && pMap->IsDungeon())
                 {
@@ -147,8 +147,8 @@ struct MANGOS_DLL_DECL boss_nadoxAI : public ScriptedAI
 
     void SummonedCreatureJustDied(Creature* pSummoned)
     {
-        if (pSummoned->GetEntry() == NPC_AHNKAHAR_GUARDIAN)
-            m_uiDeadGuardianCount++;
+		if (pSummoned->GetEntry() == NPC_AHNKAHAR_GUARDIAN)
+			m_uiDeadGuardianCount++;			
     }
 
     void UpdateAI(const uint32 uiDiff)
