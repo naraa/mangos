@@ -437,25 +437,6 @@ bool GOHello_go_sa_def_portal(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
-bool GOHello_go_sa_bomb(Player* pPlayer, GameObject* pGo)
-{
-    if (!pPlayer || !pGo)
-        return false;
-
-    if (pPlayer->GetMapId() == 607)
-    {
-        if (BattleGround *bg = pPlayer->GetBattleGround())
-        {
-            if (pPlayer->GetTeam() != bg->GetDefender())
-            {
-                pPlayer->CastSpell(pPlayer, 52415, false);
-                pGo->Delete();
-            }
-        }
-    }
-    return true;
-}
-
 void AddSC_battlegroundSA()
 {
     Script *pNewScript;
@@ -482,10 +463,5 @@ void AddSC_battlegroundSA()
     pNewScript = new Script;
     pNewScript->Name = "go_sa_def_portal";
     pNewScript->pGOUse = &GOHello_go_sa_def_portal;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name="go_sa_bomb";
-    pNewScript->pGOUse = &GOHello_go_sa_bomb;
     pNewScript->RegisterSelf();
 }
