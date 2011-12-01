@@ -13730,7 +13730,7 @@ void Player::PrepareGossipMenu(WorldObject *pSource, uint32 menuId)
 
     if (canTalkToCredit)
     {
-        if (pSource->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP))
+        if (pSource->HasFlag(UNIT_NPC_FLAGS, UNIT_NPC_FLAG_GOSSIP) && !(((Creature*)pSource)->GetCreatureInfo()->flags_extra & CREATURE_FLAG_EXTRA_NO_TALKTO_CREDIT))
             TalkedToCreature(pSource->GetEntry(), pSource->GetObjectGuid());
     }
 
@@ -13781,7 +13781,7 @@ void Player::SendPreparedGossip(WorldObject *pSource)
     uint32 textId = GetGossipTextId(pSource);
 
     if (uint32 menuId = PlayerTalkClass->GetGossipMenu().GetMenuId())
-        textId = GetGossipTextId(menuId);
+        textId = GetGossipTextId(menuId, pSource);
 
     PlayerTalkClass->SendGossipMenu(textId, pSource->GetObjectGuid());
 }
@@ -13934,7 +13934,7 @@ uint32 Player::GetGossipTextId(WorldObject *pSource)
     return DEFAULT_GOSSIP_MESSAGE;
 }
 
-uint32 Player::GetGossipTextId(uint32 menuId)
+uint32 Player::GetGossipTextId(uint32 menuId, WorldObject* pSource)
 {
     uint32 textId = DEFAULT_GOSSIP_MESSAGE;
 
@@ -13948,6 +13948,10 @@ uint32 Player::GetGossipTextId(uint32 menuId)
         if (sObjectMgr.IsPlayerMeetToCondition(this, itr->second.cond_1) && sObjectMgr.IsPlayerMeetToCondition(this, itr->second.cond_2))
         {
             textId = itr->second.text_id;
+
+            // Start related script
+            if (itr->second.script_id)
+                GetMap()->ScriptsStart(sGossipScripts, itr->second.script_id, this, pSource);
             break;
         }
     }
@@ -16165,11 +16169,13 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
 
     _LoadBGData(holder->GetResult(PLAYER_LOGIN_QUERY_LOADBGDATA));
 
+    bool player_at_bg = false;
+
     if (m_bgData.bgInstanceID)                              //saved in BattleGround
     {
         BattleGround *currentBg = sBattleGroundMgr.GetBattleGround(m_bgData.bgInstanceID, BATTLEGROUND_TYPE_NONE);
 
-        bool player_at_bg = currentBg && currentBg->IsPlayerInBattleGround(GetObjectGuid());
+        player_at_bg = currentBg && currentBg->IsPlayerInBattleGround(GetObjectGuid());
 
         if (player_at_bg && currentBg->GetStatus() != STATUS_WAIT_LEAVE)
         {
@@ -16188,7 +16194,10 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
         {
             // leave bg
             if (player_at_bg)
+            {
                 currentBg->RemovePlayerAtLeave(GetObjectGuid(), false, true);
+                player_at_bg = false;
+            }
 
             // move to bg enter point
             const WorldLocation& _loc = GetBattleGroundEntryPoint();
@@ -16293,8 +16302,8 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
     // load the player's map here if it's not already loaded
     SetMap(sMapMgr.CreateMap(GetMapId(), this));
 
-    // if the player is in an instance and it has been reset in the meantime teleport him to the entrance
-    if (GetInstanceId() && !state)
+    // if the player not at BG and is in an instance and it has been reset in the meantime teleport him to the entrance
+    if (!player_at_bg && GetInstanceId() && !state)
     {
         AreaTrigger const* at = sObjectMgr.GetMapEntranceTrigger(GetMapId());
         if (at)
@@ -17650,7 +17659,7 @@ void Player::_LoadBoundInstances(QueryResult *result)
 
             // since non permanent binds are always solo bind, they can always be reset
             DungeonPersistentState *state = (DungeonPersistentState*)sMapPersistentStateMgr.AddPersistentState(mapEntry, instanceId, Difficulty(difficulty), resetTime, !perm, true);
-            if (state) 
+            if (state)
                 BindToInstance(state, perm, true, extend);
         } while(result->NextRow());
         delete result;

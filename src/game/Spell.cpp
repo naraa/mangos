@@ -1709,6 +1709,7 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 31347:                                 // Doom TODO: exclude top threat target from target selection
                 case 33711:                                 // Murmur's Touch
                 case 38794:                                 // Murmur's Touch (h)
+                case 44869:                                 // Spectral Blast
                 case 45976:                                 // Open Portal
                 case 48278:                                 // Paralyze (Utgarde Pinnacle)
                 case 50988:                                 // Glare of the Tribunal (Halls of Stone)
@@ -1716,6 +1717,7 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 55479:                                 // Forced Obedience (Naxxramas - Razovius encounter)
                 case 59870:                                 // Glare of the Tribunal (h) (Halls of Stone)
                 case 62016:                                 // Charge Orb (Thorim)
+                case 62301:                                 // Cosmic Smash (Algalon)
                 case 62488:                                 // Activate Construct (Ulduar - Ignis encounter)
                 case 63018:                                 // Searing Light nonhero
                 case 63024:                                 // Gravity Bomb (XT-002)
@@ -1778,6 +1780,7 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 60936:                                 // Surge of Power (h) (Malygos)
                 case 61693:                                 // Arcane Storm (Malygos) (N)
                 case 62477:                                 // Icicle (Hodir 25man)
+                case 64598:                                 // Cosmic Smash (Algalon 25man) 
                 case 69055:                                 // Bone Slice (Icecrown Citadel, Lord Marrowgar, normal)
                 case 70814:                                 // Bone Slice (Icecrown Citadel, Lord Marrowgar, heroic)
                 case 73143:                                 // Bone Spike Graveyard (during Bone Storm) (Icecrown Citadel, Lord Marrowgar encounter, 25N)
@@ -6405,6 +6408,28 @@ SpellCastResult Spell::CheckCast(bool strict)
 
                 break;
             }
+            case SPELL_AURA_CONTROL_VEHICLE:
+            {
+                Unit* pTarget = m_targets.getUnitTarget();
+
+                if (!pTarget || !pTarget->GetVehicleKit())
+                    return SPELL_FAILED_BAD_TARGETS;
+
+                int32 seat = m_spellInfo->EffectApplyAuraName[i] < 8 ? m_spellInfo->EffectApplyAuraName[i] : -1;
+
+                if (!pTarget->GetVehicleKit()->HasEmptySeat(seat))
+                {
+                    if (seat == -1)
+                        return SPELL_FAILED_BAD_TARGETS;
+
+                    if (!seat && m_caster->GetTypeId() == TYPEID_PLAYER && !pTarget->GetVehicleKit()->HasEmptySeat(-1))
+                        return SPELL_FAILED_BAD_TARGETS;
+
+                    if (m_caster->GetTypeId() != TYPEID_PLAYER)
+                        return SPELL_FAILED_BAD_TARGETS;
+                }
+                break;
+            }
             default:
                 break;
         }
@@ -6436,7 +6461,7 @@ SpellCastResult Spell::CheckCast(bool strict)
     }
 
     // check LOS for ground targeted spells
-    if (!m_targets.getUnitTarget() && !m_targets.getGOTarget() && !m_targets.getItemTarget())
+    if (!(m_spellInfo->AttributesEx2 & SPELL_ATTR_EX2_IGNORE_LOS) && !m_targets.getUnitTarget() && !m_targets.getGOTarget() && !m_targets.getItemTarget())
     {
         if (m_targets.m_destX && m_targets.m_destY && m_targets.m_destZ && !m_caster->IsWithinLOS(m_targets.m_destX, m_targets.m_destY, m_targets.m_destZ))
             return SPELL_FAILED_LINE_OF_SIGHT;
@@ -8560,8 +8585,7 @@ bool Spell::FillCustomTargetMap(SpellEffectIndex i, UnitList &targetUnitMap)
         case 67860:
         {
             m_caster->CastSpell(m_caster, 66181, true);
-            m_targets.setDestination(m_caster->GetPositionX(), m_caster->GetPositionY(), m_caster->GetPositionZ());
-            SetTargetMap(SpellEffectIndex(i), m_spellInfo->EffectImplicitTargetB[i], targetUnitMap);
+            FillAreaTargets(targetUnitMap, radius, PUSH_DEST_CENTER, SPELL_TARGETS_AOE_DAMAGE);
             break;
         }
         case 67470: // Pursuing Spikes (Check Aura and Summon Spikes) (Trial Of The Crusader - Anub'arak)

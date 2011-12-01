@@ -99,7 +99,7 @@ pAuraHandler AuraHandler[TOTAL_AURAS]=
     &Aura::HandleAuraTrackResources,                        // 45 SPELL_AURA_TRACK_RESOURCES
     &Aura::HandleUnused,                                    // 46 SPELL_AURA_46 (used in test spells 54054 and 54058, and spell 48050) (3.0.8a-3.2.2a)
     &Aura::HandleAuraModParryPercent,                       // 47 SPELL_AURA_MOD_PARRY_PERCENT
-    &Aura::HandleNULL,                                      // 48 SPELL_AURA_48 spell Napalm (area damage spell with additional delayed damage effect)
+    &Aura::HandleNoImmediateEffect,                         // 48 SPELL_AURA_PERIODIC_TRIGGER_BY_CLIENT (Client periodic trigger spell by self (3 spells in 3.3.5a)). implemented in pet/player cast chains.
     &Aura::HandleAuraModDodgePercent,                       // 49 SPELL_AURA_MOD_DODGE_PERCENT
     &Aura::HandleNoImmediateEffect,                         // 50 SPELL_AURA_MOD_CRITICAL_HEALING_AMOUNT implemented in Unit::SpellCriticalHealingBonus
     &Aura::HandleAuraModBlockPercent,                       // 51 SPELL_AURA_MOD_BLOCK_PERCENT
@@ -9159,7 +9159,7 @@ void Aura::PeriodicDummyTick()
 
                     if (InstanceData* data = target->GetInstanceData())
                     {
-                        if (Creature* pSpike = target->GetMap()->GetCreature(data->GetData64(34660)))
+                        if (Creature* pSpike = target->GetMap()->GetCreature(data->GetGuid(34660)))
                             pSpike->AddThreat(target, 1000000.0f);
                     }
                     return;
@@ -9534,14 +9534,23 @@ void Aura::HandleAuraControlVehicle(bool apply, bool Real)
 
         // TODO: find a way to make this work properly
         // some spells seem like store vehicle seat info in basepoints, but not true for all of them, so... ;/
-        // int8 seat = target->GetVehicleKit()->HasEmptySeat(GetModifier()->m_amount) ? GetModifier()->m_amount : -1;
-        // caster->EnterVehicle(target->GetVehicleKit(), seat);
+        int32 seat = -1;
 
-        int8 seat = -1;
+        switch (GetId())
+        {
+// values below - from Michalpolko implementation, but i not sure in this...
+//            case 62708:
+//            case 62711:
+//                seat = GetModifier()->m_amount;
+//                break;
+            default:
+                if (GetModifier()->m_amount <= MAX_VEHICLE_SEAT)
+                    seat = GetModifier()->m_amount - 1;
+                break;
+        }
 
-        // Slag Pot (2 seats: hand and the pot)
-        if (GetId() == 62708 || GetId() == 62711)
-            seat = GetModifier()->m_amount;
+        if (caster->GetTypeId() == TYPEID_PLAYER && !target->GetVehicleKit()->HasEmptySeat(seat))
+            seat = -1;
 
         caster->EnterVehicle(target->GetVehicleKit(), seat);
     }
