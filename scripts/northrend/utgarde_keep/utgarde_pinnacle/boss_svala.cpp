@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Boss_Svala
 SD%Complete: 30%
-SDComment: TODO: abilities. The way spells for intro works could use more research.
+SDComment: The way spells for intro works could use more research.
 SDCategory: Utgarde Pinnacle
 EndScriptData */
 
@@ -45,6 +45,8 @@ enum
 
     NPC_SVALA_SORROW            = 26668,
     NPC_ARTHAS_IMAGE            = 29280,
+    NPC_RITUAL_TARGET           = 27327,
+    NPC_PARALYSER               = 27281,
 
     SPELL_ARTHAS_VISUAL         = 54134,
 
@@ -56,7 +58,9 @@ enum
     SPELL_RITUAL_OF_SWORD       = 48276,
     SPELL_CALL_FLAMES           = 48258,
     SPELL_SINISTER_STRIKE       = 15667,
-    SPELL_SINISTER_STRIKE_H     = 59409
+    SPELL_SINISTER_STRIKE_H     = 59409,
+
+    SPELL_PARALYZE              = 48278,
 };
 
 /*######
@@ -67,27 +71,35 @@ struct MANGOS_DLL_DECL boss_svalaAI : public ScriptedAI
 {
     boss_svalaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_pinnacle*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         m_bIsIntroDone = false;
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_pinnacle* m_pInstance;
     bool m_bIsRegularMode;
 
-    Creature* pArthas;
+    ObjectGuid ArthasGuid;
 
     bool m_bIsIntroDone;
     uint32 m_uiIntroTimer;
     uint32 m_uiIntroCount;
 
+    uint32 m_uiSinisterStrike;
+    uint32 m_uiCallFlamesTimer;
+    uint32 m_uiMoveToTarget;
+    float m_uiRitualPercent;
+
     void Reset()
     {
-        pArthas = NULL;
-
         m_uiIntroTimer = 2500;
         m_uiIntroCount = 0;
+
+        m_uiSinisterStrike = 2000;
+        m_uiCallFlamesTimer = urand(10000, 15000);
+        m_uiMoveToTarget = 0;
+        m_uiRitualPercent = 75;
 
         if (m_creature->isAlive() && m_pInstance && m_pInstance->GetData(TYPE_SVALA) > IN_PROGRESS)
         {
@@ -128,7 +140,7 @@ struct MANGOS_DLL_DECL boss_svalaAI : public ScriptedAI
 
     void Aggro(Unit* pWho)
     {
-        m_creature->SetLevitate(false);
+        //m_creature->SetLevitate(false);
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
@@ -137,22 +149,16 @@ struct MANGOS_DLL_DECL boss_svalaAI : public ScriptedAI
         if (pSummoned->GetEntry() == NPC_ARTHAS_IMAGE)
         {
             pSummoned->CastSpell(pSummoned, SPELL_ARTHAS_VISUAL, true);
-            pArthas = pSummoned;
+            ArthasGuid = pSummoned->GetObjectGuid();
             pSummoned->SetFacingToObject(m_creature);
         }
-    }
-
-    void SummonedCreatureDespawn(Creature* pDespawned)
-    {
-        if (pDespawned->GetEntry() == NPC_ARTHAS_IMAGE)
-            pArthas = NULL;
     }
 
     void SpellHit(Unit* pCaster, const SpellEntry* pSpell)
     {
         if (pSpell->Id == SPELL_TRANSFORMING)
         {
-            if (pArthas)
+            if (Creature* pArthas = m_creature->GetMap()->GetCreature(ArthasGuid))
                 pArthas->InterruptNonMeleeSpells(true);
 
             m_creature->UpdateEntry(NPC_SVALA_SORROW);
@@ -193,48 +199,76 @@ struct MANGOS_DLL_DECL boss_svalaAI : public ScriptedAI
             if (m_bIsIntroDone)
                 return;
 
-            if (pArthas && pArthas->isAlive())
+            if (Creature* pArthas = m_creature->GetMap()->GetCreature(ArthasGuid))
             {
-                if (m_uiIntroTimer < uiDiff)
+                if (pArthas->isAlive())
                 {
-                    m_uiIntroTimer = 10000;
-
-                    switch(m_uiIntroCount)
+                    if (m_uiIntroTimer < uiDiff)
                     {
-                        case 0:
-                            DoScriptText(SAY_INTRO_1, m_creature);
-                            break;
-                        case 1:
-                            DoScriptText(SAY_INTRO_2_ARTHAS, pArthas);
-                            break;
-                        case 2:
-                            pArthas->CastSpell(m_creature, SPELL_TRANSFORMING_CHANNEL, false);
-                            m_creature->CastSpell(m_creature, SPELL_TRANSFORMING_FLOATING, false);
-                            DoMoveToPosition();
-                            break;
-                        case 3:
-                            m_creature->CastSpell(m_creature, SPELL_TRANSFORMING, false);
-                            DoScriptText(SAY_INTRO_3, m_creature);
-                            break;
-                        case 4:
-                            DoScriptText(SAY_INTRO_4_ARTHAS, pArthas);
-                            break;
-                        case 5:
-                            DoScriptText(SAY_INTRO_5, m_creature);
-                            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                            m_bIsIntroDone = true;
-                            break;
-                    }
+                        m_uiIntroTimer = 10000;
 
-                    ++m_uiIntroCount;
+                        switch(m_uiIntroCount)
+                        {
+                            case 0:
+                                DoScriptText(SAY_INTRO_1, m_creature);
+                                break;
+                            case 1:
+                                DoScriptText(SAY_INTRO_2_ARTHAS, pArthas);
+                                break;
+                            case 2:
+                                pArthas->CastSpell(m_creature, SPELL_TRANSFORMING_CHANNEL, false);
+                                m_creature->CastSpell(m_creature, SPELL_TRANSFORMING_FLOATING, false);
+                                DoMoveToPosition();
+                                break;
+                            case 3:
+                                m_creature->CastSpell(m_creature, SPELL_TRANSFORMING, false);
+                                DoScriptText(SAY_INTRO_3, m_creature);
+                                break;
+                            case 4:
+                                DoScriptText(SAY_INTRO_4_ARTHAS, pArthas);
+                                break;
+                            case 5:
+                                DoScriptText(SAY_INTRO_5, m_creature);
+                                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                                m_creature->RemoveAurasDueToSpell(SPELL_TRANSFORMING_FLOATING);
+                                m_bIsIntroDone = true;
+                                break;
+                        }
+
+                        ++m_uiIntroCount;
+                    }
+                    else
+                        m_uiIntroTimer -= uiDiff;
                 }
-                else
-                    m_uiIntroTimer -= uiDiff;
             }
 
             return;
         }
 
+        if (m_uiSinisterStrike < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SINISTER_STRIKE : SPELL_SINISTER_STRIKE_H) == CAST_OK)
+                m_uiSinisterStrike = urand(5000, 7000);
+        }
+        else
+            m_uiSinisterStrike -= uiDiff;
+
+        if(m_uiCallFlamesTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_CALL_FLAMES) == CAST_OK)
+                m_uiCallFlamesTimer = urand(10000, 15000);
+        }
+        else
+            m_uiCallFlamesTimer -= uiDiff;
+
+        if (m_creature->GetHealthPercent() < m_uiRitualPercent)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_RITUAL_OF_SWORD) == CAST_OK)
+            {
+                m_uiRitualPercent -= 25.0f;
+            }
+        }
+        
         DoMeleeAttackIfReady();
     }
 };
@@ -243,15 +277,82 @@ CreatureAI* GetAI_boss_svala(Creature* pCreature)
 {
     return new boss_svalaAI(pCreature);
 }
+struct MANGOS_DLL_DECL npc_paralyzerAI : public ScriptedAI
+{
+    npc_paralyzerAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_pinnacle*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+
+    instance_pinnacle* m_pInstance;
+    bool m_bIsRegularMode;
+
+    uint32 spellTimer;
+
+    void Reset()
+    {
+        spellTimer = 200;
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (spellTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature, SPELL_PARALYZE) == CAST_OK)
+                spellTimer = 40000;
+        }
+        else
+            spellTimer -= uiDiff;
+    }
+};
+
+CreatureAI* GetAI_npc_paralyzer(Creature* pCreature)
+{
+    return new npc_paralyzerAI(pCreature);
+}
+
+struct MANGOS_DLL_DECL npc_ritual_targetAI : public ScriptedAI
+{
+    npc_ritual_targetAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    void AttackStart(Unit* pWho){}
+
+    void Reset(){}
+
+    void UpdateAI(const uint32 uiDiff){}
+};
+
+
+
+CreatureAI* GetAI_ritual_target(Creature* pCreature)
+{
+    return new npc_ritual_targetAI(pCreature);
+}
+
 
 bool AreaTrigger_at_svala_intro(Player* pPlayer, AreaTriggerEntry const* pAt)
 {
-    if (ScriptedInstance* pInstance = (ScriptedInstance*)pPlayer->GetInstanceData())
+    if (instance_pinnacle* pInstance = (instance_pinnacle*)pPlayer->GetInstanceData())
     {
         if (pInstance->GetData(TYPE_SVALA) == NOT_STARTED)
             pInstance->SetData(TYPE_SVALA, IN_PROGRESS);
     }
 
+    return false;
+}
+
+bool ProcessEventId_event_call_flames(uint32 uiEventId, Object* pSource, Object* pTarget, bool bIsStart)
+{
+    if (instance_pinnacle* pInstance = (instance_pinnacle*)((Creature*)pSource)->GetInstanceData())
+    {
+        pInstance->DoProcessCallFlamesEvent();
+        return true;
+    }
     return false;
 }
 
@@ -265,7 +366,22 @@ void AddSC_boss_svala()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
+    pNewScript->Name = "npc_paralyzer";
+    pNewScript->GetAI = &GetAI_npc_paralyzer;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_ritual_target";
+    pNewScript->GetAI = &GetAI_ritual_target;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
     pNewScript->Name = "at_svala_intro";
     pNewScript->pAreaTrigger = &AreaTrigger_at_svala_intro;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "event_call_flames";
+    pNewScript->pProcessEventId = &ProcessEventId_event_call_flames;
     pNewScript->RegisterSelf();
 }

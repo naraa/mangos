@@ -32,6 +32,8 @@ instance_pinnacle::instance_pinnacle(Map* pMap) : ScriptedInstance(pMap)
 void instance_pinnacle::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+    for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+        m_abAchievCriteria[i] = false;
 }
 
 void instance_pinnacle::OnObjectCreate(GameObject* pGo)
@@ -41,11 +43,38 @@ void instance_pinnacle::OnObjectCreate(GameObject* pGo)
         case GO_DOOR_SKADI:
             if (m_auiEncounter[TYPE_SKADI] == DONE)
                 pGo->SetGoState(GO_STATE_ACTIVE);
-            m_mGoEntryGuidStore[GO_DOOR_SKADI] = pGo->GetObjectGuid();
             break;
+        case GO_DOOR_AFTER_YMIRON:
+            break;
+        default:
+            return;
     }
+    m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
+void instance_pinnacle::OnCreatureCreate(Creature* pCreature)
+{
+    switch(pCreature->GetEntry())
+    {
+        case NPC_GRAUF:
+        case NPC_SKADI:
+        case NPC_YMIRON:
+        case NPC_FURBOLG:
+        case NPC_WORGEN:
+        case NPC_JORMUNGAR:
+        case NPC_RHINO:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            break;
+        case NPC_FLAME_BRAZIER:
+            m_lFlameBraziersList.push_back(pCreature->GetObjectGuid());
+            break;
+        case NPC_FLAME_BREATH_TRIGGER:
+        {
+            m_lFlameBreathTrigger.push_back(pCreature->GetObjectGuid());
+            break;
+        }
+    }
+}
 void instance_pinnacle::SetData(uint32 uiType, uint32 uiData)
 {
     switch (uiType)
@@ -55,8 +84,35 @@ void instance_pinnacle::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_GORTOK:
             m_auiEncounter[uiType] = uiData;
+            if (uiData == FAIL)
+            {
+                if (Creature* pFurbolg = GetSingleCreatureFromStorage(NPC_FURBOLG))
+                {
+                    pFurbolg->Respawn();
+                    pFurbolg->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                }
+                if (Creature* pWorg = GetSingleCreatureFromStorage(NPC_WORGEN))
+                {
+                    pWorg->Respawn();
+                    pWorg->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                }
+                if (Creature* pJormungar = GetSingleCreatureFromStorage(NPC_JORMUNGAR))
+                {
+                    pJormungar->Respawn();
+                    pJormungar->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                }
+                if (Creature* pRhino = GetSingleCreatureFromStorage(NPC_RHINO))
+                {
+                    pRhino->Respawn();
+                    pRhino->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                }
+            }
             break;
         case TYPE_SKADI:
+            if (uiData == IN_PROGRESS)
+            {
+                DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_SKADY_ID);
+            }
             if (uiData == DONE)
                 DoUseDoorOrButton(GO_DOOR_SKADI);
 
@@ -64,6 +120,10 @@ void instance_pinnacle::SetData(uint32 uiType, uint32 uiData)
             break;
         case TYPE_YMIRON:
             m_auiEncounter[uiType] = uiData;
+            if (uiData == DONE)
+            {
+                DoUseDoorOrButton(GO_DOOR_AFTER_YMIRON);
+            }
             break;
         default:
             error_log("SD2: Instance Pinnacle: SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
@@ -93,6 +153,43 @@ uint32 instance_pinnacle::GetData(uint32 uiType)
     return 0;
 }
 
+void instance_pinnacle::OnCreatureDeath(Creature * pCreature)
+{
+    if (pCreature->GetEntry() == NPC_SCOURGE_HULK)
+    {
+        if (pCreature->HasAura(SPELL_AURA_RITUAL_STRIKE))
+        {
+            m_abAchievCriteria[TYPE_ACHIEV_THE_INCREDIBLE_HULK] = true;
+        }
+    }
+}
+
+bool instance_pinnacle::CheckAchievementCriteriaMeet(uint32 criteria_id, Player const* source, Unit const* target, uint32 miscvalue1)
+{
+    switch(criteria_id)
+    {
+        case ACHIEV_CRIT_KINGS_BANE:
+        {
+            return m_abAchievCriteria[TYPE_ACHIEV_KINGS_BANE];
+        }
+        case ACHIEV_CRIT_THE_INCREDIBLE_HULK:
+        {
+            return m_abAchievCriteria[TYPE_ACHIEV_THE_INCREDIBLE_HULK];
+        }
+        case ACHIEV_CRIT_MY_GIRL_LOVES_SKADI_ALL_THE_TIME:
+        {
+            return m_abAchievCriteria[TYPE_ACHIEV_MY_GIRL_LOVES_SKADI_ALL_THE_TIME];
+        }
+    }
+    return false;
+}
+
+void instance_pinnacle::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
+{
+    if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
+        m_abAchievCriteria[uiType] = bIsMet;
+}
+
 void instance_pinnacle::Load(const char* chrIn)
 {
     if (!chrIn)
@@ -113,6 +210,25 @@ void instance_pinnacle::Load(const char* chrIn)
     }
 
     OUT_LOAD_INST_DATA_COMPLETE;
+}
+
+
+void instance_pinnacle::DoProcessCallFlamesEvent()
+{
+    for (GUIDList::const_iterator itr = m_lFlameBraziersList.begin(); itr != m_lFlameBraziersList.end(); ++itr)
+    {
+        if (Creature* pFlame = instance->GetCreature(*itr))
+            pFlame->CastSpell(pFlame, SPELL_BALL_OF_FLAME, true);
+    }
+}
+
+void instance_pinnacle::DoMakeFreezingCloud()
+{
+    for (GUIDList::const_iterator itr = m_lFlameBreathTrigger.begin(); itr != m_lFlameBreathTrigger.end(); ++itr)
+    {
+        if (Creature* pFlame = instance->GetCreature(*itr))
+            pFlame->CastSpell(pFlame, SPELL_FREEZING_CLOUD, true);
+    }
 }
 
 InstanceData* GetInstanceData_instance_pinnacle(Map* pMap)
