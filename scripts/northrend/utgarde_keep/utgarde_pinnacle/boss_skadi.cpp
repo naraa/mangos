@@ -30,6 +30,7 @@ trigger mob should use summon spells
 #include "precompiled.h"
 #include "utgarde_pinnacle.h"
 #include "Vehicle.h"
+#include "MotionMaster.h"
 
 enum
 {
@@ -183,7 +184,7 @@ struct MANGOS_DLL_DECL boss_skadiAI : public ScriptedAI
                 break;
             case SKADI:
             {
-                
+
                 if (m_uiCrush < uiDiff)
                 {
                     if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_CRUSH : SPELL_CRUSH_H) == CAST_OK)
@@ -231,7 +232,7 @@ struct boss_skadi_graufAI : public ScriptedAI
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         SetCombatMovement(false);
     }
-      
+
     instance_pinnacle* m_pInstance;
     VehicleKit* vehicle;
     bool m_bIsRegularMode;
@@ -374,7 +375,7 @@ struct boss_skadi_graufAI : public ScriptedAI
             if (uiMovementTimer < uiDiff)
             {
                 m_creature->GetMotionMaster()->Clear();
-                m_creature->GetMotionMaster()->MovePoint(uiWaypointId, FlightPosition[uiWaypointId].x, FlightPosition[uiWaypointId].y, FlightPosition[uiWaypointId].z, false);
+                m_creature->GetMotionMaster()->MovePoint(uiWaypointId, FlightPosition[uiWaypointId].x, FlightPosition[uiWaypointId].y, FlightPosition[uiWaypointId].z);
                 uiMovementTimer = 20000;
             }
             else

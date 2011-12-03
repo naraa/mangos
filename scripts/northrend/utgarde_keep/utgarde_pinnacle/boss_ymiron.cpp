@@ -23,6 +23,7 @@
 
 #include "precompiled.h"
 #include "utgarde_pinnacle.h"
+#include "MotionMaster.h"
 
 enum
 {
@@ -257,7 +258,7 @@ struct MANGOS_DLL_DECL boss_ymironAI: public ScriptedAI
                     ghost = GetNextActiveBoot();
                     DoScriptText(ActiveBot[ghost-1].say, m_creature);
                     m_creature->GetMotionMaster()->Clear();
-                    m_creature->GetMotionMaster()->MovePoint(0, ActiveBot[ghost-1].MoveX, ActiveBot[ghost-1].MoveY, ActiveBot[ghost-1].MoveZ, true);
+                    m_creature->GetMotionMaster()->MovePoint(0, ActiveBot[ghost-1].MoveX, ActiveBot[ghost-1].MoveY, ActiveBot[ghost-1].MoveZ);
                 }
             }
 
