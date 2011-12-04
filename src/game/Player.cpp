@@ -16207,7 +16207,7 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
             // We are not in BG anymore
             SetBattleGroundId(0, BATTLEGROUND_TYPE_NONE);
             // remove outdated DB data in DB
-            _SaveBGData();
+            _SaveBGData(true);
         }
     }
     else
@@ -16224,8 +16224,11 @@ bool Player::LoadFromDB(ObjectGuid guid, SqlQueryHolder *holder )
             // We are not in BG anymore
             SetBattleGroundId(0, BATTLEGROUND_TYPE_NONE);
             // remove outdated DB data in DB
-            _SaveBGData();
+            _SaveBGData(true);
         }
+        // Cleanup LFG BG data, if char not in dungeon.
+        else if (!mapEntry->IsDungeon())
+            _SaveBGData(true);
     }
 
     if (transGUID != 0)
@@ -21995,7 +21998,8 @@ void Player::SetClientControl(Unit* target, uint8 allowMove)
     WorldPacket data(SMSG_CLIENT_CONTROL_UPDATE, target->GetPackGUID().size()+1);
     data << target->GetPackGUID();
     data << uint8(allowMove);
-    GetSession()->SendPacket(&data);
+    if (GetSession())
+        GetSession()->SendPacket(&data);
 }
 
 void Player::UpdateZoneDependentAuras()
@@ -23576,10 +23580,12 @@ void Player::_SaveEquipmentSets()
     }
 }
 
-void Player::_SaveBGData()
+void Player::_SaveBGData(bool forceClean)
 {
+    if (forceClean)
+        m_bgData = BGData();
     // nothing save
-    if (!m_bgData.m_needSave)
+    else if (!m_bgData.m_needSave)
         return;
 
     static SqlStatementID delBGData ;
@@ -24245,6 +24251,44 @@ AreaLockStatus Player::GetAreaTriggerLockStatus(AreaTrigger const* at, Difficult
             (isRegularTargetMap &&
             (at->requiredQuestH && !GetQuestRewardStatus(at->requiredQuestH))))
             return AREA_LOCKSTATUS_QUEST_NOT_COMPLETED;
+    }
+
+    uint32 achievCheck = 0;
+    if (difficulty == RAID_DIFFICULTY_10MAN_HEROIC)
+        achievCheck = at->achiev0;
+    else if (difficulty == RAID_DIFFICULTY_25MAN_HEROIC)
+        achievCheck = at->achiev1;
+
+    if (achievCheck)
+    {
+        bool bHasAchiev = false;
+        if (GetAchievementMgr().HasAchievement(achievCheck))
+            bHasAchiev = true;
+        else if (Group* group = GetGroup())
+        {
+            for (GroupReference* itr = group->GetFirstMember(); itr != NULL; itr = itr->next())
+            {
+                Player* member = itr->getSource();
+                if (member && member->IsInWorld())
+                    if (member->GetAchievementMgr().HasAchievement(achievCheck))
+                        bHasAchiev = true;
+            }
+        }
+        if (!bHasAchiev)
+            return AREA_LOCKSTATUS_QUEST_NOT_COMPLETED;
+    }
+
+    // If the map is not created, assume it is possible to enter it.
+    DungeonPersistentState* state = GetBoundInstanceSaveForSelfOrGroup(at->target_mapId);
+    Map* map = sMapMgr.FindMap(at->target_mapId, state ? state->GetInstanceId() : 0);
+
+    if (map && at->combatMode == 1)
+    {
+        if (map->GetInstanceData() && map->GetInstanceData()->IsEncounterInProgress())
+        {
+            DEBUG_LOG("MAP: Player '%s' can't enter instance '%s' while an encounter is in progress.", GetObjectGuid().GetString().c_str(), map->GetMapName());
+            return AREA_LOCKSTATUS_ZONE_IN_COMBAT;
+        }
     }
 
     return AREA_LOCKSTATUS_OK;
