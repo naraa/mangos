@@ -30,6 +30,7 @@ EndScriptData */
 ## go_ic_teleport
 ## npc_ic_vehicle
 ## npc_ic_cannon
+## boss_bg_ioc
 ######*/
 
 #define MAX_PORTALS        15
@@ -42,6 +43,12 @@ enum
     NPC_DEMOLISHER         = 34775,
     NPC_GLAIVE_A           = 34802,
     NPC_GLAIVE_H           = 35273,
+
+    // bosses
+    SPELL_BRUTAL_STRIKE     = 58460,
+    SPELL_RAGE              = 66776,
+    SPELL_DAGGER_THROW      = 67280,
+    SPELL_CRUSHING_LEAP     = 68506,
 };
 
 static float SpawnLocation[MAX_PORTALS][3]=
@@ -292,6 +299,54 @@ bool GossipHello_npc_ic_cannon(Player* pPlayer, Creature* pCreature)
          return true;
 }
 
+struct MANGOS_DLL_DECL boss_bg_iocAI : public ScriptedAI
+{
+    boss_bg_iocAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+    }
+
+    uint32 m_uiBrutalStrikeTimer;
+    uint32 m_uiDaggerThrowTimer;
+
+    void Reset()
+    {
+        m_uiBrutalStrikeTimer = urand(5000, 10000);
+        m_uiDaggerThrowTimer = urand(15000, 20000);
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (m_uiBrutalStrikeTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_TOPAGGRO, 0))
+                DoCast(pTarget, SPELL_BRUTAL_STRIKE);
+            m_uiBrutalStrikeTimer = urand(5000, 10000);
+        }
+        else
+            m_uiBrutalStrikeTimer -= uiDiff;
+
+        if (m_uiDaggerThrowTimer < uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                DoCast(pTarget, SPELL_DAGGER_THROW);
+            m_uiDaggerThrowTimer = urand(15000, 20000);
+        }
+        else
+            m_uiDaggerThrowTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
+    }
+};
+
+CreatureAI* GetAI_boss_bg_ioc(Creature* pCreature)
+{
+    return new boss_bg_iocAI(pCreature);
+}
+
 void AddSC_battlegroundIC()
 {
     Script *pNewScript;
@@ -311,5 +366,10 @@ void AddSC_battlegroundIC()
     pNewScript->Name = "npc_ic_cannon";
     pNewScript->GetAI = &GetAI_npc_ic_cannon;
     pNewScript->pGossipHello = &GossipHello_npc_ic_cannon;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "boss_bg_ioc";
+    pNewScript->GetAI = &GetAI_boss_bg_ioc;
     pNewScript->RegisterSelf();
 }
