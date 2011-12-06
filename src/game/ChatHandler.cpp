@@ -186,8 +186,16 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(type == CHAT_MSG_SAY)
             {
-                sChatLog.ChatMsg(GetPlayer(), msg, type);
-                GetPlayer()->Say(msg, lang);
+                if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_SAYLEVEL))
+                {
+           		    SendNotification(LANG_CHAT_DISABLE_SAYLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_SAYLEVEL));
+           		    break;
+                }
+                else
+                {
+                    sChatLog.ChatMsg(GetPlayer(), msg, type);
+                    GetPlayer()->Say(msg, lang);
+                }
             }
             else if(type == CHAT_MSG_EMOTE)
             {
@@ -196,8 +204,16 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
             }
             else if(type == CHAT_MSG_YELL)
             {
-                sChatLog.ChatMsg(GetPlayer(), msg, type);
-                GetPlayer()->Yell(msg, lang);
+                if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_YELLLEVEL))
+                {
+           		    SendNotification(LANG_CHAT_DISABLE_YELLLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_YELLLEVEL));
+           		    break;
+                }
+                else
+                {
+                    sChatLog.ChatMsg(GetPlayer(), msg, type);
+                    GetPlayer()->Yell(msg, lang);
+                }
             }
         } break;
 
@@ -215,6 +231,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_WHISPERLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_WHISPERLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_WHISPERLEVEL));
+           		break;
+            }
 
             sChatLog.WhisperMsg(GetPlayer(), to, msg);
 
@@ -270,6 +292,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_GUILDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL));
+           		break;
+            }
 
             sChatLog.PartyMsg(GetPlayer(), msg);
 
@@ -354,6 +382,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
             if(msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_GUILDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL));
+           		break;
+            }
+
             sChatLog.GuildMsg(GetPlayer(), msg, true);
 
             if (GetPlayer()->GetGuildId())
@@ -380,6 +414,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL))
+            {
+          		SendNotification(LANG_CHAT_DISABLE_RAIDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL));
+           		break;
+            }
 
             sChatLog.RaidMsg(GetPlayer(), msg, type);
 
@@ -419,6 +459,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL))
+            {
+                SendNotification(LANG_CHAT_DISABLE_RAIDLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL));
+           		break;
+            }
 
             sChatLog.RaidMsg(GetPlayer(), msg, type);
 
@@ -487,6 +533,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
             if(msg.empty())
                 break;
 
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_BGLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL));
+           		break;
+            }
+
             sChatLog.BattleGroundMsg(GetPlayer(), msg, type);
 
             // battleground raid is always in Player->GetGroup(), never in GetOriginalGroup()
@@ -515,6 +567,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_BGLEVEL, sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL));
+           		break;
+            }
 
             sChatLog.BattleGroundMsg(GetPlayer(), msg, type);
 
@@ -549,6 +607,12 @@ void WorldSession::HandleMessagechatOpcode( WorldPacket & recv_data )
 
             if(msg.empty())
                 break;
+
+            if (!_player->isGameMaster() && _player->getLevel() < sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_CHANNELLEVEL))
+            {
+           		SendNotification(LANG_CHAT_DISABLE_CHANNELLEVEL,  sWorld.getConfig(CONFIG_UINT32_CHAT_DISABLE_CHANNELLEVEL));
+           		break;
+            }
 
             sIRC.Send_WoW_IRC(_player, channel, msg);
             sChatLog.ChannelMsg(GetPlayer(), channel, msg);

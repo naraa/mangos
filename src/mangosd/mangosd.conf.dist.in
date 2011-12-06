@@ -2027,6 +2027,56 @@ PlayerbotAI.Collect.Objects = 0
 PlayerbotAI.SellGarbage = 0
 
 ###################################################################################################################
+# Chat disable under Level Configuration
+#
+#    ChatDisable.SayLevel
+#        Chat disable in say by level
+#        Default: 0
+#
+#    ChatDisable.YellLevel
+#        Chat disable in Yell by level
+#        Default: 0
+#
+#    ChatDisable.WhisperLevel
+#        Chat disable in Whisper by level
+#        Default: 0
+#
+#    ChatDisable.PartyLevel
+#        Chat disable in Party by level
+#        Default: 0
+#
+#    ChatDisable.GuildLevel
+#        Chat disable in Guild by level
+#        Default: 0
+#
+#    ChatDisable.OfficerLevel
+#        Chat disable in Officer by level
+#        Default: 0
+#
+#    ChatDisable.RaidLevel
+#        Chat disable in say by level
+#        Default: 0
+#
+#    ChatDisable.BGLevel
+#        Chat disable in say by level
+#        Default: 0
+#
+#    ChatDisable.ChannelLevel
+#        Chat disable in say by level
+#        Default: 0
+#
+###################################################################################################################
+
+ChatDisable.SayLevel = 0
+ChatDisable.YellLevel = 0
+ChatDisable.WhisperLevel = 0
+ChatDisable.PartyLevel = 0
+ChatDisable.GuildLevel = 0
+ChatDisable.RaidLevel = 0
+ChatDisable.BGLevel = 0
+ChatDisable.ChannelLevel = 0
+
+###################################################################################################################
 # Virtual map serving system (VMSS) configuration
 #
 #    VMSS.Enable

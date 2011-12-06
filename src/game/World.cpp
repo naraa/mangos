@@ -656,6 +656,17 @@ void World::LoadConfigSettings(bool reload)
     setConfig(CONFIG_BOOL_LFG_ONLYLASTENCOUNTER, "LFG.OnlyLastEncounterForCompleteDungeon", false);
     setConfigMinMax(CONFIG_UINT32_LFG_MAXKICKS, "LFG.MaxKicks", 5, 1, 10);
 
+   /// CHAT DISBALE BY LEVEL
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_SAYLEVEL, "ChatDisable.SayLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_YELLLEVEL, "ChatDisable.YellLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_WHISPERLEVEL, "ChatDisable.WhisperLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_PARTYLEVEL, "ChatDisable.PartyLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_GUILDLEVEL, "ChatDisable.GuildLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_RAIDLEVEL, "ChatDisable.RaidLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_BGLEVEL, "ChatDisable.BGLevel", 0);
+    setConfig(CONFIG_UINT32_CHAT_DISABLE_CHANNELLEVEL, "ChatDisable.ChannelLevel", 0);
+/// CHAT DISBALE BY LEVEL END
+
     setConfig(CONFIG_BOOL_CHECK_GO_IN_PATH, "CheckGOInPath", false);
 
     setConfigMinMax(CONFIG_UINT32_GEAR_CALC_BASE, "Player.GSCalculationBase", 190, 1, 384);

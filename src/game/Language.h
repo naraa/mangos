@@ -1059,6 +1059,15 @@ enum MangosStrings
     LANG_BG_SA_END_1ROUND                         = 20043,
     LANG_BG_WIN_NONE                              = 20044,
 
+    LANG_CHAT_DISABLE_SAYLEVEL           = 50000,
+    LANG_CHAT_DISABLE_YELLLEVEL          = 50001,
+    LANG_CHAT_DISABLE_WHISPERLEVEL       = 50002,
+    LANG_CHAT_DISABLE_PARTYLEVEL         = 50003,
+    LANG_CHAT_DISABLE_GUILDLEVEL         = 50004,
+    LANG_CHAT_DISABLE_RAIDLEVEL          = 50005,
+    LANG_CHAT_DISABLE_BGLEVEL            = 50006,
+    LANG_CHAT_DISABLE_CHANNELLEVEL       = 50007,
+
     // Isle of Conquest
     LANG_BG_IC_START_TWO_MINUTES        = 20080,
     LANG_BG_IC_START_ONE_MINUTE         = 20081,
