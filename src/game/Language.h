@@ -988,6 +988,17 @@ enum MangosStrings
     LANG_MUTE_ANNOUNCE                  = 17896,
     LANG_ARENA_STARTED_ANNOUNCE_WORLD   = 17898,
 
+    //ChatSpy
+    LANG_CHATSPY_APEENDED               = 11600,
+    LANG_CHATSPY_CANCELLEDMASSIVE       = 11601,
+    LANG_CHATSPY_ALLRESET               = 11602,
+    LANG_CHATSPY_NOCHATSPY              = 11603,
+    LANG_CHATSPY_YOURCANCELLED          = 11604,
+    LANG_CHATSPY_SMBCANCELLED           = 11605,
+    LANG_CHATSPY_LISTOFSPYS             = 11606,
+    LANG_CHATSPY_TOTAL                  = 11607,
+    LANG_CHATSPY_ONESPYSANOTHER         = 11608,
+
     // SOTA
     LANG_BG_SA_START_TWO_MINUTE             = 20000,
     LANG_BG_SA_START_ONE_MINUTE             = 20001,
