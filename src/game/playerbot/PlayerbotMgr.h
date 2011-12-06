@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -34,6 +35,7 @@ typedef UNORDERED_MAP<ObjectGuid, Player*> PlayerBotMap;
 
 class MANGOS_DLL_SPEC PlayerbotMgr
 {
+
 public:
     PlayerbotMgr(Player * const master);
     virtual ~PlayerbotMgr();
@@ -51,8 +53,9 @@ public:
 
     void AddPlayerBot(ObjectGuid guid);
     void LogoutPlayerBot(ObjectGuid guid);
-    Player* GetPlayerBot (ObjectGuid guid) const;
+    Player* GetPlayerBot(ObjectGuid guid) const;
     Player* GetMaster() const { return m_master; };
+
     PlayerBotMap::const_iterator GetPlayerBotsBegin() const { return m_playerBots.begin(); }
     PlayerBotMap::const_iterator GetPlayerBotsEnd()   const { return m_playerBots.end();   }
     int GetBotCount() const { return m_botCount; }
@@ -77,6 +80,8 @@ public:
     bool m_confCollectLoot;
     bool m_confCollectSkin;
     bool m_confCollectObjects;
+    uint32 m_confCollectDistance;
+    uint32 m_confCollectDistanceMax;
 
 private:
     Player* const m_master;

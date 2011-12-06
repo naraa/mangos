@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -491,7 +492,7 @@ bool PlayerbotPaladinAI::BuffPlayer(Player* target)
             else
                 return false;
         case CLASS_WARLOCK:
-            if (petCanBeBlessed)
+            if (petCanBeBlessed && !pet->HasAuraType(SPELL_AURA_MOD_UNATTACKABLE))
             {
                 if (pet->getPowerType() == POWER_MANA)
                 {

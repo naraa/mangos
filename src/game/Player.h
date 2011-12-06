@@ -1486,10 +1486,14 @@ class MANGOS_DLL_SPEC Player : public Unit
         void RemoveTimedQuest(uint32 quest_id) { m_timedquests.erase(quest_id); }
         void MakeTalentGlyphLink(std::ostringstream &out);
 
+        PlayerTalentMap GetTalents(uint8 spec) { return m_talents[spec]; }
         void chompAndTrim(std::string& str);
         bool getNextQuestId(const std::string& pString, unsigned int& pStartPos, unsigned int& pId);
         void skill(std::list<uint32>& m_spellsToLearn);
         bool requiredQuests(const char* pQuestIdString);
+        PlayerMails::reverse_iterator GetMailRBegin() { return m_mail.rbegin();}
+        PlayerMails::reverse_iterator GetMailREnd() { return m_mail.rend();}
+        void UpdateMail();
 
         /*********************************************************/
         /***                   LOAD SYSTEM                     ***/

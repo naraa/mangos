@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,6 +19,8 @@
 * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
 
+#include "Config/Config.h"
+#include "config.h"
 #include "../Player.h"
 #include "PlayerbotAI.h"
 #include "PlayerbotMgr.h"
@@ -25,15 +28,15 @@
 #include "../Chat.h"
 #include "../ObjectMgr.h"
 #include "../GossipDef.h"
-#include "../Chat.h"
 #include "../Language.h"
 #include "../WaypointMovementGenerator.h"
+#include "../AccountMgr.h"
 #include "../Guild.h"
 #include "../World.h"
+#include "../Chat.h"
 
 class LoginQueryHolder;
 class CharacterHandler;
-
 
 PlayerbotMgr::PlayerbotMgr(Player* const master) : m_master(master)
 {
@@ -50,6 +53,19 @@ PlayerbotMgr::PlayerbotMgr(Player* const master) : m_master(master)
     m_confCollectLoot = sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_COLLECT_LOOT);
     m_confCollectSkin = sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_COLLECT_SKIN);
     m_confCollectObjects = sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_COLLECT_OBJECTS);
+    m_confCollectDistanceMax = sWorld.getConfig(CONFIG_UINT32_PLAYERBOT_COLLECT_DISTANCE_MAX);
+
+    if (m_confCollectDistanceMax > 100)
+    {
+        sLog.outError("Playerbot: PlayerbotAI.Collect.DistanceMax higher than allowed. Using 100");
+        m_confCollectDistanceMax = 100;
+    }
+    m_confCollectDistance = sWorld.getConfig(CONFIG_UINT32_PLAYERBOT_COLLECT_DISTANCE_MIN);
+    if (m_confCollectDistance > m_confCollectDistanceMax)
+    {
+        sLog.outError("Playerbot: PlayerbotAI.Collect.Distance higher than PlayerbotAI.Collect.DistanceMax. Using DistanceMax value");
+        m_confCollectDistance = m_confCollectDistanceMax;
+    }
 }
 
 PlayerbotMgr::~PlayerbotMgr()
@@ -235,7 +251,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
             return;
         }
 
-        // if master is logging out, log out all bots & remove them from group
+        // if master is logging out, log out all bots
         case CMSG_LOGOUT_REQUEST:
         {
             LogoutAllBots();
@@ -547,20 +563,26 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
 
         case CMSG_LOOT_ROLL:
         {
-
             WorldPacket p(packet);    //WorldPacket packet for CMSG_LOOT_ROLL, (8+4+1)
             ObjectGuid Guid;
-            uint32 NumberOfPlayers;
+            uint32 itemSlot;
             uint8 rollType;
-            p.rpos(0);    //reset packet pointer
-            p >> Guid;    //guid of the item rolled
-            p >> NumberOfPlayers;    //number of players invited to roll
+            p.rpos(0);        //reset packet pointer
+            p >> Guid;        //guid of the lootable target
+            p >> itemSlot;    //number of players invited to roll
             p >> rollType;    //need,greed or pass on roll
+
+            Creature *c = m_master->GetMap()->GetCreature(Guid);
+            if (!c)
+                return;
+
+            Loot *loot = &c->loot;
+
+            LootItem& lootItem = loot->items[itemSlot];
 
             for (PlayerBotMap::const_iterator it = GetPlayerBotsBegin(); it != GetPlayerBotsEnd(); ++it)
             {
-
-                uint32 choice;
+                uint32 choice = 0;
 
                 Player* const bot = it->second;
                 if (!bot)
@@ -570,9 +592,23 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
                 if (!group)
                     return;
 
-                (bot->GetPlayerbotAI()->CanStore()) ? choice = urand(0, 3) : choice = 0;  // pass = 0, need = 1, greed = 2, disenchant = 3
+                ItemPrototype const *pProto = ObjectMgr::GetItemPrototype(lootItem.itemid);
+                if (!pProto)
+                    return;
 
-                group->CountRollVote(bot, Guid, NumberOfPlayers, RollVote(choice));
+                if (bot->GetPlayerbotAI()->CanStore())
+                {
+                    if (bot->CanUseItem(pProto) == EQUIP_ERR_OK && bot->GetPlayerbotAI()->IsItemUseful(lootItem.itemid))
+                        choice = 1; // Need
+                    else if (bot->HasSkill(SKILL_ENCHANTING))
+                        choice = 3; // Disenchant
+                    else
+                        choice = 2; // Greed
+                }
+                else
+                    choice = 0; // Pass
+
+                group->CountRollVote(bot, Guid, itemSlot, RollVote(choice));
 
                 switch (choice)
                 {
@@ -586,6 +622,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
             }
             return;
         }
+
         // Handle GOSSIP activate actions, prior to GOSSIP select menu actions
         case CMSG_GOSSIP_HELLO:
         {
@@ -776,10 +813,8 @@ void PlayerbotMgr::LogoutAllBots()
         Player* bot = itr->second;
         LogoutPlayerBot(bot->GetObjectGuid());
     }
-    RemoveAllBotsFromGroup();                   ///-> If bot are logging out remove them group
+    RemoveAllBotsFromGroup();
 }
-
-
 
 void PlayerbotMgr::Stay()
 {
@@ -789,7 +824,6 @@ void PlayerbotMgr::Stay()
         bot->GetMotionMaster()->Clear();
     }
 }
-
 
 // Playerbot mod: logs out a Playerbot.
 void PlayerbotMgr::LogoutPlayerBot(ObjectGuid guid)
@@ -814,8 +848,8 @@ Player* PlayerbotMgr::GetPlayerBot(ObjectGuid playerGuid) const
 
 void PlayerbotMgr::OnBotLogin(Player * const bot)
 {
-    bot->SetMap(sMapMgr.CreateMap(bot->GetMapId(), bot));
     // give the bot some AI, object is owned by the player class
+    bot->SetMap(sMapMgr.CreateMap(bot->GetMapId(), bot));
     PlayerbotAI* ai = new PlayerbotAI(this, bot);
     bot->SetPlayerbotAI(ai);
 
@@ -873,7 +907,6 @@ void Player::skill(std::list<uint32>& m_spellsToLearn)
 
 void Player::MakeTalentGlyphLink(std::ostringstream &out)
 {
-
     // |cff4e96f7|Htalent:1396:4|h[Unleashed Fury]|h|r
     // |cff66bbff|Hglyph:23:460|h[Glyph of Fortitude]|h|r
 
@@ -900,7 +933,7 @@ void Player::MakeTalentGlyphLink(std::ostringstream &out)
                     if (talent.talentEntry->TalentTab != talentTabId)
                         continue;
 
-                    TalentEntry const *talentInfo = sTalentStore.LookupEntry(talent.talentEntry->TalentID);
+                    TalentEntry const* talentInfo = sTalentStore.LookupEntry(talent.talentEntry->TalentID);
 
                     SpellEntry const* spell_entry = sSpellStore.LookupEntry(talentInfo->RankID[talent.currentRank]);
 
@@ -944,15 +977,16 @@ void Player::chompAndTrim(std::string& str)
             str = str.substr(0, str.length() - 1);
         else
             break;
-        while (str.length() > 0)
-        {
-            char lc = str[0];
-            if (lc == ' ' || lc == '"' || lc == '\'')
-                str = str.substr(1, str.length() - 1);
-            else
-                break;
-        }
     }
+
+	while (str.length() > 0)
+	{
+		char lc = str[0];
+		if (lc == ' ' || lc == '"' || lc == '\'')
+			str = str.substr(1, str.length() - 1);
+		else
+			break;
+	}
 }
 
 bool Player::getNextQuestId(const std::string& pString, unsigned int& pStartPos, unsigned int& pId)
@@ -993,14 +1027,25 @@ bool Player::requiredQuests(const char* pQuestIdString)
     return false;
 }
 
+void Player::UpdateMail()
+{
+     // save money,items and mail to prevent cheating
+    CharacterDatabase.BeginTransaction();
+    this->SaveGoldToDB();
+    this->SaveInventoryAndGoldToDB();
+    this->_SaveMail();
+    CharacterDatabase.CommitTransaction();
+}
+
 bool ChatHandler::HandlePlayerbotCommand(char* args)
 {
-    if (sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_DISABLE))
-    {
-        PSendSysMessage("|cffff0000Playerbot system is currently disabled!");
-        SetSentErrorMessage(true);
-        return false;
-    }
+    if (!(m_session->GetSecurity() > SEC_PLAYER))
+        if (sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_DISABLE))
+        {
+            PSendSysMessage("|cffff0000Playerbot system is currently disabled!");
+            SetSentErrorMessage(true);
+            return false;
+        }
 
     if (!m_session)
     {
@@ -1040,7 +1085,9 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
     }
 
     uint32 accountId = sObjectMgr.GetPlayerAccountIdByGUID(guid);
-    if (accountId != m_session->GetAccountId())
+    AccountTypes bot_security = SEC_PLAYER;
+    bot_security = accountId ? sAccountMgr.GetSecurity(accountId) : SEC_PLAYER;
+    if (accountId != m_session->GetAccountId() && !(m_session->GetSecurity() > bot_security))
     {
         if (!sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_SHAREDBOTS))
         {
@@ -1161,8 +1208,8 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
         if (orderStr == "protect" || orderStr == "assist")
         {
             char *targetChar = strtok(NULL, " ");
-            ObjectGuid targetGuid = m_session->GetPlayer()->GetSelectionGuid();
-            if (!targetChar && targetGuid.IsEmpty())
+            ObjectGuid targetGUID = m_session->GetPlayer()->GetSelectionGuid();
+            if (!targetChar && targetGUID.IsEmpty())
             {
                 PSendSysMessage("|cffff0000Combat orders protect and assist expect a target either by selection or by giving target player in command string!");
                 SetSentErrorMessage(true);
@@ -1173,9 +1220,9 @@ bool ChatHandler::HandlePlayerbotCommand(char* args)
                 std::string targetStr = targetChar;
                 ObjectGuid targ_guid = sObjectMgr.GetPlayerGuidByName(targetStr.c_str());
 
-                targetGuid.Set(targ_guid.GetRawValue());
+                targetGUID.Set(targ_guid.GetRawValue());
             }
-            target = ObjectAccessor::GetUnit(*m_session->GetPlayer(), targetGuid);
+            target = ObjectAccessor::GetUnit(*m_session->GetPlayer(), targetGUID);
             if (!target)
             {
                 PSendSysMessage("|cffff0000Invalid target for combat order protect or assist!");

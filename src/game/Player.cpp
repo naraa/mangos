@@ -2719,6 +2719,9 @@ void Player::GiveLevel(uint32 level)
 
     GetLFGState()->Update();
 
+    if (m_playerbotAI)
+        m_playerbotAI->GiveLevel(level);
+
 }
 
 void Player::UpdateFreeTalentPoints(bool resetIfNeed)
