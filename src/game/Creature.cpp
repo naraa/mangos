@@ -41,7 +41,9 @@
 #include "MapPersistentStateMgr.h"
 #include "BattleGroundMgr.h"
 #include "Spell.h"
+#include "Transports.h"
 #include "Util.h"
+#include "Unit.h"
 #include "GridNotifiers.h"
 #include "GridNotifiersImpl.h"
 #include "CellImpl.h"
@@ -178,6 +180,11 @@ m_creatureInfo(NULL)
 
 Creature::~Creature()
 {
+    if (GetTransport())
+    {
+        GetTransport()->RemovePassenger(this);
+    }
+
     CleanupsBeforeDelete();
 
     m_vendorItemCounts.clear();

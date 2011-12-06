@@ -1519,6 +1519,9 @@ void World::SetInitialWorldSettings()
     sLog.outString( "Loading Transports..." );
     sMapMgr.LoadTransports();
 
+    sLog.outString( "Loading Transport NPCs..." );
+    sMapMgr.LoadTransportNPCs();
+
     sLog.outString("Deleting expired bans..." );
     LoginDatabase.Execute("DELETE FROM ip_banned WHERE unbandate<=UNIX_TIMESTAMP() AND unbandate<>bandate");
 
