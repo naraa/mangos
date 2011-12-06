@@ -430,6 +430,14 @@
     <ClCompile Include="..\..\src\game\LootMgr.cpp" />
     <ClCompile Include="..\..\src\game\Mail.cpp" />
     <ClCompile Include="..\..\src\game\MailHandler.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCClient.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmd.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCCmde.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCConf.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCIO.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCLog.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\IRCSock.cpp" />
+    <ClCompile Include="..\..\src\game\mangchat\MCS_OnlinePlayers.cpp" />
     <ClCompile Include="..\..\src\game\Map.cpp" />
     <ClCompile Include="..\..\src\game\MapManager.cpp" />
     <ClCompile Include="..\..\src\game\MapPersistentStateMgr.cpp" />
@@ -614,6 +622,12 @@
     <ClInclude Include="..\..\src\game\LFG.h" />
     <ClInclude Include="..\..\src\game\LFGMgr.h" />
     <ClInclude Include="..\..\src\game\LootMgr.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCClient.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCCmd.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCConf.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCFunc.h" />
+    <ClInclude Include="..\..\src\game\mangchat\IRCLog.h" />
+    <ClInclude Include="..\..\src\game\mangchat\MCS_OnlinePlayers.h" />
     <ClInclude Include="..\..\src\game\Mail.h" />
     <ClInclude Include="..\..\src\game\Map.h" />
     <ClInclude Include="..\..\src\game\MapManager.h" />

@@ -298,6 +298,13 @@ enum eConfigFloatValues
     CONFIG_FLOAT_THREAT_RADIUS,
     CONFIG_FLOAT_GHOST_RUN_SPEED_WORLD,
     CONFIG_FLOAT_GHOST_RUN_SPEED_BG,
+    ///PvP Token
+    CONFIG_FLOAT_PVP_TOKEN_ITEMID,
+    CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT,
+    CONFIG_FLOAT_PVP_TOKEN_GOLD,
+    CONFIG_FLOAT_PVP_TOKEN_HONOR,
+    CONFIG_FLOAT_PVP_TOKEN_ARENA,
+    CONFIG_FLOAT_PVP_TOKEN_RESTRICTION,
     CONFIG_FLOAT_PLAYERBOT_MINDISTANCE,
     CONFIG_FLOAT_PLAYERBOT_MAXDISTANCE,
     CONFIG_FLOAT_CROWDCONTROL_HP_BASE,
@@ -365,6 +372,10 @@ enum eConfigBoolValues
     CONFIG_BOOL_RAID_FLAGS_UNIQUE,
     CONFIG_BOOL_ANTICHEAT_ENABLE,
     CONFIG_BOOL_ANTICHEAT_WARDEN,
+    /// PvP Token
+    CONFIG_BOOL_PVP_TOKEN_ENABLE,
+    /// PvP Announcer
+    CONFIG_BOOL_PVP_ANNOUNCER,
     CONFIG_BOOL_ALLOW_FLIGHT_ON_OLD_MAPS,
     CONFIG_BOOL_LFG_ENABLE,
     CONFIG_BOOL_LFR_ENABLE,
@@ -567,6 +578,9 @@ class World
         void SendZoneMessage(uint32 zone, WorldPacket *packet, WorldSession *self = 0, uint32 team = 0);
         void SendZoneText(uint32 zone, const char *text, WorldSession *self = 0, uint32 team = 0);
         void SendServerMessage(ServerMessageType type, const char *text = "", Player* player = NULL);
+
+        ///PVP Announcer
+        void SendPvPAnnounce(Player* killer, Player* killed);
 
         /// Are we in the middle of a shutdown?
         bool IsShutdowning() const { return m_ShutdownTimer > 0; }

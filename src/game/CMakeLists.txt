@@ -66,6 +66,10 @@ source_group("References"
   REGULAR_EXPRESSION Reference|RefManager|ThreatManager
 )
 
+source_group("MangChat"
+ REGULAR_EXPRESSION mangchat/.*
+)
+
 source_group("Movement"
   REGULAR_EXPRESSION spline|Spline|packet_builder
   FILES
@@ -99,6 +103,9 @@ if(NOT ACE_USE_EXTERNAL)
   add_dependencies(game ACE_Project)
 # add_dependencies(game ace)
 endif()
+
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/mangchat/mangchat.conf.dist.in ${CMAKE_CURRENT_BINARY_DIR}/mangchat/mangchat.conf.dist)
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/mangchat/mangchat.conf.dist DESTINATION ${CONF_DIR})
 
 # Generate precompiled header
 if(PCH)

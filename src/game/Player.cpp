@@ -61,6 +61,7 @@
 #include "AchievementMgr.h"
 #include "Mail.h"
 #include "AccountMgr.h"
+#include "mangchat/IRCClient.h"
 #include "SpellAuras.h"
 
 #include <cmath>
@@ -2684,6 +2685,16 @@ void Player::GiveLevel(uint32 level)
     InitGlyphsForLevel();
 
     UpdateAllStats();
+
+    if (sIRC.BOTMASK & 64)
+    {
+        char  plevel [3];
+        sprintf(plevel, "%u", level);
+
+        std::string pname = GetName();
+        std::string channel = std::string("#") + sIRC._irc_chan[sIRC.anchn].c_str();
+        sIRC.Send_IRC_Channel(channel, "\00311["+pname+"] : Has Reached Level: "+plevel, true);
+    }
 
     // set current level health and mana/energy to maximum after applying all mods.
     if (isAlive())
@@ -23227,6 +23238,55 @@ void Player::UpdateFallInformationIfNeed( MovementInfo const& minfo,uint16 opcod
 {
     if (m_lastFallTime >= minfo.GetFallTime() || m_lastFallZ <= minfo.GetPos()->z || opcode == MSG_MOVE_FALL_LAND)
         SetFallInformation(minfo.GetFallTime(), minfo.GetPos()->z);
+}
+
+///PVP Token
+void Player::ReceiveToken()
+{
+   if(!sWorld.getConfig(CONFIG_BOOL_PVP_TOKEN_ENABLE))
+       return;
+
+   uint8 MapRestriction = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_RESTRICTION);
+
+   if( MapRestriction == 1 && !InBattleGround() && !HasByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP) ||
+       MapRestriction == 2 && !HasByteFlag(UNIT_FIELD_BYTES_2, 1, UNIT_BYTE2_FLAG_FFA_PVP) ||
+       MapRestriction == 3 && !InBattleGround())
+       return;
+
+   uint32 itemID = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMID);
+   uint32 itemCount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_ITEMCOUNT);
+   uint32 goldAmount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_GOLD);
+   uint32 honorAmount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_HONOR);  
+   uint32 arenaAmount = sWorld.getConfig(CONFIG_FLOAT_PVP_TOKEN_ARENA);
+
+
+   ItemPosCountVec dest;
+   InventoryResult msg = CanStoreNewItem( NULL_BAG, NULL_SLOT, dest, itemID, itemCount);
+   if( msg != EQUIP_ERR_OK )   // convert to possible store amount
+   {
+       SendEquipError( msg, NULL, NULL );
+       return;
+   }
+
+   Item* item = StoreNewItem( dest, itemID, true, Item::GenerateItemRandomPropertyId(itemID));  
+   SendNewItem(item,itemCount,true,false);  
+
+   if( honorAmount > 0 )  
+       ModifyHonorPoints(honorAmount);  
+       SaveToDB();  
+       return;  
+
+   if( goldAmount > 0 )  
+       ModifyMoney(goldAmount);  
+       SaveGoldToDB();  
+       return; 
+
+   if( arenaAmount > 0 )  
+       ModifyArenaPoints(arenaAmount); 
+       SaveToDB(); 
+       return;
+
+    ChatHandler(this).PSendSysMessage(LANG_YOU_RECEIVE_TOKEN);
 }
 
 void Player::UnsummonPetTemporaryIfAny(bool full)

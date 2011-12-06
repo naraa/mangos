@@ -1983,8 +1983,128 @@
 				>
 			</File>
 		</Filter>
-		<File
-			RelativePath="..\..\src\game\pchdef.cpp"
+        <Filter
+			Name="IRC"
+			>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCClient.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCClient.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCCmd.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCCmd.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCCmde.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCConf.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\src\game\mangchat\IRCConf.h.in"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Build SystemConfig.h"
+						CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h&#x0D;&#x0A;"
+						Outputs="..\..\src\game\mangchat\IRCConf.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Build SystemConfig.h"
+						CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h&#x0D;&#x0A;"
+						Outputs="..\..\src\game\mangchat\IRCConf.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug_NoPCH|Win32"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Build SystemConfig.h"
+						CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h&#x0D;&#x0A;"
+						Outputs="..\..\src\game\mangchat\IRCConf.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Release|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Build SystemConfig.h"
+						CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h"
+						Outputs="..\..\src\game\mangchat\IRCConf.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+						Description="Performing Build SystemConfig.h"
+						CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h"
+						Outputs="..\..\src\game\mangchat\IRCConf.h"
+					/>
+				</FileConfiguration>
+				<FileConfiguration
+					Name="Debug_NoPCH|x64"
+					>
+					<Tool
+						Name="VCCustomBuildTool"
+		 				Description="Performing Build SystemConfig.h"
+		 				CommandLine="copy ..\..\src\game\mangchat\IRCConf.h.in ..\..\src\game\mangchat\IRCConf.h"
+		 				Outputs="..\..\src\game\mangchat\IRCConf.h"
+		 			/>
+		 		</FileConfiguration>
+		 	</File>
+		 	<File
+				RelativePath="..\..\src\game\mangchat\IRCFunc.h"
+			 	>
+			 </File>
+			 <File
+			 	RelativePath="..\..\src\game\mangchat\IRCIO.cpp"
+			 	>
+			 </File>
+			 <File
+				RelativePath="..\..\src\game\mangchat\IRCLog.cpp"
+			 	>
+			 </File>
+			 <File
+			 	RelativePath="..\..\src\game\mangchat\IRCLog.h"
+			 	>
+			 </File>
+			 <File
+			 	RelativePath="..\..\src\game\mangchat\IRCSock.cpp"
+			 	>
+			 </File>
+			 <File
+			 	RelativePath="..\..\src\game\mangchat\MCS_OnlinePlayers.cpp"
+			 	>
+			 </File>
+			 <File
+			 	RelativePath="..\..\src\game\mangchat\MCS_OnlinePlayers.h"
+                >
+            </File>
+		 </Filter>
+		 <File
+			 RelativePath="..\..\src\game\pchdef.cpp"
 			>
 			<FileConfiguration
 				Name="Debug|Win32"

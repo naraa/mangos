@@ -282,9 +282,9 @@ enum MangosStrings
     LANG_COMMAND_TICKETON               = 291,
     LANG_COMMAND_TICKETOFF              = 292,
     LANG_COMMAND_TICKETNOTEXIST         = 293,
-    LANG_COMMAND_ALLTICKETDELETED       = 294,
-    LANG_COMMAND_TICKETPLAYERDEL        = 295,
-    LANG_COMMAND_TICKETDEL              = 296,
+    LANG_COMMAND_ALLTICKETCLOSED        = 294, 
+    LANG_COMMAND_TICKETPLAYERCLOSE      = 295, 
+    LANG_COMMAND_TICKETCLOSE            = 296,
     LANG_COMMAND_SPAWNDIST              = 297,
     LANG_COMMAND_SPAWNTIME              = 298,
     LANG_COMMAND_MODIFY_HONOR           = 299,
@@ -977,6 +977,7 @@ enum MangosStrings
     //                                    10000-10999
 
     // Use for custom patches             11000-11999
+    LANG_YOU_RECEIVE_TOKEN              = 11050,
     LANG_COMMAND_FRIEND                 = 11133,
     LANG_COMMAND_FRIEND_ERROR           = 11134,
     LANG_BAN_ACCOUNT_ANNOUNCE           = 17890,
