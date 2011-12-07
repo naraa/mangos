@@ -18543,8 +18543,10 @@ void Player::_SaveQuestStatus()
 
     static SqlStatementID updateQuestStatus ;
 
+    QuestStatusMap cachedQuestStatus = getQuestStatusMap();
+
     // we don't need transactions here.
-    for( QuestStatusMap::iterator i = mQuestStatus.begin( ); i != mQuestStatus.end( ); ++i )
+    for( QuestStatusMap::iterator i = cachedQuestStatus.begin( ); i != cachedQuestStatus.end( ); ++i )
     {
         switch (i->second.uState)
         {
@@ -18564,6 +18566,9 @@ void Player::_SaveQuestStatus()
                     for (int k = 0; k < QUEST_ITEM_OBJECTIVES_COUNT; ++k)
                         stmt.addUInt32(i->second.m_itemcount[k]);
                     stmt.Execute();
+                    QuestStatusMap::iterator itr = mQuestStatus.find(i->first);
+                    if (itr != mQuestStatus.end())
+                        itr->second.uState = QUEST_UNCHANGED;
                 }
                 break;
             case QUEST_CHANGED :
@@ -18582,12 +18587,15 @@ void Player::_SaveQuestStatus()
                     stmt.addUInt32(GetGUIDLow());
                     stmt.addUInt32(i->first);
                     stmt.Execute();
+                    QuestStatusMap::iterator itr = mQuestStatus.find(i->first);
+                    if (itr != mQuestStatus.end())
+                        itr->second.uState = QUEST_UNCHANGED;
                 }
                 break;
             case QUEST_UNCHANGED:
+            default:
                 break;
         };
-        i->second.uState = QUEST_UNCHANGED;
     }
 }
 
