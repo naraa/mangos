@@ -53,9 +53,6 @@ enum
     SPELL_SUMMON_HULKING_CORPSE     = 49104,
     SPELL_SUMMON_RISON_SHADOWCASTER = 49105,
 
-    SPELL_SHADOW_BOLT               = 51363,
-    SPELL_SHADOW_BOLT_H             = 59016,
-
     // Spells 'Crystal Handler Death' 47336, 55801, 55803, 55805 (defined in instance script)
 
     NPC_CRYSTAL_HANDLER             = 26627,
@@ -408,41 +405,6 @@ bool EffectAuraDummy_npc_crystal_channel_target(const Aura* pAura, bool bApply)
     return false;
 }
 
-struct MANGOS_DLL_DECL risen_shadowcasterAI : public ScriptedAI
-{
-    risen_shadowcasterAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
-    }
-
-    ScriptedInstance* m_pInstance;
-    bool m_bIsRegularMode;
-
-    uint32 Check_Timer;
-    void Reset()
-    {
-        Check_Timer = 1000;
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (Check_Timer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SHADOW_BOLT : SPELL_SHADOW_BOLT_H);
-            Check_Timer = 1000;
-        }
-        else
-            Check_Timer -= uiDiff;
-    }
-};
-
-CreatureAI* GetAI_risen_shadowcaster(Creature* pCreature)
-{
-    return new risen_shadowcasterAI(pCreature);
-}
-
 void AddSC_boss_novos()
 {
     Script* pNewScript;
@@ -456,10 +418,5 @@ void AddSC_boss_novos()
     pNewScript->Name = "npc_crystal_channel_target";
     pNewScript->GetAI = &GetAI_npc_crystal_channel_target;
     pNewScript->pEffectAuraDummy = &EffectAuraDummy_npc_crystal_channel_target;
-    pNewScript->RegisterSelf();
-
-    pNewScript = new Script;
-    pNewScript->Name = "risen_shadowcaster";
-    pNewScript->GetAI = &GetAI_risen_shadowcaster;
     pNewScript->RegisterSelf();
 }

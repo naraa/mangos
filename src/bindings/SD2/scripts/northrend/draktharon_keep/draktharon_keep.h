@@ -14,21 +14,8 @@ enum
     TYPE_KING_DRED                  = 2,
     TYPE_THARONJA                   = 3,
 
+    NPC_NOVOS                       = 26631,
     NPC_KING_DRED                   = 27483,
-
-    TYPE_CRYSTAL_1                = 5,
-    TYPE_CRYSTAL_2                = 6,
-    TYPE_CRYSTAL_3                = 7,
-    TYPE_CRYSTAL_4                = 8,
-    TYPE_NOVOS_PHASE2_CHECK       = 9,
-    TYPE_NOVOS_EVENT              = 10,
-
-    NPC_CRYSTAL_CHANNEL_TARGET    = 26710,
-    NPC_CRYSTAL_CHANNEL           = 26712,
-    NPC_TRIGGER_TARGET            = 26714,
-    NPC_NOVOS                     = 26631,
-
-    NPC_RISEN_SHADOWCASTER        = 27600,
 
     // Adds of King Dred Encounter - deaths counted for achievement
     NPC_DRAKKARI_GUTRIPPER          = 26641,
@@ -42,6 +29,7 @@ enum
     SPELL_CRYSTAL_HANDLER_DEATH_4   = 55805,
 
     MAX_CRYSTALS                    = 4,
+    NPC_CRYSTAL_CHANNEL_TARGET      = 26712,
     GO_CRYSTAL_SW                   = 189299,
     GO_CRYSTAL_NE                   = 189300,
     GO_CRYSTAL_NW                   = 189301,
