@@ -287,7 +287,6 @@ extern void AddSC_winterspring();
 
 // northrend
 extern void AddSC_boss_jedoga();                            // azjol-nerub, ahnkahet
-extern void AddSC_boss_amanitar();
 extern void AddSC_boss_nadox();
 extern void AddSC_boss_taldaram();
 extern void AddSC_boss_volazj();
@@ -812,7 +811,6 @@ void AddScripts()
 
     // northrend
     AddSC_boss_jedoga();                                    // azjol-nerub, ahnkahet
-    AddSC_boss_amanitar();
     AddSC_boss_nadox();
     AddSC_boss_taldaram();
     AddSC_boss_volazj();

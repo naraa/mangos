@@ -1,5 +1,4 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 MangosR2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -30,6 +29,7 @@ instance_ahnkahet::instance_ahnkahet(Map* pMap) : ScriptedInstance(pMap),
 {
     Initialize();
 }
+
 void instance_ahnkahet::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
@@ -40,37 +40,43 @@ void instance_ahnkahet::OnCreatureCreate(Creature* pCreature)
     switch(pCreature->GetEntry())
     {
         case NPC_ELDER_NADOX:
-        case NPC_JEDOGA_SHADOWSEEKER:
-        case NPC_TALDARAM:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
     }
-    m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
+
 void instance_ahnkahet::OnObjectCreate(GameObject* pGo)
 {
-     switch(pGo->GetEntry())
+    switch(pGo->GetEntry())
     {
         case GO_DOOR_TALDARAM:
             if (m_auiEncounter[TYPE_TALDARAM] == DONE)
-                DoUseDoorOrButton(GO_DOOR_TALDARAM);
-            break;
-        case GO_ANCIENT_DEVICE_L:
-            if (m_auiEncounter[TYPE_TALDARAM] == NOT_STARTED)
-                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
-            break;
-        case GO_ANCIENT_DEVICE_R:
-            if (m_auiEncounter[TYPE_TALDARAM] == NOT_STARTED)
-                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+                pGo->SetGoState(GO_STATE_ACTIVE);
             break;
         case GO_VORTEX:
             if (m_auiEncounter[TYPE_TALDARAM] != NOT_STARTED)
-                DoUseDoorOrButton(GO_VORTEX);
+                pGo->SetGoState(GO_STATE_ACTIVE);
             break;
+
+        case GO_ANCIENT_DEVICE_L:
+            if (m_auiEncounter[TYPE_TALDARAM] == NOT_STARTED)
+                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            return;
+        case GO_ANCIENT_DEVICE_R:
+            if (m_auiEncounter[TYPE_TALDARAM] == NOT_STARTED)
+                pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
+            return;
+
+        default:
+            return;
     }
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
+
 void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
 {
+    debug_log("SD2: Instance Ahn'Kahet: SetData received for type %u with data %u", uiType, uiData);
+
     switch(uiType)
     {
         case TYPE_NADOX:
@@ -84,11 +90,6 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
 
                 if (m_uiDevicesActivated == 2)
                 {
-                    if (Unit* pTaldaram = GetSingleCreatureFromStorage(NPC_TALDARAM))
-                    {
-                        pTaldaram->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                        pTaldaram->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE);
-                    }
                     m_auiEncounter[uiType] = uiData;
                     DoUseDoorOrButton(GO_VORTEX);
                 }
@@ -100,16 +101,17 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
             }
             break;
         case TYPE_JEDOGA:
+        case TYPE_AMANITAR:
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_VOLAZJ:
             m_auiEncounter[uiType] = uiData;
+            if (uiData == IN_PROGRESS)
+                DoStartTimedAchievement(ACHIEVEMENT_CRITERIA_TYPE_KILL_CREATURE, ACHIEV_START_VOLAZJ_ID);
             break;
-        case TYPE_AMANITAR:
-            m_auiEncounter[uiType] = uiData;
-            break;
+
         default:
-            error_log("SD2: Instance Ahn'Kahet: ERROR SetData = %u for type %u does not exist/not implemented.",uiType,uiData);
+            error_log("SD2: Instance Ahn'Kahet: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             break;
     }
 
@@ -121,7 +123,7 @@ void instance_ahnkahet::SetData(uint32 uiType, uint32 uiData)
         saveStream << m_auiEncounter[0] << " " << m_auiEncounter[1] << " " << m_auiEncounter[2] << " " << m_auiEncounter[3]
             << " " << m_auiEncounter[4];
 
-        strInstData = saveStream.str();
+        m_strInstData = saveStream.str();
 
         SaveToDB();
         OUT_SAVE_INST_DATA_COMPLETE;
@@ -149,21 +151,12 @@ void instance_ahnkahet::Load(const char* chrIn)
 
     OUT_LOAD_INST_DATA_COMPLETE;
 }
+
 uint32 instance_ahnkahet::GetData(uint32 uiType)
 {
-    switch(uiType)
-    {
-        case TYPE_NADOX:
-            return m_auiEncounter[0];
-        case TYPE_TALDARAM:
-            return m_auiEncounter[1];
-        case TYPE_JEDOGA:
-            return m_auiEncounter[2];
-        case TYPE_VOLAZJ:
-            return m_auiEncounter[3];
-        case TYPE_AMANITAR:
-            return m_auiEncounter[4];
-    }
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
     return 0;
 }
 
