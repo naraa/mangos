@@ -68,7 +68,7 @@
 #include "CharacterDatabaseCleaner.h"
 #include "CreatureLinkingMgr.h"
 #include "LFGMgr.h"
-#include "WardenDataStorage.h"
+#include "warden/WardenDataStorage.h"
 
 INSTANTIATE_SINGLETON_1( World );
 
