@@ -40,8 +40,8 @@
 #include "Auth/AuthCrypt.h"
 #include "Auth/HMACSHA1.h"
 #include "zlib/zlib.h"
-#include "warden/WardenWin.h"
-#include "warden/WardenMac.h"
+#include "WardenWin.h"
+#include "WardenMac.h"
 
 // Playerbot mod
 #include "playerbot/PlayerbotMgr.h"
