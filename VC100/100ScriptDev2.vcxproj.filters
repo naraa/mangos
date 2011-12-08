@@ -342,6 +342,15 @@
     <ClCompile Include="..\scripts\battlegrounds\battlegroundIC.cpp">
       <Filter>scripts\battlegrounds</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\custom\custom_npcs.cpp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\custom\custom_items.cpp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\custom\custom_gameobjects.ccp">
+      <Filter>scripts\custom</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\custom\npc_arena_honor.cpp">
       <Filter>scripts\custom</Filter>
     </ClCompile>
