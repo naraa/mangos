@@ -230,7 +230,7 @@ int main(int argc, char** argv)
     bool skipLiquid = false,
          skipContinents = false,
          skipJunkMaps = true,
-         skipBattlegrounds = false,
+         skipBattlegrounds = true,
          debugOutput = false,
          silent = false,
          bigBaseUnit = false;
