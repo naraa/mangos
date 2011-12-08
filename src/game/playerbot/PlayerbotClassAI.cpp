@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -31,8 +32,9 @@ bool PlayerbotClassAI::DoFirstCombatManeuver(Unit *)
 }
 void PlayerbotClassAI::DoNextCombatManeuver(Unit *) {}
 
-void PlayerbotClassAI::DoNonCombatActions(){}
+void PlayerbotClassAI::DoNonCombatActions() {}
 
-bool PlayerbotClassAI::BuffPlayer(Player* target) {
+bool PlayerbotClassAI::BuffPlayer(Player* target)
+{
     return false;
 }

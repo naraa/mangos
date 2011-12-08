@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -413,13 +414,13 @@ void PlayerbotMageAI::DoNonCombatActions()
 
     }
     // There is no group, buff master
-    else if (master->isAlive() && BuffPlayer(master))
-        return;
-
-    // Buff self finally
     else if (master->isAlive() && !master->IsInDuel(master))
         if (BuffPlayer(master))
             return;
+
+    // Buff self finally
+    if (BuffPlayer(m_bot))
+        return;
 
     // conjure food & water
     if (m_bot->getStandState() != UNIT_STAND_STATE_STAND)
@@ -477,7 +478,7 @@ bool PlayerbotMageAI::BuffPlayer(Player* target)
     PlayerbotAI * ai = GetAI();
     Pet * pet = target->GetPet();
 
-    if (pet && pet->getPowerType() == POWER_MANA && ai->Buff(ARCANE_INTELLECT, pet))
+    if ((pet && !pet->HasAuraType(SPELL_AURA_MOD_UNATTACKABLE)) && pet->getPowerType() == POWER_MANA && ai->Buff(ARCANE_INTELLECT, pet))
         return true;
 
     if (ARCANE_INTELLECT)

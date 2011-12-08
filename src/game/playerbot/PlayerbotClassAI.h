@@ -1,7 +1,8 @@
 /*
 * Copyright (C) 2005-2011 MaNGOS <http://getmangos.com/>
 * Copyright (C) 2010 Blueboy
-* Copyright (C) 2011 MangosR2 
+* Copyright (C) 2011 MangosR2
+* Copyright (C) 2011 Infinity 
 *
 * This program is free software; you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -51,9 +52,9 @@ public:
     virtual bool BuffPlayer(Player* target);
 
     // Utilities
-    Player* GetMaster () { return m_master; }
+    Player* GetMaster() { return m_master; }
     Player* GetPlayerBot() { return m_bot; }
-    PlayerbotAI* GetAI (){ return m_ai; };
+    PlayerbotAI* GetAI() { return m_ai; };
 
 
 private:

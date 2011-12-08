@@ -2001,6 +2001,16 @@ LFG.OnlyLastEncounterForCompleteDungeon = 0
 #        Enable collection options nearby objects 
 #                 0 - off
 #        Default: 1 - on
+#    PlayerbotAI.Collect.DistanceMax
+#        Maximum distance that can be configured for bots to collect objects. Allowing a higher
+#        distance could increase processor usage for object searching.
+#                 1-100
+#        Default: 50
+#
+#    PlayerbotAI.Collect.Distance
+#        Default distance that bots will search within for collection.
+#        Default: 25 (cannot be more than DistanceMax)
+#
 #
 #    PlayerbotAI.SellGarbage
 #        Allow bots to automatically sell all [GRAY|POOR] quality items as the player activates vendor
@@ -2008,7 +2018,6 @@ LFG.OnlyLastEncounterForCompleteDungeon = 0
 #                 1 - on
 #
 ###################################################################################################################
-
 PlayerbotAI.DisableBots = 1
 PlayerbotAI.SharedBots = 0
 PlayerbotAI.DebugWhisper = 0
@@ -2024,6 +2033,8 @@ PlayerbotAI.Collect.Profession = 0
 PlayerbotAI.Collect.Loot = 0
 PlayerbotAI.Collect.Skin = 0
 PlayerbotAI.Collect.Objects = 0
+PlayerbotAI.Collect.DistanceMax = 50
+PlayerbotAI.Collect.Distance = 25
 PlayerbotAI.SellGarbage = 0
 
 ###################################################################################################################
