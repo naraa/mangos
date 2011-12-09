@@ -1173,6 +1173,38 @@ bool ChatHandler::HandleGameObjectPhaseCommand(char* args)
     return true;
 }
 
+//set state for selected object
+bool ChatHandler::HandleGameObjectStateCommand(char* args)
+{
+    // number or [name] Shift-click form |color|Hgameobject:go_id|h[name]|h|r
+    char* cId = ExtractKeyFromLink(&args,"Hgameobject");
+    if (!cId)
+        return false;
+    uint32 lowguid = atoi(cId);
+    if (!lowguid)
+        return false;
+    GameObject* obj = NULL;
+    // by DB guid
+    if (GameObjectData const* go_data = sObjectMgr.GetGOData(lowguid))
+        obj = GetGameObjectWithGuid(lowguid, go_data->id);
+    if (!obj)
+    {
+        PSendSysMessage(LANG_COMMAND_OBJNOTFOUND, lowguid);
+        SetSentErrorMessage(true);
+        return false;
+    }
+    char* stateStr = strtok (NULL, " ");
+    uint32 state = stateStr? atoi(stateStr) : 0;
+    if (state > 2)
+    {
+        SendSysMessage(LANG_BAD_VALUE);
+        SetSentErrorMessage(true);
+        return false;
+    }
+    obj->SetGoState((GOState)state);
+    return true;
+}
+
 bool ChatHandler::HandleGameObjectNearCommand(char* args)
 {
     float distance;
@@ -1628,7 +1660,7 @@ bool ChatHandler::HandleNpcAddCommand(char* args)
     if (chr->GetTransport())
     {
         pCreature->SetTransport(chr->GetTransport());
-		
+
         float tX = chr->GetTransOffsetX();
         float tY = chr->GetTransOffsetY();
         float tZ = chr->GetTransOffsetZ();
@@ -1636,7 +1668,7 @@ bool ChatHandler::HandleNpcAddCommand(char* args)
         pCreature->m_movementInfo.SetTransportData(ObjectGuid(chr->GetTransport()->GetGUID()), tX, tY, tZ, tO, 0, -1);
         map->CreatureRelocation(pCreature, chr->GetTransport()->GetPositionX() + tX, chr->GetTransport()->GetPositionY() + tY, chr->GetTransport()->GetPositionZ() + tZ, chr->GetTransOffsetO());
         chr->GetTransport()->AddPassenger(pCreature);
-       
+
         pCreature->SaveToDB(chr->GetTransport()->GetGOInfo()->moTransport.mapID, (1 << map->GetSpawnMode()), chr->GetPhaseMaskForSpawn());
 
         pCreature->AIM_Initialize();
@@ -2859,7 +2891,7 @@ bool ChatHandler::HandleTicketCommand(char* args)
     return true;
 }
 
-//close all tickets 
+//close all tickets
 bool ChatHandler::HandleCloseTicketCommand(char *args)
 {
     char* px = ExtractLiteralArg(&args);
@@ -2869,7 +2901,7 @@ bool ChatHandler::HandleCloseTicketCommand(char *args)
     // Closeticket all
     if (strncmp(px, "all", 4) == 0)
     {
-        sTicketMgr.CloseAll(); 
+        sTicketMgr.CloseAll();
         SendSysMessage(LANG_COMMAND_ALLTICKETCLOSED);
         return true;
     }
