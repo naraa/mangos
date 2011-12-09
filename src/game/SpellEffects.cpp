@@ -1867,7 +1867,7 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     }
                     //Spawn
                     m_caster->CastSpell(m_caster, spellId, true);
-                    
+
                     if (!unitTarget) return;
                     //Arcane Prisoner Kill Credit
                     unitTarget->CastSpell(m_caster, 45456, true);
@@ -2964,6 +2964,25 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
 
                   unitTarget->CastSpell(unitTarget, 62295, true);
                   return;
+                }
+                case 62705:                                 // Auto-repair
+                {
+                    if (!unitTarget)
+                        return;
+
+                    unitTarget->SetHealth(unitTarget->GetMaxHealth());
+                    if (VehicleKit* vehicle = unitTarget->GetVehicleKit())
+                        if (Unit* seat = vehicle->GetPassenger(1))
+                            seat->ModifyPower(POWER_ENERGY,50);
+                }
+                case 62907:                                 // Freyas Wall
+                {
+                    if (!unitTarget)
+                        return;
+
+                    for (int i= 0; i < 3;++i)
+                        unitTarget->CastSpell(unitTarget, 62947, true);
+                    return;
                 }
                 case 63984:                                 // Hate to Zero (Ulduar - Yogg Saron)
                 {

@@ -1710,18 +1710,20 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 45976:                                 // Open Portal
                 case 48278:                                 // Paralyze (Utgarde Pinnacle)
                 case 50988:                                 // Glare of the Tribunal (Halls of Stone)
+                case 51146:                                 // Searching Gaze (Halls Of Stone)
                 case 54148:                                 // Svala Get Random Target
                 case 55479:                                 // Forced Obedience (Naxxramas - Razovius encounter)
                 case 59870:                                 // Glare of the Tribunal (h) (Halls of Stone)
                 case 62016:                                 // Charge Orb (Thorim)
+                case 62042:                                 // Stormhammer (Thorim)
                 case 62301:                                 // Cosmic Smash (Algalon)
+                case 62374:                                 // Pursued Ulduar Leviathan
                 case 62488:                                 // Activate Construct (Ulduar - Ignis encounter)
                 case 63018:                                 // Searing Light nonhero
                 case 63024:                                 // Gravity Bomb (XT-002)
                 case 63387:                                 // Rapid Burst
                 case 63545:                                 // Icicle Hodir(trigger spell from 62227)
                 case 63795:                                 // Psychosis (Yogg-Saron)
-                case 62042:                                 // Stormhammer (Thorim)
                 case 64218:                                 // Overcharge
                 case 64234:                                 // Gravity Bomb (h) (XT-002)
                 case 64531:                                 // Rapid Burst (h)
@@ -1753,7 +1755,6 @@ void Spell::SetTargetMap(SpellEffectIndex effIndex, uint32 targetMode, UnitList&
                 case 73058:                                 // Blood Nova
                 case 73142:                                 // Bone Spike Graveyard (during Bone Storm) (Icecrown Citadel, Lord Marrowgar encounter, 10N)
                 case 73144:                                 // Bone Spike Graveyard (during Bone Storm) (Icecrown Citadel, Lord Marrowgar encounter, 10H)
-                case 51146:                                 // Searching Gaze (Halls Of Stone)
                     unMaxTargets = 1;
                     break;
                 case 28542:                                 // Life Drain
