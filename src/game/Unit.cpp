@@ -1248,22 +1248,21 @@ uint32 Unit::DealDamage(Unit *pVictim, uint32 damage, CleanDamage const* cleanDa
                 SpellAuraHolderMap const& vAuras = pVictim->GetSpellAuraHolderMap();
                 for (SpellAuraHolderMap::const_iterator i = vAuras.begin(), next; i != vAuras.end(); ++i)
                 {
-                    SpellAuraHolderPtr holder = i->second;
-                    if (!holder || holder->IsDeleted())
+                    if (!i->second || i->second->IsDeleted())
                         continue;
 
-                    if (spellProto && spellProto->Id == holder->GetId()) // Not drop auras added by self
+                    if (spellProto && spellProto->Id == i->second->GetId()) // Not drop auras added by self
                         continue;
 
-                    if (holder->GetSpellProto()->procFlags)
+                    if (i->second->GetSpellProto()->procFlags)
                         continue;
 
-                    if (GetProcFlag(holder->GetSpellProto()))
+                    if (GetProcFlag(i->second->GetSpellProto()))
                         continue;
 
-                    if (holder->GetSpellProto()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_DAMAGE)
+                    if (i->second->GetSpellProto()->AuraInterruptFlags & AURA_INTERRUPT_FLAG_DAMAGE)
                     {
-                        spellsToRemove.insert(holder->GetId());
+                        spellsToRemove.insert(i->second->GetId());
                     }
                 }
             }
@@ -4566,25 +4565,24 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
         // take out same spell
         for (SpellAuraHolderMap::iterator iter = spair.first; iter != spair.second; ++iter)
         {
-            SpellAuraHolderPtr foundHolder = iter->second;
-            if (foundHolder && !foundHolder->IsDeleted() &&
-                foundHolder->GetCasterGuid() == holder->GetCasterGuid() ||
-                foundHolder->GetCasterGuid().IsCreatureOrPet() && holder->GetCasterGuid().IsCreatureOrPet())
+            if (iter->second && !iter->second->IsDeleted() &&
+                iter->second->GetCasterGuid() == holder->GetCasterGuid() ||
+                iter->second->GetCasterGuid().IsCreatureOrPet() && holder->GetCasterGuid().IsCreatureOrPet())
             {
                 // Aura can stack on self -> Stack it;
                 if (aurSpellInfo->StackAmount)
                 {
-                    holderToStackAdd = foundHolder;
+                    holderToStackAdd = iter->second;
                     break;
                 }
 
                 // Check for coexisting Weapon-proced Auras
                 if  (holder->IsWeaponBuffCoexistableWith() &&
-                    foundHolder->GetCastItemGuid() && foundHolder->GetCastItemGuid() != holder->GetCastItemGuid())
+                    iter->second->GetCastItemGuid() && iter->second->GetCastItemGuid() != holder->GetCastItemGuid())
                     continue;
 
                 // Carry over removed Aura's remaining damage if Aura still has ticks remaining
-                if (foundHolder->GetSpellProto()->AttributesEx4 & SPELL_ATTR_EX4_STACK_DOT_MODIFIER)
+                if (iter->second->GetSpellProto()->AttributesEx4 & SPELL_ATTR_EX4_STACK_DOT_MODIFIER)
                 {
                     for (int32 i = 0; i < MAX_EFFECT_INDEX; ++i)
                     {
@@ -4595,7 +4593,7 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
 
                             if (aurNameReal == SPELL_AURA_PERIODIC_DAMAGE && aur->GetAuraDuration() > 0)
                             {
-                                if (Aura* existing = foundHolder->GetAuraByEffectIndex(SpellEffectIndex(i)))
+                                if (Aura* existing = iter->second->GetAuraByEffectIndex(SpellEffectIndex(i)))
                                 {
                                     int32 remainingTicks = existing->GetAuraMaxTicks() - existing->GetAuraTicks();
                                     int32 remainingDamage = existing->GetModifier()->m_amount * remainingTicks;
@@ -4610,9 +4608,9 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
                 }
 
                 // only one holder per caster on same target
-                if (foundHolder->GetCasterGuid() == holder->GetCasterGuid())
+                if (iter->second->GetCasterGuid() == holder->GetCasterGuid())
                 {
-                    holdersToRemove.insert(foundHolder);
+                    holdersToRemove.insert(iter->second);
                     break;
                 }
             }
@@ -4620,7 +4618,7 @@ bool Unit::AddSpellAuraHolder(SpellAuraHolderPtr holder)
             // stacking of holders from different casters
             // some holders stack, but their auras dont (i.e. only strongest aura effect works)
             if (!sSpellMgr.IsStackableSpellAuraHolder(aurSpellInfo))
-                holdersToRemove.insert(foundHolder);
+                holdersToRemove.insert(iter->second);
         }
     }
 
@@ -5183,10 +5181,9 @@ void Unit::RemoveAurasDueToSpell(uint32 spellId, SpellAuraHolderPtr except, Aura
     SpellAuraHolderBounds bounds = GetSpellAuraHolderBounds(spellId);
     for (SpellAuraHolderMap::iterator iter = bounds.first; iter != bounds.second; )
     {
-        SpellAuraHolderPtr holder = iter->second;
-        if (holder && holder != except)
+        if (iter->second && iter->second != except)
         {
-            RemoveSpellAuraHolder(holder, mode);
+            RemoveSpellAuraHolder(iter->second, mode);
             bounds = GetSpellAuraHolderBounds(spellId);
             iter = bounds.first;
         }
@@ -5545,19 +5542,20 @@ void Unit::DelaySpellAuraHolder(uint32 spellId, int32 delaytime, ObjectGuid cast
     SpellAuraHolderBounds bounds = GetSpellAuraHolderBounds(spellId);
     for (SpellAuraHolderMap::iterator iter = bounds.first; iter != bounds.second; ++iter)
     {
-        SpellAuraHolderPtr holder = iter->second;
-
-        if (casterGuid != holder->GetCasterGuid())
+        if (!iter->second || !iter->second->IsDeleted())
             continue;
 
-        if (holder->GetAuraDuration() < delaytime)
-            holder->SetAuraDuration(0);
+        if (casterGuid != iter->second->GetCasterGuid())
+            continue;
+
+        if (iter->second->GetAuraDuration() < delaytime)
+            iter->second->SetAuraDuration(0);
         else
-            holder->SetAuraDuration(holder->GetAuraDuration() - delaytime);
+            iter->second->SetAuraDuration(iter->second->GetAuraDuration() - delaytime);
 
-        holder->SendAuraUpdate(false);
+        iter->second->SendAuraUpdate(false);
 
-        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell %u partially interrupted on %s, new duration: %u ms", spellId, GetObjectGuid().GetString().c_str(), holder->GetAuraDuration());
+        DEBUG_FILTER_LOG(LOG_FILTER_SPELL_CAST, "Spell %u partially interrupted on %s, new duration: %u ms", spellId, GetObjectGuid().GetString().c_str(), iter->second->GetAuraDuration());
     }
 }
 
@@ -12002,12 +12000,10 @@ bool Unit::hasNegativeAuraWithInterruptFlag(uint32 flag)
     MAPLOCK_READ(this,MAP_LOCK_TYPE_AURAS);
     for (SpellAuraHolderMap::const_iterator iter = m_spellAuraHolders.begin(); iter != m_spellAuraHolders.end(); ++iter)
     {
-        SpellAuraHolderPtr holder = iter->second;
-
-        if (!holder || holder->IsDeleted())
+        if (!iter->second || iter->second->IsDeleted())
             continue;
 
-        if (!holder->IsPositive() && holder->GetSpellProto()->AuraInterruptFlags & flag)
+        if (!iter->second->IsPositive() && iter->second->GetSpellProto()->AuraInterruptFlags & flag)
             return true;
     }
     return false;
@@ -13003,10 +12999,7 @@ bool Unit::HasMorePoweredBuff(uint32 spellId)
         SpellAuraHolderMap const& holders = GetSpellAuraHolderMap();
         for (SpellAuraHolderMap::const_iterator itr = holders.begin(); itr != holders.end(); ++itr)
         {
-
-            SpellAuraHolderPtr holder = itr->second;
-
-            if (!holder || holder->IsDeleted())
+            if (!itr->second || itr->second->IsDeleted())
                 continue;
 
             uint32 foundSpellId = itr->first;
