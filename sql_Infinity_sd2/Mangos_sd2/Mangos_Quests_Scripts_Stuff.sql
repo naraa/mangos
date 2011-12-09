@@ -352,8 +352,8 @@ UPDATE creature_template SET
 ScriptName='npc_tipsy_mcmanus'
 WHERE entry=28566;
 
-DELETE FROM `gameobject` WHERE guid = '200000';
-INSERT INTO `gameobject` VALUES ('200000','190643','571','1','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
+DELETE FROM `gameobject` WHERE guid = '410000';
+INSERT INTO `gameobject` VALUES ('410000','190643','571','1','1','5545.45','5767.53','-77.8042','5.39307','0','0','0.959937','0.280215','-25','0','1');
 
 DELETE FROM creature where id=28537;
 INSERT INTO creature VALUES
