@@ -459,6 +459,7 @@ INSERT INTO `item_required_target` (`entry`, `type`, `targetEntry`) VALUES
 -- Quest: Drake Hunt (11940/11919)
 -- ------------------------------
 UPDATE `creature_template` SET ScriptName='npc_nexus_drake', AIName='' WHERE entry = 26127;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 26127;
 
 -- -------------------------------
 -- Quest: Merciful Freedom (11676)
@@ -479,6 +480,7 @@ maxmana=7196
 WHERE entry=25474;
 
 UPDATE `creature_template` SET `ScriptName`='npc_beryl_sorcerer' , AIName='' WHERE entry=25316;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 25316;
 
 -- ---------------------------------------------------
 -- Mob support for Quest: Powering Our Defenses (8490)

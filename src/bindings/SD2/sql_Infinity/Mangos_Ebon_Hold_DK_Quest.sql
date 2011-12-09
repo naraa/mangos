@@ -43,8 +43,13 @@ DELETE FROM `creature` WHERE `id`=29180;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_highlord_darion_mograine' WHERE `entry`='29173';
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_the_lich_king_tirion_dawn' WHERE `entry` in (29183,29175);
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='npc_minibosses_dawn_of_light' WHERE `entry` IN (29199,29204,29200);
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29199;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29200;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29204;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_acherus_ghoul' WHERE `entry`='29219';
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29219;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName`='mob_warrior_of_the_frozen_wastes' WHERE `entry`='29206';
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 29206;
 
 DELETE FROM `spell_script_target` WHERE `entry` in (53658, 53679, 53701, 53705, 53706, 53677, 53685);
 INSERT INTO `spell_script_target` VALUES (53679, 1, 29183);
@@ -129,6 +134,8 @@ INSERT INTO `creature_ai_scripts` VALUES ('2900703', '29007', '11', '0', '100', 
 -- Quest how to win friends and how to influence enemies
 -- -----------------------------------------------------
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'npc_crusade_persuaded' WHERE `entry` IN (28939,28610);   -- 28640 scarlet crusader needs to be added
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28610;
+DELETE FROM `creature_ai_scripts` WHERE `creature_id` = 28939;
 
 -- ---------------------------------------------------------------
 -- Quest Death comes From a High
