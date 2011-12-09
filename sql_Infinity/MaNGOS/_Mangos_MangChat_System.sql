@@ -1,7 +1,7 @@
 SET FOREIGN_KEY_CHECKS=0;
-- ----------------------------
-- Table structure for IRC_Commands
-- ----------------------------
+-- ----------------------------
+-- Table structure for IRC_Commands
+-- ----------------------------
 DROP TABLE IF EXISTS `IRC_Commands`;
 CREATE TABLE `IRC_Commands` (
  `Command` varchar(10) NOT NULL default '',
@@ -10,9 +10,9 @@ CREATE TABLE `IRC_Commands` (
  PRIMARY KEY  (`Command`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='IRC Module System';
 
-- ----------------------------
-- Records
-- ----------------------------
+-- ----------------------------
+-- Records
+-- ----------------------------
 INSERT INTO `IRC_Commands` VALUES
 ('acct', '[acct <Player> <(un)lock/mail/pass/rename>] : Perform Action To <Player> Account.', '3'),
 ('ban', '[ban <Player/IP> <ip/acct/unban/reason>] : Ban/Unban <Player>', '3'),
@@ -47,9 +47,9 @@ INSERT INTO `IRC_Commands` VALUES
 ('sysmsg', '[sysmsg <a/n/e> <Message>] : Broadcasts A System Message. (a-Broadcast System Message)(n-Broadcast Notify Message)(e-Event Message)', 3);
 
 SET FOREIGN_KEY_CHECKS=0;
-- ----------------------------
-- Table structure for IRC_Inchan
-- ----------------------------
+-- ----------------------------
+-- Table structure for IRC_Inchan
+-- ----------------------------
 DROP TABLE IF EXISTS `IRC_Inchan`;
 CREATE TABLE `IRC_Inchan` (
  `guid` int(11) unsigned NOT NULL default '0' COMMENT 'Global Unique Identifier',
@@ -63,7 +63,7 @@ SET FOREIGN_KEY_CHECKS=0;
 DELETE FROM `command` WHERE `name` = 'ircpm';
 INSERT INTO `command` VALUES ('ircpm', '1', 'Syntax:.ircpm #nick #Nachricht\r\n\r\nSchicke eine Nachricht an eine Person im IRC.');
 
-- do not delete tickets, only flag them as "closed"
+-- do not delete tickets, only flag them as "closed"
 
 UPDATE `mangos_string` SET `content_default` = 'All tickets closed.', `content_loc3` = 'Alle Tickets geschlossen.' WHERE entry = 294;
 UPDATE `mangos_string` SET `content_default` = 'Character %s ticket closed.', `content_loc3` = 'Ticket von Charakter %s wurde geschlossen.' WHERE entry = 295;

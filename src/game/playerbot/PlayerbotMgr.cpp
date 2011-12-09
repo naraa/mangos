@@ -714,7 +714,7 @@ void PlayerbotMgr::HandleMasterIncomingPacket(const WorldPacket& packet)
 
         case CMSG_LIST_INVENTORY:
         {
-            if (sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_SELL_TRASH))
+            if (!sWorld.getConfig(CONFIG_BOOL_PLAYERBOT_SELL_TRASH))
                 return;
 
             WorldPacket p(packet);

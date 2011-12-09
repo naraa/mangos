@@ -51,7 +51,7 @@ INSERT INTO spell_chain VALUES
 (61681, 61680, 61680, 2, 0),
 (52858, 61681, 61680, 3, 0);
 
---Shaman Overload
+-- Shaman Overload
 
 -- Lightning Bolt
 DELETE FROM spell_chain WHERE first_spell = 45284;
