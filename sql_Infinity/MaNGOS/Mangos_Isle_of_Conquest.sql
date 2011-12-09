@@ -94,10 +94,10 @@ INSERT INTO creature_spell (guid, spell, `index`) VALUES
 
 -- Alli Glaive Thrower
 UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 3, faction_H = 3, ScriptName = 'npc_ic_vehicle' WHERE entry = 34802;
-UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 3, faction_H = 3, ScriptName = 'npc_ic_vehicle' WHERE entry = 35419;
+UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 3, faction_H = 3, ScriptName = '' WHERE entry = 35419;
 -- Horde Glaive Thrower
 UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 6, faction_H = 6, ScriptName = 'npc_ic_vehicle' WHERE entry = 35273;
-UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 6, faction_H = 6, ScriptName = 'npc_ic_vehicle' WHERE entry = 35421;
+UPDATE creature_template SET vehicle_id = 447, iconName = 'vehichleCursor', faction_A = 6, faction_H = 6, ScriptName = '' WHERE entry = 35421;
 
 -- Horde Siege Engine
 UPDATE creature_template SET powertype = 3, vehicle_id = 435, iconName = 'vehichleCursor', faction_A = 6, faction_H = 6, AIName = '' WHERE entry = 35069;

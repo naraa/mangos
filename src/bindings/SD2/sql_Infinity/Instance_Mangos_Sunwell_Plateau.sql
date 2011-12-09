@@ -9,6 +9,8 @@ UPDATE `creature_template` SET `flags_extra` = 128 WHERE `entry` = 25796; -- mak
 
 UPDATE `creature_template` SET `modelid_1` = 20577 WHERE `entry` in (25796, 25795);
 
+UPDATE gameobject_template SET ScriptName='go_spectral_rift' WHERE entry = 187055;
+
 -- correct spawn of kalegcos spawn
 DELETE FROM `creature` WHERE `id`=24891;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES

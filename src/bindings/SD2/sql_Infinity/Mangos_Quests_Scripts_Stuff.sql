@@ -8,6 +8,10 @@ DELETE FROM `creature` WHERE `id`=29560;
 -- INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 -- (88692, 29560, 571, 1, 1, 0, 0, 7458.74, 4846.24, 54.1606, 0.0676441, 300, 0, 0, 63000, 19970, 0, 0);
 
+-- Clean old ACID texts up
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
+DELETE FROM `creature_ai_texts` WHERE  `entry`= -1137;
 
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------

@@ -3,6 +3,9 @@ UPDATE `instance_template` SET `ScriptName`='instance_trial_of_the_crusader' WHE
 DELETE FROM `creature` WHERE `map` = 649 AND `id` IN 
 (34797,34796,34799,35144,34780,34460,34463,34461,34471,34475,34472,34453,34455,34458,34454,34451,34456,34497,34496,34564,34467,35465,34468,35610,34473,34474,34441,34449,34448,34450,34606, 34605, 34607, 34564);
 
+UPDATE creature_template SET ScriptName='' WHERE entry=36549;
+UPDATE creature_template SET ScriptName='' WHERE entry IN (35035, 35770, 35771);
+
 -- announcers
 UPDATE `creature_template` SET `npcflag`=1, `scriptname`='npc_toc_announcer' WHERE `entry`=34816;
 DELETE FROM `creature` WHERE `map` = 649 AND `id` = 35766;
