@@ -200,7 +200,7 @@ void PathFinder::BuildPolyPath(const Vector3 &startPos, const Vector3 &endPos)
             if (m_sourceUnit->GetTerrain()->IsUnderWater(p.x, p.y, p.z))
             {
                 DEBUG_FILTER_LOG(LOG_FILTER_PATHFINDING, "++ BuildPolyPath :: underWater case\n");
-                if (owner->CanSwim())
+                if (owner->CanSwim()|| owner->IsPet())
                     buildShotrcut = true;
             }
             else
@@ -491,7 +491,7 @@ void PathFinder::createFilter()
             includeFlags |= NAV_GROUND;          // walk
 
         // creatures don't take environmental damage
-        if (creature->CanSwim())
+        if (creature->CanSwim() || creature->IsPet())
             includeFlags |= (NAV_WATER | NAV_MAGMA | NAV_SLIME);           // swim
     }
     else if (m_sourceUnit->GetTypeId() == TYPEID_PLAYER)
