@@ -35,7 +35,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 213
-WHERE entry IN = 30066;
+WHERE entry = 30066;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (30066);
 INSERT INTO npc_spellclick_spells VALUES
@@ -54,7 +54,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 68
-WHERE entry IN = 27714;
+WHERE entry = 27714;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27714);
 INSERT INTO npc_spellclick_spells VALUES
@@ -72,7 +72,7 @@ UPDATE creature_template SET
     spell5 = 48610,
     spell6 = 0,
     vehicle_id = 49
-WHERE entry IN = 27354;
+WHERE entry = 27354;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27354);
 INSERT INTO npc_spellclick_spells VALUES
@@ -91,7 +91,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 36
-WHERE entry IN = 26523;
+WHERE entry = 26523;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26523);
 INSERT INTO npc_spellclick_spells VALUES
@@ -137,7 +137,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 308
-WHERE entry IN = 29598;
+WHERE entry = 29598;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (29598);
 INSERT INTO npc_spellclick_spells VALUES
@@ -161,7 +161,7 @@ UPDATE creature_template SET
     minmana = 51360,
     InhabitType = 3
     vehicle_id = 156
-WHERE entry IN = 28670;
+WHERE entry = 28670;
 
 REPLACE INTO creature_template_addon (entry, mount, bytes1, b2_0_sheath, emote, moveflags, auras) VALUES
 (28670, 0, 50331648, 1, 0, 1024, '53112');
@@ -177,8 +177,9 @@ UPDATE creature_template SET
     spell4 = 0,
     spell5 = 0,
     spell6 = 0,
+    KillCredit1 = 25596,
     vehicle_id = 29
-WHERE entry IN = 25596;
+WHERE entry = 25596;
 
 INSERT IGNORE INTO spell_script_target VALUES (45877, 1, 25596);
 
@@ -193,7 +194,7 @@ UPDATE creature_template SET
     spell5 = 47962,
     spell6 = 0,
     vehicle_id = 26
-WHERE entry IN = 25334;
+WHERE entry = 25334;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (25334, 27107);
 INSERT INTO npc_spellclick_spells VALUES
@@ -214,7 +215,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 300
-WHERE entry IN = 27061;
+WHERE entry = 27061;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27061);
 INSERT INTO npc_spellclick_spells VALUES (27061, 47920, 0, 0, 0, 1);
@@ -232,7 +233,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 244
-WHERE entry IN = 30236;
+WHERE entry = 30236;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (30236);
 INSERT INTO npc_spellclick_spells VALUES
@@ -250,7 +251,7 @@ UPDATE creature_template SET
     spell5 = 0,
     spell6 = 0,
     vehicle_id = 99
-WHERE entry IN = 27996;
+WHERE entry = 27996;
 
 DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27996);
 INSERT INTO npc_spellclick_spells VALUES
