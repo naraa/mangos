@@ -107,7 +107,7 @@ UPDATE creature_template SET
     spell4 = 62552,
     spell5 = 64077,
     spell6 = 62863,
-    speed_run = '1.5', 
+    speed_run = '1.5',
     unit_flags = 8
     vehicle_id = 349
 WHERE entry IN (33844, 33845);
@@ -157,8 +157,8 @@ UPDATE creature_template SET
     spell6 = 0,
     maxhealth = 133525,
     minhealth = 133525,
-    maxmana = 51360, 
-    minmana = 51360, 
+    maxmana = 51360,
+    minmana = 51360,
     InhabitType = 3
     vehicle_id = 156
 WHERE entry IN = 28670;
@@ -451,20 +451,20 @@ INSERT INTO `npc_spellclick_spells` VALUES
 (33843, 63792, 13835, 1, 0, 3);
 
   -- Typo fix for Argent Mount
-UPDATE `creature_template` SET 
-    spell1 = 62544, 
-    spell2 = 64342, 
-    spell3 = 63010, 
-    spell4 = 62552, 
-    spell5 = 64077, 
-    spell6 = 62863, 
-    spell7 = 63034, 
-    vehicle_id = 349 
+UPDATE `creature_template` SET
+    spell1 = 62544,
+    spell2 = 64342,
+    spell3 = 63010,
+    spell4 = 62552,
+    spell5 = 64077,
+    spell6 = 62863,
+    spell7 = 63034,
+    vehicle_id = 349
 WHERE entry IN (33844, 33845);
 
   -- Argent warhorse
-UPDATE `creature_template` SET 
-    `vehicle_id` = 529 
+UPDATE `creature_template` SET
+    `vehicle_id` = 529
 WHERE `entry` = 33782;
 
 DELETE FROM `npc_spellclick_spells` WHERE `npc_entry` IN = 33782;
@@ -474,10 +474,10 @@ INSERT INTO `npc_spellclick_spells` VALUES
 -- ---------
 -- Enormos -
 -- ---------
-UPDATE `creature_template` SET 
-    `spell1` = 55982, 
-    `spell2` = 55980, 
-    `vehicle_id` = 30 
+UPDATE `creature_template` SET
+    `spell1` = 55982,
+    `spell2` = 55980,
+    `vehicle_id` = 30
 WHERE `entry` = 30021
 
 DELETE FROM `npc_spellclick_spells` WHERE `npc_entry` IN = 30021;
@@ -529,39 +529,95 @@ DELETE FROM creature_template_addon WHERE entry IN = 29625;
 INSERT INTO creature_template_addon (entry, mount, bytes1, b2_0_sheath, b2_1_pvp_state, emote, moveflags, auras) VALUES
 (29625, 0, 50331648, 1, 0, 0, 0, NULL);
 
--- Under Development
+-- ------------------
+-- Highland Mustang -
+-- ------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26472);
+INSERT INTO npc_spellclick_spells VALUES (26472, 67373, 0, 0, 0, 1);
 
--- Highland Mustang
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26472);
--- INSERT INTO npc_spellclick_spells VALUES (26472, 67373, 0, 0, 0, 1);
+-- --------------------
+-- Kor Kron war Rider -
+-- --------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26813);
+INSERT INTO npc_spellclick_spells VALUES (26813, 47424, 0, 0, 0, 1);
 
--- Kor Kron war Rider
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26813);
--- INSERT INTO npc_spellclick_spells VALUES (26813, 47424, 0, 0, 0, 1);
+-- ----------------------
+-- Kor Kron war Rider 2 -
+-- ----------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26572);
+INSERT INTO npc_spellclick_spells VALUES (26572, 47424, 0, 0, 0, 1);
 
--- Kor Kron war Rider 2
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26572);
--- INSERT INTO npc_spellclick_spells VALUES (26572, 47424, 0, 0, 0, 1);
+-- --------------------
+-- Onslaught Warhorse -
+-- --------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27213);
+INSERT INTO npc_spellclick_spells VALUES (27213, 67373, 0, 0, 0, 1);
 
--- Onslaught Warhorse
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27213);
--- INSERT INTO npc_spellclick_spells VALUES (27213, 67373, 0, 0, 0, 1);
+-- ----------------------------
+-- Steel Gate Flying manchine -
+-- ----------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (24418);
+INSERT INTO npc_spellclick_spells VALUES (24418, 67373, 0, 0, 0, 1);
 
--- Steel Gate Flying manchine
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (24418);
--- INSERT INTO npc_spellclick_spells VALUES (24418, 67373, 0, 0, 0, 1);
+-- --------------------------
+-- Wintergrasp tower cannon -
+-- --------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28366);
+INSERT INTO npc_spellclick_spells VALUES (28366, 60968, 0, 0, 0, 1);
 
--- Wintergrasp tower cannon
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28366);
--- INSERT INTO npc_spellclick_spells VALUES (28366, 60968, 0, 0, 0, 1);
+-- --------------------
+-- Wintergrasp Bomber -
+-- --------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 27850;
+INSERT INTO npc_spellclick_spells VALUES (27850, 60968, 0, 0, 0, 1);
 
--- Wooly mammoth bull
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (25743);
--- INSERT INTO npc_spellclick_spells VALUES (25743, 43695, 0, 0, 0, 0);
+-- ----------------------
+-- Wintergrasp catapult -
+-- ----------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 27881;
+INSERT INTO npc_spellclick_spells VALUES (27881, 60968, 0, 0, 0, 1);
 
--- Wyrmrest skytalon
--- DELETE FROM npc_spellclick_spells WHERE npc_entry = 32535;
--- INSERT INTO npc_spellclick_spells VALUES (32535, 61245, 0, 0, 0, 1);
+-- ------------------------
+-- Wintergrasp demolisher -
+-- ------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 28094;
+INSERT INTO npc_spellclick_spells VALUES (28094, 60968, 0, 0, 0, 1);
+
+-- --------------------------
+-- Wintergrasp Seige Engine -
+-- --------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 28312;
+INSERT INTO npc_spellclick_spells VALUES (28312, 60968, 0, 0, 0, 1);
+
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 32627,;
+INSERT INTO npc_spellclick_spells VALUES (32627, 60968, 0, 0, 0, 1);
+
+-- --------------------------
+-- Wintergrasp Seige Turret -
+-- --------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 28319;
+INSERT INTO npc_spellclick_spells VALUES (28319, 60968, 0, 0, 0, 1);
+
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 32629;
+INSERT INTO npc_spellclick_spells VALUES (32629, 60968, 0, 0, 0, 1);
+
+-- --------------------------
+-- Frostbrood Vanquisher    -
+-- --------------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN = 28670;
+INSERT INTO npc_spellclick_spells VALUES (28670, 52196, 0, 0, 0, 1);
+
+-- --------------------
+-- Wooly mammoth bull -
+-- --------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry IN (25743);
+INSERT INTO npc_spellclick_spells VALUES (25743, 43695, 0, 0, 0, 0);
+
+-- -------------------
+-- Wyrmrest skytalon -
+-- -------------------
+DELETE FROM npc_spellclick_spells WHERE npc_entry = 32535;
+INSERT INTO npc_spellclick_spells VALUES (32535, 61245, 0, 0, 0, 1);
 
 
 -- =====================================================================================
@@ -605,16 +661,4 @@ DELETE FROM creature_template_addon WHERE entry IN (31260, 37643);
 -- Commit 8f022d171f3e383e2e77
 
 UPDATE `creature_template` SET `PowerType`='3', `spell1`='62225', `spell2`='47480', `spell3`='47481', `spell4`='47482', `spell5`='47484', `spell6`='67886', `ScriptName`='npc_risen_ally' WHERE `entry`='30230';
-
--- from YTDB/TC 578
-DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27850,27881,28094,28312,28319,28670,32627,32629);
-INSERT INTO npc_spellclick_spells (npc_entry, spell_id, quest_start, quest_start_active, quest_end, cast_flags) VALUES
-(27850, 60968, 0, 0, 0, 1),
-(27881, 60968, 0, 0, 0, 1),
-(28094, 60968, 0, 0, 0, 1),
-(28312, 60968, 0, 0, 0, 1),
-(28319, 60968, 0, 0, 0, 1),
-(28670, 52196, 0, 0, 0, 1),
-(32627, 60968, 0, 0, 0, 1),
-(32629, 60968, 0, 0, 0, 1);
 
