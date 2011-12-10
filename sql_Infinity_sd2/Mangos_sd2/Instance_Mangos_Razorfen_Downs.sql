@@ -39,3 +39,5 @@ UPDATE `creature_template` SET `modelid_2` = 6842, `minhealth` = 3342, `maxhealt
 
 UPDATE `gameobject_template` SET `ScriptName` = 'go_gong_razor' WHERE `entry` = 148917;
 UPDATE `gameobject_template` SET `flags` = 32 WHERE `entry` = 148917;
+
+

@@ -12,6 +12,7 @@ DELETE FROM `creature` WHERE `id`=29560;
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-555') OR (`entry`='-556') OR (`entry`='-557') OR (`entry`='-558') OR (`entry`='-559') OR (`entry`='-560') OR (`entry`='-561') OR (`entry`='-562') OR (`entry`='-563') OR (`entry`='-564') OR (`entry`='-565');
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR (`entry`='-1122') OR (`entry`='-1123') OR (`entry`='-1124') OR (`entry`='-1125') OR (`entry`='-1126') OR (`entry`='-1127') OR (`entry`='-1128');
 DELETE FROM `creature_ai_texts` WHERE  `entry`= -1137;
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-810') OR (`entry`='-811') OR (`entry`='-812') OR (`entry`='-813') OR (`entry`='-814') OR (`entry`='-815');
 
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------

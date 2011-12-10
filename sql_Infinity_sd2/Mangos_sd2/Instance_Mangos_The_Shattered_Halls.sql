@@ -1,5 +1,6 @@
--- Instance The Shattered Halls
--- ------------------------
+-- ------------------------------
+-- Instance The Shattered Halls -
+-- ------------------------------
 
 -- ------------
 -- Shattered Hand Executioner

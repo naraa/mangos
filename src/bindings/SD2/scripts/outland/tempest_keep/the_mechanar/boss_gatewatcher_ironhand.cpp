@@ -23,20 +23,23 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_AGGRO_1                     -1554006
-#define SAY_HAMMER_1                    -1554007
-#define SAY_HAMMER_2                    -1554008
-#define SAY_SLAY_1                      -1554009
-#define SAY_SLAY_2                      -1554010
-#define SAY_DEATH_1                     -1554011
-#define EMOTE_HAMMER                    -1554012
+enum
+{
+    SAY_AGGRO_1                    = -1554006,
+    SAY_HAMMER_1                   = -1554007,
+    SAY_HAMMER_2                   = -1554008,
+    SAY_SLAY_1                     = -1554009,
+    SAY_SLAY_2                     = -1554010,
+    SAY_DEATH_1                    = -1554011,
+    EMOTE_HAMMER                   = -1554012,
 
-#define SPELL_SHADOW_POWER              35322
-#define SPELL_SHADOW_POWER_H            39193
-#define SPELL_HAMMER_PUNCH              35326
-#define SPELL_JACKHAMMER                35327
-#define SPELL_JACKHAMMER_H              39194
-#define SPELL_STREAM_OF_MACHINE_FLUID   35311
+    SPELL_SHADOW_POWER             = 35322,
+    SPELL_SHADOW_POWER_H           = 39193,
+    SPELL_HAMMER_PUNCH             = 35326,
+    SPELL_JACKHAMMER               = 35327,
+    SPELL_JACKHAMMER_H             = 39194,
+    SPELL_STREAM_OF_MACHINE_FLUID  = 35311,
+};
 
 struct MANGOS_DLL_DECL boss_gatewatcher_iron_handAI : public ScriptedAI
 {
