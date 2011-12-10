@@ -1,19 +1,6 @@
--- Vehicle Support
-
--- DB Tables
-
--- Vehicle accessory
--- Commit e197cf0cba3487dd1a3f
-
-DROP TABLE IF EXISTS `vehicle_accessory`;
-CREATE TABLE `vehicle_accessory` (
-    `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-    `accessory_entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
-    `seat_id` tinyint(1) NOT NULL DEFAULT '0',
-    `minion` tinyint(1) unsigned NOT NULL DEFAULT '0',
-    `description` text NOT NULL,
-    PRIMARY KEY (`entry`, `seat_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Vehicle Accessory System';
+-- -----------------
+-- Vehicle Support -
+-- -----------------
 
 -- Vehicle Tables
 -- Commit 3be940faa44326abc801
@@ -24,12 +11,6 @@ ALTER TABLE `creature_template`
     ADD COLUMN `spell7` mediumint(8) unsigned NOT NULL default '0' AFTER `spell6`,
     ADD COLUMN `spell8` mediumint(8) unsigned NOT NULL default '0' AFTER `spell7`,
     ADD COLUMN `PowerType` tinyint(3) unsigned NOT NULL default '0' AFTER `MaxHealth`;
-
--- Raise Ally
--- Commit 8f022d171f3e383e2e77
-
-UPDATE `creature_template` SET `PowerType`='3', `spell1`='62225', `spell2`='47480', `spell3`='47481', `spell4`='47482', `spell5`='47484', `spell6`='67886', `ScriptName`='npc_risen_ally' WHERE `entry`='30230';
-
 
 -- DB DATA
 
@@ -424,103 +405,32 @@ UPDATE creature_template SET IconName="vehichleCursor" WHERE entry IN
 UPDATE creature_template SET IconName="Gunner" WHERE entry IN (28319,28366,28833,30236,32629,33067,33080,33139,33264,34111);
 UPDATE creature_template SET IconName = 'vehichleCursor' WHERE vehicle_id > 0 AND IconName IS NULL;
 
-DELETE FROM npc_spellclick_spells WHERE npc_entry IN (33109, 33062, 33060);
-INSERT INTO npc_spellclick_spells VALUES
-(33109, 62309, 0, 0, 0, 1),  -- Demolisher
-(33062, 65030, 0, 0, 0, 1),  -- Chopper
-(33060, 65031, 0, 0, 0, 1);  -- Siege engine
-
--- chopper
-UPDATE creature_template SET IconName = 'vehichleCursor', PowerType = 3,
-spell1 = 62974, spell2 = 62286, spell3 = 62299, spell4 = 64660, AIName = 'NullAI'
-WHERE entry IN (33062);
--- Siege engine
-UPDATE creature_template SET IconName = 'Gunner',  PowerType = 3,
-spell1 = 62345, spell2 = 62522, spell3 = 62346, AIName = 'NullAI'
-WHERE entry IN (33060);
--- demolisher
-UPDATE creature_template SET IconName = 'vehichleCursor', PowerType = 3,
-spell1 = 62306, spell2 = 62490, spell3 = 62308, spell4 =  62324, AIName = 'NullAI'
-WHERE entry IN (33109);
-
--- Salvaged Siege Turret by traponinet
-UPDATE creature_template SET PowerType=3,spell1=62358,spell2=62359,spell3=64677,spell4=0,spell5=0,spell6=0 WHERE entry=33067;
--- Salvaged Demolisher Mechanic Seat
-UPDATE creature_template SET PowerType=3,spell1=62634,spell2=64979,spell3=62479,spell4=62471,spell5=0,spell6=62428 WHERE entry=33167;
--- Earthen Stoneshaper
-UPDATE creature_template SET unit_flags=33587968 WHERE entry=33620;
--- Ymirjar Skycaller true fix (delete hack from YTDB)
-DELETE FROM creature_template_addon WHERE entry IN (31260, 37643);
--- Mechano-hog, Mekgineer's Chopper
-UPDATE creature_template SET vehicle_id = 318, IconName = 'vehichleCursor' WHERE entry IN (29929, 32286);
--- Traveler's Tundra Mammoth
--- Grand Ice Mammoth
--- Grand Black War Mammoth
--- Grand Caravan Mammoth
-DELETE FROM creature_template_addon WHERE entry = 32638;
-UPDATE creature_template SET vehicle_id = 312, IconName = 'vehichleCursor' WHERE entry IN (32633, 32640, 31857, 31858, 31861, 31862, 32212, 32213);
--- X-53 Touring Rocket
-UPDATE creature_template SET vehicle_id = 774, IconName = 'vehichleCursor' WHERE entry = 40725;
-
--- Under Development
-
--- Highland Mustang
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26472);
--- INSERT INTO npc_spellclick_spells VALUES (26472, 67373, 0, 0, 0, 1);
-
--- Kor Kron war Rider
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26813);
--- INSERT INTO npc_spellclick_spells VALUES (26813, 47424, 0, 0, 0, 1);
-
--- Kor Kron war Rider 2
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (26572);
--- INSERT INTO npc_spellclick_spells VALUES (26572, 47424, 0, 0, 0, 1);
-
--- Onslaught Warhorse
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27213);
--- INSERT INTO npc_spellclick_spells VALUES (27213, 67373, 0, 0, 0, 1);
-
--- Steel Gate Flying manchine
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (24418);
--- INSERT INTO npc_spellclick_spells VALUES (24418, 67373, 0, 0, 0, 1);
-
--- Wintergrasp tower cannon
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (28366);
--- INSERT INTO npc_spellclick_spells VALUES (28366, 60968, 0, 0, 0, 1);
-
--- Wooly mammoth bull
--- DELETE FROM npc_spellclick_spells WHERE npc_entry IN (25743);
--- INSERT INTO npc_spellclick_spells VALUES (25743, 43695, 0, 0, 0, 0);
-
--- Wyrmrest skytalon
--- DELETE FROM npc_spellclick_spells WHERE npc_entry = 32535;
--- INSERT INTO npc_spellclick_spells VALUES (32535, 61245, 0, 0, 0, 1);
-
--- from YTDB/TC 578
-DELETE FROM npc_spellclick_spells WHERE npc_entry IN (27850,27881,28094,28312,28319,28670,32627,32629);
-INSERT INTO npc_spellclick_spells (npc_entry, spell_id, quest_start, quest_start_active, quest_end, cast_flags) VALUES
-(27850, 60968, 0, 0, 0, 1),
-(27881, 60968, 0, 0, 0, 1),
-(28094, 60968, 0, 0, 0, 1),
-(28312, 60968, 0, 0, 0, 1),
-(28319, 60968, 0, 0, 0, 1),
-(28670, 52196, 0, 0, 0, 1),
-(32627, 60968, 0, 0, 0, 1),
-(32629, 60968, 0, 0, 0, 1);
-
--- Scaling Data
-
--- vehicle scaling spells
+-- ------------------------
+-- vehicle scaling spells -
+-- ------------------------
 
 INSERT IGNORE INTO spell_script_target VALUES (66667, 1, 27692);
 INSERT IGNORE INTO spell_script_target VALUES (66667, 1, 27756);
 INSERT IGNORE INTO spell_script_target VALUES (66667, 1, 27755);
 
--- Veh Accessory stuff
+-- -------------------------------
+-- Vehicle accessory             -
+-- Commit e197cf0cba3487dd1a3f   -
+-- -------------------------------
 
---
--- `vehicle_accessory`
---
+DROP TABLE IF EXISTS `vehicle_accessory`;
+CREATE TABLE `vehicle_accessory` (
+    `entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+    `accessory_entry` mediumint(8) unsigned NOT NULL DEFAULT '0',
+    `seat_id` tinyint(1) NOT NULL DEFAULT '0',
+    `minion` tinyint(1) unsigned NOT NULL DEFAULT '0',
+    `description` text NOT NULL,
+    PRIMARY KEY (`entry`, `seat_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Vehicle Accessory System';
+
+-- ---------------------
+-- `vehicle_accessory` -
+-- ---------------------
 
 REPLACE INTO `vehicle_accessory` (`entry`, `accessory_entry`, `seat_id`, `minion`, `description`) VALUES
 (36891, 31260, 0, 0, 'Ymirjar Skycaller'),
