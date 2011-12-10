@@ -1,3 +1,7 @@
+-- ------------------
+-- Obsidian_Sanctum -
+-- ------------------
+
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1615042 AND -1615000;
 INSERT INTO `script_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 (-1615042, '%s begins to open a Twilight Portal!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '%s начинает открывать Врата Сумерек!', 0, 5, 0, 0, 'sartharion drake WHISPER_OPEN_PORTAL'),

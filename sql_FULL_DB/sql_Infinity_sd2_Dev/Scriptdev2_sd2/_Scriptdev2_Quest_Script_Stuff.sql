@@ -14,7 +14,7 @@ INSERT INTO script_texts VALUES
 ('-1999784','Oh my...',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Tamara Wobblesprocket - Taste Test (2)'),
 ('-1999783','Tastes like I\'m drinking... engine degreaser!',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'0','0','0','0','Tamara Wobblesprocket - Taste Test (3)');
 
-DELETE FROM script_texts WHERE entry BETWEEN -1999792 AND -1999803;
+DELETE FROM script_texts WHERE entry BETWEEN -1999803 AND -1999792;
 INSERT into script_texts (entry,content_default,type,comment) VALUES
 (-1999792,'Beginning the destillation in 5 seconds',0,'SAY_EVENT_STARTED'),
 (-1999793,'Add bannanas',0,'SAY_ADD_BANNANAS'),
@@ -47,7 +47,7 @@ INSERT INTO script_texts (`entry`,`content_default`,`type`,`comment`) VALUES
 -- Quest texts 14107
 -- -----------------
 
-DELETE FROM script_texts WHERE entry BETWEEN -1999819 AND -1999823;
+DELETE FROM script_texts WHERE entry BETWEEN -1999823 AND -1999819;
 INSERT INTO script_texts (entry,content_default,sound,type,language,emote,comment) VALUES
 (-1999819,'At last... now I can rest.',0,0,0,0,'hero spirit SAY_BLESS_1'),
 (-1999820,'I\'m so tired. Just let me rest for a moment.',0,0,0,0,'hero spirit SAY_BLESS_2'),
@@ -92,7 +92,7 @@ INSERT INTO `script_waypoint` (`entry`,`pointid`,`location_x`,
 -- Quest 11560 -
 -- -------------
 
-DELETE FROM `script_texts` WHERE `entry` BETWEEN -1999824 AND -1999831;
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1999831 AND -1999825;
 INSERT INTO `script_texts` (`entry`,`content_default`,`comment`) VALUES
 (-1999825, "Eww.. $r!", "tadpole SAY_RACE"),
 (-1999826, "No go with stranger!", "tadpole SAY_2"),

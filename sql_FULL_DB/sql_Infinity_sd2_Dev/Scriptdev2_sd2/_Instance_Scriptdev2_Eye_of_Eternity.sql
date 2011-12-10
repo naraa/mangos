@@ -1,5 +1,7 @@
--- Eye of Eternity
--- russian translation from lanc
+-- -----------------
+-- Eye of Eternity -
+-- -----------------
+
 DELETE FROM `script_texts` where `entry` between -1616035 and -1616000;
 REPLACE INTO `script_texts` (entry, content_default, content_loc1, content_loc2, content_loc3, content_loc4, content_loc5, content_loc6, content_loc7, content_loc8, sound, type, language, emote, comment) VALUES
 (-1616000, 'Lesser beings, intruding here! A shame that your excess courage does not compensate for your stupidity!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Низшие создания, вторгшиеся сюда! Как жаль что ваш ум не так силен как ваша храбрость!', '14512', '1', '0', '457', NULL),

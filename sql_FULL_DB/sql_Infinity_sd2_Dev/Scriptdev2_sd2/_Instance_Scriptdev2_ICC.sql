@@ -1,3 +1,7 @@
+-- ---------------
+-- Instance: ICC -
+-- ---------------
+
 DELETE FROM `script_texts` WHERE `entry` BETWEEN -1631594 AND -1631000;
 INSERT INTO `script_texts` (`entry`,`content_loc8`, `content_default`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 
