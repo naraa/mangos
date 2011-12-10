@@ -1,3 +1,35 @@
+Infinity Project
+
+ Project Ver 0.1
+
+ ==== Game Features ====
+  * Improved: Major strides fowards in Playerbot
+  * Implented: Chatspy
+  * Implented: Chat disable by configure levels
+  * Implented: Npc_on_Transport
+  * Implented: mmaps (PathFinding System)
+
+ ==== Server Features ====
+
+ * Improved: Updated MySQL libs to 6.0.0.
+ * Implented: MangChat IRC Bot
+ * Improved:  Windows Server base and steps to better this
+ * Added alot of tools/editors  so many may help if they wish
+
+ ==== Database  ====
+ Current DB Ver == InfinityDB_V_1.0
+
+ ==== Scriptdev2 ====
+ * Implented: Infinity_sd2 
+
+
+
+=======================================================================================================
+Thank you mangos for all your work ====================================================================
+=======================================================================================================
+
+
+
 MaNGOS 0.17   (??? ??? 2010)
 
  MaNGOS 0.17 - adds further improvements to the
