@@ -10578,17 +10578,6 @@ void SpellAuraHolder::HandleSpellSpecificBoosts(bool apply)
                     GetTarget()->HandleArenaPreparation(apply);
                     return;
                 }
-                case 55053:                                 // Deathbloom (25 man)
-                {
-                    if (!apply && m_removeMode == AURA_REMOVE_BY_EXPIRE)
-                    {
-                        cast_at_remove = true;
-                        spellId1 = 55601;
-                    }
-                    else
-                        return;
-                    break;
-                }
                 case 50720:                                 // Vigilance (warrior spell but not have warrior family)
                 {
                     spellId1 = 68066;                       // Damage Reduction
