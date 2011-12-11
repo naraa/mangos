@@ -92,6 +92,21 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     void EnterCombat(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
+
+        if (m_pInstance)
+        {
+            m_pInstance->SetData(TYPE_ANOMALUS, IN_PROGRESS);
+            if (!m_bIsRegularMode)
+                m_pInstance->SetSpecialAchievementCriteria(TYPE_CHAOS_THEORY, true);
+        }
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+        {
+            m_pInstance->SetData(TYPE_ANOMALUS, FAIL);
+        }
     }
 
     void JustDied(Unit* pKiller)
@@ -110,7 +125,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         uint8 tmp = urand(0,5);
-        Creature* pRift = m_creature->SummonCreature(NPC_CHAOTIC_RIFT, RiftLocation[tmp][0], RiftLocation[tmp][1], RiftLocation[tmp][2], 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
+        Creature* pRift = m_creature->SummonCreature(NPC_CHAOTIC_RIFT, RiftLocation[tmp][0], RiftLocation[tmp][1], RiftLocation[tmp][2], 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
         if (pRift)
         {
             //DoCast(Rift, SPELL_CHARGE_RIFT);
@@ -212,10 +227,6 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
         DoCast(m_creature, SPELL_ARCANEFORM, false);
     }
 
-    void JustDied(Unit* pKiller)
-    {
-    }
-
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -225,10 +236,12 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
         {
             Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
                 if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                     DoCast(pTarget, SPELL_CHARGED_CHAOTIC_ENERGY_BURST);
                 else
                     DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
+            }
 
             m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
         }

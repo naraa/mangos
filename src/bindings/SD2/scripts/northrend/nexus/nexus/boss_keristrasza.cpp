@@ -66,6 +66,10 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
     uint32 m_uiCrystalfireBreathTimer;
     uint32 m_uiCrystallizeTimer;
 
+///-> Achiev
+    bool m_bAchievFailed;
+    uint32 m_uiCheckTimer;
+
     void Reset()
     {
         m_uiCrystalChainTimer = 30*IN_MILLISECONDS;
@@ -73,6 +77,9 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
         m_uiCrystalfireBreathTimer = urand(10*IN_MILLISECONDS, 20*IN_MILLISECONDS);
         m_uiCrystallizeTimer = urand(20*IN_MILLISECONDS, 30*IN_MILLISECONDS);
         m_bIsEnraged = false;
+
+        m_uiCheckTimer = 1000;
+        m_bAchievFailed = false;
 
         if (!m_pInstance)
             return;
@@ -89,6 +96,48 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
         DoScriptText(SAY_AGGRO, m_creature);
 
         m_creature->CastSpell(m_creature, SPELL_INTENSE_COLD, true);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_KERISTRASZA, IN_PROGRESS);
+
+        if (!m_bIsRegularMode)
+            m_pInstance->SetSpecialAchievementCriteria(TYPE_INTENSE_COLD, true);
+    }
+
+    void CheckAchievement()
+    {
+        if (!m_pInstance)
+            return;
+
+        Map* pMap = m_creature->GetMap();
+        Map::PlayerList const& pPlayers = pMap->GetPlayers();
+        if (!pPlayers.isEmpty())
+        {
+            for (Map::PlayerList::const_iterator itr = pPlayers.begin(); itr != pPlayers.end(); ++itr)
+            {
+                Unit *pTarget = itr->getSource();
+                if (pTarget)
+                {
+                    SpellAuraHolderPtr holder = pTarget->GetSpellAuraHolder(48095);
+                    if (holder)
+                    {
+                        if (holder->GetStackAmount() > 2)
+                        {
+                            m_pInstance->SetSpecialAchievementCriteria(TYPE_INTENSE_COLD, false);
+                            m_bAchievFailed = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+        {
+            m_pInstance->SetData(TYPE_KERISTRASZA, FAIL);
+        }
     }
 
     void JustDied(Unit* pKiller)
@@ -109,6 +158,16 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (!m_bAchievFailed)
+        {
+            if (m_uiCheckTimer < uiDiff)
+            {
+                CheckAchievement();
+                m_uiCheckTimer = 1000;
+            }
+            else m_uiCheckTimer -= uiDiff;
+        }
 
         if (!m_bIsEnraged && m_creature->GetHealthPercent() < 25.0f)
         {

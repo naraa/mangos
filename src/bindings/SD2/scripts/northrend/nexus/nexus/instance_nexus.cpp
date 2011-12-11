@@ -54,6 +54,9 @@ instance_nexus::instance_nexus(Map* pMap) : ScriptedInstance(pMap)
 void instance_nexus::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+
+    for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+        m_abAchievCriteria[i] = false;
 }
 
 void instance_nexus::OnObjectCreate(GameObject* pGo)
@@ -77,6 +80,19 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
             return;
     }
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+}
+
+void instance_nexus::OnCreatureDeath(Creature *pCreature)
+{
+    switch(pCreature->GetEntry())
+    {
+        case NPC_CHAOTIC_RIFT:
+            if (GetData(TYPE_ANOMALUS) == IN_PROGRESS)
+                SetSpecialAchievementCriteria(TYPE_CHAOS_THEORY, false);
+            break;
+                default:
+                    break;
+    }
 }
 
 void instance_nexus::OnCreatureCreate(Creature* pCreature)
@@ -107,6 +123,27 @@ uint32 instance_nexus::GetData(uint32 uiType)
         return m_auiEncounter[uiType];
 
     return 0;
+}
+
+bool instance_nexus::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+{
+    switch (uiCriteriaId)
+    {
+        case ACHIEV_CHAOS_THEORY:
+            return m_abAchievCriteria[TYPE_CHAOS_THEORY];
+        case ACHIEV_DOUBLE_PERSONALITY:
+            return m_abAchievCriteria[TYPE_DOUBLE_PERSONALITY];
+        case ACHIEV_INTENSE_COLD:
+            return m_abAchievCriteria[TYPE_INTENSE_COLD];
+        default:
+            return 0;
+    }
+}
+
+void instance_nexus::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
+{
+    if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
+        m_abAchievCriteria[uiType] = bIsMet;
 }
 
 void instance_nexus::SetData(uint32 uiType, uint32 uiData)

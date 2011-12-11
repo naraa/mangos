@@ -134,7 +134,7 @@ struct MANGOS_DLL_DECL boss_ormorokAI : public ScriptedAI
                 m_fSpikeXY[3][1] = m_fBaseY-(SPIKE_DISTANCE*m_uiCrystalSpikesCount*sin(m_fBaseO-(M_PI/2)));
 
                 for (uint8 i = 0; i < 4; i++)
-                    Creature* Spike = m_creature->SummonCreature(NPC_CRYSTAL_SPIKE, m_fSpikeXY[i][0], m_fSpikeXY[i][1], m_fBaseZ, 0, TEMPSUMMON_TIMED_DESPAWN, 7000);
+                    m_creature->SummonCreature(NPC_CRYSTAL_SPIKE, m_fSpikeXY[i][0], m_fSpikeXY[i][1], m_fBaseZ, 0, TEMPSUMMON_TIMED_DESPAWN, 7000);
 
                 if (++m_uiCrystalSpikesCount >= 13)
                     m_bIsCrystalSpikes = false;

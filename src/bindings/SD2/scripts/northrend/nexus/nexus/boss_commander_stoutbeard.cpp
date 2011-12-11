@@ -67,18 +67,11 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
         SPELL_FRIGHTENING_SHOUT_Timer = 2000;  // needs adjusting
         SPELL_WHIRLWIND_1_Timer = 0;   // THIS IS NOT RIGHT JUST A PLACEHOLDER FOR NOW
         SPELL_WHIRLWIND_2_Timer = 2000;   // needs adjusting
-
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_COMMANDER, NOT_STARTED);
     }
 
     void EnterCombat(Unit* pWho)
     {
         //DoScriptText(SAY_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_COMMANDER, IN_PROGRESS);
     }
 
     //void AttackStart(Unit* pWho) {}
@@ -93,9 +86,6 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
     void JustDied(Unit* pKiller)
     {
         //DoScriptText(SAY_DEATH, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_COMMANDER, DONE);
     }
 
     void UpdateAI(const uint32 uiDiff)

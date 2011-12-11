@@ -20,13 +20,17 @@
 
 enum
 {
-    MAX_ENCOUNTER                  = 5,
+    MAX_ENCOUNTER                  = 4,
+    MAX_SPECIAL_ACHIEV_CRITS       = 3,
 
     TYPE_TELESTRA                  = 0,
     TYPE_ANOMALUS                  = 1,
     TYPE_ORMOROK                   = 2,
     TYPE_KERISTRASZA               = 3,
-    TYPE_COMMANDER                 = 4,
+
+    TYPE_CHAOS_THEORY              = 0,
+    TYPE_DOUBLE_PERSONALITY        = 1,
+    TYPE_INTENSE_COLD              = 2,
 
     NPC_TELESTRA                   = 26731,
     NPC_FIRE_MAGUS                 = 26928,
@@ -67,10 +71,13 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
         void Initialize();
 
         void OnObjectCreate(GameObject* pGo);
+        void OnCreatureDeath(Creature* pCreature);
         void OnCreatureCreate(Creature* pCreature);
 
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiData);
+        bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
         const char* Save() { return m_strInstData.c_str(); }
 
@@ -79,6 +86,8 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
+        bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
 };
 
 #endif
