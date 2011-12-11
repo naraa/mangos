@@ -25,7 +25,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "nexus.h"
 
-enum eEnums
+enum
 {
     // Spells
     SPELL_ICE_NOVA_N          = 47772,
@@ -40,11 +40,11 @@ enum eEnums
 
     // Texts
     SAY_AGGRO                 = -1576000,
-    SAY_KILL                  = -1576001,
-    SAY_DEATH                 = -1576002,
+    SAY_KILL                  = -1576004,
+    SAY_DEATH                 = -1576005,
     SAY_MERGE                 = -1576003,
-    SAY_SPLIT_1               = -1576004,
-    SAY_SPLIT_2               = -1576005,
+    SAY_SPLIT_1               = -1576001,
+    SAY_SPLIT_2               = -1576002,
 };
 
 float CenterOfRoom[1][4] =
@@ -56,12 +56,12 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 {
     boss_telestraAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_nexus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_nexus* m_pInstance;
     bool m_bIsRegularMode;
 
     bool m_bAppearDelay;
@@ -208,6 +208,7 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 
                 m_bAppearDelay = true;
                 m_uiAppearDelayTimer = 4*IN_MILLISECONDS;
+
                 m_pFireMagusGuid.Clear();
                 m_pFrostMagusGuid.Clear();
                 m_pArcaneMagusGuid.Clear();

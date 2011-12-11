@@ -46,12 +46,12 @@ struct MANGOS_DLL_DECL boss_commander_stoutbeardAI : public ScriptedAI
 {
     boss_commander_stoutbeardAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_nexus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_nexus* m_pInstance;
 	bool m_bIsRegularMode;
 
     uint32 SPELL_BATTLE_SHOUT_Timer;

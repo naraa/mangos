@@ -25,7 +25,7 @@ EndScriptData */
 #include "precompiled.h"
 #include "nexus.h"
 
-enum eEnums
+enum
 {
     // Spells
     SPELL_SPARK_N                       = 47751,
@@ -39,10 +39,14 @@ enum eEnums
     SPELL_ARCANEFORM                    = 48019, // Chaotic Rift visual
 
     // Texts
-    SAY_AGGRO                           = -1576010,
-    SAY_DEATH                           = -1576011,
-    SAY_RIFT                            = -1576012,
-    SAY_SHIELD                          = -1576013,
+    SAY_AGGRO                           = -1576006,
+    SAY_DEATH                           = -1576010,
+    SAY_RIFT                            = -1576007,
+    SAY_SHIELD                          = -1576008,
+    SAY_KILL                            = -1576009,
+
+    EMOTE_OPEN_RIFT                     = -1576021,
+    EMOTE_SHIELD                        = -1576022,
 };
 
 float RiftLocation[6][3]=
@@ -55,16 +59,20 @@ float RiftLocation[6][3]=
     {651.72f, -297.44f, -9.37f}
 };
 
+/*####
+# boss_anomalus
+####*/
+
 struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 {
     boss_anomalusAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_nexus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_nexus* m_pInstance;
     bool m_bIsRegularMode;
 
     uint8 m_uiPhase;
@@ -175,16 +183,20 @@ CreatureAI* GetAI_boss_anomalus(Creature* pCreature)
     return new boss_anomalusAI (pCreature);
 }
 
+/*####
+# npc_chaotic_rift
+####*/
+
 struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
 {
     npc_chaotic_riftAI(Creature* pCreature) : Scripted_NoMovementAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_nexus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_nexus* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiChaoticEnergyBurstTimer;
