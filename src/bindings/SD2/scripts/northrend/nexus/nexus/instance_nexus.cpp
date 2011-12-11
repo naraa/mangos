@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -37,6 +38,9 @@ bool GOUse_go_containment_sphere(Player* pPlayer, GameObject* pGo)
         case GO_CONTAINMENT_SPHERE_ANOMALUS: pInstance->SetData(TYPE_ANOMALUS, SPECIAL); break;
         case GO_CONTAINMENT_SPHERE_ORMOROK:  pInstance->SetData(TYPE_ORMOROK, SPECIAL);  break;
     }
+
+    if (Creature *pCaster = GetClosestCreatureWithEntry(pGo, NPC_BREATH_CASTER, 15.0f))
+        pCaster->ForcedDespawn();
 
     pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
     return false;
@@ -77,8 +81,24 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
 
 void instance_nexus::OnCreatureCreate(Creature* pCreature)
 {
-    if (pCreature->GetEntry() == NPC_KERISTRASZA)
-        m_mNpcEntryGuidStore[NPC_KERISTRASZA] = pCreature->GetObjectGuid();
+    switch (pCreature->GetEntry())
+    {
+        case NPC_KERISTRASZA:
+             break;
+        case NPC_TELESTRA:
+             break;
+        case NPC_ANOMALUS:
+             break;
+        case NPC_ORMOROK:
+             break;
+        case NPC_COMM_KOLURG:
+             break;
+        case NPC_COMM_STOUTBEARD:
+             break;
+        case NPC_BREATH_CASTER:
+             break;
+    }
+    m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
 
 uint32 instance_nexus::GetData(uint32 uiType)
@@ -133,8 +153,11 @@ void instance_nexus::SetData(uint32 uiType, uint32 uiData)
         Creature* pCreature = GetSingleCreatureFromStorage(NPC_KERISTRASZA);
         if (pCreature && pCreature->isAlive())
         {
-            pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
-            pCreature->RemoveAurasDueToSpell(SPELL_FROZEN_PRISON);
+            if (pCreature->isAlive())
+            {
+                pCreature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_PASSIVE | UNIT_FLAG_OOC_NOT_ATTACKABLE);
+                pCreature->RemoveAurasDueToSpell(SPELL_FROZEN_PRISON);
+            }
         }
     }
 

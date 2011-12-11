@@ -1367,6 +1367,12 @@
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_anomalus.cpp">
       <Filter>scripts\northrend\nexus\nexus</Filter>
     </ClCompile>
+    <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_commander_kolurg.cpp">
+      <Filter>scripts\northrend\nexus\nexus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_commander_stoutbeard.cpp">
+      <Filter>scripts\northrend\nexus\nexus</Filter>
+    </ClCompile>
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_keristrasza.cpp">
       <Filter>scripts\northrend\nexus\nexus</Filter>
     </ClCompile>

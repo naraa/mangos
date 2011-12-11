@@ -365,6 +365,8 @@ extern void AddSC_instance_naxxramas();
 extern void AddSC_boss_malygos();                           // nexus, eye_of_eternity
 extern void AddSC_instance_eye_of_eternity();
 extern void AddSC_boss_anomalus();                          // nexus, nexus
+extern void AddSC_boss_commander_stoutbeard();
+extern void AddSC_boss_commander_kolurg();
 extern void AddSC_boss_keristrasza();
 extern void AddSC_boss_ormorok();
 extern void AddSC_boss_telestra();
@@ -883,6 +885,8 @@ void AddScripts()
     AddSC_boss_malygos();                                   // nexus, eye_of_eternity
     AddSC_instance_eye_of_eternity();
     AddSC_boss_anomalus();                                  // nexus, nexus
+    AddSC_boss_commander_stoutbeard();
+    AddSC_boss_commander_kolurg();
     AddSC_boss_keristrasza();
     AddSC_boss_ormorok();
     AddSC_boss_telestra();

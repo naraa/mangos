@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -15,61 +16,41 @@
  */
 
 /* ScriptData
-SDName: Boss_Telestra
-SD%Complete: 80%
-SDComment: script depend on database spell support and eventAi for clones. transition to phase 2 also not fully implemented
-SDCategory: Nexus
+SDName: Boss_Magus_Telestra
+SD%Complete: 95%
+SDComment:
+SDCategory: The Nexus, The Nexus
 EndScriptData */
 
 #include "precompiled.h"
 #include "nexus.h"
 
-enum
+enum eEnums
 {
-    SAY_AGGRO               = -1576000,
-    SAY_SPLIT_1             = -1576001,
-    SAY_SPLIT_2             = -1576002,
-    SAY_MERGE               = -1576003,
-    SAY_KILL                = -1576004,
-    SAY_DEATH               = -1576005,
+    // Spells
+    SPELL_ICE_NOVA_N          = 47772,
+    SPELL_ICE_NOVA_H          = 56935,
+    SPELL_FIREBOMB_N          = 47773,
+    SPELL_FIREBOMB_H          = 56934,
+    SPELL_GRAVITY_WELL        = 47756,
+    SPELL_TELESTRA_BACK       = 47714,
+    SPELL_FIRE_MAGUS_VISUAL   = 47705,
+    SPELL_FROST_MAGUS_VISUAL  = 47706,
+    SPELL_ARCANE_MAGUS_VISUAL = 47704,
 
-    SPELL_FIREBOMB          = 47773,
-    SPELL_FIREBOMB_H        = 56934,
-
-    SPELL_ICE_NOVA          = 47772,
-    SPELL_ICE_NOVA_H        = 56935,
-
-    SPELL_GRAVITY_WELL      = 47756,
-
-    SPELL_SUMMON_CLONES     = 47710,
-
-    SPELL_ARCANE_VISUAL     = 47704,
-    SPELL_FIRE_VISUAL       = 47705,
-    SPELL_FROST_VISUAL      = 47706,
-
-    SPELL_SUMMON_FIRE       = 47707,
-    SPELL_SUMMON_ARCANE     = 47708,
-    SPELL_SUMMON_FROST      = 47709,
-
-    SPELL_FIRE_DIES         = 47711,                        // cast by clones at their death
-    SPELL_ARCANE_DIES       = 47713,
-    SPELL_FROST_DIES        = 47712,
-
-    SPELL_SPAWN_BACK_IN     = 47714,
-
-    NPC_TELEST_FIRE         = 26928,
-    NPC_TELEST_ARCANE       = 26929,
-    NPC_TELEST_FROST        = 26930,
-
-    PHASE_1                 = 1,
-    PHASE_2                 = 2,
-    PHASE_3                 = 3,
-    PHASE_4                 = 4
+    // Texts
+    SAY_AGGRO                 = -1576000,
+    SAY_KILL                  = -1576001,
+    SAY_DEATH                 = -1576002,
+    SAY_MERGE                 = -1576003,
+    SAY_SPLIT_1               = -1576004,
+    SAY_SPLIT_2               = -1576005,
 };
 
-/*######
-## boss_telestra
-######*/
+float CenterOfRoom[1][4] =
+{
+    {504.80f, 89.07f, -16.12f, 6.27f}
+};
 
 struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 {
@@ -83,41 +64,44 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
+    bool m_bAppearDelay;
+    bool m_bFireMagusDead;
+    bool m_bFrostMagusDead;
+    bool m_bArcaneMagusDead;
     uint8 m_uiPhase;
-    uint8 m_uiCloneDeadCount;
-
-    uint32 m_uiFirebombTimer;
+    uint32 m_uiCooldownTimer;
+    uint32 m_uiAppearDelayTimer;
     uint32 m_uiIceNovaTimer;
+    uint32 m_uiFirebombTimer;
     uint32 m_uiGravityWellTimer;
+    ObjectGuid m_pFireMagusGuid;
+    ObjectGuid m_pFrostMagusGuid;
+    ObjectGuid m_pArcaneMagusGuid;
 
     void Reset()
     {
-        m_uiPhase = PHASE_1;
-        m_uiCloneDeadCount = 0;
+        m_bAppearDelay = false;
+        m_bFireMagusDead = false;
+        m_bFrostMagusDead = false;
+        m_bArcaneMagusDead = false;
+        m_uiPhase = 0;
+        m_uiCooldownTimer = 0;
+        m_uiAppearDelayTimer = 0;
+        m_uiIceNovaTimer = 7*IN_MILLISECONDS;
+        m_uiFirebombTimer = 0;
+        m_uiGravityWellTimer = 15*IN_MILLISECONDS;
+        m_pFireMagusGuid.Clear();
+        m_pFrostMagusGuid.Clear();
+        m_pArcaneMagusGuid.Clear();
 
-        m_uiFirebombTimer = urand(2000, 4000);
-        m_uiIceNovaTimer = urand(8000, 12000);
-        m_uiGravityWellTimer = urand(15000, 25000);
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+        m_creature->SetVisibility(VISIBILITY_ON);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_TELESTRA, NOT_STARTED);
     }
 
-    void JustReachedHome()
-    {
-        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-    }
-
-    void AttackStart(Unit* pWho)
-    {
-        if (m_creature->Attack(pWho, true))
-        {
-            m_creature->AddThreat(pWho);
-            m_creature->SetInCombatWith(pWho);
-            pWho->SetInCombatWith(m_creature);
-
-            m_creature->GetMotionMaster()->MoveChase(pWho, 15.0f);
-        }
-    }
-
-    void Aggro(Unit* pWho)
+    void EnterCombat(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
@@ -132,48 +116,42 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if (urand(0, 1))
-            DoScriptText(SAY_KILL, m_creature);
+        DoScriptText(SAY_KILL, m_creature);
     }
 
-    void SpellHit(Unit* pCaster, const SpellEntry *pSpell)
+    ObjectGuid SplitPersonality(uint32 entry)
     {
-        switch(pSpell->Id)
+        Creature* pSummoned = m_creature->SummonCreature(entry, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
+        if (pSummoned)
         {
-            // eventAi must make sure clones cast spells when each of them die
-            case SPELL_FIRE_DIES:
-            case SPELL_ARCANE_DIES:
-            case SPELL_FROST_DIES:
+            switch (entry)
             {
-                ++m_uiCloneDeadCount;
-
-                if (m_uiCloneDeadCount == 3 || m_uiCloneDeadCount == 6)
+                case NPC_FIRE_MAGUS:
                 {
-                    m_creature->RemoveAurasDueToSpell(SPELL_SUMMON_CLONES);
-                    m_creature->CastSpell(m_creature, SPELL_SPAWN_BACK_IN, false);
-
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-
-                    DoScriptText(SAY_MERGE, m_creature);
-
-                    m_uiPhase = m_uiCloneDeadCount == 3 ? PHASE_3 : PHASE_4;
+                    pSummoned->CastSpell(pSummoned, SPELL_FIRE_MAGUS_VISUAL, false);
+                    break;
                 }
-                break;
-            }
-            case SPELL_SUMMON_CLONES:
-                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                break;
-        }
-    }
+                case NPC_FROST_MAGUS:
+                {
+                    pSummoned->CastSpell(pSummoned, SPELL_FROST_MAGUS_VISUAL, false);
+                    break;
+                }
+                case NPC_ARCANE_MAGUS:
+                {
+                    pSummoned->CastSpell(pSummoned, SPELL_ARCANE_MAGUS_VISUAL, false);
+                    break;
+                }
+                default:
+                    break;
+           }
 
-    void JustSummoned(Creature* pSummoned)
-    {
-        switch(pSummoned->GetEntry())
-        {
-            case NPC_TELEST_FIRE: pSummoned->CastSpell(pSummoned, SPELL_FIRE_VISUAL, true); break;
-            case NPC_TELEST_ARCANE: pSummoned->CastSpell(pSummoned, SPELL_ARCANE_VISUAL, true); break;
-            case NPC_TELEST_FROST: pSummoned->CastSpell(pSummoned, SPELL_FROST_VISUAL, true); break;
+           if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                pSummoned->AI()->AttackStart(pTarget);
+
+            return pSummoned->GetObjectGuid();
         }
+
+        return ObjectGuid();
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -181,72 +159,148 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        switch(m_uiPhase)
+        if (m_bAppearDelay)
         {
-            case PHASE_1:
-            case PHASE_3:
-            case PHASE_4:
+            m_creature->StopMoving();
+            m_creature->AttackStop();
+
+            if (m_uiAppearDelayTimer <= uiDiff)
             {
-                if (!m_creature->GetCurrentSpell(CURRENT_CHANNELED_SPELL))
-                {
-                    if (m_uiFirebombTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_FIREBOMB : SPELL_FIREBOMB_H) == CAST_OK)
-                            m_uiFirebombTimer = urand(4000, 6000);
-                    }
-                    else
-                        m_uiFirebombTimer -= uiDiff;
-
-                    if (m_uiIceNovaTimer < uiDiff)
-                    {
-                        if (DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_ICE_NOVA : SPELL_ICE_NOVA_H) == CAST_OK)
-                            m_uiIceNovaTimer = urand(10000, 15000);
-                    }
-                    else
-                        m_uiIceNovaTimer -= uiDiff;
-
-                    if (m_uiPhase == PHASE_1 && m_creature->GetHealthPercent() < 50.0f)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
-                            m_uiPhase = PHASE_2;
-                        }
-                    }
-
-                    if (m_uiPhase == PHASE_3 && !m_bIsRegularMode && m_creature->GetHealthPercent() < 15.0f)
-                    {
-                        if (DoCastSpellIfCan(m_creature, SPELL_SUMMON_CLONES, CAST_INTERRUPT_PREVIOUS) == CAST_OK)
-                        {
-                            DoScriptText(urand(0, 1) ? SAY_SPLIT_1 : SAY_SPLIT_2, m_creature);
-                            m_uiPhase = PHASE_2;
-                        }
-                    }
-
-                    DoMeleeAttackIfReady();
-                }
-
-                if (m_uiGravityWellTimer < uiDiff)
-                {
-                    if (DoCastSpellIfCan(m_creature, SPELL_GRAVITY_WELL) == CAST_OK)
-                        m_uiGravityWellTimer = urand(15000, 30000);
-                }
-                else
-                    m_uiGravityWellTimer -= uiDiff;
-
-                break;
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+                m_bAppearDelay = false;
             }
-            case PHASE_2:
+            else
+                m_uiAppearDelayTimer -= uiDiff;
+
+            return;
+        }
+
+        if ((m_uiPhase == 1) || (m_uiPhase == 3))
+        {
+            Unit* pFireMagus;
+            Unit* pFrostMagus;
+            Unit* pArcaneMagus;
+
+            if (!m_pFireMagusGuid.IsEmpty())
+                pFireMagus = m_creature->GetMap()->GetUnit(m_pFireMagusGuid);
+
+            if (!m_pFrostMagusGuid.IsEmpty())
+                pFrostMagus = m_creature->GetMap()->GetUnit(m_pFrostMagusGuid);
+
+            if (!m_pArcaneMagusGuid.IsEmpty())
+                pArcaneMagus = m_creature->GetMap()->GetUnit(m_pArcaneMagusGuid);
+
+            if (pFireMagus && pFireMagus->isDead())
             {
-                break;
+                m_bFireMagusDead = true;
+            }
+
+            if (pFrostMagus && pFrostMagus->isDead())
+            {
+                m_bFrostMagusDead = true;
+            }
+
+            if (pArcaneMagus && pArcaneMagus->isDead())
+            {
+                m_bArcaneMagusDead = true;
+            }
+
+            if (m_bFireMagusDead && m_bFrostMagusDead && m_bArcaneMagusDead)
+            {
+                m_creature->GetMotionMaster()->Clear();
+                m_creature->GetMap()->CreatureRelocation(m_creature, CenterOfRoom[0][0], CenterOfRoom[0][1], CenterOfRoom[0][2], CenterOfRoom[0][3]);
+                DoCast(m_creature, SPELL_TELESTRA_BACK);
+                DoScriptText(SAY_MERGE, m_creature);
+                m_creature->SetVisibility(VISIBILITY_ON);
+
+                if (m_uiPhase == 1)
+                    m_uiPhase = 2;
+                else if (m_uiPhase == 3)
+                    m_uiPhase = 4;
+
+                m_bAppearDelay = true;
+                m_uiAppearDelayTimer = 4*IN_MILLISECONDS;
+                m_pFireMagusGuid.Clear();
+                m_pFrostMagusGuid.Clear();
+                m_pArcaneMagusGuid.Clear();
+            }
+            else
+                return;
+        }
+
+        if (((m_uiPhase == 0) && (m_creature->GetHealth() <= (m_creature->GetMaxHealth() * 0.5)))
+           || (!m_bIsRegularMode && (m_uiPhase == 2) && (m_creature->GetHealth() <= (m_creature->GetMaxHealth() * 0.1))))
+        {
+            DoScriptText(urand(SAY_SPLIT_1,SAY_SPLIT_2), m_creature);
+            m_creature->CastStop();
+            m_creature->RemoveAllAuras();
+            m_creature->SetVisibility(VISIBILITY_OFF);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NOT_SELECTABLE);
+
+            m_bFireMagusDead = false;
+            m_bFrostMagusDead = false;
+            m_bArcaneMagusDead = false;
+            m_uiPhase++;
+            m_pFireMagusGuid = SplitPersonality(NPC_FIRE_MAGUS);
+            m_pFrostMagusGuid = SplitPersonality(NPC_FROST_MAGUS);
+            m_pArcaneMagusGuid = SplitPersonality(NPC_ARCANE_MAGUS);
+            return;
+        }
+
+        if (m_uiCooldownTimer)
+        {
+            if (m_uiCooldownTimer <= uiDiff)
+                m_uiCooldownTimer = 0;
+            else
+            {
+                m_uiCooldownTimer -= uiDiff;
+                return;
             }
         }
+
+        if (m_uiIceNovaTimer <= uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                DoCast(pTarget, m_bIsRegularMode ? SPELL_ICE_NOVA_N : SPELL_ICE_NOVA_H);
+                m_uiCooldownTimer = 1.5*IN_MILLISECONDS;
+            }
+            m_uiIceNovaTimer = 15*IN_MILLISECONDS;
+        }
+        else
+            m_uiIceNovaTimer -= uiDiff;
+
+        if (m_uiGravityWellTimer <= uiDiff)
+        {
+            if (Unit* pTarget = m_creature->getVictim())
+            {
+                DoCast(pTarget, SPELL_GRAVITY_WELL);
+                m_uiCooldownTimer = 6*IN_MILLISECONDS;
+            }
+            m_uiGravityWellTimer = 15*IN_MILLISECONDS;
+        }
+        else
+            m_uiGravityWellTimer -= uiDiff;
+
+        if (m_uiFirebombTimer <= uiDiff)
+        {
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+            {
+                DoCast(pTarget, m_bIsRegularMode ? SPELL_FIREBOMB_N : SPELL_FIREBOMB_H);
+                m_uiCooldownTimer = 2*IN_MILLISECONDS;
+            }
+            m_uiFirebombTimer = 2*IN_MILLISECONDS;
+        }
+        else
+            m_uiFirebombTimer -= uiDiff;
+
+        DoMeleeAttackIfReady();
     }
 };
 
 CreatureAI* GetAI_boss_telestra(Creature* pCreature)
 {
-    return new boss_telestraAI(pCreature);
+    return new boss_telestraAI (pCreature);
 }
 
 void AddSC_boss_telestra()

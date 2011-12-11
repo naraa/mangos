@@ -566,6 +566,8 @@
     <ClCompile Include="..\scripts\northrend\nexus\eye_of_eternity\boss_malygos.cpp" />
     <ClCompile Include="..\scripts\northrend\nexus\eye_of_eternity\instance_eye_of_eternity.cpp" />
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_anomalus.cpp" />
+    <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_commander_kolurg.cpp" />
+    <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_commander_stoutbeard.cpp" />
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_keristrasza.cpp" />
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_ormorok.cpp" />
     <ClCompile Include="..\scripts\northrend\nexus\nexus\boss_telestra.cpp" />
