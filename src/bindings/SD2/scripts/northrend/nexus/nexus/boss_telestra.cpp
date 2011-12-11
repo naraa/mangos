@@ -119,6 +119,22 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
         DoScriptText(SAY_KILL, m_creature);
     }
 
+    void SummonedCreatureJustDied(Creature* pSummoned)
+    {
+        switch (pSummoned->GetEntry())
+        {
+            case NPC_FIRE_MAGUS:
+                m_bFireMagusDead = true;
+                break;
+            case NPC_FROST_MAGUS:
+                m_bFrostMagusDead = true;
+                break;
+            case NPC_ARCANE_MAGUS:
+                m_bArcaneMagusDead = true;
+                break;
+        }
+    }
+
     ObjectGuid SplitPersonality(uint32 entry)
     {
         Creature* pSummoned = m_creature->SummonCreature(entry, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(), m_creature->GetOrientation(), TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
@@ -177,34 +193,6 @@ struct MANGOS_DLL_DECL boss_telestraAI : public ScriptedAI
 
         if ((m_uiPhase == 1) || (m_uiPhase == 3))
         {
-            Unit* pFireMagus;
-            Unit* pFrostMagus;
-            Unit* pArcaneMagus;
-
-            if (!m_pFireMagusGuid.IsEmpty())
-                pFireMagus = m_creature->GetMap()->GetUnit(m_pFireMagusGuid);
-
-            if (!m_pFrostMagusGuid.IsEmpty())
-                pFrostMagus = m_creature->GetMap()->GetUnit(m_pFrostMagusGuid);
-
-            if (!m_pArcaneMagusGuid.IsEmpty())
-                pArcaneMagus = m_creature->GetMap()->GetUnit(m_pArcaneMagusGuid);
-
-            if (pFireMagus && pFireMagus->isDead())
-            {
-                m_bFireMagusDead = true;
-            }
-
-            if (pFrostMagus && pFrostMagus->isDead())
-            {
-                m_bFrostMagusDead = true;
-            }
-
-            if (pArcaneMagus && pArcaneMagus->isDead())
-            {
-                m_bArcaneMagusDead = true;
-            }
-
             if (m_bFireMagusDead && m_bFrostMagusDead && m_bArcaneMagusDead)
             {
                 m_creature->GetMotionMaster()->Clear();

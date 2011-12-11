@@ -84,19 +84,19 @@ void instance_nexus::OnCreatureCreate(Creature* pCreature)
     switch (pCreature->GetEntry())
     {
         case NPC_KERISTRASZA:
-             break;
+            break;
         case NPC_TELESTRA:
-             break;
+            break;
         case NPC_ANOMALUS:
-             break;
+            break;
         case NPC_ORMOROK:
-             break;
+            break;
         case NPC_COMM_KOLURG:
-             break;
+            break;
         case NPC_COMM_STOUTBEARD:
-             break;
+            break;
         case NPC_BREATH_CASTER:
-             break;
+            break;
     }
     m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
