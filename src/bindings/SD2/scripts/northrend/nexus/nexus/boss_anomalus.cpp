@@ -269,7 +269,13 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
         m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
         m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
 
-        DoCast(m_creature, SPELL_ARCANEFORM, false);
+        //DoCast(m_creature, SPELL_CHAOTIC_RIFT_VISUAL, false);
+
+        if (!m_creature->HasAura(SPELL_RIFT_AURA))
+            DoCast(m_creature,SPELL_RIFT_AURA,true);
+
+        if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
+            DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -277,7 +283,7 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (m_uiChaoticEnergyBurstTimer < uiDiff)
+        /*if (m_uiChaoticEnergyBurstTimer < uiDiff)
         {
             //Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
@@ -285,15 +291,15 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
                 /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                     DoCast(pTarget, SPELL_CHARGED_CHAOTIC_ENERGY_BURST);
                 else*/
-                    DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
+       /*             DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
             }
 
             m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
         }
         else
-            m_uiChaoticEnergyBurstTimer -= uiDiff;
+            m_uiChaoticEnergyBurstTimer -= uiDiff;*/
 
-        if (m_uiCrazedManaWraithTimer < uiDiff)
+        /*if (m_uiCrazedManaWraithTimer < uiDiff)
         {
             Creature* pWraith = m_creature->SummonCreature(NPC_CRAZED_MANA_WRAITH, m_creature->GetPositionX()+1, m_creature->GetPositionY()+1, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
             if (pWraith)
@@ -304,10 +310,10 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
             /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                 m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
             else*/
-                m_uiCrazedManaWraithTimer = 10*IN_MILLISECONDS;  // suppose to be 15 secs according to spells
+          /*      m_uiCrazedManaWraithTimer = 10*IN_MILLISECONDS;  // suppose to be 15 secs according to spells
         }
         else
-            m_uiCrazedManaWraithTimer -= uiDiff;
+            m_uiCrazedManaWraithTimer -= uiDiff;*/
     }
 };
 
