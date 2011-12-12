@@ -120,6 +120,8 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     void SummonRifts()
     {
         DoScriptText(SAY_SHIELD, m_creature);
+        DoScriptText(EMOTE_SHIELD, m_creature);
+        DoScriptText(EMOTE_OPEN_RIFT, m_creature);
         DoCast(m_creature, SPELL_RIFT_SHIELD);
 
         m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
@@ -139,7 +141,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim()) //|| m_creature->HasAura(SPELL_RIFT_SHIELD))
             return;
 
        if (m_creature->HasAura(SPELL_RIFT_SHIELD))
