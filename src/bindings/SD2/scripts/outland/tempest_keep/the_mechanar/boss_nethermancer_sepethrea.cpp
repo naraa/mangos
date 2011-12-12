@@ -1,5 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 - 2012 Infinity_Scriptdev2
+ * Copyright (C) 2011 - 2012 Infinity_scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -52,7 +52,7 @@ struct MANGOS_DLL_DECL boss_nethermancer_sepethreaAI : public ScriptedAI
     boss_nethermancer_sepethreaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularuiDifficulty();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_nethermancer_sepethreaAI : public ScriptedAI
         uint8 am = (m_bIsRegularMode ? 2 : 1);
         for (int i = 0; i < am; ++i)
         {
-            DoCastSpellIfCan(who,SPELL_SUMMON_RAGIN_FLAMES);
+            DoCastSpellIfCan(pWho,SPELL_SUMMON_RAGIN_FLAMES);
         }
 
         DoScriptText(SAY_SUMMON, m_creature);
@@ -171,7 +171,7 @@ struct MANGOS_DLL_DECL mob_ragin_flamesAI : public ScriptedAI
     mob_ragin_flamesAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularuiDifficulty();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 

@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -22,31 +23,39 @@ SDCategory: Tempest Keep, The Mechanar
 EndScriptData */
 
 #include "precompiled.h"
+#include "mechanar.h"
 
-#define SAY_AGGRO                       -1554020
-#define SAY_DOMINATION_1                -1554021
-#define SAY_DOMINATION_2                -1554022
-#define SAY_SUMMON                      -1554023
-#define SAY_ENRAGE                      -1554024
-#define SAY_SLAY_1                      -1554025
-#define SAY_SLAY_2                      -1554026
-#define SAY_DEATH                       -1554027
+enum
+{
+    SAY_AGGRO                      = -1554020,
+    SAY_DOMINATION_1               = -1554021,
+    SAY_DOMINATION_2               = -1554022,
+    SAY_SUMMON                     = -1554023,
+    SAY_ENRAGE                     = -1554024,
+    SAY_SLAY_1                     = -1554025,
+    SAY_SLAY_2                     = -1554026,
+    SAY_DEATH                      = -1554027,
 
 // Spells to be casted
-#define SPELL_MANA_TAP                  36021
-#define SPELL_ARCANE_TORRENT            36022
-#define SPELL_DOMINATION                35280
-#define SPELL_ARCANE_EXPLOSION_H        15453
-#define SPELL_FRENZY                    36992
+    SPELL_MANA_TAP                 = 36021,
+    SPELL_ARCANE_TORRENT           = 36022,
+    SPELL_DOMINATION               = 35280,
+    SPELL_ARCANE_EXPLOSION_H       = 15453,
+    SPELL_FRENZY                   = 36992,
 
-#define SPELL_SUMMON_NETHER_WRAITH_1    35285               //Spells work, but not implemented
-#define SPELL_SUMMON_NETHER_WRAITH_2    35286
-#define SPELL_SUMMON_NETHER_WRAITH_3    35287
-#define SPELL_SUMMON_NETHER_WRAITH_4    35288
+    SPELL_SUMMON_NETHER_WRAITH_1   = 35285,              //Spells work, but not implemented
+    SPELL_SUMMON_NETHER_WRAITH_2   = 35286,
+    SPELL_SUMMON_NETHER_WRAITH_3   = 35287,
+    SPELL_SUMMON_NETHER_WRAITH_4   = 35288,
 
 // Add Spells
-#define SPELL_DETONATION                35058
-#define SPELL_ARCANE_MISSILES           35034
+    SPELL_DETONATION               = 35058,
+    SPELL_ARCANE_MISSILES          = 35034,
+};
+
+/****
+* boss_pathaleon_the_calculator
+****/
 
 struct MANGOS_DLL_DECL boss_pathaleon_the_calculatorAI : public ScriptedAI
 {
@@ -58,111 +67,113 @@ struct MANGOS_DLL_DECL boss_pathaleon_the_calculatorAI : public ScriptedAI
 
     bool m_bIsRegularMode;
 
-    uint32 Summon_Timer;
-    uint32 ManaTap_Timer;
-    uint32 ArcaneTorrent_Timer;
-    uint32 Domination_Timer;
-    uint32 ArcaneExplosion_Timer;
-    bool Enraged;
-
-    uint32 Counter;
+    uint32 m_uiSummon_Timer;
+    uint32 m_uiManaTap_Timer;
+    uint32 m_uiArcaneTorrent_Timer;
+    uint32 m_uiDomination_Timer;
+    uint32 m_uiArcaneExplosion_Timer;
+    bool m_bEnraged;
 
     void Reset()
     {
-        Summon_Timer = 30000;
-        ManaTap_Timer = urand(12000, 20000);
-        ArcaneTorrent_Timer = urand(16000, 25000);
-        Domination_Timer = urand(25000, 40000);
-        ArcaneExplosion_Timer = urand(8000, 13000);
+        m_uiSummon_Timer = 30000;
+        m_uiManaTap_Timer = urand(12000, 20000);
+        m_uiArcaneTorrent_Timer = urand(16000, 25000);
+        m_uiDomination_Timer = urand(25000, 40000);
+        m_uiArcaneExplosion_Timer = urand(8000, 13000);
 
-        Enraged = false;
-        Counter = 0;
+        m_bEnraged = false;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (Summon_Timer < diff)
+        if (m_uiSummon_Timer < uiDiff)
         {
             for(int i = 0; i < 3; ++i)
             {
-                Unit* target = NULL;
-                target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
-                Creature* Wraith = m_creature->SummonCreature(21062,m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
-                if (target && Wraith)
-                    Wraith->AI()->AttackStart(target);
+                Unit* pTarget = NULL;
+                pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0);
+                Creature* pWraith = m_creature->SummonCreature(21062,m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ(),0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 25000);
+                if (pTarget && pWraith)
+                    pWraith->AI()->AttackStart(pTarget);
             }
 
             DoScriptText(SAY_SUMMON, m_creature);
 
-            Summon_Timer = urand(30000, 45000);
-        }else Summon_Timer -= diff;
+            m_uiSummon_Timer = urand(30000, 45000);
+        }else m_uiSummon_Timer -= uiDiff;
 
-        if (ManaTap_Timer < diff)
+        if (m_uiManaTap_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_MANA_TAP);
-            ManaTap_Timer = urand(14000, 22000);
-        }else ManaTap_Timer -= diff;
+            m_uiManaTap_Timer = urand(14000, 22000);
+        }else m_uiManaTap_Timer -= uiDiff;
 
-        if (ArcaneTorrent_Timer < diff)
+        if (m_uiArcaneTorrent_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_ARCANE_TORRENT);
-            ArcaneTorrent_Timer = urand(12000, 18000);
-        }else ArcaneTorrent_Timer -= diff;
+            m_uiArcaneTorrent_Timer = urand(12000, 18000);
+        }else m_uiArcaneTorrent_Timer -= uiDiff;
 
-        if (Domination_Timer < diff)
+        if (m_uiDomination_Timer < uiDiff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
             {
                 DoScriptText(urand(0, 1) ? SAY_DOMINATION_1 : SAY_DOMINATION_2, m_creature);
-                DoCastSpellIfCan(target,SPELL_DOMINATION);
+                DoCastSpellIfCan(pTarget,SPELL_DOMINATION);
             }
 
-            Domination_Timer = urand(25000, 30000);
-        }else Domination_Timer -= diff;
+            m_uiDomination_Timer = urand(25000, 30000);
+        }else m_uiDomination_Timer -= uiDiff;
 
         //Only casting if Heroic Mode is used
         if (!m_bIsRegularMode)
         {
-            if (ArcaneExplosion_Timer < diff)
+            if (m_uiArcaneExplosion_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_ARCANE_EXPLOSION_H);
-                ArcaneExplosion_Timer = urand(10000, 14000);
-            }else ArcaneExplosion_Timer -= diff;
+                m_uiArcaneExplosion_Timer = urand(10000, 14000);
+            }else m_uiArcaneExplosion_Timer -= uiDiff;
         }
 
-        if (!Enraged && m_creature->GetHealthPercent() < 21.0f)
+        if (!m_bEnraged && m_creature->GetHealthPercent() < 21.0f)
         {
             DoCastSpellIfCan(m_creature, SPELL_FRENZY);
             DoScriptText(SAY_ENRAGE, m_creature);
-            Enraged = true;
+            m_bEnraged = true;
         }
 
         DoMeleeAttackIfReady();
     }
 };
+
 CreatureAI* GetAI_boss_pathaleon_the_calculator(Creature* pCreature)
 {
     return new boss_pathaleon_the_calculatorAI(pCreature);
 }
+
+/****
+* mob_nether_wraith
+****/
 
 struct MANGOS_DLL_DECL mob_nether_wraithAI : public ScriptedAI
 {
@@ -170,50 +181,50 @@ struct MANGOS_DLL_DECL mob_nether_wraithAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    uint32 ArcaneMissiles_Timer;
-    uint32 Detonation_Timer;
-    uint32 Die_Timer;
-    bool Detonation;
+    uint32 m_uiArcaneMissiles_Timer;
+    uint32 m_uiDetonation_Timer;
+    uint32 m_uiDie_Timer;
+    bool m_bDetonation;
 
     void Reset()
     {
-        ArcaneMissiles_Timer = urand(1000, 4000);
-        Detonation_Timer = 20000;
-        Die_Timer = 2200;
-        Detonation = false;
+        m_uiArcaneMissiles_Timer = urand(1000, 4000);
+        m_uiDetonation_Timer = 20000;
+        m_uiDie_Timer = 2200;
+        m_bDetonation = false;
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (ArcaneMissiles_Timer < diff)
+        if (m_uiArcaneMissiles_Timer < uiDiff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
-                DoCastSpellIfCan(target,SPELL_ARCANE_MISSILES);
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,1))
+                DoCastSpellIfCan(pTarget,SPELL_ARCANE_MISSILES);
             else
                 DoCastSpellIfCan(m_creature->getVictim(),SPELL_ARCANE_MISSILES);
 
-            ArcaneMissiles_Timer = urand(5000, 10000);
-        }else ArcaneMissiles_Timer -=diff;
+            m_uiArcaneMissiles_Timer = urand(5000, 10000);
+        }else m_uiArcaneMissiles_Timer -=uiDiff;
 
-        if (!Detonation)
+        if (!m_bDetonation)
         {
-            if (Detonation_Timer < diff)
+            if (m_uiDetonation_Timer < uiDiff)
             {
                 DoCastSpellIfCan(m_creature,SPELL_DETONATION);
-                Detonation = true;
-            }else Detonation_Timer -= diff;
+                m_bDetonation = true;
+            }else m_uiDetonation_Timer -= uiDiff;
         }
 
-        if (Detonation)
+        if (m_bDetonation)
         {
-            if (Die_Timer < diff)
+            if (m_uiDie_Timer < uiDiff)
             {
                 m_creature->SetDeathState(JUST_DIED);
                 m_creature->RemoveCorpse();
-            }else Die_Timer -= diff;
+            }else m_uiDie_Timer -= uiDiff;
         }
 
         DoMeleeAttackIfReady();

@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_scriptdev2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -53,23 +54,23 @@ struct MANGOS_DLL_DECL boss_gatewatcher_iron_handAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 Shadow_Power_Timer;
-    uint32 Jackhammer_Timer;
-    uint32 Stream_of_Machine_Fluid_Timer;
+    uint32 m_uiShadow_Power_Timer;
+    uint32 m_uiJackhammer_Timer;
+    uint32 m_uiStream_of_Machine_Fluid_Timer;
 
     void Reset()
     {
-        Shadow_Power_Timer = 25000;
-        Jackhammer_Timer = 45000;
-        Stream_of_Machine_Fluid_Timer = 55000;
+        m_uiShadow_Power_Timer = 25000;
+        m_uiJackhammer_Timer = 45000;
+        m_uiStream_of_Machine_Fluid_Timer = 55000;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO_1, m_creature);
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* pVictim)
     {
         if (urand(0, 1))
             return;
@@ -77,7 +78,7 @@ struct MANGOS_DLL_DECL boss_gatewatcher_iron_handAI : public ScriptedAI
         DoScriptText(urand(0, 1) ? SAY_SLAY_1 : SAY_SLAY_2, m_creature);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* PKiller)
     {
         DoScriptText(SAY_DEATH_1, m_creature);
 
@@ -87,21 +88,21 @@ struct MANGOS_DLL_DECL boss_gatewatcher_iron_handAI : public ScriptedAI
         //TODO: Add door check/open code
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         //Shadow Power
-        if (Shadow_Power_Timer < diff)
+        if (m_uiShadow_Power_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature, m_bIsRegularMode ? SPELL_SHADOW_POWER : SPELL_SHADOW_POWER_H);
-            Shadow_Power_Timer = urand(20000, 28000);
-        }else Shadow_Power_Timer -= diff;
+            m_uiShadow_Power_Timer = urand(20000, 28000);
+        }else m_uiShadow_Power_Timer -= uiDiff;
 
         //Jack Hammer
-        if (Jackhammer_Timer < diff)
+        if (m_uiJackhammer_Timer < uiDiff)
         {
             //TODO: expect cast this about 5 times in a row (?), announce it by emote only once
             DoScriptText(EMOTE_HAMMER, m_creature);
@@ -111,15 +112,15 @@ struct MANGOS_DLL_DECL boss_gatewatcher_iron_handAI : public ScriptedAI
             if (urand(0, 4))
                 DoScriptText(urand(0, 1) ? SAY_HAMMER_1 : SAY_HAMMER_2, m_creature);
 
-            Jackhammer_Timer = 30000;
-        }else Jackhammer_Timer -= diff;
+            m_uiJackhammer_Timer = 30000;
+        }else m_uiJackhammer_Timer -= uiDiff;
 
         //Stream of Machine Fluid
-        if (Stream_of_Machine_Fluid_Timer < diff)
+        if (m_uiStream_of_Machine_Fluid_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_STREAM_OF_MACHINE_FLUID);
-            Stream_of_Machine_Fluid_Timer = urand(35000, 50000);
-        }else Stream_of_Machine_Fluid_Timer -= diff;
+            m_uiStream_of_Machine_Fluid_Timer = urand(35000, 50000);
+        }else m_uiStream_of_Machine_Fluid_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
