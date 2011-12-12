@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:28
+# Date/time:                    2011-12-12 07:18:24
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `pool_creature` (
   KEY `pool_idx` (`pool_entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.pool_creature: 1,266 rows
+# Dumping data for table mangos.pool_creature: 1,267 rows
 /*!40000 ALTER TABLE `pool_creature` DISABLE KEYS */;
 INSERT IGNORE INTO `pool_creature` (`guid`, `pool_entry`, `chance`, `description`) VALUES
 	(58, 1341, 0, 'NPC 14490'),
@@ -267,6 +267,7 @@ INSERT IGNORE INTO `pool_creature` (`guid`, `pool_entry`, `chance`, `description
 	(47714, 303, 0, ''),
 	(47716, 303, 0, ''),
 	(47723, 303, 0, ''),
+	(47738, 303, 0, ''),
 	(47910, 172, 12, '12237 Meshlok the Harvester'),
 	(47927, 146, 6, '10558 Hearthsinger Forresten'),
 	(47940, 205, 12, '10393 Skul'),

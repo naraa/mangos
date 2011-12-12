@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:52:55
+# Date/time:                    2011-12-12 07:17:53
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `creature_addon` (
   PRIMARY KEY  (`guid`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.creature_addon: 19,507 rows
+# Dumping data for table mangos.creature_addon: 19,506 rows
 /*!40000 ALTER TABLE `creature_addon` DISABLE KEYS */;
 INSERT IGNORE INTO `creature_addon` (`guid`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES
 	(31, 0, 0, 1, 16, 0, 0, '18950'),
@@ -14986,7 +14986,6 @@ INSERT IGNORE INTO `creature_addon` (`guid`, `mount`, `bytes1`, `b2_0_sheath`, `
 	(92062, 0, 0, 1, 16, 0, 0, NULL),
 	(92063, 0, 0, 1, 16, 0, 0, NULL),
 	(92068, 0, 0, 1, 16, 0, 0, NULL),
-	(115895, 0, 0, 0, 0, 10, 0, NULL),
 	(92070, 0, 0, 1, 16, 0, 0, NULL),
 	(92071, 0, 0, 1, 16, 0, 0, NULL),
 	(92072, 0, 0, 1, 16, 0, 0, NULL),

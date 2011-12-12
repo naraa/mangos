@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:33
+# Date/time:                    2011-12-12 07:18:29
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `spell_target_position` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Spell System';
 
-# Dumping data for table mangos.spell_target_position: 581 rows
+# Dumping data for table mangos.spell_target_position: 580 rows
 /*!40000 ALTER TABLE `spell_target_position` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position_x`, `target_position_y`, `target_position_z`, `target_orientation`) VALUES
 	(8195, 0, 16229, 16265, 14, 3.19),
@@ -121,7 +121,7 @@ INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position
 	(4801, 37, 1042, 29.08, 334.19, 0),
 	(31267, 0, 2063.47, 271.3, 94.1, 3.15),
 	(29216, 533, 2633.49, -3529.56, 274.111, 0),
-	(20682, 1, -3992.64, -4717.93, 11.006, 0.7),
+	(20682, 0, -14292, 543.946, 8.84137, 4.19088),
 	(20618, 409, 736.516, -1176.35, -119.006, 1.57),
 	(26448, 1, 7566.95, -2202.49, 475.118, 2.78267),
 	(17159, 1, 6106.4, -4191.1, 849.74, 0.0201),
@@ -483,7 +483,7 @@ INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position
 	(55431, 571, 5799.29, -1597.31, 237.17, 0),
 	(17278, 329, 3533.95, -2965.1, 125, 0),
 	(46233, 571, 3190.83, 5275.33, 48.2713, 0),
-	(52462, 609, 2390.19, -5900.24, 108.967, 3.8941),
+	(52462, 609, 2389.58, -5901.18, 108.938, 0),
 	(49984, 571, 479.019, -5941.53, 308.746, 0),
 	(49988, 571, 479.019, -5941.53, 308.746, 0),
 	(49990, 571, 479.019, -5941.53, 308.746, 0),
@@ -602,11 +602,10 @@ INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position
 	(71413, 631, 4380.43, 3206.55, 389.398, 0),
 	(71414, 631, 4335, 3206.75, 389.399, 0),
 	(73040, 616, 755, 1301, 280, 0),
-	(72546, 631, 514, -2523, 1250.99, 3.1765),
-	(70860, 631, 529.302, -2124.49, 1040.86, 3.1765),
+	(72546, 631, 514, -2523, 1050.99, 3.1765),
+	(73655, 631, 495.708, -2523.76, 1050.99, 3.1765),
 	(25182, 1, -8124.41, 1525.13, 16.368, 3.05),
-	(72468, 631, -67.357, 2158.99, 30.654, 4.126),
-	(73655, 631, 495.708, -2523.76, 1250.99, 3.1765);
+	(72468, 631, -67.357, 2158.99, 30.654, 4.126);
 /*!40000 ALTER TABLE `spell_target_position` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

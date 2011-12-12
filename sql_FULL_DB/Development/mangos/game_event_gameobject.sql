@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:13
+# Date/time:                    2011-12-12 07:18:10
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -4318,7 +4318,7 @@ INSERT IGNORE INTO `game_event_gameobject` (`guid`, `event`) VALUES
 	(55144, 46),
 	(55145, 46),
 	(55131, 12),
-	(954391, 35),
+	(42670, 35),
 	(45061, 1),
 	(43439, 1),
 	(45062, 1),

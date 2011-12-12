@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:52:50
+# Date/time:                    2011-12-12 07:17:48
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `battleground_events` (
   PRIMARY KEY  (`map`,`event1`,`event2`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.battleground_events: 269 rows
+# Dumping data for table mangos.battleground_events: 191 rows
 /*!40000 ALTER TABLE `battleground_events` DISABLE KEYS */;
 INSERT IGNORE INTO `battleground_events` (`map`, `event1`, `event2`, `description`) VALUES
 	(489, 0, 0, 'Alliance Flag'),
@@ -214,85 +214,7 @@ INSERT IGNORE INTO `battleground_events` (`map`, `event1`, `event2`, `descriptio
 	(30, 61, 0, 'Alliance - Boss'),
 	(30, 62, 0, 'Horde - Boss'),
 	(30, 63, 0, 'Alliance - Captain Dead'),
-	(30, 64, 0, 'Horde - Captain Dead'),
-	(617, 253, 0, 'buffs'),
-	(617, 254, 0, 'doors'),
-	(617, 250, 0, 'waterfall'),
-	(628, 0, 0, 'Dock - Neutral'),
-	(628, 0, 1, 'Dock - Alliance contested'),
-	(628, 0, 2, 'Dock - Horde contested'),
-	(628, 0, 3, 'Dock - Alliance owned'),
-	(628, 0, 4, 'Dock - Horde owned'),
-	(628, 1, 0, 'Hangar - Neutral'),
-	(628, 1, 1, 'Hangar - Alliance contested'),
-	(628, 1, 2, 'Hangar - Horde contested'),
-	(628, 1, 3, 'Hangar - Alliance owned'),
-	(628, 1, 4, 'Hangar - Horde owned'),
-	(628, 2, 0, 'Workshop - Neutral'),
-	(628, 2, 1, 'Workshop - Alliance contested'),
-	(628, 2, 2, 'Workshop - Horde contested'),
-	(628, 2, 3, 'Workshop - Alliance owned'),
-	(628, 2, 4, 'Workshop - Horde owned'),
-	(628, 3, 0, 'Quarry - Neutral'),
-	(628, 3, 1, 'Quarry - Alliance contested'),
-	(628, 3, 2, 'Quarry - Horde contested'),
-	(628, 3, 3, 'Quarry - Alliance owned'),
-	(628, 3, 4, 'Quarry - Horde owned'),
-	(628, 4, 0, 'Refinery - Neutral'),
-	(628, 4, 1, 'Refinery - Alliance contested'),
-	(628, 4, 2, 'Refinery - Horde contested'),
-	(628, 4, 3, 'Refinery - Alliance owned'),
-	(628, 4, 4, 'Refinery - Horde owned'),
-	(628, 5, 1, 'Alli keep - Alliance contested'),
-	(628, 5, 2, 'Alli keep - Horde contested'),
-	(628, 5, 3, 'Alli keep - Alliance owned'),
-	(628, 5, 4, 'Alli keep - Horde owned'),
-	(628, 6, 1, 'Horde keep - Alliance contested'),
-	(628, 6, 2, 'Horde keep - Horde contested'),
-	(628, 6, 3, 'Horde keep - Alliance owned'),
-	(628, 6, 4, 'Horde keep - Horde owned'),
-	(628, 7, 0, 'Base teleport spawn'),
-	(628, 8, 0, 'Npcs'),
-	(628, 9, 0, 'Alli Boss guards'),
-	(628, 10, 0, 'Horde Boss guards'),
-	(628, 11, 0, 'Alli Boss'),
-	(628, 12, 0, 'Horde Boss'),
-	(628, 251, 0, 'Alli Boss gate'),
-	(628, 252, 0, 'Horde Boss gate'),
-	(628, 254, 0, 'Door'),
-	(607, 0, 1, 'East gy - A contested'),
-	(607, 0, 2, 'East gy - H contested'),
-	(607, 0, 3, 'East gy - A occupied'),
-	(607, 0, 4, 'East gy - H occupied'),
-	(607, 1, 1, 'West gy - A contested'),
-	(607, 1, 2, 'West gy - H contested'),
-	(607, 1, 3, 'West gy - A occupied'),
-	(607, 1, 4, 'West gy - H occupied'),
-	(607, 2, 1, 'Central gy - A contested'),
-	(607, 2, 2, 'Central gy - H contested'),
-	(607, 2, 3, 'Central gy - A occupied'),
-	(607, 2, 4, 'Central gy - H occupied'),
-	(607, 3, 3, 'Relic gy A'),
-	(607, 3, 4, 'Relic gy H'),
-	(607, 4, 3, 'Beach gy A'),
-	(607, 4, 4, 'Beach gy H'),
-	(607, 5, 3, 'East bombs - A occupied'),
-	(607, 5, 4, 'East bombs - H occupied'),
-	(607, 6, 3, 'West bombs - A occupied'),
-	(607, 6, 4, 'West bombs - H occupied'),
-	(607, 7, 3, 'Central bombs - A occupied'),
-	(607, 7, 4, 'Central bombs - H occupied'),
-	(607, 8, 3, 'Beach bombs - A occupied'),
-	(607, 8, 4, 'Beach bombs - H occupied'),
-	(607, 9, 0, 'Dock demolishers, factory npcs'),
-	(607, 10, 0, 'Defender cannons'),
-	(607, 11, 0, 'Gameobjects'),
-	(607, 12, 0, 'E base demolishers'),
-	(607, 13, 0, 'W base demolishers'),
-	(607, 14, 1, 'Titan Relic - A attacking'),
-	(607, 14, 2, 'Titan Relic - H attacking'),
-	(618, 253, 0, 'buffs'),
-	(618, 254, 0, 'doors');
+	(30, 64, 0, 'Horde - Captain Dead');
 /*!40000 ALTER TABLE `battleground_events` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

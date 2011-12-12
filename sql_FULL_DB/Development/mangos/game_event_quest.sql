@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:13
+# Date/time:                    2011-12-12 07:18:10
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `game_event_quest` (
   PRIMARY KEY  (`quest`,`event`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Game event system';
 
-# Dumping data for table mangos.game_event_quest: 755 rows
+# Dumping data for table mangos.game_event_quest: 750 rows
 /*!40000 ALTER TABLE `game_event_quest` DISABLE KEYS */;
 INSERT IGNORE INTO `game_event_quest` (`quest`, `event`) VALUES
 	(171, 10),
@@ -60,15 +60,10 @@ INSERT IGNORE INTO `game_event_quest` (`quest`, `event`) VALUES
 	(8149, 11),
 	(8150, 11),
 	(8193, 15),
-	(8193, 35),
 	(8194, 15),
-	(8194, 35),
 	(8221, 15),
-	(8221, 35),
 	(8224, 15),
-	(8224, 35),
 	(8225, 15),
-	(8225, 35),
 	(8228, 14),
 	(8229, 14),
 	(8311, 12),

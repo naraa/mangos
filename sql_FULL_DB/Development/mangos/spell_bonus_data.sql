@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:32
+# Date/time:                    2011-12-12 07:18:29
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `spell_bonus_data` (
   PRIMARY KEY  (`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.spell_bonus_data: 169 rows
+# Dumping data for table mangos.spell_bonus_data: 152 rows
 /*!40000 ALTER TABLE `spell_bonus_data` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_bonus_data` (`entry`, `direct_bonus`, `dot_bonus`, `ap_bonus`, `ap_dot_bonus`, `comments`) VALUES
 	(5185, 1.6104, 0, 0, 0, 'Druid - Healing Touch'),
-	(33763, 0.8, 0.09518, 0, 0, 'Druid - Lifebloom'),
+	(33763, 0, 0.09518, 0, 0, 'Druid - Lifebloom'),
 	(8936, 0.539, 0.188, 0, 0, 'Druid - Regrowth'),
 	(18562, 0, 0, 0, 0, 'Druid - Swiftmend'),
 	(44203, 0.538, 0, 0, 0, 'Druid - Tranquility Triggered'),
@@ -136,11 +136,11 @@ INSERT IGNORE INTO `spell_bonus_data` (`entry`, `direct_bonus`, `dot_bonus`, `ap
 	(50401, 0, 0, 0, 0, 'Death Knight - Razor Frost'),
 	(56903, 0, 0, 0, 0, 'Death Knight - Lichflame'),
 	(40293, 0, 0, 0, 0, 'Item - Siphon Essence'),
-	(52042, 0, 0, 0, 0, 'Healing Stream Totem'),
+	(54158, 0.25, 0, 0, 0, 'Paladin - Judgement'),
 	(63675, 0, 0, 0, 0, 'Priest - Improved Devouring Plague Triggered'),
 	(63544, 0, 0, 0, 0, 'Priest - Empowered Renew Triggered'),
 	(56160, 0, 0, 0, 0, 'Item - Glyph of Power Word: Shield'),
-	(51963, 0, 0, 0.33, 0, 'Gargoyle Strike'),
+	(64085, 1.2, 0, 0, 0, 'Priest - Vampiric Touch Dispel'),
 	(31024, 0, 0, 0, 0, 'Item - Living Ruby Pedant'),
 	(38395, 0, 0, 0, 0, 'Item - Siphon Essence'),
 	(5707, 0, 0, 0, 0, 'Item - Lifestone Regeneration'),
@@ -177,24 +177,7 @@ INSERT IGNORE INTO `spell_bonus_data` (`entry`, `direct_bonus`, `dot_bonus`, `ap
 	(15662, 0, 0, 0, 0, 'Item - Six Demon Bag - Fireball'),
 	(11538, 0, 0, 0, 0, 'Item - Six Demon Bag - Frostbolt'),
 	(21179, 0, 0, 0, 0, 'Item - Six Demon Bag - Chain Lightning'),
-	(64569, 0, 0, 0, 0, 'Item - Blood Reserve'),
-	(52752, 0, 0, 0, 0, 'Ancestral Awakening'),
-	(54158, 0, 0, 0, 0, 'Judgement'),
-	(56161, 0, 0, 0, 0, 'Glyph of Prayer of Healing'),
-	(58621, 0, 0, 0.08, 0, 'Glyph of Chains of Ice'),
-	(64844, 0.564, 0, 0, 0, 'Priest - Divine Hymn'),
-	(64085, 2.4, 0, 0, 0, 'Priest - Vampiric Touch Dispel'),
-	(467, 0.033, 0, 0, 0, 'Druid - Thorns'),
-	(7294, 0.033, 0, 0, 0, 'Paladin - Retribution Aura'),
-	(2947, 0.033, 0, 0, 0, 'Warlock - Fire Shield (Imp)'),
-	(16614, 0, 0, 0, 0, 'Item - Storm Gauntlets - Lightning Strike'),
-	(45055, 0, 0, 0, 0, 'Item - Timbal\'s Focusing Crystal'),
-	(60488, 0, 0, 0, 0, 'Item - Extract of Necromatic Power'),
-	(17253, 0, 0, 0.08, 0, 'Bite (Rank 1) - Hunter pet'),
-	(16827, 0, 0, 0.08, 0, 'Claw (Rank 1) - Hunter pet'),
-	(49966, 0, 0, 0.08, 0, 'Smack (Rank 1) - Hunter pet'),
-	(45284, 0.3572, 0, 0, 0, 'Shaman - Lightning Bolt Overload Proc'),
-	(45297, 0.2857, 0, 0, 0, 'Shaman - Chain Lightning Overload Proc');
+	(64569, 0, 0, 0, 0, 'Item - Blood Reserve');
 /*!40000 ALTER TABLE `spell_bonus_data` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

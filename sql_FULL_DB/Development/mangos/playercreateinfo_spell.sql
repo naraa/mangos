@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:27
+# Date/time:                    2011-12-12 07:18:24
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `playercreateinfo_spell` (
   PRIMARY KEY  (`race`,`class`,`Spell`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.playercreateinfo_spell: 2,853 rows
+# Dumping data for table mangos.playercreateinfo_spell: 2,851 rows
 /*!40000 ALTER TABLE `playercreateinfo_spell` DISABLE KEYS */;
 INSERT IGNORE INTO `playercreateinfo_spell` (`race`, `class`, `Spell`, `Note`) VALUES
 	(1, 1, 78, 'Heroic Strike'),
@@ -2874,9 +2874,7 @@ INSERT IGNORE INTO `playercreateinfo_spell` (`race`, `class`, `Spell`, `Note`) V
 	(7, 6, 68398, 'Opening'),
 	(8, 6, 68398, 'Opening'),
 	(10, 6, 68398, 'Opening'),
-	(11, 6, 68398, 'Opening'),
-	(4, 11, 44835, 'Maim Interrupt'),
-	(6, 11, 44835, 'Maim Interrupt');
+	(11, 6, 68398, 'Opening');
 /*!40000 ALTER TABLE `playercreateinfo_spell` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

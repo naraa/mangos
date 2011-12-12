@@ -1034,6 +1034,5 @@ INSERT INTO `creature_template_addon`(`entry`, `auras`)
 
 -- Valkyr guardian
 UPDATE `creature_template` SET `minmana` = '6500', `maxmana` = '6500', `spell1` = '71841' WHERE `entry` =38391;
-REPLACE INTO `creature_spell` (`guid`,`spell`,`index`) VALUES (38391, 71841, 0);
 
 

@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:21
+# Date/time:                    2011-12-12 07:18:18
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `locales_creature` (
   PRIMARY KEY  (`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.locales_creature: 29,985 rows
+# Dumping data for table mangos.locales_creature: 29,984 rows
 /*!40000 ALTER TABLE `locales_creature` DISABLE KEYS */;
 INSERT IGNORE INTO `locales_creature` (`entry`, `name_loc1`, `name_loc2`, `name_loc3`, `name_loc4`, `name_loc5`, `name_loc6`, `name_loc7`, `name_loc8`, `subname_loc1`, `subname_loc2`, `subname_loc3`, `subname_loc4`, `subname_loc5`, `subname_loc6`, `subname_loc7`, `subname_loc8`) VALUES
 	(10290, '', '', '', '', '', '', '', 'Пойманный слизнюк Оскверненного леса', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -30024,8 +30024,7 @@ INSERT IGNORE INTO `locales_creature` (`entry`, `name_loc1`, `name_loc2`, `name_
 	(48353, '', '', '', '', '', '', '', 'Сарсарун-убийца', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(48354, '', '', '', '', '', '', '', 'Сарсарун-призыватель бури', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 	(48379, '', '', '', '', '', '', '', 'Шук\'сар', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(48380, '', '', '', '', '', '', '', 'Вен\'лор', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-	(99321, 'Pandora reseller', '', '', '', '', '', '', '?????????? ???????', 'Moneychanger', NULL, NULL, NULL, NULL, NULL, NULL, '??????');
+	(48380, '', '', '', '', '', '', '', 'Вен\'лор', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 /*!40000 ALTER TABLE `locales_creature` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

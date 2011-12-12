@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:13
+# Date/time:                    2011-12-12 07:18:10
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `gossip_menu_option` (
   PRIMARY KEY  (`menu_id`,`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.gossip_menu_option: 3,932 rows
+# Dumping data for table mangos.gossip_menu_option: 3,922 rows
 /*!40000 ALTER TABLE `gossip_menu_option` DISABLE KEYS */;
 INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`, `option_id`, `npc_option_npcflag`, `action_menu_id`, `action_poi_id`, `action_script_id`, `box_coded`, `box_money`, `box_text`, `cond_1`, `cond_1_val_1`, `cond_1_val_2`, `cond_2`, `cond_2_val_1`, `cond_2_val_2`, `cond_3`, `cond_3_val_1`, `cond_3_val_2`) VALUES
 	(0, 0, 0, 'GOSSIP_OPTION_QUESTGIVER', 2, 2, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -2422,15 +2422,16 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(7185, 0, 0, '<Administer the restorative draught.>', 1, 1, 7186, 0, 0, 0, 0, NULL, 9, 9164, 0, 2, 22628, 1, 0, 0, 0),
 	(7177, 0, 0, '<Administer the restorative draught.>', 1, 1, 7176, 0, 0, 0, 0, NULL, 9, 9164, 0, 2, 22628, 1, 0, 0, 0),
 	(9426, 0, 0, 'Remove the Eye of the Prophets from the idol\'s face.', 1, 1, -1, 0, 9426, 0, 0, NULL, 9, 12007, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 5, 0, 'Gnomeregan Champion\'s Pennant', 1, 1, -1, 0, 50129, 0, 0, '', 20, 2762, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 6, 0, 'Ironforge Champion\'s Pennant', 1, 1, -1, 0, 50128, 0, 0, '', 20, 2763, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 7, 0, 'Stormwind Champion\'s Pennant', 1, 1, -1, 0, 50127, 0, 0, '', 20, 2764, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 5, 0, 'Silvermoon Champion\'s Pennant', 1, 1, -1, 0, 50134, 0, 0, NULL, 20, 2767, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
-	(33239, 1, 1, 'Visit a trader.', 3, 128, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
-	(33239, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
-	(10318, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
+	(10318, 4, 0, 'Exodar Champion\'s Pennant', 1, 1, -1, 0, 50130, 0, 0, '', 20, 2761, 0, 0, 0, 0, 0, 0, 0),
+	(10318, 3, 0, 'Darnassus Champion\'s Pennant', 1, 1, -1, 0, 50131, 0, 0, '', 20, 2760, 0, 0, 0, 0, 0, 0, 0),
+	(10318, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
 	(10318, 1, 1, 'Visit a trader.', 3, 128, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
+	(10318, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
+	(33239, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
+	(33239, 1, 1, 'Visit a trader.', 3, 128, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
+	(33239, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
+	(33239, 3, 0, 'Orgrimmar Champion\'s Pennant', 1, 1, -1, 0, 50132, 0, 0, NULL, 20, 2765, 0, 0, 0, 0, 0, 0, 0),
+	(33239, 4, 0, 'Sen\'jin Champion\'s Pennant', 1, 1, -1, 0, 50133, 0, 0, NULL, 20, 2766, 0, 0, 0, 0, 0, 0, 0),
 	(7171, 2, 3, 'Master chef, can you train me in the culinary arts?', 5, 16, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(7153, 1, 0, 'Arcanist Vandril that here makes these Forsaken?', 1, 1, 7211, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(9484, 1, 1, 'Show me what you have for sale, trapper.', 3, 128, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -3942,11 +3943,12 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(9574, 2, 0, 'I want to exchange my Emerald Essence for Amber Essence.', 1, 1, -1, 0, 9574, 0, 0, '', 2, 37815, 1, 0, 0, 0, 0, 0, 0),
 	(9574, 3, 0, 'I want to exchange my Ruby Essence for Amber Essence.', 1, 1, -1, 0, 9574, 0, 0, '', 2, 37860, 1, 0, 0, 0, 0, 0, 0),
 	(9574, 5, 0, 'What is the ultimate ability of the Amber Drake?', 1, 1, 0, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 4, 0, 'Sen\'jin Champion\'s Pennant', 1, 1, -1, 0, 50133, 0, 0, NULL, 20, 2766, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 3, 0, 'Orgrimmar Champion\'s Pennant', 1, 1, -1, 0, 50132, 0, 0, NULL, 20, 2765, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
-	(10318, 3, 0, 'Darnassus Champion\'s Pennant', 1, 1, -1, 0, 50131, 0, 0, '', 20, 2760, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 4, 0, 'Exodar Champion\'s Pennant', 1, 1, -1, 0, 50130, 0, 0, '', 20, 2761, 0, 0, 0, 0, 0, 0, 0),
+	(10318, 5, 0, 'Gnomeregan Champion\'s Pennant', 1, 1, -1, 0, 50129, 0, 0, '', 20, 2762, 0, 0, 0, 0, 0, 0, 0),
+	(10318, 6, 0, 'Ironforge Champion\'s Pennant', 1, 1, -1, 0, 50128, 0, 0, '', 20, 2763, 0, 0, 0, 0, 0, 0, 0),
+	(10318, 7, 0, 'Stormwind Champion\'s Pennant', 1, 1, -1, 0, 50127, 0, 0, '', 20, 2764, 0, 0, 0, 0, 0, 0, 0),
+	(33239, 5, 0, 'Silvermoon Champion\'s Pennant', 1, 1, -1, 0, 50134, 0, 0, NULL, 20, 2767, 0, 0, 0, 0, 0, 0, 0),
+	(33239, 6, 0, 'Thunder Bluff Champion\'s Pennant', 1, 1, -1, 0, 50135, 0, 0, NULL, 20, 2768, 0, 0, 0, 0, 0, 0, 0),
+	(33239, 7, 0, 'Undercity Champion\'s Pennant', 1, 1, -1, 0, 50136, 0, 0, NULL, 20, 2769, 0, 0, 0, 0, 0, 0, 0),
 	(7676, 1, 0, 'What do I need to do?', 1, 1, -1, 0, 18, 0, 0, NULL, 9, 10107, 0, 0, 0, 0, 0, 0, 0),
 	(10118, 2, 0, 'Tell me about the Wispcloak Recipe.', 1, 1, -1, 0, 16, 0, 0, '', 20, 1288, 0, 7, 197, 420, 17, 56016, 1),
 	(10118, 4, 0, 'Tell me about the Deathchill Cloak Recipe.', 1, 1, -1, 0, 15, 0, 0, '', 20, 41, 0, 7, 197, 420, 17, 56017, 1),
@@ -3960,19 +3962,7 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(5749, 0, 0, '<Copy the schematic into your engineering notebook.>', 1, 1, -1, 0, 5749, 0, 0, NULL, 7, 202, 300, 17, 22704, 1, 0, 0, 0),
 	(11388, 0, 0, 'Attack!', 1, 1, -1, 0, 11388, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(11388, 1, 0, 'Sorry!', 1, 1, -1, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(50169, 0, 0, 'Who is the Headless Horseman?', 1, 1, 8880, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 6, 0, 'Thunder Bluff Champion\'s Pennant', 1, 1, -1, 0, 50135, 0, 0, NULL, 20, 2768, 0, 0, 0, 0, 0, 0, 0),
-	(33239, 7, 0, 'Undercity Champion\'s Pennant', 1, 1, -1, 0, 50136, 0, 0, NULL, 20, 2769, 0, 0, 0, 0, 0, 0, 0),
-	(10453, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10453, 0, 0, NULL, 1, 62853, 0, 6, 469, 0, 0, 0, 0),
-	(10454, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10454, 0, 0, NULL, 1, 62853, 0, 6, 469, 0, 0, 0, 0),
-	(10455, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10455, 0, 0, NULL, 1, 62853, 0, 6, 469, 0, 0, 0, 0),
-	(10456, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10456, 0, 0, NULL, 1, 62853, 0, 6, 469, 0, 0, 0, 0),
-	(10457, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10457, 0, 0, NULL, 1, 62853, 0, 6, 67, 0, 0, 0, 0),
-	(10458, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10458, 0, 0, NULL, 1, 62853, 0, 6, 67, 0, 0, 0, 0),
-	(10459, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10459, 0, 0, NULL, 1, 62853, 0, 6, 67, 0, 0, 0, 0),
-	(10460, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10460, 0, 0, NULL, 1, 62853, 0, 6, 469, 0, 0, 0, 0),
-	(10461, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10461, 0, 0, NULL, 1, 62853, 0, 6, 67, 0, 0, 0, 0),
-	(10462, 0, 0, 'I am ready to fight!', 1, 1, -1, 0, 10462, 0, 0, NULL, 1, 62853, 0, 6, 67, 0, 0, 0, 0);
+	(50169, 0, 0, 'Who is the Headless Horseman?', 1, 1, 8880, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `gossip_menu_option` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:14
+# Date/time:                    2011-12-12 07:18:11
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -47,7 +47,7 @@ INSERT IGNORE INTO `instance_template` (`map`, `parent`, `levelMin`, `levelMax`,
 	(560, 0, 66, 0, 'instance_old_hillsbrad'),
 	(564, 0, 70, 0, 'instance_black_temple'),
 	(565, 0, 65, 0, 'instance_gruuls_lair'),
-	(624, 0, 80, 0, 'instance_vault_of_archavon'),
+	(624, 0, 80, 0, ''),
 	(531, 0, 60, 0, 'instance_temple_of_ahnqiraj'),
 	(509, 0, 60, 0, 'instance_ruins_of_ahnqiraj'),
 	(469, 0, 60, 0, 'instance_blackwing_lair'),
@@ -97,7 +97,7 @@ INSERT IGNORE INTO `instance_template` (`map`, `parent`, `levelMin`, `levelMax`,
 	(562, 0, 10, 0, ''),
 	(572, 0, 10, 0, ''),
 	(169, 0, 1, 0, ''),
-	(724, 0, 80, 80, 'instance_ruby_sanctum'),
+	(724, 0, 80, 80, ''),
 	(44, 0, 1, 0, ''),
 	(598, 0, 0, 0, ''),
 	(599, 0, 70, 0, 'instance_halls_of_stone'),
@@ -105,12 +105,12 @@ INSERT IGNORE INTO `instance_template` (`map`, `parent`, `levelMin`, `levelMax`,
 	(602, 0, 70, 0, 'instance_halls_of_lightning'),
 	(603, 0, 80, 0, 'instance_ulduar'),
 	(607, 0, 71, 0, ''),
-	(616, 0, 80, 0, 'instance_eye_of_eternity'),
-	(650, 0, 75, 0, 'instance_trial_of_the_champion'),
+	(616, 0, 80, 0, ''),
+	(650, 0, 75, 0, ''),
 	(649, 0, 80, 0, 'instance_trial_of_the_crusader'),
-	(631, 0, 80, 0, 'instance_icecrown_spire'),
+	(631, 0, 80, 0, ''),
 	(658, 0, 75, 0, 'instance_pit_of_saron'),
-	(668, 0, 75, 0, 'instance_halls_of_reflection'),
+	(668, 0, 75, 0, ''),
 	(632, 0, 75, 0, 'instance_forge_of_souls');
 /*!40000 ALTER TABLE `instance_template` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

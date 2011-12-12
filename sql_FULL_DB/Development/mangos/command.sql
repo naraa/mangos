@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:52:50
+# Date/time:                    2011-12-12 07:17:48
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `command` (
   PRIMARY KEY  (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Chat System';
 
-# Dumping data for table mangos.command: 338 rows
+# Dumping data for table mangos.command: 329 rows
 /*!40000 ALTER TABLE `command` DISABLE KEYS */;
 INSERT IGNORE INTO `command` (`name`, `security`, `help`) VALUES
 	('account delete', 4, 'Syntax: .account delete $account\r\n\r\nDelete account with all characters.'),
@@ -38,7 +38,7 @@ INSERT IGNORE INTO `command` (`name`, `security`, `help`) VALUES
 	('commands', 0, 'Syntax: .commands\r\n\r\nDisplay a list of available commands for your account level.'),
 	('cooldown', 3, 'Syntax: .cooldown [#spell_id]\r\n\r\nRemove all (if spell_id not provided) or #spel_id spell cooldown from selected character or you (if no selection).'),
 	('npc flag', 2, 'Syntax: .npc flag #npcflag\r\n\r\nSet the NPC flags of creature template of the selected creature and selected creature to #npcflag. NPC flags will applied to all creatures of selected creature template after server restart or grid unload/load.'),
-	('closeticket', 2, 'Syntax: .closeticket all\r\n        .closeticket #num\r\n        .closeticket $character_name\r\n\rall to close all tickets at server, $character_name to close ticket of this character, #num to close ticket #num.'),
+	('delticket', 2, 'Syntax: .delticket all\r\n        .delticket #num\r\n        .delticket $character_name\r\n\rall to dalete all tickets at server, $character_name to delete ticket of this character, #num to delete ticket #num.'),
 	('npc factionid', 2, 'Syntax: .npc factionid #factionid\r\n\r\nSet the faction of the selected creature to #factionid.'),
 	('demorph', 2, 'Syntax: .demorph\r\n\r\nDemorph the selected player.'),
 	('die', 3, 'Syntax: .die\r\n\r\nKill the selected player. If no player is selected, it will kill you.'),
@@ -129,13 +129,13 @@ INSERT IGNORE INTO `command` (`name`, `security`, `help`) VALUES
 	('debug getvalue', 3, 'Syntax: .debug getvalue #field [int|hex|bit|float]\r\n\r\nGet the field #field of the selected target. If no target is selected, get the content of your field.\r\n\r\nUse type arg for set output format: int (decimal number), hex (hex value), bit (bitstring), float. By default use integer output.'),
 	('npc setphase', 2, 'Syntax: .npc setphase #phasemask\r\n\r\nSelected unit or pet phasemask changed to #phasemask with related world vision update for players. In creature case state saved to DB and persistent. In pet case change active until in game phase changed for owner, owner re-login, or GM-mode enable/disable..'),
 	('taxicheat', 1, 'Syntax: .taxicheat on/off\r\n\r\nTemporary grant access or remove to all taxi routes for the selected character. If no character is selected, hide or reveal all routes to you.\r\n\r\nVisited taxi nodes sill accessible after removing access.'),
-	('cast self', 3, 'Syntax: .cast self #spellid [triggered]\r\nCast #spellid by target at target itself. If \'triggered\' or part provided then spell casted with triggered flag.'),
+	('cast back', 3, 'Syntax: .cast back #spellid [triggered]\r\n  Selected target will cast #spellid to your character. If \'trigered\' or part provided then spell casted with triggered flag.'),
 	('ticket', 2, 'Syntax: .ticket on\r\n        .ticket off\r\n        .ticket #num\r\n        .ticket $character_name\r\n        .ticket respond #num $response\r\n        .ticket respond $character_name $response\r\n\r\non/off for GMs to show or not a new ticket directly, $character_name to show ticket of this character, #num to show ticket #num.'),
 	('help', 0, 'Syntax: .help [$command]\r\n\r\nDisplay usage instructions for the given $command. If no $command provided show list available commands.'),
 	('unaura', 3, 'Syntax: .unaura #spellid\r\n\r\nRemove aura due to spell #spellid from the selected Unit.'),
 	('learn', 3, 'Syntax: .learn #spell [all]\r\n\r\nSelected character learn a spell of id #spell. If \'all\' provided then all ranks learned.'),
 	('unlearn', 3, 'Syntax: .unlearn #spell [all]\r\n\r\nUnlearn for selected player a spell #spell.  If \'all\' provided then all ranks unlearned.'),
-	('cast target', 3, 'Syntax: .cast target #spellid [triggered]\r\n  Selected target will cast #spellid to his victim. If \'triggered\' or part provided then spell casted with triggered flag.'),
+	('cast', 3, 'Syntax: .cast #spellid [triggered]\r\n  Cast #spellid to selected target. If no target selected cast to self. If \'trigered\' or part provided then spell casted with triggered flag.'),
 	('debug anim', 2, 'Syntax: .debug anim #emoteid\r\n\r\nPlay emote #emoteid for your character.'),
 	('wchange', 3, 'Syntax: .wchange #weathertype #status\r\n\r\nSet current weather to #weathertype with an intensity of #status.\r\n\r\n#weathertype can be 1 for rain, 6 for snow, and 3 for sand. #status can be 0 for disabled, and 1 for enabled.'),
 	('whispers', 1, 'Syntax: .whispers on|off\r\nEnable/disable accepting whispers by GM from players. By default use mangosd.conf setting.'),
@@ -207,14 +207,14 @@ INSERT IGNORE INTO `command` (`name`, `security`, `help`) VALUES
 	('event stop', 2, 'Syntax: .event stop #event_id\r\nStop event #event_id. Set start time for event to time in past that make current moment is event stop time (change not saved in DB).'),
 	('combatstop', 2, 'Syntax: .combatstop [$playername]\r\nStop combat for selected character. If selected non-player then command applied to self. If $playername provided then attempt applied to online player $playername.'),
 	('quest complete', 3, 'Syntax: .quest complete #questid\r\nMark all quest objectives as completed for target character active quest. After this target character can go and get quest reward.'),
-	('cast back', 3, 'Syntax: .cast back #spellid [triggered]\r\n  Selected target will cast #spellid to your character. If \'triggered\' or part provided then spell casted with triggered flag.'),
-	('cast', 3, 'Syntax: .cast #spellid [triggered]\r\n  Cast #spellid to selected target. If no target selected cast to self. If \'triggered\' or part provided then spell casted with triggered flag.'),
+	('cast self', 3, 'Syntax: .cast self #spellid [triggered]\r\nCast #spellid by target at target itself. If \'trigered\' or part provided then spell casted with triggered flag.'),
+	('cast target', 3, 'Syntax: .cast target #spellid [triggered]\r\n  Selected target will cast #spellid to his victim. If \'trigered\' or part provided then spell casted with triggered flag.'),
 	('instance unbind', 3, 'Syntax: .instance unbind all\r\n  All of the selected\r\nplayer\'s binds will be cleared.\r\n.instance unbind #mapid\r\n Only the\r\nspecified #mapid instance will be cleared.'),
 	('instance listbinds', 3, 'Syntax: .instance listbinds\r\n  Lists the binds of the selected player.'),
 	('instance stats', 3, 'Syntax: .instance stats\r\n  Shows statistics about instances.'),
 	('instance savedata', 3, 'Syntax: .instance savedata\r\n  Save the InstanceData for the current player\'s map to the DB.'),
 	('learn all_recipes', 2, 'Syntax: .learn all_recipes [$profession]\r\rLearns all recipes of specified profession and sets skill level to max.\rExample: .learn all_recipes enchanting'),
-	('cast dist', 3, 'Syntax: .cast dist #spellid [#dist [triggered]]\r\n  You will cast spell to pint at distance #dist. If \'triggered\' or part provided then spell casted with triggered flag. Not all spells can be casted as area spells.'),
+	('cast dist', 3, 'Syntax: .cast dist #spellid [#dist [triggered]]\r\n  You will cast spell to pint at distance #dist. If \'trigered\' or part provided then spell casted with triggered flag. Not all spells can be casted as area spells.'),
 	('server idlerestart', 3, 'Syntax: .server idlerestart #delay\r\n\r\nRestart the server after #delay seconds if no active connections are present (no players). Use #exist_code or 2 as program exist code.'),
 	('server idlerestart cancel', 3, 'Syntax: .server idlerestart cancel\r\n\r\nCancel the restart/shutdown timer if any.'),
 	('reload config', 3, 'Syntax: .reload config\r\n\r\nReload config settings (by default stored in mangosd.conf). Not all settings can be change at reload: some new setting values will be ignored until restart, some values will applied with delay or only to new objects/maps, some values will explicitly rejected to change at reload.'),
@@ -351,16 +351,7 @@ INSERT IGNORE INTO `command` (`name`, `security`, `help`) VALUES
 	('ahbot rebuild', 3, 'Syntax: .ahbot rebuild [all]\r\n\r\nExpire all actual auction of ahbot except bided by player. Binded auctions included to expire if "all" option used. Ahbot re-fill auctions base at current settings then.'),
 	('ahbot reload', 3, 'Syntax: .ahbot reload\r\n\r\nReload AHBot settings from configuration file.'),
 	('ahbot status', 3, 'Syntax: .ahbot status [all]\r\n\r\nShow current ahbot state data in short form, and with "all" with details.'),
-	('gearscore', 3, 'Syntax: .gearscore [#withBags] [#withBank]\r\n\r\nShow selected player\'s gear score. Check items in bags if #withBags != 0 and check items in Bank if #withBank != 0. Default: 1 for bags and 0 for bank'),
-	('bot', 0, 'Syntax:\r.bot add BOTNAME (add character to world)\r.bot remove BOTNAME (remove character from world)\r.bot co|combatorder BOTNAME COMBATORDER [TARGET]'),
-	('account friend add', 3, 'Syntax: .account friend add [#accountId|$accountName] [#friendaccountId|$friendaccountName]\r\n\r\nSet friend account.'),
-	('account friend delete', 3, 'Syntax: .account friend delete [#accountId|$accountName] [#friendaccountId|$friendaccountName]\r\n\r\nDelete friend account.'),
-	('account friend list', 3, 'Syntax: .account friend list [#accountId|$accountName]\r\n\r\nList friends for account.'),
-	('chatspy set', 3, 'Syntax: .chatspy set $PlayerName\r\n  Append ChatSpy on $player.'),
-	('chatspy reset', 3, 'Syntax: .chatspy reset\r\n  Reset all ChatSpys.'),
-	('chatspy status', 3, 'Syntax: .chatspy status $PlayerName\r\n  Show ChatSpy status for $player.'),
-	('chatspy cancel', 3, 'Syntax: .chatspy cancel $PlayerName\r\n  Reset ChatSpy for $player.'),
-	('ircpm', 1, 'Syntax:.ircpm #nick #Nachricht\r\n\r\nSchicke eine Nachricht an eine Person im IRC.');
+	('gearscore', 3, 'Syntax: .gearscore [#withBags] [#withBank]\r\n\r\nShow selected player\'s gear score. Check items in bags if #withBags != 0 and check items in Bank if #withBank != 0. Default: 1 for bags and 0 for bank');
 /*!40000 ALTER TABLE `command` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

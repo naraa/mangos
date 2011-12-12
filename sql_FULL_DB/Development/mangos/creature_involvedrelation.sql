@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:52:57
+# Date/time:                    2011-12-12 07:17:55
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -7157,6 +7157,7 @@ INSERT IGNORE INTO `creature_involvedrelation` (`id`, `quest`) VALUES
 	(28589, 12652),
 	(28647, 12679),
 	(28653, 12680),
+	(28653, 12687),
 	(28658, 12697),
 	(28658, 12698),
 	(28667, 12689),
@@ -7185,7 +7186,6 @@ INSERT IGNORE INTO `creature_involvedrelation` (`id`, `quest`) VALUES
 	(28746, 13052),
 	(28771, 12681),
 	(28771, 12683),
-	(28788, 12687),
 	(28907, 12714),
 	(28910, 12722),
 	(28911, 12715),

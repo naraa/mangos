@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:32
+# Date/time:                    2011-12-12 07:18:29
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `spell_chain` (
   PRIMARY KEY  (`spell_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Spell Additinal Data';
 
-# Dumping data for table mangos.spell_chain: 1,672 rows
+# Dumping data for table mangos.spell_chain: 1,645 rows
 /*!40000 ALTER TABLE `spell_chain` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_chain` (`spell_id`, `prev_spell`, `first_spell`, `rank`, `req_spell`) VALUES
 	(10, 0, 10, 1, 0),
@@ -1669,34 +1669,7 @@ INSERT IGNORE INTO `spell_chain` (`spell_id`, `prev_spell`, `first_spell`, `rank
 	(58764, 58763, 5672, 8, 0),
 	(58765, 58764, 5672, 9, 0),
 	(53672, 0, 53672, 1, 0),
-	(54149, 53672, 53672, 2, 0),
-	(61680, 0, 61680, 1, 0),
-	(61681, 61680, 61680, 2, 0),
-	(52858, 61681, 61680, 3, 0),
-	(45284, 0, 45284, 1, 0),
-	(45286, 45284, 45284, 2, 0),
-	(45287, 45286, 45284, 3, 0),
-	(45288, 45287, 45284, 4, 0),
-	(45289, 45288, 45284, 5, 0),
-	(45290, 45289, 45284, 6, 0),
-	(45291, 45290, 45284, 7, 0),
-	(45292, 45291, 45284, 8, 0),
-	(45293, 45292, 45284, 9, 0),
-	(45294, 45293, 45284, 10, 0),
-	(45295, 45294, 45284, 11, 0),
-	(45296, 45295, 45284, 12, 0),
-	(49239, 45296, 45284, 13, 0),
-	(49240, 49239, 45284, 14, 0),
-	(45297, 0, 45297, 1, 0),
-	(45298, 45297, 45297, 2, 0),
-	(45299, 45298, 45297, 3, 0),
-	(45300, 45299, 45297, 4, 0),
-	(45301, 45300, 45297, 5, 0),
-	(45302, 45301, 45297, 6, 0),
-	(49268, 45302, 45297, 7, 0),
-	(49269, 49268, 45297, 8, 0),
-	(57529, 0, 57529, 1, 0),
-	(57531, 57529, 57529, 2, 0);
+	(54149, 53672, 53672, 2, 0);
 /*!40000 ALTER TABLE `spell_chain` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

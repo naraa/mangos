@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:26
+# Date/time:                    2011-12-12 07:18:23
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS `npc_vendor` (
   PRIMARY KEY  (`entry`,`item`,`ExtendedCost`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Npc System';
 
-# Dumping data for table mangos.npc_vendor: 34,678 rows
+# Dumping data for table mangos.npc_vendor: 34,668 rows
 /*!40000 ALTER TABLE `npc_vendor` DISABLE KEYS */;
 INSERT IGNORE INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `ExtendedCost`) VALUES
 	(54, 2495, 0, 0, 0),
@@ -34692,17 +34692,7 @@ INSERT IGNORE INTO `npc_vendor` (`entry`, `item`, `maxcount`, `incrtime`, `Exten
 	(16717, 16059, 0, 0, 0),
 	(16717, 16060, 0, 0, 0),
 	(26123, 34599, 0, 0, 2349),
-	(26124, 34599, 0, 0, 2349),
-	(99321, 41596, 0, 0, 2707),
-	(99321, 47241, 0, 0, 1909),
-	(99321, 44990, 0, 0, 2707),
-	(99321, 43228, 0, 0, 2707),
-	(99321, 47241, 0, 0, 2589),
-	(99321, 47241, 0, 0, 2637),
-	(99321, 47241, 0, 0, 2743),
-	(99321, 49426, 0, 0, 2723),
-	(99321, 43589, 0, 0, 2707),
-	(99321, 49908, 0, 0, 2723);
+	(26124, 34599, 0, 0, 2349);
 /*!40000 ALTER TABLE `npc_vendor` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

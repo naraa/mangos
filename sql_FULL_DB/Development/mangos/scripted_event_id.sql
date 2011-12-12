@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:32
+# Date/time:                    2011-12-12 07:18:29
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `scripted_event_id` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='Script library scripted events';
 
-# Dumping data for table mangos.scripted_event_id: 24 rows
+# Dumping data for table mangos.scripted_event_id: 23 rows
 /*!40000 ALTER TABLE `scripted_event_id` DISABLE KEYS */;
 INSERT IGNORE INTO `scripted_event_id` (`id`, `ScriptName`) VALUES
 	(11225, 'event_taxi_stormcrow'),
@@ -44,8 +44,7 @@ INSERT IGNORE INTO `scripted_event_id` (`id`, `ScriptName`) VALUES
 	(3099, 'event_antalarion_statue_activation'),
 	(3100, 'event_antalarion_statue_activation'),
 	(8502, 'event_avatar_of_hakkar'),
-	(9735, 'event_spell_saronite_barrier'),
-	(11560, 'go_tadpole_cage');
+	(9735, 'event_spell_saronite_barrier');
 /*!40000 ALTER TABLE `scripted_event_id` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

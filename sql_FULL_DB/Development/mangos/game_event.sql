@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:13
+# Date/time:                    2011-12-12 07:18:10
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `game_event` (
   PRIMARY KEY  (`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.game_event: 73 rows
+# Dumping data for table mangos.game_event: 72 rows
 /*!40000 ALTER TABLE `game_event` DISABLE KEYS */;
 INSERT IGNORE INTO `game_event` (`entry`, `start_time`, `end_time`, `occurence`, `length`, `holiday`, `description`) VALUES
 	(1, '2012-06-21 02:00:00', '2020-12-30 02:00:00', 525600, 20160, 341, 'Midsummer Fire Festival'),
@@ -44,7 +44,7 @@ INSERT IGNORE INTO `game_event` (`entry`, `start_time`, `end_time`, `occurence`,
 	(13, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 525600, 28800, 0, 'Elemental Invasions'),
 	(14, '2010-12-19 13:50:00', '2020-12-30 16:00:00', 10080, 130, 0, 'Fishing Extravaganza Announce'),
 	(16, '2010-12-01 00:00:00', '2020-12-30 19:00:00', 180, 120, 0, 'Gurubashi Arena Booty Run'),
-	(15, '2009-06-14 14:00:00', '2020-12-27 16:00:00', 10080, 120, 301, 'Fishing Extravaganza'),
+	(15, '2010-12-19 14:00:00', '2020-12-27 16:00:00', 10080, 120, 301, 'Fishing Extravaganza'),
 	(18, '2011-08-12 00:01:00', '2020-12-30 22:00:00', 60480, 5758, 283, 'Call to Arms: Alterac Valley!'),
 	(19, '2011-08-19 00:01:00', '2020-12-30 22:00:00', 60480, 5758, 284, 'Call to Arms: Warsong Gulch!'),
 	(20, '2011-07-29 00:01:00', '2020-12-30 22:00:00', 60480, 5758, 285, 'Call to Arms: Arathi Basin!'),
@@ -55,7 +55,7 @@ INSERT IGNORE INTO `game_event` (`entry`, `start_time`, `end_time`, `occurence`,
 	(28, '2007-08-12 21:59:59', '2020-12-31 01:00:00', 7200, 60, 0, 'Death Legion Attack Stormwind City (Undead Attack)'),
 	(25, '2007-08-12 16:00:07', '2020-12-31 01:00:00', 7200, 60, 0, 'Orgrimmar Grunts Start Defend'),
 	(34, '2010-09-18 14:00:00', '2020-01-01 00:00:00', 10080, 5, 0, 'L70ETC Concert'),
-	(35, '2009-03-29 14:00:00', '2020-12-31 00:00:00', 10080, 180, 0, 'Fishing Extravaganza Questgivers'),
+	(35, '2010-09-06 00:01:00', '2020-12-30 22:00:00', 80640, 20160, 0, 'Edge of Madness, Gri\'lek'),
 	(36, '2010-09-20 00:01:00', '2020-12-30 22:00:00', 80640, 20160, 0, 'Edge of Madness, Hazza\'rah'),
 	(37, '2010-10-04 00:01:00', '2020-12-30 22:00:00', 80640, 20160, 0, 'Edge of Madness, Renataki'),
 	(38, '2010-10-18 00:01:00', '2020-12-30 22:00:00', 80640, 20160, 0, 'Edge of Madness, Wushoolay'),
@@ -98,8 +98,7 @@ INSERT IGNORE INTO `game_event` (`entry`, `start_time`, `end_time`, `occurence`,
 	(70, '2011-01-01 03:48:00', '2020-12-31 00:00:00', 180, 24, 0, 'World\'s End Tavern - L70ETC Concert Announce'),
 	(71, '2011-01-01 04:00:00', '2020-12-31 00:00:00', 180, 5, 0, 'World\'s End Tavern - L70ETC Concert'),
 	(72, '2011-01-01 00:58:00', '2020-12-31 00:00:00', 30, 10, 0, 'Stormwind City - Stockades Jail Break'),
-	(31, '2011-01-01 21:00:00', '2020-12-31 00:00:00', 1440, 5, 0, 'Dalaran - Invitation to the Argent Crusade'),
-	(101, '2012-11-02 18:45:00', '2020-12-31 09:00:00', 15, 6, 0, 'Hallows End - Horseman Village Attack');
+	(31, '2011-01-01 21:00:00', '2020-12-31 00:00:00', 1440, 5, 0, 'Dalaran - Invitation to the Argent Crusade');
 /*!40000 ALTER TABLE `game_event` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

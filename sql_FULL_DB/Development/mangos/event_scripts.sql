@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:08
+# Date/time:                    2011-12-12 07:18:05
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `event_scripts` (
   `comments` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.event_scripts: 773 rows
+# Dumping data for table mangos.event_scripts: 771 rows
 /*!40000 ALTER TABLE `event_scripts` DISABLE KEYS */;
 INSERT IGNORE INTO `event_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `datalong3`, `datalong4`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES
 	(420, 0, 10, 2755, 180000, 0, 0, 0, 0, 0, 0, 0, -931.73, -3111.81, 48.517, 3.27404, ''),
@@ -675,7 +675,7 @@ INSERT IGNORE INTO `event_scripts` (`id`, `delay`, `command`, `datalong`, `datal
 	(18475, 2, 7, 12537, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(21998, 2, 10, 34980, 180000, 0, 0, 0, 0, 0, 0, 0, 10405.5, 958.478, 122.832, 4.51132, ''),
 	(21997, 2, 10, 34965, 180000, 0, 0, 0, 0, 0, 0, 0, 10184.5, 1182.46, 75.8961, 2.80308, ''),
-	(22030, 3, 10, 35012, 300000, 0, 0, 0, 0, 0, 0, 0, 10006.4, 650.6, 10.34, 4.542, ''),
+	(22030, 2, 10, 35012, 180000, 0, 0, 0, 0, 0, 0, 0, 10013.3, 690.361, 25.9377, 4.40924, ''),
 	(15363, 2, 10, 23741, 60000, 0, 0, 0, 0, 0, 0, 0, -2458.02, -3184.27, 33.1414, 3.33516, ''),
 	(15363, 3, 10, 23741, 60000, 0, 0, 0, 0, 0, 0, 0, -2450.9, -3167.18, 35.7501, 1.62142, ''),
 	(15363, 4, 10, 23741, 60000, 0, 0, 0, 0, 0, 0, 0, -2452.22, -3135.79, 35.3755, 5.06382, ''),
@@ -806,9 +806,7 @@ INSERT IGNORE INTO `event_scripts` (`id`, `delay`, `command`, `datalong`, `datal
 	(4276, 5, 27, 8, 174712, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(4280, 5, 27, 8, 174713, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(4284, 5, 27, 8, 174708, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
-	(4288, 5, 27, 8, 174709, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
-	(14858, 1, 15, 33663, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Summon greater Earth elemental'),
-	(14859, 1, 15, 32982, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Summon greater Fire  elemental');
+	(4288, 5, 27, 8, 174709, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
 /*!40000 ALTER TABLE `event_scripts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

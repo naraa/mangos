@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:53:32
+# Date/time:                    2011-12-12 07:18:29
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `spell_area` (
   PRIMARY KEY  (`spell`,`area`,`quest_start`,`quest_start_active`,`aura_spell`,`racemask`,`gender`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.spell_area: 367 rows
+# Dumping data for table mangos.spell_area: 365 rows
 /*!40000 ALTER TABLE `spell_area` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_active`, `quest_end`, `aura_spell`, `racemask`, `gender`, `autocast`) VALUES
 	(54056, 4306, 12536, 1, 12536, 0, 0, 2, 1),
@@ -196,7 +196,6 @@ INSERT IGNORE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_ac
 	(53371, 4288, 12762, 1, 12762, 0, 0, 2, 0),
 	(43060, 4054, 11326, 1, 11326, 0, 1101, 2, 1),
 	(33900, 3525, 9672, 1, 9683, 0, 0, 2, 1),
-	(35481, 4100, 0, 0, 0, 0, 0, 1, 1),
 	(40195, 3785, 11102, 1, 11102, 0, 0, 2, 1),
 	(40195, 3785, 11010, 1, 11010, 0, 0, 2, 1),
 	(48864, 65, 12301, 1, 12301, 0, 0, 2, 1),
@@ -394,8 +393,7 @@ INSERT IGNORE INTO `spell_area` (`spell`, `area`, `quest_start`, `quest_start_ac
 	(29135, 1537, 0, 0, 0, 0, 690, 2, 0),
 	(29137, 1519, 0, 0, 0, 0, 690, 2, 0),
 	(46671, 3557, 0, 0, 0, 0, 690, 2, 0),
-	(74276, 4910, 0, 0, 0, 0, 0, 2, 1),
-	(35480, 4100, 0, 0, 0, 0, 0, 0, 1);
+	(74276, 4910, 0, 0, 0, 0, 0, 2, 1);
 /*!40000 ALTER TABLE `spell_area` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

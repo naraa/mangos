@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-11 23:52:57
+# Date/time:                    2011-12-12 07:17:55
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `creature_linking_template` (
   PRIMARY KEY  (`entry`,`map`)
 ) ENGINE=MyISAM AUTO_INCREMENT=30683 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Creature Linking System';
 
-# Dumping data for table mangos.creature_linking_template: 31 rows
+# Dumping data for table mangos.creature_linking_template: 29 rows
 /*!40000 ALTER TABLE `creature_linking_template` DISABLE KEYS */;
 INSERT IGNORE INTO `creature_linking_template` (`entry`, `map`, `master_entry`, `flag`) VALUES
 	(12119, 409, 12118, 519),
@@ -52,9 +52,7 @@ INSERT IGNORE INTO `creature_linking_template` (`entry`, `map`, `master_entry`, 
 	(16803, 533, 16061, 7),
 	(16809, 540, 16808, 1),
 	(14892, 1, 14857, 512),
-	(2532, 0, 2533, 656),
-	(11666, 409, 12057, 7),
-	(11658, 409, 448, 256);
+	(2532, 0, 2533, 656);
 /*!40000 ALTER TABLE `creature_linking_template` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
