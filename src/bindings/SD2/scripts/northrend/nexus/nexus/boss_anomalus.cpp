@@ -33,9 +33,6 @@ enum
     SPELL_SPARK_H                      = 57062,
     SPELL_RIFT_SHIELD                  = 47748,
 
-    SPELL_ARCANEFORM                   = 48019,
-
-
     // Chaotic Rift Stuff
     SPELL_CHAOTIC_RIFT_VISUAL          = 47686, /// Suppose to be the visual spells
     SPELL_CHARGE_RIFT                  = 47747, /// Works wrong (affect players, not rifts) ---- UNTESTED:X0
@@ -180,7 +177,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim()) //|| m_creature->HasAura(SPELL_RIFT_SHIELD))
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         if ((m_uiPhase == 0) && (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.75))
@@ -261,19 +258,12 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
     instance_nexus* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 m_uiChaoticEnergyBurstTimer;
-    uint32 m_uiCrazedManaWraithTimer;
-
     void Reset()
     {
-        m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
-        m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
-
-        //DoCast(m_creature, SPELL_CHAOTIC_RIFT_VISUAL, false);
-
+///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
         if (!m_creature->HasAura(SPELL_RIFT_AURA))
             DoCast(m_creature,SPELL_RIFT_AURA,true);
-
+///-> aura summons wraiths according to DBC values from spell -- non_charged
         if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
             DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
     }
@@ -282,38 +272,15 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        /*if (m_uiChaoticEnergyBurstTimer < uiDiff)
-        {
-            //Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+///-> left enough of this code to remind me of an idea i had
+            /*Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
             {
-                /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+                if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                     DoCast(pTarget, SPELL_CHARGED_CHAOTIC_ENERGY_BURST);
-                else*/
-       /*             DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
-            }
+                else
+                    DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
 
-            m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
-        }
-        else
-            m_uiChaoticEnergyBurstTimer -= uiDiff;*/
-
-        /*if (m_uiCrazedManaWraithTimer < uiDiff)
-        {
-            Creature* pWraith = m_creature->SummonCreature(NPC_CRAZED_MANA_WRAITH, m_creature->GetPositionX()+1, m_creature->GetPositionY()+1, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
-            if (pWraith)
-                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                    pWraith->AI()->AttackStart(pTarget);
-
-            //Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
-            /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
-                m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
-            else*/
-          /*      m_uiCrazedManaWraithTimer = 10*IN_MILLISECONDS;  // suppose to be 15 secs according to spells
-        }
-        else
-            m_uiCrazedManaWraithTimer -= uiDiff;*/
+            if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))*/
     }
 };
 
