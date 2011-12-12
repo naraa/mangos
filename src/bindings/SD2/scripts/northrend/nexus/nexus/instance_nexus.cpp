@@ -82,6 +82,12 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
+///-> Use this for commanders and trash mob correct spawn on player faction enter
+/*void instance_nexus::OnPlayerEnter(Player* pPlayer)
+{
+
+}*/
+
 void instance_nexus::OnCreatureDeath(Creature *pCreature)
 {
     switch(pCreature->GetEntry())

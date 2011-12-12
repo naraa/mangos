@@ -23,23 +23,26 @@ EndScriptData */
 
 #include "precompiled.h"
 
-#define SAY_AGGRO                   -1553000
-#define SAY_KILL_1                  -1553001
-#define SAY_KILL_2                  -1553002
-#define SAY_TREE_1                  -1553003
-#define SAY_TREE_2                  -1553004
-#define SAY_DEATH                   -1553005
+enum
+{
+    SAY_AGGRO                  = -1553000,
+    SAY_KILL_1                 = -1553001,
+    SAY_KILL_2                 = -1553002,
+    SAY_TREE_1                 = -1553003,
+    SAY_TREE_2                 = -1553004,
+    SAY_DEATH                  = -1553005,
 
-#define SPELL_TRANQUILITY           34550
-#define SPELL_TREE_FORM             34551
+    SPELL_TRANQUILITY          = 34550,
+    SPELL_TREE_FORM            = 34551,
 
-#define SPELL_SUMMON_FRAYER         34557
-#define ENTRY_FRAYER                19953
+    SPELL_SUMMON_FRAYER        = 34557,
+    ENTRY_FRAYER               = 19953,
 
-#define SPELL_PLANT_WHITE           34759
-#define SPELL_PLANT_GREEN           34761
-#define SPELL_PLANT_BLUE            34762
-#define SPELL_PLANT_RED             34763
+    SPELL_PLANT_WHITE          = 34759,
+    SPELL_PLANT_GREEN          = 34761,
+    SPELL_PLANT_BLUE           = 34762,
+    SPELL_PLANT_RED            = 34763,
+};
 
 struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
 {
@@ -47,24 +50,24 @@ struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
 
     GUIDList Adds_List;
 
-    uint32 SummonSeedling_Timer;
-    uint32 TreeForm_Timer;
-    uint32 MoveCheck_Timer;
-    uint32 DeadAddsCount;
-    bool MoveFree;
+    uint32 m_uiSummonSeedling_Timer;
+    uint32 m_uiTreeForm_Timer;
+    uint32 m_uiMoveCheck_Timer;
+    uint32 m_uiDeadAddsCount;
+    bool m_bMoveFree;
 
     void Reset()
     {
         Adds_List.clear();
 
-        SummonSeedling_Timer = 6000;
-        TreeForm_Timer = 30000;
-        MoveCheck_Timer = 1000;
-        DeadAddsCount = 0;
-        MoveFree = true;
+        m_uiSummonSeedling_Timer = 6000;
+        m_uiTreeForm_Timer = 30000;
+        m_uiMoveCheck_Timer = 1000;
+        m_uiDeadAddsCount = 0;
+        m_bMoveFree = true;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
@@ -86,22 +89,22 @@ struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
         }
     }
 
-    void KilledUnit(Unit* victim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(urand(0, 1) ? SAY_KILL_1 : SAY_KILL_2, m_creature);
     }
 
-    void JustDied(Unit* Killer)
+    void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (TreeForm_Timer < diff)
+        if (m_uiTreeForm_Timer < uiDiff)
         {
             DoScriptText(urand(0, 1) ? SAY_TREE_1 : SAY_TREE_2, m_creature);
 
@@ -115,14 +118,14 @@ struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
             DoCastSpellIfCan(m_creature, SPELL_TREE_FORM,     CAST_TRIGGERED);
 
             m_creature->GetMotionMaster()->MoveIdle();
-            MoveFree = false;
+            m_bMoveFree = false;
 
-            TreeForm_Timer = 75000;
-        }else TreeForm_Timer -= diff;
+            m_uiTreeForm_Timer = 75000;
+        }else m_uiTreeForm_Timer -= uiDiff;
 
-        if (!MoveFree)
+        if (!m_bMoveFree)
         {
-            if (MoveCheck_Timer < diff)
+            if (m_uiMoveCheck_Timer < uiDiff)
             {
                 for(GUIDList::iterator itr = Adds_List.begin(); itr != Adds_List.end(); ++itr)
                 {
@@ -131,28 +134,28 @@ struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
                         if (!pTemp->isAlive())
                         {
                             Adds_List.erase(itr);
-                            ++DeadAddsCount;
+                            ++m_uiDeadAddsCount;
                             break;
                         }
                     }
                 }
 
-                if (DeadAddsCount < 3 && TreeForm_Timer-30000 < diff)
-                    DeadAddsCount = 3;
+                if (m_uiDeadAddsCount < 3 && m_uiTreeForm_Timer-30000 < uiDiff)
+                    m_uiDeadAddsCount = 3;
 
-                if (DeadAddsCount >= 3)
+                if (m_uiDeadAddsCount >= 3)
                 {
                     Adds_List.clear();
-                    DeadAddsCount = 0;
+                    m_uiDeadAddsCount = 0;
 
                     m_creature->InterruptNonMeleeSpells(true);
                     m_creature->RemoveAllAuras();
                     m_creature->GetMotionMaster()->MoveChase(m_creature->getVictim());
-                    MoveFree = true;
+                    m_bMoveFree = true;
                 }
-                MoveCheck_Timer = 500;
+                m_uiMoveCheck_Timer = 500;
             }
-            else MoveCheck_Timer -= diff;
+            else m_uiMoveCheck_Timer -= uiDiff;
 
             return;
         }
@@ -161,11 +164,11 @@ struct MANGOS_DLL_DECL boss_high_botanist_freywinnAI : public ScriptedAI
             return;*/
 
         //one random seedling every 5 secs, but not in tree form
-        if (SummonSeedling_Timer < diff)
+        if (m_uiSummonSeedling_Timer < uiDiff)
         {
             DoSummonSeedling();
-            SummonSeedling_Timer = 6000;
-        }else SummonSeedling_Timer -= diff;
+            m_uiSummonSeedling_Timer = 6000;
+        }else m_uiSummonSeedling_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

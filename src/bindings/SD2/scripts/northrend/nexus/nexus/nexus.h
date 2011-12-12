@@ -70,6 +70,7 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 
         void Initialize();
 
+        //void OnPlayerEnter(Player* pPlayer);
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureDeath(Creature* pCreature);
         void OnCreatureCreate(Creature* pCreature);
