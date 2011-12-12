@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-10 02:16:30
+# Date/time:                    2011-12-11 23:56:17
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -84,10 +84,6 @@ INSERT IGNORE INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `
 	(-3649008, 'Val\'kyr? We\'re ready for them', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'barrett GOSSIP_ITEM_TWINS_START'),
 	(-3649009, 'Your words of praise are appreciated, Coliseum Master.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'barrett GOSSIP_ITEM_ANUB_INIT'),
 	(-3649010, 'That is strange...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'barrett GOSSIP_ITEM_ANUB_START'),
-	(-3000770, 'Exchange 100 ArenaPoints to 2000 HonorPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 100 АренаПойнтов на 2000 ХонорПойнтов', 'npc_arena_honor gossip 1'),
-	(-3000771, 'Exchange 1000 ArenaPoints to 20000 HonorPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 1000 АренаПойнтов на 20000 ХонорПойнтов', 'npc_arena_honor gossip 2'),
-	(-3000772, 'Exchange 1000 HonorPoints to 50 ArenaPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 1000 ХонорПойнтов на 50 АренаПойнтов', 'npc_arena_honor gossip 3'),
-	(-3000773, 'Exchange 10000 HonorPoints to 500 ArenaPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 10000 ХонорПойнтов на 500 АренаПойнтов', 'npc_arena_honor gossip 4'),
 	(-3631604, 'Icecrown Citadel', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Цитадель Ледяной Короны', 'IceCrown citadel teleporter text 5'),
 	(-3631605, 'The Sanctum of Blood', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Святилище крови', 'IceCrown citadel teleporter text 6'),
 	(-3631606, 'Frost Queen\'s Lair', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Логово Королевы льда', 'IceCrown citadel teleporter text 7'),
@@ -97,7 +93,11 @@ INSERT IGNORE INTO `gossip_texts` (`entry`, `content_default`, `content_loc1`, `
 	(-3594537, 'Lady Jaina, Let\'s go!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Давай быстрее!', ''),
 	(-3594538, 'Lady Sylvanas, we are ready for next mission!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Сильвана, мы готовы!', ''),
 	(-3594539, 'Lady Sylvanas, Let\'s go!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Поехали!', ''),
-	(-3594540, 'Let\'s go!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Побежали!', '');
+	(-3594540, 'Let\'s go!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Побежали!', ''),
+	(-3000770, 'Exchange 100 ArenaPoints to 2000 HonorPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 100 АренаПойнтов на 2000 ХонорПойнтов', 'npc_arena_honor gossip 1'),
+	(-3000771, 'Exchange 1000 ArenaPoints to 20000 HonorPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 1000 АренаПойнтов на 20000 ХонорПойнтов', 'npc_arena_honor gossip 2'),
+	(-3000772, 'Exchange 1000 HonorPoints to 50 ArenaPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 1000 ХонорПойнтов на 50 АренаПойнтов', 'npc_arena_honor gossip 3'),
+	(-3000773, 'Exchange 10000 HonorPoints to 500 ArenaPoints', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Обменять 10000 ХонорПойнтов на 500 АренаПойнтов', 'npc_arena_honor gossip 4');
 /*!40000 ALTER TABLE `gossip_texts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

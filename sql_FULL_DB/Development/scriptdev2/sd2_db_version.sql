@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-10 02:16:30
+# Date/time:                    2011-12-11 23:56:17
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `sd2_db_version` (
 # Dumping data for table scriptdev2.sd2_db_version: 1 rows
 /*!40000 ALTER TABLE `sd2_db_version` DISABLE KEYS */;
 INSERT IGNORE INTO `sd2_db_version` (`version`) VALUES
-	('ScriptDev2 (for MaNGOS 11812+) And Infinity Project ');
+	('Infinity_scriptdev2 and ScriptDev2 (for MaNGOS 11812+) ');
 /*!40000 ALTER TABLE `sd2_db_version` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

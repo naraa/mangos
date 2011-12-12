@@ -31,3 +31,5 @@ UPDATE creature SET spawntimesecs = 10 WHERE id IN (
 13116, 13117,
 -- SotA demolishers
 28781);
+
+

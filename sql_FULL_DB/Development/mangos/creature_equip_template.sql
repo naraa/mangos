@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-10 02:14:50
+# Date/time:                    2011-12-11 23:52:57
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -4248,8 +4248,8 @@ INSERT IGNORE INTO `creature_equip_template` (`entry`, `equipentry1`, `equipentr
 	(35329, 46090, 6254, 0),
 	(38112, 50249, 49777, 0),
 	(38113, 50248, 50248, 0),
-	(110000, 34816, 34816, 0),
-	(10400, 38175, 0, 0);
+	(10400, 38175, 0, 0),
+	(110000, 34816, 34816, 0);
 /*!40000 ALTER TABLE `creature_equip_template` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

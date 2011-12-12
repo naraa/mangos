@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-10 02:14:49
+# Date/time:                    2011-12-11 23:52:56
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -4882,7 +4882,10 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2918602, 29186, 0, 0, 100, 3, 10000, 20000, 10000, 10000, 11, 50335, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Rampaging Abomination - Cast Scourge Hook'),
 	(2919001, 29190, 0, 0, 100, 3, 10000, 20000, 10000, 10000, 11, 36706, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Flesh Behemoth - Cast Thunderclap'),
 	(2919002, 29190, 0, 0, 100, 3, 10000, 20000, 10000, 20000, 11, 53634, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Flesh Behemoth - Cast Stomp'),
+	(2769801, 27698, 8, 0, 100, 0, 49367, -1, 0, 0, 33, 27698, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'q12372'),
+	(2368602, 23686, 4, 0, 100, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(2900112, 29001, 0, 0, 100, 1, 2000, 10000, 7500, 10000, 11, 52922, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'High Inquisitor Valroth - Cast Inquisitor_penance'),
+	(2368601, 23686, 11, 0, 100, 0, 0, 0, 0, 0, 11, 42075, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(150201, 1502, 1, 0, 100, 0, 0, 0, 0, 0, 11, 26047, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Wretched Ghoul - Cast Birth on Spawn'),
 	(150401, 1504, 11, 0, 100, 0, 0, 0, 0, 0, 11, 6752, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Young Night Web Spider - Cast Weak Poison Proc on Spawn'),
 	(150501, 1505, 11, 0, 100, 0, 0, 0, 0, 0, 11, 6752, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Night Web Spider - Cast Weak Poison Proc on Spawn'),
@@ -6558,10 +6561,10 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(392403, 3924, 14, 0, 100, 1, 400, 40, 19500, 35500, 11, 11986, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thistlefur Shaman - Cast Healing Wave on Friendlies'),
 	(392404, 3924, 2, 0, 100, 0, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Thistlefur Shaman - Flee at 15% HP'),
 	(392501, 3925, 11, 0, 100, 0, 0, 0, 0, 0, 11, 6813, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thistlefur Avenger - Cast Coat of Thistlefur on Spawn'),
-	(392502, 3925, 14, 0, 100, 0, 664, 20, 0, 0, 11, 8602, 0, 1, 1, -550, 0, 0, 0, 0, 0, 0, 'Thistlefur Avenger - Cast Vengeance on Friendly Low HP'),
-	(392503, 3925, 2, 0, 30, 0, 30, 0, 0, 0, 11, 8602, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thistlefur Avenger - Cast Vengeance at 30% HP'),
-	(392601, 3926, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Thistlefur Pathfinder - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn');
+	(392502, 3925, 14, 0, 100, 0, 664, 20, 0, 0, 11, 8602, 0, 1, 1, -550, 0, 0, 0, 0, 0, 0, 'Thistlefur Avenger - Cast Vengeance on Friendly Low HP');
 INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(392503, 3925, 2, 0, 30, 0, 30, 0, 0, 0, 11, 8602, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thistlefur Avenger - Cast Vengeance at 30% HP'),
+	(392601, 3926, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Thistlefur Pathfinder - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
 	(392602, 3926, 11, 0, 100, 0, 0, 0, 0, 0, 11, 6813, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Thistlefur Pathfinder - Cast Coat of Thistlefur on Spawn'),
 	(392603, 3926, 9, 5, 100, 1, 5, 30, 2300, 2800, 11, 6660, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Thistlefur Pathfinder - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
 	(392604, 3926, 9, 5, 100, 1, 30, 80, 0, 0, 21, 1, 1, 0, 20, 1, 0, 0, 0, 0, 0, 0, 'Thistlefur Pathfinder - Start Combat Movement and Start Melee at 30 Yards (Phase 1)'),
@@ -13049,10 +13052,10 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2552003, 25520, 9, 5, 100, 1, 0, 40, 3400, 4800, 11, 9532, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Cast Lightning Bolt (Phase 1)'),
 	(2552004, 25520, 3, 5, 100, 0, 7, 0, 0, 0, 21, 1, 0, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Start Combat Movement and Set Phase 2 when Mana is at 7% (Phase 1)'),
 	(2552005, 25520, 9, 5, 100, 0, 35, 80, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Start Combat Movement at 35 Yards (Phase 1)'),
-	(2552006, 25520, 9, 5, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Prevent Combat Movement at 15 Yards (Phase 1)'),
-	(2552007, 25520, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Start Combat Movement Below 5 Yards (Phase 1)'),
-	(2552008, 25520, 3, 3, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Set Phase 1 when Mana is above 15% (Phase 2)');
+	(2552006, 25520, 9, 5, 100, 0, 5, 15, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Prevent Combat Movement at 15 Yards (Phase 1)');
 INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(2552007, 25520, 9, 5, 100, 0, 0, 5, 0, 0, 21, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Start Combat Movement Below 5 Yards (Phase 1)'),
+	(2552008, 25520, 3, 3, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Set Phase 1 when Mana is above 15% (Phase 2)'),
 	(2552009, 25520, 0, 0, 100, 1, 8000, 15000, 120000, 125000, 11, 49871, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Cast Rune of Retribution'),
 	(2552010, 25520, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Skadir Runecaster - Set Phase to 0 on Evade'),
 	(2552201, 25522, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Skadir Raider - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
@@ -19329,10 +19332,10 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(733510, 7335, 0, 0, 100, 3, 12000, 16000, 8000, 20000, 11, 11436, 4, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Geomancer - Slow'),
 	(733511, 7335, 2, 0, 100, 2, 15, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Geomancer - Set Phase 3 at 15% HP'),
 	(733512, 7335, 2, 7, 100, 2, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Death\'s Head Geomancer - Start Combat Movement and Flee at 15% HP (Phase 3)'),
-	(733513, 7335, 7, 0, 100, 2, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Geomancer - Set Phase to 0 on Evade'),
-	(733701, 7337, 1, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Prevent Combat Movement on Spawn'),
-	(733702, 7337, 1, 0, 100, 2, 1000, 1000, 0, 0, 11, 12420, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Summon Skeletal Servant on Spawn');
+	(733513, 7335, 7, 0, 100, 2, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Geomancer - Set Phase to 0 on Evade');
 INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(733701, 7337, 1, 0, 100, 2, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Prevent Combat Movement on Spawn'),
+	(733702, 7337, 1, 0, 100, 2, 1000, 1000, 0, 0, 11, 12420, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Summon Skeletal Servant on Spawn'),
 	(733703, 7337, 4, 0, 100, 2, 0, 0, 0, 0, 11, 11445, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Cast Bone Armor on Aggro'),
 	(733704, 7337, 4, 0, 100, 2, 0, 0, 0, 0, 11, 9613, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Cast Shadow Bolt and Set Phase 1 on Aggro'),
 	(733705, 7337, 9, 13, 100, 3, 0, 40, 2400, 3800, 11, 9613, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Death\'s Head Necromancer - Cast Shadow Bolt (Phase 1)'),
@@ -25298,8 +25301,6 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2991951, 29919, 8, 0, 100, 0, 23301, -1, 0, 0, 0, 0, 0, 0, 33, 30220, 6, 0, 0, 0, 0, 0, 'ytdb-q12995'),
 	(3072551, 30725, 8, 0, 100, 0, 23301, -1, 0, 0, 0, 0, 0, 0, 33, 30220, 6, 0, 0, 0, 0, 0, 'ytdb-q12995'),
 	(2835251, 28352, 8, 0, 100, 0, 51381, -1, 0, 0, 41, 0, 0, 0, 33, 28352, 6, 0, 0, 0, 0, 0, 'ytdb-q12591,12598'),
-	(2368602, 23686, 4, 0, 100, 0, 0, 0, 0, 0, 24, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
-	(2368601, 23686, 11, 0, 100, 0, 0, 0, 0, 0, 11, 42075, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(2150605, 21506, 0, 0, 100, 1, 6000, 6000, 14000, 14000, 11, 38750, 1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 'Azaloth - Cast War Stomp-R2'),
 	(2543451, 25434, 8, 0, 60, 1, 51912, -1, 0, 0, 37, 0, 0, 0, 33, 25505, 6, 0, 0, 0, 0, 0, 'ytdb-q11653'),
 	(2543251, 25432, 8, 0, 60, 1, 51912, -1, 0, 0, 37, 0, 0, 0, 33, 25505, 6, 0, 0, 0, 0, 0, 'ytdb-q11653'),
@@ -25626,7 +25627,6 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(1999051, 19990, 6, 0, 100, 0, 0, 0, 0, 0, 11, 37473, 6, 23, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q10607'),
 	(2491401, 24914, 6, 0, 100, 0, 0, 0, 0, 0, 11, 45070, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Sorlof - Cast Sorlof\'s Booty on Death (Quest: 11529)'),
 	(2172952, 21729, 6, 0, 100, 0, 0, 0, 0, 0, 41, 0, 0, 0, 12, 21737, 0, 60000, 0, 0, 0, 0, 'ytdb-q10584'),
-	(2769801, 27698, 8, 0, 100, 0, 49367, -1, 0, 0, 33, 27698, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'q12372'),
 	(3017801, 30178, 0, 0, 100, 7, 0, 500, 25000, 40000, 11, 56354, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'Ahn kahar Swarmer - Cast Sprint');
 /*!40000 ALTER TABLE `creature_ai_scripts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

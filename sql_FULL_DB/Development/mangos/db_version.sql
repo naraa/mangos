@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-10 02:15:01
+# Date/time:                    2011-12-11 23:53:08
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `db_version` (
 # Dumping data for table mangos.db_version: 1 rows
 /*!40000 ALTER TABLE `db_version` DISABLE KEYS */;
 INSERT IGNORE INTO `db_version` (`version`, `creature_ai_version`, `cache_id`, `required_11852_01_mangos_gossip_menu`) VALUES
-	('Infinity_DB_VERSION_1.0', 'ACID 3.0.9 \'Streamlined Perfection\' - Full Release for MaNGOS (3.3.5a Client)', 612, b'00000000');
+	('Infinity_DB_ver_r1_', 'Infinity_ACID 3.3.5 \'Streamlined Perfection\' - Full Release for MaNGOS (3.3.5a Client)', 612, b'00000000');
 /*!40000 ALTER TABLE `db_version` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
