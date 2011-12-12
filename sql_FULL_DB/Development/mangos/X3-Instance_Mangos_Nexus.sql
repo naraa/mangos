@@ -13,6 +13,15 @@ UPDATE `creature_template` SET `modelid_1` = 25206 WHERE `entry` = 30522;
 UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 26918;
 UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 30522;
 
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26746';
+
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2674601');
+INSERT INTO `creature_ai_scripts` VALUES ('2674601', '26746', '0', '0', '100', '15', '3000', '4000', '1000', '1500', '11', '33833', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - Cast Arcane Missles');
+
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2674602');
+INSERT INTO `creature_ai_scripts` VALUES ('2674602', '26746', '4', '0', '100', '15', '0', '0', '0', '0', '39', '70', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - call for help');
+
+
 -- Commanders
 UPDATE `creature_template` SET `ScriptName` = 'boss_commander_kolurg' WHERE `entry` = '26798';
 UPDATE `creature_template` SET `ScriptName` = 'boss_commander_stoutbeard' WHERE `entry` = '26796';

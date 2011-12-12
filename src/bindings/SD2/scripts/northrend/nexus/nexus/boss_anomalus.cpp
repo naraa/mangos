@@ -18,8 +18,7 @@
 /* ScriptData
 SDName: Boss_Anomalus
 SD%Complete: 90%
-TODO: Rewrite one more time but its ok like this for now
-SDComment: TODO:::: IMPLENT CHARGED && NONCHARGED RIFT STUFF && AND SHOULD WE FIX BLIZZES PLATFORM ONLY RIFT SUMMONS ???
+SDComment: TODO:::: IMPLENT CHARGED && NONCHARGED RIFT STUFF
 SDCategory: The Nexus, The Nexus
 EndScriptData */
 
@@ -70,6 +69,8 @@ float RiftLocation[6][3]=
     {651.72f, -297.44f, -9.37f}
 };
 
+uint32 m_uiHowManyRifts;
+
 /*####
 # boss_anomalus
 ####*/
@@ -96,7 +97,9 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         m_uiPhase = 0;
         m_uiSparkTimer = 5*IN_MILLISECONDS;
         m_ChaoticRiftGuid.Clear();
-        m_uiCreateRiftTimer = 20000;
+        m_uiCreateRiftTimer = 25000;
+
+        m_uiHowManyRifts = 0;
 
         m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
@@ -122,6 +125,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_ANOMALUS, FAIL);
+            m_uiHowManyRifts = 0;
         }
     }
 
@@ -139,6 +143,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
         uint8 tmp = urand(0,5);
         m_creature->SummonCreature(NPC_CHAOTIC_RIFT, RiftLocation[tmp][0], RiftLocation[tmp][1], RiftLocation[tmp][2], 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+        ++m_uiHowManyRifts;
     }
 
     void JustSummoned(Creature* pSummoned)
@@ -156,11 +161,10 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
     void SummonedCreatureDespawn(Creature* pSummoned)
     {
+        --m_uiHowManyRifts;
+
         if (pSummoned->GetObjectGuid() == m_ChaoticRiftGuid)
         {
-            if (m_creature->HasAura(SPELL_RIFT_SHIELD))
-                m_creature->RemoveAurasDueToSpell(SPELL_RIFT_SHIELD);
-                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
             m_ChaoticRiftGuid.Clear();
         }
     }
@@ -179,6 +183,18 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (!m_creature->HasAura(SPELL_RIFT_SHIELD))
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+        if (m_uiHowManyRifts == 0)
+        {
+            if (m_creature->HasAura(SPELL_RIFT_SHIELD))
+            {
+                m_creature->RemoveAurasDueToSpell(SPELL_RIFT_SHIELD);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            }
+        }
 
         if ((m_uiPhase == 0) && (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.75))
         {
@@ -213,13 +229,10 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
             m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         }
 
-        if (!m_creature->HasAura(SPELL_RIFT_SHIELD))
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-
         if (m_uiCreateRiftTimer < uiDiff)
         {
             SummonRifts();
-            m_uiCreateRiftTimer = 20000;
+            m_uiCreateRiftTimer = 25000;
         }
         else
             m_uiCreateRiftTimer -= uiDiff;
@@ -268,19 +281,38 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
             DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
     }
 
+    void JustDied(Unit* pKiller)
+    {
+        --m_uiHowManyRifts;
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-///-> left enough of this code to remind me of an idea i had
-            /*Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
-            {
-                if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
-                    DoCast(pTarget, SPELL_CHARGED_CHAOTIC_ENERGY_BURST);
-                else
-                    DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
-
-            if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))*/
+///-> not tested anolm doesnt have his part yet
+       /*if (Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
+         {
+             if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+             {
+///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
+                  if (m_creature->HasAura(SPELL_RIFT_AURA))
+                     DoCast(m_creature,SPELL_CHARGED_RIFT_AURA,true);
+///-> aura summons wraiths according to DBC values from spell -- non_charged
+                  if (m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
+                     DoCast(m_creature,SPELL_CHARGED_RIFT_SUMMON_AURA,true);
+             }
+             else
+             {
+///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
+                 if (!m_creature->HasAura(SPELL_RIFT_AURA))
+                     DoCast(m_creature,SPELL_RIFT_AURA,true);
+///-> aura summons wraiths according to DBC values from spell -- non_charged
+                 if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
+                     DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
+             }
+         }
+*/
     }
 };
 
