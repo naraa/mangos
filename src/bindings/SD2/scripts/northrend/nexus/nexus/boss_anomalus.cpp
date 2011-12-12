@@ -17,8 +17,9 @@
 
 /* ScriptData
 SDName: Boss_Anomalus
-SD%Complete: 95%
-SDComment:
+SD%Complete: 90%
+TODO: Rewrite one more time but its ok like this for now
+SDComment: TODO:::: IMPLENT CHARGED && NONCHARGED RIFT STUFF && AND SHOULD WE FIX BLIZZES PLATFORM ONLY RIFT SUMMONS ???
 SDCategory: The Nexus, The Nexus
 EndScriptData */
 
@@ -28,15 +29,28 @@ EndScriptData */
 enum
 {
     // Spells
-    SPELL_SPARK_N                       = 47751,
-    SPELL_SPARK_H                       = 57062,
-    SPELL_RIFT_SHIELD                   = 47748,
-    SPELL_CHARGE_RIFT                   = 47747, // Works wrong (affect players, not rifts)
-    SPELL_CREATE_RIFT                   = 47743, // Don't work, using WA
-    SPELL_ARCANE_ATTRACTION             = 57063, // not used
-    SPELL_CHAOTIC_ENERGY_BURST          = 47688,
-    SPELL_CHARGED_CHAOTIC_ENERGY_BURST  = 47737,
-    SPELL_ARCANEFORM                    = 48019, // Chaotic Rift visual
+    SPELL_SPARK_N                      = 47751,
+    SPELL_SPARK_H                      = 57062,
+    SPELL_RIFT_SHIELD                  = 47748,
+
+    SPELL_ARCANEFORM                   = 48019,
+
+
+    // Chaotic Rift Stuff
+    SPELL_CHAOTIC_RIFT_VISUAL          = 47686, /// Suppose to be the visual spells
+    SPELL_CHARGE_RIFT                  = 47747, /// Works wrong (affect players, not rifts) ---- UNTESTED:X0
+    SPELL_CREATE_RIFT                  = 47743, /// Don't work, using WA   --- UNTESTED:X0
+///-> try to use auras in rewrite and ect
+    SPELL_RIFT_AURA                    = 47687,  /// 47688 && 47686 spells combined apply aura triggers
+    SPELL_CHARGED_RIFT_AURA            = 47733,  /// 47737 && 47686 spells combined apply aura triggers
+
+    SPELL_RIFT_SUMMON_AURA             = 47732,  /// aura to trigger summons wraiths  15 secs
+    SPELL_CHARGED_RIFT_SUMMON_AURA     = 47742,  /// aura to trigger summons wraiths  6 secs
+
+    SPELL_CHAOTIC_ENERGY_BURST         = 47688,  /// Unleashes a burst of chaotic energy at an enemy, dealing 244 to 406 Arcane damage and then jumping to additional nearby enemies.  Each jump reduces the damage by 50%.  Affects 3 total targets.
+    SPELL_CHARGED_CHAOTIC_ENERGY_BURST = 47737,  /// Unleashes a burst of chaotic energy at an enemy, dealing 357 to 593 Arcane damage and then jumping to additional nearby enemies.  Each jump reduces the damage by 50%.  Affects 3 total targets.
+
+    SPELL_ARCANE_ATTRACTION             = 57063,  /// Increases Arcane damage taken by 2000 for 10 sec.  -- 50 yards
 
     // Texts
     SAY_AGGRO                           = -1576006,
@@ -77,6 +91,7 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
     uint8 m_uiPhase;
     uint32 m_uiSparkTimer;
+    uint32 m_uiCreateRiftTimer;
     ObjectGuid m_ChaoticRiftGuid;
 
     void Reset()
@@ -84,18 +99,22 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
         m_uiPhase = 0;
         m_uiSparkTimer = 5*IN_MILLISECONDS;
         m_ChaoticRiftGuid.Clear();
+        m_uiCreateRiftTimer = 20000;
+
+        m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_ANOMALUS, NOT_STARTED);
     }
 
-    void EnterCombat(Unit* pWho)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
 
         if (m_pInstance)
         {
             m_pInstance->SetData(TYPE_ANOMALUS, IN_PROGRESS);
+
             if (!m_bIsRegularMode)
                 m_pInstance->SetSpecialAchievementCriteria(TYPE_CHAOS_THEORY, true);
         }
@@ -119,68 +138,94 @@ struct MANGOS_DLL_DECL boss_anomalusAI : public ScriptedAI
 
     void SummonRifts()
     {
-        DoScriptText(SAY_SHIELD, m_creature);
-        DoScriptText(EMOTE_SHIELD, m_creature);
         DoScriptText(EMOTE_OPEN_RIFT, m_creature);
-        DoCast(m_creature, SPELL_RIFT_SHIELD);
-
-        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
 
         uint8 tmp = urand(0,5);
-        Creature* pRift = m_creature->SummonCreature(NPC_CHAOTIC_RIFT, RiftLocation[tmp][0], RiftLocation[tmp][1], RiftLocation[tmp][2], 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
-        if (pRift)
-        {
-            //DoCast(Rift, SPELL_CHARGE_RIFT);
-            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
-                pRift->AI()->AttackStart(pTarget);
+        m_creature->SummonCreature(NPC_CHAOTIC_RIFT, RiftLocation[tmp][0], RiftLocation[tmp][1], RiftLocation[tmp][2], 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 10000);
+    }
 
-            m_ChaoticRiftGuid = pRift->GetObjectGuid();
-            DoScriptText(SAY_RIFT , m_creature);
+    void JustSummoned(Creature* pSummoned)
+    {
+        if (pSummoned->GetEntry() == NPC_CHAOTIC_RIFT)
+        {
+            m_ChaoticRiftGuid = pSummoned->GetObjectGuid();
+
+            DoScriptText(SAY_RIFT, m_creature);
+
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                pSummoned->AI()->AttackStart(pTarget);
         }
     }
+
+    void SummonedCreatureDespawn(Creature* pSummoned)
+    {
+        if (pSummoned->GetObjectGuid() == m_ChaoticRiftGuid)
+        {
+            if (m_creature->HasAura(SPELL_RIFT_SHIELD))
+                m_creature->RemoveAurasDueToSpell(SPELL_RIFT_SHIELD);
+                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            m_ChaoticRiftGuid.Clear();
+        }
+    }
+
+///-> future function for future rewrite
+/*  void ChargeTheRifts()
+    {
+        DoScriptText(SAY_SHIELD, m_creature);
+        DoScriptText(EMOTE_SHIELD, m_creature);
+        DoCast(m_creature, SPELL_RIFT_SHIELD);
+        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+    }
+*/
 
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim()) //|| m_creature->HasAura(SPELL_RIFT_SHIELD))
             return;
 
-       if (m_creature->HasAura(SPELL_RIFT_SHIELD))
-       {
-            if (!m_ChaoticRiftGuid.IsEmpty())
-            {
-                Unit* pRift = m_creature->GetMap()->GetUnit(m_ChaoticRiftGuid);
-                if (pRift && pRift->isDead())
-                {
-                    m_creature->RemoveAurasDueToSpell(SPELL_RIFT_SHIELD);
-                    m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                    m_ChaoticRiftGuid.Clear();
-                }
-                return;
-            }
-        }
-        else
-        {
-            m_ChaoticRiftGuid.Clear();
-            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-        }
-
         if ((m_uiPhase == 0) && (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.75))
         {
             m_uiPhase = 1;
             SummonRifts();
+///-> CHARGED STUFF WOULD GO HERE
+            DoScriptText(SAY_SHIELD, m_creature);
+            DoScriptText(EMOTE_SHIELD, m_creature);
+            DoCast(m_creature, SPELL_RIFT_SHIELD);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         }
 
         if ((m_uiPhase == 1) && (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.50))
         {
             m_uiPhase = 2;
             SummonRifts();
+///-> CHARGED STUFF WOULD GO HERE
+            DoScriptText(SAY_SHIELD, m_creature);
+            DoScriptText(EMOTE_SHIELD, m_creature);
+            DoCast(m_creature, SPELL_RIFT_SHIELD);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         }
 
         if ((m_uiPhase == 2) && (m_creature->GetHealth() < m_creature->GetMaxHealth() * 0.25))
         {
             m_uiPhase = 3;
             SummonRifts();
+///-> CHARGED STUFF WOULD GO HERE
+            DoScriptText(SAY_SHIELD, m_creature);
+            DoScriptText(EMOTE_SHIELD, m_creature);
+            DoCast(m_creature, SPELL_RIFT_SHIELD);
+            m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
         }
+
+        if (!m_creature->HasAura(SPELL_RIFT_SHIELD))
+            m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+
+        if (m_uiCreateRiftTimer < uiDiff)
+        {
+            SummonRifts();
+            m_uiCreateRiftTimer = 20000;
+        }
+        else
+            m_uiCreateRiftTimer -= uiDiff;
 
         if (m_uiSparkTimer < uiDiff)
         {
@@ -223,9 +268,7 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
     {
         m_uiChaoticEnergyBurstTimer = 1*IN_MILLISECONDS;
         m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
-        m_creature->SetDisplayId(25206); //For some reason in DB models for ally and horde are different.
-                                         //Model for ally (1126) does not show auras. Horde model works perfect.
-                                         //Set model to horde number
+
         DoCast(m_creature, SPELL_ARCANEFORM, false);
     }
 
@@ -236,12 +279,12 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
 
         if (m_uiChaoticEnergyBurstTimer < uiDiff)
         {
-            Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
+            //Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
             {
-                if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+                /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                     DoCast(pTarget, SPELL_CHARGED_CHAOTIC_ENERGY_BURST);
-                else
+                else*/
                     DoCast(pTarget, SPELL_CHAOTIC_ENERGY_BURST);
             }
 
@@ -257,11 +300,11 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
                 if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
                     pWraith->AI()->AttackStart(pTarget);
 
-            Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
-            if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+            //Unit* pAnomalus = m_creature->GetMap()->GetUnit(ObjectGuid(m_pInstance ? m_pInstance->GetData64(TYPE_ANOMALUS) : 0));
+            /*if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
                 m_uiCrazedManaWraithTimer = 5*IN_MILLISECONDS;
-            else
-                m_uiCrazedManaWraithTimer = 10*IN_MILLISECONDS;
+            else*/
+                m_uiCrazedManaWraithTimer = 10*IN_MILLISECONDS;  // suppose to be 15 secs according to spells
         }
         else
             m_uiCrazedManaWraithTimer -= uiDiff;
