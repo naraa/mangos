@@ -1,5 +1,5 @@
 -- Player race/faction change tables
-
+DROP TABLE IF EXISTS `player_factionchange_achievements`;
 CREATE TABLE IF NOT EXISTS `player_factionchange_achievements` (
     `alliance_id` int(8) NOT NULL,
     `horde_id` int(8) NOT NULL,
@@ -129,7 +129,7 @@ INSERT INTO `player_factionchange_achievements` VALUES ('4156', '4079', 'In the 
 INSERT INTO `player_factionchange_achievements` VALUES ('4436', '4437', 'Pelt the enemy leaders listed below.', 'Pelt the enemy leaders listed below.');
 INSERT INTO `player_factionchange_achievements` VALUES ('4786', '4790', 'You assisted High Tinker Mekkatorque and the Gnomeregan Exiles in the recapture of Gnomeregan\'s surface.', 'You assisted High Tinker Mekkatorque and the Gnomeregan Exiles in the recapture of Gnomeregan\'s surface.');
 
-
+DROP TABLE IF EXISTS `player_factionchange_items`;
 CREATE TABLE IF NOT EXISTS `player_factionchange_items` (
     `race_A` int(8) NOT NULL DEFAULT '0',
     `alliance_id` int(8) NOT NULL,
@@ -882,7 +882,7 @@ INSERT INTO `player_factionchange_items` VALUES ('0', '17903', 'Stormpike Insign
 INSERT INTO `player_factionchange_items` VALUES ('0', '17904', 'Stormpike Insignia Rank 6', '0', '17909', 'Frostwolf Insignia Rank 6');
 INSERT INTO `player_factionchange_items` VALUES ('0', '15198', 'Knight\'s Colors', '0', '15199', 'Stone Guard\'s Herald');
 
-
+DROP TABLE IF EXISTS `player_factionchange_reputations`;
 CREATE TABLE IF NOT EXISTS `player_factionchange_reputations` (
     `race_A` int(8) NOT NULL DEFAULT '0',
     `alliance_id` int(8) NOT NULL,
@@ -911,7 +911,7 @@ INSERT INTO `player_factionchange_reputations` VALUES ('0', '69', 'Darnassus', '
 INSERT INTO `player_factionchange_reputations` VALUES ('0', '72', 'Stormwind', '0', '76', 'Orgrimmar');
 INSERT INTO `player_factionchange_reputations` VALUES ('0', '930', 'Exodar', '0', '911', 'Silvermoon City');
 
-
+DROP TABLE IF EXISTS `player_factionchange_spells`;
 CREATE TABLE IF NOT EXISTS  `player_factionchange_spells` (
     `race_A` int(8) NOT NULL DEFAULT '0',
     `alliance_id` int(8) NOT NULL,

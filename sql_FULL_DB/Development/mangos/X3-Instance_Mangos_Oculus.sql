@@ -26,3 +26,8 @@ UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` 
 -- herbalism flower   a ytdb bugs flowers cant wander around lol
 UPDATE `creature_template` SET `unit_flags` = 33555204, `dynamicflags` = 8 WHERE `entry` = 29888;
 UPDATE `creature_template` SET `speed_walk` = 0, `speed_run` = 0, `movementId` = 0 WHERE `entry` = 29888;
+
+
+-- -------
+-- Fix speed of oculus drakes
+-- UPDATE `creature_template_addon` SET `auras`='50325' WHERE `entry` IN (27755,27692,27756);
