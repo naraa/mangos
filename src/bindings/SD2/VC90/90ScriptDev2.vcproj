@@ -2050,14 +2050,6 @@
 							>
 						</File>
 						<File
-							RelativePath="..\scripts\northrend\nexus\nexus\boss_commander_kolurg.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\scripts\northrend\nexus\nexus\boss_commander_stoutbeard.cpp"
-							>
-						</File>
-						<File
 							RelativePath="..\scripts\northrend\nexus\nexus\boss_keristrasza.cpp"
 							>
 						</File>
