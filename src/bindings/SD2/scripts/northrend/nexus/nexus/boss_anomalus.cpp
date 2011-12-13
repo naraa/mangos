@@ -18,7 +18,10 @@
 /* ScriptData
 SDName: Boss_Anomalus
 SD%Complete: 90%
-SDComment: TODO:::: IMPLENT CHARGED && NONCHARGED RIFT STUFF
+SDComment:
+TODO:::: Charge rift half implented now ( need anomluas to cast spell at rifts
+-- side note while anom is in shield state rift is getting charge bonus effects
+
 SDCategory: The Nexus, The Nexus
 EndScriptData */
 
@@ -36,7 +39,7 @@ enum
     SPELL_CHAOTIC_RIFT_VISUAL          = 47686, /// Suppose to be the visual spells
     SPELL_CHARGE_RIFT                  = 47747, /// Works wrong (affect players, not rifts) ---- UNTESTED:X0
     SPELL_CREATE_RIFT                  = 47743, /// Don't work, using WA   --- UNTESTED:X0
-///-> try to use auras in rewrite and ect
+
     SPELL_RIFT_AURA                    = 47687,  /// 47688 && 47686 spells combined apply aura triggers
     SPELL_CHARGED_RIFT_AURA            = 47733,  /// 47737 && 47686 spells combined apply aura triggers
 
@@ -271,14 +274,18 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
     instance_nexus* m_pInstance;
     bool m_bIsRegularMode;
 
+    uint32 m_uiCrazedManaWraithTimer;
+
     void Reset()
     {
 ///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
         if (!m_creature->HasAura(SPELL_RIFT_AURA))
             DoCast(m_creature,SPELL_RIFT_AURA,true);
 ///-> aura summons wraiths according to DBC values from spell -- non_charged
-        if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
-            DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
+        //if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
+          //  DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
+
+        m_uiCrazedManaWraithTimer = 6*IN_MILLISECONDS;
     }
 
     void JustDied(Unit* pKiller)
@@ -290,29 +297,38 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-///-> not tested anolm doesnt have his part yet
-       /*if (Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_KILJAEDEN))
+
+        if (Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_ANOMALUS))
          {
              if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
              {
-///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
-                  if (m_creature->HasAura(SPELL_RIFT_AURA))
+///->   -- CHARGED
+                 if (m_creature->HasAura(SPELL_RIFT_AURA))
                      DoCast(m_creature,SPELL_CHARGED_RIFT_AURA,true);
-///-> aura summons wraiths according to DBC values from spell -- non_charged
-                  if (m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
-                     DoCast(m_creature,SPELL_CHARGED_RIFT_SUMMON_AURA,true);
              }
              else
              {
-///-> visual && Normal chaotic light attack combined in aura according to DBC values from spell  -- non_charged
+///-> -- NoN_charged
                  if (!m_creature->HasAura(SPELL_RIFT_AURA))
                      DoCast(m_creature,SPELL_RIFT_AURA,true);
-///-> aura summons wraiths according to DBC values from spell -- non_charged
-                 if (!m_creature->HasAura(SPELL_RIFT_SUMMON_AURA))
-                     DoCast(m_creature,SPELL_RIFT_SUMMON_AURA,true);
              }
          }
-*/
+///-> walk around for charged wraith summon  unable to make wraith attack by summon by aura trigger
+        if (m_uiCrazedManaWraithTimer < uiDiff)
+        {
+            Creature* pWraith = m_creature->SummonCreature(NPC_CRAZED_MANA_WRAITH, m_creature->GetPositionX()+1, m_creature->GetPositionY()+1, m_creature->GetPositionZ(), 0, TEMPSUMMON_TIMED_DESPAWN_OUT_OF_COMBAT, 1000);
+            if (pWraith)
+                if (Unit *pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
+                    pWraith->AI()->AttackStart(pTarget);
+
+            Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_ANOMALUS);
+            if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+                m_uiCrazedManaWraithTimer = 6*IN_MILLISECONDS;
+            else
+                m_uiCrazedManaWraithTimer = 15*IN_MILLISECONDS;
+        }
+        else
+            m_uiCrazedManaWraithTimer -= uiDiff;
     }
 };
 

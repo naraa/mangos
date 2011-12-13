@@ -36,11 +36,11 @@ enum
     NPC_FIRE_MAGUS                 = 26928,
     NPC_FROST_MAGUS                = 26930,
     NPC_ARCANE_MAGUS               = 26929,
-    
+
     NPC_ANOMALUS                   = 26763,
     NPC_CRAZED_MANA_WRAITH         = 26746,
     NPC_CHAOTIC_RIFT               = 26918,
-    
+
     NPC_ORMOROK                    = 26794,
     NPC_CRYSTAL_SPIKE              = 27099,
     NPC_CRYSTALLINE_TANGLER        = 32665,
@@ -63,6 +63,9 @@ enum
     ACHIEV_INTENSE_COLD            = 7315,
 };
 
+/// locs needed for hall of statis commander event only need commander loc they can share one spot 8P
+
+
 class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 {
     public:
@@ -72,11 +75,12 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 
         //void OnPlayerEnter(Player* pPlayer);
         void OnObjectCreate(GameObject* pGo);
-        void OnCreatureDeath(Creature* pCreature);
         void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureDeath(Creature* pCreature);
 
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiData);
+
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
         void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
@@ -87,6 +91,8 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
+        uint32 m_uiTeam;
 
         bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
 };

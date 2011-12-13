@@ -46,7 +46,8 @@ bool GOUse_go_containment_sphere(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
-instance_nexus::instance_nexus(Map* pMap) : ScriptedInstance(pMap)
+instance_nexus::instance_nexus(Map* pMap) : ScriptedInstance(pMap),
+     m_uiTeam(0)
 {
     Initialize();
 }
@@ -85,7 +86,13 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
 ///-> Use this for commanders and trash mob correct spawn on player faction enter
 /*void instance_nexus::OnPlayerEnter(Player* pPlayer)
 {
+    // Only on heroic
+    if (instance->IsRegularDifficulty())
+        return;
 
+///-> need return here if commander is already spawned and if command type is in progress
+
+    /// despawn a commander and spawn right faction one if heroic dungeon
 }*/
 
 void instance_nexus::OnCreatureDeath(Creature *pCreature)
@@ -103,6 +110,15 @@ void instance_nexus::OnCreatureDeath(Creature *pCreature)
 
 void instance_nexus::OnCreatureCreate(Creature* pCreature)
 {
+/*    Map::PlayerList const &pPlayers = instance->GetPlayers();
+    uint32 TeamInInstance = 0;
+
+    if (!pPlayers.isEmpty())
+    {
+        if (Player* pPlayer = pPlayers.begin()->getSource())
+            TeamInInstance = pPlayer->GetTeam();
+    }*/
+
     switch (pCreature->GetEntry())
     {
         case NPC_KERISTRASZA:
