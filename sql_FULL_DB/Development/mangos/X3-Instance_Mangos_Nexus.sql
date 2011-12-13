@@ -24,16 +24,41 @@ UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 30522;
 -- ------------
   -- just some fixes to all this
 
+
+  -- ACID Improvement for Commanders and 
+
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27947);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26798);
+INSERT INTO `creature_ai_scripts` VALUES 
+(2794701, 27947, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -631, 0, 0, 11, 31403, 0, 1, 'Horde Commander && Commander Kolurg - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2794702, 27947, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Charge'),
+(2794703, 27947, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Whirlwind'),
+(2794704, 27947, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Frightening Shout'),
+(2794705, 27947, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -632, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Yell on Player Kill'),
+(2794706, 27947, 6, 0, 100, 6, 0, 0, 0, 0, 1, -633, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Yell on Death');
+
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27949);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26796);
+INSERT INTO `creature_ai_scripts` VALUES 
+(2794901, 27949, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -628, 0, 0, 11, 31403, 0, 1, 'Alliance Commander && Commander Stoutbeard - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2794902, 27949, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Charge'),
+(2794903, 27949, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Whirlwind'),
+(2794904, 27949, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Frightening Shout'),
+(2794905, 27949, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -629, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Yell on Player Kill'),
+(2794906, 27949, 6, 0, 100, 6, 0, 0, 0, 0, 1, -630, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Yell on Death');
+
 -- commander stout
 UPDATE `creature_template` SET `modelid_2` = 24366 WHERE `entry` = 26796;
 DELETE FROM `creature` WHERE `id` = 26796;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26796;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = '26796';
 UPDATE `creature_template` SET `faction_A` = 1802, `faction_H` = 1802 WHERE `entry` = 26796;
 
 -- commander kolurg
 UPDATE `creature_template` SET `modelid_2` = 24352 WHERE `entry` = 26798;
 DELETE FROM `creature` WHERE `id`=26798;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26798;
+UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = '26798';
 UPDATE `creature_template` SET `faction_A` = 1801, `faction_H` = 1801 WHERE `entry` = 26798;
 
 -- alliance ranger 
@@ -107,6 +132,46 @@ DELETE FROM `creature` WHERE `id` = 26803;
 UPDATE `creature_template` SET `modelid_2` = 24357 WHERE `entry` = 26803;
 DELETE FROM `creature` WHERE `id` = 26799;
 UPDATE `creature_template` SET `modelid_2` = 24358 WHERE `entry` = 26799;
+ -- pool deletes for above removal
+DELETE FROM `pool_creature` WHERE  `guid`=79905 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79907 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79908 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79910 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79912 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79913 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79915 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79916 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79918 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79920 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79922 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79924 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79930 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79931 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79933 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79925 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79926 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79928 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79935 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79937 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79939 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79940 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79942 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79944 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79947 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79949 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79951 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79952 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79954 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79955 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79957 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79958 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79960 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79962 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79963 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79965 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79967 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79969 LIMIT 1;
+DELETE FROM `pool_creature` WHERE  `guid`=79970 LIMIT 1;
 
 -- -------------
 -- Keristrasza -
