@@ -6028,10 +6028,13 @@ void Aura::HandleAuraPeriodicDummy(bool apply, bool Real)
                     {
                         if (target)
                         {
-                            target->CastSpell(target, 49618, true);
-                            target->CastSpell(target, 51270, true);
-                            target->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
-                            target->SetDeathState(JUST_DIED);
+                            if (Unit *caster = GetCaster())
+                            {
+                                target->CastSpell(target, 49618, true, 0, 0, caster->GetObjectGuid());
+                                target->CastSpell(target, 51270, true);
+                                target->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
+                                target->SetDeathState(JUST_DIED);
+                            }
                         }
                     }
                     break;
@@ -6040,10 +6043,13 @@ void Aura::HandleAuraPeriodicDummy(bool apply, bool Real)
                     {
                         if (target)
                         {
-                            target->CastSpell(target, 59809, true);
-                            target->CastSpell(target, 51270, true);
-                            target->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
-                            target->SetDeathState(JUST_DIED);
+                            if (Unit *caster = GetCaster())
+                            {
+                                target->CastSpell(target, 59809, true, 0, 0, caster->GetObjectGuid());
+                                target->CastSpell(target, 51270, true);
+                                target->SetFloatValue(OBJECT_FIELD_SCALE_X, 1.0f);
+                                target->SetDeathState(JUST_DIED);
+                            }
                         }
                     }
                     break;
@@ -6114,6 +6120,15 @@ void Aura::HandleAuraPeriodicDummy(bool apply, bool Real)
 
                     if (caster && target)
                         caster->CastCustomSpell(target, 63278, 0, &(spell->EffectBasePoints[0]), 0, false, 0, 0, caster->GetObjectGuid() , spell);
+                    return;
+                }
+                case 64217:                                 // Overcharged (spell from Emalon adds)
+                {
+                    if (GetHolder()->GetStackAmount() > 11)
+                    {
+                        target->CastSpell(target, 64219, true);
+                        target->DealDamage(target, target->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                    }
                     return;
                 }
             }
@@ -9556,9 +9571,6 @@ void Aura::HandleAuraControlVehicle(bool apply, bool Real)
 
     if (apply)
     {
-        if (caster->GetTypeId() == TYPEID_PLAYER)
-            ((Player*)caster)->RemovePet(PET_SAVE_AS_CURRENT);
-
         // TODO: find a way to make this work properly
         // some spells seem like store vehicle seat info in basepoints, but not true for all of them, so... ;/
         int32 seat = -1;
@@ -9588,9 +9600,6 @@ void Aura::HandleAuraControlVehicle(bool apply, bool Real)
 
         if (caster->GetVehicle() == target->GetVehicleKit())
             caster->ExitVehicle();
-
-        if (caster->GetTypeId() == TYPEID_PLAYER)
-            ((Player*)caster)->ResummonPetTemporaryUnSummonedIfAny();
     }
 }
 
