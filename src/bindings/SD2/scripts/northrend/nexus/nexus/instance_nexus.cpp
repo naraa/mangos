@@ -46,8 +46,7 @@ bool GOUse_go_containment_sphere(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
-instance_nexus::instance_nexus(Map* pMap) : ScriptedInstance(pMap),
-     m_uiTeam(0)
+instance_nexus::instance_nexus(Map* pMap) : ScriptedInstance(pMap)
 {
     Initialize();
 }
@@ -83,18 +82,6 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
-///-> Use this for commanders and trash mob correct spawn on player faction enter
-/*void instance_nexus::OnPlayerEnter(Player* pPlayer)
-{
-    // Only on heroic
-    if (instance->IsRegularDifficulty())
-        return;
-
-///-> need return here if commander is already spawned and if command type is in progress
-
-    /// despawn a commander and spawn right faction one if heroic dungeon
-}*/
-
 void instance_nexus::OnCreatureDeath(Creature *pCreature)
 {
     switch(pCreature->GetEntry())
@@ -110,18 +97,20 @@ void instance_nexus::OnCreatureDeath(Creature *pCreature)
 
 void instance_nexus::OnCreatureCreate(Creature* pCreature)
 {
-/*    Map::PlayerList const &pPlayers = instance->GetPlayers();
+    Map::PlayerList const &pPlayers = instance->GetPlayers();
     uint32 TeamInInstance = 0;
 
     if (!pPlayers.isEmpty())
     {
         if (Player* pPlayer = pPlayers.begin()->getSource())
             TeamInInstance = pPlayer->GetTeam();
-    }*/
+    }
 
     switch (pCreature->GetEntry())
     {
         case NPC_KERISTRASZA:
+            break;
+        case NPC_BREATH_CASTER:
             break;
         case NPC_TELESTRA:
             break;
@@ -129,12 +118,62 @@ void instance_nexus::OnCreatureCreate(Creature* pCreature)
             break;
         case NPC_ORMOROK:
             break;
-        case NPC_COMM_KOLURG:
+        case NPC_ALLIANCE_COMMANDER:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_COMMANDER, HORDE);
             break;
+        }
+        case NPC_ALLIANCE_BERSERKER:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_BERSERKER, HORDE);
+            break;
+        }
+        case NPC_ALLIANCE_BERSERKER_H:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_BERSERKER_H, HORDE);
+            break;
+        }
+        case NPC_ALLIANCE_CLERIC:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_CLERIC, HORDE);
+            break;
+        }
+        case NPC_ALLIANCE_CLERIC_H:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_CLERIC_H, HORDE);
+            break;
+        }
+        case NPC_ALLIANCE_RANGER:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_RANGER, HORDE);
+            break;
+        }
+        case NPC_ALLIANCE_RANGER_H:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_HORDE_RANGER_H, HORDE);
+            break;
+        }
         case NPC_COMM_STOUTBEARD:
+        {
+            //pCreature->setFaction(16);
+            if (TeamInInstance == ALLIANCE)
+                pCreature->UpdateEntry(NPC_COMM_KOLURG, HORDE);
             break;
-        case NPC_BREATH_CASTER:
-            break;
+        }
     }
     m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
