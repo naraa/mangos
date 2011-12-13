@@ -26,40 +26,62 @@ UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 30522;
 
 
   -- ACID Improvement for Commanders and 
-
+  
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27947);
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26798);
 INSERT INTO `creature_ai_scripts` VALUES 
-(2794701, 27947, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -631, 0, 0, 11, 31403, 0, 1, 'Horde Commander && Commander Kolurg - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
-(2794702, 27947, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Charge'),
-(2794703, 27947, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Whirlwind'),
-(2794704, 27947, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Cast Frightening Shout'),
-(2794705, 27947, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -632, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Yell on Player Kill'),
-(2794706, 27947, 6, 0, 100, 6, 0, 0, 0, 0, 1, -633, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander && Commander Kolurg - Yell on Death');
+(2794701, 27947, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -631, 0, 0, 11, 31403, 0, 1, 'Horde Commander - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2794702, 27947, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander - Cast Charge'),
+(2794703, 27947, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander - Cast Whirlwind'),
+(2794704, 27947, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander - Cast Frightening Shout'),
+(2794705, 27947, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -632, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander - Yell on Player Kill'),
+(2794706, 27947, 6, 0, 100, 6, 0, 0, 0, 0, 1, -633, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Horde Commander - Yell on Death');
 
 DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27949);
-DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26796);
 INSERT INTO `creature_ai_scripts` VALUES 
-(2794901, 27949, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -628, 0, 0, 11, 31403, 0, 1, 'Alliance Commander && Commander Stoutbeard - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
-(2794902, 27949, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Charge'),
-(2794903, 27949, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Whirlwind'),
-(2794904, 27949, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Cast Frightening Shout'),
-(2794905, 27949, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -629, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Yell on Player Kill'),
-(2794906, 27949, 6, 0, 100, 6, 0, 0, 0, 0, 1, -630, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander && Commander Stoutbeard - Yell on Death');
+(2794901, 27949, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -628, 0, 0, 11, 31403, 0, 1, 'Alliance Commander - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2794902, 27949, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander - Cast Charge'),
+(2794903, 27949, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander - Cast Whirlwind'),
+(2794904, 27949, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander - Cast Frightening Shout'),
+(2794905, 27949, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -629, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander - Yell on Player Kill'),
+(2794906, 27949, 6, 0, 100, 6, 0, 0, 0, 0, 1, -630, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Alliance Commander - Yell on Death');
 
 -- commander stout
 UPDATE `creature_template` SET `modelid_2` = 24366 WHERE `entry` = 26796;
 DELETE FROM `creature` WHERE `id` = 26796;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26796;
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = '26796';
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '26796';
 UPDATE `creature_template` SET `faction_A` = 1802, `faction_H` = 1802 WHERE `entry` = 26796;
+
+DELETE FROM `creature_template_addon` WHERE (`entry`=26796);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (26796, 0, 0, 0, 0, 0, 0, 47543);
+
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26796);
+INSERT INTO `creature_ai_scripts` VALUES 
+(2679601, 26796, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -628, 0, 0, 11, 31403, 0, 1, 'Commander Stoutbeard - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2679602, 26796, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - Cast Charge'),
+(2679603, 26796, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - Cast Whirlwind'),
+(2679604, 26796, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - Cast Frightening Shout'),
+(2679605, 26796, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -629, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - Yell on Player Kill'),
+(2679606, 26796, 6, 0, 100, 6, 0, 0, 0, 0, 1, -630, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Stoutbeard - Yell on Death');
 
 -- commander kolurg
 UPDATE `creature_template` SET `modelid_2` = 24352 WHERE `entry` = 26798;
 DELETE FROM `creature` WHERE `id`=26798;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26798;
-UPDATE `creature_template` SET `AIName` = '', `ScriptName` = '' WHERE `entry` = '26798';
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '26798';
 UPDATE `creature_template` SET `faction_A` = 1801, `faction_H` = 1801 WHERE `entry` = 26798;
+
+DELETE FROM `creature_template_addon` WHERE (`entry`=26798);
+INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (26798, 0, 0, 0, 0, 0, 0, 47543);
+
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=26798);
+INSERT INTO `creature_ai_scripts` VALUES 
+(2679801, 26798, 4, 0, 100, 6, 0, 0, 0, 0, 28, 0, 47543, 0, 1, -631, 0, 0, 11, 31403, 0, 1, 'Commander Kolurg - Remove Frozen Prison and Yell and Cast Battle Shout on Aggro'),
+(2679802, 26798, 0, 0, 100, 7, 3000, 4000, 11000, 15000, 11, 60067, 5, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - Cast Charge'),
+(2679803, 26798, 0, 0, 100, 7, 6000, 8000, 19500, 25000, 11, 38618, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - Cast Whirlwind'),
+(2679804, 26798, 0, 0, 100, 5, 13000, 15000, 45000, 55000, 11, 19134, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - Cast Frightening Shout'),
+(2679805, 26798, 5, 0, 100, 7, 5000, 5000, 0, 0, 1, -632, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - Yell on Player Kill'),
+(2679806, 26798, 6, 0, 100, 6, 0, 0, 0, 0, 1, -633, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Commander Kolurg - Yell on Death');
 
 -- alliance ranger 
 UPDATE `creature_template` SET `modelid_2` = 24355 WHERE `entry` = 26802;
@@ -82,7 +104,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 -- Alliance commander
 UPDATE `creature_template` SET `modelid_2` = 24366 WHERE `entry` = 27949;
 DELETE FROM `creature` WHERE `id` = 27949;
-UPDATE `creature_template` SET `difficulty_entry_1` = 26796 WHERE `entry` = 27949;
+UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 27949;
 INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
 (95896, 27949, 576, 3, 1, 0, 0, 425.4, 185.827, -35.0195, 3.41809, 7200, 0, 0, 74328, 0, 0, 0);
 
@@ -125,7 +147,7 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
    -- REMOVE HORDE STATIC SPAWN FOR COMMANDERS EVENT
 DELETE FROM `creature` WHERE `id` = 27947;
 UPDATE `creature_template` SET `modelid_2` = 24352 WHERE `entry` = 27947;
-UPDATE `creature_template` SET `difficulty_entry_1` = 26798 WHERE `entry` = 27947;
+UPDATE `creature_template` SET `difficulty_entry_1` =''  WHERE `entry` = 27947;
 DELETE FROM `creature` WHERE `id` = 26801;
 UPDATE `creature_template` SET `modelid_2` = 24354 WHERE `entry` = 26801;
 DELETE FROM `creature` WHERE `id` = 26803;

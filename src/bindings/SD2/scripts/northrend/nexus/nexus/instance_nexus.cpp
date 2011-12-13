@@ -95,6 +95,53 @@ void instance_nexus::OnCreatureDeath(Creature *pCreature)
     }
 }
 
+void instance_nexus::OnPlayerEnter(Player* pPlayer)
+{
+    Map::PlayerList const &pPlayers = instance->GetPlayers();
+    uint32 TeamInInstance = 0;
+
+    if (!pPlayers.isEmpty())
+    {
+        if (Player* pPlayer = pPlayers.begin()->getSource())
+            TeamInInstance = pPlayer->GetTeam();
+    }
+
+///-> Only on heroic
+   if (instance->IsRegularDifficulty())
+       return;
+///-> nothing if already spawned
+    if (GetSingleCreatureFromStorage(NPC_COMM_STOUTBEARD, true))
+        return;
+///-> nothing if already spawned
+    if (GetSingleCreatureFromStorage(NPC_COMM_KOLURG, true))
+        return;
+///-> if not already spawned && in heroic
+
+    if (TeamInInstance == HORDE)
+    {
+        if (Creature* pALLIANCE_COMMANDER = GetSingleCreatureFromStorage(NPC_ALLIANCE_COMMANDER))
+        {
+            if (pALLIANCE_COMMANDER->isAlive())
+                pALLIANCE_COMMANDER->setFaction(16);
+                pALLIANCE_COMMANDER->SummonCreature(NPC_COMM_STOUTBEARD, 425.4f, 185.827f, -35.0195f, 3.41809f, TEMPSUMMON_CORPSE_DESPAWN, 300000);
+	            pALLIANCE_COMMANDER->ForcedDespawn();
+                return;
+        }
+    }
+
+    if (TeamInInstance == ALLIANCE)
+    {
+        if (Creature* pHORDE_COMMANDER = GetSingleCreatureFromStorage(NPC_HORDE_COMMANDER))
+        {
+            if (pHORDE_COMMANDER->isAlive())
+                pHORDE_COMMANDER->setFaction(16);
+                pHORDE_COMMANDER->SummonCreature(NPC_COMM_KOLURG, 425.4f, 185.827f, -35.0195f, 3.41809f, TEMPSUMMON_CORPSE_DESPAWN, 300000);
+	            pHORDE_COMMANDER->ForcedDespawn();
+                return;
+        }
+    }
+}
+
 void instance_nexus::OnCreatureCreate(Creature* pCreature)
 {
     Map::PlayerList const &pPlayers = instance->GetPlayers();
@@ -120,58 +167,51 @@ void instance_nexus::OnCreatureCreate(Creature* pCreature)
             break;
         case NPC_ALLIANCE_COMMANDER:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_COMMANDER, HORDE);
             break;
         }
         case NPC_ALLIANCE_BERSERKER:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_BERSERKER, HORDE);
             break;
         }
         case NPC_ALLIANCE_BERSERKER_H:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_BERSERKER_H, HORDE);
             break;
         }
         case NPC_ALLIANCE_CLERIC:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_CLERIC, HORDE);
             break;
         }
         case NPC_ALLIANCE_CLERIC_H:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_CLERIC_H, HORDE);
             break;
         }
         case NPC_ALLIANCE_RANGER:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_RANGER, HORDE);
             break;
         }
         case NPC_ALLIANCE_RANGER_H:
         {
-            //pCreature->setFaction(16);
+            pCreature->setFaction(16);
             if (TeamInInstance == ALLIANCE)
                 pCreature->UpdateEntry(NPC_HORDE_RANGER_H, HORDE);
-            break;
-        }
-        case NPC_COMM_STOUTBEARD:
-        {
-            //pCreature->setFaction(16);
-            if (TeamInInstance == ALLIANCE)
-                pCreature->UpdateEntry(NPC_COMM_KOLURG, HORDE);
             break;
         }
     }

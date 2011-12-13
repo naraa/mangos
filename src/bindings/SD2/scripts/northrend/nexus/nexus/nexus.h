@@ -90,7 +90,7 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 
         void Initialize();
 
-        //void OnPlayerEnter(Player* pPlayer);
+        void OnPlayerEnter(Player* pPlayer);
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
         void OnCreatureDeath(Creature* pCreature);
@@ -108,8 +108,6 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
     private:
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
-
-        uint32 m_uiTeam;
 
         bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
 };

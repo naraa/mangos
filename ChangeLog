@@ -1,6 +1,7 @@
 Infinity Project
 
  Project Ver 0.1
+12/5/2011 - ??/??/????
 
  ==== Game Features ====
   * Improved: Major strides fowards in Playerbot
@@ -20,7 +21,10 @@ Infinity Project
  Current DB Ver == InfinityDB_V_1.0
 
  ==== Scriptdev2 ====
- * Implented: Infinity_sd2 
+ * Implented: Infinity_sd2
+ * Implented/rewritten: Instance Nexus
+      :now open to bugreports,forum issues and ect
+ *
 
 
 
