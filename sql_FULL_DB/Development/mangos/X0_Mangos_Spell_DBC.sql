@@ -1,9 +1,10 @@
 -- Spell DBC
 
 DROP TABLE IF EXISTS `spell_dbc`;
-CREATE TABLE `spell_dbc` (
+-- Spell DBC
+CREATE TABLE IF NOT EXISTS `spell_dbc` (
   `Id` int(10) unsigned NOT NULL,
-  `Category` int(10) unsigned NOT NULL default '0',
+  `Category` int(10) unsigned NOT NULL DEFAULT '0',
   `Dispel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `Mechanic` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `Attributes` int(10) unsigned NOT NULL DEFAULT '0',
@@ -18,6 +19,10 @@ CREATE TABLE `spell_dbc` (
   `StancesNot` int(10) unsigned NOT NULL DEFAULT '0',
   `Targets` int(10) unsigned NOT NULL DEFAULT '0',
   `RequiresSpellFocus` int(10) unsigned NOT NULL DEFAULT '0',
+  `CasterAuraState` int(10) unsigned NOT NULL DEFAULT '0',
+  `TargetAuraState` int(10) NOT NULL DEFAULT '0',
+  `ExcludeCasterAuraState` int(10) unsigned NOT NULL DEFAULT '0',
+  `ExcludeTargetAuraState` int(10) NOT NULL DEFAULT '0',
   `CasterAuraSpell` int(10) unsigned NOT NULL DEFAULT '0',
   `TargetAuraSpell` int(10) unsigned NOT NULL DEFAULT '0',
   `ExcludeCasterAuraSpell` int(10) unsigned NOT NULL DEFAULT '0',
@@ -34,7 +39,13 @@ CREATE TABLE `spell_dbc` (
   `BaseLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `SpellLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `DurationIndex` smallint(5) unsigned NOT NULL DEFAULT '0',
+  `PowerType` int(10) NOT NULL DEFAULT '0',
+  `ManaCost` int(10) NOT NULL DEFAULT '0',
+  `ManaCostPerLevel` int(10) NOT NULL DEFAULT '0',
+  `ManaPerSecond` int(10) NOT NULL DEFAULT '0',
+  `ManaPerSecondPerLevel` int(10) NOT NULL DEFAULT '0',
   `RangeIndex` tinyint(3) unsigned NOT NULL DEFAULT '1',
+  `Speed` int(10) NOT NULL DEFAULT '0',
   `StackAmount` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `EquippedItemClass` int(11) NOT NULL DEFAULT '-1',
   `EquippedItemSubClassMask` int(11) NOT NULL DEFAULT '0',
@@ -73,7 +84,7 @@ CREATE TABLE `spell_dbc` (
   `EffectMultipleValue2` float NOT NULL DEFAULT '0',
   `EffectMultipleValue3` float NOT NULL DEFAULT '0',
   `EffectItemType1` int(11) NOT NULL DEFAULT '0',
-  `EffectItemType2` int(11) NOT NULL DEFAULT '0',
+  `EffectItemType2` int(11) unsigned NOT NULL DEFAULT '0',
   `EffectMiscValue1` int(11) NOT NULL DEFAULT '0',
   `EffectMiscValue2` int(11) NOT NULL DEFAULT '0',
   `EffectMiscValue3` int(11) NOT NULL DEFAULT '0',
@@ -93,6 +104,9 @@ CREATE TABLE `spell_dbc` (
   `EffectSpellClassMaskC2` int(10) unsigned NOT NULL DEFAULT '0',
   `EffectSpellClassMaskC3` int(10) unsigned NOT NULL DEFAULT '0',
   `SpellIconID` int(10) unsigned NOT NULL DEFAULT '0',
+  `ManaCostPct` int(10) NOT NULL DEFAULT '0',
+  `StartRecoveryCategory` int(10) NOT NULL DEFAULT '0',
+  `StartRecoveryTime` int(10) NOT NULL DEFAULT '0',
   `MaxTargetLevel` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `SpellFamilyName` tinyint(3) unsigned NOT NULL DEFAULT '0',
   `SpellFamilyFlags1` int(10) unsigned NOT NULL DEFAULT '0',
@@ -106,6 +120,7 @@ CREATE TABLE `spell_dbc` (
   `DmgMultiplier3` float NOT NULL DEFAULT '0',
   `AreaGroupId` int(11) NOT NULL DEFAULT '0',
   `SchoolMask` int(10) unsigned NOT NULL DEFAULT '0',
+  `RuneCostID` int(10) NOT NULL DEFAULT '0',
   `Comment` text NOT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Custom spell.dbc entries';
@@ -502,8 +517,8 @@ WHERE `Id` = 55689;
 -- 
 DELETE FROM `spell_dbc` WHERE `Id` = 48156;
 INSERT INTO `spell_dbc` 
-( `Id`, `Category`, `Dispel`, `Mechanic`, `Attributes`, `AttributesEx`, `AttributesEx2`, `AttributesEx3`, `AttributesEx4`, `AttributesEx5`, `AttributesEx6`, `AttributesEx7`, `Stances`, `StancesNot`, `Targets`, `RequiresSpellFocus`, `CasterAuraSpell`, `TargetAuraSpell`, `ExcludeCasterAuraSpell`, `ExcludeTargetAuraSpell`, `CastingTimeIndex`, `RecoveryTime`, `CategoryRecoveryTime`, `InterruptFlags`, `AuraInterruptFlags`, `ProcFlags`, `ProcChance`, `ProcCharges`, `MaxLevel`, `BaseLevel`, `SpellLevel`, `DurationIndex`, `RangeIndex`, `StackAmount`, `EquippedItemClass`, `EquippedItemSubClassMask`, `EquippedItemInventoryTypeMask`, `Effect1`, `Effect2`, `Effect3`, `EffectDieSides1`, `EffectDieSides2`, `EffectDieSides3`, `EffectRealPointsPerLevel1`, `EffectRealPointsPerLevel2`, `EffectRealPointsPerLevel3`, `EffectBasePoints1`, `EffectBasePoints2`, `EffectBasePoints3`, `EffectMechanic1`, `EffectMechanic2`, `EffectMechanic3`, `EffectImplicitTargetA1`, `EffectImplicitTargetA2`, `EffectImplicitTargetA3`, `EffectImplicitTargetB1`, `EffectImplicitTargetB2`, `EffectImplicitTargetB3`, `EffectRadiusIndex1`, `EffectRadiusIndex2`, `EffectRadiusIndex3`, `EffectApplyAuraName1`, `EffectApplyAuraName2`, `EffectApplyAuraName3`, `EffectAmplitude1`, `EffectAmplitude2`, `EffectAmplitude3`, `EffectMultipleValue1`, `EffectMultipleValue2`, `EffectMultipleValue3`, `EffectItemType1`, `EffectItemType2`, `EffectMiscValue1`, `EffectMiscValue2`, `EffectMiscValue3`, `EffectMiscValueB1`, `EffectMiscValueB2`, `EffectMiscValueB3`, `EffectTriggerSpell1`, `EffectTriggerSpell2`, `EffectTriggerSpell3`, `EffectSpellClassMaskA1`, `EffectSpellClassMaskA2`, `EffectSpellClassMaskA3`, `EffectSpellClassMaskB1`, `EffectSpellClassMaskB2`, `EffectSpellClassMaskB3`, `EffectSpellClassMaskC1`, `EffectSpellClassMaskC2`, `EffectSpellClassMaskC3`, `SpellIconID`, `Comment`, `MaxTargetLevel`, `SpellFamilyName`, `SpellFamilyFlags1`, `SpellFamilyFlags2`, `SpellFamilyFlags3`, `MaxAffectedTargets`, `DmgClass`, `PreventionType`, `DmgMultiplier1`, `DmgMultiplier2`, `DmgMultiplier3`, `AreaGroupId`, `SchoolMask` )
-VALUES (48156, 0, 0, 0, 65536, 67125252, 524288, 0, 0, 134225920, 8388608, 0, 134217728, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 15, 0, 0, 101, 0, 84, 80, 80, 27, 4, 0, -1, 0, 0, 6, 6, 6, 0, 1, 1, 0, 0, 0, 0, -51, 195, 0, 11, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0, 4, 33, 227, 0, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 58381, 0, 0, 0, 0, 0, 0, 0, 0, 0, 548, "Mind Flay", 0, 6, 0, 0, 64, 0, 1, 1, 1, 1, 1, 0, 32 );
+( `Id`, `Category`, `Dispel`, `Mechanic`, `Attributes`, `AttributesEx`, `AttributesEx2`, `AttributesEx3`, `AttributesEx4`, `AttributesEx5`, `AttributesEx6`, `AttributesEx7`, `Stances`, `StancesNot`, `Targets`, `RequiresSpellFocus`, `CasterAuraState`, `TargetAuraState`, `ExcludeCasterAuraState`, `ExcludeTargetAuraState`, `CasterAuraSpell`, `TargetAuraSpell`, `ExcludeCasterAuraSpell`, `ExcludeTargetAuraSpell`, `CastingTimeIndex`, `RecoveryTime`, `CategoryRecoveryTime`, `InterruptFlags`, `AuraInterruptFlags`, `ProcFlags`, `ProcChance`, `ProcCharges`, `MaxLevel`, `BaseLevel`, `SpellLevel`, `DurationIndex`, `PowerType`, `ManaCost`, `ManaCostPerLevel`, `ManaPerSecond`, `ManaPerSecondPerLevel`, `RangeIndex`, `Speed`, `StackAmount`, `EquippedItemClass`, `EquippedItemSubClassMask`, `EquippedItemInventoryTypeMask`, `Effect1`, `Effect2`, `Effect3`, `EffectDieSides1`, `EffectDieSides2`, `EffectDieSides3`, `EffectRealPointsPerLevel1`, `EffectRealPointsPerLevel2`, `EffectRealPointsPerLevel3`, `EffectBasePoints1`, `EffectBasePoints2`, `EffectBasePoints3`, `EffectMechanic1`, `EffectMechanic2`, `EffectMechanic3`, `EffectImplicitTargetA1`, `EffectImplicitTargetA2`, `EffectImplicitTargetA3`, `EffectImplicitTargetB1`, `EffectImplicitTargetB2`, `EffectImplicitTargetB3`, `EffectRadiusIndex1`, `EffectRadiusIndex2`, `EffectRadiusIndex3`, `EffectApplyAuraName1`, `EffectApplyAuraName2`, `EffectApplyAuraName3`, `EffectAmplitude1`, `EffectAmplitude2`, `EffectAmplitude3`, `EffectMultipleValue1`, `EffectMultipleValue2`, `EffectMultipleValue3`, `EffectItemType1`, `EffectItemType2`, `EffectMiscValue1`, `EffectMiscValue2`, `EffectMiscValue3`, `EffectMiscValueB1`, `EffectMiscValueB2`, `EffectMiscValueB3`, `EffectTriggerSpell1`, `EffectTriggerSpell2`, `EffectTriggerSpell3`, `EffectSpellClassMaskA1`, `EffectSpellClassMaskA2`, `EffectSpellClassMaskA3`, `EffectSpellClassMaskB1`, `EffectSpellClassMaskB2`, `EffectSpellClassMaskB3`, `EffectSpellClassMaskC1`, `EffectSpellClassMaskC2`, `EffectSpellClassMaskC3`, `SpellIconID`, `Comment`, `ManaCostPct`, `StartRecoveryCategory`, `StartRecoveryTime`, `MaxTargetLevel`, `SpellFamilyName`, `SpellFamilyFlags1`, `SpellFamilyFlags2`, `SpellFamilyFlags3`, `MaxAffectedTargets`, `DmgClass`, `PreventionType`, `DmgMultiplier1`, `DmgMultiplier2`, `DmgMultiplier3`, `AreaGroupId`, `SchoolMask`, `RuneCostID` )
+VALUES (48156, 0, 0, 0, 65536, 67125252, 524288, 0, 0, 134225920, 8388608, 0, 134217728, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 15, 0, 0, 101, 0, 84, 80, 80, 27, 0, 0, 0, 0, 0, 4, 0, 0, -1, 0, 0, 6, 6, 6, 0, 1, 1, 0, 0, 0, 0, -51, 195, 0, 11, 0, 6, 6, 1, 0, 0, 0, 0, 0, 0, 4, 33, 227, 0, 0, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 58381, 0, 0, 0, 0, 0, 0, 0, 0, 0, 548, "Mind Flay", 9, 133, 1500, 0, 6, 0, 0, 64, 0, 1, 1, 1, 1, 1, 0, 32, 0 );
 
 UPDATE `spell_dbc` SET 
 `SpellFamilyFlags3` = `SpellFamilyFlags3` | 1024,
@@ -539,6 +554,7 @@ UPDATE `spell_dbc` SET
 `InterruptFlags` = 0x04,
 `Comment` = 'Replacement for spell "Fel Fireball" - set SPELL_INTERRUPT_FLAG_INTERRUPT' 
 WHERE `Id` IN (66532, 66963, 66964, 66965);
+
 
 -- SERVER SIDE SPELLS
 
