@@ -11,6 +11,9 @@ UPDATE `creature_template` SET `ScriptName`='generic_creature' WHERE `entry` in 
 REPLACE INTO spell_target_position VALUES
 (20682, 1, -3992.637, -4717.926, 11.006, 0.7);
 
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 3122;
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 3127;
+
 -- --------------------------
 -- Guards around the worlds -
 -- --------------------------

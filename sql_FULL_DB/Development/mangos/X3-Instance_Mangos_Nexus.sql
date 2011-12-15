@@ -50,7 +50,7 @@ UPDATE `creature_template` SET `modelid_2` = 24366 WHERE `entry` = 26796;
 DELETE FROM `creature` WHERE `id` = 26796;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26796;
 UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '26796';
-UPDATE `creature_template` SET `faction_A` = 1802, `faction_H` = 1802 WHERE `entry` = 26796;
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 26796;
 
 DELETE FROM `creature_template_addon` WHERE (`entry`=26796);
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (26796, 0, 0, 0, 0, 0, 0, 47543);
@@ -69,7 +69,7 @@ UPDATE `creature_template` SET `modelid_2` = 24352 WHERE `entry` = 26798;
 DELETE FROM `creature` WHERE `id`=26798;
 UPDATE `creature_template` SET `difficulty_entry_1` = '' WHERE `entry` = 26798;
 UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = '26798';
-UPDATE `creature_template` SET `faction_A` = 1801, `faction_H` = 1801 WHERE `entry` = 26798;
+UPDATE `creature_template` SET `faction_A` = 16, `faction_H` = 16 WHERE `entry` = 26798;
 
 DELETE FROM `creature_template_addon` WHERE (`entry`=26798);
 INSERT INTO `creature_template_addon` (`entry`, `mount`, `bytes1`, `b2_0_sheath`, `b2_1_pvp_state`, `emote`, `moveflags`, `auras`) VALUES (26798, 0, 0, 0, 0, 0, 0, 47543);
