@@ -183,10 +183,10 @@ void guardAI::UpdateAI(const uint32 uiDiff)
        if (m_creature->getFaction() == F_SILVERMOON)
            m_creature->MonsterSay("Silvermoon is under Invasion! Guards!! Help me!",LANG_THALASSIAN);
        m_creature->HandleEmoteCommand(EMOTE_ONESHOT_BATTLEROAR);
-       for(int i = 0; i < 3;i++)
-       {
+       //for(int i = 0; i < 3;i++)
+       //{
             SummonGuardsHelpers();
-       }
+       //}
        m_uiHelp = urand(60000, 105000);
     }
 

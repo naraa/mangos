@@ -124,7 +124,7 @@ void instance_nexus::OnPlayerEnter(Player* pPlayer)
             if (pALLIANCE_COMMANDER->isAlive())
                 pALLIANCE_COMMANDER->setFaction(16);
                 pALLIANCE_COMMANDER->SummonCreature(NPC_COMM_STOUTBEARD, 425.4f, 185.827f, -35.0195f, 3.41809f, TEMPSUMMON_CORPSE_DESPAWN, 300000);
-	            pALLIANCE_COMMANDER->ForcedDespawn();
+                pALLIANCE_COMMANDER->ForcedDespawn();
                 return;
         }
     }
@@ -136,7 +136,7 @@ void instance_nexus::OnPlayerEnter(Player* pPlayer)
             if (pHORDE_COMMANDER->isAlive())
                 pHORDE_COMMANDER->setFaction(16);
                 pHORDE_COMMANDER->SummonCreature(NPC_COMM_KOLURG, 425.4f, 185.827f, -35.0195f, 3.41809f, TEMPSUMMON_CORPSE_DESPAWN, 300000);
-	            pHORDE_COMMANDER->ForcedDespawn();
+                pHORDE_COMMANDER->ForcedDespawn();
                 return;
         }
     }
