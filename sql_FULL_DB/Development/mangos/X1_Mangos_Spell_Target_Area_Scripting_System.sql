@@ -22,12 +22,12 @@ INSERT INTO spell_area (spell, area, autocast) VALUES (74276, 4910, 1);
 */
 
 -- Molten Fury - Sartharion encounter - target Lava Blazes only
-DELETE FROM spell_script_target WHERE spell_script_target.entry = 60430;
+DELETE FROM spell_script_target WHERE entry = 60430;
 INSERT INTO spell_script_target VALUES
 (60430, 1, 30643);
 
 -- Berserk - Sartharion encounter - target dragon bosses only
-DELETE FROM spell_script_target WHERE spell_script_target.entry = 61632;
+DELETE FROM spell_script_target WHERE entry = 61632;
 INSERT INTO spell_script_target VALUES
 (61632, 1, 28860),
 (61632, 1, 30452),
@@ -35,12 +35,12 @@ INSERT INTO spell_script_target VALUES
 (61632, 1, 30449);
 
 -- Devour humanoid ---- Quest and to all things (DK Area)
-DELETE FROM spell_script_target WHERE spell_script_target.entry = 53110;
+DELETE FROM spell_script_target WHERE entry = 53110;
 INSERT INTO spell_script_target VALUES
 (53110, 1, 29102),
 (53110, 1, 29103);
 
-DELETE FROM spell_script_target WHERE spell_script_target.entry = 61920;
+DELETE FROM spell_script_target WHERE entry = 61920;
 INSERT INTO spell_script_target VALUES 
 (61920 ,1,32857),
 (61920 ,1,32927),
