@@ -1,5 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
- * Copyright (C) 2011 MangosR2
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: Boss_Drakos
-SD%Complete: 80%
+SD%Complete: 90%
 SDComment:
 SDAuthor:
 SDCategory: Oculus
@@ -59,14 +59,14 @@ enum
 
 struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
 {
-    boss_drakosAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_drakosAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_oculus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_oculus* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiMagicPullTimer ;
@@ -84,32 +84,23 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
         m_uiStompTimer = urand(3000, 6000);
         m_uiBombSummonTimer = 7000;
 
-        if (m_pInstance && m_creature->isAlive())
-            m_pInstance->SetData(TYPE_DRAKOS, NOT_STARTED);
-
         MagicPull80 = false;
         MagicPull60 = false;
         MagicPull40 = false;
         MagicPull20 = false;
     }
 
-    void Aggro(Unit* who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_DRAKOS, IN_PROGRESS);
     }
 
     void JustDied(Unit* killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
-
-        if (m_pInstance)
-            m_pInstance->SetData(TYPE_DRAKOS, DONE);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* pVictim)
     {
         switch (urand(0, 2))
         {
@@ -119,7 +110,7 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
         }
     }
 
-    void SpellHitTarget(Unit *pTarget, const SpellEntry *spell)
+    void SpellHitTarget(Unit* pTarget, const SpellEntry* spell)
     {
         if (spell->Id == SPELL_MAGIC_PULL)
             if (pTarget->GetTypeId() == TYPEID_PLAYER)
@@ -221,14 +212,14 @@ CreatureAI* GetAI_boss_drakos(Creature* pCreature)
 
 struct MANGOS_DLL_DECL npc_unstable_sphereAI : public ScriptedAI
 {
-    npc_unstable_sphereAI(Creature *pCreature) : ScriptedAI(pCreature)
+    npc_unstable_sphereAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_oculus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_oculus* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiPulseTimer;
@@ -261,9 +252,6 @@ struct MANGOS_DLL_DECL npc_unstable_sphereAI : public ScriptedAI
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (m_pInstance && m_pInstance->GetData(TYPE_DRAKOS) != IN_PROGRESS)
-            m_creature->ForcedDespawn();
-
         if (m_uiPulseTimer < uiDiff)
         {
             DoCast(m_creature, SPELL_UNSTABLE_SPHERE_PULSE, true);

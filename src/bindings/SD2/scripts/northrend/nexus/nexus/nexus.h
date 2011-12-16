@@ -80,9 +80,6 @@ enum
     ACHIEV_INTENSE_COLD            = 7315,
 };
 
-/// locs needed for hall of statis commander event only need commander loc they can share one spot 8P
-
-
 class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 {
     public:

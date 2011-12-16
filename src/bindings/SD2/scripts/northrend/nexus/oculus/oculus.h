@@ -1,4 +1,5 @@
-/* Copyright (C) 2010 - 2011 by /dev/rsa for ScriptDev2 <https://scriptdev2.svn.sourceforge.net/>
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -16,25 +17,13 @@
 
 #ifndef DEF_OCULUS_H
 #define DEF_OCULUS_H
-#include "BSW_ai.h"
-#include "BSW_instance.h"
 
 enum
 {
-    TYPE_DRAKOS,
-    TYPE_VAROS,
-    TYPE_UROM,
-    TYPE_EREGOS,
-    TYPE_ROBOTS,
-    TYPE_UROM_PHASE,
-    MAX_ENCOUNTERS,
+    MAX_ENCOUNTER                  = 1,
 
-    DATA_DRAKOS,
-    DATA_VAROS,
-    DATA_UROM,
-    DATA_EREGOS,
+    TYPE_DRAKOS                    = 0,
 
-    NPC_ROBOT              = 27641,
     NPC_BALGAR_IMAGE       = 28012,
     NPC_VERDISA            = 27657,
     NPC_BELGARISTRASZ      = 27658,
@@ -49,11 +38,28 @@ enum
     GO_EREGOS_CACHE_H      = 193603,
     GO_SPOTLIGHT           = 191351,
     GO_ORB_OF_NEXUS        = 188715,
+};
 
-    BELGAR_TEXT_0          = 13267,
-    BELGAR_TEXT_1          = 13268,
-    BELGAR_TEXT_2          = 13269,
+class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
+{
+    public:
+        instance_oculus(Map* pMap);
 
+        void Initialize();
+
+        void OnObjectCreate(GameObject* pGo);
+        void OnCreatureCreate(Creature* pCreature);
+
+        uint32 GetData(uint32 uiType);
+        void SetData(uint32 uiType, uint32 uiData);
+
+        const char* Save() { return m_strInstData.c_str(); }
+
+        void Load(const char* chrIn);
+
+    private:
+        uint32 m_auiEncounter[MAX_ENCOUNTER];
+        std::string m_strInstData;
 };
 
 #endif

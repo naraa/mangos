@@ -3,11 +3,15 @@
 -- ---------------
 
 -- ---------------------- Script Names ----------------------
-
+UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 578;
 
 -- -----------------------  Boss fixes DB -----------------------------
--- Drakos the Interrogator
 
+-- -------------------------
+-- Drakos the Interrogator -
+-- -------------------------
+UPDATE `creature_template` SET `ScriptName` = 'boss_drakos' WHERE entry = 27654;
+UPDATE `creature_template` SET `ScriptName` = 'npc_unstable_sphere' WHERE entry = 28166;
 UPDATE `creature_template` SET `maxhealth` = 431392 WHERE `entry` = 31558;  -- Hard Instance Version  data from wow.com
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 27654;  -- added immune to pacify
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 31558;  -- added immune to pacify to hard version

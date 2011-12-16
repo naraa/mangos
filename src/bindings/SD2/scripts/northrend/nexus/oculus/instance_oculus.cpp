@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -14,215 +15,138 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-
 /* ScriptData
 SDName: instance_oculus
-SD%Complete: 70%
+SD%Complete: 75%
 SDComment:
-SDAuthor: originally from TC, reworked by MaxXx2021 Aka Mioka, corrected by /dev/rsa
-SDCategory: Oculus
+SDCategory: The Oculus
 EndScriptData */
 
 #include "precompiled.h"
 #include "oculus.h"
 
-/* The Occulus encounters:
-0 - Drakos the Interrogator
-1 - Varos Cloudstrider
-2 - Mage-Lord Urom
-3 - Ley-Guardian Eregos */
-
-enum
+instance_oculus::instance_oculus(Map* pMap) : ScriptedInstance(pMap)
 {
-    SAY_VAROS_SPAWN        = -1578029,
-};
+    Initialize();
+}
 
-struct MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
+void instance_oculus::Initialize()
 {
-    instance_oculus(Map* pMap) : ScriptedInstance(pMap) 
+    memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+}
+
+void instance_oculus::OnObjectCreate(GameObject* pGo)
+{
+    switch (pGo->GetEntry())
     {
-        m_bIsRegularMode = pMap->IsRegularDifficulty();
-        Initialize();
-    };
+        case GO_DRAGON_CAGE_DOOR:
+            break;
+        case GO_EREGOS_CACHE:
+            break;
+        case GO_EREGOS_CACHE_H:
+            break;
+        case GO_SPOTLIGHT:
+            break;
+        case GO_ORB_OF_NEXUS:
+            break;
 
-    uint32 m_auiEncounter[MAX_ENCOUNTERS+1];
-
-    std::string strSaveData;
-    bool m_bIsRegularMode;
-
-    void Initialize()
-    {
-        for (uint8 i = 0; i < MAX_ENCOUNTERS+1; ++i)
-            m_auiEncounter[i] = NOT_STARTED;
-
-        m_auiEncounter[TYPE_ROBOTS] = 10;
-        m_auiEncounter[TYPE_UROM_PHASE] = 0;
-    }
-
-    void OnObjectCreate(GameObject* pGo)
-    {
-        switch(pGo->GetEntry())
-        {
-            case GO_DRAGON_CAGE_DOOR:
-                break;
-
-           default:
-                return;
-        }
-        m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
-    }
-
-    void OnCreatureCreate(Creature* pCreature)
-    {
-        switch(pCreature->GetEntry())
-        {
-            case NPC_VAROS:
-                pCreature->SetActiveObjectState(true);
-                break;
-            case NPC_DRAKOS:
-            case NPC_UROM:
-            case NPC_EREGOS:
-            case NPC_BELGARISTRASZ:
-            case NPC_VERDISA:
-            case NPC_ETERNOS:
-            case NPC_BALGAR_IMAGE:
-                break;
-        }
-        m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
-    }
-
-    void SetData(uint32 type, uint32 data)
-    {
-        switch(type)
-        {
-            case TYPE_DRAKOS:
-            case TYPE_VAROS:
-            case TYPE_UROM:
-                m_auiEncounter[type] = data;
-                break;
-            case TYPE_EREGOS:
-                m_auiEncounter[type] = data;
-                if (data == DONE)
-                {
-                    DoRespawnGameObject(m_bIsRegularMode ? GO_EREGOS_CACHE : GO_EREGOS_CACHE_H, HOUR);
-                    DoRespawnGameObject(GO_SPOTLIGHT, HOUR);
-                }
-                break;
-            case TYPE_ROBOTS:
-                m_auiEncounter[type] = m_auiEncounter[type] - data;
-                if(m_auiEncounter[type] == 0)
-                {
-                    if(Creature* pVaros = GetSingleCreatureFromStorage(NPC_VAROS))
-                    {
-                        DoScriptText(SAY_VAROS_SPAWN, pVaros);
-                        pVaros->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-                        pVaros->InterruptNonMeleeSpells(false);
-                        pVaros->RemoveAurasDueToSpell(50053);
-                    }
-                }
-                data = NOT_STARTED;
-                break;
-            case TYPE_UROM_PHASE:
-                m_auiEncounter[type] = data;
-                data = NOT_STARTED;
-                break;
-        }
-
-        if (data == DONE)
-        {
-            OUT_SAVE_INST_DATA;
-
-            std::ostringstream saveStream;
-
-            for(uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
-                saveStream << m_auiEncounter[i] << " ";
-
-            strSaveData = saveStream.str();
-
-            SaveToDB();
-            OUT_SAVE_INST_DATA_COMPLETE;
-        }
-    }
-
-    uint32 GetData(uint32 type)
-    {
-        switch(type)
-        {
-            case TYPE_DRAKOS:
-            case TYPE_VAROS:
-            case TYPE_UROM:
-            case TYPE_EREGOS:
-            case TYPE_ROBOTS:
-            case TYPE_UROM_PHASE:
-                return m_auiEncounter[type];
-            default:
-                return 0;
-        }
-        return 0;
-    }
-
-    const char* Save()
-    {
-        return strSaveData.c_str();
-    }
-
-    void Load(const char* chrIn)
-    {
-        if (!chrIn)
-        {
-            OUT_LOAD_INST_DATA_FAIL;
+        default:
             return;
-        }
-
-        OUT_LOAD_INST_DATA(chrIn);
-
-        std::istringstream loadStream(chrIn);
-
-        for(uint8 i = 0; i < MAX_ENCOUNTERS; ++i)
-        {
-            loadStream >> m_auiEncounter[i];
-
-            if (m_auiEncounter[i] == IN_PROGRESS)
-                m_auiEncounter[i] = NOT_STARTED;
-        }
-
-        m_auiEncounter[TYPE_ROBOTS] = 10;
-        m_auiEncounter[TYPE_UROM_PHASE] = 0;
-
-        OUT_LOAD_INST_DATA_COMPLETE;
     }
-};
+    m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
+}
+
+void instance_oculus::OnCreatureCreate(Creature* pCreature)
+{
+    switch (pCreature->GetEntry())
+    {
+        case NPC_BALGAR_IMAGE:
+            break;
+        case NPC_VERDISA:
+            break;
+        case NPC_BELGARISTRASZ:
+            break;
+        case NPC_ETERNOS:
+            break;
+        case NPC_DRAKOS:
+            break;
+        case NPC_VAROS:
+            break;
+        case NPC_UROM:
+            break;
+        case NPC_EREGOS:
+            break;
+    }
+    m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+}
+
+uint32 instance_oculus::GetData(uint32 uiType)
+{
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
+    return 0;
+}
+
+void instance_oculus::SetData(uint32 uiType, uint32 uiData)
+{
+    switch (uiType)
+    {
+        case TYPE_DRAKOS:
+            m_auiEncounter[uiType] = uiData;
+            break;
+        default:
+            error_log("SD2: Instance OCULUS: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
+            return;
+    }
+
+    if (uiData == DONE)
+    {
+        OUT_SAVE_INST_DATA;
+
+        std::ostringstream saveStream;
+        saveStream << m_auiEncounter[TYPE_DRAKOS];
+
+        m_strInstData = saveStream.str();
+
+        SaveToDB();
+        OUT_SAVE_INST_DATA_COMPLETE;
+    }
+}
+
+void instance_oculus::Load(const char* chrIn)
+{
+    if (!chrIn)
+    {
+        OUT_LOAD_INST_DATA_FAIL;
+        return;
+    }
+
+    OUT_LOAD_INST_DATA(chrIn);
+
+    std::istringstream loadStream(chrIn);
+    loadStream >> m_auiEncounter[TYPE_DRAKOS];
+
+    for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
+    {
+        if (m_auiEncounter[i] == IN_PROGRESS)
+            m_auiEncounter[i] = NOT_STARTED;
+    }
+
+    OUT_LOAD_INST_DATA_COMPLETE;
+}
 
 InstanceData* GetInstanceData_instance_oculus(Map* pMap)
 {
     return new instance_oculus(pMap);
 }
 
-/*### 
-# Oculus Orb 
--####*/ 
-bool GOUse_go_oculus_portal(Player* pPlayer, GameObject* pGo) 
-{ 
-    switch(pGo->GetEntry()) 
-    {
-        case GO_ORB_OF_NEXUS: 
-            pPlayer->TeleportTo(571,3876.159912f,6984.439941f,106.32f,6.279f); 
-            return true; 
-    } 
-    return false; 
-}
-
-
 void AddSC_instance_oculus()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "instance_oculus";
-    newscript->GetInstanceData = &GetInstanceData_instance_oculus;
-    newscript->RegisterSelf();
+    Script* pNewScript;
 
-    newscript = new Script; 
-    newscript->Name = "go_oculus_portal"; 
-    newscript->pGOUse = GOUse_go_oculus_portal; 
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "instance_oculus";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_oculus;
+    pNewScript->RegisterSelf();
 }
