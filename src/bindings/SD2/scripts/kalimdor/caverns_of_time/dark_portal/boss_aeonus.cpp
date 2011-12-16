@@ -73,7 +73,7 @@ struct MANGOS_DLL_DECL boss_aeonusAI : public ScriptedAI
     void MoveInLineOfSight(Unit* pWho)
     {
         //Despawn Time Keeper
-        if (who->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_TIME_KEEPER)
+        if (pWho->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_TIME_KEEPER)
         {
             if (m_creature->IsWithinDistInMap(pWho,20.0f))
             {
@@ -82,7 +82,7 @@ struct MANGOS_DLL_DECL boss_aeonusAI : public ScriptedAI
             }
         }
 
-        ScriptedAI::MoveInLineOfSight(who);
+        ScriptedAI::MoveInLineOfSight(pWho);
     }
 
     void JustDied(Unit* pVictim)

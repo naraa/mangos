@@ -1039,7 +1039,7 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                 }
                 case 7669:                                   // Belthor's Potion
                 {
-                    SpellAuraHolder* hexOfRavenclaw = m_caster->GetSpellAuraHolder(7656);
+                    SpellAuraHolderPtr hexOfRavenclaw = m_caster->GetSpellAuraHolder(7656);
                     if (hexOfRavenclaw)
                     {
                        m_caster->RemoveAurasDueToSpell(7656);
