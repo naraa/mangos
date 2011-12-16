@@ -39,7 +39,7 @@ bool GOUse_go_containment_sphere(Player* pPlayer, GameObject* pGo)
         case GO_CONTAINMENT_SPHERE_ORMOROK:  pInstance->SetData(TYPE_ORMOROK, SPECIAL);  break;
     }
 
-    if (Creature *pCaster = GetClosestCreatureWithEntry(pGo, NPC_BREATH_CASTER, 15.0f))
+    if (Creature* pCaster = GetClosestCreatureWithEntry(pGo, NPC_BREATH_CASTER, 15.0f))
         pCaster->ForcedDespawn();
 
     pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT);
@@ -82,7 +82,7 @@ void instance_nexus::OnObjectCreate(GameObject* pGo)
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
-void instance_nexus::OnCreatureDeath(Creature *pCreature)
+void instance_nexus::OnCreatureDeath(Creature* pCreature)
 {
     switch(pCreature->GetEntry())
     {
