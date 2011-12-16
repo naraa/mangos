@@ -88,11 +88,23 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
         MagicPull60 = false;
         MagicPull40 = false;
         MagicPull20 = false;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_DRAKOS, NOT_STARTED);
     }
 
     void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_DRAKOS, IN_PROGRESS);
+    }
+
+    void JustReachedHome()
+    {
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_DRAKOS, FAIL);
     }
 
     void JustDied(Unit* killer)
