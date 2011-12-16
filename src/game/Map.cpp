@@ -3378,6 +3378,50 @@ void Map::PlayDirectSoundToMap(uint32 soundId, uint32 zoneId /*=0*/)
 }
 
 /**
+* Need Base Support (With Values 0)
+*
+*/
+bool Map::SetZoneWeather(uint32 zoneId, WeatherType type, float grade)
+{
+   //Weather is OFF
+   if (!sWorld.getConfig(CONFIG_BOOL_WEATHER))
+       return false;
+
+   if (grade < 0.0f || grade > 1.0f || MAX_WEATHER_TYPE <= type)
+       return false;
+
+   Weather* weather = sWorld.FindWeather(zoneId);
+
+   if (!weather)
+       weather = sWorld.AddWeather(zoneId);
+
+   if (!weather)
+       return false;
+
+   weather->SetWeather(type, grade);
+
+   return true;
+}
+
+void Map::SetMapWeather(WeatherState state, float grade)
+{
+    //Weather is OFF
+    if (!sWorld.getConfig(CONFIG_BOOL_WEATHER))
+        return;
+
+    if (grade < 0.0f || grade > 1.0f)
+        return;
+
+    if (!IsDungeon())
+        return;
+
+    WorldPacket data(SMSG_WEATHER, (4+4+4));
+    data << uint32(state) << (float)grade << uint8(0);
+
+    ((DungeonMap*)this)->SendToPlayers(&data);
+}
+
+/**
  * Function to operations with attackers per-map storage
  *
  * @param targetGuid (attackerGuid)
@@ -3543,10 +3587,10 @@ void Map::ForcedUnload()
     SetBroken(false);
 }
 
-float Map::GetVisibilityDistance(WorldObject* obj) const 
+float Map::GetVisibilityDistance(WorldObject* obj) const
 {
     if (obj && obj->GetObjectGuid().IsGameObject())
         return (m_VisibleDistance + ((GameObject*)obj)->GetDeterminativeSize());
     else
-        return m_VisibleDistance; 
+        return m_VisibleDistance;
 }
