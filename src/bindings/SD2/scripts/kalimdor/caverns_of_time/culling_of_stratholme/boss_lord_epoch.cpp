@@ -39,12 +39,12 @@ enum
     SAY_EPOCH_SLAY03       = -1594122,
     SAY_EPOCH_WARP01       = -1594123,
     SAY_EPOCH_WARP02       = -1594124,
-    SAY_EPOCH_WARP03       = -1594125
+    SAY_EPOCH_WARP03       = -1594125,
 };
 
 struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
 {
-    boss_lord_epochAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_lord_epochAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
          m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
          m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
@@ -68,7 +68,7 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
         m_uiSpike_Timer = 5300;
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         DoScriptText(SAY_EPOCH_DEATH, m_creature);
     }
@@ -90,8 +90,8 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
 
         if (m_uiCourse_Timer < uiDiff)
         {
-            if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCast(target, SPELL_COURSE);
+            if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                DoCast(pTarget, SPELL_COURSE);
 
             m_uiCourse_Timer = 9300;
         }else m_uiCourse_Timer -= uiDiff;
@@ -106,16 +106,16 @@ struct MANGOS_DLL_DECL boss_lord_epochAI : public ScriptedAI
 
         if (m_uiStop_Timer < uiDiff)
         {
-             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCast(target, SPELL_TIME_STOP);
+             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                DoCast(pTarget, SPELL_TIME_STOP);
 
             m_uiStop_Timer = 21300;
         }else m_uiStop_Timer -= uiDiff;
 
         if (m_uiWarp_Timer < uiDiff)
         {
-             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                DoCast(target, SPELL_TIME_WARP);
+             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                DoCast(pTarget, SPELL_TIME_WARP);
                 switch(rand()%3)
                 {
                     case 0: DoScriptText(SAY_EPOCH_WARP01, m_creature); break;
@@ -138,7 +138,7 @@ CreatureAI* GetAI_boss_lord_epoch(Creature* pCreature)
 
 void AddSC_boss_lord_epoch()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "boss_lord_epoch";

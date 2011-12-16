@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -38,7 +39,7 @@ enum
     SPELL_TIME_STOP         = 31422,
     SPELL_ENRAGE            = 37605,
     SPELL_SAND_BREATH       = 31473,
-    SPELL_SAND_BREATH_H     = 39049
+    SPELL_SAND_BREATH_H     = 39049,
 };
 
 struct MANGOS_DLL_DECL boss_aeonusAI : public ScriptedAI
@@ -53,38 +54,38 @@ struct MANGOS_DLL_DECL boss_aeonusAI : public ScriptedAI
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 SandBreath_Timer;
-    uint32 TimeStop_Timer;
-    uint32 Frenzy_Timer;
+    uint32 m_uiSandBreath_Timer;
+    uint32 m_uiTimeStop_Timer;
+    uint32 m_uiFrenzy_Timer;
 
     void Reset()
     {
-        SandBreath_Timer = urand(15000, 30000);
-        TimeStop_Timer = urand(10000, 15000);
-        Frenzy_Timer = urand(30000, 45000);
+        m_uiSandBreath_Timer = urand(15000, 30000);
+        m_uiTimeStop_Timer = urand(10000, 15000);
+        m_uiFrenzy_Timer = urand(30000, 45000);
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* pWho)
     {
         //Despawn Time Keeper
-        if (who->GetTypeId() == TYPEID_UNIT && who->GetEntry() == NPC_TIME_KEEPER)
+        if (who->GetTypeId() == TYPEID_UNIT && pWho->GetEntry() == NPC_TIME_KEEPER)
         {
-            if (m_creature->IsWithinDistInMap(who,20.0f))
+            if (m_creature->IsWithinDistInMap(pWho,20.0f))
             {
                 DoScriptText(SAY_BANISH, m_creature);
-                m_creature->DealDamage(who, who->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
+                m_creature->DealDamage(pWho, pWho->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
             }
         }
 
         ScriptedAI::MoveInLineOfSight(who);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* pVictim)
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -92,38 +93,38 @@ struct MANGOS_DLL_DECL boss_aeonusAI : public ScriptedAI
             m_pInstance->SetData(TYPE_RIFT,DONE);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         //Sand Breath
-        if (SandBreath_Timer < diff)
+        if (m_uiSandBreath_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_SAND_BREATH : SPELL_SAND_BREATH_H);
-            SandBreath_Timer = urand(15000, 25000);
-        }else SandBreath_Timer -= diff;
+            m_uiSandBreath_Timer = urand(15000, 25000);
+        }else m_uiSandBreath_Timer -= uiDiff;
 
         //Time Stop
-        if (TimeStop_Timer < diff)
+        if (m_uiTimeStop_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_TIME_STOP);
-            TimeStop_Timer = urand(20000, 35000);
-        }else TimeStop_Timer -= diff;
+            m_uiTimeStop_Timer = urand(20000, 35000);
+        }else m_uiTimeStop_Timer -= uiDiff;
 
         //Frenzy
-        if (Frenzy_Timer < diff)
+        if (m_uiFrenzy_Timer < uiDiff)
         {
             DoScriptText(EMOTE_GENERIC_FRENZY, m_creature);
             DoCastSpellIfCan(m_creature, SPELL_ENRAGE);
-            Frenzy_Timer = urand(20000, 35000);
-        }else Frenzy_Timer -= diff;
+            m_uiFrenzy_Timer = urand(20000, 35000);
+        }else m_uiFrenzy_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

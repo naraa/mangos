@@ -1,5 +1,5 @@
-/* Copyright (C) 2009 - 2011 Project Dark-iCE <http://projectSD2.clanice.com/>
-/* Copyright (C) 2009 - 2011 Project Infinity
+/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or

@@ -28,12 +28,12 @@ EndScriptData */
 enum
 {
     SPELL_COURSE      = 60588,
-    SPELL_STRIKE      = 60590
+    SPELL_STRIKE      = 60590,
 };
 
 struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
 {
-    boss_infinite_corruptorAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_infinite_corruptorAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
          m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
          m_creature->SetActiveObjectState(true);
@@ -57,7 +57,7 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
             m_pInstance->SetData(TYPE_BONUS, SPECIAL);
     }
 
-    void JustDied(Unit *pKiller)
+    void JustDied(Unit* pKiller)
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_BONUS, DONE);
@@ -101,8 +101,8 @@ struct MANGOS_DLL_DECL boss_infinite_corruptorAI : public ScriptedAI
 
          if (m_uiCourseTimer < uiDiff)
          {
-             if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
-                 DoCast(target, SPELL_COURSE);
+             if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM,0))
+                 DoCast(pTarget, SPELL_COURSE);
 
              m_uiCourseTimer = 17000;
          }else m_uiCourseTimer -= uiDiff;
@@ -125,7 +125,7 @@ CreatureAI* GetAI_boss_infinite_corruptor(Creature* pCreature)
 
 void AddSC_boss_infinite_corruptor()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "boss_infinite_corruptor";

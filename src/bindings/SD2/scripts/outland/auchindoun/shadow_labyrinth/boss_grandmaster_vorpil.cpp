@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -24,30 +25,33 @@ EndScriptData */
 #include "precompiled.h"
 #include "shadow_labyrinth.h"
 
-#define SAY_INTRO                       -1555028
-#define SAY_AGGRO1                      -1555029
-#define SAY_AGGRO2                      -1555030
-#define SAY_AGGRO3                      -1555031
-#define SAY_HELP                        -1555032
-#define SAY_SLAY1                       -1555033
-#define SAY_SLAY2                       -1555034
-#define SAY_DEATH                       -1555035
+enum
+{
+    SAY_INTRO                      = -1555028,
+    SAY_AGGRO1                     = -1555029,
+    SAY_AGGRO2                     = -1555030,
+    SAY_AGGRO3                     = -1555031,
+    SAY_HELP                       = -1555032,
+    SAY_SLAY1                      = -1555033,
+    SAY_SLAY2                      = -1555034,
+    SAY_DEATH                      = -1555035,
 
-#define SPELL_DRAW_SHADOWS              33563
-#define SPELL_VOID_PORTAL_A             33566               //spell only summon one unit, but we use it for the visual effect and summon the 4 other portals manual way(only one spell exist)
-#define SPELL_VOID_PORTAL_VISUAL        33569
-#define SPELL_SHADOW_BOLT_VOLLEY        32963
-#define SPELL_SUMMON_VOIDWALKER_A       33582
-#define SPELL_SUMMON_VOIDWALKER_B       33583
-#define SPELL_SUMMON_VOIDWALKER_C       33584
-#define SPELL_SUMMON_VOIDWALKER_D       33585
-#define SPELL_SUMMON_VOIDWALKER_E       33586
-#define SPELL_RAIN_OF_FIRE              33617
-#define SPELL_RAIN_OF_FIRE_H            39363
-#define SPELL_BANISH_H                  38791
+    SPELL_DRAW_SHADOWS             = 33563,
+    SPELL_VOID_PORTAL_A            = 33566,              //spell only summon one unit, but we use it for the visual effect and summon the 4 other portals manual way(only one spell exist)
+    SPELL_VOID_PORTAL_VISUAL       = 33569,
+    SPELL_SHADOW_BOLT_VOLLEY       = 32963,
+    SPELL_SUMMON_VOIDWALKER_A      = 33582,
+    SPELL_SUMMON_VOIDWALKER_B      = 33583,
+    SPELL_SUMMON_VOIDWALKER_C      = 33584,
+    SPELL_SUMMON_VOIDWALKER_D      = 33585,
+    SPELL_SUMMON_VOIDWALKER_E      = 33586,
+    SPELL_RAIN_OF_FIRE             = 33617,
+    SPELL_RAIN_OF_FIRE_H           = 39363,
+    SPELL_BANISH_H                 = 38791,
 
-#define ENTRY_VOID_PORTAL               19224
-#define ENTRY_VOID_TRAVELER             19226
+    ENTRY_VOID_PORTAL              = 19224,
+    ENTRY_VOID_TRAVELER            = 19226,
+};
 
 #define LOCX                            -253.06f
 #define LOCY                            -264.02f
@@ -59,47 +63,47 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Intro = false;
+        m_bIntro = false;
         Reset();
     }
 
     ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 ShadowBoltVolley_Timer;
-    uint32 DrawShadows_Timer;
-    uint32 Teleport_Timer;
-    uint32 VoidTraveler_Timer;
-    uint32 Banish_Timer;
-    bool Intro;
-    bool Teleport;
+    uint32 m_uiShadowBoltVolley_Timer;
+    uint32 m_uiDrawShadows_Timer;
+    uint32 m_uiTeleport_Timer;
+    uint32 m_uiVoidTraveler_Timer;
+    uint32 m_uiBanish_Timer;
+    bool m_bIntro;
+    bool m_bTeleport;
 
     void Reset()
     {
-        ShadowBoltVolley_Timer = urand(7000, 14000);
-        DrawShadows_Timer = 40000;
-        Teleport_Timer = 1000;
-        VoidTraveler_Timer = 20000;
-        Banish_Timer = 25000;
-        Teleport = false;
+        m_uiShadowBoltVolley_Timer = urand(7000, 14000);
+        m_uiDrawShadows_Timer = 40000;
+        m_uiTeleport_Timer = 1000;
+        m_uiVoidTraveler_Timer = 20000;
+        m_uiBanish_Timer = 25000;
+        m_bTeleport = false;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VORPIL, NOT_STARTED);
     }
 
-    void MoveInLineOfSight(Unit *who)
+    void MoveInLineOfSight(Unit* pWho)
     {
         //not sure about right radius
-        if (!Intro && m_creature->IsWithinDistInMap(who, 50))
+        if (!m_bIntro && m_creature->IsWithinDistInMap(pWho, 50))
         {
             DoScriptText(SAY_INTRO, m_creature);
-            Intro = true;
+            m_bIntro = true;
         }
 
-        ScriptedAI::MoveInLineOfSight(who);
+        ScriptedAI::MoveInLineOfSight(pWho);
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         switch(urand(0, 2))
         {
@@ -118,21 +122,21 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VORPIL, IN_PROGRESS);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
 
-    void JustSummoned(Creature *summoned)
+    void JustSummoned(Creature* pSummoned)
     {
-        if (summoned->GetEntry() == ENTRY_VOID_TRAVELER)
-            summoned->GetMotionMaster()->MoveFollow(m_creature, 1.0f, 0.0f);
+        if (pSummoned->GetEntry() == ENTRY_VOID_TRAVELER)
+            pSummoned->GetMotionMaster()->MoveFollow(m_creature, 1.0f, 0.0f);
 
-        if (summoned->GetEntry() == ENTRY_VOID_PORTAL)
-            summoned->CastSpell(summoned,SPELL_VOID_PORTAL_VISUAL,true);
+        if (pSummoned->GetEntry() == ENTRY_VOID_PORTAL)
+            pSummoned->CastSpell(pSummoned,SPELL_VOID_PORTAL_VISUAL,true);
     }
 
-    void JustDied(Unit *victim)
+    void JustDied(Unit* pVictim)
     {
         DoScriptText(SAY_DEATH, m_creature);
 
@@ -140,15 +144,15 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VORPIL, DONE);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //Return since we have no target
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
-        if (Teleport)
+        if (m_bTeleport)
         {
-            if (Teleport_Timer <= diff)
+            if (m_uiTeleport_Timer <= uiDiff)
             {
                 m_creature->NearTeleportTo(LOCX, LOCY, LOCZ, 0.0f);
 
@@ -160,36 +164,36 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
                 m_creature->FillGuidsListFromThreatList(vGuids);
                 for (std::vector<ObjectGuid>::const_iterator itr = vGuids.begin();itr != vGuids.end(); ++itr)
                 {
-                    Unit* target = m_creature->GetMap()->GetUnit(*itr);
+                    Unit* pTarget = m_creature->GetMap()->GetUnit(*itr);
 
-                    if (target && target->GetTypeId() == TYPEID_PLAYER)
+                    if (pTarget && pTarget->GetTypeId() == TYPEID_PLAYER)
                     {
-                        target->GetRandomPoint(LOCX,LOCY,LOCZ,3.0f,ranX,ranY,ranZ);
-                        DoTeleportPlayer(target,ranX,ranY,ranZ,m_creature->GetAngle(m_creature->GetPositionX(),m_creature->GetPositionY()));
+                        pTarget->GetRandomPoint(LOCX,LOCY,LOCZ,3.0f,ranX,ranY,ranZ);
+                        DoTeleportPlayer(pTarget,ranX,ranY,ranZ,m_creature->GetAngle(m_creature->GetPositionX(),m_creature->GetPositionY()));
                     }
                 }
-                Teleport = false;
+                m_bTeleport = false;
 
                 DoCastSpellIfCan(m_creature->getVictim(), m_bIsRegularMode ? SPELL_RAIN_OF_FIRE : SPELL_RAIN_OF_FIRE_H);
 
-                Teleport_Timer = 1000;
-            }else Teleport_Timer -= diff;
+                m_uiTeleport_Timer = 1000;
+            }else m_uiTeleport_Timer -= uiDiff;
         }
 
-        if (ShadowBoltVolley_Timer < diff)
+        if (m_uiShadowBoltVolley_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_SHADOW_BOLT_VOLLEY);
-            ShadowBoltVolley_Timer = urand(15000, 30000);
-        }else ShadowBoltVolley_Timer -= diff;
+            m_uiShadowBoltVolley_Timer = urand(15000, 30000);
+        }else m_uiShadowBoltVolley_Timer -= uiDiff;
 
-        if (DrawShadows_Timer < diff)
+        if (m_uiDrawShadows_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature,SPELL_DRAW_SHADOWS);
-            DrawShadows_Timer = 30000;
-            Teleport = true;
-        }else DrawShadows_Timer -= diff;
+            m_uiDrawShadows_Timer = 30000;
+            m_bTeleport = true;
+        }else m_uiDrawShadows_Timer -= uiDiff;
 
-        if (VoidTraveler_Timer < diff)
+        if (m_uiVoidTraveler_Timer < uiDiff)
         {
             DoScriptText(SAY_HELP, m_creature);
 
@@ -202,17 +206,17 @@ struct MANGOS_DLL_DECL boss_grandmaster_vorpilAI : public ScriptedAI
                 case 4: DoCastSpellIfCan(m_creature, SPELL_SUMMON_VOIDWALKER_E, CAST_TRIGGERED); break;
             }
             //faster rate when below (X) health?
-            VoidTraveler_Timer = 35000;
-        }else VoidTraveler_Timer -= diff;
+            m_uiVoidTraveler_Timer = 35000;
+        }else m_uiVoidTraveler_Timer -= uiDiff;
 
         if (!m_bIsRegularMode)
         {
-            if (Banish_Timer < diff)
+            if (m_uiBanish_Timer < uiDiff)
             {
-                if (Unit* target = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
-                    DoCastSpellIfCan(target,SPELL_BANISH_H);
-                Banish_Timer = 35000;
-            }else Banish_Timer -= diff;
+                if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 1))
+                    DoCastSpellIfCan(pTarget,SPELL_BANISH_H);
+                m_uiBanish_Timer = 35000;
+            }else m_uiBanish_Timer -= uiDiff;
         }
 
         DoMeleeAttackIfReady();
