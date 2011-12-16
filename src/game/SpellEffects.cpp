@@ -1037,6 +1037,15 @@ void Spell::EffectDummy(SpellEffectIndex eff_idx)
                     m_caster->CastSpell(unitTarget, spell_id, true);
                     return;
                 }
+                case 7669:                                   // Belthor's Potion
+                {
+                    SpellAuraHolder* hexOfRavenclaw = m_caster->GetSpellAuraHolder(7656);
+                    if (hexOfRavenclaw)
+                    {
+                       m_caster->RemoveAurasDueToSpell(7656);
+                    }
+                    return;
+                }
                 case 7671:                                  // Transformation (human<->worgen)
                 {
                     if (!unitTarget)
