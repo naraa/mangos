@@ -229,6 +229,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -381,6 +382,7 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
+        pSummoned->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         uint32 uiEntry = pSummoned->GetEntry();
         if (uiEntry == NPC_VORTEX || uiEntry == NPC_STATIC_FIELD)
             pSummoned->SetDisplayId(MODEL_ID_INVISIBLE);
@@ -1052,6 +1054,7 @@ struct MANGOS_DLL_DECL npc_power_sparkAI : public ScriptedAI
     npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1138,6 +1141,7 @@ struct MANGOS_DLL_DECL npc_nexus_lordAI : public ScriptedAI
     npc_nexus_lordAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1238,6 +1242,7 @@ struct MANGOS_DLL_DECL npc_scion_of_eternityAI : public ScriptedAI
     npc_scion_of_eternityAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1280,6 +1285,7 @@ struct MANGOS_DLL_DECL npc_hover_diskAI : public ScriptedAI
 {
     npc_hover_diskAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1339,6 +1345,7 @@ struct MANGOS_DLL_DECL npc_alexstraszaAI : public ScriptedAI
     npc_alexstraszaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1466,6 +1473,7 @@ struct MANGOS_DLL_DECL npc_whyrmrest_skytalonAI : public ScriptedAI
     npc_whyrmrest_skytalonAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1563,45 +1571,45 @@ CreatureAI* GetAI_npc_whyrmrest_skytalon(Creature* pCreature)
 
 void AddSC_boss_malygos()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_malygos";
-    newscript->GetAI = &GetAI_boss_malygos;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_malygos";
+    pNewScript->GetAI = &GetAI_boss_malygos;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_power_spark";
-    newscript->GetAI = &GetAI_npc_power_spark;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_power_spark";
+    pNewScript->GetAI = &GetAI_npc_power_spark;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_nexus_lord";
-    newscript->GetAI = &GetAI_npc_nexus_lord;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_nexus_lord";
+    pNewScript->GetAI = &GetAI_npc_nexus_lord;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_scion_of_eternity";
-    newscript->GetAI = &GetAI_npc_scion_of_eternity;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_scion_of_eternity";
+    pNewScript->GetAI = &GetAI_npc_scion_of_eternity;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_hover_disk";
-    newscript->GetAI = &GetAI_npc_hover_disk;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_hover_disk";
+    pNewScript->GetAI = &GetAI_npc_hover_disk;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_whyrmrest_skytalon";
-    newscript->GetAI = &GetAI_npc_whyrmrest_skytalon;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_whyrmrest_skytalon";
+    pNewScript->GetAI = &GetAI_npc_whyrmrest_skytalon;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_alexstrasza";
-    newscript->GetAI = &GetAI_npc_alexstrasza;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_alexstrasza";
+    pNewScript->GetAI = &GetAI_npc_alexstrasza;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "go_focusing_iris";
-    newscript->pGOUse = &GOHello_go_focusing_iris;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "go_focusing_iris";
+    pNewScript->pGOUse = &GOHello_go_focusing_iris;
+    pNewScript->RegisterSelf();
 }
