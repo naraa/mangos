@@ -7,6 +7,9 @@ UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' 
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29179;
 UPDATE `creature_template` SET `AIName` = '', `ScriptName` = 'generic_creature' WHERE `entry` = 29180;
 
+UPDATE `gameobject_template` SET ScriptName ="go_org_portal" WHERE `entry` = 193052;
+UPDATE `gameobject_template` SET ScriptName ="go_sw_portal" WHERE `entry` = 193053;
+
 -- ------------
 -- Special npcs
 -- ------------

@@ -39,6 +39,8 @@ npc_mine_cart
 scourge_gryphon
 npc_valkyr_battle_maiden
 npc_crusade_persuaded
+go_org_portal
+go_sw_portal
 EndContentData */
 
 #include "precompiled.h"
@@ -4057,6 +4059,39 @@ CreatureAI* GetAI_npc_scourge_gryphon(Creature* pCreature)
     return new npc_scourge_gryphonAI(pCreature);
 };
 
+/*######
+## EbonHold go_org_portal && go_sw_portal
+######*/
+
+enum
+{
+    SPELL_PORTAL_STORMWIND   = 17334,
+    SPELL_PORTAL_ORGRIMMAR   = 17609,
+
+    QUEST_WARCHIEF_BLESSING  = 13189,
+    QUEST_KINGS_WALK         = 13188,
+};
+
+bool GOUse_go_org_portal(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_WARCHIEF_BLESSING) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(QUEST_WARCHIEF_BLESSING) == QUEST_STATUS_INCOMPLETE)
+    {
+         pPlayer->CastSpell(pPlayer, SPELL_PORTAL_ORGRIMMAR, true);
+         return true;
+    }
+    return false;
+}
+
+bool GOUse_go_sw_portal(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_KINGS_WALK) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(QUEST_KINGS_WALK) == QUEST_STATUS_INCOMPLETE)
+    {
+         pPlayer->CastSpell(pPlayer, SPELL_PORTAL_STORMWIND, true);
+         return true;
+    }
+    return false;
+}
+
 void AddSC_ebon_hold()
 {
     Script* pNewScript;
@@ -4169,5 +4204,15 @@ void AddSC_ebon_hold()
     pNewScript = new Script;
     pNewScript->Name= "mob_scarlet_courier";
     pNewScript->GetAI = &GetAI_mob_scarlet_courier;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_org_portal";
+    pNewScript->pGOUse =          &GOUse_go_org_portal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_sw_portal";
+    pNewScript->pGOUse =          &GOUse_go_sw_portal;
     pNewScript->RegisterSelf();
 }
