@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: instance_oculus
-SD%Complete: 75%
+SD%Complete: %
 SDComment:
 SDCategory: The Oculus
 EndScriptData */

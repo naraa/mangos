@@ -20,17 +20,25 @@
 
 enum
 {
-    MAX_ENCOUNTER                  = 1,
+    MAX_ENCOUNTER                  = 3,
 
     TYPE_DRAKOS                    = 0,
 
-    NPC_BALGAR_IMAGE       = 28012,
+    TYPE_VAROS                     = 1,
+    TYPE_CONSTRUCTS                = 2,
+
     NPC_VERDISA            = 27657,
     NPC_BELGARISTRASZ      = 27658,
+    NPC_BELGAR_IMAGE       = 28012,
     NPC_ETERNOS            = 27659,
+
     NPC_DRAKOS             = 27654,
+
     NPC_VAROS              = 27447,
+    NPC_CONSTRUCT          = 27641,
+
     NPC_UROM               = 27655,
+
     NPC_EREGOS             = 27656,
 
     GO_DRAGON_CAGE_DOOR    = 193995,
@@ -38,6 +46,17 @@ enum
     GO_EREGOS_CACHE_H      = 193603,
     GO_SPOTLIGHT           = 191351,
     GO_ORB_OF_NEXUS        = 188715,
+
+    // world states FOR CONSTRUCT COUNT
+    WORLD_STATE_CON             = 3524,
+    WORLD_STATE_CON_COUNT       = 3486,
+};
+
+enum Instance_Oculus
+{
+    SAY_VAROS_SPAWN             = -1578029,
+    // varos' shield
+    SPELL_CENTRIFUGE_SHIELD     = 50053,
 };
 
 class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance

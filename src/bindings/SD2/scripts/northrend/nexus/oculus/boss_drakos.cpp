@@ -110,6 +110,9 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
     void JustDied(Unit* killer)
     {
         DoScriptText(SAY_DEATH, m_creature);
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_DRAKOS, DONE);
     }
 
     void KilledUnit(Unit* pVictim)
