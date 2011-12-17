@@ -35,49 +35,88 @@ void instance_oculus::Initialize()
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 }
 
+void instance_oculus::DoOpenAllCages()
+{
+    // open all doors
+    for(GUIDList::const_iterator itr = m_lCageDoorGUIDs.begin(); itr != m_lCageDoorGUIDs.end(); ++itr)
+        DoUseDoorOrButton(*itr);
+
+    // get the prisoners out
+    if(Creature* pEternos = GetSingleCreatureFromStorage(NPC_ETERNOS))
+        pEternos->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[0].m_fX, m_sPrisonersMoveLocs[0].m_fY, m_sPrisonersMoveLocs[0].m_fZ);
+
+    if(Creature* pVerdisa = GetSingleCreatureFromStorage(NPC_VERDISA))
+        pVerdisa->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[1].m_fX, m_sPrisonersMoveLocs[1].m_fY, m_sPrisonersMoveLocs[1].m_fZ);
+
+    if(Creature* pBelgaristrasz = GetSingleCreatureFromStorage(NPC_BELGARISTRASZ))
+        pBelgaristrasz->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[2].m_fX, m_sPrisonersMoveLocs[2].m_fY, m_sPrisonersMoveLocs[2].m_fZ);
+}
+
+void instance_oculus::OnCreatureDeath(Creature* pCreature)
+{
+    switch (pCreature->GetEntry())
+    {
+        case NPC_CONSTRUCT:
+            if (m_sConstructsGUIDs.find(pCreature->GetObjectGuid()) != m_sConstructsGUIDs.end())
+            {
+                m_sConstructsGUIDs.erase(pCreature->GetObjectGuid());
+
+                // update world state
+                DoUpdateWorldState(WORLD_STATE_CON_COUNT, m_sConstructsGUIDs.size());
+
+                // check if event complete
+                if (m_sConstructsGUIDs.empty())
+                    SetData(TYPE_CONSTRUCTS, DONE);
+            }
+            break;
+    }
+}
+
 void instance_oculus::OnObjectCreate(GameObject* pGo)
 {
     switch (pGo->GetEntry())
     {
-        case GO_DRAGON_CAGE_DOOR:
-            break;
         case GO_EREGOS_CACHE:
-            break;
         case GO_EREGOS_CACHE_H:
-            break;
         case GO_SPOTLIGHT:
+            m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
-        case GO_ORB_OF_NEXUS:
+        case GO_DRAGON_CAGE_DOOR:
+            m_lCageDoorGUIDs.push_back(pGo->GetObjectGuid());
+            if (m_auiEncounter[TYPE_DRAKOS] == DONE)
+                pGo->SetGoState(GO_STATE_ACTIVE);
             break;
 
         default:
             return;
     }
-    m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
 void instance_oculus::OnCreatureCreate(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
-        case NPC_BALGAR_IMAGE:
-            break;
+        case NPC_BELGAR_IMAGE:
         case NPC_VERDISA:
-            break;
         case NPC_BELGARISTRASZ:
-            break;
         case NPC_ETERNOS:
-            break;
         case NPC_DRAKOS:
+        case NPC_UROM:
+        case NPC_EREGOS:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
         case NPC_VAROS:
+            if (GetData(TYPE_CONSTRUCTS) != DONE)
+            {
+                pCreature->CastSpell(pCreature, SPELL_CENTRIFUGE_SHIELD, false);
+                pCreature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+            }
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
-        case NPC_UROM:
-            break;
-        case NPC_EREGOS:
+        case NPC_CONSTRUCT:
+            m_sConstructsGUIDs.insert(pCreature->GetObjectGuid());
             break;
     }
-    m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
 }
 
 uint32 instance_oculus::GetData(uint32 uiType)
@@ -93,7 +132,39 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
     switch (uiType)
     {
         case TYPE_DRAKOS:
-            m_auiEncounter[uiType] = uiData;
+            m_auiEncounter[TYPE_DRAKOS] = uiData;
+            if (uiData == DONE)
+            {
+                // open cages
+                DoOpenAllCages();
+
+                // varos intro
+                if (Creature* pVaros = GetSingleCreatureFromStorage(NPC_VAROS))
+                    DoScriptText(SAY_VAROS_INTRO, pVaros);
+
+                // update world state
+                DoUpdateWorldState(WORLD_STATE_CON, 1);
+                DoUpdateWorldState(WORLD_STATE_CON_COUNT, m_sConstructsGUIDs.size());
+            }
+            break;
+        case TYPE_VAROS:
+            m_auiEncounter[TYPE_VAROS] = uiData;
+            if (uiData == DONE)
+            {
+                // update world state
+                DoUpdateWorldState(WORLD_STATE_CON, 0);
+            }
+            break;
+        case TYPE_CONSTRUCTS:
+            m_auiEncounter[TYPE_CONSTRUCTS] = uiData;
+            if (uiData == DONE)
+            {
+                if (Creature* pVaros = GetSingleCreatureFromStorage(NPC_VAROS))
+                {
+                    pVaros->InterruptNonMeleeSpells(false);
+                    pVaros->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
+                }
+            }
             break;
         default:
             error_log("SD2: Instance OCULUS: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
@@ -105,7 +176,7 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA;
 
         std::ostringstream saveStream;
-        saveStream << m_auiEncounter[TYPE_DRAKOS];
+        saveStream << m_auiEncounter[TYPE_DRAKOS] << " " << m_auiEncounter[TYPE_VAROS] << " " << m_auiEncounter[TYPE_CONSTRUCTS];
 
         m_strInstData = saveStream.str();
 
@@ -125,7 +196,7 @@ void instance_oculus::Load(const char* chrIn)
     OUT_LOAD_INST_DATA(chrIn);
 
     std::istringstream loadStream(chrIn);
-    loadStream >> m_auiEncounter[TYPE_DRAKOS];
+    loadStream >> m_auiEncounter[TYPE_DRAKOS] >> m_auiEncounter[TYPE_VAROS] >> m_auiEncounter[TYPE_CONSTRUCTS];
 
     for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {

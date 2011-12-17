@@ -54,9 +54,21 @@ enum
 
 enum Instance_Oculus
 {
-    SAY_VAROS_SPAWN             = -1578029,
+    SAY_VAROS_INTRO             = -1578029,
     // varos' shield
     SPELL_CENTRIFUGE_SHIELD     = 50053,
+};
+
+struct sOculusLocations
+{
+    float m_fX, m_fY, m_fZ, m_fO;
+};
+
+static const sOculusLocations m_sPrisonersMoveLocs[] =
+{
+    {944.384f, 1058.418f, 359.967f},        // Eter
+    {949.928f, 1034.753f, 359.967f},        // Ver
+    {944.868f, 1044.982f, 359.967f}         // Bel
 };
 
 class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
@@ -68,6 +80,7 @@ class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
 
         void OnObjectCreate(GameObject* pGo);
         void OnCreatureCreate(Creature* pCreature);
+        void OnCreatureDeath(Creature* pCreature);
 
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiData);
@@ -77,8 +90,12 @@ class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         void Load(const char* chrIn);
 
     private:
+        void DoOpenAllCages();
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
+
+        GUIDList m_lCageDoorGUIDs;
+        GUIDSet m_sConstructsGUIDs;
 };
 
 #endif
