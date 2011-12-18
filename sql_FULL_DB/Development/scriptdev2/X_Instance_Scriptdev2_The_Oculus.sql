@@ -20,3 +20,18 @@ INSERT INTO `script_texts` (entry, content_default, content_loc8, sound, type, l
 (-1578009,'Tremble, worms!','Трепещите, черви!',13595,1,0,0,'SAY_STOMP_1'),
 (-1578010,'I will crush you!','Я раздавлю вас!',13596,1,0,0,'SAY_STOMP_2'),
 (-1578011,'Can you fly?','Вы умеете летать?',13597,1,0,0,'SAY_STOMP_3');
+
+-- -------
+-- Varos -
+-- -------
+
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1578029 AND -1578022;
+INSERT INTO `script_texts` (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
+(-1578022,'There will be no mercy!','Пощады не будет!',13649,1,0,0,'SAY_AGGRO'),
+(-1578023,'Oculus ours!','Окулус наш!',13654,1,0,0,'SAY_KILL_1'),
+(-1578024,'I warned you!','Тебя предупреждали!',13653,1,0,0,'SAY_KILL_2'),
+(-1578025,'They are... too strong! Underestimated their... fortitude.','Они... слишком сильны! Я недооценил... их мужество.',13655,1,0,0,'SAY_DEATH'),
+(-1578026,'Blast them! Destroy them!','Взорвать их! Изничтожить!',13650,1,0,0,'SAY_STRIKE_1'),
+(-1578027,'Take no prisoners! Attack!','Пленных не брать! В Атаку!',13651,1,0,0,'SAY_STRIKE_2'),
+(-1578028,'Strike now! Obliterate them!','Нанесите удар! Уничтожте их!',13652,1,0,0,'SAY_STRIKE_3'),
+(-1578029,'Intruders, your victory will be short-lived. I am Commander Varos Cloudstrider. My drakes control the skies and protest this conduit. I will see to it personally that the Oculus does not fall into your hands!','Чужаки, ваш триумф будет не долгим. Я командир Варос Заоблачный странник. Мои драконы обозревают небеса и защищают это место. Я позабочусь, чтобы Окулус не достался вам!',13648,1,0,0,'SAY_VAROS_SPAWN');
