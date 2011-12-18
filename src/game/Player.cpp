@@ -2153,7 +2153,8 @@ void Player::Regenerate(Powers power, uint32 diff)
         {
             float RunicPowerDecreaseRate = sWorld.getConfig(CONFIG_FLOAT_RATE_POWER_RUNICPOWER_LOSS);
             addvalue = 30 * RunicPowerDecreaseRate;         // 3 RunicPower by tick
-        }   break;
+            break;
+        }
         case POWER_RUNE:
         {
             if (getClass() != CLASS_DEATH_KNIGHT)
@@ -2192,6 +2193,7 @@ void Player::Regenerate(Powers power, uint32 diff)
         case POWER_FOCUS:
         case POWER_HAPPINESS:
         case POWER_HEALTH:
+        default:
             break;
     }
 
@@ -22560,7 +22562,7 @@ bool Player::ActivateRunes(RuneType type, uint32 count)
     bool modify = false;
     for(uint32 j = 0; count > 0 && j < MAX_RUNES; ++j)
     {
-        if (GetRuneCooldown(j) && GetCurrentRune(j) == type)
+        if (GetCurrentRune(j) == type && GetRuneCooldown(j) > 0)
         {
             SetRuneCooldown(j, 0);
             --count;
@@ -24356,6 +24358,10 @@ AreaLockStatus Player::GetAreaTriggerLockStatus(AreaTrigger const* at, Difficult
     if (getLevel() < at->requiredLevel && !sWorld.getConfig(CONFIG_BOOL_INSTANCE_IGNORE_LEVEL))
         return AREA_LOCKSTATUS_TOO_LOW_LEVEL;
 
+    if (mapEntry->IsDungeon() && mapEntry->IsRaid() && !sWorld.getConfig(CONFIG_BOOL_INSTANCE_IGNORE_RAID))
+        if (!GetGroup() || !GetGroup()->isRaidGroup())
+            return AREA_LOCKSTATUS_RAID_LOCKED;
+
     // must have one or the other, report the first one that's missing
     if (at->requiredItem)
     {
@@ -24602,6 +24608,9 @@ bool Player::CheckTransferPossibility(AreaTrigger const*& at, bool b_onlyMainReq
             return false;
         // TODO: messages for other cases
         case AREA_LOCKSTATUS_RAID_LOCKED:
+            SendTransferAborted(at->target_mapId, TRANSFER_ABORT_NEED_GROUP);
+            return false;
+        // TODO: messages for other cases
         case AREA_LOCKSTATUS_UNKNOWN_ERROR:
         default:
             SendTransferAborted(at->target_mapId, TRANSFER_ABORT_ERROR);
