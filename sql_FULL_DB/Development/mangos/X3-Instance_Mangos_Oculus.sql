@@ -21,9 +21,18 @@ UPDATE `creature_template` SET `minlevel` = 81, `maxlevel` = 81, `unit_flags` = 
 -- -------
 -- Varos -
 -- -------
+
+UPDATE `creature_template` SET `ScriptName` = 'boss_varos' WHERE entry = 27447;
+UPDATE `creature_template` SET `ScriptName` = 'npc_varos_orb' WHERE entry = 28183;
+UPDATE `creature_template` SET `ScriptName` = 'npc_varos_beam_target' WHERE entry = 28239;
+
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 27447; -- added immune to pacify
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 31559; -- added immune to pacify to hard version 
 
+REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) values
+(51024, 1, 28239),
+(51022, 1, 28239),
+(57963, 1, 27656);
 
 -- -------------- Instance Data Fixes & Ect --------------------------------- --
 

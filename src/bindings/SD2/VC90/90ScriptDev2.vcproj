@@ -2078,6 +2078,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\scripts\northrend\nexus\oculus\boss_varos.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\northrend\nexus\oculus\instance_oculus.cpp"
 							>
 						</File>
