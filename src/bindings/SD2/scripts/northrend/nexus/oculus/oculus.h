@@ -82,6 +82,8 @@ class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
         void OnCreatureCreate(Creature* pCreature);
         void OnCreatureDeath(Creature* pCreature);
 
+        void OnPlayerEnter(Player* pPlayer);
+
         uint32 GetData(uint32 uiType);
         void SetData(uint32 uiType, uint32 uiData);
 

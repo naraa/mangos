@@ -35,6 +35,16 @@ void instance_oculus::Initialize()
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 }
 
+void instance_oculus::OnPlayerEnter(Player *pPlayer)
+{
+    // show world state if players reenter oculus for any reason (e.i. = gated , died ,raid wipe, ect ect )
+    if (GetData(TYPE_DRAKOS) == DONE && GetData(TYPE_VAROS) != DONE)
+    {
+        DoUpdateWorldState(WORLD_STATE_CON, 1);
+        DoUpdateWorldState(WORLD_STATE_CON_COUNT, m_sConstructsGUIDs.size());
+    }
+}
+
 void instance_oculus::DoOpenAllCages()
 {
     // open all doors
