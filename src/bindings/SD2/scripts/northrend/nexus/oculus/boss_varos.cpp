@@ -310,15 +310,6 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
 
     }
 
-    /*void SpellHitTarget(Unit *target, const SpellEntry *spell)
-    {
-        if(spell->Id == (m_bIsRegularMode ? SPELL_ENERGIZE_CORES : SPELL_ENERGIZE_CORES_2) && target->GetTypeId() == TYPEID_PLAYER)
-        {
-           int32 uiDmg = m_bIsRegularMode ? urand(5938, 6562) : urand(9025, 9975);
-           m_creature->DealDamage(target, uiDmg,NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_ARCANE, NULL, false);
-        }
-    }*/
-
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
@@ -344,15 +335,15 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
            }
         } else m_uiDragonAttackTimer -= uiDiff;
 
-        if(m_uiDragonMoveTimer <= uiDiff)
+        if (m_uiDragonMoveTimer <= uiDiff)
         {
-           if(m_pInstance)
-              if(Creature* Dragon = m_pInstance->instance->GetCreature(m_uiAzureDrakeGUID))
-              {
-                 Dragon->GetMotionMaster()->MovementExpired(false);
-                 Dragon->GetMotionMaster()->Clear(false);
-                 Dragon->GetMotionMaster()->MovePoint(0, (m_creature->GetPositionX()-45)+rand()%90, (m_creature->GetPositionY()-45)+rand()%90, m_creature->GetPositionZ() + 30.0f);
-              }
+            if (m_pInstance)
+                if(Creature* pDragon = m_pInstance->instance->GetCreature(m_uiAzureDrakeGUID))
+                {
+                    pDragon->GetMotionMaster()->MovementExpired(false);
+                    pDragon->GetMotionMaster()->Clear(false);
+                    pDragon->GetMotionMaster()->MovePoint(0, (m_creature->GetPositionX()-45)+rand()%90, (m_creature->GetPositionY()-45)+rand()%90, m_creature->GetPositionZ() + 30.0f);
+                }
            m_uiDragonMoveTimer = 25000;
         } else m_uiDragonMoveTimer -= uiDiff;
 
