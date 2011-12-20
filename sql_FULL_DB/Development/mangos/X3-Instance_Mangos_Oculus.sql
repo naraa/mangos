@@ -18,6 +18,9 @@ UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` 
   -- Unstable Sphere Fixes
 UPDATE `creature_template` SET `minlevel` = 81, `maxlevel` = 81, `unit_flags` = 33587202 WHERE `entry` = 28166;
 
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` = 27654;
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27654);
+
 -- -------
 -- Varos -
 -- -------
@@ -25,6 +28,9 @@ UPDATE `creature_template` SET `minlevel` = 81, `maxlevel` = 81, `unit_flags` = 
 UPDATE `creature_template` SET `ScriptName` = 'boss_varos' WHERE entry = 27447;
 UPDATE `creature_template` SET `ScriptName` = 'npc_varos_orb' WHERE entry = 28183;
 UPDATE `creature_template` SET `ScriptName` = 'npc_varos_beam_target' WHERE entry = 28239;
+
+UPDATE `creature_template` SET `AIName` = '' WHERE `entry` = 27447;
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27447);
 
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 27447; -- added immune to pacify
 UPDATE `creature_template` SET `mechanic_immune_mask` = 617299931 WHERE `entry` = 31559; -- added immune to pacify to hard version 
