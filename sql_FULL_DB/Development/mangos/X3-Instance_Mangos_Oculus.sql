@@ -7,6 +7,14 @@ UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 57
 
 -- -----------------------  Boss fixes DB -----------------------------
 
+-- some ACID CLEAN UP
+DELETE FROM `creature_ai_texts` WHERE (`entry`='-1153') OR (`entry`='-1154') 
+OR (`entry`='-1155') OR (`entry`='-1156') OR (`entry`='-1157') OR (`entry`='-1158') OR (`entry`='-1159') 
+OR (`entry`='-1160') OR (`entry`='-1161') OR (`entry`='-1162') OR (`entry`='-1163') 
+OR (`entry`='-1164') OR (`entry`='-1165') OR (`entry`='-1166') OR (`entry`='-1167') 
+OR (`entry`='-1168') OR (`entry`='-1169') OR (`entry`='-1170') OR (`entry`='-1171');
+
+
 -- -------------------------
 -- Drakos the Interrogator -
 -- -------------------------
