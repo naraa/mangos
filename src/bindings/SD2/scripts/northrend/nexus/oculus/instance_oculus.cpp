@@ -176,6 +176,15 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
                 }
             }
             break;
+        case TYPE_UROM:
+            //m_auiEncounter[TYPE_UROM] = uiData;
+            //if (uiData == DONE)
+            break;
+        case TYPE_EREGOS:
+            //m_auiEncounter[TYPE_EREGOS] = uiData;
+            //if (uiData == DONE)
+                //DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CACHE_EREGOS : GO_CACHE_EREGOS_H);
+            break;
         default:
             error_log("SD2: Instance OCULUS: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
             return;
@@ -186,7 +195,7 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA;
 
         std::ostringstream saveStream;
-        saveStream << m_auiEncounter[TYPE_DRAKOS] << " " << m_auiEncounter[TYPE_VAROS] << " " << m_auiEncounter[TYPE_CONSTRUCTS];
+        saveStream << m_auiEncounter[TYPE_DRAKOS] << " " << m_auiEncounter[TYPE_VAROS] << " " << m_auiEncounter[TYPE_CONSTRUCTS] << " " << m_auiEncounter[TYPE_UROM];
 
         m_strInstData = saveStream.str();
 
@@ -206,7 +215,7 @@ void instance_oculus::Load(const char* chrIn)
     OUT_LOAD_INST_DATA(chrIn);
 
     std::istringstream loadStream(chrIn);
-    loadStream >> m_auiEncounter[TYPE_DRAKOS] >> m_auiEncounter[TYPE_VAROS] >> m_auiEncounter[TYPE_CONSTRUCTS];
+    loadStream >> m_auiEncounter[TYPE_DRAKOS] >> m_auiEncounter[TYPE_VAROS] >> m_auiEncounter[TYPE_CONSTRUCTS] >> m_auiEncounter[TYPE_UROM];
 
     for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {

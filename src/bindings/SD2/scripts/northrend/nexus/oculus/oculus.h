@@ -20,12 +20,15 @@
 
 enum
 {
-    MAX_ENCOUNTER                  = 3,
+    MAX_ENCOUNTER                  = 5,
 
     TYPE_DRAKOS                    = 0,
 
     TYPE_VAROS                     = 1,
     TYPE_CONSTRUCTS                = 2,
+
+    TYPE_UROM                      = 3,
+    TYPE_EREGOS                    = 4,
 
     NPC_VERDISA            = 27657,
     NPC_BELGARISTRASZ      = 27658,
@@ -38,6 +41,16 @@ enum
     NPC_CONSTRUCT          = 27641,
 
     NPC_UROM               = 27655,
+	
+    NPC_PHANTASMAL_CLOUDSCRAPER     = 27645,
+    NPC_PHANTASMAL_MAMMOTH          = 27642,
+    NPC_PHANTASMAL_WOLF             = 27644,
+    NPC_PHANTASMAL_AIR              = 27650,
+    NPC_PHANTASMAL_FIRE             = 27651,
+    NPC_PHANTASMAL_WATER            = 27653,
+    NPC_PHANTASMAL_MURLOC           = 27649,
+    NPC_PHANTASMAL_NAGAL            = 27648,
+    NPC_PHANTASMAL_OGRE             = 27647,
 
     NPC_EREGOS             = 27656,
 
