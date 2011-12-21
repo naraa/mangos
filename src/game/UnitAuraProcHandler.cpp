@@ -3854,6 +3854,13 @@ SpellAuraProcResult Unit::HandleProcTriggerSpellAuraProc(Unit *pVictim, uint32 d
                 if(GetShapeshiftForm() != FORM_SHADOW)
                     return SPELL_AURA_PROC_FAILED;
             }
+            // Improved Spirit Tap
+            else if (auraSpellInfo->Id == 15337 || auraSpellInfo->Id == 15338)
+            {
+                // proc chance for Mind Flay is 2 times lower, so we have to roll for 50% now
+                if (procSpell->SpellIconID == 548 && roll_chance_i(50))
+                    return SPELL_AURA_PROC_FAILED;
+            }
             break;
         }
         case SPELLFAMILY_DRUID:
@@ -5140,7 +5147,8 @@ SpellAuraProcResult Unit::IsTriggeredAtCustomProcEvent(Unit *pVictim, SpellAuraH
                         spellProto->Attributes & SPELL_ATTR_BREAKABLE_BY_DAMAGE))
                         return SPELL_AURA_PROC_OK;
                     else if (procFlag & PROC_FLAG_TAKEN_ANY_DAMAGE &&
-                        spellProto->AttributesEx & SPELL_ATTR_EX_BREAKABLE_BY_ANY_DAMAGE)
+                        (spellProto->AuraInterruptFlags & AURA_INTERRUPT_FLAG_DAMAGE &&
+                        spellProto->AttributesEx & SPELL_ATTR_EX_BREAKABLE_BY_ANY_DAMAGE))
                         return SPELL_AURA_PROC_OK;
                     else if (EventProcFlag || spellProcEvent)
                         return SPELL_AURA_PROC_FAILED;
