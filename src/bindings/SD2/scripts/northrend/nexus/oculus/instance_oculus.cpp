@@ -52,13 +52,13 @@ void instance_oculus::DoOpenAllCages()
         DoUseDoorOrButton(*itr);
 
     // get the prisoners out
-    if(Creature* pEternos = GetSingleCreatureFromStorage(NPC_ETERNOS))
+    if (Creature* pEternos = GetSingleCreatureFromStorage(NPC_ETERNOS))
         pEternos->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[0].m_fX, m_sPrisonersMoveLocs[0].m_fY, m_sPrisonersMoveLocs[0].m_fZ);
 
-    if(Creature* pVerdisa = GetSingleCreatureFromStorage(NPC_VERDISA))
+    if (Creature* pVerdisa = GetSingleCreatureFromStorage(NPC_VERDISA))
         pVerdisa->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[1].m_fX, m_sPrisonersMoveLocs[1].m_fY, m_sPrisonersMoveLocs[1].m_fZ);
 
-    if(Creature* pBelgaristrasz = GetSingleCreatureFromStorage(NPC_BELGARISTRASZ))
+    if (Creature* pBelgaristrasz = GetSingleCreatureFromStorage(NPC_BELGARISTRASZ))
         pBelgaristrasz->GetMotionMaster()->MovePoint(0, m_sPrisonersMoveLocs[2].m_fX, m_sPrisonersMoveLocs[2].m_fY, m_sPrisonersMoveLocs[2].m_fZ);
 }
 
