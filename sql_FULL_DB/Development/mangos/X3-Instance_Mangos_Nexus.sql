@@ -49,8 +49,7 @@ UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `en
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2674601');
 INSERT INTO `creature_ai_scripts` VALUES ('2674601', '26746', '0', '0', '100', '7', '3000', '4000', '5000', '5500', '11', '33833', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - Cast Arcane Missles');
 DELETE FROM `creature_ai_scripts` WHERE (`id`='2674602');
-INSERT INTO `creature_ai_scripts` VALUES ('2674602', '26746', '4', '0', '100', '7', '0', '0', '0', '0', '20', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - melee');
-
+INSERT INTO `creature_ai_scripts` VALUES ('2674602', '26746', '4', '0', '100', '6', '0', '0', '0', '0', '20', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - melee');
 
 -- ------------
 -- Commanders -
