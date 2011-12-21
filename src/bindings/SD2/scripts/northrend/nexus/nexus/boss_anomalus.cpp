@@ -289,20 +289,20 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
             return;
 
         if (Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_ANOMALUS))
-         {
-             if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
-             {
+        {
+            if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
+            {
 ///->   -- CHARGED
-                 if (m_creature->HasAura(SPELL_RIFT_AURA))
-                     DoCast(m_creature,SPELL_CHARGED_RIFT_AURA,true);
-             }
-             else
-             {
+                if (m_creature->HasAura(SPELL_RIFT_AURA))
+                    DoCast(m_creature,SPELL_CHARGED_RIFT_AURA,true);
+            }
+            else
+            {
 ///-> -- NoN_charged
-                 if (!m_creature->HasAura(SPELL_RIFT_AURA))
-                     DoCast(m_creature,SPELL_RIFT_AURA,true);
-             }
-         }
+                if (!m_creature->HasAura(SPELL_RIFT_AURA))
+                    DoCast(m_creature,SPELL_RIFT_AURA,true);
+            }
+        }
 ///-> walk around for charged wraith summon  unable to make wraith attack by summon by aura trigger
         if (m_uiCrazedManaWraithTimer < uiDiff)
         {

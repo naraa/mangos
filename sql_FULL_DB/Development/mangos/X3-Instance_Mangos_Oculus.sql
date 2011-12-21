@@ -18,6 +18,12 @@ OR (`entry`='-1168') OR (`entry`='-1169') OR (`entry`='-1170') OR (`entry`='-117
 -- -------------------------
 -- Drakos the Interrogator -
 -- -------------------------
+UPDATE `creature_template` SET `modelid_2` = 27032 WHERE `entry` = 27654;
+UPDATE `creature_template` SET `modelid_2` = 27032 WHERE `entry` = 31558;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=27032);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (27032, 1.5, 2.0, 0, 0, 0);
+
 UPDATE `creature_template` SET `ScriptName` = 'boss_drakos' WHERE entry = 27654;
 UPDATE `creature_template` SET `ScriptName` = 'npc_unstable_sphere' WHERE entry = 28166;
 UPDATE `creature_template` SET `maxhealth` = 431392 WHERE `entry` = 31558;  -- Hard Instance Version  data from wow.com
@@ -32,6 +38,11 @@ DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=27654);
 -- -------
 -- Varos -
 -- -------
+UPDATE `creature_template` SET `modelid_2` = 27033 WHERE `entry` = 27447;
+UPDATE `creature_template` SET `modelid_2` = 27033 WHERE `entry` = 31559;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=27033);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (27033, 2.5, 2.5, 0, 0, 0);
 
 UPDATE `creature_template` SET `ScriptName` = 'boss_varos' WHERE entry = 27447;
 UPDATE `creature_template` SET `ScriptName` = 'npc_varos_orb' WHERE entry = 28183;

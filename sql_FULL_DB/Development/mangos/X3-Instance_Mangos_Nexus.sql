@@ -2,9 +2,31 @@
 -- Instance Nexus -
 -- ----------------
 
+-- ---------
+-- Magus tele
+-- ---------
+
+UPDATE `creature_template` SET `modelid_2` = 24066 WHERE `entry` = 26731;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 26928;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 26929;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 26930;
+UPDATE `creature_template` SET `modelid_2` = 24066 WHERE `entry` = 30510;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 30511;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 30512;
+UPDATE `creature_template` SET `modelid_2` = 24066, `equipment_id` = 1735 WHERE `entry` = 30513;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=24066);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (24066, 1.125, 1.5, 1, 0, 0);
+
+
 -- -------
 -- ormok -
 -- -------
+UPDATE `creature_template` SET `modelid_2` = 26298 WHERE `entry` = 30532;
+UPDATE `creature_template` SET `modelid_2` = 26298 WHERE `entry` = 26794;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=26298);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (26298, 2.5, 5.25, 2, 0, 0);
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_crystal_spike' WHERE `entry` = '27099';
 UPDATE `creature_template` SET `ScriptName` = 'npc_crystalline_tangler' WHERE `entry` = '32665';
@@ -18,6 +40,17 @@ UPDATE `creature_template` SET `modelid_1` = 25206 WHERE `entry` = 26918;
 UPDATE `creature_template` SET `modelid_1` = 25206 WHERE `entry` = 30522;
 UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 26918;
 UPDATE `creature_template` SET `spell1` = 0 WHERE `entry` = 30522;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=26259);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (26259, 2.5, 5, 2, 0, 0);
+
+-- ACID For Crazied mana wraiths
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '26746';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2674601');
+INSERT INTO `creature_ai_scripts` VALUES ('2674601', '26746', '0', '0', '100', '7', '3000', '4000', '5000', '5500', '11', '33833', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - Cast Arcane Missles');
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2674602');
+INSERT INTO `creature_ai_scripts` VALUES ('2674602', '26746', '4', '0', '100', '7', '0', '0', '0', '0', '20', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', 'Crazed Mana-Wraith - melee');
+
 
 -- ------------
 -- Commanders -
@@ -198,6 +231,12 @@ DELETE FROM `pool_creature` WHERE  `guid`=79970 LIMIT 1;
 -- -------------
 -- Keristrasza -
 -- -------------
+
+UPDATE `creature_template` SET `modelid_2` = 24307 WHERE `entry` = 26723;
+UPDATE `creature_template` SET `modelid_2` = 24307 WHERE `entry` = 30540;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=24307);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (24307, 2.5, 5.25, 2, 0, 0);
 
   -- set Breath Casters to flying (dummy NPCs near Keristrasza)
 UPDATE creature_template SET InhabitType = 4 WHERE entry = 27048;
