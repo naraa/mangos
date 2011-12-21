@@ -59,6 +59,16 @@ REPLACE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) values
 (51022, 1, 28239),
 (57963, 1, 27656);
 
+-- ------
+-- urom -
+-- ------
+UPDATE `creature_template` SET `ScriptName` = 'boss_urom' WHERE entry = 27655;
+UPDATE `creature_template` SET `modelid_2` = 25010 WHERE `entry` = 27655;
+UPDATE `creature_template` SET `modelid_2` = 25010 WHERE `entry` = 31560;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=25010);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (25010, 2, 2, 0, 0, 0);
+
 -- -------------- Instance Data Fixes & Ect --------------------------------- --
 
 -- herbalism flower   a ytdb bugs flowers cant wander around lol
