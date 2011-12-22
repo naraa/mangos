@@ -113,7 +113,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
             m_pInstance->SetData(TYPE_UROM, DONE);
     }
 
-    void SummonPack_1
+    void SummonPack_1()
     {
         m_creature->SummonCreature(NPC_PHANTASMAL_AIR, 1177.505f,  937.96f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
         m_creature->SummonCreature(NPC_PHANTASMAL_FIRE, 1177.505f,  937.96f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
@@ -122,7 +122,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
         m_uiPhase = PHASE_PLATFORM_2;
     }
 
-    void SummonPack_2
+    void SummonPack_2()
     {
        m_creature->SummonCreature(NPC_PHANTASMAL_CLOUDSCRAPER, 968.941f, 1045.45f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
        m_creature->SummonCreature(NPC_PHANTASMAL_MAMMOTH, 968.941f, 1042.45f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
@@ -130,7 +130,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
        m_uiPhase = PHASE_PLATFORM_3;
     }
 
-    void SummonPack_3
+    void SummonPack_3()
     {
         m_creature->SummonCreature(NPC_PHANTASMAL_MURLOC, 1163.637f, 1170.95f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
         m_creature->SummonCreature(NPC_PHANTASMAL_NAGAL, 1163.637f, 1170.95f, 527.32f,0,TEMPSUMMON_DEAD_DESPAWN,0);
