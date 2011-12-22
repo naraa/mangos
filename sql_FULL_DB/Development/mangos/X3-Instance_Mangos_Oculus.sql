@@ -80,7 +80,11 @@ DELETE FROM `creature_model_info` WHERE (`modelid`=27034);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (27034, 3, 10, 0, 0, 0);
 
 UPDATE `creature_template` SET `ScriptName` = 'npc_planar_anomaly' WHERE entry = 30879;
+UPDATE `creature_template` SET `modelid_1` = 11686, `modelid_2` = 11686 WHERE `entry` = 30879;
 
+DELETE FROM `creature_model_info` WHERE (`modelid`=11686);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (11686, 1, 1.5, 2, 0, 0);
+UPDATE `creature_template` SET `speed_run` = 1.5 WHERE `entry` = 30879;
 -- -------------- Instance Data Fixes & Ect --------------------------------- --
 
 -- herbalism flower   a ytdb bugs flowers cant wander around lol
