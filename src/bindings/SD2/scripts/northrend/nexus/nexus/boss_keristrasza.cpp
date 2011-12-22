@@ -88,6 +88,9 @@ struct MANGOS_DLL_DECL boss_keristraszaAI : public ScriptedAI
         {
             if (m_pInstance->GetData(TYPE_KERISTRASZA) != SPECIAL)
                 DoCastSpellIfCan(m_creature, SPELL_FROZEN_PRISON, CAST_TRIGGERED);
+
+            if (m_pInstance)
+                m_pInstance->SetData(TYPE_KERISTRASZA, NOT_STARTED);
         }
     }
 

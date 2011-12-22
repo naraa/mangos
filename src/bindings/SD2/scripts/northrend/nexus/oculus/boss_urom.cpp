@@ -113,6 +113,9 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
 
         TimeBomb = NULL;
         m_uiTimeBombDetonateTimer = 0;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_UROM, NOT_STARTED);
     }
 
     void Aggro(Unit* pWho)
@@ -137,7 +140,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
             case 2: DoScriptText(SAY_KILL_2,m_creature); break;
             case 3: DoScriptText(SAY_KILL_3,m_creature); break;
         }
-   }
+    }
 
     void JustDied(Unit* pKiller)
     {
@@ -240,7 +243,7 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
                 if (itr->getSource() && !(TimeBomb->GetTypeId() == TYPEID_PLAYER && ((Player*)TimeBomb) == itr->getSource()) )
                 {
                     Player* pTarget = itr->getSource();
-                    if (pTarget->isAlive() && Target->IsWithinDistInMap(TimeBomb,10.0f))
+                    if (pTarget->isAlive() && pTarget->IsWithinDistInMap(TimeBomb,10.0f))
                         TimeBomb->DealDamage(pTarget,damage,0,DIRECT_DAMAGE,SPELL_SCHOOL_MASK_NORMAL,0,false);
                 }
             }

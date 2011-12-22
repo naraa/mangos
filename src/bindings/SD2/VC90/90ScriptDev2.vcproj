@@ -2082,6 +2082,10 @@
 							>
 						</File>
 						<File
+							RelativePath="..\scripts\northrend\nexus\oculus\boss_eregos.cpp"
+							>
+						</File>
+						<File
 							RelativePath="..\scripts\northrend\nexus\oculus\boss_urom.cpp"
 							>
 						</File>
