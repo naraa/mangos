@@ -14,6 +14,9 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-1120') OR (`entry`='-1121') OR 
 DELETE FROM `creature_ai_texts` WHERE  `entry`= -1137;
 DELETE FROM `creature_ai_texts` WHERE (`entry`='-810') OR (`entry`='-811') OR (`entry`='-812') OR (`entry`='-813') OR (`entry`='-814') OR (`entry`='-815');
 
+UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
+
+
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
