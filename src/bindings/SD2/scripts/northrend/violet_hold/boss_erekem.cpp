@@ -18,7 +18,7 @@
 SDName: boss_erekem
 SDAuthor: ckegg
 SD%Complete: 50%
-SDComment: 
+SDComment:
 SDCategory: The Violet Hold
 EndScriptData */
 
@@ -53,15 +53,15 @@ enum
 
 struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
 {
-    boss_erekemAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_erekemAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
-    ScriptedInstance *m_pInstance;
-
+    ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
+
     bool m_bIsAddDead;
     bool MovementStarted;
 
@@ -107,7 +107,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
             m_pInstance->SetData(TYPE_EREKEM, FAIL);
             m_pInstance->SetData(TYPE_EVENT, FAIL);
             m_pInstance->SetData(TYPE_RIFT, FAIL);
-            if(m_pInstance->GetData(TYPE_PORTAL6) == IN_PROGRESS) {m_pInstance->SetData(TYPE_PORTAL6, NOT_STARTED);}
+            if (m_pInstance->GetData(TYPE_PORTAL6) == IN_PROGRESS) {m_pInstance->SetData(TYPE_PORTAL6, NOT_STARTED);}
             else {m_pInstance->SetData(TYPE_PORTAL12, NOT_STARTED);}
         }
     }
@@ -146,7 +146,7 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
                         if ((*iter)->isAlive())
                         {
                             (*iter)->AddThreat(pWho, 0.0f);
-                      /*      (*iter)->AI()->AttackStart(pWho);*/ 
+                      /*      (*iter)->AI()->AttackStart(pWho);*/
                         }
         }
     }
@@ -263,12 +263,12 @@ struct MANGOS_DLL_DECL boss_erekemAI : public ScriptedAI
 
 struct MANGOS_DLL_DECL mob_erekem_guardAI : public ScriptedAI
 {
-    mob_erekem_guardAI(Creature *pCreature) : ScriptedAI(pCreature)
+    mob_erekem_guardAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
         Reset();
     }
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
 
     uint32 m_uiGushingWound_Timer;
     uint32 m_uiHowlingScreech_Timer;
@@ -318,7 +318,7 @@ struct MANGOS_DLL_DECL mob_erekem_guardAI : public ScriptedAI
             m_creature->GetMotionMaster()->MovementExpired();
             SetCombatMovement(true);
         }
-    }*/ 
+    }*/
 
     void StartMovement(uint32 id)
     {
@@ -415,15 +415,15 @@ CreatureAI* GetAI_mob_erekem_guard(Creature* pCreature)
 
 void AddSC_boss_erekem()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_erekem";
-    newscript->GetAI = &GetAI_boss_erekem;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_erekem";
+    pNewScript->GetAI = &GetAI_boss_erekem;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_erekem_guard";
-    newscript->GetAI = &GetAI_mob_erekem_guard;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_erekem_guard";
+    pNewScript->GetAI = &GetAI_mob_erekem_guard;
+    pNewScript->RegisterSelf();
 }

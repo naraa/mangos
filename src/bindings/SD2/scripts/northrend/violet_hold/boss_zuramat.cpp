@@ -18,7 +18,7 @@
 SDName: boss_zuramat
 SDAuthor: ckegg
 SD%Complete: 60%
-SDComment: 
+SDComment:
 SDCategory: The Violet Hold
 EndScriptData */
 
@@ -87,9 +87,9 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
             m_pInstance->SetData(TYPE_EVENT, FAIL);
             m_pInstance->SetData(TYPE_RIFT, FAIL);
 
-            if(m_pInstance->GetData(TYPE_PORTAL6) == IN_PROGRESS) 
+            if(m_pInstance->GetData(TYPE_PORTAL6) == IN_PROGRESS)
                 m_pInstance->SetData(TYPE_PORTAL6, NOT_STARTED);
-            else 
+            else
                 m_pInstance->SetData(TYPE_PORTAL12, NOT_STARTED);
         }
     }
@@ -170,7 +170,7 @@ struct MANGOS_DLL_DECL boss_zuramatAI : public ScriptedAI
         }
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff)
     {
         if (m_pInstance->GetData(TYPE_ZURAMAT) == SPECIAL && !MovementStarted)
             StartMovement(0);
@@ -246,8 +246,8 @@ struct MANGOS_DLL_DECL mob_zuramat_sentryAI : public ScriptedAI
     void Reset()
     {
         m_uiShadowBoltVolley_Timer = 3000;
-//        DoCast(m_creature, m_bIsRegularMode ? SPELL_VOID_SENTRY_AURA_H : SPELL_VOID_SENTRY_AURA); 
-//        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);*/ 
+//        DoCast(m_creature, m_bIsRegularMode ? SPELL_VOID_SENTRY_AURA_H : SPELL_VOID_SENTRY_AURA);
+//        m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);*/
         DoCast(m_creature, m_bIsRegularMode ? SPELL_SHADOW_BOLT_VOLLEY : SPELL_SHADOW_BOLT_VOLLEY_H);
     }
 
@@ -257,7 +257,7 @@ struct MANGOS_DLL_DECL mob_zuramat_sentryAI : public ScriptedAI
             damage=0;
     }
 
-    void UpdateAI(const uint32 uiDiff) 
+    void UpdateAI(const uint32 uiDiff)
     {
         if (m_uiShadowBoltVolley_Timer < uiDiff)
         {
@@ -281,16 +281,16 @@ CreatureAI* GetAI_mob_zuramat_sentry(Creature* pCreature)
 
 void AddSC_boss_zuramat()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_zuramat";
-    newscript->GetAI = &GetAI_boss_zuramat;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_zuramat";
+    pNewScript->GetAI = &GetAI_boss_zuramat;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_zuramat_sentry";
-    newscript->GetAI = &GetAI_mob_zuramat_sentry;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_zuramat_sentry";
+    pNewScript->GetAI = &GetAI_mob_zuramat_sentry;
+    pNewScript->RegisterSelf();
 
 }

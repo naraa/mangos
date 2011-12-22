@@ -174,10 +174,10 @@ CreatureAI* GetAI_boss_moragg(Creature* pCreature)
 
 void AddSC_boss_moragg()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_moragg";
-    newscript->GetAI = &GetAI_boss_moragg;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_moragg";
+    pNewScript->GetAI = &GetAI_boss_moragg;
+    pNewScript->RegisterSelf();
 }

@@ -18,7 +18,7 @@
 SDName: violet_hold
 SDAuthor: ckegg, modified by rsa
 SD%Complete: 60
-SDComment: 
+SDComment:
 SDCategory: The Violet Hold
 EndScriptData */
 
@@ -687,7 +687,7 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
             //set portal type
             uint8 portalType = rand()%2+1;
             uint32 portalID = rand()%50000;
-            ((npc_violet_portalAI*)pTemp->AI())->portalType = portalType; 
+            ((npc_violet_portalAI*)pTemp->AI())->portalType = portalType;
             ((npc_violet_portalAI*)pTemp->AI())->portalID = portalID;
             ((npc_violet_portalAI*)pTemp->AI())->portalLoc = tmp;
 
@@ -712,22 +712,22 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
             {
                 switch(m_uiWaypoint)
                 {
-                case 0: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z); 
+                case 0: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z);
                     m_uiWalkTimer = 1000;
                     m_uiWaypoint++;
                     break;
-                case 1: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z); 
+                case 1: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z);
                     DoScriptText(SAY_BEGIN, m_creature);
                     CallGuards(false);
                     m_uiWalkTimer = 2000;
                     m_uiWaypoint++;
                     break;
                 case 2:
-                    m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z); 
+                    m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z);
                     m_uiWalkTimer = 3000;
                     m_uiWaypoint++;
                     break;
-                case 3: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z); 
+                case 3: m_creature->GetMotionMaster()->MovePoint(m_uiWaypoint, SinclariWP[m_uiWaypoint].x, SinclariWP[m_uiWaypoint].y, SinclariWP[m_uiWaypoint].z);
                     DoScriptText(SAY_LOCK_DOOR, m_creature);
                     m_uiWalkTimer = 3000;
                     m_uiWaypoint++;
@@ -764,9 +764,9 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
                 }
 
                 if ( m_uiRiftPortalCount != 6
-                     && m_uiRiftPortalCount != 12 
+                     && m_uiRiftPortalCount != 12
                      && m_uiRiftPortalCount != 18
-                     && m_uiRiftPortalCount < 18 
+                     && m_uiRiftPortalCount < 18
                    )
                 {
                     DoSpawnPortal();
@@ -799,7 +799,7 @@ struct MANGOS_DLL_DECL npc_sinclariAI : public ScriptedAI
                 {
                     Creature* pCyanigossa = GetClosestCreatureWithEntry(m_creature, NPC_CYANIGOSA, 300.0f);
 
-                    if (!pCyanigossa) 
+                    if (!pCyanigossa)
                     {
                         m_creature->SummonCreature(NPC_CYANIGOSA, 1922.420f, 803.240f, 52.40f, 3.022f, TEMPSUMMON_TIMED_OR_DEAD_DESPAWN , 99999999);}
                         m_pInstance->SetData(TYPE_RIFT, DONE);
@@ -1027,7 +1027,7 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
         if (m_bIsActiving)
             if (m_uiDisruption_Timer < uiDiff)
             {
-                if (m_uiDisruptionCounter < 3) 
+                if (m_uiDisruptionCounter < 3)
                 {
                     DoCast(m_creature, SPELL_SHIELD_DISRUPTION);
                     ++m_uiDisruptionsCount;
@@ -1036,13 +1036,13 @@ struct MANGOS_DLL_DECL npc_azure_saboteurAI : public ScriptedAI
                 else if (m_uiDisruptionCounter == 3)
                 {
                     m_pInstance->DoUseDoorOrButton(m_uiDoorGUID);
-                    if (m_uiBossType == TYPE_EREKEM) 
+                    if (m_uiBossType == TYPE_EREKEM)
                     {
                         m_pInstance->DoUseDoorOrButton(GO_DOOR_EREKEM_RIGHT);
                         m_pInstance->DoUseDoorOrButton(GO_DOOR_EREKEM_LEFT);
                     }
                 }
-                else 
+                else
                 {
                     m_creature->DealDamage(m_creature, m_creature->GetHealth(), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NORMAL, NULL, false);
                     if (m_pInstance->GetData(TYPE_LASTBOSS_ID) != 0)
@@ -1083,33 +1083,33 @@ CreatureAI* GetAI_npc_door_seal(Creature* pCreature)
 
 void AddSC_violet_hold()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "npc_sinclari";
-    newscript->GetAI = &GetAI_npc_sinclari;
-    newscript->pGossipHello =  &GossipHello_npc_sinclari;
-    newscript->pGossipSelect = &GossipSelect_npc_sinclari;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_sinclari";
+    pNewScript->GetAI = &GetAI_npc_sinclari;
+    pNewScript->pGossipHello =  &GossipHello_npc_sinclari;
+    pNewScript->pGossipSelect = &GossipSelect_npc_sinclari;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_violet_portal";
-    newscript->GetAI = &GetAI_npc_violet_portal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_violet_portal";
+    pNewScript->GetAI = &GetAI_npc_violet_portal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_door_seal_vh";
-    newscript->GetAI = &GetAI_npc_door_seal;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_door_seal_vh";
+    pNewScript->GetAI = &GetAI_npc_door_seal;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "npc_azure_saboteur";
-    newscript->GetAI = &GetAI_npc_azure_saboteur;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "npc_azure_saboteur";
+    pNewScript->GetAI = &GetAI_npc_azure_saboteur;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_vh_dragons";
-    newscript->GetAI = &GetAI_mob_vh_dragons;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_vh_dragons";
+    pNewScript->GetAI = &GetAI_mob_vh_dragons;
+    pNewScript->RegisterSelf();
 
 }

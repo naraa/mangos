@@ -51,14 +51,13 @@ enum
 
 struct MANGOS_DLL_DECL boss_cyanigosaAI : public ScriptedAI
 {
-    boss_cyanigosaAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_cyanigosaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
-    ScriptedInstance *m_pInstance;
-
+    ScriptedInstance* m_pInstance;
     bool m_bIsRegularMode;
 
     uint32 m_uiTailSweep_Timer;
@@ -187,10 +186,10 @@ CreatureAI* GetAI_boss_cyanigosa(Creature* pCreature)
 
 void AddSC_boss_cyanigosa()
 {
-    Script *newscript;
+    Script* pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_cyanigosa";
-    newscript->GetAI = &GetAI_boss_cyanigosa;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_cyanigosa";
+    pNewScript->GetAI = &GetAI_boss_cyanigosa;
+    pNewScript->RegisterSelf();
 }

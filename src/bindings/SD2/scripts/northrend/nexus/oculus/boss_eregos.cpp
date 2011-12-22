@@ -123,7 +123,7 @@ struct MANGOS_DLL_DECL boss_eregosAI: public ScriptedAI
         if(pWho->GetTypeId() == TYPEID_PLAYER
            && m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE)
            && !((Player*)pWho)->isGameMaster()
-           && m_creature->IsWithinDistInMap(pWho, 100.0f)
+           && m_creature->IsWithinDistInMap(pWho, 50.0f)
            && pWho->GetVehicle()
            && m_pInstance->GetData(TYPE_UROM) == DONE)
         {
@@ -157,11 +157,11 @@ CreatureAI* GetAI_boss_eregos(Creature* pCreature)
 
 void AddSC_boss_eregos()
 {
-	Script* pNewScript;
+    Script* pNewScript;
 
-	pNewScript = new Script;
-	pNewScript->Name = "boss_eregos";
-	pNewScript->GetAI = &GetAI_boss_eregos;
-	pNewScript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_eregos";
+    pNewScript->GetAI = &GetAI_boss_eregos;
+    pNewScript->RegisterSelf();
 }
 

@@ -18,7 +18,7 @@
 SDName: boss_xevozz
 SDAuthor: ckegg
 SD%Complete: 60%
-SDComment: 
+SDComment:
 SDCategory: The Violet Hold
 EndScriptData */
 
@@ -268,7 +268,7 @@ struct MANGOS_DLL_DECL mob_ethereal_sphereAI : public ScriptedAI
     {
         //Return since we have no target
        /* if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-            return;*/ 
+            return;*/
         if(!bNormalPhase)
         {
             if (m_uiPhaseCheck_Timer < uiDiff )
@@ -327,7 +327,7 @@ struct MANGOS_DLL_DECL mob_ethereal_sphereAI : public ScriptedAI
                      }
                   }
             }
-            else m_uiSummonPlayers_Timer -= uiDiff; 
+            else m_uiSummonPlayers_Timer -= uiDiff;
         }
     }
 };
@@ -344,15 +344,15 @@ CreatureAI* GetAI_mob_ethereal_sphere(Creature* pCreature)
 
 void AddSC_boss_xevozz()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_xevozz";
-    newscript->GetAI = &GetAI_boss_xevozz;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_xevozz";
+    pNewScript->GetAI = &GetAI_boss_xevozz;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_ethereal_sphere";
-    newscript->GetAI = &GetAI_mob_ethereal_sphere;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_ethereal_sphere";
+    pNewScript->GetAI = &GetAI_mob_ethereal_sphere;
+    pNewScript->RegisterSelf();
 }

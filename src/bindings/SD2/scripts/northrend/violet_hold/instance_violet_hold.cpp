@@ -253,8 +253,8 @@ struct MANGOS_DLL_DECL instance_violet_hold : public ScriptedInstance
                          m_auiEncounter[6] == DONE &&
                          m_auiEncounter[7] == DONE) return 0;
                     while ( m_auiEncounter[m_uiLastBossID] == DONE
-                            || m_auiEncounter[m_uiLastBossID] == IN_PROGRESS 
-                            || m_auiEncounter[m_uiLastBossID] == SPECIAL ) 
+                            || m_auiEncounter[m_uiLastBossID] == IN_PROGRESS
+                            || m_auiEncounter[m_uiLastBossID] == SPECIAL )
                         {
                             m_uiLastBossID = urand(2, 7);
                         }
@@ -305,9 +305,9 @@ InstanceData* GetInstanceData_instance_violet_hold(Map* pMap)
 
 void AddSC_instance_violet_hold()
 {
-    Script *newscript;
-    newscript = new Script;
-    newscript->Name = "instance_violet_hold";
-    newscript->GetInstanceData = &GetInstanceData_instance_violet_hold;
-    newscript->RegisterSelf();
+    Script *pNewScript;
+    pNewScript = new Script;
+    pNewScript->Name = "instance_violet_hold";
+    pNewScript->GetInstanceData = &GetInstanceData_instance_violet_hold;
+    pNewScript->RegisterSelf();
 }

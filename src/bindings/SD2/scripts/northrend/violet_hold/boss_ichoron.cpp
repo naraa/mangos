@@ -18,7 +18,7 @@
 SDName: boss_ichoron
 SDAuthor: ckegg
 SD%Complete: 30%
-SDComment: 
+SDComment:
 SDCategory: The Violet Hold
 EndScriptData */
 
@@ -58,13 +58,13 @@ enum
 
 struct MANGOS_DLL_DECL boss_ichoronAI : public ScriptedAI
 {
-    boss_ichoronAI(Creature *pCreature) : ScriptedAI(pCreature)
+    boss_ichoronAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = ((ScriptedInstance*)pCreature->GetInstanceData());
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
-    ScriptedInstance *m_pInstance;
+    ScriptedInstance* m_pInstance;
     std::list<ObjectGuid> m_lWaterElementsGUIDList;
 
     bool m_bIsRegularMode;
@@ -373,15 +373,15 @@ CreatureAI* GetAI_mob_ichor_globule(Creature* pCreature)
 
 void AddSC_boss_ichoron()
 {
-    Script *newscript;
+    Script *pNewScript;
 
-    newscript = new Script;
-    newscript->Name = "boss_ichoron";
-    newscript->GetAI = &GetAI_boss_ichoron;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "boss_ichoron";
+    pNewScript->GetAI = &GetAI_boss_ichoron;
+    pNewScript->RegisterSelf();
 
-    newscript = new Script;
-    newscript->Name = "mob_ichor_globule";
-    newscript->GetAI = &GetAI_mob_ichor_globule;
-    newscript->RegisterSelf();
+    pNewScript = new Script;
+    pNewScript->Name = "mob_ichor_globule";
+    pNewScript->GetAI = &GetAI_mob_ichor_globule;
+    pNewScript->RegisterSelf();
 }
