@@ -52,3 +52,21 @@ INSERT INTO `script_texts` (entry, content_default, content_loc8, sound, type, l
 (-1578019,'What do we have here... those would defy the Spell-Weaver? Those without foresight or understanding. How could I make you see? Malygos is saving the world from itself! Bah! You are hardly worth my time!','Так, что у нас тут... ааа вы пришли сразится с Хранителем магии? Это вы то лишенные предвидиния и понимания. Как мне заставить вас прозреть? Малигос спасает мир от самого мира! Эх! На вас жаль тратить время!',13635,1,0,0,'SAY_SUMMON_1'),
 (-1578020,'Clearly my pets failed. Perhaps another demonstration is in order.','Моих слуг постигла неудача. Возможно потребуется еще одно предупреждение.',13636,1,0,0,'SAY_SUMMON_2'),
 (-1578021,'Still you fight. Still you cling to misguided principles. If you survive, you\'ll find me in the center ring.','Вы все еще сражаетесь. Все еще цепляетесь за свои ложные убеждения. Если выживите, встретимся в центральном кругу.',13637,1,0,0,'SAY_SUMMON_3');
+
+-- --------
+-- Eregos -
+-- --------
+
+DELETE FROM `script_texts` WHERE `entry` BETWEEN -1578039 AND -1578030;
+INSERT INTO `script_texts` (entry, content_default, content_loc8, sound, type, language, emote, comment) VALUES
+(-1578030,'You brash interlopers are out of your element! I will ground you!','Нахальные невежды, вы все в небесах летаете! Сейчас я вас заземлю!',13623,1,0,0,'SAY_AGGRO'),
+(-1578031,'It\'s a long way down...','Как больно падать...',13628,1,0,0,'SAY_KILL_1'),
+(-1578032,'Back to the earth with you!','Вернемся на землю!',13629,1,0,0,'SAY_KILL_2'),
+(-1578033,'Enjoy the fall!','Наслаждайся полетом!',13630,1,0,0,'SAY_KILL_3'),
+(-1578034,'Savor this small victory, foolish little creatures. You and your dragon allies have won this battle. But we will win... the Nexus War.','Празнуйте свой мелкий триумф, призренные глупцы. Вы и ваши союзники драконы победили в этой битве. Но мы одержим верх в войне... Нексуса.',13631,1,0,0,'SAY_DEATH'),
+(-1578035,'We command the arcane! It shall not be used against us.','Мы повелеваем тайной магией! Она не будет использована против нас.',13626,1,0,0,'SAY_ARCANE_SHIELD'),
+(-1578036,'It is trivial to extinguish your fire!','Как легко погасить ваш огонь!',13627,1,0,0,'SAY_FIRE_SHIELD'),
+(-1578037,'No magic of nature will help you now!','Никакая магия природы теперь вас не спасет!',13625,1,0,0,'SAY_NATURE_SHIELD'),
+(-1578038,'Such insolence... such arrogance... must be PUNISHED!','Какая заносчивость... какая чандливость... вы заслуживаете КАРЫ!',13624,1,0,0,'SAY_FRENZY'),
+(-1578039,'Simpletons! You cannot comprehend the forces you have set in motion. The ley line conduit will not be disrupted! Your defeat shall be absolute!','Простаки! Вам и неведомо какие силы вы привели в действие. Поток энергии не прервется! Вас ждет полный разгром!',13622,1,0,0,'SAY_SPAWN');
+

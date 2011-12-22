@@ -69,6 +69,18 @@ UPDATE `creature_template` SET `modelid_2` = 25010 WHERE `entry` = 31560;
 DELETE FROM `creature_model_info` WHERE (`modelid`=25010);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (25010, 2, 2, 0, 0, 0);
 
+-- --------
+-- Eregos -
+-- --------
+UPDATE `creature_template` SET `ScriptName` = 'boss_eregos' WHERE entry = 27656;
+UPDATE `creature_template` SET `modelid_2` = 27034, `mechanic_immune_mask` = 617299931 WHERE `entry` = 27656;
+UPDATE `creature_template` SET `modelid_2` = 27034, `mechanic_immune_mask` = 617299931 WHERE `entry` = 31561;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=27034);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (27034, 3, 10, 0, 0, 0);
+
+UPDATE `creature_template` SET `ScriptName` = 'npc_planar_anomaly' WHERE entry = 30879;
+
 -- -------------- Instance Data Fixes & Ect --------------------------------- --
 
 -- herbalism flower   a ytdb bugs flowers cant wander around lol
