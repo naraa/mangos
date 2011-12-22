@@ -161,9 +161,9 @@ struct MANGOS_DLL_DECL boss_drakosAI : public ScriptedAI
             m_uiStompTimer = urand(11000, 18000);
             switch (urand(0, 2))
             {
-               case 0: DoScriptText(SAY_STOMP_1, m_creature); break;
-               case 1: DoScriptText(SAY_STOMP_2, m_creature); break;
-               case 2: DoScriptText(SAY_STOMP_3, m_creature); break;
+                case 0: DoScriptText(SAY_STOMP_1, m_creature); break;
+                case 1: DoScriptText(SAY_STOMP_2, m_creature); break;
+                case 2: DoScriptText(SAY_STOMP_3, m_creature); break;
             }
         }
         else
@@ -284,7 +284,7 @@ CreatureAI* GetAI_npc_unstable_sphere(Creature* pCreature)
 
 void AddSC_boss_drakos()
 {
-    Script *pNewScript;
+    Script* pNewScript;
 
     pNewScript = new Script;
     pNewScript->Name = "boss_drakos";
