@@ -84,6 +84,7 @@ class MANGOS_DLL_DECL instance_nexus : public ScriptedInstance
 {
     public:
         instance_nexus(Map* pMap);
+        ~instance_nexus() {}
 
         void Initialize();
 
