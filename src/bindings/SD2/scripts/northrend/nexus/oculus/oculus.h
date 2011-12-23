@@ -55,10 +55,9 @@ enum
     NPC_EREGOS             = 27656,
 
     GO_DRAGON_CAGE_DOOR    = 193995,
-    GO_EREGOS_CACHE        = 191349,
-    GO_EREGOS_CACHE_H      = 193603,
+    GO_CACHE_EREGOS        = 191349,
+    GO_CACHE_EREGOS_H      = 193603,
     GO_SPOTLIGHT           = 191351,
-    GO_ORB_OF_NEXUS        = 188715,
 
     // world states FOR CONSTRUCT COUNT
     WORLD_STATE_CON             = 3524,

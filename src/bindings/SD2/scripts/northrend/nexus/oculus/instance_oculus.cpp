@@ -86,8 +86,8 @@ void instance_oculus::OnObjectCreate(GameObject* pGo)
 {
     switch (pGo->GetEntry())
     {
-        case GO_EREGOS_CACHE:
-        case GO_EREGOS_CACHE_H:
+        case GO_CACHE_EREGOS:
+        case GO_CACHE_EREGOS_H:
         case GO_SPOTLIGHT:
             m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
             break;
@@ -111,8 +111,14 @@ void instance_oculus::OnCreatureCreate(Creature* pCreature)
         case NPC_BELGARISTRASZ:
         case NPC_ETERNOS:
         case NPC_DRAKOS:
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            break;
         case NPC_UROM:
+            pCreature->SetVisibility(VISIBILITY_OFF);
+            m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
+            break;
         case NPC_EREGOS:
+            pCreature->SetVisibility(VISIBILITY_OFF);
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
         case NPC_VAROS:
@@ -174,16 +180,27 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
                     pVaros->InterruptNonMeleeSpells(false);
                     pVaros->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
                 }
+
+                if (Creature* pUrom = GetSingleCreatureFromStorage(NPC_UROM))
+                {
+                    pUrom->SetVisibility(VISIBILITY_ON);
+                }
             }
             break;
         case TYPE_UROM:
-            //m_auiEncounter[TYPE_UROM] = uiData;
-            //if (uiData == DONE)
+            m_auiEncounter[TYPE_UROM] = uiData;
+            if (uiData == DONE)
+            {
+                if (Creature* pEregos = GetSingleCreatureFromStorage(NPC_EREGOS))
+                {
+                    pEregos->SetVisibility(VISIBILITY_ON);
+                }
+            }
             break;
         case TYPE_EREGOS:
-            //m_auiEncounter[TYPE_EREGOS] = uiData;
-            //if (uiData == DONE)
-                //DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CACHE_EREGOS : GO_CACHE_EREGOS_H);
+            m_auiEncounter[TYPE_EREGOS] = uiData;
+            if (uiData == DONE)
+                DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CACHE_EREGOS : GO_CACHE_EREGOS_H);
             break;
         default:
             error_log("SD2: Instance OCULUS: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
@@ -195,7 +212,7 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
         OUT_SAVE_INST_DATA;
 
         std::ostringstream saveStream;
-        saveStream << m_auiEncounter[TYPE_DRAKOS] << " " << m_auiEncounter[TYPE_VAROS] << " " << m_auiEncounter[TYPE_CONSTRUCTS] << " " << m_auiEncounter[TYPE_UROM];
+        saveStream << m_auiEncounter[TYPE_DRAKOS] << " " << m_auiEncounter[TYPE_VAROS] << " " << m_auiEncounter[TYPE_CONSTRUCTS] << " " << m_auiEncounter[TYPE_UROM] << " " << m_auiEncounter[TYPE_EREGOS];
 
         m_strInstData = saveStream.str();
 
@@ -215,7 +232,7 @@ void instance_oculus::Load(const char* chrIn)
     OUT_LOAD_INST_DATA(chrIn);
 
     std::istringstream loadStream(chrIn);
-    loadStream >> m_auiEncounter[TYPE_DRAKOS] >> m_auiEncounter[TYPE_VAROS] >> m_auiEncounter[TYPE_CONSTRUCTS] >> m_auiEncounter[TYPE_UROM];
+    loadStream >> m_auiEncounter[TYPE_DRAKOS] >> m_auiEncounter[TYPE_VAROS] >> m_auiEncounter[TYPE_CONSTRUCTS] >> m_auiEncounter[TYPE_UROM] >> m_auiEncounter[TYPE_EREGOS];
 
     for(uint8 i = 0; i < MAX_ENCOUNTER; ++i)
     {

@@ -81,7 +81,6 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
 
     void Reset()
     {
-        //m_creature->SetVisibility(VISIBILITY_ON);
         if (m_pInstance)
         {
            m_pInstance->SetData(TYPE_EREGOS, NOT_STARTED);
@@ -89,12 +88,10 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
            if (m_pInstance->GetData(TYPE_UROM) == DONE)
            {
                m_creature->RemoveFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-               //m_creature->SetVisibility(VISIBILITY_ON);
            }
            else
            {
                m_creature->SetFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE);
-               //m_creature->SetVisibility(VISIBILITY_OFF);
            }
         }
 
