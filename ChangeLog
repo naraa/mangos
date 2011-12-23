@@ -3,31 +3,46 @@ Infinity Project
  Project Ver 0.1
 12/5/2011 - ??/??/????
 
- ==== Game Features ====
-  * Improved: Major strides fowards in Playerbot
+ ==== Infinity_Project Features ====
+  * Implented: AdvancePlayerbot System
   * Implented: Chatspy
   * Implented: Chat disable by configure levels
   * Implented: Npc_on_Transport
   * Implented: mmaps (PathFinding System)  (optional can be turned off but must be set up as if you were using them)
   * And just Additional Development were i can
-
- ==== Server Features ====
-
- * Improved: Updated MySQL libs to 6.0.0.
- * Implented: MangChat IRC Bot
- * Improved:  Windows Server base and steps to better this
- * Added alot of tools/editors  so many may help if they wish
+  * Rewriten Pet System
+  * Creature And Spell Linking Support
+  * Implented/Rewritten: Aura Stacking System
+  * Force Permissions For Mutli Realm
+  * Spell_Dbc System 
+  * Spell_Disable System
+  * BattleGround/Arena: IoC, SoTa, Dalarn Sewers, Ring of Valor
+  * Core Vehicle System
+  * Warden and AntiCheat Systems
+  * Core support for Website things such as
+     Refer a Friend, Faction Race Change, Advance Character stats table for armories and such
+  * Lexis Cutter
+  * Adv. AuctionBot
+  * LFG System
+  * AutoBroadCast
+  * Improved: Updated MySQL libs to 6.0.0.
+  * Implented: MangChat IRC Bot
+  * Improved:  Windows Server base and steps to better this
+  * Added alot of tools/editors  so many may help if they wish
+  * Implented: Optional pvp annoucner and pvp token system
+  * Implented: Optional Flight mounts allowed on old maps
 
  ==== Database  ====
  Current DB Ver == InfinityDB_V_1.0
 
  ==== Scriptdev2 ====
- * Implented: Infinity_sd2
+ * Implented: Infinity_sd2 Optional Customs
+
  * Implented/rewritten: Instance Nexus
       :now open to bugreports,forum issues and ect
- *
 
-
+ * Implented/rewritten: Instance Oculus
+      :now open to bugreports,forum issues and ect
 
 =======================================================================================================
 Thank you mangos for all your work ====================================================================

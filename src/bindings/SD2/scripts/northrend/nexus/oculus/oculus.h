@@ -87,6 +87,7 @@ class MANGOS_DLL_DECL instance_oculus : public ScriptedInstance
 {
     public:
         instance_oculus(Map* pMap);
+        ~instance_oculus() {}
 
         void Initialize();
 

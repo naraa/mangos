@@ -200,7 +200,10 @@ void instance_oculus::SetData(uint32 uiType, uint32 uiData)
         case TYPE_EREGOS:
             m_auiEncounter[TYPE_EREGOS] = uiData;
             if (uiData == DONE)
-                DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CACHE_EREGOS : GO_CACHE_EREGOS_H);
+            {
+                DoRespawnGameObject(instance->IsRegularDifficulty() ? GO_CACHE_EREGOS : GO_CACHE_EREGOS_H, HOUR);
+                DoRespawnGameObject(GO_SPOTLIGHT, HOUR);
+            }
             break;
         default:
             error_log("SD2: Instance OCULUS: ERROR SetData = %u for type %u does not exist/not implemented.", uiType, uiData);
