@@ -1182,7 +1182,7 @@ class MANGOS_DLL_SPEC Unit : public WorldObject
         typedef std::set<ObjectGuid> ComboPointHolderSet;
         typedef std::map<uint8, uint32> VisibleAuraMap;
         typedef std::map<SpellEntry const*, ObjectGuid> SingleCastSpellTargetMap;
-
+        typedef std::set<uint32> SpellIdSet;
 
         virtual ~Unit ( );
 
