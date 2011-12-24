@@ -62,6 +62,20 @@ enum
     // world states FOR CONSTRUCT COUNT
     WORLD_STATE_CON             = 3524,
     WORLD_STATE_CON_COUNT       = 3486,
+/*
+    CRITERIA_MAKE_IT_COUNT          = 7145,
+    MAKE_IT_COUNT_START             = 18153,
+
+    // individual per-player check
+    CRITERIA_DRAKE_RIDER_RUBY       = 7179,
+    CRITERIA_DRAKE_RIDER_EMERALD    = 7178,
+    CRITERIA_DRAKE_RIDER_AMBER      = 7177,
+
+    // raidwide check
+    CRITERIA_RUBY_VOID              = 7323,
+    CRITERIA_EMERALD_VOID           = 7324,
+    CRITERIA_AMBER_VOID             = 7325,
+*/
 };
 
 enum Instance_Oculus
