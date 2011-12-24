@@ -182,6 +182,8 @@ struct MANGOS_DLL_DECL boss_varosAI : public ScriptedAI
     {
         DoScriptText(SAY_DEATH, m_creature);
 
+        m_creature->SummonCreature(NPC_BELGAR_IMAGE, 1282.5909f,  1056.800f, 439.4319f,0,TEMPSUMMON_DEAD_DESPAWN,0);
+
         if (m_pInstance)
             m_pInstance->SetData(TYPE_VAROS, DONE);
     }
