@@ -35,6 +35,15 @@ void instance_oculus::Initialize()
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 }
 
+//bool instance_nexus::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+/*{
+    switch (uiCriteriaId)
+    {
+        default:
+            return 0;
+    }
+}*/
+
 void instance_oculus::OnPlayerEnter(Player *pPlayer)
 {
     // show world state if players reenter oculus for any reason (e.i. = gated , died ,raid wipe, ect ect )

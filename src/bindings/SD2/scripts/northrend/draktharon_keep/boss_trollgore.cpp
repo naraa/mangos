@@ -1,4 +1,5 @@
 /* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+ * Copyright (C) 2011 - 2012 Infinity_sd2
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -30,7 +31,19 @@ enum
     SAY_CONSUME                     = -1600001,
     SAY_DEATH                       = -1600002,
     SAY_EXPLODE                     = -1600003,
-    SAY_KILL                        = -1600004
+    SAY_KILL                        = -1600004,
+
+    SPELL_CRUSH                     = 49639,
+    SPELL_INFECTED_WOUND            = 49367,
+    SPELL_CORPSE_EXPLODE            = 49555,
+    H_SPELL_CORPSE_EXPLODE          = 59087,
+    SPELL_CONSUME                   = 49380,
+    H_SPELL_CONSUME                 = 59803,
+    SPELL_CONSUME_BUFF              = 49381,
+    H_SPELL_CONSUME_BUFF            = 59805,
+
+    SPELL_CORPSE_EXPLODE_PROC       = 49618,
+    H_SPELL_CORPSE_EXPLODE_PROC     = 59809,
 };
 
 /*######
@@ -41,12 +54,12 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 {
     boss_trollgoreAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
+        m_pInstance = (instance_draktharon_keep*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
         Reset();
     }
 
-    ScriptedInstance* m_pInstance;
+    instance_draktharon_keep* m_pInstance;
     bool m_bIsRegularMode;
 
     void Reset()

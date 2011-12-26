@@ -35,6 +35,9 @@ enum
     GO_CRYSTAL_NW                   = 189301,
     GO_CRYSTAL_SE                   = 189302,
 
+    NPC_DRAKKARI_INVADER            = 27753,
+    NPC_TROLLGORE                   = 26630,
+
     // Achievement Criterias to be handled with SD2
     ACHIEV_CRIT_BETTER_OFF_DREAD    = 7318,
     ACHIEV_CRIT_CONSUME_JUNCTION    = 7579,
