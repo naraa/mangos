@@ -66,14 +66,13 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     instance_draktharon_keep* m_pInstance;
     bool m_bIsRegularMode;
 
-    uint32 m_uiConsume_Timer;
     uint32 m_uiCrush_Timer;
     uint32 m_uiInfectedWound_Timer;
-    uint32 m_uiWave_Timer;
-    uint32 m_uiCorpseExplode_Timer;
 
     void Reset()
     {
+        m_uiCrush_Timer = 10000;
+        m_uiInfectedWound_Timer = 30000;
     }
 
     void Aggro(Unit* pWho)
@@ -118,6 +117,20 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        // Crush
+        if (m_uiCrush_Timer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_CRUSH);
+            m_uiCrush_Timer = 10000;
+        }else m_uiCrush_Timer -= uiDiff;
+
+        // Infected Wound
+        if (m_uiInfectedWound_Timer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_CRUSH);
+            m_uiInfectedWound_Timer = 30000;
+        }else m_uiInfectedWound_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
