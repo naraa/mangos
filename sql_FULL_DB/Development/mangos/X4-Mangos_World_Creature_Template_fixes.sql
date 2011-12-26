@@ -2,6 +2,10 @@
 -- World Creatures Template Spell Data && General Fixes ( all instance trash will be handled in instance sql) -
 -- ------------------------------------------------------------------------------------------------------------
 
+-- ----------------------
+--  :ID  -
+-- ----------------------
+
 -- -------------------
 -- Flesh Eater :ID 3 -
 -- -------------------
@@ -85,3 +89,20 @@ INSERT INTO `creature_loot_template` VALUES
 (30, 5571, 0.3, 0, -5571, 1, 0, 0, 0),
 (30, 818, 0.473, 0, 1, 1, 0, 0, 0);
 
+-- ----------------------
+-- Mine spider :ID 43 -
+-- ----------------------
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=368);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (368, 1.122, 1, 2, 0, 0);
+
+UPDATE `creature_template` SET `modelid_2` = 368, `spell1` = 11918 WHERE `entry` = 43;
+
+-- -------------------------
+-- Skeleton Warroir :ID 48 -
+-- -------------------------
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=200);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (200, 1.15, 1.275, 2, 0, 0);
+
+UPDATE `creature_template` SET `modelid_2` = 200 WHERE `entry` = 48;
