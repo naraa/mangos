@@ -17,7 +17,7 @@
 
 /* ScriptData
 SDName: Boss_Trollgore
-SD%Complete: 20%
+SD%Complete: %
 SDComment:
 SDCategory: Drak'Tharon Keep
 EndScriptData */
@@ -33,17 +33,17 @@ enum
     SAY_EXPLODE                     = -1600003,
     SAY_KILL                        = -1600004,
 
-    SPELL_CRUSH                     = 49639,
-    SPELL_INFECTED_WOUND            = 49367,
-    SPELL_CORPSE_EXPLODE            = 49555,
-    H_SPELL_CORPSE_EXPLODE          = 59087,
-    SPELL_CONSUME                   = 49380,
-    H_SPELL_CONSUME                 = 59803,
-    SPELL_CONSUME_BUFF              = 49381,
-    H_SPELL_CONSUME_BUFF            = 59805,
+    SPELL_CRUSH                     = 49639, // Crushes your target, inflicting 150% melee damage.
+    SPELL_INFECTED_WOUND            = 49637, // Increases the Physical damage taken by an enemy by 15% for 10 sec.
+    SPELL_CORPSE_EXPLODE            = 49555, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards. (aura#226)
+    H_SPELL_CORPSE_EXPLODE          = 59807, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards. (aura#226)
+    SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase.
+    H_SPELL_CONSUME                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase.
+    SPELL_CONSUME_BUFF              = 49381, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase. // increase size and dmg
+    H_SPELL_CONSUME_BUFF            = 59805, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase. // increase size and dmg
 
-    SPELL_CORPSE_EXPLODE_PROC       = 49618,
-    H_SPELL_CORPSE_EXPLODE_PROC     = 59809,
+    SPELL_CORPSE_EXPLODE_PROC       = 49618, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards.
+    H_SPELL_CORPSE_EXPLODE_PROC     = 59809, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards.
 };
 
 const float PosSummon1[3] = {-259.59f, -652.49f, 26.52f};
@@ -118,58 +118,6 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
-
-        if (m_uiCrush_Timer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_CRUSH);
-            m_uiCrush_Timer = 10000;
-        }else m_uiCrush_Timer -= uiDiff;
-
-        if (m_uiInfectedWound_Timer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(), SPELL_CRUSH);
-            m_uiInfectedWound_Timer = 30000;
-        }else m_uiInfectedWound_Timer -= uiDiff;
-
-        if (m_uiWave_Timer < uiDiff)
-        {
-            SummonWaves();
-            m_uiWave_Timer = 15000;
-        }else m_uiWave_Timer -= uiDiff;
-
-        if (m_uiConsume_Timer < uiDiff)
-        {
-            m_creature->CastSpell(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CONSUME : H_SPELL_CONSUME, true);
-            m_creature->CastSpell(m_creature, m_bIsRegularMode ? SPELL_CONSUME_BUFF : H_SPELL_CONSUME_BUFF, true);
-            m_uiConsume_Timer = 15000;
-        }else m_uiConsume_Timer -= uiDiff;
-
-        if (m_uiCorpseExplode_Timer < uiDiff)
-        {
-            DoCast(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : H_SPELL_CORPSE_EXPLODE);
-        
-            if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
-            {
-                if (!pCorpse->isAlive())
-                {                    
-                    Map *map = pCorpse->GetMap();
-                    if (map->IsDungeon())
-                    {            
-                        Map::PlayerList const &PlayerList = map->GetPlayers();
-                         
-                        if (PlayerList.isEmpty())
-                            return;
-                             
-                        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-                        {
-                            if (i->getSource()->isAlive() && pCorpse->GetDistance2d(i->getSource()->GetPositionX(), i->getSource()->GetPositionY()) <= 5)
-                                m_creature->DealDamage(i->getSource(), (m_bIsRegularMode ? urand(3770, 4230) : urand(9425, 10575)), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NATURE, NULL, false);
-                        }
-                    }
-                }
-            }
-           m_uiCorpseExplode_Timer = 15000;
-        }else m_uiCorpseExplode_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
