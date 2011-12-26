@@ -46,6 +46,10 @@ enum
     H_SPELL_CORPSE_EXPLODE_PROC     = 59809,
 };
 
+const float PosSummon1[3] = {-259.59f, -652.49f, 26.52f};
+const float PosSummon2[3] = {-261.60f, -658.71f, 26.51f};
+const float PosSummon3[3] = {-262.05f, -665.71f, 26.49f};
+
 /*######
 ## boss_trollgore
 ######*/
@@ -61,6 +65,12 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     instance_draktharon_keep* m_pInstance;
     bool m_bIsRegularMode;
+
+    uint32 m_uiConsume_Timer;
+    uint32 m_uiCrush_Timer;
+    uint32 m_uiInfectedWound_Timer;
+    uint32 m_uiWave_Timer;
+    uint32 m_uiCorpseExplode_Timer;
 
     void Reset()
     {
@@ -94,10 +104,72 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             m_pInstance->SetData(TYPE_TROLLGORE, FAIL);
     }
 
+    void SummonWaves()
+    {
+        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
+            pInvader1->AI()->AttackStart(m_creature);
+        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
+            pInvader2->AI()->AttackStart(m_creature);
+        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
+            pInvader3->AI()->AttackStart(m_creature);
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (m_uiCrush_Timer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_CRUSH);
+            m_uiCrush_Timer = 10000;
+        }else m_uiCrush_Timer -= uiDiff;
+
+        if (m_uiInfectedWound_Timer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(), SPELL_CRUSH);
+            m_uiInfectedWound_Timer = 30000;
+        }else m_uiInfectedWound_Timer -= uiDiff;
+
+        if (m_uiWave_Timer < uiDiff)
+        {
+            SummonWaves();
+            m_uiWave_Timer = 15000;
+        }else m_uiWave_Timer -= uiDiff;
+
+        if (m_uiConsume_Timer < uiDiff)
+        {
+            m_creature->CastSpell(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CONSUME : H_SPELL_CONSUME, true);
+            m_creature->CastSpell(m_creature, m_bIsRegularMode ? SPELL_CONSUME_BUFF : H_SPELL_CONSUME_BUFF, true);
+            m_uiConsume_Timer = 15000;
+        }else m_uiConsume_Timer -= uiDiff;
+
+        if (m_uiCorpseExplode_Timer < uiDiff)
+        {
+            DoCast(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : H_SPELL_CORPSE_EXPLODE);
+        
+            if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
+            {
+                if (!pCorpse->isAlive())
+                {                    
+                    Map *map = pCorpse->GetMap();
+                    if (map->IsDungeon())
+                    {            
+                        Map::PlayerList const &PlayerList = map->GetPlayers();
+                         
+                        if (PlayerList.isEmpty())
+                            return;
+                             
+                        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
+                        {
+                            if (i->getSource()->isAlive() && pCorpse->GetDistance2d(i->getSource()->GetPositionX(), i->getSource()->GetPositionY()) <= 5)
+                                m_creature->DealDamage(i->getSource(), (m_bIsRegularMode ? urand(3770, 4230) : urand(9425, 10575)), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NATURE, NULL, false);
+                        }
+                    }
+                }
+            }
+           m_uiCorpseExplode_Timer = 15000;
+        }else m_uiCorpseExplode_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
