@@ -9,6 +9,7 @@ UPDATE `instance_template` SET `ScriptName` = 'instance_oculus' WHERE `map` = 57
   -- Constructs still need ACID support ( note to self check rest of mob in oculus by hand) -- spells contstruct use are added here to template
 UPDATE `creature_template` SET `KillCredit1` = 27641, `modelid_2` = 24943, `spell1` = 50045 WHERE `entry` = 27641;
 UPDATE `creature_template` SET `modelid_2` = 24943, `spell1` = 59214 WHERE `entry` = 30905;
+UPDATE `creature_template` SET `ScriptName` = 'generic_creature' WHERE `entry` = 27641;
 UPDATE `creature_template` SET `KillCredit1` = 27447 WHERE `entry` = 27447;  -- kill credit for varos
 UPDATE `creature_template` SET `KillCredit1` = 27654 WHERE `entry` = 27654; -- KC for drakos
 UPDATE `creature_template` SET `KillCredit1` = 27655 WHERE `entry` = 27655; -- KC for urom

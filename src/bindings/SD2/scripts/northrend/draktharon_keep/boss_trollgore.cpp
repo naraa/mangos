@@ -20,6 +20,7 @@ SDName: Boss_Trollgore
 SD%Complete: %
 SDComment:
 SDCategory: Drak'Tharon Keep
+ToDo: fix corpse expl, other minor things and achievement
 EndScriptData */
 
 #include "precompiled.h"

@@ -2064,7 +2064,7 @@ Item* PlayerbotAI::FindConsumable(uint32 displayId) const
 
 void PlayerbotAI::InterruptCurrentCastingSpell()
 {
-    //TellMaster("I'm interrupting my current spell!");
+    TellMaster("I'm interrupting my current spell!");
     WorldPacket* const packet = new WorldPacket(CMSG_CANCEL_CAST, 5);  //changed from thetourist suggestion
     *packet << m_CurrentlyCastingSpellId;
     *packet << m_targetGuidCommand;   //changed from thetourist suggestion
@@ -2092,6 +2092,7 @@ void PlayerbotAI::Feast()
         Item* pItem = FindDrink();
         if (pItem != NULL)
         {
+            TellMaster("drinking now...");
             UseItem(pItem);
             m_TimeDoneDrinking = currentTime + 30;
             return;
@@ -2105,7 +2106,7 @@ void PlayerbotAI::Feast()
         Item* pItem = FindFood();
         if (pItem != NULL)
         {
-            //TellMaster("eating now...");
+            TellMaster("eating now...");
             UseItem(pItem);
             m_TimeDoneEating = currentTime + 30;
             return;
@@ -5533,7 +5534,7 @@ void PlayerbotAI::findNearbyCreature()
                                         // withdraw items
                                         case BANK_WITHDRAW:
                                         {
-                                            // TellMaster("Withdraw items");
+                                            TellMaster("Withdraw items");
                                             if (!Withdraw(ait->second))
                                                 DEBUG_LOG("Withdraw: Couldn't withdraw (%u)", ait->second);
                                             break;
@@ -5541,7 +5542,7 @@ void PlayerbotAI::findNearbyCreature()
                                         // deposit items
                                         case BANK_DEPOSIT:
                                         {
-                                            // TellMaster("Deposit items");
+                                            TellMaster("Deposit items");
                                             if (!Deposit(ait->second))
                                                 DEBUG_LOG("Deposit: Couldn't deposit (%u)", ait->second);
                                             break;
@@ -5570,7 +5571,7 @@ void PlayerbotAI::findNearbyCreature()
                                         // reset talents
                                         case RESET_TALENTS:
                                         {
-                                            // TellMaster("Reset all talents");
+                                            TellMaster("Reset all talents");
                                             if (Talent(currCreature))
                                                 InspectUpdate();
                                             break;
@@ -5578,7 +5579,7 @@ void PlayerbotAI::findNearbyCreature()
                                         // take new quests
                                         case TAKE_QUEST:
                                         {
-                                            // TellMaster("Accepting quest");
+                                            TellMaster("Accepting quest");
                                             if (!AddQuest(ait->second, wo))
                                                 DEBUG_LOG("AddQuest: Couldn't add quest (%u)", ait->second);
                                             break;
@@ -5586,28 +5587,28 @@ void PlayerbotAI::findNearbyCreature()
                                         // list npc quests
                                         case LIST_QUEST:
                                         {
-                                            // TellMaster("Show available npc quests");
+                                            TellMaster("Show available npc quests");
                                             ListQuests(wo);
                                             break;
                                         }
                                         // end quests
                                         case END_QUEST:
                                         {
-                                            // TellMaster("Turn in available quests");
+                                            TellMaster("Turn in available quests");
                                             TurnInQuests(wo);
                                             break;
                                         }
                                         // sell items
                                         case SELL_ITEMS:
                                         {
-                                            // TellMaster("Selling items");
+                                            TellMaster("Selling items");
                                             Sell(ait->second);
                                             break;
                                         }
                                         // repair items
                                         case REPAIR_ITEMS:
                                         {
-                                            // TellMaster("Repairing items");
+                                            TellMaster("Repairing items");
                                             Repair(ait->second, currCreature);
                                             break;
                                         }
@@ -5628,14 +5629,14 @@ void PlayerbotAI::findNearbyCreature()
                                         // add new auction item
                                         case ADD_AUCTION:
                                         {
-                                            // TellMaster("Creating auction");
+                                            TellMaster("Creating auction");
                                             AddAuction(ait->second, currCreature);
                                             break;
                                         }
                                         // cancel active auction
                                         case REMOVE_AUCTION:
                                         {
-                                            // TellMaster("Cancelling auction");
+                                            TellMaster("Cancelling auction");
                                             if (!RemoveAuction(ait->second))
                                                 DEBUG_LOG("RemoveAuction: Couldn't remove auction (%u)", ait->second);
                                             break;
