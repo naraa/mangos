@@ -4365,6 +4365,25 @@ void Spell::EffectTriggerSpell(SpellEffectIndex effIndex)
                 return;
         }
     }
+    else if (spellInfo->Targets & TARGET_FLAG_DEST_LOCATION &&
+         m_targets.m_targetMask & TARGET_FLAG_DEST_LOCATION)
+    {
+        // Init dest coordinates
+        float x,y,z;
+
+        x = m_targets.m_destX;
+        y = m_targets.m_destY;
+        z = m_targets.m_destZ;
+        if (m_caster->GetTypeId() == TYPEID_PLAYER)
+            ((Player*)m_caster)->RemoveSpellCooldown(triggered_spell_id);
+
+        MaNGOS::NormalizeMapCoord(x);
+        MaNGOS::NormalizeMapCoord(y);
+        m_caster->UpdateGroundPositionZ(x,y,z);
+
+        m_caster->CastSpell(x, y, z, spellInfo, true, NULL, NULL, m_originalCasterGUID);
+        return;
+    }
     else
     {
         // Note: not exist spells with weapon req. and IsSpellHaveCasterSourceTargets == true
@@ -4414,7 +4433,9 @@ void Spell::EffectJump(SpellEffectIndex eff_idx)
         return;
 
     // Init dest coordinates
+    Unit* pTarget = NULL;
     float x,y,z,o;
+    o = 0.0f;
     if (m_targets.m_targetMask & TARGET_FLAG_DEST_LOCATION)
     {
         x = m_targets.m_destX;
@@ -4425,7 +4446,6 @@ void Spell::EffectJump(SpellEffectIndex eff_idx)
         {
             // explicit cast data from client or server-side cast
             // some spell at client send caster
-            Unit* pTarget = NULL;
             if (m_targets.getUnitTarget() && m_targets.getUnitTarget()!=m_caster)
                 pTarget = m_targets.getUnitTarget();
             else if (unitTarget->getVictim())
@@ -4442,6 +4462,7 @@ void Spell::EffectJump(SpellEffectIndex eff_idx)
     {
         unitTarget->GetContactPoint(m_caster,x,y,z,CONTACT_DISTANCE);
         o = m_caster->GetOrientation();
+        pTarget = unitTarget;
     }
     else if (gameObjTarget)
     {
@@ -4461,7 +4482,10 @@ void Spell::EffectJump(SpellEffectIndex eff_idx)
     if (!speed_xy)
         speed_xy = 150;
 
-    m_caster->MonsterMoveJump(x, y, z, o, float(speed_xy) / 2, float(speed_z) / 10);
+    if (pTarget == m_caster)
+        pTarget = NULL;
+
+    m_caster->MonsterMoveJump(x, y, z, o, float(speed_xy) / 2, float(speed_z) / 10, false, pTarget);
 }
 
 void Spell::EffectTeleportUnits(SpellEffectIndex eff_idx)
