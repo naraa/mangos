@@ -150,6 +150,7 @@ struct MANGOS_DLL_DECL npc_arthasAI : public npc_escortAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsHeroic = pCreature->GetMap()->IsRaidOrHeroicDungeon();
+        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         m_creature->SetActiveObjectState(true);
         m_creature->SetSpeedRate(MOVE_RUN, 1);
         Reset();
