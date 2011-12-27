@@ -38,10 +38,10 @@ enum
     SPELL_INFECTED_WOUND            = 49637, // Increases the Physical damage taken by an enemy by 15% for 10 sec.
     SPELL_CORPSE_EXPLODE            = 49555, // (aura#226)
     H_SPELL_CORPSE_EXPLODE          = 59807, // (aura#226)
-    SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase.
-    H_SPELL_CONSUME                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase.
-    SPELL_CONSUME_BUFF              = 49381, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase. // increase size and dmg and consume a nearby corpse
-    H_SPELL_CONSUME_BUFF            = 59805, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase. // increase size and dmg and consume a nearby corpse
+    SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 2% damage increase.
+    H_SPELL_CONSUME                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 5% damage increase.
+    SPELL_CONSUME_BUFF              = 49381, // increase size needs casted w/ consume
+    H_SPELL_CONSUME_BUFF            = 59805, // increase size needs casted w/ consume
 
     SPELL_CORPSE_EXPLODE_PROC       = 49618, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards.
     H_SPELL_CORPSE_EXPLODE_PROC     = 59809, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards.
@@ -114,15 +114,15 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         // Crush
         if (m_uiCrush_Timer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_CRUSH);
-            m_uiCrush_Timer = 10000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_CRUSH) == CAST_OK)
+                m_uiCrush_Timer = 10000;
         }else m_uiCrush_Timer -= uiDiff;
 
         // Infected Wound
         if (m_uiInfectedWound_Timer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_INFECTED_WOUND);
-            m_uiInfectedWound_Timer = 20000;
+            if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_INFECTED_WOUND) == CAST_OK)
+                m_uiInfectedWound_Timer = 20000;
         }else m_uiInfectedWound_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();

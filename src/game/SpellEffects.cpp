@@ -8448,14 +8448,9 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                     unitTarget->CastSpell(unitTarget, 32756, true);
                     return;
                 }
-                case 49380:                                 // Consume
-                case 59803:                                 // Consume (heroic)
+                case 49380:                                 // Consume: Spell of Trollgore nonhero
                 {
-                    if (!unitTarget)
-                        return;
-
-                    // Each target hit buffs the caster
-                    unitTarget->CastSpell(m_caster, m_spellInfo->Id == 49380 ? 49381 : 59805, true, NULL, NULL, m_caster->GetObjectGuid());
+                    m_caster->CastSpell(m_caster,49381,true);
                     return;
                 }
                 case 49405:                                 // Taunt Invider Trigger (Trollgore - Drak'Tharon Keep)
@@ -8956,6 +8951,11 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                         default:
                             break;
                     }
+                    return;
+                }
+                case 59803:                                 // Consume: Spell of Trollgore hero
+                {
+                    m_caster->CastSpell(m_caster,59805,true);
                     return;
                 }
                 case 62428:                                 // Load into Catapult
