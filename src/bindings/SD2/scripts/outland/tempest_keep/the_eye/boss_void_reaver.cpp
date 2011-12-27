@@ -24,18 +24,21 @@ EndScriptData */
 #include "precompiled.h"
 #include "the_eye.h"
 
-#define SAY_AGGRO                   -1550000
-#define SAY_SLAY1                   -1550001
-#define SAY_SLAY2                   -1550002
-#define SAY_SLAY3                   -1550003
-#define SAY_DEATH                   -1550004
-#define SAY_POUNDING1               -1550005
-#define SAY_POUNDING2               -1550006
+enum
+{
+    SAY_AGGRO                  = -1550000,
+    SAY_SLAY1                  = -1550001,
+    SAY_SLAY2                  = -1550002,
+    SAY_SLAY3                  = -1550003,
+    SAY_DEATH                  = -1550004,
+    SAY_POUNDING1              = -1550005,
+    SAY_POUNDING2              = -1550006,
 
-#define SPELL_POUNDING              34162
-#define SPELL_ARCANE_ORB_MISSILE    34172
-#define SPELL_KNOCK_AWAY            25778
-#define SPELL_BERSERK               26662
+    SPELL_POUNDING             = 34162,
+    SPELL_ARCANE_ORB_MISSILE   = 34172,
+    SPELL_KNOCK_AWAY           = 25778,
+    SPELL_BERSERK              = 26662,
+};
 
 //Unknown function. If target not found, this will be created and used as dummy target instead?
 //#define CREATURE_ORB_TARGET         19577
@@ -50,17 +53,17 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
 
     ScriptedInstance* m_pInstance;
 
-    uint32 Pounding_Timer;
-    uint32 ArcaneOrb_Timer;
-    uint32 KnockAway_Timer;
-    uint32 Berserk_Timer;
+    uint32 m_uiPounding_Timer;
+    uint32 m_uiArcaneOrb_Timer;
+    uint32 m_uiKnockAway_Timer;
+    uint32 m_uiBerserk_Timer;
 
     void Reset()
     {
-        Pounding_Timer = 15000;
-        ArcaneOrb_Timer = 3000;
-        KnockAway_Timer = 30000;
-        Berserk_Timer = 600000;
+        m_uiPounding_Timer = 15000;
+        m_uiArcaneOrb_Timer = 3000;
+        m_uiKnockAway_Timer = 30000;
+        m_uiBerserk_Timer = 600000;
 
         if (m_pInstance && m_creature->isAlive())
             m_pInstance->SetData(TYPE_VOIDREAVER, NOT_STARTED);
@@ -92,24 +95,24 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
             m_pInstance->SetData(TYPE_VOIDREAVER, IN_PROGRESS);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
         // Pounding
-        if (Pounding_Timer < diff)
+        if (m_uiPounding_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_POUNDING);
             DoScriptText(urand(0, 1) ? SAY_POUNDING1 : SAY_POUNDING2, m_creature);
 
-            Pounding_Timer = 15000;                         //cast time(3000) + cooldown time(12000)
-        }else Pounding_Timer -= diff;
+            m_uiPounding_Timer = 15000;                         //cast time(3000) + cooldown time(12000)
+        }else m_uiPounding_Timer -= uiDiff;
 
         // Arcane Orb
-        if (ArcaneOrb_Timer < diff)
+        if (m_uiArcaneOrb_Timer < uiDiff)
         {
-            Unit *target = NULL;
+            Unit* target = NULL;
             std::vector<Unit *> target_list;
 
             ThreatList const& tList = m_creature->getThreatManager().getThreatList();
@@ -136,30 +139,30 @@ struct MANGOS_DLL_DECL boss_void_reaverAI : public ScriptedAI
             if (target)
                 DoCastSpellIfCan(target, SPELL_ARCANE_ORB_MISSILE);
 
-            ArcaneOrb_Timer = 3000;
-        }else ArcaneOrb_Timer -= diff;
+            m_uiArcaneOrb_Timer = 3000;
+        }else m_uiArcaneOrb_Timer -= uiDiff;
 
         // Single Target knock back, reduces aggro
-        if (KnockAway_Timer < diff)
+        if (m_uiKnockAway_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(),SPELL_KNOCK_AWAY);
 
-            KnockAway_Timer = 30000;
-        }else KnockAway_Timer -= diff;
+            m_uiKnockAway_Timer = 30000;
+        }else m_uiKnockAway_Timer -= uiDiff;
 
         //Berserk
-        if (Berserk_Timer < diff)
+        if (m_uiBerserk_Timer < uiDiff)
         {
             if (m_creature->IsNonMeleeSpellCasted(false))
                 m_creature->InterruptNonMeleeSpells(false);
 
             DoCastSpellIfCan(m_creature,SPELL_BERSERK);
-            Berserk_Timer = 600000;
-        }else Berserk_Timer -= diff;
+            m_uiBerserk_Timer = 600000;
+        }else m_uiBerserk_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
 
-        EnterEvadeIfOutOfCombatArea(diff);
+        EnterEvadeIfOutOfCombatArea(uiDiff);
     }
 };
 
