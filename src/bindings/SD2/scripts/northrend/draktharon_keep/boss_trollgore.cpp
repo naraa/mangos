@@ -80,6 +80,9 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         m_uiCorpseExplode_Timer = 10000;
         m_uiConsume_Timer = 5000;
         m_uiWave_Timer = 2000;
+
+        if (m_pInstance)
+            m_pInstance->SetData(TYPE_TROLLGORE, NOT_STARTED);
     }
 
     void Aggro(Unit* pWho)
