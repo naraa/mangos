@@ -79,9 +79,9 @@ INSERT INTO creature_ai_scripts (id,creature_id,event_type,event_chance,action1_
 -- evade immediately after receiving bucket hit
 (2368602,23686,4,100,24,0);
 
--- DELETE FROM game_event WHERE entry = 101;
--- INSERT INTO game_event (entry,start_time,end_time,occurence,LENGTH,description) VALUES
--- (101,'2012-11-02 18:45:00','2020-12-31 09:00:00','15','6','Hallows End - Horseman Village Attack');
+DELETE FROM game_event WHERE entry = 101;
+INSERT INTO game_event (entry,start_time,end_time,occurence,LENGTH,description) VALUES
+(101,'2012-11-02 18:45:00','2020-12-31 09:00:00','15','6','Hallows End - Horseman Village Attack');
 
 DELETE FROM creature WHERE id IN (23543,23686);
 INSERT INTO `creature` (`guid`, `id`, `map`, `spawnMask`, `phaseMask`, `modelid`, `equipment_id`, `position_x`, `position_y`, `position_z`, `orientation`, `spawntimesecs`, `spawndist`, `currentwaypoint`, `curhealth`, `curmana`, `DeathState`, `MovementType`) VALUES
