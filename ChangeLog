@@ -16,7 +16,9 @@ Infinity Project
   * Force Permissions For Mutli Realm
   * Spell_Dbc System 
   * Spell_Disable System
-  * BattleGround/Arena: IoC, SoTa, Dalarn Sewers, Ring of Valor
+  * Area_Trigger Support
+  * Multi-threaded and locking 
+  * Additional BattleGround/Arena: IoC, SoTa, Dalarn Sewers, Ring of Valor
   * Core Vehicle System
   * Warden and AntiCheat Systems
   * Core support for Website things such as
@@ -38,10 +40,13 @@ Infinity Project
  ==== Scriptdev2 ====
  * Implented: Infinity_sd2 Optional Customs
 
- * Implented/rewritten: Instance Nexus:BETA
+ * Implented/rewritten/Fixes: Instance Nexus:BETA
       :now open to bugreports,forum issues and ect
 
- * Implented/rewritten: Instance Oculus:BETA
+ * Implented/rewritten/Fixes: Instance Oculus:BETA
+      :now open to bugreports,forum issues and ect
+
+ * Implented/rewritten/Fixes: Instance Draktharon Keep:BETA
       :now open to bugreports,forum issues and ect
 
 =======================================================================================================
