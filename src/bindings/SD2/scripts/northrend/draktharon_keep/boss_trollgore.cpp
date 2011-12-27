@@ -128,7 +128,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         // Infected Wound
         if (m_uiInfectedWound_Timer < uiDiff)
         {
-            DoCast(m_creature->getVictim(), SPELL_CRUSH);
+            DoCast(m_creature->getVictim(), SPELL_INFECTED_WOUND);
             m_uiInfectedWound_Timer = 30000;
         }else m_uiInfectedWound_Timer -= uiDiff;
 
