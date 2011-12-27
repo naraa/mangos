@@ -39,7 +39,7 @@ enum
     SPELL_CORPSE_EXPLODE            = 49555, // (aura#226)
     H_SPELL_CORPSE_EXPLODE          = 59807, // (aura#226)
     SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 2% damage increase.
-    H_SPELL_CONSUME                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 5% damage increase.
+    SPELL_CONSUME_H                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 5% damage increase.
 
     SPELL_CORPSE_EXPLODE_PROC       = 49618, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards.
     H_SPELL_CORPSE_EXPLODE_PROC     = 59809, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards.
@@ -67,11 +67,13 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     uint32 m_uiCrush_Timer;
     uint32 m_uiInfectedWound_Timer;
+    uint32 m_uiConsumeTimer;
 
     void Reset()
     {
-        m_uiCrush_Timer = 10000;
-        m_uiInfectedWound_Timer = 20000;
+        m_uiCrush_Timer          = 10000;
+        m_uiInfectedWound_Timer  = 20000;
+        m_uiConsumeTimer         = 15000;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, NOT_STARTED);
@@ -122,6 +124,12 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature->getVictim(), SPELL_INFECTED_WOUND) == CAST_OK)
                 m_uiInfectedWound_Timer = 20000;
         }else m_uiInfectedWound_Timer -= uiDiff;
+
+        if (m_uiConsumeTimer < uiDiff)
+        {
+            if (DoCastSpellIfCan(m_creature,  m_bIsRegularMode ? SPELL_CONSUME : SPELL_CONSUME_H) == CAST_OK)
+                m_uiConsumeTimer = 15000;
+        }else m_uiConsumeTimer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
