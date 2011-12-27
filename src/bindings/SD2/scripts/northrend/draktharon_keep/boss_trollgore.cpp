@@ -69,17 +69,11 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     uint32 m_uiCrush_Timer;
     uint32 m_uiInfectedWound_Timer;
-    uint32 m_uiWave_Timer;
-    uint32 m_uiCorpseExplode_Timer;
-    uint32 m_uiConsume_Timer;
 
     void Reset()
     {
         m_uiCrush_Timer = 10000;
-        m_uiInfectedWound_Timer = 30000;
-        m_uiCorpseExplode_Timer = 10000;
-        m_uiConsume_Timer = 5000;
-        m_uiWave_Timer = 2000;
+        m_uiInfectedWound_Timer = 20000;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, NOT_STARTED);
@@ -95,8 +89,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     void KilledUnit(Unit* pVictim)
     {
-        if (pVictim->GetCharmerOrOwnerPlayerOrPlayerItself())
-            DoScriptText(SAY_KILL, m_creature);
+        DoScriptText(SAY_KILL, m_creature);
     }
 
     void JustDied(Unit* pKiller)
@@ -111,16 +104,6 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     {
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, FAIL);
-    }
-
-    void SummonWaves()
-    {
-        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
-            pInvader1->AI()->AttackStart(m_creature);
-        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
-            pInvader2->AI()->AttackStart(m_creature);
-        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
-            pInvader3->AI()->AttackStart(m_creature);
     }
 
     void UpdateAI(const uint32 uiDiff)
@@ -139,51 +122,8 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         if (m_uiInfectedWound_Timer < uiDiff)
         {
             DoCast(m_creature->getVictim(), SPELL_INFECTED_WOUND);
-            m_uiInfectedWound_Timer = 30000;
+            m_uiInfectedWound_Timer = 20000;
         }else m_uiInfectedWound_Timer -= uiDiff;
-
-        // Summon npcs
-        if (m_uiWave_Timer < uiDiff)
-        {
-            SummonWaves();
-            m_uiWave_Timer = 15000;
-        }else m_uiWave_Timer -= uiDiff;
-
-        // Consume
-        if (m_uiConsume_Timer < uiDiff)
-        {
-            m_creature->CastSpell(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CONSUME : H_SPELL_CONSUME, true);
-            m_creature->CastSpell(m_creature, m_bIsRegularMode ? SPELL_CONSUME_BUFF : H_SPELL_CONSUME_BUFF, true);
-            m_uiConsume_Timer = 15000;
-        }else m_uiConsume_Timer -= uiDiff;
-
-        //Corpse Explosion
-        if (m_uiCorpseExplode_Timer < uiDiff)
-        {
-            //DoCast(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : H_SPELL_CORPSE_EXPLODE);
-        
-            if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
-            {
-                if (!pCorpse->isAlive())
-                {                    
-                    Map *map = pCorpse->GetMap();
-                    if (map->IsDungeon())
-                    {            
-                        Map::PlayerList const &PlayerList = map->GetPlayers();
-                         
-                        if (PlayerList.isEmpty())
-                            return;
-                             
-                        for (Map::PlayerList::const_iterator i = PlayerList.begin(); i != PlayerList.end(); ++i)
-                        {
-                            if (i->getSource()->isAlive() && pCorpse->GetDistance2d(i->getSource()->GetPositionX(), i->getSource()->GetPositionY()) <= 5)
-                                m_creature->DealDamage(i->getSource(), (m_bIsRegularMode ? urand(3770, 4230) : urand(9425, 10575)), NULL, DIRECT_DAMAGE, SPELL_SCHOOL_MASK_NATURE, NULL, false);
-                        }
-                    }
-                }
-            }
-           m_uiCorpseExplode_Timer = 15000;
-        }else m_uiCorpseExplode_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
@@ -193,6 +133,20 @@ CreatureAI* GetAI_boss_trollgore(Creature* pCreature)
 {
     return new boss_trollgoreAI(pCreature);
 }
+
+/*######
+## Drakkari Invader
+######
+
+struct MANGOS_DLL_DECL npc_invaderAI : public ScriptedAI
+{
+};
+
+CreatureAI* GetAI_npc_invader(Creature* pCreature)
+{
+    return new npc_invaderAI(pCreature);
+}
+*/
 
 void AddSC_boss_trollgore()
 {
