@@ -39,8 +39,8 @@ enum
     H_SPELL_CORPSE_EXPLODE          = 59807, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards. (aura#226)
     SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase.
     H_SPELL_CONSUME                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase.
-    SPELL_CONSUME_BUFF              = 49381, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase. // increase size and dmg
-    H_SPELL_CONSUME_BUFF            = 59805, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase. // increase size and dmg
+    SPELL_CONSUME_BUFF              = 49381, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 2% damage increase. // increase size and dmg and consume a nearby corpse
+    H_SPELL_CONSUME_BUFF            = 59805, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards. For every enemy damaged in this way, the caster gains a 5% damage increase. // increase size and dmg and consume a nearby corpse
 
     SPELL_CORPSE_EXPLODE_PROC       = 49618, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards.
     H_SPELL_CORPSE_EXPLODE_PROC     = 59809, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards.
