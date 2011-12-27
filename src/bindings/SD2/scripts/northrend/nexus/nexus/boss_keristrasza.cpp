@@ -17,8 +17,8 @@
 
 /* ScriptData
 SDName: Boss_Keristrasza
-SD%Complete: 90%
-SDComment: TODO: research how intense cold spell works i dont think its working right
+SD%Complete: 95%
+SDComment:
 SDCategory: Nexus
 EndScriptData */
 

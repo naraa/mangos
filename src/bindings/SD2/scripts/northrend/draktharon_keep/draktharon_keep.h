@@ -21,6 +21,9 @@
 enum
 {
     MAX_ENCOUNTER                   = 4,
+    MAX_SPECIAL_ACHIEV_CRITS        = 1,
+
+    TYPE_CONSUME_JUNCTION           = 0,
 
     TYPE_TROLLGORE                  = 0,
     TYPE_NOVOS                      = 1,
@@ -53,7 +56,7 @@ enum
 
     // Achievement Criterias to be handled with SD2
     ACHIEV_CRIT_BETTER_OFF_DREAD    = 7318,
-    ACHIEV_CRIT_CONSUME_JUNCTION    = 7579,
+    ACHIEV_CRIT_CONSUME_JUNCTION    = 7581,
     ACHIEV_CRIT_OH_NOVOS            = 7361,
 };
 
@@ -86,6 +89,7 @@ class MANGOS_DLL_DECL instance_draktharon_keep : public ScriptedInstance
         void OnObjectCreate(GameObject* pGo);
 
         bool CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/);
+        void SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet);
 
         const char* Save() { return m_strInstData.c_str(); }
         void Load(const char* chrIn);
@@ -100,9 +104,10 @@ class MANGOS_DLL_DECL instance_draktharon_keep : public ScriptedInstance
         uint32 m_auiEncounter[MAX_ENCOUNTER];
         std::string m_strInstData;
 
+        bool m_abAchievCriteria[MAX_SPECIAL_ACHIEV_CRITS];
+
         uint32 m_uiDreadAddsKilled;
         bool m_bNovosAddGrounded;
-        bool m_bTrollgoreConsume;
 
         ObjectGuid m_novosChannelGuid;
 

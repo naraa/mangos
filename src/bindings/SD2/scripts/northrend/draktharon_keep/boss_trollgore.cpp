@@ -20,7 +20,7 @@ SDName: Boss_Trollgore
 SD%Complete: %
 SDComment:
 SDCategory: Drak'Tharon Keep
-ToDo: fix corpse expl, other minor things and achievement
+ToDo: fix corpse expl. , and addes waves
 EndScriptData */
 
 #include "precompiled.h"
@@ -43,7 +43,13 @@ enum
 
     SPELL_CORPSE_EXPLODE_PROC       = 49618, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 3770 to 4230 Nature damage to enemies within 5 yards.
     H_SPELL_CORPSE_EXPLODE_PROC     = 59809, // Infests a nearby Drakkari Invader corpse, causing it to explode after a few seconds dealing 9425 to 10575 Nature damage to enemies within 5 yards.
+
+///-> used for Achiev
+    SPELL_CONSUME_BUFF_H            = 59805,
 };
+
+///-> Temp achi Hack
+#define ACHIEVEMENT			2151
 
 const float PosSummon1[3] = {-259.59f, -652.49f, 26.52f};
 const float PosSummon2[3] = {-261.60f, -658.71f, 26.51f};
@@ -69,6 +75,10 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     uint32 m_uiInfectedWound_Timer;
     uint32 m_uiConsumeTimer;
 
+///-> Achiev
+    bool m_bAchievFailed;
+    uint32 m_uiCheckTimer;
+
     void Reset()
     {
         m_uiCrush_Timer          = 10000;
@@ -77,6 +87,32 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, NOT_STARTED);
+
+        if (!m_bIsRegularMode)
+            m_pInstance->SetSpecialAchievementCriteria(TYPE_CONSUME_JUNCTION, true);
+
+        m_uiCheckTimer = 1000;
+        m_bAchievFailed = false;
+    }
+
+    void CheckAchievement()
+    {
+        if (!m_pInstance)
+            return;
+
+        Creature* pTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_TROLLGORE);
+        if (pTarget)
+        {
+            SpellAuraHolderPtr holder = pTarget->GetSpellAuraHolder(SPELL_CONSUME_BUFF_H);
+            if (holder)
+            {
+                if (holder->GetStackAmount() > 10)
+                {
+                    //m_pInstance->SetSpecialAchievementCriteria(TYPE_CONSUME_JUNCTION, false);
+                    m_bAchievFailed = true;
+                }
+            }
+         }
     }
 
     void Aggro(Unit* pWho)
@@ -98,6 +134,12 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, DONE);
+
+        if (!m_bIsRegularMode && !m_bAchievFailed)
+        {
+            if (m_pInstance)
+                m_pInstance->DoCompleteAchievement(ACHIEVEMENT);
+        }
     }
 
     void JustReachedHome()
@@ -110,6 +152,16 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
+
+        if (!m_bAchievFailed)
+        {
+            if (m_uiCheckTimer < uiDiff)
+            {
+                CheckAchievement();
+                m_uiCheckTimer = 1000;
+            }
+            else m_uiCheckTimer -= uiDiff;
+        }
 
         // Crush
         if (m_uiCrush_Timer < uiDiff)

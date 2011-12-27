@@ -8450,6 +8450,9 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                 }
                 case 49380:                                 // Consume: Spell of Trollgore nonhero
                 {
+                    if (!m_caster)
+                        return;
+
                     m_caster->CastSpell(m_caster,49381,true);
                     return;
                 }
@@ -8955,6 +8958,9 @@ void Spell::EffectScriptEffect(SpellEffectIndex eff_idx)
                 }
                 case 59803:                                 // Consume: Spell of Trollgore hero
                 {
+                    if (!m_caster)
+                        return;
+
                     m_caster->CastSpell(m_caster,59805,true);
                     return;
                 }

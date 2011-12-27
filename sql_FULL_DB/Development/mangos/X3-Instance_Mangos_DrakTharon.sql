@@ -16,3 +16,20 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 (79249, 26630, 600, 3, 1, 0, 0, -267.731, -659.496, 26.6921, 6.21337, 43200, 0, 0, 244510, 0, 0, 0);
 UPDATE `creature_template` SET `modelid_2` = 26352 WHERE `entry` = 31362;
 UPDATE `creature_template` SET `minhealth` = 244510 WHERE `entry` = 26630;
+
+DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=11;
+DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=12;
+DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=18;
+INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 11, 0, 0);
+-- TYPE 8 isnt supported so hack for will be needed
+-- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 8, 0, 0);
+-- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 18, 0, 0);
+
+   -- already in YTDB (Here for dev reasons but needed)
+DELETE FROM `spell_script_target` WHERE  `entry`=49555 AND `type`=1 AND `targetEntry`=27709 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=49555 AND `type`=1 AND `targetEntry`=27753 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=49555 AND `type`=1 AND `targetEntry`=27754 LIMIT 1;
+INSERT IGNORE INTO spell_script_target values 
+(49555, 1, 27753),
+(49555, 1, 27754),
+(49555, 1, 27709);

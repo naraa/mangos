@@ -27,8 +27,7 @@ EndScriptData */
 
 instance_draktharon_keep::instance_draktharon_keep(Map* pMap) : ScriptedInstance(pMap),
     m_uiDreadAddsKilled(0),
-    m_bNovosAddGrounded(false),
-    m_bTrollgoreConsume(true)
+    m_bNovosAddGrounded(false)
 {
     Initialize();
 }
@@ -36,6 +35,28 @@ instance_draktharon_keep::instance_draktharon_keep(Map* pMap) : ScriptedInstance
 void instance_draktharon_keep::Initialize()
 {
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
+
+    for (uint8 i = 0; i < MAX_SPECIAL_ACHIEV_CRITS; ++i)
+        m_abAchievCriteria[i] = false;
+}
+
+void instance_draktharon_keep::SetSpecialAchievementCriteria(uint32 uiType, bool bIsMet)
+{
+    if (uiType < MAX_SPECIAL_ACHIEV_CRITS)
+        m_abAchievCriteria[uiType] = bIsMet;
+}
+
+bool instance_draktharon_keep::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
+{
+    switch (uiCriteriaId)
+    {
+        case ACHIEV_CRIT_BETTER_OFF_DREAD: return m_uiDreadAddsKilled >= 6;
+        case ACHIEV_CRIT_OH_NOVOS:         return !m_bNovosAddGrounded;
+        case ACHIEV_CRIT_CONSUME_JUNCTION: 
+            return m_abAchievCriteria[TYPE_CONSUME_JUNCTION];
+        default:
+            return false;
+    }
 }
 
 void instance_draktharon_keep::OnCreatureEnterCombat(Creature* pCreature)
@@ -63,6 +84,7 @@ void instance_draktharon_keep::OnCreatureCreate(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
+        case NPC_TROLLGORE:
         case NPC_NOVOS:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
             break;
@@ -206,27 +228,11 @@ Creature* instance_draktharon_keep::GetSummonDummy()
     return instance->GetCreature(m_vSummonDummyGuids[urand(0, m_vSummonDummyGuids.size() - 1)]);
 }
 
-bool instance_draktharon_keep::CheckAchievementCriteriaMeet(uint32 uiCriteriaId, Player const* pSource, Unit const* pTarget, uint32 uiMiscValue1 /* = 0*/)
-{
-    switch (uiCriteriaId)
-    {
-        case ACHIEV_CRIT_BETTER_OFF_DREAD: return m_uiDreadAddsKilled >= 6;
-        case ACHIEV_CRIT_OH_NOVOS:         return !m_bNovosAddGrounded;
-        case ACHIEV_CRIT_CONSUME_JUNCTION: return m_bTrollgoreConsume;
-        default:
-            return false;
-    }
-}
-
 void instance_draktharon_keep::SetData(uint32 uiType, uint32 uiData)
 {
     switch(uiType)
     {
         case TYPE_TROLLGORE:
-            if (uiData == IN_PROGRESS)
-                m_bTrollgoreConsume = true;
-            if (uiData == SPECIAL)
-                m_bTrollgoreConsume = false;
             m_auiEncounter[uiType] = uiData;
             break;
         case TYPE_NOVOS:
@@ -317,15 +323,10 @@ void instance_draktharon_keep::Load(const char* chrIn)
 
 uint32 instance_draktharon_keep::GetData(uint32 uiType)
 {
-    switch(uiType)
-    {
-        case TYPE_TROLLGORE: return m_auiEncounter[uiType];
-        case TYPE_NOVOS:     return m_auiEncounter[uiType];
-        case TYPE_KING_DRED: return m_auiEncounter[uiType];
-        case TYPE_THARONJA:  return m_auiEncounter[uiType];
-        default:
-            return 0;
-    }
+    if (uiType < MAX_ENCOUNTER)
+        return m_auiEncounter[uiType];
+
+    return 0;
 }
 
 InstanceData* GetInstanceData_instance_draktharon_keep(Map* pMap)
