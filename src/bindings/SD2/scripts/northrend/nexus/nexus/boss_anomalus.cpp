@@ -288,6 +288,9 @@ struct MANGOS_DLL_DECL npc_chaotic_riftAI : public Scripted_NoMovementAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
+        if (m_pInstance->GetData(TYPE_ANOMALUS) != IN_PROGRESS)
+            m_creature->ForcedDespawn();
+
         if (Unit* pAnomalus = m_pInstance->GetSingleCreatureFromStorage(NPC_ANOMALUS))
         {
             if (pAnomalus && pAnomalus->HasAura(SPELL_RIFT_SHIELD))
