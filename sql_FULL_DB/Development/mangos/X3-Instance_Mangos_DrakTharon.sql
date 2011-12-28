@@ -6,6 +6,9 @@
 -- TrollGore -
 -- -----------
 
+-- UPDATE creature_template SET AIName='', ScriptName='npc_drakkari_invader' WHERE entry=27709;
+-- UPDATE creature_template SET VehicleId=40 WHERE entry=27724;
+
 DELETE FROM `creature_model_info` WHERE (`modelid`=26352);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (26352, 2.5, 3, 2, 0, 0);
 
@@ -17,10 +20,8 @@ INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equ
 UPDATE `creature_template` SET `modelid_2` = 26352 WHERE `entry` = 31362;
 UPDATE `creature_template` SET `minhealth` = 244510 WHERE `entry` = 26630;
 
-DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=11;
-DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=12;
-DELETE FROM achievement_criteria_requirement where criteria_id=7581 and type=18;
-INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 11, 0, 0);
+DELETE FROM achievement_criteria_requirement where criteria_id=7581;
+-- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 11, 0, 0);
 -- TYPE 8 isnt supported so hack for will be needed
 -- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 8, 0, 0);
 -- INSERT INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES (7581, 18, 0, 0);

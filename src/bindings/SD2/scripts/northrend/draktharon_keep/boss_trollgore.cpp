@@ -17,10 +17,10 @@
 
 /* ScriptData
 SDName: Boss_Trollgore
-SD%Complete: %
+SD%Complete: 80%
 SDComment:
 SDCategory: Drak'Tharon Keep
-ToDo: fix corpse expl. , and addes waves
+ToDo: fix corpse expl. && fix addeds (corpse && way of summon)
 EndScriptData */
 
 #include "precompiled.h"
@@ -37,7 +37,7 @@ enum
     SPELL_CRUSH                     = 49639, // Crushes your target, inflicting 150% melee damage.
     SPELL_INFECTED_WOUND            = 49637, // Increases the Physical damage taken by an enemy by 15% for 10 sec.
     SPELL_CORPSE_EXPLODE            = 49555, // (aura#226)
-    H_SPELL_CORPSE_EXPLODE          = 59807, // (aura#226)
+    SPELL_CORPSE_EXPLODE_H          = 59807, // (aura#226)
     SPELL_CONSUME                   = 49380, // Deals 1885 to 2115 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 2% damage increase.
     SPELL_CONSUME_H                 = 59803, // Deals 4713 to 5287 Shadow damage to enemies within 50 yards (50 yrds around target hit). For every enemy damaged in this way, the caster gains a 5% damage increase.
 
@@ -46,6 +46,13 @@ enum
 
 ///-> used for Achiev
     SPELL_CONSUME_BUFF_H            = 59805,
+
+    SPELL_INVADER_TAUNT             = 49405, // cast 49406
+
+    SPELL_INVADER_A                 = 49456, 
+    SPELL_INVADER_B                 = 49457,
+    SPELL_INVADER_C                 = 49458,
+
 };
 
 ///-> Temp achi Hack
@@ -74,6 +81,9 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
     uint32 m_uiCrush_Timer;
     uint32 m_uiInfectedWound_Timer;
     uint32 m_uiConsumeTimer;
+    uint32 m_uiCorpseExplode_Timer;
+
+    uint32 m_uiWave_Timer;
 
 ///-> Achiev
     bool m_bAchievFailed;
@@ -84,6 +94,9 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         m_uiCrush_Timer          = 10000;
         m_uiInfectedWound_Timer  = 20000;
         m_uiConsumeTimer         = 15000;
+        m_uiWave_Timer           = 2000;
+
+        m_uiCorpseExplode_Timer = 10000;
 
         if (m_pInstance)
             m_pInstance->SetData(TYPE_TROLLGORE, NOT_STARTED);
@@ -93,6 +106,27 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
         m_uiCheckTimer = 1000;
         m_bAchievFailed = false;
+    }
+
+    void SummonWaves()
+    {
+        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+            pInvader1->AI()->AttackStart(m_creature);
+        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+            pInvader2->AI()->AttackStart(m_creature);
+        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+            pInvader3->AI()->AttackStart(m_creature);
+    }
+
+    void JustSummoned(Creature* pSummoned)
+    {
+        Creature* pTarget = m_pInstance->GetSingleCreatureFromStorage(NPC_TROLLGORE);
+        if (Creature* pSummoned = m_pInstance->GetSingleCreatureFromStorage(NPC_DRAKKARI_INVADER))
+        {
+            pSummoned->AddThreat(pTarget,1000.0f);
+            pTarget->AddThreat(pSummoned);
+            pSummoned->CastSpell(pSummoned,SPELL_INVADER_TAUNT,true);
+        }
     }
 
     void CheckAchievement()
@@ -153,6 +187,9 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
             return;
 
+        Creature* pInvader = m_pInstance->GetSingleCreatureFromStorage(NPC_DRAKKARI_INVADER);
+        //m_uiInvaderGuid = pInvader->GetObjectGuid();
+
         if (!m_bAchievFailed)
         {
             if (m_uiCheckTimer < uiDiff)
@@ -162,6 +199,13 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             }
             else m_uiCheckTimer -= uiDiff;
         }
+
+        // Summon npcs
+        if (m_uiWave_Timer < uiDiff)
+        {
+            SummonWaves();
+            m_uiWave_Timer = 15000;
+        }else m_uiWave_Timer -= uiDiff;
 
         // Crush
         if (m_uiCrush_Timer < uiDiff)
@@ -182,6 +226,20 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
             if (DoCastSpellIfCan(m_creature,  m_bIsRegularMode ? SPELL_CONSUME : SPELL_CONSUME_H) == CAST_OK)
                 m_uiConsumeTimer = 15000;
         }else m_uiConsumeTimer -= uiDiff;
+
+        //Corpse Explosion
+        if (m_uiCorpseExplode_Timer < uiDiff)
+        {
+            if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
+            {
+                if (pCorpse->isAlive())  // should be a corpse he targets
+                {                    
+                    DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true); 
+                    DoScriptText(SAY_EXPLODE, m_creature);
+                }
+            }
+            m_uiCorpseExplode_Timer = 15000;
+        }else m_uiCorpseExplode_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }

@@ -84,6 +84,7 @@ void instance_draktharon_keep::OnCreatureCreate(Creature* pCreature)
 {
     switch (pCreature->GetEntry())
     {
+        case NPC_DRAKKARI_INVADER:
         case NPC_TROLLGORE:
         case NPC_NOVOS:
             m_mNpcEntryGuidStore[pCreature->GetEntry()] = pCreature->GetObjectGuid();
