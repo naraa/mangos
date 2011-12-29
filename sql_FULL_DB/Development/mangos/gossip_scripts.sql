@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:11
+# Date/time:                    2011-12-29 12:03:18
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `gossip_scripts` (
   `comments` varchar(255) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.gossip_scripts: 663 rows
+# Dumping data for table mangos.gossip_scripts: 666 rows
 /*!40000 ALTER TABLE `gossip_scripts` DISABLE KEYS */;
 INSERT IGNORE INTO `gossip_scripts` (`id`, `delay`, `command`, `datalong`, `datalong2`, `datalong3`, `datalong4`, `data_flags`, `dataint`, `dataint2`, `dataint3`, `dataint4`, `x`, `y`, `z`, `o`, `comments`) VALUES
 	(31111, 0, 15, 69243, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
@@ -698,7 +698,10 @@ INSERT IGNORE INTO `gossip_scripts` (`id`, `delay`, `command`, `datalong`, `data
 	(11388, 3, 26, 0, 23872, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
 	(2211, 1, 10, 9136, 60000, 0, 0, 1, 0, 0, 0, 0, -7917.38, -2610.53, 221.123, 5.04026, ''),
 	(6540, 1, 15, 24803, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
-	(6763, 7, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, '');
+	(6763, 7, 18, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
+	(2908, 0, 7, 4941, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
+	(2908, 0, 7, 4941, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ''),
+	(1286, 0, 7, 3377, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Zamael Lunthistle - Questcredit (3377');
 /*!40000 ALTER TABLE `gossip_scripts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

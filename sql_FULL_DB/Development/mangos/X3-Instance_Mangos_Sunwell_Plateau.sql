@@ -202,7 +202,12 @@ UPDATE `creature_template` SET `ScriptName` = 'mob_shield_orb' WHERE `entry` = 2
 UPDATE `creature_template` SET `ScriptName` = 'mob_felfire_portal' WHERE `entry` = 25603; 
 -- UPDATE `creature_template` SET `ScriptName` = 'mob_armagedon_target' WHERE `entry` = 25735; 
 UPDATE `creature_template` SET `ScriptName` = 'mob_felfire_fiend' WHERE `entry` = 25598;
--- UPDATE `creature_template` SET `ScriptName` = 'mob_kiljaeden_controller' WHERE `entry` = 25608; 
+
+-- ------
+-- UPDATE `creature_template` SET `ScriptName` = 'mob_kiljaeden_controller' WHERE `entry` = 25608;
+UPDATE `creature_template` SET `ScriptName` = '' WHERE `entry` = 25608;
+-- -------
+
 UPDATE `creature_template` SET `unit_flags` = 33554438 WHERE `entry` = 25603; 
 UPDATE creature set position_z = 60.0 where id = 26046;
 UPDATE `gameobject_template` SET `type` = 10 WHERE `entry` = 188415;

@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:29
+# Date/time:                    2011-12-29 12:03:37
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `spell_script_target` (
   UNIQUE KEY `entry_type_target` (`entry`,`type`,`targetEntry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Spell System';
 
-# Dumping data for table mangos.spell_script_target: 2,218 rows
+# Dumping data for table mangos.spell_script_target: 2,221 rows
 /*!40000 ALTER TABLE `spell_script_target` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 	(802, 1, 15316),
@@ -1224,9 +1224,12 @@ INSERT IGNORE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 	(44562, 1, 24718),
 	(44574, 1, 27383),
 	(44610, 1, 24824),
+	(44844, 1, 25160),
 	(44864, 1, 24933),
 	(44864, 1, 24955),
 	(44872, 1, 25158),
+	(44883, 1, 24882),
+	(44884, 1, 25160),
 	(44885, 1, 25160),
 	(44939, 1, 24914),
 	(44969, 1, 24980),
@@ -1466,7 +1469,7 @@ INSERT IGNORE INTO `spell_script_target` (`entry`, `type`, `targetEntry`) VALUES
 	(46797, 1, 26249),
 	(46809, 1, 26239),
 	(46815, 1, 26264),
-	(46818, 1, 25840),
+	(46818, 1, 26262),
 	(46820, 1, 26264),
 	(46852, 0, 181605),
 	(46886, 1, 24769),

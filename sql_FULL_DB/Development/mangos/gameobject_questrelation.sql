@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:08
+# Date/time:                    2011-12-29 12:03:16
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `gameobject_questrelation` (
   PRIMARY KEY  (`id`,`quest`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.gameobject_questrelation: 544 rows
+# Dumping data for table mangos.gameobject_questrelation: 542 rows
 /*!40000 ALTER TABLE `gameobject_questrelation` DISABLE KEYS */;
 INSERT IGNORE INTO `gameobject_questrelation` (`id`, `quest`) VALUES
 	(31, 248),
@@ -320,8 +320,6 @@ INSERT IGNORE INTO `gameobject_questrelation` (`id`, `quest`) VALUES
 	(186585, 11254),
 	(186887, 12133),
 	(186887, 12155),
-	(187236, 11528),
-	(187236, 13203),
 	(187236, 13966),
 	(187273, 1268),
 	(187273, 1284),

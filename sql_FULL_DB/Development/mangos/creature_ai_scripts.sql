@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:17:53
+# Date/time:                    2011-12-29 12:03:01
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `creature_ai_scripts` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=31039052 DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='EventAI Scripts';
 
-# Dumping data for table mangos.creature_ai_scripts: 25,837 rows
+# Dumping data for table mangos.creature_ai_scripts: 25,830 rows
 /*!40000 ALTER TABLE `creature_ai_scripts` DISABLE KEYS */;
 INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(224001, 2240, 9, 0, 100, 1, 0, 5, 1800, 9800, 11, 7159, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Syndicate Footpad - Cast Backstab'),
@@ -14425,7 +14425,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2640801, 26408, 0, 0, 100, 1, 1000, 3000, 33000, 36000, 11, 52701, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune-Smith - Cast Lightning Charged'),
 	(2640802, 26408, 0, 0, 100, 1, 5000, 8000, 9000, 13000, 11, 52699, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune-Smith - Cast Smelt Rune'),
 	(2640803, 26408, 6, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune-Smith - Set Phase 1 on Death'),
-	(2640804, 26408, 8, 2, 100, 0, 48046, -1, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune-Smith - Quest Credit and Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
+	(2640804, 26408, 8, 2, 100, 0, 48046, -1, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune-Smith - Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
 	(2640901, 26409, 0, 0, 100, 1, 1000, 3000, 33000, 36000, 11, 52710, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Rune-Smith Durar - Cast Lightning Charged'),
 	(2641401, 26414, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 20, 0, 0, 0, 23, 1, 0, 0, 'Runic Lightning Gunner - Prevent Combat Movement and Prevent Melee and Set Phase 1 on Spawn'),
 	(2641402, 26414, 9, 13, 100, 1, 5, 30, 4000, 6000, 11, 46982, 1, 0, 40, 2, 0, 0, 0, 0, 0, 0, 'Runic Lightning Gunner - Cast Shoot and Set Ranged Weapon Model (Phase 1)'),
@@ -14436,7 +14436,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2641407, 26414, 2, 11, 100, 0, 15, 0, 0, 0, 21, 1, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 'Runic Lightning Gunner - Start Combat Movement and Flee at 15% HP (Phase 2)'),
 	(2641408, 26414, 7, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 40, 1, 0, 0, 0, 0, 0, 0, 'Runic Lightning Gunner - Set Phase 1 and Set Melee Weapon Model on Evade'),
 	(2641409, 26414, 6, 0, 100, 0, 0, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Runic Lightning Gunner - Set Phase to 3 on Death'),
-	(2641410, 26414, 8, 7, 100, 0, 48046, -1, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'Runic Lightning Gunner - Quest Credit and Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
+	(2641410, 26414, 8, 7, 100, 0, 48046, -1, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Runic Lightning Gunner - Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
 	(2641801, 26418, 0, 0, 100, 1, 3000, 7000, 9000, 14000, 11, 42320, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Longhoof Grazer - Cast Head Butt'),
 	(2642501, 26425, 2, 0, 100, 1, 30, 0, 60000, 70000, 11, 52309, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Drakkari Warrior - Cast Warrior\'s Will at 30% HP'),
 	(2642801, 26428, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Frostpaw Shaman - Prevent Combat Movement and Set Phase to 0 on Spawn'),
@@ -14609,7 +14609,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2717708, 27177, 3, 11, 100, 1, 100, 15, 100, 100, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune Overseer - Set Phase 1 when Mana is above 15% (Phase 2)'),
 	(2717709, 27177, 7, 0, 100, 0, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune Overseer - Set Phase to 0 on Evade'),
 	(2717710, 27177, 6, 0, 100, 0, 0, 0, 0, 0, 22, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune Overseer - Set Phase to 3 on Death'),
-	(2717711, 27177, 8, 7, 100, 0, 48046, -1, 0, 0, 0, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune Overseer - Quest Credit and Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
+	(2717711, 27177, 8, 7, 100, 0, 48046, -1, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Iron Rune Overseer - Despawn on Use Camera Spellhit (Quest: 12184 and 12202)'),
 	(2725901, 27259, 1, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Dragonflayer Flamebinder - Prevent Combat Movement and Set Phase to 0 on Spawn'),
 	(2725902, 27259, 4, 0, 100, 0, 0, 0, 0, 0, 11, 52209, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Dragonflayer Flamebinder - Cast Incite Flames and Set Phase 1 on Aggro'),
 	(2725903, 27259, 9, 5, 100, 1, 0, 40, 3400, 4800, 11, 52209, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Dragonflayer Flamebinder - Cast Incite Flames (Phase 1)'),
@@ -14755,7 +14755,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2387601, 23876, 0, 0, 100, 1, 5000, 12000, 23000, 28000, 11, 42526, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spore - Cast Spore Cloud'),
 	(2387602, 23876, 6, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spore - Set Phase 1 on Death'),
 	(2387603, 23876, 8, 2, 100, 0, 43354, -1, 0, 0, 33, 24235, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Spore - Quest Credit on Enchanted Ice Core Spellhit (Quest: 11319)'),
-	(2393101, 23931, 6, 0, 100, 0, 0, 0, 0, 0, 11, 43326, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Oluf the Violent - Cast Drop Ancient Cipher on Death (Quest: 11300)'),
+	(2393101, 23931, 6, 0, 100, 0, 0, 0, 0, 0, 11, 43326, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Oluf the Violent - Cast Drop Ancient Cipher on Death (Quest: 11300)'),
 	(2397701, 23977, 22, 0, 100, 1, 125, 0, 0, 0, 11, 43572, 6, 32, 0, 0, 0, 0, 0, 0, 0, 0, 'Abandonded Pack Mule - Cast Send Them Packing on Receive Raise Emote (Quest: 11224)'),
 	(2401601, 24016, 9, 0, 100, 1, 0, 5, 7000, 12000, 11, 48288, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ulf the Bloodletter - Cast Mace Smash'),
 	(2401602, 24016, 6, 0, 100, 0, 0, 0, 0, 0, 22, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ulf the Bloodletter - Set Phase 2 on Death'),
@@ -19210,7 +19210,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2469701, 24697, 0, 0, 100, 7, 3500, 3500, 25000, 35000, 11, 44547, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sister of Torment - Cast Deadly Embrace'),
 	(2469702, 24697, 0, 0, 100, 7, 0, 0, 12000, 22000, 11, 44640, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sister of Torment - Cast Lash of Pain'),
 	(2469801, 24698, 9, 0, 100, 7, 0, 8, 12000, 17000, 11, 44538, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Ethereum Smuggler - Cast Arcane Explosion'),
-	(2476101, 24761, 6, 0, 100, 6, 0, 0, 0, 0, 11, 44406, 1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 'Brightscale Wyrm - Cast Energry Infusion on Death'),
+	(2476101, 24761, 6, 0, 100, 6, 0, 0, 0, 0, 11, 44406, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Brightscale Wyrm - Cast Energry Infusion on Death'),
 	(2476201, 24762, 1, 0, 100, 6, 0, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunblade Keeper - Prevent Combat Movement on Spawn'),
 	(2476202, 24762, 4, 0, 100, 6, 0, 0, 0, 0, 11, 15232, 1, 0, 23, 1, 0, 0, 0, 0, 0, 0, 'Sunblade Keeper - Cast Shadow Bolt and Set Phase 1 on Aggro'),
 	(2476203, 24762, 9, 5, 100, 7, 0, 40, 3400, 4800, 11, 15232, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Sunblade Keeper - Cast Shadow Bolt (Phase 1)'),
@@ -20907,8 +20907,8 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(172903, 1729, 0, 0, 100, 3, 1100, 1100, 42600, 63500, 11, 4979, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Evoker - Cast Quick Flame Ward'),
 	(172904, 1729, 27, 0, 100, 3, 12544, 1, 15000, 30000, 11, 12544, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Evoker - Cast Frost Armor on Missing Buff'),
 	(172905, 1729, 2, 0, 100, 2, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Defias Evoker - Flee at 15% HP'),
-	(173101, 1731, 0, 0, 100, 3, 700, 9700, 25000, 52300, 11, 5159, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Goblin Craftsman - Cast Melt Ore'),
-	(173102, 1731, 2, 0, 100, 2, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Goblin Craftsman - Flee at 15% HP'),
+	(173101, 1731, 4, 0, 100, 2, 0, 0, 0, 0, 11, 3605, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Goblin Craftsman - Summon Remote-Controlled Golem on Aggro'),
+	(173102, 1731, 0, 0, 100, 3, 5600, 9700, 25000, 52300, 11, 5159, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Goblin Craftsman - Cast Melt Ore'),
 	(173201, 1732, 1, 0, 100, 3, 1000, 1000, 1800000, 1800000, 11, 12544, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Squallshaper - Cast Frost Armor on Aggro'),
 	(173202, 1732, 9, 0, 100, 3, 0, 8, 23500, 33500, 11, 122, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Squallshaper - Cast Frost Nova'),
 	(173203, 1732, 0, 0, 100, 3, 0, 3200, 8000, 33000, 11, 2138, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Defias Squallshaper - Cast Fire Blast'),
@@ -24036,7 +24036,6 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2548605, 25486, 28, 3, 100, 3, 46469, 1, 5000, 5000, 23, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Vanquisher - Set Phase 1 on Target Missing Melt Armor Aura Stack (Phase 2)'),
 	(2548606, 25486, 0, 0, 100, 3, 7000, 11000, 9000, 12000, 11, 46468, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Vanquisher - Cast Cleave'),
 	(2548607, 25486, 7, 0, 100, 2, 0, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Vanquisher - Set Phase to 0 on Evade'),
-	(2550201, 25502, 0, 0, 100, 3, 1000, 3000, 4000, 6000, 11, 45680, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shield Orb - Cast Shadow Bolt'),
 	(2550601, 25506, 11, 0, 100, 2, 0, 0, 0, 0, 11, 45769, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Lifeshaper - Cast Sunwell Radiance on Spawn'),
 	(2550602, 25506, 0, 0, 100, 3, 25000, 35000, 40000, 70000, 11, 46466, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Lifeshaper - Cast Drain Life'),
 	(2550603, 25506, 14, 0, 100, 3, 75000, 25, 45000, 60000, 11, 46467, 6, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Lifeshaper - Cast Health Funnel on Friendlies'),
@@ -24048,7 +24047,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2550804, 25508, 0, 0, 100, 3, 7000, 11000, 15000, 24000, 11, 46240, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Shadowsword Guardian - Cast Earthquake'),
 	(2550901, 25509, 11, 0, 100, 2, 0, 0, 0, 0, 11, 45769, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Priestess of Torment - Cast Sunwell Radiance on Spawn'),
 	(2550902, 25509, 0, 0, 100, 3, 5000, 8000, 14000, 18000, 11, 46270, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Priestess of Torment - Cast Whirlwind'),
-	(2558801, 25588, 11, 0, 100, 2, 0, 0, 0, 0, 11, 45769, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Sunwell Radiance on Spawn'),
+	(2558801, 25588, 11, 0, 100, 2, 0, 0, 0, 0, 11, 46757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Shadow Channelling on Spawn'),
 	(2558802, 25588, 0, 0, 100, 3, 1000, 3000, 4000, 6000, 11, 45770, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Shadow Bolt Volley'),
 	(2558803, 25588, 0, 0, 100, 3, 9000, 15000, 21000, 28000, 11, 46875, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Felfire Portal'),
 	(2558804, 25588, 2, 0, 100, 2, 50, 0, 0, 0, 11, 45772, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Shadow Infusion at 50% HP'),
@@ -25405,7 +25404,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2912451, 29124, 8, 0, 100, 1, 54191, -1, 0, 0, 41, 0, 0, 0, 33, 29303, 6, 0, 0, 0, 0, 0, 'ytdb-q12805'),
 	(2299151, 22991, 8, 0, 100, 0, 39844, -1, 1, 1, 33, 22991, 6, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q11008'),
 	(3103751, 31037, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
-	(30203051, 30203, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
+	(3020351, 30203, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
 	(3054351, 30543, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
 	(3054451, 30544, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
 	(3054151, 30541, 6, 0, 100, 0, 0, 0, 0, 0, 33, 30402, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'YTDBq13036KillCredit1=30402'),
@@ -25447,7 +25446,6 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2424853, 24248, 1, 1, 100, 0, 5000, 5000, 0, 0, 1, -242481, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q11343'),
 	(2424854, 24248, 1, 1, 100, 0, 10000, 10000, 0, 0, 1, -242482, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q11343'),
 	(2424855, 24248, 1, 1, 100, 0, 15000, 15000, 0, 0, 1, -242483, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q11343'),
-	(2077451, 20774, 8, 0, 100, 0, 35772, -1, 1000, 1000, 36, 20983, -1, 0, 11, 3019, 0, 0, 0, 0, 0, 0, 'ytdb-q10426'),
 	(2061051, 20610, 8, 0, 50, 0, 35771, -1, 1000, 1000, 11, 40347, 6, 22, 11, 52742, 0, 0, 41, 1000, 0, 0, 'ytdb-q10427'),
 	(2077751, 20777, 8, 0, 50, 0, 35771, -1, 1000, 1000, 11, 40347, 6, 22, 11, 52742, 0, 0, 41, 1000, 0, 0, 'ytdb-q10427'),
 	(3806551, 38065, 10, 0, 100, 1, 1, 5, 0, 0, 11, 71522, 6, 22, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
@@ -25493,7 +25491,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2632151, 26321, 8, 0, 100, 1, 47530, -1, 0, 0, 33, 26321, 6, 0, 11, 47575, 0, 22, 41, 500, 0, 0, 'ytdb-q12092,12096'),
 	(3052752, 30527, 4, 0, 100, 0, 0, 0, 0, 0, 20, 0, 0, 0, 21, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2733151, 27331, 8, 0, 100, 1, 48345, -1, 0, 0, 33, 27331, 6, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'YTDB_12232'),
-	(2367851, 23678, 8, 0, 100, 0, 49624, -1, 1000, 1000, 2, 35, 0, 0, 1, -236781, -236782, -236783, 41, 0, 0, 0, 'ytdb-q11314'),
+	(2291101, 22911, 6, 0, 100, 0, 0, 0, 0, 0, 11, 39862, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Vim\'gol the Vile - Cast Summon Vim\'gol\'s Vile Grimoire Chest on Death (Quest: 10998)'),
 	(2438151, 24381, 1, 0, 100, 0, 1000, 1000, 1000, 1000, 1, -243811, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2438152, 24381, 1, 0, 100, 0, 2000, 2000, 2000, 2000, 1, -243812, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2438153, 24381, 1, 0, 100, 0, 3000, 3000, 3000, 3000, 1, -243813, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
@@ -25594,7 +25592,6 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2131951, 21319, 11, 0, 100, 0, 0, 0, 0, 0, 1, -213191, 0, 0, 1, -213192, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2055551, 20555, 11, 0, 100, 0, 0, 0, 0, 0, 1, -205551, 0, 0, 1, -205552, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2244851, 22448, 11, 0, 100, 0, 0, 0, 0, 0, 1, -224481, 0, 0, 1, -224482, 0, 0, 0, 0, 0, 0, 'ytdb'),
-	(2291151, 22911, 6, 0, 100, 0, 0, 0, 0, 0, 11, 39862, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-Vim\'gol- Summon Vim\'gol\'s Vile Grimoire Cheston Death'),
 	(2291051, 22910, 6, 0, 100, 0, 0, 0, 0, 0, 11, 39909, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-Summon Skulloc\'s Soul Chest on Death'),
 	(2578151, 25781, 8, 0, 100, 1, 45990, -1, 0, 0, 33, 25781, 6, 0, 11, 45991, 0, 6, 41, 0, 0, 0, 'ytdb-q11715'),
 	(2239551, 22395, 8, 0, 100, 1, 39094, -1, 0, 0, 33, 22395, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q10833'),
@@ -25848,11 +25845,11 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(2976951, 29769, 8, 0, 100, 1, 29070, -1, 0, 0, 33, 29845, 6, 0, 12, 29860, 0, 60000, 41, 0, 0, 0, 'ytdb-q12893'),
 	(2977051, 29770, 8, 0, 100, 1, 29070, -1, 0, 0, 33, 29846, 6, 0, 12, 29858, 0, 60000, 41, 0, 0, 0, 'ytdb-q12893'),
 	(2984051, 29840, 8, 0, 100, 1, 29070, -1, 0, 0, 33, 29847, 6, 0, 12, 29859, 0, 60000, 41, 0, 0, 0, 'ytdb-q12893'),
-	(2986051, 29860, 11, 0, 100, 1, 0, 0, 0, 0, 1, -298601, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q12893');
-INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
+	(2986051, 29860, 11, 0, 100, 1, 0, 0, 0, 0, 1, -298601, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q12893'),
 	(2985851, 29858, 11, 0, 100, 1, 0, 0, 0, 0, 1, -298581, -298582, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q12893'),
 	(2985951, 29859, 11, 0, 100, 1, 0, 0, 0, 0, 1, -298591, -298592, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q12893'),
-	(716702, 7167, 8, 0, 100, 1, 9976, -1, 0, 0, 11, 9998, 0, 6, 41, 0, 0, 0, 0, 0, 0, 0, 'Polly - Change Template to Polly Jr. (Quest: 2381)'),
+	(716702, 7167, 8, 0, 100, 1, 9976, -1, 0, 0, 11, 9998, 0, 6, 41, 0, 0, 0, 0, 0, 0, 0, 'Polly - Change Template to Polly Jr. (Quest: 2381)');
+INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `event_inverse_phase_mask`, `event_chance`, `event_flags`, `event_param1`, `event_param2`, `event_param3`, `event_param4`, `action1_type`, `action1_param1`, `action1_param2`, `action1_param3`, `action2_type`, `action2_param1`, `action2_param2`, `action2_param3`, `action3_type`, `action3_param1`, `action3_param2`, `action3_param3`, `comment`) VALUES
 	(1576053, 15760, 22, 0, 33, 1, 58, 11, 26218, 1, 11, 45036, 6, 6, 11, 26218, 6, 6, 0, 0, 0, 0, 'ytdb'),
 	(1576052, 15760, 22, 0, 33, 1, 58, 11, 26218, 1, 11, 26207, 6, 6, 11, 26218, 6, 6, 0, 0, 0, 0, 'ytdb'),
 	(1576051, 15760, 22, 0, 33, 1, 58, 11, 26218, 1, 11, 26206, 6, 6, 11, 26218, 6, 6, 0, 0, 0, 0, 'ytdb'),
@@ -25864,16 +25861,12 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(3109951, 31099, 4, 0, 100, 0, 0, 0, 0, 0, 11, 28131, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(3322455, 33224, 1, 2, 100, 1, 0, 0, 120000, 120000, 28, 0, 62550, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(3109952, 31099, 6, 0, 100, 0, 0, 0, 0, 0, 11, 58416, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
-	(3356251, 33562, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3356151, 33561, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3356451, 33564, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3355851, 33558, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3355951, 33559, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3338451, 33384, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3338351, 33383, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3338251, 33382, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3328551, 33285, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
-	(3330651, 33306, 2, 0, 100, 1, 2, 1, 5000, 5000, 1, -335621, 0, 0, 41, 1000, 0, 0, 11, 62724, 6, 6, 'ytdb'),
+	(2558805, 25588, 21, 0, 100, 2, 0, 0, 0, 0, 11, 46757, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Hand of the Deceiver - Cast Shadow Channelling on Reached Home'),
+	(173103, 1731, 2, 0, 100, 2, 15, 0, 0, 0, 25, 0, 0, 0, 1, -47, 0, 0, 0, 0, 0, 0, 'Goblin Craftsman - Flee at 15% HP'),
+	(2077403, 20774, 8, 0, 100, 0, 35772, -1, 1000, 1000, 36, 20983, -1, 0, 11, 3019, 0, 0, 0, 0, 0, 0, 'Farahlon Lasher - Change Template to Mutated Farahlon Lasher and Cast Frenzy on Energy Field Modulator Spellhit (Quest: 10426)'),
+	(2077402, 20774, 9, 0, 100, 1, 0, 8, 16000, 21000, 11, 36604, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Farahlon Lasher - Cast Flanking Growth'),
+	(2077401, 20774, 0, 0, 100, 1, 4000, 11000, 14000, 19000, 11, 12747, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Farahlon Lasher - Cast Entangling Roots'),
+	(2051801, 20518, 11, 0, 100, 0, 0, 0, 0, 0, 11, 12980, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'Image of Wind Trader Marid - Cast Simple Teleport on Spawn'),
 	(2421151, 24211, 11, 0, 100, 0, 0, 0, 0, 0, 1, -242111, -242112, -242113, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb'),
 	(2222651, 22226, 0, 0, 100, 1, 2500, 2500, 15000, 20000, 11, 36093, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-Koi-Koi Spirit - Casts Ghost Strike'),
 	(2132651, 21326, 0, 0, 100, 1, 10000, 10000, 20000, 20000, 11, 37696, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-Raven\'s Wood Leafbeard - Casts Force of Nature'),
@@ -25882,7 +25875,7 @@ INSERT IGNORE INTO `creature_ai_scripts` (`id`, `creature_id`, `event_type`, `ev
 	(1998851, 19988, 6, 0, 100, 0, 0, 0, 0, 0, 11, 37473, 6, 23, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q10607'),
 	(2032951, 20329, 6, 0, 100, 0, 0, 0, 0, 0, 11, 37473, 6, 23, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q10607'),
 	(1999051, 19990, 6, 0, 100, 0, 0, 0, 0, 0, 11, 37473, 6, 23, 0, 0, 0, 0, 0, 0, 0, 0, 'ytdb-q10607'),
-	(2491401, 24914, 6, 0, 100, 0, 0, 0, 0, 0, 11, 45070, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 'Sorlof - Cast Sorlof\'s Booty on Death (Quest: 11529)'),
+	(2491401, 24914, 6, 0, 100, 0, 0, 0, 0, 0, 11, 45070, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 'Sorlof - Cast Sorlof\'s Booty on Death (Quest: 11529)'),
 	(2172952, 21729, 6, 0, 100, 0, 0, 0, 0, 0, 41, 0, 0, 0, 12, 21737, 0, 60000, 0, 0, 0, 0, 'ytdb-q10584');
 /*!40000 ALTER TABLE `creature_ai_scripts` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

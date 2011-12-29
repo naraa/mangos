@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:17:54
+# Date/time:                    2011-12-29 12:03:02
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -32,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `creature_ai_texts` (
   PRIMARY KEY  (`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Script Texts';
 
-# Dumping data for table mangos.creature_ai_texts: 1,258 rows
+# Dumping data for table mangos.creature_ai_texts: 1,254 rows
 /*!40000 ALTER TABLE `creature_ai_texts` DISABLE KEYS */;
 INSERT IGNORE INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc1`, `content_loc2`, `content_loc3`, `content_loc4`, `content_loc5`, `content_loc6`, `content_loc7`, `content_loc8`, `sound`, `type`, `language`, `emote`, `comment`) VALUES
 	(-1, 'I see those fools at the Abbey sent some fresh meat for us.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я смотрю, эти дураки из Аббатства прислали нам свежего мяса.', 0, 0, 0, 0, '103'),
@@ -56,7 +56,7 @@ INSERT IGNORE INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc
 	(-19, 'I\'m gonna cook ya, and then i\'m going to eat ya!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Эндорель ануминор!', 0, 0, 0, 1, '20905'),
 	(-20, 'I hope you die! Painfully!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Твой жизненный цикл закончен!', 0, 0, 0, 0, '20905'),
 	(-21, 'Mission accomplished.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Образцы... нужно... сохранить.', 11073, 1, 0, 0, '17976'),
-	(-22, 'VanCleef pay big for your heads!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ВанКлиф хорошо заплатит за ваши головы!', 5774, 1, 0, 0, '644'),
+	(-22, 'VanCleef pay big for you heads!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5774, 1, 0, 0, '644'),
 	(-23, 'On guard!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Берегись!', 11241, 1, 0, 0, '20886'),
 	(-24, 'Defend yourself, for all the good it will do...', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Защишайтесь, и пусть вам повезет...', 11242, 1, 0, 0, '20886'),
 	(-25, 'Knew this was... the only way out', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я знал... это единственный выход.', 11243, 1, 0, 0, '20886'),
@@ -205,7 +205,7 @@ INSERT IGNORE INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc
 	(-168, 'Who dares disturb me?  Die $N!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ох, подходи! Позволь не драться!', 0, 0, 0, 0, '315'),
 	(-169, 'None may challenge the Brotherhood!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Никто не смеет бросить вызов братству!', 5780, 1, 0, 0, '639'),
 	(-170, 'And stay down!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Туда тебе и дорога!', 5781, 1, 0, 0, '639'),
-	(-171, 'Lap dogs, all of you!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Все вы трусливые псы!', 5782, 1, 0, 0, '639'),
+	(-171, 'Lapdogs, all of you!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 5782, 1, 0, 0, '639'),
 	(-172, 'Fools! Our cause is righteous!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Глупцы! Мы боремся за правое дело!', 5783, 1, 0, 0, '639'),
 	(-173, 'The Brotherhood will prevail!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Братство победит!', 5784, 1, 0, 0, '639'),
 	(-177, 'I\'m going to wear your skin as a smoking jacket! The stogies? You\'ll have to pry them from my cold dead... er... RAWR!!!!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я собираюсь носить твою кожу вместо пиджака!', 0, 0, 0, 0, '11058'),
@@ -1224,9 +1224,6 @@ INSERT IGNORE INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc
 	(-308353, 'Look like, my lady? A vrykul, I suppose. They did not actually show him to me. Ever since The Shadow Vault....', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Как он выглядел, госпожа? Как врайкул, я полагаю. Вообще-то мне его не показывали. С тех пор, как Мрачный Свод...', 0, 0, 0, 0, NULL),
 	(-308354, 'A name? Oh, yes, the name! I believe it was Iskalder.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Имя? Ах да, имя! Кажется, Искальдер', 0, 0, 0, 0, NULL),
 	(-308352, 'There is word from Jotunheim. The sleep-watchers there believe that they have found someone of significance.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Пришло сообщение из Йотунхейма. Сноходцы полагают, что нашли кого-то очень важного', 0, 0, 0, 0, NULL),
-	(-236781, 'I knew that Lurielle send someone to help! Thank you, friend! Give Lurielle my best wishes!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Я знала, что Луриэль пошлет кого-нибудь на помощь! Спасибо, друг! Передай Луриэль мои наилучшие пожелания!', 0, 0, 0, 0, '23678'),
-	(-236782, 'Thank you! I was afraid to die without seeing more of his sisters!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Спасибо тебе! Я боялась умереть, не увидев больше своих сестер!', 0, 0, 0, 0, NULL),
-	(-236783, 'Where am I? What\'s wrong with me? It\'s you ... I was released?', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Где я? Что со мной? Это ты...меня освободил?', 0, 0, 0, 0, NULL),
 	(-243811, 'Arise, my brothers!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '24381'),
 	(-243812, 'Our iron masters is for us the job!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '24381'),
 	(-243813, 'Follow me to the mountains and do the will of our Lord!', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, 0, '24381'),
@@ -1288,7 +1285,6 @@ INSERT IGNORE INTO `creature_ai_texts` (`entry`, `content_default`, `content_loc
 	(-298582, 'You dare? Where is Baron Sliver? I would have words with him!', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb-q12839'),
 	(-298591, 'Mrrfrmrfrmrrrrr!', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb-q12839'),
 	(-298592, 'Mrmrmrmrmrmrm... mrmrmrmr?', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb-q12839'),
-	(-335621, 'I have been defeated. Good fight!', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb'),
 	(-242111, 'Thank you, stranger.', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb'),
 	(-242112, 'Blessings of the spirits of the land and air upon you.', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb'),
 	(-242113, 'We should never have traveled through the Rivenwood. Everyone knows this!', '', '', '', '', '', '', '', '', 0, 0, 0, 0, 'ytdb'),

@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:11
+# Date/time:                    2011-12-29 12:03:19
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS `item_loot_template` (
   PRIMARY KEY  (`entry`,`item`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Loot System';
 
-# Dumping data for table mangos.item_loot_template: 2,949 rows
+# Dumping data for table mangos.item_loot_template: 2,946 rows
 /*!40000 ALTER TABLE `item_loot_template` DISABLE KEYS */;
 INSERT IGNORE INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`, `groupid`, `mincountOrRef`, `maxcount`, `lootcondition`, `condition_value1`, `condition_value2`) VALUES
 	(4632, 804, 5, 0, -857, 1, 0, 0, 0),
@@ -818,7 +818,6 @@ INSERT IGNORE INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`,
 	(17685, 17404, 100, 0, 1, 1, 0, 0, 0),
 	(17685, 17406, 100, 0, 1, 1, 0, 0, 0),
 	(17685, 17407, 100, 0, 1, 1, 0, 0, 0),
-	(17685, 21215, 100, 0, 1, 1, 0, 0, 0),
 	(17726, 17706, 0, 1, 1, 1, 0, 0, 0),
 	(17726, 17709, 0, 1, 1, 1, 0, 0, 0),
 	(17726, 17720, 0, 1, 1, 1, 0, 0, 0),
@@ -1415,14 +1414,14 @@ INSERT IGNORE INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`,
 	(21310, 21309, 0, 1, 1, 1, 0, 0, 0),
 	(21315, 21211, -100, 0, 1, 1, 0, 0, 0),
 	(21315, 21314, 100, 0, 1, 1, 0, 0, 0),
-	(21327, 17706, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 17709, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 17720, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 17722, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 17724, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 17725, 1, 1, 1, 1, 0, 0, 0),
-	(21327, 21213, 35, 1, 5, 5, 0, 0, 0),
-	(21327, 21325, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17706, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17709, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17720, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17722, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17724, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 17725, 0, 1, 1, 1, 0, 0, 0),
+	(21327, 21213, 100, 0, 5, 5, 0, 0, 0),
+	(21327, 21325, 100, 0, 1, 1, 0, 0, 0),
 	(21363, 21328, 100, 0, 1, 1, 0, 0, 0),
 	(21386, 21378, 0, 1, 1, 1, 0, 0, 0),
 	(21386, 21379, 0, 1, 1, 1, 0, 0, 0),
@@ -2030,7 +2029,6 @@ INSERT IGNORE INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`,
 	(33857, 33873, 10, 0, 1, 1, 0, 0, 0),
 	(33857, 33875, 7, 0, 1, 1, 0, 0, 0),
 	(33857, 33925, 1.4852, 0, 1, 1, 0, 0, 0),
-	(43624, 22926, 1, 0, -22926, 1, 0, 0, 0),
 	(33926, 23620, 0.3489, 0, 1, 1, 0, 0, 0),
 	(33926, 23621, 0.2094, 0, 1, 1, 0, 0, 0),
 	(33926, 23622, 0.0698, 0, 1, 1, 0, 0, 0),
@@ -2515,7 +2513,6 @@ INSERT IGNORE INTO `item_loot_template` (`entry`, `item`, `ChanceOrQuestChance`,
 	(46110, 40404, 23.2973, 0, 3, 4, 0, 0, 0),
 	(46110, 40411, 73.452, 0, 17, 19, 0, 0, 0),
 	(43556, 36003, 0.66, 0, -36003, 1, 0, 0, 0),
-	(33926, 22926, 1, 0, -22926, 1, 0, 0, 0),
 	(46110, 44325, 2.6316, 0, 2, 2, 0, 0, 0),
 	(46110, 44327, 5.2632, 0, 2, 3, 0, 0, 0),
 	(46110, 44328, 18.4211, 0, 2, 3, 0, 0, 0),

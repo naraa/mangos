@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:25
+# Date/time:                    2011-12-29 12:03:33
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `pool_template` (
   PRIMARY KEY  (`entry`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.pool_template: 13,425 rows
+# Dumping data for table mangos.pool_template: 13,426 rows
 /*!40000 ALTER TABLE `pool_template` DISABLE KEYS */;
 INSERT IGNORE INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(1, 1, ''),
@@ -13447,7 +13447,8 @@ INSERT IGNORE INTO `pool_template` (`entry`, `max_limit`, `description`) VALUES
 	(14147, 1, 'GO 176638'),
 	(14148, 10, 'Calcified Elven Gem'),
 	(14149, 15, 'Grishnath Orb'),
-	(14150, 11, 'Smuggled Mana Cell');
+	(14150, 11, 'Smuggled Mana Cell'),
+	(14151, 30, 'Hardpacked Snowdrift');
 /*!40000 ALTER TABLE `pool_template` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

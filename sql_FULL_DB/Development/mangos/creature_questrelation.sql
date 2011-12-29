@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:01
+# Date/time:                    2011-12-29 12:03:09
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS `creature_questrelation` (
   PRIMARY KEY  (`id`,`quest`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Creature System';
 
-# Dumping data for table mangos.creature_questrelation: 7,629 rows
+# Dumping data for table mangos.creature_questrelation: 7,628 rows
 /*!40000 ALTER TABLE `creature_questrelation` DISABLE KEYS */;
 INSERT IGNORE INTO `creature_questrelation` (`id`, `quest`) VALUES
 	(196, 33),
@@ -3673,7 +3673,6 @@ INSERT IGNORE INTO `creature_questrelation` (`id`, `quest`) VALUES
 	(16271, 9617),
 	(16275, 9677),
 	(16276, 9489),
-	(16285, 12616),
 	(16287, 9189),
 	(16287, 9425),
 	(16289, 9193),

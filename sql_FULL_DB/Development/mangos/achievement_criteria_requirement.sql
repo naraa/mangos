@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:17:48
+# Date/time:                    2011-12-29 12:02:56
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS `achievement_criteria_requirement` (
   PRIMARY KEY  (`criteria_id`,`type`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Achievment system';
 
-# Dumping data for table mangos.achievement_criteria_requirement: 2,189 rows
+# Dumping data for table mangos.achievement_criteria_requirement: 2,199 rows
 /*!40000 ALTER TABLE `achievement_criteria_requirement` DISABLE KEYS */;
 INSERT IGNORE INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `value1`, `value2`) VALUES
 	(2379, 4, 0, 0),
@@ -2212,7 +2212,17 @@ INSERT IGNORE INTO `achievement_criteria_requirement` (`criteria_id`, `type`, `v
 	(12345, 12, 2, 0),
 	(12338, 12, 1, 0),
 	(12339, 12, 3, 0),
-	(11142, 16, 404, 0);
+	(11142, 16, 404, 0),
+	(12658, 1, 4949, 0),
+	(12659, 1, 10540, 0),
+	(12661, 1, 10181, 0),
+	(12660, 1, 16802, 0),
+	(12662, 1, 3057, 0),
+	(12663, 1, 29611, 0),
+	(12664, 1, 2784, 0),
+	(12665, 1, 7937, 0),
+	(12666, 1, 7999, 0),
+	(12667, 1, 17468, 0);
 /*!40000 ALTER TABLE `achievement_criteria_requirement` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

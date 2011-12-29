@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:10
+# Date/time:                    2011-12-29 12:03:18
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `gossip_menu_option` (
   PRIMARY KEY  (`menu_id`,`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.gossip_menu_option: 3,922 rows
+# Dumping data for table mangos.gossip_menu_option: 3,930 rows
 /*!40000 ALTER TABLE `gossip_menu_option` DISABLE KEYS */;
 INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option_text`, `option_id`, `npc_option_npcflag`, `action_menu_id`, `action_poi_id`, `action_script_id`, `box_coded`, `box_money`, `box_text`, `cond_1`, `cond_1_val_1`, `cond_1_val_2`, `cond_2`, `cond_2_val_1`, `cond_2_val_2`, `cond_3`, `cond_3_val_1`, `cond_3_val_2`) VALUES
 	(0, 0, 0, 'GOSSIP_OPTION_QUESTGIVER', 2, 2, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -789,8 +789,8 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(8918, 1, 0, 'I took off the worg mask.', 1, 1, -1, 0, 24273, 0, 0, NULL, 9, 11325, 0, 0, 0, 0, 0, 0, 0),
 	(9618, 0, 0, 'Emilune, I sent Admiral Keller. Please send me To Westguard Keep!', 1, 1, -1, 0, 27930, 0, 0, NULL, 9, 11291, 0, 0, 0, 0, 0, 0, 0),
 	(9007, 0, 0, '<To feed the worm rocky falcon>', 1, 1, -1, 0, 24752, 0, 0, NULL, 2, 34102, 1, 9, 11460, 0, 0, 0, 0),
-	(3862, 0, 0, 'You have fought well, spirit.  I ask you to grant me the strength of your body and the strength of your heart.', 1, 1, 3863, 0, 3863, 0, 0, NULL, 9, 6001, 0, 0, 0, 0, 0, 0, 0),
-	(3862, 1, 0, 'You have fought well, spirit.  I ask you to grant me the strength of your body and the strength of your heart.', 1, 1, 3863, 0, 3862, 0, 0, NULL, 9, 6002, 0, 0, 0, 0, 0, 0, 0),
+	(3862, 0, 0, 'You have fought well, spirit.  I ask you to grant me the strength of your body and the strength of your heart.', 1, 1, 3863, 0, 3863, 0, 0, NULL, 9, 6001, 1, 0, 0, 0, 0, 0, 0),
+	(3862, 1, 0, 'You have fought well, spirit.  I ask you to grant me the strength of your body and the strength of your heart.', 1, 1, 3863, 0, 3862, 0, 0, NULL, 9, 6002, 1, 0, 0, 0, 0, 0, 0),
 	(9785, 0, 2, 'I need a ride.', 4, 8192, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(9785, 1, 0, 'I was told that you can bring me to the Light\'s Breach...', 1, 1, -1, 0, 26853, 0, 0, NULL, 9, 12763, 0, 0, 0, 0, 0, 0, 0),
 	(9709, 4, 0, 'I\'ve lost my ensorcelled choker!', 1, 1, 9797, 0, 9709, 0, 0, NULL, 9, 12669, 0, 24, 38699, 1, 0, 0, 0),
@@ -2424,12 +2424,12 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(9426, 0, 0, 'Remove the Eye of the Prophets from the idol\'s face.', 1, 1, -1, 0, 9426, 0, 0, NULL, 9, 12007, 0, 0, 0, 0, 0, 0, 0),
 	(10318, 4, 0, 'Exodar Champion\'s Pennant', 1, 1, -1, 0, 50130, 0, 0, '', 20, 2761, 0, 0, 0, 0, 0, 0, 0),
 	(10318, 3, 0, 'Darnassus Champion\'s Pennant', 1, 1, -1, 0, 50131, 0, 0, '', 20, 2760, 0, 0, 0, 0, 0, 0, 0),
-	(10318, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
+	(10318, 2, 0, 'Visit a mailbox.', 18, 1, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
 	(10318, 1, 1, 'Visit a trader.', 3, 128, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
 	(10318, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67334, 0, 20, 2817, 0, 0, 0, 0),
 	(33239, 0, 6, 'Visit a bank.', 9, 131072, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
 	(33239, 1, 1, 'Visit a trader.', 3, 128, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
-	(33239, 2, 0, 'Visit a mailbox.', 1, 1, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
+	(33239, 2, 0, 'Visit a mailbox.', 18, 1, -1, 0, 0, 0, 0, '', 11, 67401, 0, 20, 2816, 0, 0, 0, 0),
 	(33239, 3, 0, 'Orgrimmar Champion\'s Pennant', 1, 1, -1, 0, 50132, 0, 0, NULL, 20, 2765, 0, 0, 0, 0, 0, 0, 0),
 	(33239, 4, 0, 'Sen\'jin Champion\'s Pennant', 1, 1, -1, 0, 50133, 0, 0, NULL, 20, 2766, 0, 0, 0, 0, 0, 0, 0),
 	(7171, 2, 3, 'Master chef, can you train me in the culinary arts?', 5, 16, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -3435,7 +3435,7 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(11387, 0, 0, 'Insult Coren Direbrew\'s brew.', 1, 1, 11388, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(562, 0, 0, 'Who are the Earthen?', 1, 1, 561, 0, 0, 0, 0, NULL, 9, 2278, 0, 0, 0, 0, 0, 0, 0),
 	(1161, 0, 0, 'What have you heard of the Shady Rest Inn?', 1, 1, 1162, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(1285, 0, 0, 'I wish to hear your tale.', 1, 1, 1287, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(1285, 0, 0, 'I wish to hear your tale.', 1, 1, 1287, 0, 0, 0, 0, NULL, 9, 3377, 1, 0, 0, 0, 0, 0, 0),
 	(1443, 2, 0, 'You can cook?  So can I!  Is there a recipe you can teach me?', 1, 1, 1501, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(2061, 2, 0, 'Milk me, John.', 1, 1, 2802, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(3063, 0, 0, 'You will be ok, Awbee. Your assailants have been terminated.', 1, 1, 3064, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -3479,7 +3479,7 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(8695, 0, 0, 'How dare you question an overseer of the Dragonmaw!', 1, 1, 8700, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(9807, 0, 0, '<You nod slightly but do not complete the motion as the lord-commander narrows his eyes before he continues.>', 1, 1, 9808, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(563, 0, 0, 'What are the anomalies you speak of?', 1, 1, 564, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(1286, 0, 0, 'Let me think about it, Zamael.', 1, 1, 1285, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(1286, 0, 0, 'Let me think about it, Zamael.', 1, 1, -1, 0, 1286, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(3065, 0, 0, 'Horrifying.', 1, 1, 3066, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(3370, 0, 0, 'This is disheartening. Is there anything I can do to stop this?', 1, 1, 3369, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(7585, 0, 0, 'I will tell them. Farewell, elder.', 1, 1, 7586, 0, 7585, 0, 0, NULL, 9, 9803, 0, 24, 24573, 1, 0, 0, 0),
@@ -3786,13 +3786,13 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(9203, 0, 0, 'Loremaster Festival asked me to talk to you.', 1, 1, 9282, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(8540, 0, 3, 'Train me.', 5, 16, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(8434, 0, 3, 'Train me.', 5, 16, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 0, 0, 'Low spirits', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 1, 0, 'Bad hang nail', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 2, 0, 'Feeling underpowered', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 3, 0, 'Jungle Fever', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 4, 0, 'Uni-brow', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 5, 0, 'Whiplash', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(3062, 6, 0, 'I don\'t want to go back to work', 1, 1, -1, 0, 3062, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 0, 0, 'Low spirits', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 1, 0, 'Bad hang nail', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 2, 0, 'Feeling underpowered', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 3, 0, 'Jungle Fever', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 4, 0, 'Uni-brow', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 5, 0, 'Whiplash', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
+	(3062, 6, 0, 'I don\'t want to go back to work', 1, 1, -1, 0, 3062, 0, 0, NULL, 8, 826, 0, 0, 0, 0, 0, 0, 0),
 	(8726, 0, 1, 'I want to browse your goods.', 3, 128, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(8716, 0, 1, 'I want to browse your goods.', 3, 128, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(8717, 0, 1, 'I want to browse your goods.', 3, 128, 0, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -3962,7 +3962,15 @@ INSERT IGNORE INTO `gossip_menu_option` (`menu_id`, `id`, `option_icon`, `option
 	(5749, 0, 0, '<Copy the schematic into your engineering notebook.>', 1, 1, -1, 0, 5749, 0, 0, NULL, 7, 202, 300, 17, 22704, 1, 0, 0, 0),
 	(11388, 0, 0, 'Attack!', 1, 1, -1, 0, 11388, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
 	(11388, 1, 0, 'Sorry!', 1, 1, -1, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-	(50169, 0, 0, 'Who is the Headless Horseman?', 1, 1, 8880, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+	(50169, 0, 0, 'Who is the Headless Horseman?', 1, 1, 8880, 0, 0, 0, 0, NULL, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2901, 0, 0, 'Hello, Eitrigg. I bring news from Blackrock Spire.', 1, 1, 2902, 0, 0, 0, 0, '', 9, 4941, 0, 0, 0, 0, 0, 0, 0),
+	(2902, 0, 0, 'There is only one Warchief, Eitrigg!', 1, 1, 2903, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2903, 0, 0, 'What do you mean?', 1, 1, 2904, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2904, 0, 0, 'Hearthglen? But...', 1, 1, 2905, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2905, 0, 0, 'I will take you up on that offer, Eitrigg.', 1, 1, 2906, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2906, 0, 0, 'Ah, so that is how they pushed the Dark Iron to the lower parts of the Spire.', 1, 1, 2907, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2907, 0, 0, 'Perhaps there exists a way?', 1, 1, 2908, 0, 0, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0),
+	(2908, 0, 0, 'As you wish, Eitrigg.', 1, 1, -1, 0, 2908, 0, 0, '', 0, 0, 0, 0, 0, 0, 0, 0, 0);
 /*!40000 ALTER TABLE `gossip_menu_option` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

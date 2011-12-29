@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:29
+# Date/time:                    2011-12-29 12:03:37
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `spell_target_position` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ROW_FORMAT=FIXED COMMENT='Spell System';
 
-# Dumping data for table mangos.spell_target_position: 580 rows
+# Dumping data for table mangos.spell_target_position: 581 rows
 /*!40000 ALTER TABLE `spell_target_position` DISABLE KEYS */;
 INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position_x`, `target_position_y`, `target_position_z`, `target_orientation`) VALUES
 	(8195, 0, 16229, 16265, 14, 3.19),
@@ -605,7 +605,8 @@ INSERT IGNORE INTO `spell_target_position` (`id`, `target_map`, `target_position
 	(72546, 631, 514, -2523, 1050.99, 3.1765),
 	(73655, 631, 495.708, -2523.76, 1050.99, 3.1765),
 	(25182, 1, -8124.41, 1525.13, 16.368, 3.05),
-	(72468, 631, -67.357, 2158.99, 30.654, 4.126);
+	(72468, 631, -67.357, 2158.99, 30.654, 4.126),
+	(46473, 580, 1667.64, 633.466, 28.05, 6.05);
 /*!40000 ALTER TABLE `spell_target_position` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -3,7 +3,7 @@
 # Server version:               5.0.45-community-nt - MySQL Community Edition (GPL)
 # Server OS:                    Win32
 # HeidiSQL version:             6.0.0.3968
-# Date/time:                    2011-12-12 07:18:10
+# Date/time:                    2011-12-29 12:03:18
 # --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS `game_event_creature_data` (
   PRIMARY KEY  (`guid`,`event`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-# Dumping data for table mangos.game_event_creature_data: 965 rows
+# Dumping data for table mangos.game_event_creature_data: 981 rows
 /*!40000 ALTER TABLE `game_event_creature_data` DISABLE KEYS */;
 INSERT IGNORE INTO `game_event_creature_data` (`guid`, `entry_id`, `modelid`, `equipment_id`, `spell_start`, `spell_end`, `event`) VALUES
 	(5946, 0, 0, 92, 0, 0, 29),
@@ -991,7 +991,23 @@ INSERT IGNORE INTO `game_event_creature_data` (`guid`, `entry_id`, `modelid`, `e
 	(81630, 0, 0, 0, 49672, 0, 60),
 	(14053, 0, 0, 0, 49673, 0, 60),
 	(11755, 0, 0, 0, 49673, 0, 61),
-	(81627, 0, 0, 0, 49672, 0, 61);
+	(81627, 0, 0, 0, 49672, 0, 61),
+	(47966, 0, 15733, 0, 0, 0, 2),
+	(51507, 0, 15734, 0, 0, 0, 2),
+	(49041, 0, 15735, 0, 0, 0, 2),
+	(49159, 0, 15737, 0, 0, 0, 2),
+	(49075, 0, 15760, 0, 0, 0, 2),
+	(54700, 0, 22800, 0, 0, 0, 2),
+	(57895, 0, 22801, 0, 0, 0, 2),
+	(86210, 0, 22802, 0, 0, 0, 2),
+	(92337, 0, 22804, 0, 0, 0, 2),
+	(84992, 0, 22805, 0, 0, 0, 2),
+	(138139, 0, 19342, 0, 0, 0, 2),
+	(138140, 0, 19342, 0, 0, 0, 2),
+	(138141, 0, 19342, 0, 0, 0, 2),
+	(138142, 0, 19342, 0, 0, 0, 2),
+	(138143, 0, 19342, 0, 0, 0, 2),
+	(138144, 0, 19342, 0, 0, 0, 2);
 /*!40000 ALTER TABLE `game_event_creature_data` ENABLE KEYS */;
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
