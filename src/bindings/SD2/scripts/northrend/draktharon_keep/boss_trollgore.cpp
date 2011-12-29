@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         {
             if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
             {
-                if (pCorpse->isAlive())  // should be a corpse he targets
+                if (pCorpse->isAlive() // && pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))  // should be a corpse he targets
                 {                    
                     DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true); 
                     DoScriptText(SAY_EXPLODE, m_creature);
@@ -256,6 +256,67 @@ CreatureAI* GetAI_boss_trollgore(Creature* pCreature)
 
 struct MANGOS_DLL_DECL npc_invaderAI : public ScriptedAI
 {
+    npc_drakkari_invaderAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        m_pInstance = (instance_draktharon_keep*)pCreature->GetInstanceData();
+        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
+        Reset();
+    }
+
+    instance_draktharon_keep* m_pInstance;
+    bool m_bIsRegularMode;
+
+    void Reset()
+    {
+    }
+
+    void AttackStart(Unit* pWho)
+    {
+        if (!pWho)
+            return;
+
+        if (m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
+            return;
+
+        ScriptedAI::AttackStart(pWho);
+    }
+
+    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
+    {
+        if (m_creature->GetHealth() < uiDamage)
+        {
+            uiDamage = 0;
+            if (!m_creature->HasFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE))
+            {
+                m_creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
+                m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
+                m_creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
+                m_creature->RemoveAllAuras();
+                m_creature->InterruptNonMeleeSpells(false);
+                m_creature->SetHealth(1);
+                m_creature->GetMotionMaster()->Clear(false);
+                m_creature->GetMotionMaster()->MoveIdle();
+                m_creature->AttackStop();
+                m_creature->StopMoving();
+                m_creature->getHostileRefManager().clearReferences();
+            }
+        }
+    }
+
+    void UpdateAI(const uint32 uiDiff)
+    {
+        if (!m_pInstance)
+            return;
+
+        if (m_pInstance->GetData(TYPE_TROLLGORE) != IN_PROGRESS)
+            m_creature->ForcedDespawn();
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+           return;
+
+        if (!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
+            DoMeleeAttackIfReady();
+    }
 };
 
 CreatureAI* GetAI_npc_invader(Creature* pCreature)
@@ -272,4 +333,10 @@ void AddSC_boss_trollgore()
     pNewScript->Name = "boss_trollgore";
     pNewScript->GetAI = &GetAI_boss_trollgore;
     pNewScript->RegisterSelf();
+
+/*  pNewScript = new Script;
+    pNewScript->Name = "npc_drakkari_invader";
+    pNewScript->GetAI = &GetAI_npc_drakkari_invader;
+    pNewScript->RegisterSelf();
+*/
 }
