@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         {
             if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
             {
-                if (pCorpse->isAlive() // && pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))  // should be a corpse he targets
+                if (pCorpse->isAlive() /* && pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE)*/)  // should be a corpse he targets
                 {                    
                     DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true); 
                     DoScriptText(SAY_EXPLODE, m_creature);
