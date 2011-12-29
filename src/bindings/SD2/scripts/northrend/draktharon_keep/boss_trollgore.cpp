@@ -20,7 +20,7 @@ SDName: Boss_Trollgore
 SD%Complete: 80%
 SDComment:
 SDCategory: Drak'Tharon Keep
-ToDo: fix corpse expl. && fix addeds (corpse && way of summon)
+ToDo: fix corpse expl. && fix addeds (corpse && way of summon)  // more work is needed
 EndScriptData */
 
 #include "precompiled.h"
