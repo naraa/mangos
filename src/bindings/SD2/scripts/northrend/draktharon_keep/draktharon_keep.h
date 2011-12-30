@@ -55,7 +55,7 @@ enum
     NPC_TROLLGORE                   = 26630,
 
     // Achievement Criterias to be handled with SD2
-    ACHIEV_CRIT_BETTER_OFF_DREAD    = 7318,
+    ACHIEV_CRIT_BETTER_OFF_DRED     = 7318,
     ACHIEV_CRIT_CONSUME_JUNCTION    = 7581,
     ACHIEV_CRIT_OH_NOVOS            = 7361,
 };

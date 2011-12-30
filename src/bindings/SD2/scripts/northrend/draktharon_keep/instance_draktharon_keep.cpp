@@ -50,9 +50,10 @@ bool instance_draktharon_keep::CheckAchievementCriteriaMeet(uint32 uiCriteriaId,
 {
     switch (uiCriteriaId)
     {
-        case ACHIEV_CRIT_BETTER_OFF_DREAD: return m_uiDreadAddsKilled >= 6;
-        case ACHIEV_CRIT_OH_NOVOS:         return !m_bNovosAddGrounded;
-        case ACHIEV_CRIT_CONSUME_JUNCTION: 
+        case ACHIEV_CRIT_BETTER_OFF_DRED: return m_uiDreadAddsKilled >= 6;
+
+        case ACHIEV_CRIT_OH_NOVOS:         return !m_bNovosAddGrounded;  // works
+        case ACHIEV_CRIT_CONSUME_JUNCTION:   // temp hack to make it work
             return m_abAchievCriteria[TYPE_CONSUME_JUNCTION];
         default:
             return false;
@@ -78,6 +79,8 @@ void instance_draktharon_keep::OnCreatureDeath(Creature* pCreature)
 
     if (pCreature->GetEntry() == NPC_KING_DRED)
         SetData(TYPE_KING_DRED, DONE);
+
+    // set here when a drak invader during trollgore event dies they spawn a corpse version in their place for corpse explo.
 }
 
 void instance_draktharon_keep::OnCreatureCreate(Creature* pCreature)

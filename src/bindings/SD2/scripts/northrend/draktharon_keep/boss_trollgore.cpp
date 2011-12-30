@@ -49,7 +49,7 @@ enum
 
     SPELL_INVADER_TAUNT             = 49405, // cast 49406
 
-    SPELL_INVADER_A                 = 49456, 
+    SPELL_INVADER_A                 = 49456,
     SPELL_INVADER_B                 = 49457,
     SPELL_INVADER_C                 = 49458,
 
@@ -110,11 +110,11 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     void SummonWaves()
     {
-        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
+        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
             pInvader1->AI()->AttackStart(m_creature);
-        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
+        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
             pInvader2->AI()->AttackStart(m_creature);
-        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
+        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 15000))
             pInvader3->AI()->AttackStart(m_creature);
     }
 
@@ -221,9 +221,10 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
                 m_uiInfectedWound_Timer = 20000;
         }else m_uiInfectedWound_Timer -= uiDiff;
 
+        // consume
         if (m_uiConsumeTimer < uiDiff)
         {
-            if (DoCastSpellIfCan(m_creature,  m_bIsRegularMode ? SPELL_CONSUME : SPELL_CONSUME_H) == CAST_OK)
+            if (DoCastSpellIfCan(m_creature->getVictim(),  m_bIsRegularMode ? SPELL_CONSUME : SPELL_CONSUME_H) == CAST_OK)
                 m_uiConsumeTimer = 15000;
         }else m_uiConsumeTimer -= uiDiff;
 
@@ -232,9 +233,9 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         {
             if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
             {
-                if (pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
-                {                    
-                    DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true); 
+                if (pCorpse->isAlive())
+                {
+                    DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true);
                     DoScriptText(SAY_EXPLODE, m_creature);
                 }
             }
@@ -250,81 +251,6 @@ CreatureAI* GetAI_boss_trollgore(Creature* pCreature)
     return new boss_trollgoreAI(pCreature);
 }
 
-/*######
-## Drakkari Invader
-######
-
-struct MANGOS_DLL_DECL npc_drakkari_invaderAI : public ScriptedAI
-{
-    npc_drakkari_invaderAI(Creature* pCreature) : ScriptedAI(pCreature)
-    {
-        m_pInstance = (instance_draktharon_keep*)pCreature->GetInstanceData();
-        m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        Reset();
-    }
-
-    instance_draktharon_keep* m_pInstance;
-    bool m_bIsRegularMode;
-
-    void Reset()
-    {
-    }
-
-    void AttackStart(Unit* pWho)
-    {
-        if (!pWho)
-            return;
-
-        if (m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
-            return;
-
-        ScriptedAI::AttackStart(pWho);
-    }
-
-    void DamageTaken(Unit* pDoneBy, uint32 &uiDamage)
-    {
-        if (m_creature->GetHealth() < uiDamage)
-        {
-            uiDamage = 0;
-            if (!m_creature->HasFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE))
-            {
-                m_creature->SetFlag(UNIT_FIELD_FLAGS,UNIT_FLAG_NON_ATTACKABLE);
-                m_creature->SetStandState(UNIT_STAND_STATE_DEAD);
-                m_creature->SetFlag(UNIT_DYNAMIC_FLAGS, UNIT_DYNFLAG_DEAD);
-                m_creature->RemoveAllAuras();
-                m_creature->InterruptNonMeleeSpells(false);
-                m_creature->SetHealth(1);
-                m_creature->GetMotionMaster()->Clear(false);
-                m_creature->GetMotionMaster()->MoveIdle();
-                m_creature->AttackStop();
-                m_creature->StopMoving();
-                m_creature->getHostileRefManager().clearReferences();
-            }
-        }
-    }
-
-    void UpdateAI(const uint32 uiDiff)
-    {
-        if (!m_pInstance)
-            return;
-
-        if (m_pInstance->GetData(TYPE_TROLLGORE) != IN_PROGRESS)
-            m_creature->ForcedDespawn();
-
-        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-           return;
-
-        if (!m_creature->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
-            DoMeleeAttackIfReady();
-    }
-};
-
-CreatureAI* GetAI_npc_drakkari_invader(Creature* pCreature)
-{
-    return new npc_drakkari_invaderAI(pCreature);
-}*/
-
-
 void AddSC_boss_trollgore()
 {
     Script* pNewScript;
@@ -333,9 +259,4 @@ void AddSC_boss_trollgore()
     pNewScript->Name = "boss_trollgore";
     pNewScript->GetAI = &GetAI_boss_trollgore;
     pNewScript->RegisterSelf();
-
-    /*pNewScript = new Script;
-    pNewScript->Name = "npc_drakkari_invader";
-    pNewScript->GetAI = &GetAI_npc_drakkari_invader;
-    pNewScript->RegisterSelf();*/
 }

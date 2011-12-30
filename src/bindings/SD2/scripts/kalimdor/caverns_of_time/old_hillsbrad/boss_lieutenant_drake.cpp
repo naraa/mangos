@@ -15,7 +15,7 @@
  */
 
 /* ScriptData
-SDName: Boss_Luetenant_Drake
+SDName: Boss_Lieutenant_Drake
 SD%Complete: 70
 SDComment: Missing proper code for patrolling area after being spawned. Script for GO (barrels) quest 10283
 SDCategory: Caverns of Time, Old Hillsbrad Foothills
@@ -45,18 +45,21 @@ bool GOUse_go_barrel_old_hillsbrad(Player* pPlayer, GameObject* pGo)
 ## boss_lieutenant_drake
 ######*/
 
-#define SAY_ENTER               -1560006
-#define SAY_AGGRO               -1560007
-#define SAY_SLAY1               -1560008
-#define SAY_SLAY2               -1560009
-#define SAY_MORTAL              -1560010
-#define SAY_SHOUT               -1560011
-#define SAY_DEATH               -1560012
+enum
+{
+    SAY_ENTER              = -1560006,
+    SAY_AGGRO              = -1560007,
+    SAY_SLAY1              = -1560008,
+    SAY_SLAY2              = -1560009,
+    SAY_MORTAL             = -1560010,
+    SAY_SHOUT              = -1560011,
+    SAY_DEATH              = -1560012,
 
-#define SPELL_WHIRLWIND         31909
-#define SPELL_HAMSTRING         9080
-#define SPELL_MORTAL_STRIKE     31911
-#define SPELL_FRIGHTENING_SHOUT 33789
+    SPELL_WHIRLWIND         = 31909,
+    SPELL_HAMSTRING         = 9080,
+    SPELL_MORTAL_STRIKE     = 31911,
+    SPELL_FRIGHTENING_SHOUT = 33789,
+};
 
 struct Location
 {
@@ -93,31 +96,31 @@ struct MANGOS_DLL_DECL boss_lieutenant_drakeAI : public ScriptedAI
 {
     boss_lieutenant_drakeAI(Creature* pCreature) : ScriptedAI(pCreature) {Reset();}
 
-    bool CanPatrol;
+    bool m_bCanPatrol;
     uint32 wpId;
 
-    uint32 Whirlwind_Timer;
-    uint32 Fear_Timer;
-    uint32 MortalStrike_Timer;
-    uint32 ExplodingShout_Timer;
+    uint32 m_uiWhirlwind_Timer;
+    uint32 m_uiFear_Timer;
+    uint32 m_uiMortalStrike_Timer;
+    uint32 m_uiExplodingShout_Timer;
 
     void Reset()
     {
-        CanPatrol = true;
+        m_bCanPatrol = true;
         wpId = 0;
 
-        Whirlwind_Timer = 20000;
-        Fear_Timer = 30000;
-        MortalStrike_Timer = 45000;
-        ExplodingShout_Timer = 25000;
+        m_uiWhirlwind_Timer = 20000;
+        m_uiFear_Timer = 30000;
+        m_uiMortalStrike_Timer = 45000;
+        m_uiExplodingShout_Timer = 25000;
     }
 
-    void Aggro(Unit *who)
+    void Aggro(Unit* pWho)
     {
         DoScriptText(SAY_AGGRO, m_creature);
     }
 
-    void KilledUnit(Unit *victim)
+    void KilledUnit(Unit* pVictim)
     {
         DoScriptText(urand(0, 1) ? SAY_SLAY1 : SAY_SLAY2, m_creature);
     }
@@ -127,10 +130,10 @@ struct MANGOS_DLL_DECL boss_lieutenant_drakeAI : public ScriptedAI
         DoScriptText(SAY_DEATH, m_creature);
     }
 
-    void UpdateAI(const uint32 diff)
+    void UpdateAI(const uint32 uiDiff)
     {
         //TODO: make this work
-        if (CanPatrol && wpId == 0)
+        if (m_bCanPatrol && wpId == 0)
         {
             m_creature->GetMotionMaster()->MovePoint(DrakeWP[0].wpId, DrakeWP[0].x, DrakeWP[0].y, DrakeWP[0].z);
             ++wpId;
@@ -141,27 +144,27 @@ struct MANGOS_DLL_DECL boss_lieutenant_drakeAI : public ScriptedAI
             return;
 
         //Whirlwind
-        if (Whirlwind_Timer < diff)
+        if (m_uiWhirlwind_Timer < uiDiff)
         {
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_WHIRLWIND);
-            Whirlwind_Timer = urand(20000, 25000);
-        }else Whirlwind_Timer -= diff;
+            m_uiWhirlwind_Timer = urand(20000, 25000);
+        }else m_uiWhirlwind_Timer -= uiDiff;
 
         //Fear
-        if (Fear_Timer < diff)
+        if (m_uiFear_Timer < uiDiff)
         {
             DoScriptText(SAY_SHOUT, m_creature);
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_FRIGHTENING_SHOUT);
-            Fear_Timer = urand(25000, 35000);
-        }else Fear_Timer -= diff;
+            m_uiFear_Timer = urand(25000, 35000);
+        }else m_uiFear_Timer -= uiDiff;
 
         //Mortal Strike
-        if (MortalStrike_Timer < diff)
+        if (m_uiMortalStrike_Timer < uiDiff)
         {
             DoScriptText(SAY_MORTAL, m_creature);
             DoCastSpellIfCan(m_creature->getVictim(), SPELL_MORTAL_STRIKE);
-            MortalStrike_Timer = urand(20000, 30000);
-        }else MortalStrike_Timer -= diff;
+            m_uiMortalStrike_Timer = urand(20000, 30000);
+        }else m_uiMortalStrike_Timer -= uiDiff;
 
         DoMeleeAttackIfReady();
     }
