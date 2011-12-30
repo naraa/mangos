@@ -31,7 +31,7 @@ INSERT INTO creature_ai_scripts VALUES
 (2827402,28274,8,0,100,0,51165,-1,0,0,33,28289,6,0,0,0,0,0,0,0,0,0,'Plague Sprayer - Quest Credit'),
 (2827403,28274,0,3,100,0,1000,1000, 0, 0, 24, 0, 0, 0, 41, 0, 0, 0, 0, 0, 0, 0, 'Plague Sprayer-despawn'),
 (2827404,28274,11, 0, 100, 0, 0, 0, 0, 0, 21, 0, 0, 0, 22, 0, 0, 0, 0, 0, 0, 0, 'Plague Sprayer-Set Phase to 0 on Spawn, prevent combat movement');
-
+UPDATE `creature_template` SET `modelid_2` = 25266 WHERE `entry` = 28274;
 UPDATE `creature_template` SET `flags_extra` = 64 WHERE `entry` = 28274;
 
 -- ------------------------------------------

@@ -110,11 +110,11 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
 
     void SummonWaves()
     {
-        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+        if (Creature* pInvader1 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon1[0],PosSummon1[1],PosSummon1[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
             pInvader1->AI()->AttackStart(m_creature);
-        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+        if (Creature* pInvader2 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon2[0],PosSummon2[1],PosSummon2[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
             pInvader2->AI()->AttackStart(m_creature);
-        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 10000))
+        if (Creature* pInvader3 = m_creature->SummonCreature(NPC_DRAKKARI_INVADER,PosSummon3[0],PosSummon3[1],PosSummon3[2],0, TEMPSUMMON_TIMED_DESPAWN, 150000))
             pInvader3->AI()->AttackStart(m_creature);
     }
 
@@ -232,7 +232,7 @@ struct MANGOS_DLL_DECL boss_trollgoreAI : public ScriptedAI
         {
             if (Creature* pCorpse = GetClosestCreatureWithEntry(m_creature, NPC_DRAKKARI_INVADER, 85.0f))
             {
-                if (pCorpse->isAlive() /* && pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE)*/)  // should be a corpse he targets
+                if (pCorpse->HasFlag(UNIT_FIELD_FLAGS, UNIT_FLAG_NON_ATTACKABLE))
                 {                    
                     DoCast(pCorpse,m_bIsRegularMode ? SPELL_CORPSE_EXPLODE : SPELL_CORPSE_EXPLODE_H,true); 
                     DoScriptText(SAY_EXPLODE, m_creature);
@@ -254,7 +254,7 @@ CreatureAI* GetAI_boss_trollgore(Creature* pCreature)
 ## Drakkari Invader
 ######
 
-struct MANGOS_DLL_DECL npc_invaderAI : public ScriptedAI
+struct MANGOS_DLL_DECL npc_drakkari_invaderAI : public ScriptedAI
 {
     npc_drakkari_invaderAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
@@ -319,11 +319,11 @@ struct MANGOS_DLL_DECL npc_invaderAI : public ScriptedAI
     }
 };
 
-CreatureAI* GetAI_npc_invader(Creature* pCreature)
+CreatureAI* GetAI_npc_drakkari_invader(Creature* pCreature)
 {
-    return new npc_invaderAI(pCreature);
-}
-*/
+    return new npc_drakkari_invaderAI(pCreature);
+}*/
+
 
 void AddSC_boss_trollgore()
 {
@@ -334,9 +334,8 @@ void AddSC_boss_trollgore()
     pNewScript->GetAI = &GetAI_boss_trollgore;
     pNewScript->RegisterSelf();
 
-/*  pNewScript = new Script;
+    /*pNewScript = new Script;
     pNewScript->Name = "npc_drakkari_invader";
     pNewScript->GetAI = &GetAI_npc_drakkari_invader;
-    pNewScript->RegisterSelf();
-*/
+    pNewScript->RegisterSelf();*/
 }

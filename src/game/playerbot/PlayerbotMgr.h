@@ -82,11 +82,11 @@ public:
     bool m_confCollectObjects;
     uint32 m_confCollectDistance;
     uint32 m_confCollectDistanceMax;
+    int m_botCount;
 
 private:
     Player* const m_master;
     PlayerBotMap m_playerBots;
-    int m_botCount;
 };
 
 #endif
