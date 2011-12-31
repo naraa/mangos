@@ -27,8 +27,8 @@
 #define __SPELL_H__
 
 char const *SPELL_DBC   = "Spell.dbc";
-char const *SPELL_SQL   = "spell.sql";
-char const *SPELL_TABLE = "spell";
+char const *SPELL_SQL   = "spell_dbc_dev.sql";
+char const *SPELL_TABLE = "spell_dbc_dev";
 
 #define SPELL_DBC_CLIENT_BUILD  12340 // 3.3.5
 
