@@ -27,8 +27,8 @@
 #define __SPELL_H__
 
 char const *SPELL_DBC   = "Spell.dbc";
-char const *SPELL_SQL   = "spell_dbc.sql";
-char const *SPELL_TABLE = "spell_dbc";
+char const *SPELL_SQL   = "spell_dbc_dev.sql";
+char const *SPELL_TABLE = "spell_dbc_dev";
 
 #define SPELL_DBC_CLIENT_BUILD  12340 // 3.3.5
 
@@ -264,13 +264,13 @@ char const *spell_translation[SPELL_DBC_COLUMN_NUMS][2] =
     {"uint32",   "TotemCategory2"},                               // 223      m_requiredTotemCategoryID
     {"int32",    "AreaGroupId"},                                  // 224      m_requiredAreaGroupId
     {"uint32",   "SchoolMask"},                                   // 225      m_schoolMask
-    {"uint32",   "runeCostID"},                                   // 226      m_runeCostID
-    {"uint32",   "spellMissileID"},                               // 227      m_spellMissileID not used
+    {"uint32",   "RuneCostID"},                                   // 226      m_runeCostID
+    {"uint32",   "SpellMissileID"},                               // 227      m_spellMissileID not used
     {"uint32",   "PowerDisplayId"},                               // 228      PowerDisplay.dbc, new in 3.1
-    {"float",    "unk_320_41"},                                   // 229      3.2.0
-    {"float",    "unk_320_42"},                                   // 230      3.2.0
-    {"float",    "unk_320_43"},                                   // 231      3.2.0
-    {"uint32",   "spellDescriptionVariableID"},                   // 232      3.2.0
+    {"float",    "EffectBonusCoefficient1"},                                   // 229      3.2.0
+    {"float",    "EffectBonusCoefficient2"},                                   // 230      3.2.0
+    {"float",    "EffectBonusCoefficient3"},                                   // 231      3.2.0
+    {"uint32",   "SpellDescriptionVariableID"},                   // 232      3.2.0
     {"uint32",   "SpellDifficultyId"},                            // 233      3.3.0
 };
 

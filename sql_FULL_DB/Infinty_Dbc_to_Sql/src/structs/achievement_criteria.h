@@ -27,8 +27,8 @@
 #define __ACHIEVEMENT_CRITERIA_H__
 
 char const *ACHIEVEMENT_CRITERIA_DBC    = "Achievement_Criteria.dbc";
-char const *ACHIEVEMENT_CRITERIA_SQL    = "achievement_criteria_dbc.sql";
-char const *ACHIEVEMENT_CRITERIA_TABLE  = "dbc_achievement_criteria";
+char const *ACHIEVEMENT_CRITERIA_SQL    = "Achievement_Criteria.sql";
+char const *ACHIEVEMENT_CRITERIA_TABLE  = "Achievement_Criteria_dbc";
 
 #define ACHIEVEMENT_CRITERIA_DBC_CLIENT_BUILD   12340 // 3.3.5
 
@@ -37,37 +37,37 @@ char const *ACHIEVEMENT_CRITERIA_TABLE  = "dbc_achievement_criteria";
 
 char const *achievement_criteria_translation[ACHIEVEMENT_CRITERIA_DBC_COLUMN_NUMS][2] =
 {
-    {"uint32",  "id"},          // ID
-    {"uint32",  "1"},           // referredAchievement
-    {"uint32",  "2"},           // requiredType
-    {"uint32",  "3"},
-    {"uint32",  "4"},
-    {"uint32",  "5"},
-    {"uint32",  "6"},
-    {"uint32",  "7"},
-    {"uint32",  "8"},
-    {"char*",   "9"},           // name[0]
-    {"char*",   "10"},          // name[1]
-    {"char*",   "11"},          // name[2]
-    {"char*",   "12"},          // name[3]
-    {"char*",   "13"},          // name[4]
-    {"char*",   "14"},          // name[5]
-    {"char*",   "15"},          // name[6]
-    {"char*",   "16"},          // name[7]
-    {"char*",   "17"},          // name[8]
-    {"char*",   "18"},          // name[9]
-    {"char*",   "19"},          // name[10]
-    {"char*",   "20"},          // name[11]
-    {"char*",   "21"},          // name[12]
-    {"char*",   "22"},          // name[13]
-    {"char*",   "23"},          // name[14]
-    {"char*",   "24"},          // name[15]
-    {"uint32",  "25"},          // name_flags
-    {"uint32",  "26"},          // completionFlag
-    {"uint32",  "27"},          // groupFlag
-    {"uint32",  "28"},          // unk1
-    {"uint32",  "29"},          // timeLimit
-    {"uint32",  "30"}           // showOrder
+    {"uint32",  "Id"},                       // ID
+    {"uint32",  "Achievement"},              // referredAchievement
+    {"uint32",  "Type"},                     // requiredType
+    {"uint32",  "AssetID"},
+    {"uint32",  "Quantity"},
+    {"uint32",  "StartEvent"},
+    {"uint32",  "StartAsset"},
+    {"uint32",  "FailEvent"},
+    {"uint32",  "FailAsset"},
+    {"char*",   "Description1"},             // name[0]
+    {"char*",   "Description2"},             // name[1]
+    {"char*",   "Description3"},             // name[2]
+    {"char*",   "Description4"},             // name[3]
+    {"char*",   "Description5"},             // name[4]
+    {"char*",   "Description6"},             // name[5]
+    {"char*",   "Description7"},             // name[6]
+    {"char*",   "Description8"},             // name[7]
+    {"char*",   "Description9"},             // name[8]
+    {"char*",   "Description10"},            // name[9]
+    {"char*",   "Description11"},            // name[10]
+    {"char*",   "Description12"},            // name[11]
+    {"char*",   "Description13"},            // name[12]
+    {"char*",   "Description14"},            // name[13]
+    {"char*",   "Description15"},            // name[14]
+    {"char*",   "Description16"},            // name[15]
+    {"uint32",  "UNK_1"},                    // 26
+    {"uint32",  "Flags"},                    // name_flags
+    {"uint32",  "TimerStartEvent"},          // completionFlag
+    {"uint32",  "TimerAssetID"},          // groupFlag
+    {"uint32",  "TimerAmount"},          // unk1
+    {"uint32",  "UIOrder"},          // timeLimit
 };
 
 char const *ACHIEVEMENT_CRITERIA_TABLE_INDEX = achievement_criteria_translation[0][1];

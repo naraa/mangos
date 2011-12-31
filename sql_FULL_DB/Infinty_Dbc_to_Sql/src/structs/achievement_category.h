@@ -27,8 +27,8 @@
 #define __ACHIEVEMENT_CATEGORY_H__
 
 char const *ACHIEVEMENT_CATEGORY_DBC    = "Achievement_Category.dbc";
-char const *ACHIEVEMENT_CATEGORY_SQL    = "achievement_category_dbc.sql";
-char const *ACHIEVEMENT_CATEGORY_TABLE  = "dbc_achievement_category";
+char const *ACHIEVEMENT_CATEGORY_SQL    = "Achievement_Category.sql";
+char const *ACHIEVEMENT_CATEGORY_TABLE  = "Achievement_Category_dbc";
 
 #define ACHIEVEMENT_CATEGORY_DBC_CLIENT_BUILD   12340 // 3.3.5
 
