@@ -1,6 +1,5 @@
-= DBCtoSQL =
-
-    DBC to SQL Converter
+/*
+ DBC to SQL Converter
     Copyright (C) 2009  David Vas, Anubisss
     <http://code.google.com/p/dbctosql/>
     updated by Przemratajczak and Darkrulerz
@@ -22,17 +21,28 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-For more information about the program You can check: http://code.google.com/p/dbctosql/
+#ifndef __PROGRESSBAR_H__
+#define __PROGRESSBAR_H__
 
-Supported DBC files:
-    Spell.dbc, client build: 12340
-    Item.dbc, client build: 12340
-    
-Temp. Unsupported DBC files:
-    Achievement.dbc, client build: 9947
-    Achievement_Category.dbc, client build: 9947
-    Achievement_Criteria.dbc, client build: 9947
+#include "common/common.h"
 
-DO NOT DO!
-    THE DBC FILES OWNER IS BLIZZARD AND ITS A COPYRIGHTED DATA SO YOU SHOULD'NT CONVERT/MODIFY IT.
+class Bar
+{
+    char static const *empty;
+    char static const *full;
+
+    uint32 rec_no;
+    uint32 rec_pos;
+    uint8 indic_len;
+    uint32 num_rec;
+
+    public:
+        Bar(uint32 row_count);
+        ~Bar();
+
+        void Step();
+};
+
+#endif

@@ -16,6 +16,8 @@ DELETE FROM `creature_ai_texts` WHERE (`entry`='-810') OR (`entry`='-811') OR (`
 
 UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 
+-- note to self 
+-- 11686 is invis id
 
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
