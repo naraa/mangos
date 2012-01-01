@@ -101,3 +101,12 @@ INSERT INTO `script_texts` (`entry`,`content_default`,`comment`) VALUES
 (-1999829, "Play!", "tadpole SAY_5"),
 (-1999830, "Alurglgl!", "tadpole SAY_6"),
 (-1999831, "da-da?", "tadpole SAY_7");
+
+-- -------------
+-- Quest 9948 -
+-- -------------
+DELETE FROM script_texts WHERE entry IN (-1000040,-1000041,-1000042);
+INSERT INTO script_texts (entry,content_default,type,comment) VALUES
+(-1000040,'Death to the ogres!',1,'SAY_MAGHAR_THANKS_1'),
+(-1000041,'Spirits watch for you.',1,'SAY_MAGHAR_THANKS_2'),
+(-1000042,'Many Thanks, hero!',1,'SAY_MAGHAR_THANKS_3');

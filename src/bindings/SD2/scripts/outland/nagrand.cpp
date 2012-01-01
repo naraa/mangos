@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: Nagrand
 SD%Complete: 90
-SDComment: Quest support: 9868, 9918, 9991, 10044, 10085, 10172, 10646. TextId's unknown for altruis_the_sufferer and greatmother_geyah (npc_text)
+SDComment: Quest support: 9868, 9918, 9948, 9991, 10044, 10085, 10172, 10646. TextId's unknown for altruis_the_sufferer and greatmother_geyah (npc_text)
 SDCategory: Nagrand
 EndScriptData */
 
@@ -27,6 +27,7 @@ npc_altruis_the_sufferer
 npc_greatmother_geyah
 npc_maghar_captive
 npc_creditmarker_visit_with_ancestors
+go_warmaul_prison
 EndContentData */
 
 #include "precompiled.h"
@@ -522,6 +523,44 @@ CreatureAI* GetAI_npc_creditmarker_visit_with_ancestors(Creature* pCreature)
     return new npc_creditmarker_visit_with_ancestorsAI(pCreature);
 }
 
+/*#####
+## go_warmaul_prison
+#####*/
+
+enum
+{
+    QUEST_FINDING_THE_SURVIVORS        = 9948,
+    SPELL_OPEN_WARMAUL_PRISON          = 32347,
+    NPC_MAGHAR_PRISONER                = 18428,
+    SAY_MAGHAR_THANKS_1                = -1000040,
+    SAY_MAGHAR_THANKS_2                = -1000041,
+    SAY_MAGHAR_THANKS_3                = -1000042,
+
+    SPELL_DESPAWN_SELF                 = 43014,
+};
+
+bool GOUse_go_warmaul_prison(Player* pPlayer, GameObject* pGo) 
+{
+    if (pPlayer->GetQuestStatus(QUEST_FINDING_THE_SURVIVORS) == QUEST_STATUS_INCOMPLETE)
+    {
+     Creature *pCreature = GetClosestCreatureWithEntry(pGo, NPC_MAGHAR_PRISONER, INTERACTION_DISTANCE);
+        if(pCreature)
+        {
+            pPlayer->CastedCreatureOrGO(NPC_MAGHAR_PRISONER, pCreature->GetObjectGuid(), SPELL_OPEN_WARMAUL_PRISON);
+                switch(urand(1,3))
+                {
+                    case 1: DoScriptText(SAY_MAGHAR_THANKS_1, pCreature); break;
+                    case 2: DoScriptText(SAY_MAGHAR_THANKS_2, pCreature); break;
+                    case 3: DoScriptText(SAY_MAGHAR_THANKS_3, pCreature); break;
+                }
+		
+            pCreature->CastSpell(pCreature, SPELL_DESPAWN_SELF, false);
+        }
+    }
+    return false;
+};
+
+
 /*######
 ## AddSC
 ######*/
@@ -557,5 +596,10 @@ void AddSC_nagrand()
     pNewScript = new Script;
     pNewScript->Name = "npc_creditmarker_visit_with_ancestors";
     pNewScript->GetAI = &GetAI_npc_creditmarker_visit_with_ancestors;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_warmaul_prison";
+    pNewScript->pGOUse = &GOUse_go_warmaul_prison;
     pNewScript->RegisterSelf();
 }
