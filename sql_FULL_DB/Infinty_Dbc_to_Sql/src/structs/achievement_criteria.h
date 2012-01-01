@@ -28,7 +28,7 @@
 
 char const *ACHIEVEMENT_CRITERIA_DBC    = "Achievement_Criteria.dbc";
 char const *ACHIEVEMENT_CRITERIA_SQL    = "Achievement_Criteria.sql";
-char const *ACHIEVEMENT_CRITERIA_TABLE  = "Achievement_Criteria_dbc";
+char const *ACHIEVEMENT_CRITERIA_TABLE  = "Achievement_Criteria_dbc_dev";
 
 #define ACHIEVEMENT_CRITERIA_DBC_CLIENT_BUILD   12340 // 3.3.5
 
