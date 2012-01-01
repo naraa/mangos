@@ -19,9 +19,29 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- note to self 
 -- 11686 is invis id
 
+-- make it fly instead of walking in the air
+-- DELETE FROM `creature_template_addon` WHERE `entry` = ??????;
+-- INSERT INTO `creature_template_addon`(`entry`, `mount`, `bytes1`, `b2_0_sheath`, `emote`, `moveflags`) VALUES (??????, 0, 33554432, 1, 0, 0);
+
 -- ----------------------------------------------------------------
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
+-- --------------------------------------------
+-- Quest Sniffing Out the Perpetrator (12855) -
+-- --------------------------------------------
+-- Can Be Completed
+-- NOT FIXED ALL THE WAY  BUT NEEDED SUPPORT FOR QUEST EVENT PART
+DELETE from creature_ai_scripts WHERE creature_id=29695;
+INSERT INTO creature_ai_scripts VALUES 
+(2969501,29695,10,0,100,1,0,15,2000,2000,33,29677,6,0,0,0,0,0,0,0,0,0,'Complete first quest objective after los event occured(quest 12855), NPC 29695');
+UPDATE creature_template SET 
+AIName='EventAI'
+WHERE entry=29695;
+DELETE from spell_scripts WHERE id=61122;
+INSERT INTO spell_scripts (id,delay,command,datalong,datalong2)VALUES
+(61122,0,15,55038,0);
+UPDATE creature_loot_template SET ChanceOrQuestChance=100, groupid=2 WHERE item=40971;
+UPDATE `creature_template` SET `modelid_2` = 1166, `minlevel` = 80, `maxlevel` = 80, `minhealth` = 12600, `maxhealth` = 12600, `armor` = 9729, `mindmg` = 1064, `maxdmg` = 1228 WHERE `entry` = 29677;
 
 -- -------------------
 -- Quest 11259/11245 -
