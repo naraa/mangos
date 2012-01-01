@@ -1,0 +1,303 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22\par
+Spell.dbc\par
+1 Structure\par
+2 SpellAttributes\par
+3 AuraStates\par
+4 ProcFlags\par
+`Spells` DBC\par
+Spells: The heart of everything.\par
+\par
+Version is : 3.3.5a\par
+\par
+Structure\par
+Column\tab  Field\tab  Type\tab  Notes\par
+1\tab  Id\tab  Integer\tab\par
+2\tab Category\tab  Integer\tab  Ref-ID\par
+3\tab Dispel\tab  Integer\tab  Ref-ID\par
+4\tab Mechanic\tab  Integer\tab  Ref-ID\par
+5-12\tab  Attributes\tab  Integer\tab  Bitmask; see below\par
+13\tab Stances\tab  Integer\tab  Ref-ID; Bitmask\par
+14\tab  Unknown\tab  Integer\tab  new in 3.2.0\par
+15\tab StancesNot\tab  Integer\tab  Ref-ID; Bitmask\par
+16\tab  Unknown\tab  Integer\tab  new in 3.2.0\par
+17\tab  Targets\tab  Integer\tab  ?\par
+18\tab TargetCreatureType\tab  Integer\tab  Ref-ID; Bitmask\par
+19\tab RequiresSpellFocus\tab  Integer\tab  Ref-ID\par
+20\tab  FacingCasterFlags\tab  Integer\tab  Bitmask\par
+21\tab  CasterAuraState\tab  Integer\tab  see below\par
+22\tab  TargetAuraState\tab  Integer\tab  "\par
+23\tab  CasterAuraStateNot\tab  Integer\tab  "\par
+24\tab  TargetAuraStateNot\tab  Integer\tab  "\par
+25\tab CasterAuraSpell\tab  Integer\tab  Ref-ID\par
+26\tab TargetAuraSpell\tab  Integer\tab  Ref-ID\par
+27\tab ExcludeCasterAuraSpell\tab  Integer\tab  Ref-ID\par
+28\tab ExcludeTargetAuraSpell\tab  Integer\tab  Ref-ID\par
+29\tab CastingTimeIndex\tab  Integer\tab  Ref-ID\par
+30\tab  RecoveryTime\tab  Integer\tab  in ms\par
+31\tab  CategoryRecoveryTime\tab  Integer\tab  in ms\par
+32\tab  InterruptFlags\tab  Integer\tab  Bitmask\par
+33\tab  AuraInterruptFlags\tab  Integer\tab  Bitmask\par
+34\tab  ChannelInterruptFlags\tab  Integer\tab  Bitmask\par
+35\tab  ProcFlags\tab  Integer\tab  Bitmask; see below\par
+36\tab  ProcChance\tab  Integer\tab\par
+37\tab  ProcCharges\tab  Integer\tab\par
+38\tab  MaxLevel\tab  Integer\tab\par
+39\tab  BaseLevel\tab  Integer\tab\par
+40\tab  SpellLevel\tab  Integer\tab\par
+41\tab DurationIndex\tab  Integer\tab  Ref-ID\par
+42\tab  PowerType\tab  Integer\tab  0=mana, 1=rage, 2=focus, 3=energy , 4=happiness, 5=rune, 6=runicPower, -2=health\par
+43\tab  PowerCost\tab  Integer\tab\par
+44\tab  PowerCostPerLevel\tab  Integer\tab\par
+45\tab  PowerPerSecond\tab  Integer\tab\par
+46\tab  PowerPerSecondPerLevel\tab  Integer\tab\par
+47\tab  RangeIndex\tab  Integer\tab\par
+48\tab  Speed\tab  Float\tab\par
+49\tab  ModalNextSpell\tab  Integer\tab\par
+50\tab  StackAmount\tab  Integer\tab\par
+51-52\tab Totem\tab  Integer\tab  Ref-ID; also used by item_template\par
+53-60\tab Reagent\tab  Integer\tab  Ref-ID; also used by item_template\par
+61-68\tab  ReagentCount\tab  Integer\tab\par
+69\tab EquippedItemClass\tab  Integer\tab  Ref-ID\par
+70\tab EquippedItemSubClassMask\tab  Integer\tab  Ref-ID; Bitmask\par
+71\tab  EquippedItemInventoryTypeMask\tab  Integer\tab  Bitmask\par
+72-74\tab  Effect\tab  Integer\tab\par
+75-77\tab  EffectDieSides3\tab  Integer\tab\par
+78-80\tab  EffectRealPointsPerLevel\tab  Float\tab\par
+81-83\tab  EffectBasePoints\tab  Integer\tab  don't must be used in spell/auras explicitly, must be used cached Spell::m_currentBasePoints\par
+84-86\tab EffectMechanic\tab  Integer\tab  Ref-ID\par
+87-89\tab  EffectImplicitTargetA\tab  Integer\tab\par
+90-92\tab  EffectImplicitTargetB\tab  Integer\tab\par
+93-95\tab EffectRadiusIndex\tab  Integer\tab  Ref-ID\par
+96-98\tab  EffectApplyAuraName\tab  Integer\tab\par
+99-101\tab  EffectAmplitude\tab  Integer\tab  in ms\par
+102-104\tab  EffectMultipleValue\tab  Float\tab  in ms\par
+105-107\tab  EffectChainTarget\tab  Integer\tab\par
+108-110\tab EffectItemType\tab  Integer\tab  also used by item_template\par
+111-113\tab  EffectMiscValue\tab  Integer\tab\par
+114-116\tab  EffectMiscValueB\tab  Integer\tab\par
+117-119\tab EffectTriggerSpell\tab  Integer\tab  Ref-ID\par
+120-122\tab  EffectPointsPerComboPoint\tab  Float\tab  ?\par
+123-125\tab  EffectSpellClassMaskA\tab  Integer\tab  Bitmask for effect 0\par
+126-128\tab  EffectSpellClassMaskB\tab  Integer\tab  Bitmask for effect 1\par
+129-131\tab  EffectSpellClassMaskC\tab  Integer\tab  Bitmask for effect 2\par
+132-133\tab SpellVisual\tab  Integer\tab  Ref-ID\par
+134\tab SpellIconID\tab  Integer\tab  Ref-ID\par
+135\tab ActiveIconID\tab  Integer\tab  Ref-ID\par
+136\tab  SpellPriority\tab  Integer\tab\par
+137-153\tab  SpellName\tab  String\tab Loc.\par
+154-170\tab  Rank\tab  String\tab Loc.\par
+171-187\tab  Description\tab  String\tab Loc.\par
+188-204\tab  ToolTip\tab  String\tab Loc.\par
+205\tab  ManaCostPercentage\tab  Integer\tab\par
+206\tab  StartRecoveryCategory\tab  Integer\tab\par
+207\tab  StartRecoveryTime\tab  Integer\tab  in ms\par
+208\tab  MaxTargetLevel\tab  Integer\tab\par
+209\tab  SpellFamilyName\tab  Integer\tab\par
+210-212\tab  SpellFamilyFlags\tab  Integer\tab  Bitmask\par
+213\tab  MaxAffectedTargets\tab  Integer\tab\par
+214\tab  DmgClass\tab  Integer\tab  0=none, 1=magic, 2=melee, 3=ranged\par
+215\tab  PreventionType\tab  Integer\tab  0=none, 1=silence, 2=pacify\par
+216\tab  StanceBarOrder\tab  Integer\tab\par
+217-219\tab  DmgMultiplier\tab  Float\tab\par
+220\tab ReqFactionId\tab  Integer\tab  Ref-ID\par
+221\tab  MinReputation\tab  Integer\tab\par
+222\tab  RequiredAuraVision\tab  Integer\tab\par
+223-224\tab TotemCategory\tab  Integer\tab  Ref-ID\par
+225\tab AreaGroupID\tab  Integer\tab  Ref-ID\par
+226\tab SchoolMask\tab  Integer\tab  Ref-ID; Bitmask\par
+227\tab RuneCostID\tab  Integer\tab  Ref-ID\par
+228\tab SpellMissileID\tab  Integer\tab  Ref-ID\par
+229\tab PowerDisplayID\tab  Integer\tab  Ref-ID\par
+230-232\tab  EffectBonusCoefficient\tab  Float\tab\par
+233\tab SpellDescriptionVariableID\tab  Integer\tab  Ref-ID\par
+234\tab SpellDifficultyID\tab  Integer\tab  Ref-ID\par
+SpellAttributes\par
+Attributes per Field. Unknown Attributes are not mapped\par
+These Flags are subject to ongoing interpretation.\par
+Flags\tab  Name\tab  Notes\par
+Field1\par
+0x00000002\tab  SPELL_ATTR_RANGED\tab  All ranged abilites have this flag\par
+0x00000004\tab  SPELL_ATTR_ON_NEXT_SWING_1\tab  on next swing\par
+0x00000020\tab  SPELL_ATTR_TRADESPELL\tab  trade spells, will be added by client to a sublist of profession spell\par
+0x00000040\tab  SPELL_ATTR_PASSIVE\tab  Passive spell\par
+0x00000080\tab  SPELL_ATTR0_HIDDEN_CLIENTSIDE\tab  Spells with this attribute are not visible in spellbook or aura bar\par
+0x00000100\tab  SPELL_ATTR0_HIDE_IN_COMBAT_LOG\tab  This attribite controls whether spell appears in combat logs\par
+0x00000400\tab  SPELL_ATTR_ON_NEXT_SWING_2\tab  on next swing 2\par
+0x00001000\tab  SPELL_ATTR_DAYTIME_ONLY\tab  only useable at daytime, not set in 2.4.2\par
+0x00002000\tab  SPELL_ATTR_NIGHT_ONLY\tab  only useable at night, not set in 2.4.2\par
+0x00004000\tab  SPELL_ATTR_INDOORS_ONLY\tab  only useable indoors, not set in 2.4.2\par
+0x00008000\tab  SPELL_ATTR_OUTDOORS_ONLY\tab  Only useable outdoors.\par
+0x00010000\tab  SPELL_ATTR_NOT_SHAPESHIFT\tab  Not while shapeshifted\par
+0x00020000\tab  SPELL_ATTR_ONLY_STEALTHED\tab  Must be in stealth\par
+0x00080000\tab  SPELL_ATTR_LEVEL_DAMAGE_CALCULATION\tab  spelldamage depends on caster level\par
+0x00100000\tab  SPELL_ATTR_STOP_ATTACK_TARGET\tab  Stop attack after use this spell (and not begin attack if use)\par
+0x00200000\tab  SPELL_ATTR_IMPOSSIBLE_DODGE_PARRY_BLOCK\tab  Cannot be dodged/parried/blocked\par
+0x00400000\tab  SPELL_ATTR_SET_TRACKING_TARGET\tab  SetTrackingTarget\par
+0x00800000\tab  SPELL_ATTR_CASTABLE_WHILE_DEAD\tab  castable while dead?\par
+0x01000000\tab  SPELL_ATTR_CASTABLE_WHILE_MOUNTED\tab  castable while mounted\par
+0x02000000\tab  SPELL_ATTR_DISABLED_WHILE_ACTIVE\tab  Activate and start cooldown after aura fade or remove summoned creature or go\par
+0x04000000\tab  SPELL_ATTR_NEGATIVE_1\tab\par
+0x08000000\tab  SPELL_ATTR_CASTABLE_WHILE_SITTING\tab  castable while sitting\par
+0x10000000\tab  SPELL_ATTR_CANT_USED_IN_COMBAT\tab  Cannot be used in combat\par
+0x20000000\tab  SPELL_ATTR_UNAFFECTED_BY_INVULNERABILITY\tab  unaffected by invulnerability (hmm possible not...)\par
+0x40000000\tab  SPELL_ATTR_BREAKABLE_BY_DAMAGE\tab\par
+0x80000000\tab  SPELL_ATTR_CANT_CANCEL\tab  positive aura can't be canceled\par
+Field2\par
+0x00000001\tab  SPELL_ATTR_EX_DISMISS_PET\tab  dismiss pet and not allow to summon new one?\par
+0x00000002\tab  SPELL_ATTR_EX_DRAIN_ALL_POWER\tab  use all power (Only paladin Lay of Hands and Bunyanize)\par
+0x00000004\tab  SPELL_ATTR_EX_CHANNELED_1\tab  channeled 1\par
+0x00000008\tab  SPELL_ATTR_EX_PUT_CASTER_IN_COMBAT\tab  spells that cause a caster to enter a combat\par
+0x00000020\tab  SPELL_ATTR_EX_NOT_BREAK_STEALTH\tab  Not break stealth\par
+0x00000040\tab  SPELL_ATTR_EX_CHANNELED_2\tab  channeled 2\par
+0x00000080\tab  SPELL_ATTR_EX_NEGATIVE\tab\par
+0x00000100\tab  SPELL_ATTR_EX_NOT_IN_COMBAT_TARGET\tab  Spell req target not to be in combat state\par
+0x00000400\tab  SPELL_ATTR_EX_NO_THREAT\tab  no generates threat on cast 100%\par
+0x00000800\tab  SPELL_ATTR_EX_UNK11\tab\par
+0x00001000\tab  SPELL_ATTR_EX_UNK12\tab\par
+0x00002000\tab  SPELL_ATTR_EX_USE_RADIUS_AS_MAX_DISTANCE\tab\par
+0x00004000\tab  SPELL_ATTR_EX_STACK_FOR_DIFF_CASTERS\tab\par
+0x00008000\tab  SPELL_ATTR_EX_DISPEL_AURAS_ON_IMMUNITY\tab  remove auras on immunity\par
+0x00010000\tab  SPELL_ATTR_EX_UNAFFECTED_BY_SCHOOL_IMMUNE\tab  unaffected by school immunity\par
+0x00020000\tab  SPELL_ATTR_EX_NOT_AUTOCASTABLE_BY_PET\tab\par
+0x00080000\tab  SPELL_ATTR_EX_CANT_TARGET_SELF\tab  Applies only to unit target - for example Divine Intervention (19752)\par
+0x00100000\tab  SPELL_ATTR_EX_REQ_TARGET_COMBO_POINTS\tab  Req combo points on target\par
+0x00400000\tab  SPELL_ATTR_EX_REQ_COMBO_POINTS\tab  Use combo points (in 4.x not required combo point target selected)\par
+0x10000000\tab  SPELL_ATTR_EX_IGNORE_IMMUNITY\tab\par
+0x40000000\tab  SPELL_ATTR_EX_ENABLE_AT_DODGE\tab  Overpower, Wolverine Bite\par
+Field3\par
+0x00000001\tab  SPELL_ATTR_EX2_ALLOW_DEAD_TARGET\tab\par
+0x00000004\tab  SPELL_ATTR_EX2_CANT_REFLECTED\tab   ? used for detect can or not spell reflected // do not need LOS (e.g. 18220 since 3.3.3)\par
+0x00000010\tab  SPELL_ATTR_EX2_ALWAYS_APPLY_MODIFIERS\tab\par
+0x00000020\tab  SPELL_ATTR_EX2_AUTOREPEAT_FLAG\tab\par
+0x00000800\tab  SPELL_ATTR_EX2_HEALTH_FUNNEL\tab\par
+0x00010000\tab  SPELL_ATTR_EX2_TAME_BEAST\tab\par
+0x00020000\tab  SPELL_ATTR_EX2_NOT_RESET_AUTO_ACTIONS\tab  suspend weapon timer instead of resetting it, (?Hunters Shot and Stings only have this flag?)\par
+0x00080000\tab  SPELL_ATTR_EX2_NOT_NEED_SHAPESHIFT\tab  does not necessarly need shapeshift\par
+0x00200000\tab  SPELL_ATTR_EX2_DAMAGE_REDUCED_SHIELD\tab  for ice blocks, pala immunity buffs, priest absorb shields, but used also for other spells -> not sure!\par
+0x20000000\tab  SPELL_ATTR_EX2_CANT_CRIT\tab  Spell can't crit\par
+0x40000000\tab  SPELL_ATTR_EX2_TRIGGERED_CAN_TRIGGER\tab  spell can trigger even if triggered\par
+0x80000000\tab  SPELL_ATTR_EX2_FOOD_BUFF\tab  Food or Drink Buff (like Well Fed)\par
+Field4\par
+0x00000008\tab  SPELL_ATTR_EX3_BLOCKABLE_SPELL\tab\par
+0x00000010\tab  SPELL_ATTR_EX3_REBIRTH\tab  only rebirth has this flag\par
+0x00000080\tab  SPELL_ATTR_EX3_STACK_FOR_DIFF_CASTERS\tab  create a separate (de)buff stack for each caster\par
+0x00000100\tab  SPELL_ATTR_EX3_PLAYERS_ONLY\tab\par
+0x00000200\tab  SPELL_ATTR_EX3_TRIGGERED_CAN_TRIGGER_2\tab  triggered from effect?\par
+0x00000400\tab  SPELL_ATTR_EX3_MAIN_HAND\tab  Main hand weapon required\par
+0x00000800\tab  SPELL_ATTR_EX3_BATTLEGROUND\tab  Can casted only on battleground\par
+0x00001000\tab  SPELL_ATTR_EX3_CAST_ON_DEAD\tab  target is a dead player (not every spell has this flag)\par
+0x00020000\tab  SPELL_ATTR_EX3_NO_INITIAL_AGGRO\tab  Causes no aggro if not missed\par
+0x00040000\tab  SPELL_ATTR_EX3_CANT_MISS\tab  Spell should always hit its target\par
+0x00080000\tab  SPELL_ATTR_EX3_DISABLE_PROC\tab  during aura proc no spells can trigger (20178, 20375)\par
+0x00100000\tab  SPELL_ATTR_EX3_DEATH_PERSISTENT\tab  Death persistent spells\par
+0x00400000\tab  SPELL_ATTR_EX3_REQ_WAND\tab  Req wand\par
+0x01000000\tab  SPELL_ATTR_EX3_REQ_OFFHAND\tab  Req offhand weapon\par
+0x04000000\tab  SPELL_ATTR_EX3_CAN_PROC_TRIGGERED\tab\par
+0x08000000\tab  SPELL_ATTR_EX3_DRAIN_SOUL\tab  only drain soul has this flag\par
+0x20000000\tab  SPELL_ATTR_EX3_NO_DONE_BONUS\tab  Ignore caster spellpower and done damage mods?\par
+Field5\par
+0x00000008\tab  SPELL_ATTR_EX4_CANT_PROC_FROM_SELFCAST\tab\par
+0x00000040\tab  SPELL_ATTR_EX4_NOT_STEALABLE\tab  although such auras might be dispellable, they cannot be stolen\par
+0x00000080\tab  SPELL_ATTR_EX4_TRIGGERED\tab  spells forced to be triggered\par
+0x00000100\tab  SPELL_ATTR_EX4_STACK_DOT_MODIFIER\tab  no effect on non DoTs?\par
+0x00000400\tab  SPELL_ATTR_EX4_SPELL_VS_EXTEND_COST\tab  Rogue Shiv have this flag\par
+0x00004000\tab  SPELL_ATTR_EX4_DAMAGE_DOESNT_BREAK_AURAS\tab  doesn't break auras by damage from these spells\par
+0x00010000\tab  SPELL_ATTR_EX4_NOT_USABLE_IN_ARENA\tab  not usable in arena\par
+0x00020000\tab  SPELL_ATTR_EX4_USABLE_IN_ARENA\tab  usable in arena\par
+0x00100000\tab  SPELL_ATTR_EX4_NOT_CHECK_SELFCAST_POWER\tab  do not give "more powerful spell" error message\par
+0x02000000\tab  SPELL_ATTR_EX4_PET_SCALING\tab  pet scaling auras\par
+0x04000000\tab  SPELL_ATTR_EX4_CAST_ONLY_IN_OUTLAND\tab  Can only be used in Outland.\par
+Field6\par
+0x00000002\tab  SPELL_ATTR_EX5_NO_REAGENT_WHILE_PREP\tab  not need reagents if UNIT_FLAG_PREPARATION\par
+0x00000008\tab  SPELL_ATTR_EX5_USABLE_WHILE_STUNNED\tab  usable while stunned\par
+0x00000020\tab  SPELL_ATTR_EX5_SINGLE_TARGET_SPELL\tab  Only one target can be apply at a time\par
+0x00000200\tab  SPELL_ATTR_EX5_START_PERIODIC_AT_APPLY\tab  begin periodic tick at aura apply\par
+0x00000400\tab  SPELL_ATTR_EX5_HIDE_DURATION\tab  do not send duration to client\par
+0x00002000\tab  SPELL_ATTR_EX5_HASTE_AFFECT_DURATION\tab  haste affects duration (e.g. 8050 since 3.3.3)\par
+0x00010000\tab  SPELL_ATTR_EX5SPECIAL_ITEM_CLASS_CHECK\tab  this allows spells with EquippedItemClass to affect spells from other items if the required item is equipped\par
+0x00020000\tab  SPELL_ATTR_EX5_USABLE_WHILE_FEARED\tab  usable while feared\par
+0x00040000\tab  SPELL_ATTR_EX5_USABLE_WHILE_CONFUSED\tab  usable while confused\par
+Field7\par
+0x00000002\tab  SPELL_ATTR_EX6_ONLY_IN_ARENA\tab  only usable in arena, not used in 3.2.0a and early\par
+0x00000004\tab  SPELL_ATTR_EX6_IGNORE_CASTER_AURAS\tab\par
+0x00000100\tab  SPELL_ATTR_EX6_IGNORE_CROWD_CONTROL_TARGETS\tab\par
+0x00000800\tab  SPELL_ATTR_EX6_NOT_IN_RAID_INSTANCE\tab  not usable in raid instance\par
+0x00200000\tab  SPELL_ATTR_EX6_CLIENT_UI_TARGET_EFFECTS\tab  clientside\par
+0x20000000\tab  SPELL_ATTR_EX6_NO_DMG_MODS\tab  do not apply damage mods (usually in cases where it has already been applied)\par
+Field8\par
+0x00000004\tab  SPELL_ATTR_EX7_PALADIN_AURA\tab\par
+0x00000008\tab  SPELL_ATTR_EX7_DISABLED_CLIENT_SIDE\tab  used only by client to disable spells client-side. some sort of special player flag (0x40000) bypasses that restriction\par
+0x00000020\tab  SPELL_ATTR_EX7_TOTEM_SPELL\tab  shaman summon totem spells\par
+0x00000100\tab  SPELL_ATTR_EX7_HORDE_ONLY\tab  Teleports, mounts and other spells.\par
+0x00000200\tab  SPELL_ATTR_EX7_ALLIANCE_ONLY\tab  Teleports, mounts and other spells.\par
+0x00000400\tab  SPELL_ATTR_EX7_DISPEL_CHARGES\tab  Dispel and Spellsteal individual charges instead of whole aura.\par
+0x00000800\tab  SPELL_ATTR_EX7_INTERRUPT_ONLY_NONPLAYER\tab\par
+0x00040000\tab  SPELL_ATTR_EX7_HAS_CHARGE_EFFECT\tab  Only spells that have Charge among effects.\par
+0x00080000\tab  SPELL_ATTR_EX7_ZONE_TELEPORT\tab  Teleports to specific zones.\par
+\par
+AuraStates\par
+AuraStates describe under which conditions a Spell may or may not be casted.\par
+If the conditions are not met, the Spell is disabled by the client.\par
+(C) used in caster aura state     (T) used in target aura state\par
+(c) used in caster aura state-not (t) used in target aura state-not\par
+ID\tab  Name\tab  Column\tab  Notes\par
+0\tab  AURA_STATE_NONE\tab  C\tab\par
+1\tab  AURA_STATE_DEFENSE\tab  C\tab\par
+2\tab  AURA_STATE_HEALTHLESS_20_PERCENT\tab  CcT\tab\par
+3\tab  AURA_STATE_BERSERKING\tab  C T\tab\par
+4\tab  AURA_STATE_FROZEN\tab   c t\tab\par
+5\tab  AURA_STATE_JUDGEMENT\tab  C\tab\par
+6\tab  AURA_STATE_UNKNOWN6\tab\tab\par
+7\tab  AURA_STATE_HUNTER_PARRY\tab  C\tab\par
+7\tab  AURA_STATE_ROGUE_ATTACK_FROM_STEALTH\tab  C\tab\par
+7\tab  AURA_STATE_UNKNOWN\tab   c\tab  creature cheap shot / focused bursts spells\par
+8\tab  AURA_STATE_UNKNOWN8\tab     t\tab  test spells\par
+9\tab  AURA_STATE_UNKNOWN9\tab\tab\par
+10\tab  AURA_STATE_WARRIOR_VICTORY_RUSH\tab  C\tab  warrior victory rush\par
+11\tab  AURA_STATE_UNKNOWN11\tab  C  t\tab  60348 - Maelstrom Ready!, test spells\par
+12\tab  AURA_STATE_FAERIE_FIRE\tab   c t\tab\par
+13\tab  AURA_STATE_HEALTHLESS_35_PERCENT\tab  C T\tab\par
+14\tab  AURA_STATE_CONFLAGRATE\tab    T\tab\par
+15\tab  AURA_STATE_SWIFTMEND\tab    T\tab\par
+16\tab  AURA_STATE_DEADLY_POISON\tab    T\tab\par
+17\tab  AURA_STATE_ENRAGE\tab  C\tab\par
+18\tab  AURA_STATE_BLEEDING\tab    T\tab\par
+19\tab  AURA_STATE_UNKNOWN19\tab\tab\par
+20\tab  AURA_STATE_UNKNOWN20\tab   c\tab  only (45317 Suicide)\par
+21\tab  AURA_STATE_UNKNOWN21\tab\tab  not used\par
+22\tab  AURA_STATE_UNKNOWN22\tab  C  t\tab  varius spells (63884, 50240)\par
+23\tab  AURA_STATE_HEALTH_ABOVE_75_PERCENT\tab  C\tab\par
+\par
+ProcFlags\par
+Spells, triggering other Spells may be limited by the following Flags. A 'proc' may only occur if one or more of these conditions are met.\par
+Additionally a roll agains the ProcChance-Field may be done.\par
+These Flags are subject to ongoing interpretation.\par
+Flag\tab  Name\tab  Notes\par
+0x00000000\tab  PROC_FLAG_NONE\tab  does not proc\par
+0x00000001\tab  PROC_FLAG_KILLED\tab  Killed by aggressor\par
+0x00000002\tab  PROC_FLAG_KILL\tab  Kill target (in most cases need XP/Honor reward)\par
+0x00000004\tab  PROC_FLAG_SUCCESSFUL_MELEE_HIT\tab  Successful melee auto attack\par
+0x00000008\tab  PROC_FLAG_TAKEN_MELEE_HIT\tab  Taken damage from melee auto attack hit\par
+0x00000010\tab  PROC_FLAG_SUCCESSFUL_MELEE_SPELL_HIT\tab  Successful attack by Spell that use melee weapon\par
+0x00000020\tab  PROC_FLAG_TAKEN_MELEE_SPELL_HIT\tab  Taken damage by Spell that use melee weapon\par
+0x00000040\tab  PROC_FLAG_SUCCESSFUL_RANGED_HIT\tab  Successful Ranged auto attack\par
+0x00000080\tab  PROC_FLAG_TAKEN_RANGED_HIT\tab  Taken damage from ranged auto attack\par
+0x00000100\tab  PROC_FLAG_SUCCESSFUL_RANGED_SPELL_HIT\tab  Successful Ranged attack by Spell that use ranged weapon\par
+0x00000200\tab  PROC_FLAG_TAKEN_RANGED_SPELL_HIT\tab  Taken damage by Spell that use ranged weapon\par
+0x00000400\tab  PROC_FLAG_SUCCESSFUL_POSITIVE_AOE_HIT\tab  Successful AoE (not 100% shure unused)\par
+0x00000800\tab  PROC_FLAG_TAKEN_POSITIVE_AOE\tab  Taken AoE (not 100% shure unused)\par
+0x00001000\tab  PROC_FLAG_SUCCESSFUL_AOE_SPELL_HIT\tab  Successful AoE damage spell hit (not 100% shure unused)\par
+0x00002000\tab  PROC_FLAG_TAKEN_AOE_SPELL_HIT\tab  Taken AoE damage spell hit (not 100% shure unused)\par
+0x00004000\tab  PROC_FLAG_SUCCESSFUL_POSITIVE_SPELL\tab  Successful cast positive spell (by default only on healing)\par
+0x00008000\tab  PROC_FLAG_TAKEN_POSITIVE_SPELL\tab  Taken positive spell hit (by default only on healing)\par
+0x00010000\tab  PROC_FLAG_SUCCESSFUL_NEGATIVE_SPELL_HIT\tab  Successful negative spell cast (by default only on damage)\par
+0x00020000\tab  PROC_FLAG_TAKEN_NEGATIVE_SPELL_HIT\tab  Taken negative spell (by default only on damage)\par
+0x00040000\tab  PROC_FLAG_ON_DO_PERIODIC\tab  Successful do periodic (damage / healing, determined by PROC_EX_PERIODIC_POSITIVE or negative if no procEx)\par
+0x00080000\tab  PROC_FLAG_ON_TAKE_PERIODIC\tab  Taken spell periodic (damage / healing, determined by PROC_EX_PERIODIC_POSITIVE or negative if no procEx)\par
+0x00100000\tab  PROC_FLAG_TAKEN_ANY_DAMAGE\tab  Taken any damage\par
+0x00200000\tab  PROC_FLAG_ON_TRAP_ACTIVATION\tab  On trap activation\par
+0x00400000\tab  PROC_FLAG_TAKEN_OFFHAND_HIT\tab  Taken off-hand melee attacks(not used)\par
+0x00800000\tab  PROC_FLAG_SUCCESSFUL_OFFHAND_HIT\tab  Successful off-hand melee attacks\par
+}
+ 

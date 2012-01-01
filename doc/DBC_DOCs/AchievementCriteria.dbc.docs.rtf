@@ -1,0 +1,307 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 `Achievement Criteria` DBC\par
+This DBC contains information, how Achievements are to be acquired.\par
+Version is : 3.3.5a\par
+Structure\par
+Column\tab  Field\tab  Type\tab  Notes\par
+1\tab  ID\tab  Integer\tab\par
+2\tab Achievement\tab  Integer\tab  Ref-ID; References the achievement this criteria is needed for.\par
+3\tab  Type\tab  Integer\tab  Which type is this criteria? This defines the rows below. See below.\par
+4\tab  AssetID\tab  Integer\tab  Main requirement\par
+5\tab  Quantity\tab  Integer\tab  Main requirement count\par
+6\tab  StartEvent\tab  Integer\tab  additional requirement 1 type\par
+7\tab  StartAsset\tab  Integer\tab  additional requirement 1 value\par
+8\tab  FailEvent\tab  Integer\tab  additional requirement 2 type\par
+9\tab  FailAsset\tab  Integer\tab  additional requirement 2 value\par
+10-25\tab  Description\tab String\tab Loc.; Criteria description.\par
+27\tab  Flags\tab  Integer\tab\par
+28\tab  TimerStartEvent\tab  Integer\tab\par
+29\tab  TimerAssetID\tab  Integer\tab\par
+30\tab  TimerAmount\tab  Integer\tab  Complete quest in %i seconds.\par
+31\tab  UIOrder\tab  Integer\par
+\par
+Information by type\par
+This describes rows 4 to 9 by type (row 3). There may be more types. Unlisted fields are zero.\par
+\par
+Type 0: KILL_CREATURE\par
+(Also used for player deaths.)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab Creature\tab  Integer\tab  IDs are also used by creature_template\par
+5\tab  Count\tab  Integer\tab\par
+\par
+Type 1: WIN_BG\par
+(There are further criterias instead just winning)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab MapID\tab  Integer\tab  Ref-ID\par
+5\tab  WinCount\tab  Integer\tab\par
+\par
+Type 5: REACH_LEVEL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  Level\tab  Integer\tab\par
+\par
+Type 7: REACH_SKILL_LEVEL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SkillID\tab  Integer\tab  Ref-ID\par
+5\tab  skillLevel\tab  Integer\tab\par
+\par
+Type 8: COMPLETE_ACHIEVEMENT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab Achievement\tab  Integer\tab  Ref-ID\par
+\par
+Type 9: COMPLETE_QUEST_COUNT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unused\tab  Integer\tab\par
+5\tab  TotalQuestCount\tab  Integer\tab\par
+\par
+Type 10: COMPLETE_DAILY_QUEST_DAILY\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unused\tab  Integer\tab\par
+5\tab  NumberOfDays\tab  Integer\tab\par
+\par
+Type 11: COMPLETE_QUESTS_IN_ZONE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab ZoneID\tab  Integer\tab  Ref-ID\par
+5\tab  QuestCount\tab  Integer\tab\par
+\par
+Type 14: COMPLETE_DAILY_QUEST\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  QuestCount\tab  Integer\tab\par
+\par
+Type 15: COMPLETE_BATTLEGROUND\par
+Type 16: DEATH_AT_MAP\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab MapID\tab  Integer\tab  Ref-ID\par
+\par
+Type 18: DEATH_IN_DUNGEON\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  ManLimit\tab  Integer\tab\par
+\par
+Type 19: COMPLETE_RAID\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  GroupSize\tab  Integer\tab  can be 5, 10 or 25\par
+\par
+Type 20: KILLED_BY_CREATURE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab CreatureID\tab  Integer\tab  IDs are also used by creature_template\par
+\par
+Type 24: FALL_WITHOUT_DYING\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  FallHeight\tab  Integer\tab\par
+\par
+Type 26: DEATHS_FROM\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab Environment\tab  Integer\tab  Ref-ID\par
+\par
+Type 27: COMPLETE_QUEST\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab QuestID\tab  Integer\tab  IDs are also used by quest_template\par
+5\tab  QuestCount\tab  Integer\par
+\par
+Type 28: BE_SPELL_TARGET\par
+Type 69: BE_SPELL_TARGET2\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SpellID\tab  Integer\tab  Ref-ID\par
+5\tab  SpellCount\tab  Integer\tab\par
+\par
+Type 29: CAST_SPELL\par
+Type 110: CAST_SPELL2\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SpellID\tab  Integer\tab  Ref-ID\par
+5\tab  CastCount\tab  Integer\tab\par
+\par
+Type 30: BG_OBJECTIVE_CAPTURE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  Objective\tab  Integer\tab  The same objectives in different BGs have different IDs\par
+5\tab  Count\tab  Integer\tab  how many captures required\par
+\par
+Type 31: HONORABLE_KILL_AT_AREA\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab AreaID\tab  Integer\tab  Ref-ID\par
+5\tab  KillCount\tab  Integer\tab\par
+\par
+Type 32: WIN_ARENA\par
+Type 33: PLAY_ARENA\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab MapID\tab  Integer\tab  Ref-ID\par
+\par
+Type 34: LEARN_SPELL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SpellID\tab  Integer\tab  Ref-ID\par
+\par
+Type 37: WIN_RATED_ARENA\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  Count\tab  Integer\tab\par
+6\tab  Flags\tab  Integer\tab  0x4: in a row\par
+\par
+Type 38: HIGHEST_TEAM_RATING\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  TeamType\tab  Integer\tab  \{2,3,5\}\par
+\par
+Type 39: REACH_TEAM_RATING\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  TeamType\tab  Integer\tab  \{2,3,5\}\par
+5\tab  TeamRating\tab  Integer\tab\par
+\par
+Type 40: LEARN_SKILL_LEVEL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SkillID\tab  Integer\tab  Ref-ID\par
+5\tab  SkillLevel\tab  Integer\tab  apprentice=1, journeyman=2, expert=3, artisan=4, master=5, grand master=6\par
+\par
+Type 36: OWN_ITEM\par
+Type 41: USE_ITEM\par
+Type 42: LOOT_ITEM\par
+Type 57: EQUIP_ITEM\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab ItemID\tab  Integer\tab  Ref-ID; IDs are also used by item_template\par
+5\tab  ItemCount\tab  Integer\tab\par
+\par
+Type 43: EXPLORE_AREA\par
+(This areaReference is NOT the index from AreaTable.dbc)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  AreaReference\tab  Integer\tab\par
+\par
+Type 44: OWN_RANK\par
+(This rank is NOT the index from CharTitles.dbc)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  rank\tab  Integer\tab\par
+\par
+Type 45: BUY_BANK_SLOT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  SlotCount\tab  Integer\tab\par
+\par
+Type 46: GAIN_REPUTATION\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab FactionID\tab  Integer\tab  Ref-ID\par
+5\tab  ReputationAmount\tab  Integer\tab  Total reputation amount, so 42000 = exalted\par
+\par
+Type 47: GAIN_EXALTED_REPUTATION\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  FactionCount\tab  Integer\tab\par
+\par
+Type 48: VISIT_BARBER_SHOP\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  VisitCount\tab  Integer\tab\par
+\par
+Type 49: EQUIP_EPIC_ITEM\par
+(Where is the required itemlevel stored?)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  ItemSlot\tab  Integer\tab\par
+\par
+Type 50: ROLL_NEED_ON_LOOT\par
+Tape 51: ROLL_GREED_ON_LOOT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  RollValue\tab  Integer\tab\par
+5\tab  Count\tab  Integer\tab\par
+\par
+Type 52: HK_CLASS\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab ClassID\tab  Integer\tab  Ref-ID\par
+5\tab  Count\tab  Integer\tab\par
+\par
+Type 53: HK_RACE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab RaceID\tab  Integer\tab  Ref-ID\par
+5\tab  Count\tab  Integer\tab\par
+\par
+Type 54: DO_EMOTE\par
+(where is the information about the target stored?)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab EmoteID\tab  Integer\tab  Ref-ID\par
+5\tab  Count\tab  Integer\tab  count of emotes, always required special target or requirements\par
+\par
+Type 13: DAMAGE_DONE\par
+Type 55: HEALING_DONE\par
+Type 56: GET_KILLING_BLOWS\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  Count\tab  Integer\tab\par
+6\tab  Flag\tab  Integer\tab  3 for battleground healing\par
+7\tab MapID\tab  Integer\tab  Ref-ID\par
+\par
+Type 62: MONEY_FROM_QUEST_REWARD\par
+Type 67: LOOT_MONEY\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  Amount\tab  Integer\tab  in copper\par
+\par
+Type 68: USE_GAMEOBJECT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab GameObjectID\tab  Integer\tab  IDs are also used by gameobject_template\par
+5\tab  UseCount\tab  Integer\tab\par
+\par
+Type 70: SPECIAL_PVP_KILL\par
+Are those special criteria stored in the dbc?\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  KillCount\tab  Integer\tab\par
+\par
+Type 72: FISH_IN_GAMEOBJECT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab GameObjectID\tab  Integer\tab  IDs are also used by gameobject_template\par
+5\tab  LootCount\tab  Integer\tab\par
+\par
+Type 75: LEARN_SKILLLINE_SPELLS\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SkillLineID\tab  Integer\tab  Ref-ID\par
+5\tab  SpellCount\tab  Integer\tab\par
+\par
+Type 76: WIN_DUEL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  DuelCount\tab  Integer\tab\par
+\par
+Type 96: HIGHEST_POWER\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  PowerType\tab  Integer\tab  0=mana, 1=rage, 3=energy, 6=runic power\par
+\par
+Type 97: HIGHEST_STAT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  StatType\tab  Integer\tab  0=str, 1=agi, 2=sta, 3=int, 4=spi\par
+\par
+Type 98: HIGHEST_SPELLPOWER\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SpellSchool\tab  Integer\tab  Ref-ID\par
+\par
+Type 100: HIGHEST_RATING\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  RatingType\tab  Integer\tab\par
+\par
+Type 109: LOOT_TYPE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  LootType\tab  Integer\tab  3=fishing, 2=pickpocket, 4=disenchant\par
+5\tab  LootTypeCount\tab  Integer\tab\par
+\par
+Type 112: LEARN_SKILL_LINE\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab SkillLine\tab  Integer\tab  Ref-ID\par
+5\tab  SpellCount\tab  Integer\tab\par
+\par
+Type 113: EARN_HONORABLE_KILL\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  KillCount\tab  Integer\tab\par
+\par
+Type 114: ACCEPTED_SUMMONS\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  unused\tab  Integer\tab  Here comes a 1 in, because it's a Statistic\par
+\par
+Type 115: ACHIVEMENTPOINTS_REACHED\par
+(only used for "Over Ninethousand". Amount not specified)\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  unknown\tab  Integer\tab\par
+\par
+Type 119: RANDOM_DUNGEON_PLAYERCOUNT\par
+Column\tab  Field\tab  Type\tab  Notes\par
+4\tab  unknown\tab  Integer\tab\par
+5\tab  PlayerCount\tab  Integer\tab\par
+}
+ 
