@@ -1,0 +1,365 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Creature loot template\par
+Contents [hide]\par
+1 General\par
+2 Structure\par
+3 Relations\par
+4 Description of the fields\par
+4.1 entry\par
+4.2 item\par
+4.3 ChanceOrQuestChance\par
+4.3.1 Plain entry\par
+4.3.2 Quest drop\par
+4.3.3 Chanced references\par
+4.3.4 Common remarks\par
+4.4 groupid\par
+4.5 mincountOrRef\par
+4.5.1 Template reference\par
+4.5.2 Group reference\par
+4.6 maxcount\par
+4.7 lootcondition\par
+4.8 condition_value\par
+5 Agreements\par
+5.1 Fishing haul\par
+5.2 Corpse loot\par
+5.3 Disenchant outcome\par
+5.4 Gameobject harvest\par
+5.5 Luggage contents\par
+5.6 Pocket pick-ups\par
+5.7 Prospecting outcome\par
+5.8 Skinning pulls\par
+6 Examples\par
+6.1 Simple examples\par
+6.1.1 Gameobject dropping a single non-quest item\par
+6.1.2 Creature having in the pocket single quest item\par
+6.1.3 Wrong definition: combined quest and non-quest chances\par
+6.2 Groups\par
+6.2.1 Simple skinning group\par
+6.2.2 Almost correct skinning loot\par
+6.2.3 Damnly wrong skinning loot\par
+Back to world database list of tables.\par
+\par
+The `*_loot_template` tables\par
+General\par
+\par
+Well, according to vocabulary the meaning of the word "loot" is good for corpse loot and may be for some gameobjects like chests but quite unfit for fishing "loot". Nevermind. We will use term "loot" here as "a set of items generated on an event for a player" and "loot definition" as "a set of rules for loot generation". And forget about vocabulary for a while.\par
+This table format is used for 11 different tables to generate different loot items for different things. The 11 tables are creature_loot_template, disenchant_loot_template, fishing_loot_template, gameobject_loot_template, item_loot_template, pickpocketing_loot_template, prospecting_loot_template, skinning_loot_template, quest_mail_loot_template, reference_loot_template, milling_loot_template. The general description here is valid for all 11 because the loot system is the same for all eleven.\par
+Loot templates define only items in the loot. See comments about money drop in corpse, pickpocketing and luggage loot in creature_template and item_template.\par
+Structure\par
+\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+entry\tab mediumint unsigned\tab NO\tab PRI\tab 0\tab\par
+item\tab mediumint unsigned\tab NO\tab PRI\tab 0\tab\par
+ChanceOrQuestChance\tab float\tab NO\tab\tab 100\tab\par
+groupid\tab tinyint\tab NO\tab\tab 0\tab\par
+mincountOrRef\tab mediumint\tab NO\tab\tab 1\tab\par
+maxcount\tab tinyint unsigned\tab NO\tab\tab 1\tab\par
+lootcondition\tab tinyint unsigned\tab NO\tab\tab 0\tab\par
+condition_value1\tab mediumint unsigned\tab NO\tab\tab 0\tab\par
+condition_value2\tab mediumint unsigned\tab NO\tab\tab 0\tab\par
+Relations\par
+\par
+The 11 tables have different relations with other DB tables.\par
+Loot table\tab Field\tab Relation\tab Related table\tab Field\tab Comment\par
+fishing_loot_template\tab  no relation\tab entry is linked with ID of the fishing zone or area\par
+entry\tab many <- many\tab creature_template |lootid\tab\par
+gameobject_loot_template\tab entry\tab many <- many\tab gameobject_template |data1\tab Only gameobject type 3 (GAMEOBJECT_TYPE_CHEST) or 25 (GAMEOBJECT_TYPE_FISHINGHOLE) use data1 as loot ID, for other types data1 is used in other ways\par
+item_loot_template\tab entry\tab many <- one\tab item_template\tab entry\tab\par
+disenchant_loot_template\tab entry\tab many <- many\tab item_template\tab DisenchantID\tab\par
+prospecting_loot_template\tab entry\tab many <- one\tab item_template\tab entry\tab\par
+milling_loot_template\tab entry\tab many <- one\tab item_template\tab entry\tab\par
+pickpocketing_loot_template\tab entry\tab many <- many\tab creature_template |pickpocketloot\tab\par
+skinning_loot_template\tab entry\tab many <- many\tab creature_template\tab skinloot\tab Can also store minable/herbable items gathered from creatures\par
+quest_mail_loot_template\tab entry\tab\tab quest_template |RewMailTemplateId\tab\par
+reference_loot_template\tab entry\tab many <- many\tab *_loot_template\tab -mincountOrRef\tab In case of negative mincountOrRef\par
+Description of the fields\par
+\par
+entry\par
+The ID of the loot definition (loot template). The rows with the same ID defines a single loot. \par
+It is often the same ID as the loot source (item, creature, etc) but when the link is made not on entry field of the Related table then ID can be different. For example, when several loot sources should provide the same loot, single loot definition can be used. In this case the loot sources have the same value in the link field.\par
+It is possible also to set up artificial loot templates which are not used directly at all as they have ID which are not referenced from the related source. Such "support templates" can be referenced from "normal" loot templates.\par
+When a common or artificial loot template is used a problem arises: what ID to use for that template? Depending on the loot table, different rules can be agreed on to simplify maintenance for the table. Moreover, such rules would be very handy but it seems at the moment there are very few rules explicitly defined.\par
+Agreements on entry field values are described there.\par
+item\par
+Template ID of the item which can be included into the loot.\par
+NOTE: For reference entries this field has no meaning and not used by the core in any way. Yet because of the PRIMARY KEY on the entry + item combination, this field will nonetheless need to be a unique number for each reference entry so that no indexing conflicts arise.\par
+ChanceOrQuestChance\par
+Meaning of that field is a bit different depending on its sign and the sign of mincountOrRef:\par
+Plain entry\par
+ChanceOrQuestChance > 0, mincountOrRef > 0\par
+Absolute value of ChanceOrQuestChance (actuallu just the value as it's positive in this case) signifies the percent chance that the item has to drop. Any floating point number is allowed but indeed any value larger that 100 will make the same result as 100.\par
+Quest drop\par
+ChanceOrQuestChance < 0, mincountOrRef > 0\par
+Just as for plain entries absolute value of ChanceOrQuestChance signifies the percent chance that the item has to drop. But in addition negative ChanceOrQuestChance informs the core that the item should be shown only to characters having appropriate quest. This means that even if item is dropped, in order to see it in the loot the player must have at least one quest that has the item ID in its ReqItemIdN fields or in its ReqSourceIdN fields. The player must also have less copies of the item than ReqItemCountN or ReqSourceCountN.\par
+Chanced references\par
+mincountOrRef < 0\par
+For negative mincountOrRef (reference entries) ChanceOrQuestChance signifies the percent chance that the reference has to be used. So it is very similar to plain entries meaning, just note that entire reference is skipped if the chance is missed.\par
+Negative and zero values of ChanceOrQuestChance make no sense for that case and should not be used.\par
+Common remarks\par
+Zero value of ChanceOrQuestChance is allowed for grouped entries only.\par
+(Non-zero) values of ChanceOrQuestChance in loot definition are multiplied by RATE_DROP_ITEMS (mangos config setting) during loot generation for references and non-reference entries, but not for grouped entries.\par
+groupid\par
+A group is a set of loot definitions processed in such a way that at any given looting event the loot generated can receive only 1 (or none) item from the items declared in the loot definitions of the group. Groups are formed by loot definitions having the same values of entry and groupid fields.\par
+A group may consists of explicitly-chanced (having non-zero ChanceOrQuestChance) and equal-chanced (ChanceOrQuestChance = 0) entries. Every equal-chanced entry of a group is considered having such a chance that: * all equal-chanced entries have the same chance * group chance (sum of chances of all entries) is 100%\par
+Of course group may consist of * only explicitly-chanced entries or * only equal-chanced entries or * entries of both type.\par
+The easies way to understand what are groups is to understand how core processes grouped entries:\par
+At loading time:\par
+groups are formed - all grouped entries with the same values of groupid and entry fields are gathered into two sets - one for explicitly-chanced entries and one for equal-chanced. Note that order of entries in the sets can not be defined by DB - you should assume that the entries are in an unknown order. But indeed every time core processes a group the entries are in some order, constant during processing.\par
+During loot generation:\par
+core rolls for explicitly-chanced entries (if any):\par
+a random number R is rolled in range 0 to 100 (floating point value).\par
+chance to drop is checked for every (explicitly-chanced) entry in the group:\par
+if R is less than absolute value of ChanceOrQuestChance of the entry then the entry 'wins': the item is included in the loot. Group processing stops, the rest of group entries are just skipped.\par
+if none of explicitly-chanced entries got its chance then equal-chanced part (if any) is processed:\par
+a random entry is selected from the set of equal-chanced entries and corresponding item is included in the loot.\par
+If nothing selected yet (this never happens if the group has some equal-chanced entries) - no item from the group is included into the loot.\par
+Let us use term group chance as the sum of ChanceOrQuestChance (absolute) values for the group. Please note that even one equal-chanced entry makes group chance to be 100% (provided that sum of explicit chances does not exceed 100%).\par
+If you understand the process you can understand the results:\par
+Not more than one item from a group may drop at any given time.\par
+If group chance is at least 100 then one item will be dropped for sure.\par
+If group chance does not exceed 100 then every item defined in group entries has exactly that chance to drop as set in ChanceOrQuestChance.\par
+If group chance is greater than 100 then some entries will lost a part of their chance (or even not be checked at all - that will be the case for all equal-chanced entries) whatever value takes the roll R. So for some items chance to drop will be less than their ChanceOrQuestChance. That is very bad and that is why having group chance > 100 is strictly prohibited.\par
+Processing of equal-chanced part takes much less time then of explicitly-chanced one. So usage of equal-chanced groups is recommended when possible.\par
+So now basic applications of the groups are clear:\par
+Groups with group chance of 100% generate exactly one item every time. This is needed quite often, for example such behavior is needed to define a loot template for tier item drop from a boss.\par
+Groups with group chance < 100 generate one or zero items every time keeping chances of every item unchanged. Such behavior is useful to limit maximum number of items in the loot.\par
+A single group may be defined for a set of items common for several loot sources. This could be very useful for decreasing DB size without any loss of data. See References for more details.\par
+There is no way to have a reference as a part of a group.\par
+\par
+Note: A group may contain definitions of non-quest drop, quest drop or both, but mixing non-quest and quest drop in a single group is not recommended.\par
+\par
+Note: The core has a limitation - only 16 non-quest items (money and items added into the loot for quests are not counted for this "16") may come into the loot. And this is not a caprice of core devs - the client has some constraints. As most of loots have much more than 16 possible items (sometimes several hundreds) so without groups there is a (little) chance that more than 16 items will be rolled for a given loot but player will be able to see (and take) only first 16 of them. With groups you can ensure that more than 16 items will never drop. If DB pretends to be a quality software it must have loot template definitions which ensure that not more than 16 plain entries and groups are defined for any loot template.\par
+\par
+Note: The core has no limitation for number of groups (except 255 by DB field size), but according to the previous note there is no need to use values greater than 16.\par
+\par
+mincountOrRef\par
+This field defines\par
+when positive: the minimum number of copies of the item that can drop in a single loot\par
+when negative: a reference to another template. Zero value makes no sense and should not be used.\par
+Meaning of positive values is quite clear and requires no additional comments. References can point to either a whole template or to single group of a template and decribed below.\par
+Template reference\par
+mincountOrRef < 0, group = 0\par
+Template reference asks core to process another loot template (having entry equal to "-mincountOrRef") and to include all items dropped for that template into current loot. Simple idea.\par
+Value of maxcount field is used as a repetition factor for references - the reference will be processed not just once but exactly maxcount times. So if the referenced template can produce 3 to 10 items (depending on luck) and value of maxcount is '5' then after processing of that reference 15 to 50 items will be added to the loot. An awful example, isn't it? Actually no good example for whole template reference repetition is known, but it is quite useful for group references sometimes.\par
+Be careful. Self references (loot template includes reference to itself) and loop references (loot template A includes reference to entire template B, loot template B includes reference to entire template A) are completely different from internal references. If you make a self-reference like\par
+INSERT INTO `creature_loot_template` (`entry`,`item`,`mincountOrRef`) VALUES ('21215','0','-21215');\par
+then the core will crash due to stack overflow at first attempt of loot 21215 processing. That is why self references and loop references are strictly forbidden.\par
+Group reference\par
+mincountOrRef < 0, group > 0\par
+Group reference asks core to process another loot template (having entry equal to "-mincountOrRef") only in the part of one group - with id equal to value of `groupid` field of the reference entry. So this reference may add only none or 1 item into the loot (provided maxcount is equal to 1).\par
+Meaning of maxcount field value is the same as described in Template reference.\par
+Note that there is no way to have a reference as a part of a group as such grouped reference would have the same format as reference to group described here.\par
+There are two types of group references:\par
+external reference when group reference row has entry different from entry of the referenced group\par
+internal reference when group reference row has the same entry as the referenced group.\par
+Basic usage of group references is to avoid repetition of group definitions when several loot sources have common parts of the loot. In this case it is possible:\par
+to define groups with the same contents (items/drop chances) again and again. The simpliest way, but very RAM consumable.\par
+to define the group once as a part of one of loot source loot definition and to include group references in loot definitions of the other loot sources instead of repeating group definition.\par
+to define the group once as a part of an artificial loot definition (having entry not corresponding to any source) and to include group references in loot definitions for every related loot source.\par
+The first way is deprecated, both second and third use external references. UDB recommends to use the third way.\par
+As references have chance to be processed it is possible to use them effiently for zone or world drop definitions. Those drops often have different chances for different loot sources (low/high skill gameobjects, non-elite/elite creatures etc) while having the same contents of the loot. The recommended way to define such drops is as following:\par
+to set up a group with 100% group chance in an artificial loot template (using equal-chanced entries when possible)\par
+to include references to that group into loot definition of every related loot source setting the drop chance for the reference.\par
+Some bosses drop more than one tier item (two or three). Loot statistics looks like the same group is rolled 2 or 3 times and every time an item (possible the same) is chosen. It is simple to define a group for single item, but how to define drop for the second and the third? We can:\par
+repeat group definition 2 (or 3) times with change of group id * define the group once and include 1 (or 2) internal references.\par
+define the group once as a part of an artificial loot definition and include 2 (or 3) external group references.\par
+define the group once as a part of an artificial loot definition and include an external group reference with repetition factor of 2 (or 3).\par
+The in-game results will be the same. But again - the first way is very inefficient and then deprecated. UDB recommends to use the forth way.\par
+maxcount\par
+For non-reference entries - the maximum number of copies of the item that can drop in a single loot.\par
+For references value of maxcount field is used as a repetition factor for references - the reference will be processed not just once but exactly maxcount times. This is designed to serve a single purpose: to make definition of tier token drops a bit simplier (tokens of a tier are defined as a 100%-chance group of an artificial template and bosses' loot templates include 100%-chanced reference to that group with repetition factor of 2 or 3 depending on the case). Using non-1 repetition factor for other things (references to a group with group chance less than 100% or chanced references with chance less than 100%) must be agreed with UDB devs first (and described here).\par
+Note: core rolls chance for any loot definition entry just one time - so if a references looses its chance it is skipped for the current loot completely whatever is maxcount value.\par
+lootcondition\par
+Value that represents a loot condition that must be filled in order for the item to drop. This field combined with condition_value1-2 fields can provide conditions on when an item can be dropped.\par
+0\tab  CONDITION_NONE\tab  Regular drop\par
+1\tab  CONDITION_AURA\tab  Player looting must have an aura active\par
+2\tab  CONDITION_ITEM\tab  Player must have a number of items in his/her inventory\par
+3\tab  CONDITION_ITEM_EQUIPPED\tab  Player must have an item equipped\par
+4\tab  CONDITION_ZONEID\tab  Player must be in a certain zone\par
+5\tab  CONDITION_REPUTATION_RANK\tab  Player must have a certain reputation rank with a certain faction\par
+6\tab  CONDITION_TEAM\tab  Player must be part of the specified team (Alliance or Horde)\par
+7\tab  CONDITION_SKILL\tab  Player must have a certain skill value\par
+8\tab  CONDITION_QUESTREWARDED\tab  Player must have completed a quest first\par
+9\tab  CONDITION_QUESTTAKEN\tab  Players must have the quest in the quest log and not completed yet\par
+10\tab  CONDITION_AD_COMMISSION_AURA\tab\par
+11\tab  CONDITION_NO_AURA\tab  Player looting must have no aura active mentioned in condition_value1\par
+12\tab  CONDITION_ACTIVE_EVENT\tab  The loot with that condition can be looted only while the Event (condition_value1) is active\par
+13\tab  CONDITION_AREA_FLAG\tab  player must not be in area (condition_value1)\par
+14\tab  CONDITION_RACE_CLASS\tab\par
+15\tab  CONDITION_LEVEL\tab  Player level #(condition_value1) 0, 1 or 2 (0: equal to, 1: equal or higher than, 2: equal or less than condition_value2)\par
+16\tab  CONDITION_NOITEM\tab  Player has no item# (condition_value1) count# (condition_value2)\par
+17\tab  CONDITION_SPELL\tab  spell id# (condition_value1) 0, 1 (0: has spell, 1: hasn't spell) (condition_value2)\par
+NOTE: For reference entries this field has no meaning, not used by the core in any way and should have the default value of 0.\par
+condition_value\par
+The values in the condition_value1 and condition_value2 fields depend on what condition was put in lootcondition.\par
+CONDITION_AURA\par
+condition_value1: The spell ID from where the aura came from.\par
+condition_value2: The effect index of the spell that applied the aura (0, 1, or 2)\par
+CONDITION_ITEM\par
+condition_value1: Item ID\par
+condition_value2: Count\par
+CONDITION_ITEM_EQUIPPED\par
+condition_value1: Item ID\par
+condition_value2: Always 0\par
+CONDITION_ZONEID\par
+condition_value1: Zone ID\par
+condition_value2: Always 0\par
+CONDITION_REPUTATION_RANK\par
+condition_value1: Faction ID\par
+condition_value2: Minimum rank\par
+CONDITION_TEAM\par
+condition_value1: Player team (469 - Alliance, 67 - Horde)\par
+condition_value2: Always 0\par
+CONDITION_SKILL\par
+condition_value1: Skill ID (SkillLine.dbc)\par
+condition_value2: Skill value needed\par
+CONDITION_QUESTREWARDED\par
+condition_value1: Quest ID\par
+condition_value2: Always 0\par
+CONDITION_QUESTTAKEN\par
+condition_value1: Quest ID\par
+condition_value2: Always 0\par
+CONDITION_NO_AURA\par
+condition_value1: The spell ID of the aura which have to be not active.\par
+condition_value2: The effect index of the spell that applied the aura (0, 1, or 2)\par
+CONDITION_ACTIVE_EVENT\par
+condition_value1: Event ID\par
+NOTE: For reference entries these fields have no meaning, not used by the core in any way and should have the default value of 0.\par
+Agreements\par
+\par
+These agreements are different for different loot tables. Mainly agreements defines rules for loot template IDs (entry) and groups\par
+Fishing haul\par
+For fishing_loot_template, ID is the zone or area ID from AreaTable.dbc (Note: Area IDs are not included in the link)\par
+Also an extra note on fishing_loot_template: if just one area ID is defined for a zone, then that whole zone ID is skipped and therefore all areas in that zone need to have entries in the table. Only when there doesn't exist any area entries for a zone does the core use the zone ID directly. Zone = Wetlands, Elwynn, etc; Area = Northshire, Lakeshire, etc.\par
+When several zones uses the same loot definition then\par
+the loot template of the zone with minimal ID (minID) should be defined without references\par
+the other zone with the same loot should have loot definition as a single reference to the minID loot definition\par
+Note: To be confirmed by UDB developers\par
+As successful fishing should give exactly 1 fish (with an exception for quest fishes) so non-quest part of every loot template should be\par
+or single plain entry with 100% drop chance\par
+or a single group with group chance equal to 100%\par
+or a reference to a template made according to previous two variants. It is recommended to use group references.\par
+When a fish is catched for a quest it becoms the second fish on the hook. Many people rolled on floor laughing but this is blizzlike and fortunately easy to implement. Just add necessary quest drop definition(s).\par
+Corpse loot\par
+For creature_loot_template basic approach is to use creature_template.lootid equal to creature_template.entry. But this results in great overhead in the loot table as\par
+many creatures use the same loot definition (well, stats on sites are similar due to the nature of random roll)\par
+even more creatures use same parts of loot definition That is why it is recommended to use grouping, group references and template references.\par
+Disenchant outcome\par
+Agreements for disenchant loot templates numbering is item.level*100 + item.quality where item is disenchanting target.\par
+As disenchanting should give exactly 1 type of shard/essence/dust/etc so every loot template should be\par
+or single plain entry with 100% drop chance\par
+or a single group with group chance equal to 100%\par
+There is no use for references here as the reference is done with the relation field. No quest drop at all.\par
+Gameobject harvest\par
+TBD\par
+Luggage contents\par
+TBD\par
+Pocket pick-ups\par
+Agreements for pickpocketing loot templates numbering is not known.\par
+TBD\par
+Prospecting outcome\par
+Agreements for prospecting loot templates numbering is not known.\par
+TBD\par
+Skinning pulls\par
+Agreements for skinning loot templates numbering is not known. It's a real pity as many creatures should use the same templates. In most cases mobs with the same family and level have very similar skinning statistics.\par
+As skinning should give exactly 1 type of skin/hide/etc so every loot template should be\par
+or single plain entry with 100% drop chance\par
+or single group with group chance equal to 100%\par
+There is no use for references here as the reference is done with the relation field.\par
+When a skin is pulled for a quest it becoms the second skin from the mob. Yes, funny. This is blizzlike and fortunately easy to implement. Just add necessary quest drop definition(s).\par
+Examples\par
+\par
+The example here mainly taken from current UDB (339) or from UDB forum. Often examples have several authors and it is uneasy to credit right people so: many thanks to ALL UDB devs and conributors.\par
+But please note that some (or even all) example may contain incorrect data and are shown just for demostration of different loot data organisation.\par
+Simple examples\par
+Gameobject dropping a single non-quest item\par
+# gameobject_template: entry=1622 name='Bruiseweed' type=3 data1=1419\par
+\par
+DELETE gameobject_loot_template WHERE entry=1419;\par
+INSERT INTO gameobject_loot_template\par
+  (entry, item, ChanceOrRef, QuestChanceOrGroup, mincount, maxcount, freeforall, lootcondition, condition_value1, condition_value2) \par
+VALUES   \par
+(1419, 2453, 100, 0, 1, 3, 0, 0, 0, 0);  # 100% drop a pile of 1 to 3 items [2453] 'Bruiseweed' \par
+Taking into account default values of the table the second query could be simplified with no change of data (`mincount` is left on cosmetic reasons as `maxcount` has a non-default value):\par
+gameobject_template: entry=1622 name='Bruiseweed' type=3 data1=1419 \par
+\par
+INSERT INTO gameobject_loot_template \par
+  (entry, item, ChanceOrRef, mincount, maxcount) \par
+VALUES \par
+  (1419, 2453, 100, 1, 3);  # 100% drop a pile of 1 to 3 items [2453] 'Bruiseweed' \par
+Creature having in the pocket single quest item\par
+ \par
+# creature_template: entry=6846, name='Defias Dockmaster', pickpocketloot=6846 \par
+# Note: link with pickpocketing_loot_template is on `pickpocketloot` field (which is equal to `entry` field in this case) \par
+\par
+DELETE pickpocketing_loot_template WHERE entry=6846;\par
+\par
+INSERT INTO pickpocketing_loot_template\par
+  (entry, item, ChanceOrRef, QuestChanceOrGroup, mincount, maxcount, freeforall, lootcondition, condition_value1, condition_value2) \par
+VALUES \par
+  (6846, 7675, 0, 100, 1, 1, 0, 0, 0, 0); \par
+Again, taking into account default values of the table the second query could be simplified with no change of data:\par
+ \par
+INSERT INTO pickpocketing_loot_template \par
+  (entry, item, ChanceOrRef, QuestChanceOrGroup) \par
+VALUES \par
+  (6846, 7675, 0, 100); \par
+Note that ChanceOrRef can not be skipped as it has default value of 100.\par
+Wrong definition: combined quest and non-quest chances\par
+ \par
+SELECT * FROM `pickpocketing_loot_template` WHERE `entry` = '20424'; \par
+entry\tab  item\tab  ChanceOrRef\tab  QuestChanceOrGroup\tab  mincount\tab  maxcount\tab  freeforall\tab  lootcondition\tab  condition_value1\tab  condition_value2\par
+20424\tab  422\tab  0.1\tab  100\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+20424\tab  929\tab  0.1\tab  100\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+20424\tab  4538\tab  0.1\tab  100\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+20424\tab  4542\tab  0.1\tab  100\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+20424\tab  5374\tab  0.1\tab  100\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+20424\tab  16882\tab  22.2222\tab  0\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+First 5 rows in the result are incorrect, ChanceOrRef and QuestChanceOrGroup should not be positive simultanously. See allowed combinations. The core does not crash encounering that, but non-quest chances are ignored.\par
+Groups\par
+Simple skinning group\par
+SELECT * FROM `skinning_loot_template` WHERE `entry` = '100003'; \par
+gives\par
+entry\tab  item\tab  ChanceOrRef\tab  QuestChanceOrGroup\tab  mincount\tab  maxcount\tab  freeforall\tab  lootcondition\tab  condition_value1\tab  condition_value2\par
+100003\tab  8170\tab  80\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+100003\tab  8171\tab  20\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+Quite correct. Used quite widely:\par
+ \par
+SELECT entry FROM `creature_template` WHERE `skinloot` = '100003'; \par
+gives\par
+ \par
+659 2707 4242 4243 5347 5440 6582 6583 6648 7376 8024 8025 8204 8302 8303 8925 8932 9032 9297 9521 9526 9527 10177 10204 10376 10596 10619 10717 10942 10979 10988 11181 11374 11671 11672 11710 11740 11741 11885 11896 11897 11956 12124 12125 12803 13160 13178 13221 13618 13676 13916 14283 14344 14476 14477 14566 14568 14732 14884 14943 14944 14945 14946 14947 14948 14965 14986 14988 15041 15114 15172 15204 15220 15316 15338 15718 \par
+Almost correct skinning loot\par
+SELECT * FROM `skinning_loot_template` WHERE `entry` = '5292'; \par
+gives\par
+entry\tab  item\tab  ChanceOrRef\tab  QuestChanceOrGroup\tab  mincount\tab  maxcount\tab  freeforall\tab  lootcondition\tab  condition_value1\tab  condition_value2\par
+5292\tab  4304\tab  49.655\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+5292\tab  4234\tab  43.1624\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+5292\tab  8169\tab  4.0984\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+5292\tab  4235\tab  3.0676\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+5292\tab  8973\tab  0\tab  80\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+Quest entry and a group. Would be good if group chance was 100, but it is only 99.9834. So on average at 166 skinning attempts over 1000 000 player will get an empty loot window (withuot considering quest skins which are very rare).\par
+Used for creadure with entry=5292 only.\par
+Damnly wrong skinning loot\par
+ \par
+SELECT * FROM `skinning_loot_template` WHERE `entry` = '10151'; \par
+gives\par
+entry\tab  item\tab  ChanceOrRef\tab  QuestChanceOrGroup\tab  mincount\tab  maxcount\tab  freeforall\tab  lootcondition\tab  condition_value1\tab  condition_value2\par
+10151\tab  8154\tab  60\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  8170\tab  48\tab  -1\tab  1\tab  2\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  4304\tab  40\tab  -1\tab  1\tab  2\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  8368\tab  5\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  8171\tab  4\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  8169\tab  3\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+ \par
+SELECT entry, name FROM `creature_template` WHERE `skinloot` = '10151'; \par
+gives\par
+entry\tab  name\par
+11614\tab  Bloodshot\par
+First problem the group chance is 160 that is much higher than 100. If by a case order of records in core (actually it is unknown) is such that chances of 60 and 40 are in the beginning then the rest of the group will never be processed. The result will be exacly the same is if the loot template was\par
+entry\tab  item\tab  ChanceOrRef\tab  QuestChanceOrGroup\tab  mincount\tab  maxcount\tab  freeforall\tab  lootcondition\tab  condition_value1\tab  condition_value2\par
+10151\tab  8154\tab  60\tab  -1\tab  1\tab  1\tab  0\tab  0\tab  0\tab  0\par
+10151\tab  4304\tab  40\tab  -1\tab  1\tab  2\tab  0\tab  0\tab  0\tab  0\par
+Moreover, skinloot in not equal to creature_template.entry and this is NOT a reference to the same loot - 10151 is used ONLY by creature 11614. And the last problem - wowhead has no data about this skinning loot of this pet at all...\par
+}
+ 

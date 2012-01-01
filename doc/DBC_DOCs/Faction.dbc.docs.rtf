@@ -1,0 +1,443 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Faction.dbc\par
+Contents [hide]\par
+1 Structure\par
+2 FactionFlags\par
+3 Content\par
+Back to DBC Files list.\par
+\par
+`Faction` DBC\par
+This DBC contains information on all of the base factions. These factions are unique and represent a faction with which a player can gain reputation.\par
+IMPORTANT: These values are used for ALL tables EXCEPT the creature_template and gameobject_template tables.\par
+Version is : 3.3.5a\par
+\par
+Structure\par
+Column\tab  Field\tab  Type\tab  Notes\par
+1\tab  ID\tab  Integer\tab\par
+2\tab  Index\tab  Integer\tab  -1 if reputation can't be gained\par
+3-6\tab BaseRaceMask\tab  Integer\tab  Ref-ID; Bitmask\par
+7-10\tab BaseClassMask\tab  Integer\tab  Ref-ID; Bitmask\par
+11-14\tab  BaseValue\tab  Integer\tab  value characters start with; 0 = Neutral\par
+15-18\tab  Flags\tab  Integer\tab  Bitmask; see below\par
+19\tab ParentFaction\tab  Integer\tab  Ref-ID\par
+20-21\tab  ParentFactionMod\tab  Float\tab  Spillover: incoming rep * ParentFactionMod\par
+22-23\tab  ParentFactionCap\tab  integer\tab  Cap until spillover happens\par
+24-40\tab  Name\tab  String\tab Loc.\par
+41-57\tab  Description\tab  String\tab Loc.\par
+\par
+FactionFlags\par
+0x00 FACTION_FLAG_NONE               no faction flag\par
+0x01 FACTION_FLAG_VISIBLE            makes visible in client (set or can be set at interaction with target of this faction)\par
+0x02 FACTION_FLAG_AT_WAR             enable AtWar-button in client. player controlled (except opposition team always war state)\par
+0x04 FACTION_FLAG_HIDDEN             hidden faction from reputation pane in client (player can gain reputation, but this update not sent to client)\par
+0x08 FACTION_FLAG_INVISIBLE_FORCED   always overwrite FACTION_FLAG_VISIBLE and hide faction in rep.list, used for hide opposite team factions\par
+0x10 FACTION_FLAG_PEACE_FORCED       always overwrite FACTION_FLAG_AT_WAR, used for prevent war with own team factions\par
+0x20 FACTION_FLAG_INACTIVE           player controlled, state stored in characters.data (CMSG_SET_FACTION_INACTIVE)\par
+0x40 FACTION_FLAG_RIVAL              flag for the two competing outland factions\par
+0x80 FACTION_FLAG_SPECIAL            horde and alliance home cities and their Northrend allies have this flag\par
+\par
+Content\par
+ID\tab  index\tab  ParentFaction\tab  Name\par
+1\tab  -1\tab  0\tab  PLAYER, Human\par
+2\tab  -1\tab  0\tab  PLAYER, Orc\par
+3\tab  -1\tab  0\tab  PLAYER, Dwarf\par
+4\tab  -1\tab  0\tab  PLAYER, Night Elf\par
+5\tab  -1\tab  0\tab  PLAYER, Undead\par
+6\tab  -1\tab  0\tab  PLAYER, Tauren\par
+7\tab  -1\tab  0\tab  Creature\par
+8\tab  -1\tab  0\tab  PLAYER, Gnome\par
+9\tab  -1\tab  0\tab  PLAYER, Troll\par
+14\tab  -1\tab  0\tab  Monster\par
+15\tab  -1\tab  0\tab  Defias Brotherhood\par
+16\tab  -1\tab  0\tab  Gnoll - Riverpaw\par
+17\tab  -1\tab  0\tab  Gnoll - Redridge\par
+18\tab  -1\tab  0\tab  Gnoll - Shadowhide\par
+19\tab  -1\tab  0\tab  Murloc\par
+20\tab  -1\tab  0\tab  Undead, Scourge\par
+21\tab  1\tab  169\tab  Booty Bay\par
+22\tab  -1\tab  0\tab  Beast - Spider\par
+23\tab  -1\tab  0\tab  Beast - Boar\par
+24\tab  -1\tab  0\tab  Worgen\par
+25\tab  -1\tab  0\tab  Kobold\par
+26\tab  -1\tab  0\tab  Troll, Bloodscalp\par
+27\tab  -1\tab  0\tab  Troll, Skullsplitter\par
+28\tab  -1\tab  0\tab  Prey\par
+29\tab  -1\tab  0\tab  Beast - Wolf\par
+30\tab  -1\tab  0\tab  Defias Brotherhood Traitor\par
+31\tab  -1\tab  0\tab  Friendly\par
+32\tab  -1\tab  0\tab  Trogg\par
+33\tab  -1\tab  0\tab  Troll, Frostmane\par
+34\tab  -1\tab  0\tab  Orc, Blackrock\par
+35\tab  -1\tab  0\tab  Villian\par
+36\tab  -1\tab  0\tab  Victim\par
+37\tab  -1\tab  0\tab  Beast - Bear\par
+38\tab  -1\tab  0\tab  Ogre\par
+39\tab  -1\tab  0\tab  Kurzen's Mercenaries\par
+40\tab  -1\tab  0\tab  Escortee\par
+41\tab  -1\tab  0\tab  Venture Company\par
+42\tab  -1\tab  0\tab  Beast - Raptor\par
+43\tab  -1\tab  0\tab  Basilisk\par
+44\tab  -1\tab  0\tab  Dragonflight, Green\par
+45\tab  -1\tab  0\tab  Lost Ones\par
+46\tab  29\tab  0\tab  Blacksmithing - Armorsmithing\par
+47\tab  20\tab  469\tab  Ironforge\par
+48\tab  -1\tab  0\tab  Dark Iron Dwarves\par
+49\tab  -1\tab  0\tab  Human, Night Watch\par
+50\tab  -1\tab  0\tab  Dragonflight, Red\par
+51\tab  -1\tab  0\tab  Gnoll - Mosshide\par
+52\tab  -1\tab  0\tab  Orc, Dragonmaw\par
+53\tab  -1\tab  0\tab  Gnome - Leper\par
+54\tab  18\tab  469\tab  Gnomeregan Exiles\par
+55\tab  -1\tab  0\tab  Leopard\par
+56\tab  -1\tab  0\tab  Scarlet Crusade\par
+57\tab  -1\tab  0\tab  Gnoll - Rothide\par
+58\tab  -1\tab  0\tab  Beast - Gorilla\par
+59\tab  4\tab  1118\tab  Thorium Brotherhood\par
+60\tab  -1\tab  0\tab  Naga\par
+61\tab  -1\tab  0\tab  Dalaran\par
+62\tab  -1\tab  0\tab  Forlorn Spirit\par
+63\tab  -1\tab  0\tab  Darkhowl\par
+64\tab  -1\tab  0\tab  Grell\par
+65\tab  -1\tab  0\tab  Furbolg\par
+66\tab  -1\tab  0\tab  Horde Generic\par
+67\tab  12\tab  1118\tab  Horde\par
+68\tab  17\tab  67\tab  Undercity\par
+69\tab  21\tab  469\tab  Darnassus\par
+70\tab  6\tab  0\tab  Syndicate\par
+71\tab  -1\tab  0\tab  Hillsbrad Militia\par
+72\tab  19\tab  469\tab  Stormwind\par
+73\tab  -1\tab  0\tab  Demon\par
+74\tab  -1\tab  0\tab  Elemental\par
+75\tab  -1\tab  0\tab  Spirit\par
+76\tab  14\tab  67\tab  Orgrimmar\par
+77\tab  -1\tab  0\tab  Treasure\par
+78\tab  -1\tab  0\tab  Gnoll - Mudsnout\par
+79\tab  -1\tab  0\tab  HIllsbrad, Southshore Mayor\par
+80\tab  -1\tab  0\tab  Dragonflight, Black\par
+81\tab  16\tab  67\tab  Thunder Bluff\par
+82\tab  -1\tab  0\tab  Troll, Witherbark\par
+83\tab  23\tab  0\tab  Leatherworking - Elemental\par
+84\tab  -1\tab  0\tab  Quilboar, Razormane\par
+85\tab  -1\tab  0\tab  Quilboar, Bristleback\par
+86\tab  22\tab  0\tab  Leatherworking - Dragonscale\par
+87\tab  0\tab  1118\tab  Bloodsail Buccaneers\par
+88\tab  -1\tab  0\tab  Blackfathom\par
+89\tab  -1\tab  0\tab  Makrura\par
+90\tab  -1\tab  0\tab  Centaur, Kolkar\par
+91\tab  -1\tab  0\tab  Centaur, Galak\par
+92\tab  2\tab  1118\tab  Gelkis Clan Centaur\par
+93\tab  3\tab  1118\tab  Magram Clan Centaur\par
+94\tab  -1\tab  0\tab  Maraudine\par
+108\tab  -1\tab  0\tab  Theramore\par
+109\tab  -1\tab  0\tab  Quilboar, Razorfen\par
+110\tab  -1\tab  0\tab  Quilboar, Razormane 2\par
+111\tab  -1\tab  0\tab  Quilboar, Deathshead\par
+128\tab  -1\tab  0\tab  Enemy\par
+148\tab  -1\tab  0\tab  Ambient\par
+168\tab  -1\tab  0\tab  Nethergarde Caravan\par
+169\tab  10\tab  1118\tab  Steamwheedle Cartel\par
+189\tab  -1\tab  0\tab  Alliance Generic\par
+209\tab  -1\tab  0\tab  Nethergarde\par
+229\tab  -1\tab  0\tab  Wailing Caverns\par
+249\tab  -1\tab  0\tab  Silithid\par
+269\tab  -1\tab  0\tab  Silvermoon Remnant\par
+270\tab  51\tab  1118\tab  Zandalar Tribe\par
+289\tab  30\tab  0\tab  Blacksmithing - Weaponsmithing\par
+309\tab  -1\tab  0\tab  Scorpid\par
+310\tab  -1\tab  0\tab  Beast - Bat\par
+311\tab  -1\tab  0\tab  Titan\par
+329\tab  -1\tab  0\tab  Taskmaster Fizzule\par
+349\tab  5\tab  1118\tab  Ravenholdt\par
+369\tab  7\tab  169\tab  Gadgetzan\par
+389\tab  -1\tab  0\tab  Gnomeregan Bug\par
+409\tab  -1\tab  0\tab  Harpy\par
+429\tab  -1\tab  0\tab  Burning Blade\par
+449\tab  -1\tab  0\tab  Shadowsilk Poacher\par
+450\tab  -1\tab  0\tab  Searing Spider\par
+469\tab  11\tab  1118\tab  Alliance\par
+470\tab  9\tab  169\tab  Ratchet\par
+471\tab  8\tab  0\tab  Wildhammer Clan\par
+489\tab  -1\tab  0\tab  Goblin, Dark Iron Bar Patron\par
+509\tab  53\tab  891\tab  The League of Arathor\par
+510\tab  52\tab  892\tab  The Defilers\par
+511\tab  -1\tab  0\tab  Giant\par
+529\tab  13\tab  1118\tab  Argent Dawn\par
+530\tab  15\tab  67\tab  Darkspear Trolls\par
+531\tab  -1\tab  0\tab  Dragonflight, Bronze\par
+532\tab  -1\tab  0\tab  Dragonflight, Blue\par
+549\tab  24\tab  0\tab  Leatherworking - Tribal\par
+550\tab  26\tab  0\tab  Engineering - Goblin\par
+551\tab  25\tab  0\tab  Engineering - Gnome\par
+569\tab  33\tab  0\tab  Blacksmithing - Hammersmithing\par
+570\tab  31\tab  0\tab  Blacksmithing - Axesmithing\par
+571\tab  32\tab  0\tab  Blacksmithing - Swordsmithing\par
+572\tab  -1\tab  0\tab  Troll, Vilebranch\par
+573\tab  -1\tab  0\tab  Southsea Freebooters\par
+574\tab  34\tab  0\tab  Caer Darrow\par
+575\tab  -1\tab  0\tab  Furbolg, Uncorrupted\par
+576\tab  35\tab  1118\tab  Timbermaw Hold\par
+577\tab  28\tab  169\tab  Everlook\par
+589\tab  27\tab  0\tab  Wintersaber Trainers\par
+609\tab  36\tab  1118\tab  Cenarion Circle\par
+629\tab  -1\tab  0\tab  Shatterspear Trolls\par
+630\tab  -1\tab  0\tab  Ravasaur Trainers\par
+649\tab  -1\tab  0\tab  Majordomo Executus\par
+669\tab  -1\tab  0\tab  Beast - Carrion Bird\par
+670\tab  -1\tab  0\tab  Beast - Cat\par
+671\tab  -1\tab  0\tab  Beast - Crab\par
+672\tab  -1\tab  0\tab  Beast - Crocilisk\par
+673\tab  -1\tab  0\tab  Beast - Hyena\par
+674\tab  -1\tab  0\tab  Beast - Owl\par
+675\tab  -1\tab  0\tab  Beast - Scorpid\par
+676\tab  -1\tab  0\tab  Beast - Tallstrider\par
+677\tab  -1\tab  0\tab  Beast - Turtle\par
+678\tab  -1\tab  0\tab  Beast - Wind Serpent\par
+679\tab  -1\tab  0\tab  Training Dummy\par
+689\tab  -1\tab  0\tab  Dragonflight, Black - Bait\par
+709\tab  -1\tab  0\tab  Battleground Neutral\par
+729\tab  41\tab  892\tab  Frostwolf Clan\par
+730\tab  40\tab  891\tab  Stormpike Guard\par
+749\tab  42\tab  1118\tab  Hydraxian Waterlords\par
+750\tab  -1\tab  0\tab  Sulfuron Firelords\par
+769\tab  -1\tab  0\tab  Gizlock's Dummy\par
+770\tab  -1\tab  0\tab  Gizlock's Charm\par
+771\tab  -1\tab  0\tab  Gizlock\par
+789\tab  -1\tab  0\tab  Moro'gai\par
+790\tab  -1\tab  0\tab  Spirit Guide - Alliance\par
+809\tab  44\tab  1118\tab  Shen'dralar\par
+829\tab  -1\tab  0\tab  Ogre (Captain Kromcrush)\par
+849\tab  -1\tab  0\tab  Spirit Guide - Horde\par
+869\tab  -1\tab  0\tab  Jaedenar\par
+889\tab  46\tab  892\tab  Warsong Outriders\par
+890\tab  45\tab  891\tab  Silverwing Sentinels\par
+891\tab  47\tab  1118\tab  Alliance Forces\par
+892\tab  48\tab  1118\tab  Horde Forces\par
+893\tab  -1\tab  0\tab  Revantusk Trolls\par
+909\tab  50\tab  1118\tab  Darkmoon Faire\par
+910\tab  54\tab  1118\tab  Brood of Nozdormu\par
+911\tab  55\tab  67\tab  Silvermoon City\par
+912\tab  -1\tab  0\tab  Might of Kalimdor\par
+914\tab  -1\tab  0\tab  PLAYER, Blood Elf\par
+915\tab  -1\tab  0\tab  Armies of C'Thun\par
+916\tab  -1\tab  0\tab  Silithid Attackers\par
+917\tab  -1\tab  0\tab  The Ironforge Brigade\par
+918\tab  -1\tab  0\tab  RC Enemies\par
+919\tab  -1\tab  0\tab  RC Objects\par
+920\tab  -1\tab  0\tab  Red\par
+921\tab  -1\tab  0\tab  Blue\par
+922\tab  56\tab  1118\tab  Tranquillien\par
+923\tab  -1\tab  0\tab  Farstriders\par
+924\tab  -1\tab  0\tab  DEPRECATED\par
+925\tab  -1\tab  0\tab  Sunstriders\par
+926\tab  -1\tab  0\tab  Magister's Guild\par
+927\tab  -1\tab  0\tab  PLAYER, Draenei\par
+928\tab  -1\tab  0\tab  Scourge Invaders\par
+929\tab  -1\tab  469\tab  Bloodmaul Clan\par
+930\tab  49\tab  469\tab  Exodar\par
+931\tab  -1\tab  0\tab  Test Faction (not a real faction)\par
+932\tab  58\tab  936\tab  The Aldor\par
+933\tab  60\tab  980\tab  The Consortium\par
+934\tab  62\tab  936\tab  The Scryers\par
+935\tab  39\tab  936\tab  The Sha'tar\par
+936\tab  59\tab  980\tab  Shattrath City\par
+937\tab  -1\tab  0\tab  Troll, Forest\par
+938\tab  -1\tab  0\tab  The Omenai\par
+939\tab  -1\tab  0\tab  DEPRECATED\par
+940\tab  -1\tab  0\tab  The Sons of Lothar\par
+941\tab  61\tab  980\tab  The Mag'har\par
+942\tab  64\tab  980\tab  Cenarion Expedition\par
+943\tab  -1\tab  0\tab  Fel Orc\par
+944\tab  -1\tab  0\tab  Fel Orc Ghost\par
+945\tab  -1\tab  0\tab  Sons of Lothar Ghosts\par
+946\tab  38\tab  980\tab  Honor Hold\par
+947\tab  37\tab  980\tab  Thrallmar\par
+948\tab  86\tab  949\tab  Test Faction 2\par
+949\tab  85\tab  0\tab  Test Faction 1\par
+950\tab  -1\tab  0\tab  ToWoW - Flag\par
+951\tab  -1\tab  0\tab  ToWoW - Flag Trigger Alliance (DND)\par
+952\tab  87\tab  948\tab  Test Faction 3\par
+953\tab  -1\tab  0\tab  Test Faction 4\par
+954\tab  -1\tab  0\tab  ToWoW - Flag Trigger Horde (DND)\par
+955\tab  -1\tab  0\tab  Broken\par
+956\tab  -1\tab  0\tab  Ethereum\par
+957\tab  -1\tab  0\tab  Earth Elemental\par
+958\tab  -1\tab  0\tab  Fighting Robots\par
+959\tab  -1\tab  0\tab  Actor Good\par
+960\tab  -1\tab  0\tab  Actor Evil\par
+961\tab  -1\tab  0\tab  Stillpine Furbolg\par
+962\tab  -1\tab  0\tab  Crazed Owlkin\par
+963\tab  -1\tab  0\tab  Chess Alliance\par
+964\tab  -1\tab  0\tab  Chess Horde\par
+965\tab  -1\tab  0\tab  Monster Spar\par
+966\tab  -1\tab  0\tab  Monster Spar Buddy\par
+967\tab  63\tab  980\tab  The Violet Eye\par
+968\tab  -1\tab  0\tab  Sunhawks\par
+969\tab  -1\tab  0\tab  Hand of Argus\par
+970\tab  65\tab  980\tab  Sporeggar\par
+971\tab  -1\tab  0\tab  Fungal Giant\par
+972\tab  -1\tab  0\tab  Spore Bat\par
+973\tab  -1\tab  0\tab  Monster, Predator\par
+974\tab  -1\tab  0\tab  Monster, Prey\par
+975\tab  -1\tab  0\tab  Void Anomaly\par
+976\tab  -1\tab  0\tab  Hyjal Defenders\par
+977\tab  -1\tab  0\tab  Hyjal Invaders\par
+978\tab  66\tab  980\tab  Kurenai\par
+979\tab  -1\tab  0\tab  Earthen Ring\par
+980\tab  43\tab  0\tab  The Burning Crusade\par
+981\tab  -1\tab  0\tab  Arakkoa\par
+982\tab  -1\tab  0\tab  Zangarmarsh Banner (Alliance)\par
+983\tab  -1\tab  0\tab  Zangarmarsh Banner (Horde)\par
+984\tab  -1\tab  0\tab  Zangarmarsh Banner (Neutral)\par
+985\tab  -1\tab  0\tab  Caverns of Time - Thrall\par
+986\tab  -1\tab  0\tab  Caverns of Time - Durnholde\par
+987\tab  -1\tab  0\tab  Caverns of Time - Southshore Guards\par
+988\tab  -1\tab  0\tab  Shadow Council Covert\par
+989\tab  67\tab  980\tab  Keepers of Time\par
+990\tab  57\tab  980\tab  The Scale of the Sands\par
+991\tab  -1\tab  0\tab  Dark Portal Defender, Alliance\par
+992\tab  -1\tab  0\tab  Dark Portal Defender, Horde\par
+993\tab  -1\tab  0\tab  Dark Portal Attacker, Legion\par
+994\tab  -1\tab  0\tab  Inciter Trigger\par
+995\tab  -1\tab  0\tab  Inciter Trigger 2\par
+996\tab  -1\tab  0\tab  Inciter Trigger 3\par
+997\tab  -1\tab  0\tab  Inciter Trigger 4\par
+998\tab  -1\tab  0\tab  Inciter Trigger 5\par
+999\tab  -1\tab  0\tab  Mana Creature\par
+1000\tab  -1\tab  0\tab  Khadgar's Servant\par
+1001\tab  -1\tab  0\tab  Bladespire Clan\par
+1002\tab  -1\tab  0\tab  Ethereum Sparbuddy\par
+1003\tab  -1\tab  0\tab  Protectorate\par
+1004\tab  -1\tab  0\tab  Arcane Annihilator (DNR)\par
+1005\tab  68\tab  0\tab  Friendly, Hidden\par
+1006\tab  -1\tab  0\tab  Kirin'Var - Dathric\par
+1007\tab  -1\tab  0\tab  Kirin'Var - Belmara\par
+1008\tab  -1\tab  0\tab  Kirin'Var - Luminrath\par
+1009\tab  -1\tab  0\tab  Kirin'Var - Cohlien\par
+1010\tab  -1\tab  0\tab  Servant of Illidan\par
+1011\tab  69\tab  936\tab  Lower City\par
+1012\tab  70\tab  980\tab  Ashtongue Deathsworn\par
+1013\tab  -1\tab  0\tab  Spirits of Shadowmoon 1\par
+1014\tab  -1\tab  0\tab  Spirits of Shadowmoon 2\par
+1015\tab  71\tab  980\tab  Netherwing\par
+1016\tab  -1\tab  0\tab  Wyrmcult\par
+1017\tab  -1\tab  0\tab  Treant\par
+1018\tab  -1\tab  0\tab  Leotheras Demon I\par
+1019\tab  -1\tab  0\tab  Leotheras Demon II\par
+1020\tab  -1\tab  0\tab  Leotheras Demon III\par
+1021\tab  -1\tab  0\tab  Leotheras Demon IV\par
+1022\tab  -1\tab  0\tab  Leotheras Demon V\par
+1023\tab  -1\tab  0\tab  Azaloth\par
+1024\tab  -1\tab  0\tab  Rock Flayer\par
+1025\tab  -1\tab  0\tab  Flayer Hunter\par
+1026\tab  -1\tab  0\tab  Shadowmoon Shade\par
+1027\tab  -1\tab  0\tab  Legion Communicator\par
+1028\tab  -1\tab  0\tab  Ravenswood Ancients\par
+1029\tab  -1\tab  0\tab  Chess, Friendly to All Chess\par
+1030\tab  -1\tab  0\tab  Black Temple Gates - Illidari\par
+1031\tab  72\tab  936\tab  Sha'tari Skyguard\par
+1032\tab  -1\tab  0\tab  Area 52\par
+1033\tab  -1\tab  0\tab  Maiev\par
+1034\tab  -1\tab  0\tab  Skettis Shadowy Arakkoa\par
+1035\tab  -1\tab  0\tab  Skettis Arakkoa\par
+1036\tab  -1\tab  0\tab  Dragonmaw Enemy\par
+1037\tab  88\tab  1097\tab  Alliance Vanguard\par
+1038\tab  73\tab  980\tab  Ogri'la\par
+1039\tab  -1\tab  0\tab  Ravager\par
+1040\tab  -1\tab  0\tab  REUSE\par
+1041\tab  -1\tab  0\tab  Frenzy\par
+1042\tab  -1\tab  0\tab  Skyguard Enemy\par
+1043\tab  -1\tab  0\tab  Skunk, Petunia\par
+1044\tab  -1\tab  0\tab  Theramore Deserter\par
+1045\tab  -1\tab  0\tab  Vrykul\par
+1046\tab  -1\tab  0\tab  Northsea Pirates\par
+1047\tab  -1\tab  0\tab  Tuskarr\par
+1048\tab  -1\tab  0\tab  UNUSED\par
+1049\tab  -1\tab  0\tab  Troll, Amani\par
+1050\tab  74\tab  1037\tab  Valiance Expedition\par
+1051\tab  -1\tab  0\tab  UNUSED\par
+1052\tab  75\tab  1097\tab  Horde Expedition\par
+1053\tab  -1\tab  0\tab  Westguard\par
+1054\tab  -1\tab  0\tab  Spotted Gryphon\par
+1055\tab  -1\tab  0\tab  Tamed Plaguehound\par
+1056\tab  -1\tab  0\tab  Vrykul (Ancient Spirit 1)\par
+1057\tab  -1\tab  0\tab  Vrykul (Ancient Siprit 2)\par
+1058\tab  -1\tab  0\tab  Vrykul (Ancient Siprit 3)\par
+1059\tab  -1\tab  0\tab  CTF - Flag - Alliance\par
+1060\tab  -1\tab  0\tab  Test\par
+1061\tab  -1\tab  0\tab  vrykul\par
+1062\tab  -1\tab  0\tab  Vrykul Gladiator\par
+1063\tab  -1\tab  0\tab  Valgarde Combatant\par
+1064\tab  76\tab  1052\tab  The Taunka\par
+1065\tab  -1\tab  0\tab  Monster, Zone Force Reaction 1\par
+1066\tab  -1\tab  0\tab  Monster, Zone Force Reaction 2\par
+1067\tab  77\tab  1052\tab  The Hand of Vengeance\par
+1068\tab  78\tab  1037\tab  Explorers' League\par
+1069\tab  -1\tab  0\tab  Ram Racing Powerup DND\par
+1070\tab  -1\tab  0\tab  Ram Racing Trap DND\par
+1071\tab  -1\tab  0\tab  Craig's Squirrels\par
+1072\tab  -1\tab  0\tab  REUSE\par
+1073\tab  79\tab  1097\tab  The Kalu'ak\par
+1074\tab  -1\tab  0\tab  Holiday - Water Barrel\par
+1075\tab  -1\tab  0\tab  Holiday - Generic\par
+1076\tab  -1\tab  0\tab  Iron Dwarves\par
+1077\tab  80\tab  936\tab  Shattered Sun Offensive\par
+1078\tab  -1\tab  0\tab  Fighting Vanity Pet\par
+1079\tab  -1\tab  0\tab  Murloc, Winterfin\par
+1080\tab  -1\tab  0\tab  Friendly, Force Reaction\par
+1081\tab  -1\tab  0\tab  Object, Force Reaction\par
+1082\tab  82\tab  0\tab  REUSE\par
+1083\tab  -1\tab  0\tab  REUSE\par
+1084\tab  -1\tab  0\tab  Vrykul, Sea\par
+1085\tab  81\tab  1052\tab  Warsong Offensive\par
+1086\tab  -1\tab  0\tab  Poacher\par
+1087\tab  -1\tab  0\tab  Holiday Monster\par
+1088\tab  -1\tab  0\tab  Furbolg, Redfang\par
+1089\tab  -1\tab  0\tab  Furbolg, Frostpaw\par
+1090\tab  84\tab  1097\tab  Kirin Tor\par
+1091\tab  83\tab  1097\tab  The Wyrmrest Accord\par
+1092\tab  -1\tab  0\tab  Azjol-Nerub\par
+1093\tab  -1\tab  0\tab  REUSE\par
+1094\tab  90\tab  1037\tab  The Silver Covenant\par
+1095\tab  -1\tab  0\tab  Grizzly Hills Trapper\par
+1096\tab  -1\tab  0\tab  REUSE\par
+1097\tab  89\tab  0\tab  Wrath of the Lich King\par
+1098\tab  91\tab  1097\tab  Knights of the Ebon Blade\par
+1099\tab  -1\tab  0\tab  Wrathgate Scourge\par
+1100\tab  -1\tab  0\tab  Wrathgate Alliance\par
+1101\tab  -1\tab  0\tab  Wrathgate Horde\par
+1102\tab  -1\tab  0\tab  CTF - Flag - Horde\par
+1103\tab  -1\tab  0\tab  CTF - Flag - Neutral\par
+1104\tab  92\tab  1117\tab  Frenzyheart Tribe\par
+1105\tab  93\tab  1117\tab  The Oracles\par
+1106\tab  94\tab  1097\tab  Argent Crusade\par
+1107\tab  -1\tab  0\tab  Troll, Drakkari\par
+1108\tab  -1\tab  0\tab  CoT Arthas\par
+1109\tab  -1\tab  0\tab  CoT Stratholme Citizen\par
+1110\tab  -1\tab  0\tab  CoT Scourge\par
+1111\tab  -1\tab  0\tab  Freya\par
+1112\tab  -1\tab  0\tab  Mount - Taxi - Alliance\par
+1113\tab  -1\tab  0\tab  Mount - Taxi - Horde\par
+1114\tab  -1\tab  0\tab  Mount - Taxi - Neutral\par
+1115\tab  -1\tab  0\tab  Elemental, Water\par
+1116\tab  -1\tab  0\tab  Elemental, Air\par
+1117\tab  95\tab  1097\tab  Sholazar Basin\par
+1118\tab  96\tab  0\tab  Classic\par
+1119\tab  97\tab  1097\tab  The Sons of Hodir\par
+1120\tab  -1\tab  0\tab  Iron Giants\par
+1121\tab  -1\tab  0\tab  Frost Vrykul\par
+1122\tab  -1\tab  0\tab  Earthen\par
+1123\tab  -1\tab  0\tab  Monster Referee\par
+1124\tab  98\tab  1052\tab  The Sunreavers\par
+1125\tab  -1\tab  0\tab  Hyldsmeet\par
+1126\tab  99\tab  1037\tab  The Frostborn\par
+1127\tab  -1\tab  0\tab  Orgrimmar (Alex Test)\par
+1136\tab  100\tab  0\tab  Tranquillien Conversion\par
+1137\tab  101\tab  0\tab  Wintersaber Conversion\par
+1145\tab  -1\tab  0\tab  Hates Everything\par
+1154\tab  102\tab  0\tab  Silver Covenant Conversion\par
+1155\tab  103\tab  0\tab  Sunreavers Conversion\par
+1156\tab  104\tab  1097\tab  The Ashen Verdict\par
+1159\tab  -1\tab  0\tab  CTF - Flag - Alliance 2\par
+1160\tab  -1\tab  0\tab  CTF - Flag - Horde 2\par
+}
+ 

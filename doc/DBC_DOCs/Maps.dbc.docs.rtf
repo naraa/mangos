@@ -1,0 +1,170 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Maps.dbc\par
+Contents [hide]\par
+1 Structure\par
+2 Content\par
+Back to DBC Files list.\par
+\par
+`Maps` DBC\par
+This DBC contains the maps list.\par
+Version is : 3.3.5a\par
+Structure\par
+Column\tab  Field\tab  Type\tab  Notes\par
+1\tab  ID\tab  Integer\par
+2\tab  InternalName\tab  String\tab  reference to World\\Map\\ [...] \\\par
+3\tab  Flags\tab  Integer\tab  0x100 - CAN_CHANGE_PLAYER_DIFFICULTY\par
+4\tab  Type\tab  Integer\tab  0: none, 1: party, 2: raid, 3: pvp, 4: arena, >=5: none (official from "IsInInstance()")\par
+5\tab  IsBattlegorund\tab  Integer\tab  Boolean\par
+6-22\tab  Name\tab  String\tab Loc.; displayed on World Map for example\par
+23\tab AreaTableID\tab  Integer\tab  Ref-ID;\par
+24-40\tab  MapDescriptionA\tab  String\tab Loc.\par
+41-57\tab  MapDescriptionH\tab  String\tab Loc.\par
+58\tab LoadingScreen\tab  Integer\tab  Ref-ID; The LoadingScreen to Display\par
+59\tab  BGMapIconScale\tab  Float\tab\par
+60\tab GhostEntranceMap\tab  Integer\tab  Ref-ID; Points to column 1, -1 if none\par
+61\tab  GhostEntranceX\tab  Float\tab  The X-Coord of the instance entrance\par
+62\tab  GhostEntranceY\tab  Float\tab  The Y-Coord of the instance entrance\par
+63\tab  TimeOfDayOverride\tab  Integer\tab  Set to -1 for everything but Orgrimmar and Dalaran arena. For those, the time of day will change to this.\par
+64\tab  Expansion\tab  Integer\tab  Classic: 0; BC: 1; WotLK: 2\par
+65\tab  RaidOffset\tab  Integer\tab  Instance-Reset?\par
+66\tab  MaxPlayers\tab  Integer\tab\par
+\par
+Content\par
+ID\tab  Type\tab  Name\tab  AreaTableID\tab  Expansion\tab  MaxPlayers\par
+0\tab  0\tab  Eastern Kingdoms\tab  0\tab  0\tab  0\par
+1\tab  0\tab  Kalimdor\tab  0\tab  0\tab  0\par
+13\tab  0\tab  Testing\tab  3817\tab  0\tab  0\par
+25\tab  0\tab  Scott Test\tab  0\tab  0\tab  0\par
+30\tab  3\tab  Alterac Valley\tab  0\tab  0\tab  0\par
+33\tab  1\tab  Shadowfang Keep\tab  0\tab  0\tab  10\par
+34\tab  1\tab  Stormwind Stockade\tab  717\tab  0\tab  10\par
+35\tab  0\tab  <unused>StormwindPrison\tab  717\tab  0\tab  0\par
+36\tab  1\tab  Deadmines\tab  0\tab  0\tab  10\par
+37\tab  0\tab  Azshara Crater\tab  0\tab  0\tab  0\par
+42\tab  0\tab  Collin's Test\tab  0\tab  0\tab  0\par
+43\tab  1\tab  Wailing Caverns\tab  718\tab  0\tab  10\par
+44\tab  1\tab  <unused> Monastery\tab  0\tab  0\tab  10\par
+47\tab  1\tab  Razorfen Kraul\tab  0\tab  0\tab  10\par
+48\tab  1\tab  Blackfathom Deeps\tab  719\tab  0\tab  10\par
+70\tab  1\tab  Uldaman\tab  1337\tab  0\tab  10\par
+90\tab  1\tab  Gnomeregan\tab  721\tab  0\tab  10\par
+109\tab  1\tab  Sunken Temple\tab  1477\tab  0\tab  10\par
+129\tab  1\tab  Razorfen Downs\tab  0\tab  0\tab  10\par
+169\tab  2\tab  Emerald Dream\tab  0\tab  0\tab  40\par
+189\tab  1\tab  Scarlet Monastery\tab  0\tab  0\tab  10\par
+209\tab  1\tab  Zul'Farrak\tab  0\tab  0\tab  10\par
+229\tab  1\tab  Blackrock Spire\tab  1583\tab  0\tab  10\par
+230\tab  1\tab  Blackrock Depths\tab  1584\tab  0\tab  5\par
+249\tab  2\tab  Onyxia's Lair\tab  2159\tab  0\tab  40\par
+269\tab  1\tab  Opening of the Dark Portal\tab  0\tab  1\tab  5\par
+289\tab  1\tab  Scholomance\tab  0\tab  0\tab  5\par
+309\tab  2\tab  Zul'Gurub\tab  1977\tab  0\tab  20\par
+329\tab  1\tab  Stratholme\tab  0\tab  0\tab  5\par
+349\tab  1\tab  Maraudon\tab  2100\tab  0\tab  10\par
+369\tab  0\tab  Deeprun Tram\tab  2257\tab  0\tab  0\par
+389\tab  1\tab  Ragefire Chasm\tab  2437\tab  0\tab  10\par
+409\tab  2\tab  Molten Core\tab  2717\tab  0\tab  40\par
+429\tab  1\tab  Dire Maul\tab  2557\tab  0\tab  5\par
+449\tab  0\tab  Alliance PVP Barracks\tab  2918\tab  0\tab  0\par
+450\tab  0\tab  Horde PVP Barracks\tab  2917\tab  0\tab  0\par
+451\tab  0\tab  Development Land\tab  0\tab  2\tab  0\par
+469\tab  2\tab  Blackwing Lair\tab  2677\tab  0\tab  40\par
+489\tab  3\tab  Warsong Gulch\tab  3277\tab  0\tab  0\par
+509\tab  2\tab  Ruins of Ahn'Qiraj\tab  3429\tab  0\tab  20\par
+529\tab  3\tab  Arathi Basin\tab  3358\tab  0\tab  0\par
+530\tab  0\tab  Outland\tab  0\tab  1\tab  0\par
+531\tab  2\tab  Ahn'Qiraj Temple\tab  3428\tab  0\tab  40\par
+532\tab  2\tab  Karazhan\tab  3457\tab  1\tab  10\par
+533\tab  2\tab  Naxxramas\tab  3456\tab  2\tab  25\par
+534\tab  2\tab  The Battle for Mount Hyjal\tab  616\tab  1\tab  25\par
+540\tab  1\tab  Hellfire Citadel: The Shattered Halls\tab  3714\tab  1\tab  5\par
+542\tab  1\tab  Hellfire Citadel: The Blood Furnace\tab  3713\tab  1\tab  5\par
+543\tab  1\tab  Hellfire Citadel: Ramparts\tab  3562\tab  1\tab  5\par
+544\tab  2\tab  Magtheridon's Lair\tab  3836\tab  1\tab  25\par
+545\tab  1\tab  Coilfang: The Steamvault\tab  3715\tab  1\tab  5\par
+546\tab  1\tab  Coilfang: The Underbog\tab  3716\tab  1\tab  5\par
+547\tab  1\tab  Coilfang: The Slave Pens\tab  3717\tab  1\tab  5\par
+548\tab  2\tab  Coilfang: Serpentshrine Cavern\tab  3607\tab  1\tab  25\par
+550\tab  2\tab  Tempest Keep\tab  3845\tab  1\tab  25\par
+552\tab  1\tab  Tempest Keep: The Arcatraz\tab  3848\tab  1\tab  5\par
+553\tab  1\tab  Tempest Keep: The Botanica\tab  3847\tab  1\tab  5\par
+554\tab  1\tab  Tempest Keep: The Mechanar\tab  3849\tab  1\tab  5\par
+555\tab  1\tab  Auchindoun: Shadow Labyrinth\tab  3789\tab  1\tab  5\par
+556\tab  1\tab  Auchindoun: Sethekk Halls\tab  3791\tab  1\tab  5\par
+557\tab  1\tab  Auchindoun: Mana-Tombs\tab  3792\tab  1\tab  5\par
+558\tab  1\tab  Auchindoun: Auchenai Crypts\tab  3790\tab  1\tab  5\par
+559\tab  4\tab  Nagrand Arena\tab  0\tab  0\tab  0\par
+560\tab  1\tab  The Escape From Durnholde\tab  267\tab  1\tab  5\par
+562\tab  4\tab  Blade's Edge Arena\tab  3702\tab  0\tab  0\par
+564\tab  2\tab  Black Temple\tab  0\tab  1\tab  25\par
+565\tab  2\tab  Gruul's Lair\tab  3923\tab  1\tab  25\par
+566\tab  3\tab  Eye of the Storm\tab  0\tab  1\tab  0\par
+568\tab  2\tab  Zul'Aman\tab  0\tab  1\tab  10\par
+571\tab  0\tab  Northrend\tab  0\tab  2\tab  0\par
+572\tab  4\tab  Ruins of Lordaeron\tab  0\tab  0\tab  0\par
+573\tab  0\tab  ExteriorTest\tab  0\tab  2\tab  0\par
+574\tab  1\tab  Utgarde Keep\tab  0\tab  2\tab  5\par
+575\tab  1\tab  Utgarde Pinnacle\tab  0\tab  2\tab  5\par
+576\tab  1\tab  The Nexus\tab  4265\tab  2\tab  5\par
+578\tab  1\tab  The Oculus\tab  0\tab  2\tab  5\par
+580\tab  2\tab  The Sunwell\tab  0\tab  1\tab  25\par
+582\tab  0\tab  Transport: Rut'theran to Auberdine\tab  0\tab  0\tab  0\par
+584\tab  0\tab  Transport: Menethil to Theramore\tab  0\tab  0\tab  0\par
+585\tab  1\tab  Magister's Terrace\tab  0\tab  1\tab  5\par
+586\tab  0\tab  Transport: Exodar to Auberdine\tab  0\tab  0\tab  0\par
+587\tab  0\tab  Transport: Feathermoon Ferry\tab  0\tab  0\tab  0\par
+588\tab  0\tab  Transport: Menethil to Auberdine\tab  0\tab  0\tab  0\par
+589\tab  0\tab  Transport: Orgrimmar to Grom'Gol\tab  0\tab  0\tab  0\par
+590\tab  0\tab  Transport: Grom'Gol to Undercity\tab  0\tab  0\tab  0\par
+591\tab  0\tab  Transport: Undercity to Orgrimmar\tab  0\tab  0\tab  0\par
+592\tab  0\tab  Transport: Borean Tundra Test\tab  0\tab  0\tab  0\par
+593\tab  0\tab  Transport: Booty Bay to Ratchet\tab  0\tab  0\tab  0\par
+594\tab  0\tab  Transport: Howling Fjord Sister Mercy (Quest)\tab  0\tab  2\tab  0\par
+595\tab  1\tab  The Culling of Stratholme\tab  0\tab  2\tab  5\par
+596\tab  0\tab  Transport: Naglfar\tab  0\tab  2\tab  0\par
+597\tab  0\tab  Craig Test\tab  0\tab  0\tab  0\par
+598\tab  1\tab  Sunwell Fix (Unused)\tab  0\tab  1\tab  5\par
+599\tab  1\tab  Halls of Stone\tab  0\tab  2\tab  5\par
+600\tab  1\tab  Drak'Tharon Keep\tab  0\tab  2\tab  5\par
+601\tab  1\tab  Azjol-Nerub\tab  0\tab  2\tab  5\par
+602\tab  1\tab  Halls of Lightning\tab  0\tab  2\tab  5\par
+603\tab  2\tab  Ulduar\tab  0\tab  2\tab  5\par
+604\tab  1\tab  Gundrak\tab  0\tab  2\tab  5\par
+605\tab  0\tab  Development Land (non-weighted textures)\tab  0\tab  0\tab  0\par
+606\tab  0\tab  QA and DVD\tab  0\tab  2\tab  0\par
+607\tab  3\tab  Strand of the Ancients\tab  0\tab  2\tab  0\par
+608\tab  1\tab  Violet Hold\tab  0\tab  2\tab  5\par
+609\tab  0\tab  Ebon Hold\tab  0\tab  2\tab  0\par
+610\tab  0\tab  Transport: Tirisfal to Vengeance Landing\tab  0\tab  0\tab  0\par
+612\tab  0\tab  Transport: Menethil to Valgarde\tab  0\tab  0\tab  0\par
+613\tab  0\tab  Transport: Orgrimmar to Warsong Hold\tab  0\tab  0\tab  0\par
+614\tab  0\tab  Transport: Stormwind to Valiance Keep\tab  0\tab  0\tab  0\par
+615\tab  2\tab  The Obsidian Sanctum\tab  0\tab  2\tab  0\par
+616\tab  2\tab  The Eye of Eternity\tab  0\tab  2\tab  5\par
+617\tab  4\tab  Dalaran Sewers\tab  0\tab  0\tab  0\par
+618\tab  4\tab  The Ring of Valor\tab  0\tab  0\tab  0\par
+619\tab  1\tab  Ahn'kahet: The Old Kingdom\tab  0\tab  2\tab  0\par
+620\tab  0\tab  Transport: Moa'ki to Unu'pe\tab  0\tab  2\tab  0\par
+621\tab  0\tab  Transport: Moa'ki to Kamagua\tab  0\tab  2\tab  0\par
+622\tab  0\tab  Transport: Orgrim's Hammer\tab  0\tab  2\tab  0\par
+623\tab  0\tab  Transport: The Skybreaker\tab  0\tab  2\tab  0\par
+624\tab  2\tab  Vault of Archavon\tab  0\tab  2\tab  0\par
+628\tab  3\tab  Isle of Conquest\tab  0\tab  2\tab  0\par
+631\tab  2\tab  Icecrown Citadel\tab  0\tab  2\tab  0\par
+632\tab  1\tab  The Forge of Souls\tab  0\tab  2\tab  0\par
+641\tab  0\tab  Transport: Alliance Airship BG\tab  0\tab  2\tab  0\par
+642\tab  0\tab  Transport: HordeAirshipBG\tab  0\tab  2\tab  0\par
+647\tab  0\tab  Transport: Orgrimmar to Thunder Bluff\tab  0\tab  2\tab  0\par
+649\tab  2\tab  Trial of the Crusader\tab  0\tab  2\tab  0\par
+650\tab  1\tab  Trial of the Champion\tab  0\tab  2\tab  0\par
+658\tab  1\tab  Pit of Saron\tab  0\tab  2\tab  0\par
+668\tab  1\tab  Halls of Reflection\tab  0\tab  2\tab  0\par
+672\tab  0\tab  Transport: The Skybreaker (Icecrown Citadel Raid)\tab  0\tab  2\tab  0\par
+673\tab  0\tab  Transport: Orgrim's Hammer (Icecrown Citadel Raid)\tab  0\tab  2\tab  0\par
+712\tab  0\tab  Transport: The Skybreaker (IC Dungeon)\tab  0\tab  2\tab  0\par
+713\tab  0\tab  Transport: Orgrim's Hammer (IC Dungeon)\tab  0\tab  2\tab  0\par
+718\tab  0\tab  Trasnport: The Mighty Wind (Icecrown Citadel Raid)\tab  0\tab  2\tab  0\par
+723\tab  0\tab  Stormwind\tab  0\tab  0\tab  0\par
+724\tab  2\tab  The Ruby Sanctum\tab  0\tab  2\tab  0\par
+}
+ 

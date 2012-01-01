@@ -1,0 +1,499 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Creature template\par
+Contents [hide]\par
+1 entry\par
+2 difficulty_entry\par
+3 KillCredit1\par
+4 KillCredit2\par
+5 modelid_1\par
+6 modelid_2\par
+7 modelid_3\par
+8 modelid_4\par
+9 name\par
+10 subname\par
+11 IconName\par
+12 gossip_menu_id\par
+13 minlevel\par
+14 maxlevel\par
+15 minhealth\par
+16 maxhealth\par
+17 minmana\par
+18 maxmana\par
+19 armor\par
+20 faction_A\par
+21 faction_H\par
+22 npcflag\par
+23 speed_walk\par
+24 speed_run\par
+25 scale\par
+26 rank\par
+27 mindmg\par
+28 maxdmg\par
+29 dmgschool\par
+30 attackpower\par
+31 dmg_multiplier\par
+32 baseattacktime\par
+33 rangeattacktime\par
+34 unit_class\par
+35 unit_flags\par
+36 dynamicflags\par
+37 family\par
+38 trainer_type\par
+39 trainer_spell\par
+40 trainer_class\par
+41 trainer_race\par
+42 minrangedmg\par
+43 maxrangedmg\par
+44 rangedattackpower\par
+45 type\par
+46 type_flags\par
+47 lootid\par
+48 pickpocketloot\par
+49 skinloot\par
+50 resistance1\par
+51 resistance2\par
+52 resistance3\par
+53 resistance4\par
+54 resistance5\par
+55 resistance6\par
+56 spell1-4\par
+57 PetSpellDataId\par
+58 mingold\par
+59 maxgold\par
+60 AIName\par
+61 MovementType\par
+62 InhabitType\par
+63 unk16\par
+64 unk17\par
+65 RacialLeader\par
+66 questItem1-6\par
+67 movementId\par
+68 RegenHealth\par
+69 equipment_id\par
+70 mechanic_immune_mask\par
+71 flags_extra\par
+72 ScriptName\par
+73 Quick Insert\par
+Back to world database list of tables.\par
+\par
+The `creature_template` table\par
+This table contains the description of creatures. Each spawned creature is an instance of a template present in this table, this means every creature MUST be defined in this table.\par
+\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+entry\tab mediumint(8) unsigned\tab NO\tab PRI\tab 0\tab\par
+difficulty_entry_1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+difficulty_entry_2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+difficulty_entry_3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+KillCredit1\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+KillCredit2\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+modelid_1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+modelid_2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+modelid_3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+modelid_4\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+name\tab char(100)\tab NO\tab\tab 0\tab\par
+subname\tab char(100)\tab YES\tab\tab None\tab\par
+IconName\tab char(100)\tab YES\tab\tab\tab\par
+gossip_menu_id\tab mediumint(8) unsigned\tab YES\tab\tab 0\tab\par
+minlevel\tab tinyint(3) unsigned\tab YES\tab\tab 1\tab\par
+maxlevel\tab tinyint(3) unsigned\tab YES\tab\tab 1\tab\par
+minhealth\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+maxhealth\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+minmana\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+maxmana\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+armor\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+faction_A\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+faction_H\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+npcflag\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+speed_walk\tab float\tab YES\tab\tab 1\tab\par
+speed_run\tab float\tab YES\tab\tab 1\tab\par
+scale\tab float\tab NO\tab\tab 0\tab\par
+rank\tab tinyint(3) unsigned\tab YES\tab\tab 0\tab\par
+mindmg\tab float\tab YES\tab\tab 0\tab\par
+maxdmg\tab float\tab YES\tab\tab 0\tab\par
+dmgschool\tab tinyint(4)\tab NO\tab\tab 0\tab\par
+attackpower\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+dmg_multiplier\tab float\tab NO\tab\tab 1\tab\par
+baseattacktime\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+rangeattacktime\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+unit_class\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+unit_flags\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+dynamicflags\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+family\tab tinyint(4)\tab YES\tab\tab 0\tab\par
+trainer_type\tab tinyint(4)\tab YES\tab\tab 0\tab\par
+trainer_spell\tab mediumint(8) unsigned\tab YES\tab\tab 0\tab\par
+trainer_class\tab tinyint(3) unsigned\tab YES\tab\tab 0\tab\par
+trainer_race\tab tinyint(3) unsigned\tab YES\tab\tab 0\tab\par
+minrangedmg\tab float\tab NO\tab\tab 0\tab\par
+maxrangedmg\tab float\tab NO\tab\tab 0\tab\par
+rangedattackpower\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+type\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+type_flags\tab int(10) unsigned\tab YES\tab\tab 0\tab\par
+lootid\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+pickpocketloot\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+skinloot\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+resistance1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+resistance2\tab smallint(5)\tab NO\tab\tab 0\tab\par
+resistance3\tab smallint(5)\tab NO\tab\tab 0\tab\par
+resistance4\tab smallint(5)\tab NO\tab\tab 0\tab\par
+resistance5\tab smallint(5)\tab NO\tab\tab 0\tab\par
+resistance6\tab smallint(5)\tab NO\tab\tab 0\tab\par
+spell1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+spell2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+spell3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+spell4\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+PetSpellDataId\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+mingold\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+maxgold\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+AIName\tab char(64)\tab NO\tab\tab\tab\par
+MovementType\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+InhabitType\tab tinyint(3) unsigned\tab NO\tab\tab 3\tab\par
+unk16\tab float\tab NO\tab\tab 1.0\tab\par
+unk17\tab float\tab NO\tab\tab 1.0\tab\par
+RacialLeader\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+questItem1\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+questItem2\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+questItem3\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+questItem4\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+questItem5\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+questItem6\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+movementId\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+RegenHealth\tab tinyint(3) unsigned\tab NO\tab\tab 1\tab\par
+equipment_id\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+mechanic_immune_mask\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+flags_extra\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+ScriptName\tab char(64)\tab NO\tab\tab\tab\par
+\par
+Description of the fields\par
+entry\par
+Creature's unique id.\par
+difficulty_entry\par
+If not zero, this field refers to an entry of creature_template. If a creature spawned in an instance with this difficulty-level has the template, it will get the template pointed by this field instead. difficulty_entry_1 is almost everywhere heroic _2 is maybe raid25 for some maps _3 is maybe heroic_raid25 for some maps.. but currently _2,_3 aren't realy discoveredt\par
+KillCredit1\par
+KillCredit2\par
+Killing the creature simulates a kill for the mob-IDs in KillCredit1 and KillCredit2 for the player. Used for finishing quests, that canbe accompolished by killing different creatures, e.g. killing all wild animals in a certain region.\par
+modelid_1\par
+modelid_2\par
+modelid_3\par
+modelid_4\par
+Graphical model that the client applies on this creature . This is a creature_model_info.entry\par
+name\par
+Base name of the creature.\par
+subname\par
+The subname of the creature that appears in <> below the creature's name.\par
+IconName\par
+Script icon used by guards with directions menu.\par
+gossip_menu_id\par
+The entry from gossip_menu\par
+minlevel\par
+The minimum level of the creature if the creature has a level range.\par
+maxlevel\par
+The maximum level of the creature if the creature has a level range. When added to world, a level in chosen in the specified level range.\par
+minhealth\par
+The minimum health of the creature if the creature has variable health.\par
+maxhealth\par
+The maximum health of the creature if the creature has a variable health. When added to world, the health value is chosen in proportion to the level chosen.\par
+minmana\par
+The miminum mana of the creature if the creature has variable mana.\par
+maxmana\par
+The maximum mana of the creature if the creature has variable mana. When added to world, the mana value is chosen in proportion to the level chosen.\par
+armor\par
+The armor value of the creature. It controls how much damage reduction the creature gets from physical attacks.\par
+faction_A\par
+The faction if the creature is on the alliance side. See FactionTemplate.dbc. Just because more than one faction has the same name, the inter-faction relationships can be different.\par
+Note: This field also controls the creature family assistance mechanic. Only creatures with the same faction will assist each other.\par
+faction_H\par
+The faction if the creature is on the horde side. See FactionTemplate.dbc. Just because more than one faction has the same name, the inter-faction relationships can be different.\par
+Note: This field also controls the creature family assistance mechanic. Only creatures with the same faction will assist each other.\par
+npcflag\par
+A bitmask that represents what NPC flags the creature has. Each bit controls a different flag and to combine flags, you can add each flag that you want, in effect activating the respective bits.\par
+Bit\tab  Flag\tab  Comment\par
+1\tab  Gossip\tab  If creature has more gossip options, add this flag to bring up a menu.\par
+2\tab  Quest Giver\tab  Any creature giving or taking quests needs to have this flag.\par
+4\tab  Not used\tab\par
+8\tab  Not Used\tab\par
+16\tab  Trainer\tab  Allows the creature to have a trainer list to teach spells\par
+32\tab  Class Trainer\tab  Specifies the creature as class trainer\par
+64\tab  Profession Trainer\tab  Specifies the creature as profession trainer\par
+128\tab  Vendor\tab  Any creature selling items needs to have this flag.\par
+256\tab  Vendor\tab  Not used by MaNGOS. Sells ammo. (not sure)\par
+512\tab  Vendor\tab  Not used by MaNGOS. Sells food/drink. (not sure)\par
+1024\tab  Vendor\tab  Not used by MaNGOS. Sells poisons. (not sure)\par
+2048\tab  Vendor\tab  Not used by MaNGOS. Sells reagents. (not sure)\par
+4096\tab  Repairer\tab  Creatures with this flag can repair items.\par
+8192\tab  Flight Master\tab  Any creature serving as fly master has this.\par
+16384\tab  Spirit Healer\tab  Makes the creature invisible to alive characters and has the resurrect function.\par
+32768\tab  Spirit Guide\tab\par
+65536\tab  Innkeeper\tab  Creatures with this flag can set hearthstone locations.\par
+131072\tab  Banker\tab  Creatures with this flag can show the bank\par
+262144\tab  Petitioner\tab\par
+524288\tab  Tabard Designer\tab  Allows the designing of guild tabards.\par
+1048576\tab  Battlemaster\tab  Creatures with this flag port players to battlegrounds.\par
+2097152\tab  Auctioneer\tab  Allows creature to display auction list.\par
+4194304\tab  Stable Master\tab  Has the option to stable pets for hunters.\par
+16777216\tab  Instantloot\tab  NPC could be loot immediately without killing, just after clicking on it. More at MaNGOS forum and at Npc_spellclick_spells table\par
+268435456\tab  Guard\tab  Creatures with this flag act as guards in cities.\par
+So if you want an NPC that is a quest giver, a vendor, and can repair you just add the specific flags together: 1 + 2 + 128 + 4096 = 4227.\par
+speed_walk\par
+Controls how fast the creature can walk.\par
+speed_run\par
+Controls how fast the creature can run.\par
+scale\par
+If non-zero, this field defines the size of how the model of the creature appears ingame. If zero, it will use default model size taken from the DBC.\par
+rank\par
+The rank of the creature:\par
+Rank\tab  Name\tab  Comments\par
+0\tab  Normal\tab\par
+1\tab  Elite\tab  Higher damage, more health, better loot.\par
+2\tab  Rare Elite\tab  A rare mob but with elite damage and health.\par
+3\tab  World Boss\tab  Highest rank, best loot, longest respawn time.\par
+4\tab  Rare\tab  Somewhat better loot, longer respawn time.\par
+mindmg\par
+Minimum damage the creature deals in melee.\par
+maxdmg\par
+Maximum damage the creature deals in melee.\par
+dmgschool\par
+Creature's melee damage school.\par
+ID\tab  Name\par
+0\tab  SPELL_SCHOOL_NORMAL\par
+1\tab  SPELL_SCHOOL_HOLY\par
+2\tab  SPELL_SCHOOL_FIRE\par
+3\tab  SPELL_SCHOOL_NATURE\par
+4\tab  SPELL_SCHOOL_FROST\par
+5\tab  SPELL_SCHOOL_SHADOW\par
+6\tab  SPELL_SCHOOL_ARCANE\par
+attackpower\par
+The attack power for the creature's melee attacks. This field indicates how much dmg is possible to take off from mob, by using -ap or +ap effects.\par
+dmg_multiplier\par
+Used to multiply creatures damage.\par
+baseattacktime\par
+Creature's melee attack time in milliseconds.\par
+rangeattacktime\par
+Creature's ranged attack time in milliseconds.\par
+unit_class\par
+Creature's class. Only 4 classes are available to creatures.\par
+Value\par
+CLASS_WARRIOR\tab 1\par
+CLASS_PALADIN\tab 2\par
+CLASS_ROGUE\tab 4\par
+CLASS_MAGE\tab 8\par
+unit_flags\par
+Allows the manual application of unit flags to creatures. Again this is a bitmask field and to apply more than one flag, just add the different numbers. Some possible flags are:\par
+Flag\tab Name\tab Comments\par
+1\tab UNIT_FLAG_UNK_0\tab\par
+2\tab UNIT_FLAG_NON_ATTACKABLE\tab\par
+4\tab UNIT_FLAG_DISABLE_MOVE\tab\par
+8\tab UNIT_FLAG_PVP_ATTACKABLE\tab  (allow apply pvp rules to attackable state in addition to faction dependent state)\par
+16\tab UNIT_FLAG_RENAME\tab\par
+32\tab UNIT_FLAG_PREPARATION\tab  (don't take reagents for spells with SPELL_ATTR_EX5_NO_REAGENT_WHILE_PREP)\par
+UNIT_FLAG_UNK_6\tab\par
+128\tab UNIT_FLAG_NOT_ATTACKABLE_1\tab  (??) ((UNIT_FLAG_PVP_ATTACKABLE + UNIT_FLAG_NOT_ATTACKABLE_1) is NON_PVP_ATTACKABLE)\par
+256\tab  UNIT_FLAG_OOC_NOT_ATTACKABLE\tab  (2.0.8 - Can not be attacked when not in combat. Removed if unit for some reason enter combat.)\par
+512\tab  UNIT_FLAG_PASSIVE\tab  (makes unable to attack everything. Almost identical to "civilian". Will not engage in combat unless "called upon" or engaged by another unit.)\par
+1024\tab  UNIT_FLAG_LOOTING\tab  (loot animation)\par
+2048\tab  UNIT_FLAG_PET_IN_COMBAT\tab  (in combat?, 2.0.8)\par
+4096\tab  UNIT_FLAG_PVP\tab  Allows item spells to be casted upon (?)\par
+8192\tab  UNIT_FLAG_SILENCED\tab  Can't cast spells\par
+16384\tab  UNIT_FLAG_UNK_14\tab  (2.0.8)\par
+32768\tab  UNIT_FLAG_UNK_15\tab  (swimming?)\par
+65536\tab  UNIT_FLAG_UNK_16\tab  (removes attackable icon)\par
+131072\tab  UNIT_FLAG_PACIFIED\tab\par
+262144\tab  UNIT_FLAG_STUNNED\tab  (stunned, 2.1.1)\par
+524288\tab  UNIT_FLAG_IN_COMBAT\tab\par
+1048576\tab  UNIT_FLAG_TAXI_FLIGHT\tab  (disable casting at client side spell not allowed by taxi flight (mounted?), probably used with 0x4 flag)\par
+2097152\tab  UNIT_FLAG_DISARMED\tab  (disable melee spells casting..., "Required melee weapon" added to melee spells tooltip.)\par
+4194304\tab  UNIT_FLAG_CONFUSED\tab\par
+8388608\tab  UNIT_FLAG_FLEEING\tab\par
+16777216\tab  UNIT_FLAG_PLAYER_CONTROLLED\tab  (used in spell Eyes of the Beast for pet...)\par
+33554432\tab  UNIT_FLAG_NOT_SELECTABLE\tab  Can't be selected by mouse\par
+67108864\tab  UNIT_FLAG_SKINNABLE\tab\par
+134217728\tab  UNIT_FLAG_MOUNT\tab  (the client seems to handle it perfectly)\par
+268435456\tab  UNIT_FLAG_UNK_28\tab\par
+536870912\tab  UNIT_FLAG_UNK_29\tab  (used in Feing Death spell)\par
+1073741824\tab  UNIT_FLAG_SHEATHE\tab\par
+2147483648\tab  UNIT_FLAG_UNK_31\tab  (set skinnable icon and also changes color of portrait)\par
+\par
+dynamicflags\par
+Flags that control visual appearance of the creature.\par
+A few known flags and their use are:\par
+Flag\tab Name\tab Comments\par
+0\tab UNIT_DYNFLAG_NONE\tab\par
+1\tab UNIT_DYNFLAG_LOOTABLE\tab\par
+2\tab UNIT_DYNFLAG_TRACK_UNIT\tab\par
+4\tab UNIT_DYNFLAG_TAPPED\tab Makes creatures name appear grey (good for simulating dead creatures)\par
+8\tab UNIT_DYNFLAG_TAPPED_BY_PLAYER\tab\par
+16\tab UNIT_DYNFLAG_SPECIALINFO\tab Shows creatures basic stats (Health, damage, resistances, tamable).\par
+32\tab UNIT_DYNFLAG_DEAD\tab Makes the creature appear dead (this DOES NOT make the creatures name grey)\par
+64\tab UNIT_DYNFLAG_REFER_A_FRIEND\tab\par
+128\tab UNIT_DYNFLAG_TAPPED_BY_ALL_THREAT_LIST\tab\par
+family\par
+The family this creature belongs to. Only used if type is 1 (Beast).\par
+ID\tab  Family\tab  ID\tab  Family\tab  ID\tab  Family\par
+1\tab  Wolf\tab  15\tab  Doomguard\tab  29\tab  Nether Ray\par
+2\tab  Cat\tab  16\tab  Scorpid\tab  30\tab  Serpent\par
+3\tab  Spider\tab  17\tab  Turtle\tab  31\tab  Moth\par
+4\tab  Bear\tab  18\tab  Imp\tab 32\tab Chimaera\par
+5\tab  Boar\tab  19\tab  Bat\tab 33\tab Devilsaur\par
+6\tab  Crocolisk\tab  20\tab  Hyena\tab  34\tab  Ghoul\par
+7\tab  Carrion Bird\tab  21\tab  Bird of Prey\tab 35\tab Silithid\par
+8\tab  Crab\tab  22\tab  Wind Serpent\tab 36\tab Worm\par
+9\tab  Gorilla\tab  23\tab  Remote Control\tab 37\tab Rhino\par
+10\tab  Raptor\tab  24\tab  Felguard\tab  38\tab  Wasp\par
+11\tab  Tallstrider\tab  25\tab  Dragonhawk\tab 39\tab Core Hound\par
+12\tab  Felhunter\tab  26\tab  Ravager\tab 40\tab Spirit Beast\par
+13\tab  Voidwalker\tab  27\tab  Warp Stalker\par
+14\tab  Succubus\tab  28\tab  Sporebat\par
+If you want to select only the exotic pets, there is the list: 32, 33, 35, 36, 37, 39, 40 [exotic ones are highlighted in the table]\par
+trainer_type\par
+If the NPC is a trainer (has the trainer flag), then this field controls what kind of trainer it is. Both this field and the related field must be filled in for a trainer to work correctly.\par
+ID\tab  Type\tab  Related Field\tab  Comments\par
+0\tab  TRAINER_TYPE_CLASS\tab class\tab  Trains class spells\par
+1\tab  TRAINER_TYPE_MOUNTS\tab race\tab  Trains riding skill\par
+2\tab  TRAINER_TYPE_TRADESKILLS\tab trainer_spell\tab  Trains professions\par
+3\tab  TRAINER_TYPE_PETS\tab class\tab  Trains pet skills\par
+trainer_spell\par
+If the NPC is a trainer that teaches professions (trainer_type == 2), then the player must already know the spell ID specified here to be able to talk to this NPC.\par
+trainer_class\par
+If the NPC is a class trainer or a pet trainer (trainer_type == 0 or 3), then the player's class must be the same as the value specified here to talk to this trainer. For pet trainers, this value must be 3 (hunter). See character.class\par
+trainer_race\par
+If the NPC is a mount trainer (trainer_type == 1), then the player's race must be the same as the value specified here to talk to this trainer. See character.race\par
+minrangedmg\par
+Minimum ranged damage the creature inflicts.\par
+maxrangedmg\par
+Maximum range damage the creature inflicts.\par
+rangedattackpower\par
+type\par
+The type of the creature.\par
+ID\tab  Type\par
+0\tab  None\par
+1\tab  Beast\par
+2\tab  Dragonkin\par
+3\tab  Demon\par
+4\tab  Elemental\par
+5\tab  Giant\par
+6\tab  Undead\par
+7\tab  Humanoid\par
+8\tab  Critter\par
+9\tab  Mechanical\par
+10\tab  Not specified\par
+11\tab  Totem\par
+12\tab  Non-combat Pet\par
+13\tab  Gas Cloud\par
+type_flags\par
+This field can control whether a mob is minable or herbable. If it is either of those two, then the loot given when it is skinned/mined will be stored in the skinning_loot_template table. Aside from those two flags, field has no special meaning on the serverside. It will be send to the client in SMSG_CREATURE_QUERY_RESPONSE\par
+Some values provided from the community:\par
+Flag\tab Name\tab Comments\par
+1\tab\tab Makes the mob tameable (must also be a beast and have family set)\par
+2\tab UNIT_FLAG_NOT_ATTACKABLE\tab\par
+8\tab UNIT_FLAG_ATTACKABLE\tab\par
+128\tab UNIT_FLAG_NOT_ATTACKABLE_1\tab\par
+136\tab UNIT_FLAG_NON_PVP_PLAYER\tab\par
+256\tab\tab Makes mob herbable\par
+512\tab\tab Makes mob minable\par
+1024\tab UNIT_FLAG_ANIMATION_FROZEN\tab\par
+4096\tab UNIT_FLAG_WAR_PLAYER\tab\par
+lootid\par
+The ID of the loot template ID that this creature should use to generate loots. See creature_loot_template.entry\par
+pickpocketloot\par
+The ID of the pickpocketing loot template that this creature should use to generate pickpocketing loots. See pickpocketing_loot_template.entry\par
+skinloot\par
+The ID of the skinning loot template that this creature should use to generate skinning loots. See skinning_loot_template.entry\par
+resistance1\par
+Holy resistance.\par
+resistance2\par
+Fire resistance.\par
+resistance3\par
+Nature resistance.\par
+resistance4\par
+Frost resistance.\par
+resistance5\par
+Shadow resistance.\par
+resistance6\par
+Arcane resistance.\par
+spell1-4\par
+Spell ID that are available to the creature.\par
+At this time, these fields are used by core only to populate pet spells if PetSpellDataId is 0\par
+PetSpellDataId\par
+ID linked to CreatureSpellData.dbc 1st column. This dbc contains pet spells (habilities).\par
+mingold\par
+Minimum money that the creature drops when killed, in copper.\par
+maxgold\par
+Maximum money that the creature drops when killed, in copper.\par
+AIName\par
+Overrides AI used for the creature.\par
+Name\tab  Description\par
+NullAI\tab  Empty AI, creature does nothing.\par
+AggressorAI\tab  Creature attacks as soon as something is in aggro range.\par
+ReactorAI\tab  Creature attacks only if aggroed by attack, spell etc.\par
+GuardAI\tab\par
+PetAI\tab  Creature is a pet.\par
+TotemAI\tab  Creature casts spell from field spell1, otherwise like NullAI.\par
+EventAI\tab  Creature uses event based AI.\par
+MovementType\par
+The creature's default movement type.\par
+ID\tab  Type\par
+0\tab  Idle; stay in one place\par
+1\tab  Random movement inside the spawndist radius\par
+2\tab  Waypoint movement\par
+InhabitType\par
+Controls where the creature can move and attack.\par
+ID\tab  Type\par
+1\tab  Ground only\par
+2\tab  Water only\par
+3\tab  Both ground and water\par
+4\tab  Flying\par
+unk16\par
+Float values with unknown meaning. Values are from WDB Files.\par
+unk17\par
+Float values with unknown meaning. Values are from WDB Files.\par
+RacialLeader\par
+A flag indicating wheather the creature is a racial leader. Killing racial leaders grants 100 honor.\par
+questItem1-6\par
+Contains an item entry.\par
+movementId\par
+Movement ID from CreatureMovementInfo.dbc\par
+RegenHealth\par
+Boolean 1 or 0 controlling if the creature should regenerate its health or not.\par
+equipment_id\par
+The default ID of the equipment that this creature should display. See creature_equip_template.entry\par
+mechanic_immune_mask\par
+This makes the creature immune to specific spell natures. See Spell.dbc at row effect_X_mechanic_id.\par
+Uses references from SpellMechanic.dbc.\par
+Bit\tab  Type\tab  Bit\tab  Type\par
+1\tab  MECHANIC_CHARM\tab  32768\tab  MECHANIC_BANDAGE\par
+2\tab  MECHANIC_CONFUSED\tab  65536\tab  MECHANIC_POLYMORPH\par
+4\tab  MECHANIC_DISARM\tab  131072\tab  MECHANIC_BANISH\par
+8\tab  MECHANIC_DISTRACT\tab  262144\tab  MECHANIC_SHIELD\par
+16\tab  MECHANIC_FEAR\tab  524288\tab  MECHANIC_SHACKLE\par
+32\tab  MECHANIC_FUMBLE\tab  1048576\tab  MECHANIC_MOUNT\par
+64\tab  MECHANIC_ROOT\tab  2097152\tab  MECHANIC_PERSUADE\par
+128\tab  MECHANIC_PACIFY\tab  4194304\tab  MECHANIC_TURN\par
+256\tab  MECHANIC_SILENCE\tab  8388608\tab  MECHANIC_HORROR\par
+512\tab  MECHANIC_SLEEP\tab  16777216\tab  MECHANIC_INVULNERABILITY\par
+1024\tab  MECHANIC_SNARE\tab  33554432\tab  MECHANIC_INTERRUPT\par
+2048\tab  MECHANIC_STUN\tab  67108864\tab  MECHANIC_DAZE\par
+4096\tab  MECHANIC_FREEZE\tab  134217728\tab  MECHANIC_DISCOVERY\par
+8192\tab  MECHANIC_KNOCKOUT\tab  268435456\tab  MECHANIC_IMMUNE_SHIELD\par
+16384\tab  MECHANIC_BLEED\tab  536870912\tab  MECHANIC_SAPPED\par
+To combine immunities just add values. Immune to everything corresponds to the value 1073741823.\par
+flags_extra\par
+These flags control certain creature specific attributes.\par
+Bit\tab  Name\tab  Description\par
+1\tab  CREATURE_FLAG_EXTRA_INSTANCE_BIND\tab  Bounds killer's party to the instance they are in\par
+2\tab  CREATURE_FLAG_EXTRA_CIVILIAN\tab  Makes creature ignore aggro\par
+4\tab  CREATURE_FLAG_EXTRA_NO_PARRY\tab  Prohibits creature from parrying\par
+8\tab  CREATURE_FLAG_EXTRA_NO_PARRY_HASTEN\tab  Creatures parries do not speed up its next attack\par
+16\tab  CREATURE_FLAG_EXTRA_NO_BLOCK\tab  Prohibits creature from blocking\par
+32\tab  CREATURE_FLAG_EXTRA_NO_CRUSH\tab  Prohibits creature from dealing crushing blows\par
+64\tab  CREATURE_FLAG_EXTRA_NO_XP_AT_KILL\tab  Makes creature reward no XP at kill\par
+128\tab  CREATURE_FLAG_EXTRA_INVISIBLE\tab  Makes creature invisible for player. Use this for triggers etc.\par
+256\tab  CREATURE_FLAG_EXTRA_NO_TAUNT\tab  Makes creature immune to taunt.\par
+512\tab  CREATURE_FLAG_EXTRA_AGGRO_ZONE\tab  Makes creature attack all players in the zone when aggroing a player/ pet\par
+ScriptName\par
+The name of the script that this creature uses, if any. This ties a script from a scripting engine to this creature.\par
+\par
+Quick Insert\par
+The SQL insert request :\par
+INSERT INTO creature_template(entry, heroic_entry, KillCredit1, KillCredit2, modelid_A, modelid_A2, modelid_H, modelid_H2, name, subname, IconName, minlevel, maxlevel, minhealth, maxhealth, minmana, maxmana, armor, faction_A, faction_H, npcflag, speed, scale, rank, mindmg, maxdmg, dmgschool, attackpower, dmg_multiplier, baseattacktime, rangeattacktime, unit_class, unit_flags, dynamicflags, family, trainer_type, trainer_spell, trainer_class, trainer_race, minrangedmg, maxrangedmg, rangedattackpower, type, type_flags, lootid, pickpocketloot, skinloot, resistance1, resistance2, resistance3, resistance4, resistance5, resistance6, spell1, spell2, spell3, spell4, PetSpellDataId, mingold, maxgold, AIName, MovementType, InhabitType, unk16, unk17, RacialLeader, questItem1, questItem2, questItem3, questItem4, movementId, RegenHealth, equipment_id, mechanic_immune_mask, flags_extra, ScriptName) VALUES ('0', '0', '0', '0', '0', '0', '0', '0', '0', 'None', '','1', '1', '0', '0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '','0', '3', '1.0', '1.0', '0', '0', '0', '0', '0', '0', '1', '0', '0', '0', '');\par
+}
+ 

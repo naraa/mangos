@@ -1,0 +1,148 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Creature template addon\par
+Contents [hide]\par
+1 entry/guid\par
+2 mount\par
+3 bytes1\par
+4 bytes2\par
+5 emote\par
+6 moveflags\par
+7 auras\par
+Back to world database list of tables.\par
+\par
+The `creature_(template)_addon` table\par
+The creature_addon and creature_template_addon tables define different things that are applied on creatures when they are loaded. These "different things" can be for example to have the creature be mounted, to have it emote something, to have it display an aura effect, etc. Through the use of the fields in this table, many things can be changed about the outward visual appearance of the creature. The creature_template_addon table affects all creatures with that creature template ID while the creature_addon table affects individually spawned creatures (so that two creatures using the same template can look different).\par
+NOTE: A creature_addon record will override a creature_template_addon record should they overlap on the same creature.\par
+NOTICE: The data for this table is largely incomplete and is mostly just a regurgitation of what the client receives from the server. This article is a WIP as to what all the possible values are.\par
+\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+mediumint(8) unsigned\tab NO\tab PRI\tab 0\tab\par
+mount\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+bytes1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+bytes2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+emote\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+moveflags\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+auras\tab text\tab YES\tab\tab\tab\par
+Description of the fields\par
+entry/guid\par
+For creature_template_addon, this field signifies the creature template ID. It will affect all spawned creatures using that template ID. For creature_addon, this field signifies a unique creature guid. It will affect just that creature whose GUID matches the one specified here.\par
+mount\par
+The model ID of the mount to be used to make the creature appear mounted. The value here overrides the value for the creature's unit field UNIT_FIELD_MOUNTDISPLAYID.\par
+List of known values and what their visual effects on the creature\par
+bytes1\par
+The value here overrides the value for the creature's unit field UNIT_FIELD_BYTES_1.\par
+List of known values and what their visual effects on the creature\par
+1 = Sitting on Ground\par
+3 = Sleep\par
+7 = Makes the mob lying dead (combined with empty health bar (dynamicflags |= 32) and gray name (dynamicflags |= 4) makes the mob to appear dead)\par
+8 = Makes the mob kneel (need bytes2 |= 1)\par
+9 = Submerges the creature below the ground\par
+bytes2\par
+The value here overrides the value for the creature's unit field UNIT_FIELD_BYTES_2.\par
+List of known values and what their visual effects on the creature\par
+emote\par
+Emote ID that the creature should continually perform.\par
+List of often used emote IDs and what they do\par
+65 = Makes the creature look dead by lying on the ground\par
+untested List from Mangos Source EMOTE_STATE_DANCE = 10,\par
+EMOTE_STATE_SLEEP = 12,\par
+EMOTE_STATE_SIT = 13,\par
+EMOTE_STATE_STAND = 26,\par
+EMOTE_STATE_WORK = 28,\par
+EMOTE_STATE_STUN = 64,\par
+EMOTE_STATE_DEAD = 65,\par
+EMOTE_STATE_KNEEL = 68,\par
+EMOTE_ONESHOT_WAVE_NOSHEATHE = 70,\par
+EMOTE_ONESHOT_CHEER_NOSHEATHE = 71,\par
+EMOTE_ONESHOT_EAT_NOSHEATHE = 92,\par
+EMOTE_STATE_WORK_NOSHEATHE = 173,\par
+EMOTE_STATE_FISHING = 379,\par
+EMOTE_ONESHOT_FISHING = 380,\par
+EMOTE_ONESHOT_LOOT = 381,\par
+EMOTE_STATE_WHIRLWIND = 382,\par
+EMOTE_STATE_LAUGH = 392,\par
+EMOTE_STATE_CANNIBALIZE = 398,\par
+EMOTE_STATE_DANCESPECIAL = 400,\par
+EMOTE_STATE_EXCLAIM = 412,\par
+EMOTE_STATE_SIT_CHAIR_MED = 415\par
+moveflags\par
+Flags controlling how the creature will behave animation-wise while moving. This table is 100% wrong as of 3.1. It is still here for a period of time for reference and to convert values in DB.\par
+See the proper table under this one\par
+Bit\tab  Name\tab  Comment\par
+0\tab  MOVEMENTFLAG_NONE\tab\par
+1\tab  MOVEMENTFLAG_FORWARD\tab  instantly teleport creature, then creature move forward animation but no real movement\par
+2\tab  MOVEMENTFLAG_BACKWARD\tab  instantly teleport creature, then creature move back animation but no real movement\par
+4\tab  MOVEMENTFLAG_STRAFE_LEFT\tab  instantly teleport creature, then creature move left animation but no real movement\par
+8\tab  MOVEMENTFLAG_STRAFE_RIGHT\tab  instantly teleport creature, then creature move right animation but no real movement\par
+16\tab  MOVEMENTFLAG_LEFT\tab  creature spin left animation\par
+32\tab  MOVEMENTFLAG_RIGHT\tab  then creature spin right animation\par
+64\tab  MOVEMENTFLAG_PITCH_UP\tab  no effect on creature\par
+128\tab  MOVEMENTFLAG_PITCH_DOWN\tab  no effect on creature\par
+256\tab  MOVEMENTFLAG_RUN_MODE\tab  If flag set then player runs\par
+512\tab  MOVEMENTFLAG_ONTRANSPORT\tab  causes creatures to fly while moving (not include standing)\par
+1024\tab  MOVEMENTFLAG_HOVERING\tab  hovering animation at stand (not include moving)\par
+2048\tab  MOVEMENTFLAG_FLY_UNK1\tab\par
+4096\tab  MOVEMENTFLAG_JUMPING\tab  Jump animation\par
+8192\tab  MOVEMENTFLAG_UNK1\tab\par
+16384\tab  MOVEMENTFLAG_FALLING\tab  Falling\par
+32768\tab  MOVEMENTFLAG_UNK2\tab\par
+65536\tab  MOVEMENTFLAG_UNK3\tab\par
+131072\tab  MOVEMENTFLAG_UNK4\tab\par
+262144\tab  MOVEMENTFLAG_UNK5\tab\par
+524288\tab  MOVEMENTFLAG_UNK6\tab\par
+1048576\tab  MOVEMENTFLAG_UNK7\tab  Causes creature to instantly appear at new position\par
+2097152\tab  MOVEMENTFLAG_SWIMMING\tab  appears with fly flag also (causes creatures to fall to ground at stand state)\par
+4194304\tab  MOVEMENTFLAG_FLY_UP\tab  no effect on creature\par
+8388608\tab  MOVEMENTFLAG_CAN_FLY\tab  no effect on creature\par
+16777216\tab  MOVEMENTFLAG_FLYING\tab  no effect on creature\par
+33554432\tab  MOVEMENTFLAG_UNK8\tab  Creature flying (not hover at stop moving)\par
+67108864\tab  MOVEMENTFLAG_SPLINE\tab  probably wrong name (no effect on creature)\par
+134217728\tab  MOVEMENTFLAG_SPLINE2\tab  no effect on creature\par
+268435456\tab  MOVEMENTFLAG_WATERWALKING\tab  also prevent creature from falling under water\par
+536870912\tab  MOVEMENTFLAG_SAFE_FALL\tab  active rogue safe fall spell (passive) (no effect on creature)\par
+1073741824\tab  MOVEMENTFLAG_UNK9\tab  Causes creature to hover at stand state (not include moving)\par
+2147483648\tab  MOVEMENTFLAG_UNK10\tab  Causes creature to roll to strange angle\par
+Proper table as of 3.1\par
+Bit\tab  Name\tab  Comment\par
+0\tab  MONSTER_MOVE_NONE\tab  Core makes the creature behave based on InhabitType and MovementType\par
+1\tab  MONSTER_MOVE_FORWARD\tab  Instantly teleport creature, then creature move forward animation but no real movement\par
+2\tab  MONSTER_MOVE_BACKWARD\tab  Instantly teleport creature, then creature move back animation but no real movement\par
+4\tab  MONSTER_MOVE_STRAFE_LEFT\tab  Instantly teleport creature, then creature move left animation but no real movement\par
+8\tab  MONSTER_MOVE_STRAFE_RIGHT\tab  Instantly teleport creature, then creature move right animation but no real movement\par
+16\tab  MONSTER_MOVE_LEFT\tab  Creature spin left animation\par
+32\tab  MONSTER_MOVE_RIGHT\tab  Then creature spin right animation\par
+64\tab  MONSTER_MOVE_PITCH_UP\tab  Seams to have no effect\par
+128\tab  MONSTER_MOVE_PITCH_DOWN\tab  Seams to have no effect\par
+256\tab  MONSTER_MOVE_TELEPORT\tab  Makes creature teleport instead of walking\par
+512\tab  MONSTER_MOVE_TELEPORT2\tab\par
+1024\tab  MONSTER_MOVE_LEVITATING\tab\par
+2048\tab  MONSTER_MOVE_UNK1\tab\par
+4096\tab  MONSTER_MOVE_WALK\tab  Makes creature walk\par
+8192\tab  MONSTER_MOVE_SPLINE\tab\par
+16384\tab  No name in core\tab  Makes creature run\par
+32768\tab  No name in core\tab  Makes creature run\par
+65536\tab  No name in core\tab  Makes creature run\par
+131072\tab  No name in core\tab  Makes creature run\par
+262144\tab  MONSTER_MOVE_SPLINE2\tab\par
+524288\tab  MONSTER_MOVE_UNK2\tab  Used for flying mobs\par
+1048576\tab  MONSTER_MOVE_UNK3\tab  Used for flying mobs\par
+2097152\tab  MONSTER_MOVE_UNK4\tab\par
+4194304\tab  MONSTER_MOVE_UNK5\tab  Run in place, then teleport to final point\par
+8388608\tab  MONSTER_MOVE_UNK6\tab  Teleport\par
+16777216\tab  MONSTER_MOVE_UNK7\tab  Run\par
+33554432\tab  MONSTER_MOVE_FLY\tab  Swimming / Flying\par
+67108864\tab  MONSTER_MOVE_UNK9\tab  Run\par
+134217728\tab  MONSTER_MOVE_UNK10\tab  Run\par
+268435456\tab  MONSTER_MOVE_UNK11\tab  Run\par
+536870912\tab  MONSTER_MOVE_UNK12\tab  Run\par
+1073741824\tab  MONSTER_MOVE_UNK13\tab  Levitating\par
+Note: MONSTER_MOVE_SPLINE_FLY = MONSTER_MOVE_WALK + MONSTER_MOVE_SPLINE and makes creature fly by points.\par
+auras\par
+This field controls any auras to be applied on the creature (both in effect and visually). The syntax for for an individual aura entry is "<spell ID> <index>". An aura is defined not just by the spell that applies it but also by the individual spell affect that applies it. Therefore, the effect index must be specified along with the spell ID. Each spell can have a maximum of three spell effects, so the effect index can only be 0, 1, or 2. To apply multiple auras, you can add more aura entries, separating each entry by a space. Remember that if a spell applies multiple auras, you need to specify an aura entry for each effect index if you want to apply more than one aura from the same spell.\par
+NOTE: Currently (Rev 5067) auras defined in creature_template_addon are not being properly added. Only add auras for creatures in creature_addon.\par
+List of useful aura entries:\par
+'16380 0' - Makes the creature invisible.\par
+'18950 0 18950 1' - Makes the creature detect other invisible units (players or creatures).\par
+}
+ 
