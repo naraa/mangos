@@ -23,9 +23,10 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
--- -------------
--- Quest 11259 -
--- -------------
+-- -------------------
+-- Quest 11259/11245 -
+-- -------------------
+-- REMOVE NONWORKING CORE SUPPORT FOR THIS IN SPELLEFFECTS
 -- Needs Graphic fixes and touch ups
 
 DELETE FROM creature_ai_scripts WHERE creature_id IN (24087,24092,24093,24094);
@@ -34,6 +35,14 @@ INSERT INTO creature_ai_scripts (id,creature_id,event_type,event_inverse_phase_m
 (2409201,24092,8,0,100,1,49625,-1,60000,60000,33,24092,6,0,11,56511,0,0,0,0,0,0,'Skorn Tower E Bunny Horde - q11259'),
 (2409301,24093,8,0,100,1,49625,-1,60000,60000,33,24093,6,0,11,56511,0,0,0,0,0,0,'Skorn Tower SW Bunny Horde - q11259'),
 (2409401,24094,8,0,100,1,49625,-1,60000,60000,33,24094,6,0,11,56511,0,0,0,0,0,0,'Skorn Tower SE Bunny Horde - q11259');
+
+-- added alliance Quest
+INSERT INTO `creature_ai_scripts` VALUES ('2408702', '24087', '8', '0', '100', '1', '49634', '-1', '60000', '60000', '33', '24087', '6', '0', '11', '56511', '0', '0', '0', '0', '0', '0', 'Skorn Tower NW Bunny Horde - q11245');
+INSERT INTO `creature_ai_scripts` VALUES ('2409202', '24092', '8', '0', '100', '1', '49634', '-1', '60000', '60000', '33', '24092', '6', '0', '11', '56511', '0', '0', '0', '0', '0', '0', 'Skorn Tower NW Bunny Horde - q11245');
+INSERT INTO `creature_ai_scripts` VALUES ('2409302', '24093', '8', '0', '100', '1', '49634', '-1', '60000', '60000', '33', '24093', '6', '0', '11', '56511', '0', '0', '0', '0', '0', '0', 'Skorn Tower NW Bunny Horde - q11245');
+INSERT INTO `creature_ai_scripts` VALUES ('2409402', '24094', '8', '0', '100', '1', '49634', '-1', '60000', '60000', '33', '24094', '6', '0', '11', '56511', '0', '0', '0', '0', '0', '0', 'Skorn Tower NW Bunny Horde - q11245');
+
+
 
 UPDATE creature_template SET  AIName='EventAI' WHERE entry IN (24087,24092,24093,24094);
 
