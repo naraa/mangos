@@ -17,7 +17,7 @@
 /* ScriptData
 SDName: GO_Scripts
 SD%Complete: 100
-SDComment: Quest support: 4296, 5088, 5097, 5098, 5381, 6481, 10990, 10991, 10992, 12557, 14092/14076. Barov_journal->Teaches spell 26089
+SDComment: Quest support: 4296, 5088, 5097, 5098, 5381, 6481, 10990, 10991, 10992,11231, 11265 12557, 14092/14076. Barov_journal->Teaches spell 26089
 SDCategory: Game Objects
 EndScriptData */
 
@@ -38,6 +38,8 @@ go_andorhal_tower
 go_scourge_enclosure
 go_lab_work_reagents
 go_hand_of_iruxos_crystal
+go_gjalerbon_cage
+go_large_gjalerbon_cage
 EndContentData */
 
 #include "precompiled.h"
@@ -508,6 +510,49 @@ bool GOUse_go_hand_of_iruxos_crystal(Player* pPlayer, GameObject* pGo)
     return false;
 }
 
+/*#####
+## go_gjalerbron_cage
+#####*/
+
+enum
+{
+    QUEST_OF_KEY_AND_CAGES_A    = 11231,
+    QUEST_OF_KEY_AND_CAGES_H    = 11265,
+    NPC_GJALERBON_PRISONER      = 24035,
+
+    //SPELL_DESPAWN_SELF          = 43014,
+};
+
+bool GOUse_go_gjalerbon_cage(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_OF_KEY_AND_CAGES_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_OF_KEY_AND_CAGES_H) == QUEST_STATUS_INCOMPLETE)
+    {
+            if(Creature *pPrisoner = GetClosestCreatureWithEntry(pPlayer, NPC_GJALERBON_PRISONER, 10))
+            {
+                pPlayer->KilledMonsterCredit(NPC_GJALERBON_PRISONER, pPrisoner->GetObjectGuid());
+            }
+    }
+    return false;
+};
+
+bool GOUse_go_large_gjalerbon_cage(Player* pPlayer, GameObject* pGo)
+{
+    if (pPlayer->GetQuestStatus(QUEST_OF_KEY_AND_CAGES_A) == QUEST_STATUS_INCOMPLETE || pPlayer->GetQuestStatus(QUEST_OF_KEY_AND_CAGES_H) == QUEST_STATUS_INCOMPLETE)
+    {
+        std::list<Creature*> lGjalerbronPrisoners;
+        GetCreatureListWithEntryInGrid(lGjalerbronPrisoners, pPlayer,  NPC_GJALERBON_PRISONER, 20.0f);
+        if (lGjalerbronPrisoners.empty())
+            return false;
+
+        for (std::list<Creature*>::iterator itr = lGjalerbronPrisoners.begin(); itr != lGjalerbronPrisoners.end(); ++itr)
+        {
+            pPlayer->KilledMonsterCredit(NPC_GJALERBON_PRISONER, (*itr)->GetObjectGuid());
+        }
+            
+    }
+    return false;
+};
+
 void AddSC_go_scripts()
 {
     Script* pNewScript;
@@ -605,5 +650,15 @@ void AddSC_go_scripts()
     pNewScript = new Script;
     pNewScript->Name = "go_hand_of_iruxos_crystal";
     pNewScript->pGOUse =          &GOUse_go_hand_of_iruxos_crystal;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_gjalerbon_cage";
+    pNewScript->pGOUse = &GOUse_go_gjalerbon_cage;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "go_large_gjalerbon_cage";
+    pNewScript->pGOUse = &GOUse_go_large_gjalerbon_cage;
     pNewScript->RegisterSelf();
 }

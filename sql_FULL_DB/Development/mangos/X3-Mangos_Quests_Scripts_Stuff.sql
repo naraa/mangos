@@ -27,6 +27,28 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- --------------------
+-- Quest:11231/11265 --
+-- --------------------
+UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 24035 WHERE `entry` = 11265;
+UPDATE gameobject_template SET
+ScriptName='go_gjalerbon_cage'
+WHERE entry IN (186491,186492,186493,186494,186498,186499,186500,186501,186502,186503,186504,186505,186508,
+186509,186512,186513,186514,186515,186516,186883,186895,186907,186908,186910,186911,186923,
+186924,186495,186496,186497,186507,186510,186511,186517,186518,186798,186909,186929,186930);
+
+UPDATE gameobject_template SET
+ScriptName='go_large_gjalerbon_cage'
+WHERE entry=186490;
+DELETE FROM `creature_model_info` WHERE (`modelid`=22016);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (22016, 1.15, 1.5, 1, 22017, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=22017);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (22017, 1.15, 1.5, 1, 22016, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=22018);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (22018, 1.15, 1.5, 0, 0, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=22024);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (22024, 1.15, 1.5, 0, 0, 0);
+
 -- --------------------------------------------
 -- Quest: Finding the Survivors (9948)
 -- --------------------------------------------
