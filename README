@@ -14,7 +14,7 @@ Infinity Project
   * Creature And Spell Linking Support
   * Implented/Rewritten: Aura Stacking System
   * Force Permissions For Mutli Realm
-  * Spell_Dbc System 
+  * _Dbc_to_SQL Overrride System 
   * Spell_Disable System
   * Area_Trigger Support
   * Multi-threaded and locking 

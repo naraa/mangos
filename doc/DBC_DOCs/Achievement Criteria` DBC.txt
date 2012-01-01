@@ -3,7 +3,7 @@ This DBC contains information, how Achievements are to be acquired.
 Version is : 3.3.5a
 Structure
 Column	 Field	                Type	                   Notes
-1	      ID	               Integer	
+1	      ID	               Integer
 2	   Achievement	           Integer	               Ref-ID; References the achievement this criteria is needed for.
 3	     Type	               Integer	               Which type is this criteria? This defines the rows below. See below.
 4	    AssetID	               Integer	               Main requirement
@@ -13,9 +13,9 @@ Column	 Field	                Type	                   Notes
 8	    FailEvent	           Integer	               additional requirement 2 type
 9	    FailAsset	           Integer	               additional requirement 2 value
 10-25 Description	           String	               Loc.; Criteria description.
-27	      Flags	               Integer	
-28	 TimerStartEvent           Integer	
-29	   TimerAssetID	           Integer	
+27	      Flags	               Integer
+28	 TimerStartEvent           Integer
+29	   TimerAssetID	           Integer
 30	   TimerAmount	           Integer	               Complete quest in %i seconds.
 31	   UIOrder	               Integer
 
@@ -24,49 +24,49 @@ This describes rows 4 to 9 by type (row 3). There may be more types. Unlisted fi
 
 Type 0: KILL_CREATURE
 (Also used for player deaths.)
-Column	 Field	 Type	 Notes
-4	Creature	 Integer	 IDs are also used by creature_template
-5	 Count	 Integer	
+Column	   Field	   Type	      Notes
+4	      Creature	  Integer	     IDs are also used by creature_template
+5	      Count    	  Integer
 
 Type 1: WIN_BG
 (There are further criterias instead just winning)
-Column	 Field	 Type	 Notes
-4	MapID	 Integer	 Ref-ID
-5	 WinCount	 Integer	
+Column	 Field	  Type	     Notes
+4	     MapID	  Integer	 Ref-ID
+5	    WinCount  Integer
 
 Type 5: REACH_LEVEL
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 Level	 Integer	
+Column	 Field	      Type	 Notes
+4	     unknown	  Integer
+5	     Level	      Integer
 
 Type 7: REACH_SKILL_LEVEL
-Column	 Field	 Type	 Notes
-4	SkillID	 Integer	 Ref-ID
-5	 skillLevel	 Integer	
+Column	 Field	      Type	     Notes
+4	     SkillID	  Integer	 Ref-ID
+5	     skillLevel	  Integer
 
 Type 8: COMPLETE_ACHIEVEMENT
-Column	 Field	 Type	 Notes
-4	Achievement	 Integer	 Ref-ID
+Column	 Field	      Type	     Notes
+4	   Achievement	 Integer	 Ref-ID
 
 Type 9: COMPLETE_QUEST_COUNT
-Column	 Field	 Type	 Notes
-4	 unused	 Integer	
-5	 TotalQuestCount	 Integer	
+Column	 Field	         Type	    Notes
+4	    unused	         Integer
+5	 TotalQuestCount	 Integer
 
 Type 10: COMPLETE_DAILY_QUEST_DAILY
-Column	 Field	 Type	 Notes
-4	 unused	 Integer	
-5	 NumberOfDays	 Integer	
+Column	 Field	     Type	     Notes
+4	     unused	     Integer
+5	  NumberOfDays	 Integer
 
 Type 11: COMPLETE_QUESTS_IN_ZONE
-Column	 Field	 Type	 Notes
-4	ZoneID	 Integer	 Ref-ID
-5	 QuestCount	 Integer	
+Column	 Field	 Type	     Notes
+4	    ZoneID	 Integer	 Ref-ID
+5	 QuestCount	 Integer
 
 Type 14: COMPLETE_DAILY_QUEST
 Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 QuestCount	 Integer	
+4	 unknown	 Integer
+5	 QuestCount	 Integer
 
 Type 15: COMPLETE_BATTLEGROUND
 Type 16: DEATH_AT_MAP
@@ -75,7 +75,7 @@ Column	 Field	 Type	 Notes
 
 Type 18: DEATH_IN_DUNGEON
 Column	 Field	 Type	 Notes
-4	 ManLimit	 Integer	
+4	 ManLimit	 Integer
 
 Type 19: COMPLETE_RAID
 Column	 Field	 Type	 Notes
@@ -87,8 +87,8 @@ Column	 Field	 Type	 Notes
 
 Type 24: FALL_WITHOUT_DYING
 Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 FallHeight	 Integer	
+4	 unknown	 Integer
+5	 FallHeight	 Integer
 
 Type 26: DEATHS_FROM
 Column	 Field	 Type	 Notes
@@ -103,111 +103,111 @@ Type 28: BE_SPELL_TARGET
 Type 69: BE_SPELL_TARGET2
 Column	 Field	 Type	 Notes
 4	SpellID	 Integer	 Ref-ID
-5	 SpellCount	 Integer	
+5	 SpellCount	 Integer
 
 Type 29: CAST_SPELL
 Type 110: CAST_SPELL2
 Column	 Field	 Type	 Notes
 4	SpellID	 Integer	 Ref-ID
-5	 CastCount	 Integer	
+5	 CastCount	 Integer
 
 Type 30: BG_OBJECTIVE_CAPTURE
 Column	 Field	 Type	 Notes
 4	 Objective	 Integer	 The same objectives in different BGs have different IDs
-5	 Count	 Integer	 how many captures required
+5	 Count	     Integer	 how many captures required
 
 Type 31: HONORABLE_KILL_AT_AREA
-Column	 Field	 Type	 Notes
-4	AreaID	 Integer	 Ref-ID
-5	 KillCount	 Integer	
+Column	 Field	     Type	     Notes
+4	     AreaID	     Integer	 Ref-ID
+5	    KillCount	 Integer
 
 Type 32: WIN_ARENA
 Type 33: PLAY_ARENA
-Column	 Field	 Type	 Notes
-4	MapID	 Integer	 Ref-ID
+Column	 Field	 Type	     Notes
+4	    MapID	 Integer	 Ref-ID
 
 Type 34: LEARN_SPELL
-Column	 Field	 Type	 Notes
-4	SpellID	 Integer	 Ref-ID
+Column	 Field	  Type	     Notes
+4	    SpellID	  Integer	 Ref-ID
 
 Type 37: WIN_RATED_ARENA
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 Count	 Integer	
-6	 Flags	 Integer	 0x4: in a row
+Column	 Field   	 Type   	 Notes
+4	     unknown	 Integer
+5	     Count  	 Integer
+6	     Flags   	 Integer	 0x4: in a row
 
 Type 38: HIGHEST_TEAM_RATING
-Column	 Field	 Type	 Notes
-4	 TeamType	 Integer	 {2,3,5}
+Column	 Field  	 Type   	 Notes
+4	    TeamType	 Integer	 {2,3,5}
 
 Type 39: REACH_TEAM_RATING
-Column	 Field	 Type	 Notes
-4	 TeamType	 Integer	 {2,3,5}
-5	 TeamRating	 Integer	
+Column	 Field   	 Type   	 Notes
+4	    TeamType	 Integer	 {2,3,5}
+5	   TeamRating	 Integer
 
 Type 40: LEARN_SKILL_LEVEL
-Column	 Field	 Type	 Notes
-4	SkillID	 Integer	 Ref-ID
-5	 SkillLevel	 Integer	 apprentice=1, journeyman=2, expert=3, artisan=4, master=5, grand master=6
+Column	 Field   	 Type   	 Notes
+4	     SkillID	 Integer	 Ref-ID
+5	   SkillLevel	 Integer	 apprentice=1, journeyman=2, expert=3, artisan=4, master=5, grand master=6
 
 Type 36: OWN_ITEM
 Type 41: USE_ITEM
 Type 42: LOOT_ITEM
 Type 57: EQUIP_ITEM
-Column	 Field	 Type	 Notes
-4	ItemID	 Integer	 Ref-ID; IDs are also used by item_template
-5	 ItemCount	 Integer	
+Column	 Field  	 Type   	 Notes
+4	     ItemID 	 Integer	 Ref-ID; IDs are also used by item_template
+5	     ItemCount	 Integer
 
 Type 43: EXPLORE_AREA
 (This areaReference is NOT the index from AreaTable.dbc)
-Column	 Field	 Type	 Notes
-4	 AreaReference	 Integer	
+Column	 Field       	 Type   	 Notes
+4	   AreaReference	 Integer
 
 Type 44: OWN_RANK
 (This rank is NOT the index from CharTitles.dbc)
-Column	 Field	 Type	 Notes
-4	 rank	 Integer	
+Column	 Field  	 Type	 Notes
+4	     rank   	 Integer
 
 Type 45: BUY_BANK_SLOT
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 SlotCount	 Integer	
+Column	 Field  	 Type   	 Notes
+4	     unknown	 Integer
+5	    SlotCount	 Integer
 
 Type 46: GAIN_REPUTATION
-Column	 Field	 Type	 Notes
-4	FactionID	 Integer	 Ref-ID
-5	 ReputationAmount	 Integer	 Total reputation amount, so 42000 = exalted
+Column	 Field  	         Type   	 Notes
+4	     FactionID	         Integer	 Ref-ID
+5	     ReputationAmount	 Integer	 Total reputation amount, so 42000 = exalted
 
 Type 47: GAIN_EXALTED_REPUTATION
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 FactionCount	 Integer	
+Column	 Field   	     Type   	 Notes
+4	     unknown	     Integer
+5	     FactionCount	 Integer
 
 Type 48: VISIT_BARBER_SHOP
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 VisitCount	 Integer	
+Column	 Field	     Type   	 Notes
+4	    unknown	     Integer
+5	    VisitCount	 Integer
 
 Type 49: EQUIP_EPIC_ITEM
 (Where is the required itemlevel stored?)
-Column	 Field	 Type	 Notes
-4	 ItemSlot	 Integer	
+Column	 Field   	 Type       	 Notes
+4	     ItemSlot	 Integer
 
 Type 50: ROLL_NEED_ON_LOOT
 Tape 51: ROLL_GREED_ON_LOOT
-Column	 Field	 Type	 Notes
-4	 RollValue	 Integer	
-5	 Count	 Integer	
+Column	 Field   	 Type   	 Notes
+4	     RollValue	 Integer
+5	     Count   	 Integer
 
 Type 52: HK_CLASS
-Column	 Field	 Type	 Notes
-4	ClassID	 Integer	 Ref-ID
-5	 Count	 Integer	
+Column	 Field   	 Type   	 Notes
+4	     ClassID	 Integer	 Ref-ID
+5	     Count	     Integer
 
 Type 53: HK_RACE
-Column	 Field	 Type	 Notes
-4	RaceID	 Integer	 Ref-ID
-5	 Count	 Integer	
+Column	 Field 	 Type   	 Notes
+4	     RaceID	 Integer	 Ref-ID
+5	     Count	 Integer
 
 Type 54: DO_EMOTE
 (where is the information about the target stored?)
@@ -218,90 +218,90 @@ Column	 Field	 Type	 Notes
 Type 13: DAMAGE_DONE
 Type 55: HEALING_DONE
 Type 56: GET_KILLING_BLOWS
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 Count	 Integer	
-6	 Flag	 Integer	 3 for battleground healing
-7	MapID	 Integer	 Ref-ID
+Column	 Field	 Type   	 Notes
+4	    unknown	 Integer
+5	    Count	 Integer
+6	    Flag	 Integer	 3 for battleground healing
+7	    MapID	 Integer	 Ref-ID
 
 Type 62: MONEY_FROM_QUEST_REWARD
 Type 67: LOOT_MONEY
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 Amount	 Integer	 in copper
+Column	 Field   	 Type	       Notes
+4	     unknown	 Integer
+5	     Amount	     Integer       in copper
 
 Type 68: USE_GAMEOBJECT
-Column	 Field	 Type	 Notes
-4	GameObjectID	 Integer	 IDs are also used by gameobject_template
-5	 UseCount	 Integer	
+Column	 Field       	 Type    	 Notes
+4	     GameObjectID	 Integer	 IDs are also used by gameobject_template
+5	     UseCount    	 Integer
 
 Type 70: SPECIAL_PVP_KILL
 Are those special criteria stored in the dbc?
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 KillCount	 Integer	
+Column	 Field   	 Type       	 Notes
+4	     unknown	 Integer
+5	    KillCount	 Integer
 
 Type 72: FISH_IN_GAMEOBJECT
-Column	 Field	 Type	 Notes
-4	GameObjectID	 Integer	 IDs are also used by gameobject_template
-5	 LootCount	 Integer	
+Column	 Field       	 Type   	 Notes
+4	    GameObjectID	 Integer	 IDs are also used by gameobject_template
+5	    LootCount    	 Integer
 
 Type 75: LEARN_SKILLLINE_SPELLS
 Column	 Field	 Type	 Notes
 4	SkillLineID	 Integer	 Ref-ID
-5	 SpellCount	 Integer	
+5	 SpellCount	 Integer
 
 Type 76: WIN_DUEL
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 DuelCount	 Integer	
+Column	 Field   	 Type	 Notes
+4	     unknown	 Integer
+5	    DuelCount	 Integer
 
 Type 96: HIGHEST_POWER
-Column	 Field	 Type	 Notes
-4	 PowerType	 Integer	 0=mana, 1=rage, 3=energy, 6=runic power
+Column	 Field   	 Type   	 Notes
+4	     PowerType	 Integer	 0=mana, 1=rage, 3=energy, 6=runic power
 
 Type 97: HIGHEST_STAT
-Column	 Field	 Type	 Notes
-4	 StatType	 Integer	 0=str, 1=agi, 2=sta, 3=int, 4=spi
+Column	 Field   	 Type   	 Notes
+4	      StatType	 Integer	 0=str, 1=agi, 2=sta, 3=int, 4=spi
 
 Type 98: HIGHEST_SPELLPOWER
-Column	 Field	 Type	 Notes
-4	SpellSchool	 Integer	 Ref-ID
+Column	 Field      	 Type	 Notes
+4	     SpellSchool	 Integer	 Ref-ID
 
 Type 100: HIGHEST_RATING
-Column	 Field	 Type	 Notes
-4	 RatingType	 Integer	
+Column	 Field   	 Type	 Notes
+4	     RatingType	 Integer
 
 Type 109: LOOT_TYPE
 Column	 Field	 Type	 Notes
 4	 LootType	 Integer	 3=fishing, 2=pickpocket, 4=disenchant
-5	 LootTypeCount	 Integer	
+5	 LootTypeCount	 Integer
 
 Type 112: LEARN_SKILL_LINE
-Column	 Field	 Type	 Notes
-4	SkillLine	 Integer	 Ref-ID
-5	 SpellCount	 Integer	
+Column	 Field	     Type	     Notes
+4	     SkillLine	 Integer	 Ref-ID
+5	     SpellCount	 Integer
 
 Type 113: EARN_HONORABLE_KILL
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 KillCount	 Integer	
+Column	 Field	   Type	   Notes
+4	    unknown	   Integer
+5	    KillCount  Integer
 
 Type 114: ACCEPTED_SUMMONS
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 unused	 Integer	 Here comes a 1 in, because it's a Statistic
+Column	 Field	 Type	                Notes
+4	    unknown	 Integer
+5	    unused	 Integer	 Here comes a 1 in, because it's a Statistic
 
 Type 115: ACHIVEMENTPOINTS_REACHED
 (only used for "Over Ninethousand". Amount not specified)
 Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 unknown	 Integer	
+4	    unknown	 Integer
+5	    unknown	 Integer
 
 Type 119: RANDOM_DUNGEON_PLAYERCOUNT
-Column	 Field	 Type	 Notes
-4	 unknown	 Integer	
-5	 PlayerCount	 Integer	
+Column	 Field	   Type	      Notes
+4	    unknown	   Integer
+5	  PlayerCount  Integer
 
 
 
