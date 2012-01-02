@@ -1,0 +1,725 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Item template\par
+Contents [hide]\par
+1 entry\par
+2 class\par
+3 subclass\par
+4 unk0\par
+5 name\par
+6 displayid\par
+7 Quality\par
+8 Flags\par
+9 BuyCount\par
+10 BuyPrice\par
+11 SellPrice\par
+12 InventoryType\par
+13 AllowableClass\par
+14 AllowableRace\par
+15 ItemLevel\par
+16 RequiredLevel\par
+17 RequiredSkill\par
+18 RequiredSkillRank\par
+19 requiredspell\par
+20 requiredhonorrank\par
+21 RequiredCityRank\par
+22 RequiredReputationFaction\par
+23 RequiredReputationRank\par
+24 maxcount\par
+25 stackable\par
+26 ContainerSlots\par
+27 StatsCount\par
+28 stat_type\par
+29 stat_value\par
+30 dmg_min\par
+31 dmg_max\par
+32 dmg_type\par
+33 armor\par
+34 holy_res\par
+35 fire_res\par
+36 nature_res\par
+37 frost_res\par
+38 shadow_res\par
+39 arcane_res\par
+40 delay\par
+41 ammo_type\par
+42 RangedModRange\par
+43 spellid\par
+44 spelltrigger\par
+45 spellcharges\par
+46 spellppmRate\par
+47 spellcooldown\par
+48 spellcategory\par
+49 spellcategorycooldown\par
+50 bonding\par
+51 description\par
+52 PageText\par
+53 LanguageID\par
+54 PageMaterial\par
+55 startquest\par
+56 lockid\par
+57 Material\par
+58 sheath\par
+59 RandomProperty\par
+60 RandomSuffix\par
+61 block\par
+62 itemset\par
+63 MaxDurability\par
+64 area\par
+65 Map\par
+66 BagFamily\par
+67 TotemCategory\par
+68 socketColor\par
+69 socketContent\par
+70 socketBonus\par
+71 GemProperties\par
+72 RequiredDisenchantSkill\par
+73 ArmorDamageModifier\par
+74 Duration\par
+75 ItemLimitCategory\par
+76 ScriptName\par
+77 DisenchantID\par
+78 FoodType\par
+79 minMoneyLoot\par
+80 maxMoneyLoot\par
+Back to world database list of tables.\par
+\par
+The `item_template` table\par
+Holds information on every item that exists in the game. All items are created from their template stored in this table.\par
+\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+entry\tab int(10) unsigned\tab NO\tab PRI\tab 0\tab\par
+class\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+subclass\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+unk0\tab int(10)\tab NO\tab\tab -1\tab\par
+name\tab varchar(255)\tab NO\tab MUL\tab\tab\par
+displayid\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+Quality\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+Flags\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+BuyCount\tab tinyint(3) unsigned\tab NO\tab\tab 1\tab\par
+BuyPrice\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+SellPrice\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+InventoryType\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+AllowableClass\tab mediumint(9)\tab NO\tab\tab -1\tab\par
+AllowableRace\tab mediumint(9)\tab NO\tab\tab -1\tab\par
+ItemLevel\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+RequiredLevel\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+RequiredSkill\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RequiredSkillRank\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+requiredspell\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+requiredhonorrank\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RequiredCityRank\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RequiredReputationFaction\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RequiredReputationRank\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+maxcount\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+stackable\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ContainerSlots\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+StatsCount\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_type1\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value1\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type2\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value2\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type3\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value3\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type4\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value4\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type5\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value5\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type6\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value6\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type7\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value7\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type8\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value8\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type9\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value9\tab smallint(6)\tab NO\tab\tab 0\tab\par
+stat_type10\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+stat_value10\tab smallint(6)\tab NO\tab\tab 0\tab\par
+ScalingStatDistribution\tab smallint(6)\tab NO\tab\tab 0\tab\par
+ScalingStatValue\tab smallint(6)\tab NO\tab\tab 0\tab\par
+dmg_min1\tab float\tab NO\tab\tab 0\tab\par
+dmg_max1\tab float\tab NO\tab\tab 0\tab\par
+dmg_type1\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+dmg_min2\tab float\tab NO\tab\tab 0\tab\par
+dmg_max2\tab float\tab NO\tab\tab 0\tab\par
+dmg_type2\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+dmg_min3\tab float\tab NO\tab\tab 0\tab\par
+dmg_max3\tab float\tab NO\tab\tab 0\tab\par
+dmg_type3\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+dmg_min4\tab float\tab NO\tab\tab 0\tab\par
+dmg_max4\tab float\tab NO\tab\tab 0\tab\par
+dmg_type4\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+dmg_min5\tab float\tab NO\tab\tab 0\tab\par
+dmg_max5\tab float\tab NO\tab\tab 0\tab\par
+dmg_type5\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+armor\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+holy_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+fire_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+nature_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+frost_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+shadow_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+arcane_res\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+delay\tab int(10) unsigned\tab NO\tab\tab 1000\tab\par
+ammo_type\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RangedModRange\tab float\tab NO\tab\tab 0\tab\par
+spellid_1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spelltrigger_1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcharges_1\tab int(11)\tab NO\tab\tab 0\tab\par
+spellppmRate_1\tab float\tab NO\tab\tab 0\tab\par
+spellcooldown_1\tab int(11)\tab NO\tab\tab -1\tab\par
+spellcategory_1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcategorycooldown_1\tab int(11)\tab NO\tab\tab -1\tab\par
+spellid_2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spelltrigger_2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcharges_2\tab int(11)\tab NO\tab\tab 0\tab\par
+spellppmRate_2\tab float\tab NO\tab\tab 0\tab\par
+spellcooldown_2\tab int(11)\tab NO\tab\tab -1\tab\par
+spellcategory_2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcategorycooldown_2\tab int(11)\tab NO\tab\tab -1\tab\par
+spellid_3\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spelltrigger_3\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcharges_3\tab int(11)\tab NO\tab\tab 0\tab\par
+spellppmRate_3\tab float\tab NO\tab\tab 0\tab\par
+spellcooldown_3\tab int(11)\tab NO\tab\tab -1\tab\par
+spellcategory_3\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcategorycooldown_3\tab int(11)\tab NO\tab\tab -1\tab\par
+spellid_4\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spelltrigger_4\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcharges_4\tab int(11)\tab NO\tab\tab 0\tab\par
+spellppmRate_4\tab float\tab NO\tab\tab 0\tab\par
+spellcooldown_4\tab int(11)\tab NO\tab\tab -1\tab\par
+spellcategory_4\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcategorycooldown_4\tab int(11)\tab NO\tab\tab -1\tab\par
+spellid_5\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spelltrigger_5\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcharges_5\tab int(11)\tab NO\tab\tab 0\tab\par
+spellppmRate_5\tab float\tab NO\tab\tab 0\tab\par
+spellcooldown_5\tab int(11)\tab NO\tab\tab -1\tab\par
+spellcategory_5\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+spellcategorycooldown_5\tab int(11)\tab NO\tab\tab -1\tab\par
+bonding\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+description\tab varchar(255)\tab NO\tab\tab\tab\par
+PageText\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+LanguageID\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+PageMaterial\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+startquest\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+lockid\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+Material\tab int(11)\tab NO\tab\tab 0\tab\par
+sheath\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RandomProperty\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RandomSuffix\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+block\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+itemset\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+MaxDurability\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+area\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+Map\tab int(10)\tab NO\tab\tab 0\tab\par
+BagFamily\tab int(10)\tab NO\tab\tab 0\tab\par
+TotemCategory\tab int(10)\tab NO\tab\tab 0\tab\par
+socketColor_1\tab int(10)\tab NO\tab\tab 0\tab\par
+socketContent_1\tab int(10)\tab NO\tab\tab 0\tab\par
+socketColor_2\tab int(10)\tab NO\tab\tab 0\tab\par
+socketContent_2\tab int(10)\tab NO\tab\tab 0\tab\par
+socketColor_3\tab int(10)\tab NO\tab\tab 0\tab\par
+socketContent_3\tab int(10)\tab NO\tab\tab 0\tab\par
+socketBonus\tab int(10)\tab NO\tab\tab 0\tab\par
+GemProperties\tab int(10)\tab NO\tab\tab 0\tab\par
+RequiredDisenchantSkill\tab int(10)\tab NO\tab\tab -1\tab\par
+ArmorDamageModifier\tab float\tab NO\tab\tab 0\tab\par
+Duration\tab int(11)\tab NO\tab\tab 0\tab\par
+ItemLimitCategory\tab smallint(6)\tab NO\tab\tab 0\tab\par
+ScriptName\tab varchar(100)\tab NO\tab\tab\tab\par
+DisenchantID\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+FoodType\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+minMoneyLoot\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+maxMoneyLoot\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+\par
+Description of the fields\par
+entry\par
+The ID of the item. This ID is unique between all templates.\par
+class\par
+The class of the item:\par
+ID\tab  Name\par
+0\tab  Consumable\par
+1\tab  Container\par
+2\tab  Weapon\par
+3\tab  Gem\par
+4\tab  Armor\par
+5\tab  Reagent\par
+6\tab  Projectile\par
+7\tab  Trade Goods\par
+8\tab  Generic(OBSOLETE)\par
+9\tab  Recipe\par
+10\tab  Money(OBSOLETE)\par
+11\tab  Quiver\par
+12\tab  Quest\par
+13\tab  Key\par
+14\tab  Permanent(OBSOLETE)\par
+15\tab  Miscellaneous\par
+subclass\par
+The subclass of the item. The following table lists all available subclass and class combinations and the subclass name.\par
+Class ID\tab  Subclass ID\tab  Subclass Name\tab  Comments\par
+0\tab  0\tab  Consumable\tab  Usability in combat is decided by the spell assigned.\par
+0\tab  1\tab  Potion\tab\par
+0\tab  2\tab  Elixir\tab\par
+0\tab  3\tab  Flask\tab\par
+0\tab  4\tab  Scroll\tab\par
+0\tab  5\tab  Food & Drink\tab\par
+0\tab  6\tab  Item Enhancement\tab\par
+0\tab  7\tab  Bandage\tab\par
+0\tab  8\tab  Other\tab\par
+1\tab  0\tab  Bag\tab\par
+1\tab  1\tab  Soul Bag\tab\par
+1\tab  2\tab  Herb Bag\tab\par
+1\tab  3\tab  Enchanting Bag\tab\par
+1\tab  4\tab  Engineering Bag\tab\par
+1\tab  5\tab  Gem Bag\tab\par
+1\tab  6\tab  Mining Bag\tab\par
+1\tab  7\tab  Leatherworking Bag\tab\par
+2\tab  0\tab  Axe\tab  One handed\par
+2\tab  1\tab  Axe\tab  Two handed\par
+2\tab  2\tab  Bow\tab\par
+2\tab  3\tab  Gun\tab\par
+2\tab  4\tab  Mace\tab  One handed\par
+2\tab  5\tab  Mace\tab  Two handed\par
+2\tab  6\tab  Polearm\tab\par
+2\tab  7\tab  Sword\tab  One handed\par
+2\tab  8\tab  Sword\tab  Two handed\par
+2\tab  9\tab  Obsolete\tab\par
+2\tab  10\tab  Staff\tab\par
+2\tab  11\tab  Exotic\tab\par
+2\tab  12\tab  Exotic\tab\par
+2\tab  13\tab  Fist Weapon\tab\par
+2\tab  14\tab  Miscellaneous\tab  (Blacksmith Hammer, Mining Pick, etc.)\par
+2\tab  15\tab  Dagger\tab\par
+2\tab  16\tab  Thrown\tab\par
+2\tab  17\tab  Spear\tab\par
+2\tab  18\tab  Crossbow\tab\par
+2\tab  19\tab  Wand\tab\par
+2\tab  20\tab  Fishing Pole\tab\par
+3\tab  0\tab  Red\tab\par
+3\tab  1\tab  Blue\tab\par
+3\tab  2\tab  Yellow\tab\par
+3\tab  3\tab  Purple\tab\par
+3\tab  4\tab  Green\tab\par
+3\tab  5\tab  Orange\tab\par
+3\tab  6\tab  Meta\tab\par
+3\tab  7\tab  Simple\tab\par
+3\tab  8\tab  Prismatic\tab\par
+4\tab  0\tab  Miscellaneous\tab\par
+4\tab  1\tab  Cloth\tab\par
+4\tab  2\tab  Leather\tab\par
+4\tab  3\tab  Mail\tab\par
+4\tab  4\tab  Plate\tab\par
+4\tab  5\tab  Buckler(OBSOLETE)\tab\par
+4\tab  6\tab  Shield\tab\par
+4\tab  7\tab  Libram\tab\par
+4\tab  8\tab  Idol\tab\par
+4\tab  9\tab  Totem\tab\par
+5\tab  0\tab  Reagent\tab\par
+6\tab  0\tab  Wand(OBSOLETE)\tab\par
+6\tab  1\tab  Bolt(OBSOLETE)\tab\par
+6\tab  2\tab  Arrow\tab\par
+6\tab  3\tab  Bullet\tab\par
+6\tab  4\tab  Thrown(OBSOLETE)\tab\par
+7\tab  0\tab  Trade Goods\tab\par
+7\tab  1\tab  Parts\tab\par
+7\tab  2\tab  Explosives\tab\par
+7\tab  3\tab  Devices\tab\par
+7\tab  4\tab  Jewelcrafting\tab\par
+7\tab  5\tab  Cloth\tab\par
+7\tab  6\tab  Leather\tab\par
+7\tab  7\tab  Metal & Stone\tab\par
+7\tab  8\tab  Meat\tab\par
+7\tab  9\tab  Herb\tab\par
+7\tab  10\tab  Elemental\tab\par
+7\tab  11\tab  Other\tab\par
+7\tab  12\tab  Enchanting\tab\par
+8\tab  0\tab  Generic(OBSOLETE)\tab\par
+9\tab  0\tab  Book\tab\par
+9\tab  1\tab  Leatherworking\tab\par
+9\tab  2\tab  Tailoring\tab\par
+9\tab  3\tab  Engineering\tab\par
+9\tab  4\tab  Blacksmithing\tab\par
+9\tab  5\tab  Cooking\tab\par
+9\tab  6\tab  Alchemy\tab\par
+9\tab  7\tab  First Aid\tab\par
+9\tab  8\tab  Enchanting\tab\par
+9\tab  9\tab  Fishing\tab\par
+9\tab  10\tab  Jewelcrafting\tab\par
+10\tab  0\tab  Money(OBSOLETE)\tab\par
+11\tab  0\tab  Quiver(OBSOLETE)\tab\par
+11\tab  1\tab  Quiver(OBSOLETE)\tab\par
+11\tab  2\tab  Quiver\tab  Can hold arrows\par
+11\tab  3\tab  Ammo Pouch\tab  Can hold bullets\par
+12\tab  0\tab  Quest\tab\par
+13\tab  0\tab  Key\tab\par
+13\tab  1\tab  Lockpick\tab\par
+14\tab  0\tab  Permanent\tab\par
+15\tab  0\tab  Junk\tab\par
+15\tab  1\tab  Reagent\tab\par
+15\tab  2\tab  Pet\tab\par
+15\tab  3\tab  Holiday\tab\par
+15\tab  4\tab  Other\tab\par
+15\tab  5\tab  Mount\tab\par
+unk0\par
+name\par
+The item's name that will be displayed.\par
+displayid\par
+The model ID of the item. Each model has its own icon assigned so this field controls both the model appearance and the icon.\par
+Quality\par
+The quality of the item:\par
+ID\tab  Color\tab  Quality\par
+0\tab  Grey\tab  Poor\par
+1\tab  White\tab  Common\par
+2\tab  Green\tab  Uncommon\par
+3\tab  Blue\tab  Rare\par
+4\tab  Purple\tab  Epic\par
+5\tab  Orange\tab  Legendary\par
+6\tab  Red\tab  Artifact\par
+Flags\par
+Bitmask field that contains flags that the item has on it. As all other such fields, just add the flags together to combine them. Possible flags are listed below.\par
+Flag\tab  Comments\par
+1\tab  Soulbound\par
+2\tab  Conjured\par
+4\tab  Lootable (can be opened by right-click)\par
+8\tab  Wrapped\par
+32\tab  Totem\par
+64\tab  Activatable with right-click\par
+256\tab  Wrapper\par
+1024\tab  Gifts\par
+2048\tab  Item is party loot and can be looted by all\par
+8192\tab  Charter (Arena or Guild)\par
+32768\tab  PvP reward item\par
+524288\tab  Unique equipped (player can only have one equipped at the same time)\par
+4194304\tab  Throwable (for tooltip ingame)\par
+8388608\tab  Special Use\par
+BuyCount\par
+The size of the item stack when sold by vendors. Also if a vendor has limited copies of this item available, everytime the vendor list is refreshed (See npc_vendor.incrtime), the number of copies increases by this number.\par
+BuyPrice\par
+The price required to pay to buy this item from a vendor, in copper.\par
+SellPrice\par
+The price that the vendor will pay you for the item when you sell it and if it is possible to be sold, in copper. Put in 0 if the item cannot be sold to a vendor.\par
+InventoryType\par
+In what slot the item can be equipped.\par
+ID\tab  Slot Name\tab  ID\tab  Slot Name\par
+0\tab  Non equipable\tab  15\tab  Ranged\par
+1\tab  Head\tab  16\tab  Back\par
+2\tab  Neck\tab  17\tab  Two-Hand\par
+3\tab  Shoulder\tab  18\tab  Bag\par
+4\tab  Shirt\tab  19\tab  Tabard\par
+5\tab  Chest\tab  20\tab  Robe\par
+6\tab  Waist\tab  21\tab  Main hand\par
+7\tab  Legs\tab  22\tab  Off hand\par
+8\tab  Feet\tab  23\tab  Holdable (Tome)\par
+9\tab  Wrists\tab  24\tab  Ammo\par
+10\tab  Hands\tab  25\tab  Thrown\par
+11\tab  Finger\tab  26\tab  Ranged right\par
+12\tab  Trinket\tab  27\tab  Quiver\par
+13\tab  Weapon\tab  28\tab  Relic\par
+14\tab  Shield\tab\tab\par
+AllowableClass\par
+Bitmask controlling which classes can use this item. Add ids together to combine class possibilities. Use -1 if all classes can use it.\par
+Value\tab Name\par
+1\tab Warrior\par
+2\tab Paladin\par
+4\tab Hunter\par
+8\tab Rogue\par
+16\tab Priest\par
+32\tab Death Knight\par
+64\tab Shaman\par
+128\tab Mage\par
+256\tab Warlock\par
+1024\tab Druid\par
+AllowableRace\par
+Bitmask controlling which races can use this item. Add ids together to combine race possibilities. Use -1 for all races.\par
+Value\tab Name\par
+1\tab Human\par
+2\tab Orc\par
+4\tab Dwarf\par
+8\tab Night Elf\par
+16\tab Undead\par
+32\tab Tauren\par
+64\tab Gnome\par
+128\tab Troll\par
+512\tab Blood Elf\par
+1024\tab Draenei\par
+ItemLevel\par
+Base item level.\par
+RequiredLevel\par
+Required level the player has to be to use this item.\par
+RequiredSkill\par
+The skill required to use this item. See SkillLine.dbc\par
+RequiredSkillRank\par
+The required skill rank the player needs to have to use this item.\par
+requiredspell\par
+The required spell that the player needs to have to use this item.\par
+requiredhonorrank\par
+The honor rank the player needs to have to use this item.\par
+RequiredCityRank\par
+RequiredReputationFaction\par
+The faction template ID (from Faction.dbc) of the faction that the player has to have a certain ranking with.\par
+RequiredReputationRank\par
+The rank the player has to have with the faction from RequiredReputationFaction.\par
+ID\tab  Rank\par
+0\tab  Hated\par
+1\tab  Hostile\par
+2\tab  Unfriendly\par
+3\tab  Neutral\par
+4\tab  Friendly\par
+5\tab  Honored\par
+6\tab  Revered\par
+7\tab  Exalted\par
+maxcount\par
+Maximum number of copies of this item a player can have. Use 0 for infinite.\par
+stackable\par
+The number of copies of this item that can be stacked in the same slot.\par
+ContainerSlots\par
+If the item is a bag, this field controls the number of slots the bag has.\par
+StatsCount\par
+The number of stats used for this item. Only the first n stats are used.\par
+stat_type\par
+The type of stat to modify.\par
+ID\tab  Stat Type\par
+0\tab  ITEM_MOD_MANA\par
+1\tab  ITEM_MOD_HEALTH\par
+3\tab  ITEM_MOD_AGILITY\par
+4\tab  ITEM_MOD_STRENGTH\par
+5\tab  ITEM_MOD_INTELLECT\par
+6\tab  ITEM_MOD_SPIRIT\par
+7\tab  ITEM_MOD_STAMINA\par
+12\tab  ITEM_MOD_DEFENSE_SKILL_RATING\par
+13\tab  ITEM_MOD_DODGE_RATING\par
+14\tab  ITEM_MOD_PARRY_RATING\par
+15\tab  ITEM_MOD_BLOCK_RATING\par
+16\tab  ITEM_MOD_HIT_MELEE_RATING\par
+17\tab  ITEM_MOD_HIT_RANGED_RATING\par
+18\tab  ITEM_MOD_HIT_SPELL_RATING\par
+19\tab  ITEM_MOD_CRIT_MELEE_RATING\par
+20\tab  ITEM_MOD_CRIT_RANGED_RATING\par
+21\tab  ITEM_MOD_CRIT_SPELL_RATING\par
+22\tab  ITEM_MOD_HIT_TAKEN_MELEE_RATING\par
+23\tab  ITEM_MOD_HIT_TAKEN_RANGED_RATING\par
+24\tab  ITEM_MOD_HIT_TAKEN_SPELL_RATING\par
+25\tab  ITEM_MOD_CRIT_TAKEN_MELEE_RATING\par
+26\tab  ITEM_MOD_CRIT_TAKEN_RANGED_RATING\par
+27\tab  ITEM_MOD_CRIT_TAKEN_SPELL_RATING\par
+28\tab  ITEM_MOD_HASTE_MELEE_RATING\par
+29\tab  ITEM_MOD_HASTE_RANGED_RATING\par
+30\tab  ITEM_MOD_HASTE_SPELL_RATING\par
+31\tab  ITEM_MOD_HIT_RATING\par
+32\tab  ITEM_MOD_CRIT_RATING\par
+33\tab  ITEM_MOD_HIT_TAKEN_RATING\par
+34\tab  ITEM_MOD_CRIT_TAKEN_RATING\par
+35\tab  ITEM_MOD_RESILIENCE_RATING\par
+36\tab  ITEM_MOD_HASTE_RATING\par
+37\tab  ITEM_MOD_EXPERTISE_RATING\par
+stat_value\par
+The value to change the stat type to.\par
+dmg_min\par
+The minimum damage of the item.\par
+dmg_max\par
+The maximum damage of the item.\par
+dmg_type\par
+The damage type that the item uses.\par
+ID\tab  Damage Type\par
+0\tab  Physical\par
+1\tab  Holy\par
+2\tab  Fire\par
+3\tab  Nature\par
+4\tab  Frost\par
+5\tab  Shadow\par
+6\tab  Arcane\par
+armor\par
+The armor value of the item.\par
+holy_res\par
+Holy resistance.\par
+fire_res\par
+Fire resistance.\par
+nature_res\par
+Nature resistance.\par
+frost_res\par
+Frost resistance.\par
+shadow_res\par
+Shadow resistance.\par
+arcane_res\par
+Arcane resistance.\par
+delay\par
+The time in milliseconds between successive hits.\par
+ammo_type\par
+The type of ammunition the item uses. Arrows = 2; Bullets = 3\par
+RangedModRange\par
+spellid\par
+The spell ID of the spell that the item can cast or trigger.\par
+spelltrigger\par
+The type of trigger for the spell.\par
+ID\tab  Trigger Type\par
+0\tab  Use\par
+1\tab  On Equip\par
+2\tab  Chance on Hit\par
+4\tab  Soulstone\par
+5\tab  Use with no delay\par
+6\tab  Learn spell if spellid_1 = 55884\par
+spellcharges\par
+The number of times that the item can cast the spell. If 0, then infinite charges are possible. If negative, then after the number of charges is depleted, the item is deleted as well. If positive, then the item is not deleted after all the charges are spent.\par
+spellppmRate\par
+The proc per minute rate controlling how often the spell is triggered (if #spelltrigger == 2).\par
+spellcooldown\par
+The cooldown in milliseconds for the specific spell controlling how often the spell can be used. Use -1 to use the default spell cooldown.\par
+spellcategory\par
+The category that the spell is in.\par
+spellcategorycooldown\par
+The cooldown time in milliseconds that is applied to all other spells in the category that the triggered spell is also in. Use -1 to use the default spell cooldown.\par
+bonding\par
+The bonding for the item.\par
+ID\tab  Bonding Type\par
+1\tab  Binds when picked up\par
+2\tab  Binds when equipped\par
+3\tab  Binds when used\par
+4\tab  Quest item\par
+description\par
+The description that appears in orange letters at the bottom of the item tooltip.\par
+PageText\par
+The ID referring to the text that the item will show (if it is a book or a letter, etc). The item will have a magnifying glass cursor in the game and will show the text when right-clicked. See page_text.entry\par
+LanguageID\par
+The language that the item text is written in.\par
+ID\tab Name\par
+1\tab Orcish\par
+2\tab Darnassian\par
+3\tab Taurahe\par
+6\tab Dwarvish\par
+7\tab Common\par
+8\tab Demonic\par
+9\tab Titan\par
+10\tab Thalassian\par
+11\tab Draconic\par
+12\tab Kalimag\par
+13\tab Gnomish\par
+14\tab Troll\par
+33\tab Gutterspeak\par
+35\tab Draenei\par
+36\tab Zombie\par
+37\tab Gnomish Binary\par
+38\tab Goblin Binary\par
+PageMaterial\par
+The background texture that appears in the page text window.\par
+ID\tab Name\par
+1\tab Parchment\par
+2\tab Stone\par
+3\tab Marble\par
+4\tab Silver\par
+5\tab Bronze\par
+6\tab Valentine\par
+7\tab Illidan\par
+startquest\par
+The ID of the quest that this item will start if right-clicked. See quest_template.entry\par
+lockid\par
+The lock entry ID that this item (which serves as a key) is tied to. This field is used in key-door mechanics. See Lock.dbc\par
+Material\par
+The material that the item is made of. The value here affects the sound that the item makes when moved. Use -1 for consumable items like food, reagents, etc.\par
+ID\tab  Material\par
+1\tab  Metal\par
+2\tab  Wood\par
+3\tab  Liquid\par
+4\tab  Jewelry\par
+5\tab  Chain\par
+6\tab  Plate\par
+7\tab  Cloth\par
+8\tab  Leather\par
+sheath\par
+Controls how the item is put away on the character (pressing the 'Z' hotkey).\par
+ID\tab  Type\tab  Position\par
+1\tab  Two Handed Weapon\tab  Diagonally accross the back pointing down\par
+2\tab  Staff\tab  Diagonally accross the back poiting up\par
+3\tab  One Handed\tab  To the side\par
+4\tab  Shield\tab  On the back in the middle\par
+5\tab  Enchanter's Rod\tab\par
+6\tab  Off hand\tab  On the other side of One Handed\par
+RandomProperty\par
+The number in this field points to item_enchantment_template.entry and ties in an item's chance at having a random property attached to it when it shows up for the first time. This field and the RandomSuffix field CANNOT both have non-zero values. Either one is filled, or the other. Also, the primary source for the number in this field are WDBs.\par
+RandomSuffix\par
+The number in this field points to item_enchantment_template.entry and ties in an item's chance at having a random suffix attached to it when it shows up for the first time. This field and the RandomProperty field CANNOT both have non-zero values. Either one is filled, or the other. Also, the primary source for the number in this field are WDBs.\par
+block\par
+If the item is a shield, the block chance of the shield.\par
+itemset\par
+The ID of the item set that this item belongs to. To save you some time, you CAN NOT make up new item sets. Item sets are defined in ItemSet.dbc\par
+MaxDurability\par
+The maximum durability of this item.\par
+area\par
+The zone ID that this item can be used in.\par
+Map\par
+The map ID that this item can be used in.\par
+BagFamily\par
+If the item is a bag, this field is a bitmask controlling what types of items can be put in this bag. You can combine different types by adding up the bit numbers.\par
+ID\tab  Bag Family Mask\par
+0\tab  None\par
+1\tab  Arrows\par
+2\tab  Bullets\par
+4\tab  Soul Shards\par
+8\tab  Leatherworking Supplies\par
+32\tab  Herbs\par
+64\tab  Enchanting Supplies\par
+128\tab  Engineering Supplies\par
+256\tab  Keys\par
+512\tab  Gems\par
+1024\tab  Mining Supplies\par
+TotemCategory\par
+Corresponds to the ID in TotemCategory.dbc.\par
+ID\tab  Category Name\par
+1\tab  TC_SKINNING_SKIFE\par
+2\tab  TC_EARTH_TOTEM\par
+3\tab  TC_AIR_TOTEM\par
+4\tab  TC_FIRE_TOTEM\par
+5\tab  TC_WATER_TOTEM\par
+6\tab  TC_COPPER_ROD\par
+7\tab  TC_SILVER_ROD\par
+8\tab  TC_GOLDEN_ROD\par
+9\tab  TC_TRUESILVER_ROD\par
+10\tab  TC_ARCANITE_ROD\par
+11\tab  TC_MINING_PICK\par
+12\tab  TC_PHILOSOPHERS_STONE\par
+13\tab  TC_BLACKSMITH_HAMMER\par
+14\tab  TC_ARCLIGHT_SPANNER\par
+15\tab  TC_ GYROMATIC_MA\par
+21\tab  TC_MASTER_TOTEM\par
+41\tab  TC_FEL_IRON_ROD\par
+62\tab  TC_ADAMANTITE_ROD\par
+63\tab  TC_ETERNIUM_ROD\par
+socketColor\par
+The color of the socket that can be placed in this item.\par
+ID\tab  Color\par
+1\tab  Meta\par
+2\tab  Red\par
+4\tab  Yellow\par
+8\tab  Blue\par
+socketContent\par
+socketBonus\par
+GemProperties\par
+The value here corresponds to the ID in GemProperties.dbc.\par
+RequiredDisenchantSkill\par
+The required proficiency in disenchanting that the player needs to have to be able to disenchant this item.\par
+ArmorDamageModifier\par
+Duration\par
+The duration of the item in seconds. If positive, it is the duration measured in ingame time. If negative, it is the duration measured in real time.\par
+ItemLimitCategory\par
+ScriptName\par
+The name of the script that the item should use. There is no 'internalitemhandler' or 'internalitemhanler' script so mangos will ignore any such values in this field.\par
+DisenchantID\par
+The disenchant loot template ID. See disenchant_loot_template.entry\par
+FoodType\par
+If this item is a food type item, this field defines what type of food it is for hunters who want to feed their pets. It controls in what diet this food item falls in.\par
+NOTE: Raw meat and fish is not the same as regular meat and fish. It seems that the last two types of diets include grey "poor" types of food that players have no use for but some pets seem to be able to eat. Also, those food types appeared in TBC so most likely only TBC pets will have those types of diets.\par
+ID\tab  Type\par
+1\tab  Meat\par
+2\tab  Fish\par
+3\tab  Cheese\par
+4\tab  Bread\par
+5\tab  Fungus\par
+6\tab  Fruit\par
+7\tab  Raw Meat\par
+8\tab  Raw Fish\par
+minMoneyLoot\par
+If the item is a container that can contain money, then this field defines the minimum coinage held in this container, in copper.\par
+maxMoneyLoot\par
+If the item is a container that can contain money, then this field defines the maximum coinage held in this container, in copper.\par
+}
+ 

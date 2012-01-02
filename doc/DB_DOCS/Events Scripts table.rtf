@@ -1,0 +1,210 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Scripts table\par
+Contents [hide]\par
+1 id\par
+2 delay\par
+3 command\par
+4 OtherFields\par
+Back to world database list of tables.\par
+\par
+The `*_scripts` table\par
+This table format is used for 5 different tables to control possible scripts activated by different actions:\par
+gameobject_scripts: Holds possible scripts activated by gameobjects of type GAMEOBJECT_TYPE_BUTTON (1).\par
+spell_scripts: Holds scripts that can be activated by spells with effect SPELL_EFFECT_SCRIPT_EFFECT (77).\par
+quest_start_scripts: Holds scripts activated when a player accepts a quest.\par
+quest_end_scripts: Holds scripts activated when a player finishes a quest.\par
+creature_movement_scripts: Holds scripts activated while a npc is moving.\par
+event_scripts: Holds scripts activated whenever an event is activated, be it by an object or as the spell effect\par
+SPELL_EFFECT_SEND_EVENT (61).\par
+NOTE:An entry in this table may have more than one row as a script may domore than just one action. Also each action the script may make canhave a separate delay attached to it. In that case, the core willactivate the appropriate action after the correct delay.\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+id\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+delay\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+command\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+datalong\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+datalong2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+datalong3\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+datalong4\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data_flags\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+dataint\tab int(11)\tab NO\tab\tab 0\tab\par
+x\tab float\tab NO\tab\tab 0\tab\par
+y\tab float\tab NO\tab\tab 0\tab\par
+z\tab float\tab NO\tab\tab 0\tab\par
+o\tab float\tab NO\tab\tab 0\tab\par
+Description of the fields\par
+id\par
+For gameobject_scripts, it is the guid of the button/lever. See gameobject.guid.\par
+For spell_scripts, it is the spell ID. See Spell.dbc\par
+For quest_*_scripts, it is the ID that is used inStartScript orCompleteScript in the quest templatedefinition.\par
+For creature_movement_scripts, itis the ID used increature_movement.script_id.\par
+For event_scripts, it is the event ID. There doesn't exist currentlya full list of events. In any case, the event IDs are taken directlyfrom gameobject WDB data or spell effect data. If both a gameobject anda spell activate the same event, the IDs will match.\par
+delay\par
+Delay in seconds before this current step of the script activates. 0 = instant.\par
+command\par
+Thetype of action performed by the script after delay secondshave passed. The value of this field affects what other fields alsoneed to be set.\par
+Command\tab  Name\tab  Description\par
+0\tab  TALK\tab  Creature say/whisper/yell/textemote.\par
+1\tab  EMOTE\tab  Play emote on creature.\par
+2\tab  FIELD_SET\tab  Change the value at an index for the unit.\par
+3\tab  MOVE_TO\tab  Relocate creature to a destination\par
+4\tab  FLAG_SET\tab  Turns on bits on a flag field at an index for the worldobject.\par
+5\tab  FLAG_REMOVE\tab  Turns off bits on a flag field at an index for the worldobject.\par
+6\tab  TELEPORT_TO\tab  Teleports the player to a location.\par
+7\tab  QUEST_EXPLORED\tab  Satisfies the explore requirement for a quest.\par
+8\tab  KILL_CREDIT\tab  Satisfies the kill credit requirement for a quest.\par
+9\tab  RESPAWN_GAMEOBJECT\tab  Spawns a despawned gameobject.\par
+10\tab  TEMP_SUMMON_CREATURE\tab  Temporarily summon a creature.\par
+11\tab  OPEN_DOOR\tab  Opens a door gameobject (type == 0).\par
+12\tab  CLOSE_DOOR\tab  Closes a door gameobject (type == 0).\par
+13\tab  ACTIVATE_OBJECT\tab  Activates an object.\par
+14\tab  REMOVE_AURA\tab  Removes an aura due to a spell.\par
+15\tab  CAST_SPELL\tab  Casts a spell.\par
+16\tab  PLAY_SOUND\tab  Plays a sound.\par
+17\tab  CREATE_ITEM\tab  Creates an item.\par
+18\tab  DESPAWN_SELF\tab  Despawns an npc with some delay.\par
+19\tab  PLAY_MOVIE\tab  Plays a movie.\par
+20\tab  MOVEMENT\tab  Change Movement of a creature.\par
+21\tab  SET_ACTIVEOBJECT\tab  Sets the active object state of the creature\par
+22\tab  SET_FACTION\tab  Sets the faction id from the creature.\par
+23\tab  MORPH_TO_ENTRY_OR_MODEL\tab  Morphs the creature to the model specified.\par
+24\tab  MOUNT_TO_ENTRY_OR_MODEL\tab  Mounts the creature with the model specified.\par
+25\tab  SET_RUN\tab  Changes the run capacity of the creature.\par
+\par
+OtherFields\par
+Depending on what command was used, the meaning and use for the following fields varies.\par
+SCRIPT_COMMAND_TALK = 0\par
+datalong: 0=say, 1=yell, 2=text emote, 3=boss emote, 4=whisper, 5=boss whisper, 6=zone yell (see "enum ChatType")\par
+datalong2: creature entry (searching for a buddy, closest to source)\par
+datalong3 : creature search radius\par
+data_flags:\par
+flag\tab  value\par
+flag_target_player_as_source\tab  0x01\par
+flag_original_source_as_target\tab  0x02\par
+flag_buddy_as_target\tab  0x04\par
+dataint: The text ID that the creature will say. See db_script_string. ID must be between 2000000000 and 2000010000.\par
+dataint2: Optionally, for random selection of text.\par
+dataint3: Optionally, for random selection of text.\par
+dataint4: Optionally, for random selection of text.\par
+\par
+SCRIPT_COMMAND_EMOTE = 1\par
+datalong: The emote ID to play.\par
+datalong2: creature entry.\par
+datalong3: creature search radius.\par
+\par
+SCRIPT_COMMAND_FIELD_SET = 2\par
+datalong: Index of the field.\par
+datalong2: Value to place at the index.\par
+\par
+SCRIPT_COMMAND_MOVE_TO = 3\par
+datalong2: Length of the motion.\par
+x: X position to move to.\par
+y: Y position to move to.\par
+z: Z position to move to.\par
+o: Orientation to face.\par
+\par
+SCRIPT_COMMAND_FLAG_SET = 4\par
+datalong: Field index to be set.\par
+datalong2: Flag bit(s) to set.\par
+\par
+SCRIPT_COMMAND_FLAG_REMOVE = 5\par
+datalong: Field index to be unset.\par
+datalong2: Flag bit(s) to unset.\par
+\par
+SCRIPT_COMMAND_TELEPORT_TO = 6\par
+datalong: Target Map ID. See Maps.dbc\par
+x: Teleport target x coordinate.\par
+y: Teleport target y coordinate.\par
+z: Teleport target z coordinate.\par
+o: Teleport target orientation.\par
+\par
+SCRIPT_COMMAND_QUEST_EXPLORED = 7\par
+datalong: Quest ID whose external status should be satisfied\par
+datalong2: Distance away from the NPC/object that the player can be and have the script still take effect\par
+\par
+SCRIPT_COMMAND_KILL_CREDIT = 8\par
+datalong: Kill credit entry for quest (entry in quest_template.ReqCreatureOrGOId)\par
+datalong2: 0=personal credit, 1=group credit\par
+\par
+SCRIPT_COMMAND_RESPAWN_GAMEOBJECT = 9\par
+datalong: Guid of the gameobject to respawn. See gameobject.guid.\par
+datalong2: Despawn time in seconds. If the value is < 5 seconds: 5 is used instead.\par
+SCRIPT_COMMAND_TEMP_SUMMON_CREATURE = 10\par
+datalong: Entry of the summoned creature from creature_template.entry.\par
+datalong2: Despawn time in ms.\par
+x: Summon target x coordinate.\par
+y: Summon target y coordinate.\par
+z: Summon target z coordinate.\par
+o: Summon target orientation.\par
+data_flags: 0x01 = Summon as active Object.\par
+\par
+SCRIPT_COMMAND_OPEN_DOOR = 11\par
+datalong: Guid of the activated door. It's a gameobject.guid.\par
+datalong2: Delay before closing again the door. If the value is < 5 seconds: 5 is used instead.\par
+\par
+SCRIPT_COMMAND_CLOSE_DOOR = 12\par
+datalong: Guid of the activated door. It's a gameobject.guid.\par
+datalong2: Delay before opening again the door. If the value is < 5 seconds: 5 is used instead.\par
+\par
+SCRIPT_COMMAND_ACTIVATE_OBJECT = 13\par
+The source must be a unit and the target a game object.\par
+\par
+SCRIPT_COMMAND_REMOVE_AURA = 14\par
+datalong: Spell ID.\par
+datalong2: If value > 0, then cast on the source; otherwise cast on the target.\par
+SCRIPT_COMMAND_CAST_SPELL = 15\par
+datalong: Spell ID.\par
+datalong2: If value > 0, then cast on the source; otherwise cast on the target.\par
+\par
+SCRIPT_COMMAND_PLAY_SOUND = 16\par
+datalong: Sound ID.\par
+datalong2: bitmask: 0/1=anyone/target, 0/2=with distance dependent, so1|2 = 3 is target with distance dependent. Side note: Source may beany object/npc. Target may be any player.\par
+\par
+SCRIPT_COMMAND_CREATE_ITEM = 17\par
+datalong: item entry.\par
+datalong2: amount. Side note: Source or target have to be a player.\par
+\par
+SCRIPT_COMMAND_DESPAWN_SELF = 18\par
+datalong: despawn delay. Side note: Source or target must be creature.\par
+\par
+SCRIPT_COMMAND_PLAY_MOVIE = 19\par
+datalong: Movie ID. Side note: Target or Source must be player.\par
+\par
+SCRIPT_COMMAND_MOVEMENT = 20\par
+datalong: Movement Type: 0 - Idle Movement, 1 - Random Movement, 2 - Waypoint Movement (Creature must have a valid path)\par
+datalong2: Entry of Creature in range datalong3\par
+default: Source or Target must be Creature.\par
+\par
+SCRIPT_COMMAND_SET_ACTIVEOBJECT = 21\par
+datalong: bool, 0=off, 1=on\par
+datalong2: Entry of Creature\par
+datalong3: search radius for creature entry\par
+Note: source = any, target = creature\par
+\par
+SCRIPT_COMMAND_SET_FACTION = 22\par
+datalong: faction ID\par
+datalong2: Entry of Creature\par
+datalong3: search radius for creature entry\par
+Note: source = any, target = creature\par
+\par
+SCRIPT_COMMAND_MORPH_TO_ENTRY_OR_MODEL = 23\par
+datalong: creature entry OR modelid (depends on data_flags). 0 = demorph\par
+datalong2: Entry of Creature\par
+datalong3: search radius for creature entry\par
+data_flags: 0=morphs using the modelid from the creature entry in datalong, 1 = morphs using direct modelid from datalong\par
+Note: source = any, target = creature\par
+\par
+SCRIPT_COMMAND_MOUNT_TO_ENTRY_OR_MODEL = 24\par
+datalong: creature entry OR modelid (depends on data_flags). 0 = unmount\par
+datalong2: Entry of Creature\par
+datalong3: search radius for creature entry\par
+data_flags: 0=mounts using the modelid from the creature entry in datalong, 1 = mounts using direct modelid from datalong\par
+Note: source = any, target = creature\par
+\par
+SCRIPT_COMMAND_SET_RUN = 25\par
+datalong: bool, 0=can't run (walk), 1=can run\par
+datalong2: Entry of Creature\par
+datalong3: search radius for creature entry\par
+Note: source = any, target = creature\par
+}
+ 

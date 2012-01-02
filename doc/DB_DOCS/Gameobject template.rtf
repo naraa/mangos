@@ -1,0 +1,346 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Gameobject template\par
+Contents [hide]\par
+1 entry\par
+2 type\par
+3 displayId\par
+4 name\par
+5 castBarCaption\par
+6 faction\par
+7 flags\par
+8 size\par
+9 data0-23\par
+10 ScriptName\par
+Back to world database list of tables.\par
+\par
+The `gameobject_template` table\par
+Contains template off all world's objects\par
+\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+entry\tab int(10) unsigned\tab NO\tab PRI\tab 0\tab\par
+type\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+displayId\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+name\tab char(100)\tab NO\tab MUL\tab 0\tab\par
+castBarCaption\tab varchar(100)\tab NO\tab\tab\tab\par
+faction\tab int(4) unsigned\tab NO\tab\tab 0\tab\par
+flags\tab int(4) unsigned\tab NO\tab\tab 0\tab\par
+size\tab float\tab NO\tab\tab 1\tab\par
+data0\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data2\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data3\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data4\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data5\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data6\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data7\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data8\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data9\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data10\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data11\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data12\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data13\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data14\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data15\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data16\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data17\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data18\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data19\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data20\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data21\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data22\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+data23\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+ScriptName\tab char(100)\tab NO\tab\tab\tab\par
+\par
+Description of the fields\par
+entry\par
+Id of the gameobject template\par
+type\par
+   GAMEOBJECT_TYPE_DOOR               = 0\par
+   GAMEOBJECT_TYPE_BUTTON             = 1\par
+   GAMEOBJECT_TYPE_QUESTGIVER         = 2\par
+   GAMEOBJECT_TYPE_CHEST              = 3\par
+   GAMEOBJECT_TYPE_BINDER             = 4\par
+   GAMEOBJECT_TYPE_GENERIC            = 5\par
+   GAMEOBJECT_TYPE_TRAP               = 6\par
+   GAMEOBJECT_TYPE_CHAIR              = 7\par
+   GAMEOBJECT_TYPE_SPELL_FOCUS        = 8\par
+   GAMEOBJECT_TYPE_TEXT               = 9\par
+   GAMEOBJECT_TYPE_GOOBER             = 10\par
+   GAMEOBJECT_TYPE_TRANSPORT          = 11\par
+   GAMEOBJECT_TYPE_AREADAMAGE         = 12\par
+   GAMEOBJECT_TYPE_CAMERA             = 13\par
+   GAMEOBJECT_TYPE_MAP_OBJECT         = 14\par
+   GAMEOBJECT_TYPE_MO_TRANSPORT       = 15\par
+   GAMEOBJECT_TYPE_DUEL_ARBITER       = 16\par
+   GAMEOBJECT_TYPE_FISHINGNODE        = 17\par
+   GAMEOBJECT_TYPE_RITUAL             = 18\par
+   GAMEOBJECT_TYPE_MAILBOX            = 19\par
+   GAMEOBJECT_TYPE_AUCTIONHOUSE       = 20\par
+   GAMEOBJECT_TYPE_GUARDPOST          = 21\par
+   GAMEOBJECT_TYPE_SPELLCASTER        = 22\par
+   GAMEOBJECT_TYPE_MEETINGSTONE       = 23\par
+   GAMEOBJECT_TYPE_FLAGSTAND          = 24\par
+   GAMEOBJECT_TYPE_FISHINGHOLE        = 25\par
+   GAMEOBJECT_TYPE_FLAGDROP           = 26\par
+   GAMEOBJECT_TYPE_MINI_GAME          = 27\par
+   GAMEOBJECT_TYPE_LOTTERY_KIOSK      = 28\par
+   GAMEOBJECT_TYPE_CAPTURE_POINT      = 29\par
+   GAMEOBJECT_TYPE_AURA_GENERATOR     = 30\par
+   GAMEOBJECT_TYPE_DUNGEON_DIFFICULTY = 31\par
+   GAMEOBJECT_TYPE_BARBER_CHAIR       = 32\par
+   GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING = 33\par
+   GAMEOBJECT_TYPE_GUILD_BANK         = 34\par
+displayId\par
+Graphic model id sent to the client from GameObjectDisplayInfo.dbc.\par
+name\par
+Object's name\par
+castBarCaption\par
+Shows unique text in the object's casting bar when the object is used.\par
+faction\par
+Object's faction, if any. See FactionTemplate.dbc\par
+flags\par
+1 = in use (can't interact with the object)\par
+2 = Makes chests/doors locked (requiring a key, spell, event to open)\par
+4 = Untargetable\par
+8 = Transport (Object can transport (elevator, boat, car))\par
+32 = No despawn (never despawn, typically for doors, they just change state)\par
+64 = Triggered (typically, summoned objects. Triggered by spell or other events)\par
+NOTE: All chests that contain only quest loots need to have flag 4 set as the core will only allow players who have the quest in their questlog to loot them.\par
+size\par
+Object's size must be set because graphic models can be resample.\par
+data0-23\par
+The content of the data fields depends on the gameobject type\par
+GAMEOBJECT_TYPE_DOOR = 0\par
+data0: startOpen (Boolean flag)\par
+data1: open (LockId from Lock.dbc)\par
+data2: autoClose (long unknown flag)\par
+data3: noDamageImmune (Boolean flag)\par
+data4: openTextID (Unknown Text ID)\par
+data5: closeTextID (Unknown Text ID)\par
+\par
+GAMEOBJECT_TYPE_BUTTON = 1\par
+data0: startOpen (State)\par
+data1: open (LockId from Lock.dbc)\par
+data2: autoClose (long unknown flag)\par
+data3: linkedTrap (gameobject_template.entry (Spawned GO type 6))\par
+data4: noDamageImmune (Boolean flag)\par
+data5: large? (Boolean flag)\par
+data6: openTextID (Unknown Text ID)\par
+data7: closeTextID (Unknown Text ID)\par
+data8: losOK (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_QUESTGIVER = 2\par
+data0: open (LockId from Lock.dbc)\par
+data1: questList (unknown ID)\par
+data2: pageMaterial (PageTextMaterial.dbc)\par
+data3: gossipID (unknown ID)\par
+data4: customAnim (unknown value from 1 to 4)\par
+data5: noDamageImmune (Boolean flag)\par
+data6: openTextID (Unknown Text ID)\par
+data7: losOK (Boolean flag)\par
+data8: allowMounted (Boolean flag)\par
+data9: large? (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_CHEST = 3\par
+data0: open (LockId from Lock.dbc)\par
+data1: chestLoot (gameobject_loot_template.entry) *This field is obtained from WDB data and is not to be changed*\par
+data2: chestRestockTime (time in seconds)\par
+data3: consumable (State: Boolean flag)\par
+data4: minRestock (Min successful loot attempts for Mining, Herbalism etc)\par
+data5: maxRestock (Max successful loot attempts for Mining, Herbalism etc)\par
+data6: lootedEvent (unknown ID)\par
+data7: linkedTrap (gameobject_template.entry (Spawned GO type 6))\par
+data8: questID (quest_template.entry of completed quest)\par
+data9: level (minimal level required to open this gameobject)\par
+data10: losOK (Boolean flag)\par
+data11: leaveLoot (Boolean flag)\par
+data12: notInCombat (Boolean flag)\par
+data13: log loot (Boolean flag)\par
+data14: openTextID (Unknown ID)\par
+data15: use group loot rules (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_BINDER = 4\par
+Object type not used\par
+\par
+GAMEOBJECT_TYPE_GENERIC = 5\par
+data0: floatingTooltip (Boolean flag)\par
+data1: highlight (Boolean flag)\par
+data2: serverOnly? (Always 0)\par
+data3: large? (Boolean flag)\par
+data4: floatOnWater (Boolean flag)\par
+data5: questID (Required active quest_template.entry to work)\par
+\par
+GAMEOBJECT_TYPE_TRAP = 6\par
+data0: open (LockId from Lock.dbc)\par
+data1: level (npc equivalent level for casted spell)\par
+data2: diameter (so radius*2)\par
+data3: spell (Spell Id from spell.dbc)\par
+data4: charges (0 or 1)\par
+data5: cooldown (time in seconds)\par
+data6: autoClose (unknown)\par
+data7: startDelay? (time in seconds)\par
+data8: serverOnly? (always 0)\par
+data9: stealthed (Boolean flag)\par
+data10: large? (Boolean flag)\par
+data11: stealthAffected (Boolean flag)\par
+data12: openTextID (Unknown ID)\par
+\par
+GAMEOBJECT_TYPE_CHAIR = 7\par
+data0: chairslots (number of players that can sit down on it)\par
+data1: chairorientation? (number of usable side?)\par
+\par
+GAMEOBJECT_TYPE_SPELLFOCUS = 8\par
+data0: spellFocusType (from SpellFocusObject.dbc)\par
+data1: diameter (so radius*2)\par
+data2: linkedTrap (gameobject_template.entry (Spawned GO type 6))\par
+\par
+GAMEOBJECT_TYPE_TEXT = 9\par
+data0: pageID (page_text.entry)\par
+data1: language (from Languages.dbc)\par
+data2: pageMaterial (PageTextMaterial.dbc)\par
+\par
+GAMEOBJECT_TYPE_GOOBER = 10\par
+data0: open (LockId from Lock.dbc)\par
+data1: questID (Required active quest_template.entry to work)\par
+data2: eventID (The id of the event that the gameobject will activate)\par
+data3: autoClose (unknown)\par
+data4: customAnim (unknown)\par
+data5: consumable (Boolean flag controling if gameobject will despawn or not)\par
+data6: cooldown (time in seconds)\par
+data7: pageID (page_text.entry)\par
+data8: language (from Languages.dbc)\par
+data9: pageMaterial (PageTextMaterial.dbc)\par
+data10: spell (Spell Id from spell.dbc)\par
+data11: noDamageImmune (Boolean flag)\par
+data12: linkedTrap (gameobject_template.entry (Spawned GO type 6))\par
+data13: large? (Boolean flag)\par
+data14: openTextID (Unknown ID)\par
+data15: closeTextID (Unknown ID)\par
+data16: losOK (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_TRANSPORT = 11\par
+No data data used, all are always 0\par
+\par
+GAMEOBJECT_TYPE_AREADAMAGE = 12\par
+Object type not used\par
+\par
+GAMEOBJECT_TYPE_CAMERA = 13\par
+data0: open (LockId from Lock.dbc)\par
+data1: camera (Cinematic entry from CinematicCamera.dbc)\par
+\par
+GAMEOBJECT_TYPE_MAPOBJECT = 14\par
+No data data used, all are always 0\par
+\par
+GAMEOBJECT_TYPE_MOTRANSPORT = 15\par
+data0: taxiPathID (Id from TaxiPath.dbc)\par
+data1: moveSpeed\par
+data2: accelRate\par
+\par
+GAMEOBJECT_TYPE_DUELFLAG = 16\par
+Only one Gameobject with this type (21680) and no data data\par
+\par
+GAMEOBJECT_TYPE_FISHINGNODE = 17\par
+Only one Gameobject with this type (35591) and no data data\par
+\par
+GAMEOBJECT_TYPE_RITUAL = 18\par
+data0: casters?\par
+data1: spell (Spell Id from spell.dbc)\par
+data2: animSpell (Spell Id from spell.dbc)\par
+data3: ritualPersistent (Boolean flag)\par
+data4: casterTargetSpell (Spell Id from spell.dbc)\par
+data5: casterTargetSpellTargets (Boolean flag)\par
+data6: castersGrouped (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_MAILBOX = 19\par
+No data data used, all are always 0\par
+\par
+GAMEOBJECT_TYPE_AUCTIONHOUSE = 20\par
+data0: actionHouseID (From AuctionHouse.dbc ?)\par
+\par
+GAMEOBJECT_TYPE_GUARDPOST = 21\par
+Object type not used\par
+\par
+GAMEOBJECT_TYPE_SPELLCASTER = 22\par
+data0: spell (Spell Id from spell.dbc)\par
+data1: charges\par
+data2: partyOnly (Boolean flag, need to be in group to use it)\par
+\par
+GAMEOBJECT_TYPE_MEETINGSTONE = 23\par
+data0: minLevel\par
+data1: maxLevel\par
+data2: areaID (From AreaTable.dbc)\par
+\par
+GAMEOBJECT_TYPE_FLAGSTAND = 24\par
+data0: open (LockId from Lock.dbc)\par
+data1: pickupSpell (Spell Id from spell.dbc)\par
+data2: radius (distance)\par
+data3: returnAura (Spell Id from spell.dbc)\par
+data4: returnSpell (Spell Id from spell.dbc)\par
+data5: noDamageImmune (Boolean flag)\par
+data6: openTextID\par
+data7: losOK (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_FISHINGHOLE = 25\par
+data0: radius (distance)\par
+data1: chestLoot (gameobject_loot_template.entry)\par
+data2: minRestock\par
+data3: maxRestock\par
+\par
+GAMEOBJECT_TYPE_FLAGDROP = 26\par
+data0: open (LockId from Lock.dbc)\par
+data1: eventID (Unknown Event ID)\par
+data2: pickupSpell (Spell Id from spell.dbc)\par
+data3: noDamageImmune (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_MINIGAME = 27\par
+Object type not used\par
+Reused in core for CUSTOM_TELEPORT\par
+data0: areatrigger_teleport.id\par
+\par
+GAMEOBJECT_TYPE_LOTTERYKIOSK = 28\par
+Object type not used\par
+\par
+GAMEOBJECT_TYPE_CAPTUREPOINT = 29\par
+data0: radius (Distance)\par
+data1: spell (Unknown ID, not a spell id in dbc file, maybe server only side spell)\par
+data2: worldState1\par
+data3: worldstate2\par
+data4: winEventID1 (Unknown Event ID)\par
+data5: winEventID2 (Unknown Event ID)\par
+data6: contestedEventID1 (Unknown Event ID)\par
+data7: contestedEventID2 (Unknown Event ID)\par
+data8: progressEventID1 (Unknown Event ID)\par
+data9: progressEventID2 (Unknown Event ID)\par
+data10: neutralEventID1 (Unknown Event ID)\par
+data11: neutralEventID2 (Unknown Event ID)\par
+data12: neutralPercent\par
+data13: worldstate3\par
+data14: minSuperiority\par
+data15: maxSuperiority\par
+data16: minTime (in seconds)\par
+data17: maxTime (in seconds)\par
+data18: large? (Boolean flag)\par
+\par
+GAMEOBJECT_TYPE_AURAGENERATOR = 30\par
+data0: startOpen (Boolean flag)\par
+data1: radius (Distance)\par
+data2: auraID1 (Spell Id from spell.dbc)\par
+data3: conditionID1 (Unknown ID)\par
+\par
+GAMEOBJECT_TYPE_DUNGEONDIFFICULTY = 31\par
+data0: mapID (From Maps.dbc)\par
+data1: difficulty (0 or 1)\par
+\par
+GAMEOBJECT_TYPE_BARBER_CHAIR = 32\par
+Used for barber chairs.\par
+\par
+GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING = 33\par
+Object type not used\par
+\par
+GAMEOBJECT_TYPE_GUILD_BANK = 34\par
+No data data used, all are always 0\par
+ScriptName\par
+Name of the script this object uses if needed\par
+}
+ 

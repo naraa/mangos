@@ -1,0 +1,560 @@
+{\rtf1\ansi\deff0{\fonttbl{\f0\fnil\fcharset0 Calibri;}}
+{\*\generator Msftedit 5.41.21.2510;}\viewkind4\uc1\pard\sa200\sl276\slmult1\lang9\f0\fs22 Quest template\par
+Contents [hide]\par
+1 entry\par
+2 Method\par
+3 ZoneOrSort\par
+4 SkillOrClass\par
+5 MinLevel\par
+6 QuestLevel\par
+7 Type\par
+8 RequiredClasses\par
+9 RequiredRaces\par
+10 RequiredSkillValue\par
+11 RepObjectiveFaction\par
+12 RepObjectiveValue\par
+13 RequiredMinRepFaction\par
+14 RequiredMinRepValue\par
+15 RequiredMaxRepFaction\par
+16 RequiredMaxRepValue\par
+17 SuggestedPlayers\par
+18 LimitTime\par
+19 QuestFlags\par
+20 SpecialFlags\par
+21 CharTitleId\par
+22 PlayersSlain\par
+23 BonusTalents\par
+24 PrevQuestId\par
+25 NextQuestId\par
+26 ExclusiveGroup\par
+27 NextQuestInChain\par
+28 RewXPId\par
+29 SrcItemId\par
+30 SrcItemCount\par
+31 SrcSpell\par
+32 Title\par
+33 Details\par
+34 Objectives\par
+35 OfferRewardText\par
+36 RequestItemsText\par
+37 EndText\par
+38 ObjectiveText\par
+39 ReqItemId\par
+40 ReqItemCount\par
+41 ReqSourceID\par
+42 ReqSourceCount\par
+43 ReqCreatureOrGOId\par
+44 ReqCreatureOrGOCount\par
+45 ReqSpellCast\par
+46 RewChoiceItemId, RewChoiceItemCount\par
+47 RewItemId, RewItemCount\par
+48 RewRepFaction, RewRepValue\par
+49 RewHonorableKills\par
+50 RewOrReqMoney\par
+51 RewMoneyMaxLevel\par
+52 RewSpell\par
+53 RewSpellCast\par
+54 RewMailTemplateId\par
+55 RewMailDelaySecs\par
+56 PointMapId\par
+57 PointX\par
+58 PointY\par
+59 PointOpt\par
+60 DetailsEmote\par
+61 CompleteEmote\par
+62 OfferRewardEmote\par
+63 StartScript\par
+64 CompleteScript\par
+65 Examples\par
+Back to world database list of tables.\par
+\par
+The `quest_template` table\par
+Contains all basic definitions of quests available.\par
+\par
+Structure\par
+Field\tab Type\tab Null\tab Key\tab Default\tab Extra\par
+entry\tab int(10) unsigned\tab NO\tab PRI\tab 0\tab\par
+Method\tab tinyint(3)\tab NO\tab\tab 2\tab\par
+ZoneOrSort\tab smallint(6)\tab NO\tab\tab 0\tab\par
+SkillOrClass\tab smallint(6)\tab NO\tab\tab 0\tab\par
+MinLevel\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+QuestLevel\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+Type\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RequiredRaces\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RequiredSkillValue\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RepObjectiveFaction\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RepObjectiveValue\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RequiredMinRepFaction\tab mediumint(5) unsigned\tab NO\tab\tab 0\tab\par
+RequiredMinRepValue\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RequiredMaxRepFaction\tab mediumint(5) unsigned\tab NO\tab\tab 0\tab\par
+RequiredMaxRepValue\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+SuggestedPlayers\tab mediumint(3) unsigned\tab NO\tab\tab 0\tab\par
+LimitTime\tab int(10)\tab NO\tab\tab 0\tab\par
+QuestFlags\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+SpecialFlags\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+CharTitleId\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+PlayersSlain\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+BonusTalents\tab tinyint(3) unsigned\tab NO\tab\tab 0\tab\par
+PrevQuestId\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+NextQuestId\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+ExclusiveGroup\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+NextQuestInChain\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+RewXPId\tab tinyint(3)\tab NO\tab\tab 0\tab\par
+SrcItemId\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+SrcItemCount\tab tinyint(3)\tab NO\tab\tab 0\tab\par
+SrcSpell\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+Title\tab text\tab YES\tab\tab\tab\par
+Details\tab text\tab YES\tab\tab\tab\par
+Objectives\tab text\tab YES\tab\tab\tab\par
+OfferRewardText\tab text\tab YES\tab\tab\tab\par
+RequestItemsText\tab text\tab YES\tab\tab\tab\par
+EndText\tab text\tab YES\tab\tab\tab\par
+ObjectiveText1\tab text\tab YES\tab\tab\tab\par
+ObjectiveText2\tab text\tab YES\tab\tab\tab\par
+ObjectiveText3\tab text\tab YES\tab\tab\tab\par
+ObjectiveText4\tab text\tab YES\tab\tab\tab\par
+ReqItemId1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemId2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemId3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemId4\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemCount1\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemCount2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemCount3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqItemCount4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqSourceId1\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSourceId2\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSourceId3\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSourceId4\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSourceCount1\tab smallint(5)\tab NO\tab\tab 0\tab\par
+ReqSourceCount2\tab smallint(5)\tab NO\tab\tab 0\tab\par
+ReqSourceCount3\tab smallint(5)\tab NO\tab\tab 0\tab\par
+ReqSourceCount4\tab smallint(5)\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOId1\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOId2\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOId3\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOId4\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOCount1\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOCount2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOCount3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqCreatureOrGOCount4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+ReqSpellCast1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+ReqSpellCast2\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSpellCast3\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+ReqSpellCast4\tab mediumint(8)\tab NO\tab\tab 0\tab\par
+RewChoiceItemId1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemId2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemId3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemId4\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemId5\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemId6\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount1\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount5\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewChoiceItemCount6\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewItemId1\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewItemId2\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewItemId3\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewItemId4\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewItemCount1\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewItemCount2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewItemCount3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewItemCount4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+RewRepFaction1\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RewRepFaction2\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RewRepFaction3\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RewRepFaction4\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RewRepFaction5\tab smallint(5)\tab NO\tab\tab 0\tab\par
+RewRepValue1\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RewRepValue2\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RewRepValue3\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RewRepValue4\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RewRepValue5\tab mediumint(9)\tab NO\tab\tab 0\tab\par
+RewHonorableKills\tab int(11)\tab NO\tab\tab 0\tab\par
+RewOrReqMoney\tab int(11)\tab NO\tab\tab 0\tab\par
+RewMoneyMaxLevel\tab int(10) unsigned\tab NO\tab\tab 0\tab\par
+RewSpell\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewSpellCast\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewMailTemplateId\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+RewMailDelaySecs\tab int(11) unsigned\tab NO\tab\tab 0\tab\par
+PointMapId\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+PointX\tab float\tab NO\tab\tab 0\tab\par
+PointY\tab float\tab NO\tab\tab 0\tab\par
+PointOpt\tab mediumint(8)\tab NO\tab\tab\tab\par
+DetailsEmote1\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+DetailsEmote2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+DetailsEmote3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+DetailsEmote4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+IncompleteEmote\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+CompleteEmote\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+OfferRewardEmote1\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+OfferRewardEmote2\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+OfferRewardEmote3\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+OfferRewardEmote4\tab smallint(5) unsigned\tab NO\tab\tab 0\tab\par
+StartScript\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+CompleteScript\tab mediumint(8) unsigned\tab NO\tab\tab 0\tab\par
+\par
+entry\par
+Quest Id. Quest ID is the Primary Key for the Table. Each Quest ID must be unique!\par
+Method\par
+Accepted values: 0, 1 or 2. If value = 0 then Quest is autocompleted (skip objectives/details).\par
+ZoneOrSort\par
+This field defines under what category the quest falls in the quest log.\par
+If value > 0 then value is Zone IDs taken from AreaTable.dbc.\par
+if value < 0 then (-value) is quest sort id: (in general profession or class quests. Also see RequiredSkillValue ) Value is ID from QuestSort.dbc. QuestSort.dbc\par
+SkillOrClass\par
+This field defines any specific skill or class requirements for the quest to be available for a character.\par
+If value > 0 then value is a skill ID (see SkillLine.dbc)\par
+If value < 0 then (-value) is class ID (see ChrClasses.dbc)\par
+MinLevel\par
+Minimum level required to get the quest.\par
+QuestLevel\par
+Level of quest. Player recieves full experience amount only if their level is less than or equal to QuestLevel+5\par
+Type\par
+These values are ID taken from QuestInfo.dbc\par
+Value\tab Type\par
+1\tab Group\par
+21\tab Life\par
+41\tab PvP\par
+62\tab Raid\par
+81\tab Dungeon\par
+82\tab World Event\par
+83\tab Legendary\par
+84\tab Escort\par
+85\tab Heroic\par
+88\tab Raid (10)\par
+89\tab Raid (25)\par
+RequiredClasses\par
+Class required to get the quest. 0 means available for all classes. Field's value is a decimal value that must be transform to a 8 bits binary in order to be understandable. In binary form, each different bit represent a different class. They're assigned as follow :\par
+Class\par
+These values are 2^ID taken from ChrClasses.dbc\par
+Value\tab Name\par
+1\tab Warrior\par
+2\tab Paladin\par
+4\tab Hunter\par
+8\tab Rogue\par
+16\tab Priest\par
+32\tab Death Knight\par
+64\tab Shaman\par
+128\tab Mage\par
+256\tab Warlock\par
+1024\tab Druid\par
+RequiredRaces\par
+Races required to get the quest. 0 means available for all races. Field's value is a decimal value that must be transform to a 8 bits binary in order to be understandable. In binary form, each different bit represent a different race. They're assigned as follow :\par
+Race\par
+These values are 2^ID taken from ChrRaces.dbc\par
+Value\tab Name\par
+1\tab Human\par
+2\tab Orc\par
+4\tab Dwarf\par
+8\tab Night Elf\par
+16\tab Undead\par
+32\tab Tauren\par
+64\tab Gnome\par
+128\tab Troll\par
+512\tab Blood Elf\par
+1024\tab Draenei\par
+Examples\par
+0,1791 = All Races\par
+690 (2 + 16 + 32 + 128 + 512) = Horde Quest\par
+1101 (1 + 4 + 8 + 64 + 1024) = Alliance Quest\par
+RequiredSkillValue\par
+Player skill value requirement for skill if in ZoneOrSort field < 0 and have some from skill related values.\par
+RepObjectiveFaction\par
+Faction ID for an objective to achieve a certain reputation value with. See Faction.dbc\par
+RepObjectiveValue\par
+Reputation value that the player must achieve with the faction in RepObjectiveFaction as part of the quest objectives.\par
+RequiredMinRepFaction\par
+Faction ID for reputation requirement. See Faction.dbc\par
+RequiredMinRepValue\par
+Players must have this reputation or higher in order to receive the quest. Reputation\par
+RequiredMaxRepFaction\par
+The Faction ID for the faction that controls the maximum reputation value that the player can have and still get the quest. See Faction.dbc\par
+RequiredMaxRepValue\par
+The maximum reputation value that the player can have with a faction and still get the quest. If the player has more reputation than the value in this field, the quest will not be able to be taken anymore. Reputation\par
+SuggestedPlayers\par
+Info about how many players should do unite for the quest.\par
+LimitTime\par
+Time in seconds that the player has to complete this quest.\par
+QuestFlags\par
+This flag field defines more specifically the type of quest it is. Aside from the daily flag and sharable flag, this field is used just for grouping purposes and NOT for any other quest requirements. The quest requirements are calculated from non-zero values in other quest template fields. Also, while some of these flags are known, others have yet an unknown purpose and the comments below is simply guesswork on them.\par
+At the moment (rev 6055), the core does not actually handle these flags any differently (again, except for the daily flag and the sharable flag).\par
+Bit\tab  Name\tab  Comments\par
+0\tab  QUEST_FLAGS_NONE\tab  No flags, so no groups assigned to this quest.\par
+1\tab  QUEST_FLAGS_STAY_ALIVE\tab  If the player dies, the quest is failed. (?)\par
+2\tab  QUEST_FLAGS_EVENT\tab  Escort quests or any other event-driven quests. If player in party, all players that can accept this quest will receive confirmation box to accept quest.\par
+4\tab  QUEST_FLAGS_EXPLORATION\tab  Involves the activation of an areatrigger.\par
+8\tab  QUEST_FLAGS_SHARABLE\tab  Allows the quest to be shared with other players.\par
+16\tab  QUEST_FLAGS_NONE2\tab  Unknown at this time and not used.\par
+32\tab  QUEST_FLAGS_EPIC\tab  Epic class quests (hunter) (??)\par
+64\tab  QUEST_FLAGS_RAID\tab  Raid or similiar player group needed for quest.\par
+128\tab  QUEST_FLAGS_TBC\tab  Added with or after TBC.\par
+256\tab  QUEST_FLAGS_UNK2\tab  Quest needs extra non-objective items dropped (eg. ReqSourceID fields) (?)\par
+512\tab  QUEST_FLAGS_HIDDEN_REWARDS\tab  Item and monetary rewards are hidden in the initial quest details page and in the quest log but will appear once ready to be rewarded.\par
+1024\tab  QUEST_FLAGS_UNK4\tab  Unknown at this time.\par
+2048\tab  QUEST_FLAGS_TBC_RACES\tab  Blood elf/draenei starting zone quests.\par
+4096\tab  QUEST_FLAGS_DAILY\tab  Daily repeatable quests (only flag that the core applies specific behavior for)\par
+8192\tab  QUEST_FLAGS_UNK5\tab  Grizzly Hills PvP daily? Puts PvP-tag on? No idea.)\par
+Like all flag based fields, QuestFlags can be added for the different types of quest.\par
+SpecialFlags\par
+This field is a bitmask and controls only two extra requirements and has only 4 possible values.\par
+0: No extra requirements\par
+1: Makes the quest repeatable.\par
+2: Makes the quest only completable by some external event (an entry in areatrigger_involvedrelation, spell effect quest complete or an entry in spell_scripts with command 7 as some examples)\par
+3: Both repeatable and completable only through an external event\par
+CharTitleId\par
+The title the character will receive upon completion of the quest. See CharTitles.dbc\par
+PlayersSlain\par
+BonusTalents\par
+PrevQuestId\par
+if value > 0: Contains the previous quest id, that must be completed before this quest can be started.\par
+If value < 0: Contains the parent quest id, that must be active before this quest can be started.\par
+See the examples section for examples.\par
+NextQuestId\par
+If value > 0: Contains the next quest id, if PrevQuestId of that quest is not sufficient.\par
+If value < 0: Contains the sub quest id, if PrevQuestId of that quest is not sufficient. If quest have many alternative next quests (class specific quests lead from single not class specific quest) field PrevQuestId in next quests can used for setting this dependence.\par
+See the examples section for examples.\par
+ExclusiveGroup\par
+if ExclusiveGroup > 0\par
+Allows to define a group of quests of which only one may be chosen and completed. E.g. if from quests 1200, 1201 and 1202 only one should be allowed to be chosen, insert 1200 into ExclusiveGroup of all 3 quests.\par
+if ExclusiveGroup < 0\par
+Allows to define a group of quests of which all must be completed and rewarded to start next quest. E.g. if quest 1000 dependent from one of quests 1200, 1201 and 1202 and all this quests have same negative exclusive group then all this quest must be completed and rewarded before quest 1000 can be started.\par
+See the examples section for examples.\par
+NextQuestInChain\par
+The quest entry from a creature or gameobject that ends a quest and starts a new one. The result is, that if you end the quest, the new quest instantly appears from the quest giver.\par
+See the examples section for examples.\par
+RewXPId\par
+This field controls the experience given at the end of a quest. Its values are taken from QuestXP.dbc; The ID ranges from 1 to 11 and the amount of xp given depends on the quest's level.\par
+SrcItemId\par
+Item's ID given by the quest giver at beginning of the quest. Items will be deleted when quest is abandoned.\par
+SrcItemCount\par
+Amount of items given.\par
+SrcSpell\par
+Spell casted on player when quest is started. Can be a buff or a learning spell.\par
+Title\par
+Title of the quest.\par
+Details\par
+The quest text. You can use certain placeholders that will be filled in in-game: $B - line break, $N - name, $R - race, $C - class, $Gmale:female; (male and female can be replace with any synonymn you want, but the order must stay the same. IE: boy:girl / man:woman / sir:madam / dude:chick)\par
+Objectives\par
+Objectives of the quest. If empty, quest is an auto-complete quest that can be immediately finished without accepting it first.\par
+OfferRewardText\par
+First text send to the player by the NPC when completing the quest. You can use certain placeholders that will be filled in in-game: $B - line break, $N - name, $R - race, $C - class, $Gmale:female; (male and female can be replace with any synonymn you want, but the order must stay the same. IE: boy:girl / man:woman / sir:madam / dude:chick)\par
+RequestItemsText\par
+Text sent to player when the player tries to talk to the NPC with the quest active but incomplete. (The text under the "Progress" title in Wowhead.) You can use certain placeholders that will be filled in in-game: $B - line break, $N - name, $R - race, $C - class, $Gmale:female; (male and female can be replace with any synonymn you want, but the order must stay the same. IE: boy:girl / man:woman / sir:madam / dude:chick)\par
+EndText\par
+Used only when SpecialFlags 2 is active. This is the objective text sent to the player describing the external event that is required to complete the quest.\par
+ObjectiveText\par
+Used to define non-standard objective texts, that show up in the questlog. Example, "Heal fallen warrior" and the number gets added by Count values.\par
+ReqItemId\par
+Item_template Id of required item to complete the quest.\par
+ReqItemCount\par
+Amount of required items\par
+ReqSourceID\par
+Item ID that is needed indirectly by the quest. For example, the quests asks for item X but the only way to get item X is by activating item Y; however, item Y is also a quest item. Therefore you set item Y's ID in this field. This requirement will not appear in the quest text, it is just for the core to know when to drop a quest item that isn't in the ReqItemID field but is still needed by the quest.\par
+ReqSourceCount\par
+The maximum number of copies of the item in ReqSourceID that can be picked up (and dropped by the core).\par
+ReqCreatureOrGOId\par
+Value > 0: required creature_template ID the player needs to kill/cast on in order to complete the quest.\par
+Value < 0: required gameobject_template ID the player needs to cast on in order to complete the quest.\par
+If ReqSpellCast is != 0, the objective is to cast on target, else kill.\par
+NOTE: If ReqSpellCast is != 0 and the spell has effects Send Event or Quest Complete, this field may be left empty.\par
+ReqCreatureOrGOCount\par
+The number of times the creature or gameobject must be killed or casted upon.\par
+ReqSpellCast\par
+Spell ID of Spell that needs to be cast in order to fulfill a quest objective. A spell normally needs a target which is ReqCreatureOrGOId\par
+And for spells with "SpellEffect with ImpliciteTargetA-B == 38" check table Spell_script_target\par
+NOTE: If the spell has spell effects Send Event or Quest Complete, it can be entered here WITHOUT the need for a target and count.\par
+RewChoiceItemId, RewChoiceItemCount\par
+Id of item available for reward choice.\par
+Number of Charges in rewarded item available.\par
+\par
+RewItemId, RewItemCount\par
+Number of RewItem\par
+item Id given for reward (no choice).\par
+RewRepFaction, RewRepValue\par
+Faction Id (from Faction.dbc) for which the quest give reputation points.\par
+Number of gain or lost reputation points for Faction at quest completion. This is special reputation rewarding. Normal reputation reward to quest rewarding creature faction calculated and added automatically.\par
+RewHonorableKills\par
+Number of honorable kill honor rewarded for completing this quest.\par
+Example: An example value is 15 for quest 8388: At level 70 an honorable kill is 20.9 honor worth. Multiply this with 15 and you receive 313.5, after the multiplication the value is rounded up. So the honor rewarded at level 70 is 314 for this quest.\par
+RewOrReqMoney\par
+Money earned by completing the quest (if value > 0). Money quest requirement (if value < 0).\par
+RewMoneyMaxLevel\par
+The money a character at level 70 would get when they complete this quest. This field also controls the XP given as the XP is calculated from the value in this field by the following formula. If the quest is repeatable, XP will be given only once. The total XP that a character will receive is also affected by the level difference between the character's level and the quest's level. \par
+\par
+The formula for calculating XP from the value in this field:\par
+QuestLevel >= 65: XP = RewMoneyMaxLevel / 6.0\par
+QuestLevel == 64: XP = RewMoneyMaxLevel / 4.8\par
+QuestLevel == 63: XP = RewMoneyMaxLevel / 3.6\par
+QuestLevel == 62: XP = RewMoneyMaxLevel / 2.4\par
+QuestLevel == 61: XP = RewMoneyMaxLevel / 1.2\par
+QuestLevel <= 60: XP = RewMoneyMaxLevel / 0.6\par
+RewSpell\par
+Spell that is shown to be casted on quest completion in the quest log. Note that this spell will NOT be casted if RewSpellCast is non-zero. The spell in the other field will be casted instead, in which case the spell here only serves as the visual in the quest log.\par
+NOTE: This field comes straight from the WDB and should not be changed.\par
+RewSpellCast\par
+Spell that will always be casted at player when completing the quest. This can be learn spell and player learned some spell in result, or buff spell, for example. If this field is non-zero then this spell will ALWAYS be casted and the spell in RewSpell will not.\par
+NOTE: This field comes straight from the WDB and should not be changed.\par
+RewMailTemplateId\par
+If the quest gives as a reward an item from a possible list of items, the ID here corresponds to the proper loot template in quest_mail_loot_template. According to the rules in that loot template, items "looted" will be sent by mail at the completion of the quest.\par
+RewMailDelaySecs\par
+How many seconds to wait until the mail is sent to the character that turned in a quest rewarding items from a loot template defined in RewMailTemplateId\par
+PointMapId\par
+MapId of a quest point of interest (POI - Point Of Interest). POI will be shown on the map when quest is active.\par
+PointX\par
+X coordinate of quest POI.\par
+PointY\par
+Y coordinate of quest POI.\par
+PointOpt\par
+DetailsEmote\par
+CompleteEmote\par
+Emote played by the related NPC at the time all quest objects are completed.\par
+OfferRewardEmote\par
+Emote played by the NPC at the time the character is rewarded for the quest.\par
+StartScript\par
+ID of the start script. See quest_start_scripts.id\par
+CompleteScript\par
+ID of the end script. See quest_end_scripts.id\par
+Examples\par
+\par
+The "rules of engagement" dealing with quests\par
+1. Always use PrevQuestId before using NextQuestId. NextQuestId is considered optional and to be used only when PrevQuestId is not sufficient\par
+\par
+Basic quest\par
+Single, stand-alone quest with no prerequisites\par
+    *questA*\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = 0        entry = questA\par
+When this quest require another quest to be rewarded\par
+    *questA*\par
+PrevQuestId = questX   NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = 0        entry = questA\par
+Chain of quests\par
+Player get quests in a strict chain that must be completed in a specific order.\par
+    *questA*\par
+        |\par
+    *questB*\par
+        |\par
+    *questC*\par
+        |\par
+    *questD*\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = questB    entry = questA\par
+PrevQuestId = questA   NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = questC    entry = questB\par
+PrevQuestId = questB   NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = questD    entry = questC\par
+PrevQuestId = questC   NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = 0         entry = questD\par
+Chain of quests with multiple start quests.\par
+Player should only be allowed to complete one of three possible\par
+    *questA*     *questB*    *questC*\par
+        \\           |           /\par
+          ------ *questD* -----\par
+                    |\par
+                 *questE*\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = questA   NextQuestInChain = questD    entry = questA\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = questA   NextQuestInChain = questD    entry = questB\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = questA   NextQuestInChain = questD    entry = questC\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = questE    entry = questD\par
+PrevQuestId = questD   NextQuestId = 0        ExclusiveGroup = 0        NextQuestInChain = 0         entry = questE\par
+\par
+Chain of quests with multiple start quests.\par
+Player must complete all three initial quests before D becomes available\par
+    *questA*    *questB*    *questC*\par
+        \\          |          /\par
+         ------ *questD* -----\par
+                   |\par
+                *questE*\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = -questA    NextQuestInChain = questD    entry = questA\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = -questA    NextQuestInChain = questD    entry = questB\par
+PrevQuestId = 0        NextQuestId = questD   ExclusiveGroup = -questA    NextQuestInChain = questD    entry = questC\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0          NextQuestInChain = questE    entry = questD\par
+PrevQuestId = questD   NextQuestId = 0        ExclusiveGroup = 0          NextQuestInChain = 0         entry = questE\par
+\par
+Quests with split and a child quest\par
+Completing A unlocks B and C that can be done at the same time. They both need to be completed before D becomes available. X is needed to obtain item for C and this quest should only be available if C is active\par
+                *questA*\par
+                /        \\\par
+           *questB     *questC* - *questX*\par
+                \\        /\par
+                *questD*\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0         NextQuestInChain = 0        entry = questA\par
+PrevQuestId = questA   NextQuestId = questD   ExclusiveGroup = -questB   NextQuestInChain = 0        entry = questB\par
+PrevQuestId = questA   NextQuestId = questD   ExclusiveGroup = -questB   NextQuestInChain = 0        entry = questC\par
+PrevQuestId = -questC  NextQuestId = 0        ExclusiveGroup = 0         NextQuestInChain = 0        entry = questX\par
+PrevQuestId = 0        NextQuestId = 0        ExclusiveGroup = 0         NextQuestInChain = 0        entry = questD\par
+\par
+Multiple quest chains, leading to one final quest\par
+Player may complete (not required to) X, but has to complete all three quest chains before final quest becomes available\par
+                *questX*\par
+                   |\par
+    *questA*    *questC*    *questE*\par
+       |           |            |\par
+    *questB*    *questD*    *questF*\par
+       \\           |           /\par
+         ------ *questG* -----\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questC    entry = questX\par
+\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questB    entry = questA\par
+PrevQuestId = questA   NextQuestId = questG    ExclusiveGroup = -questB    NextQuestInChain = 0         entry = questB\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questD    entry = questC\par
+PrevQuestId = questC   NextQuestId = questG    ExclusiveGroup = -questB    NextQuestInChain = 0         entry = questD\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questF    entry = questE\par
+PrevQuestId = questE   NextQuestId = questG    ExclusiveGroup = -questB    NextQuestInChain = 0         entry = questF\par
+\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questG\par
+\par
+Complicated\par
+Player must first complete A, then B to unlock the chain from C to E. Three other quests in a group will also be unlocked, those can be done at the same time. The three grouped quests must all be completed before I becomes available. Completion of E and I is required to obtain the final quest.\par
+                *questA*\par
+                   |\par
+                *questB*\par
+              /          \\\par
+          *questC*     *questF*\par
+             |         *questG*\par
+          *questD*     *questH*\par
+             |            |\par
+          *questE*     *questI*\par
+             \\           /\par
+                *questJ*\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questB    entry = questA\par
+PrevQuestId = questA   NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questB\par
+\par
+PrevQuestId = questB   NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questD    entry = questC\par
+PrevQuestId = questC   NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questE    entry = questD\par
+PrevQuestId = questD   NextQuestId = questJ    ExclusiveGroup = -questE    NextQuestInChain = 0         entry = questE\par
+\par
+PrevQuestId = questB   NextQuestId = questI    ExclusiveGroup = -questF    NextQuestInChain = 0         entry = questF\par
+PrevQuestId = questB   NextQuestId = questI    ExclusiveGroup = -questF    NextQuestInChain = 0         entry = questG\par
+PrevQuestId = questB   NextQuestId = questI    ExclusiveGroup = -questF    NextQuestInChain = 0         entry = questH\par
+\par
+PrevQuestId = 0        NextQuestId = questJ    ExclusiveGroup = -questE    NextQuestInChain = 0         entry = questI\par
+\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questJ\par
+\par
+Impossible - many quests may unlock many\par
+Player can choose between two alternative chains (Chain A or B, but not both chains). A2 or B2 should unlock C, D and E when complete. When all three complete, F should be unlocked. If player get A3 or B3 after complete F, depends on if chain A or B was chosen.\par
+                *questA1*           *questB1*\par
+                    |                   |\par
+                *questA2*           *questB2*\par
+                    \\                  /\par
+                     ---- *questC* ----\par
+                          *questD*\par
+                          *questE*\par
+                             |\par
+                          *questF*\par
+                         /        \\\par
+                    *questA3*   *questB3*\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questA2   entry = questA1\par
+PrevQuestId = questA1  NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questA2\par
+\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = questB2   entry = questB1\par
+PrevQuestId = questB1  NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questB2\par
+\par
+PrevQuestId = 0        NextQuestId = questF    ExclusiveGroup = -questC    NextQuestInChain = 0         entry = questC\par
+PrevQuestId = 0        NextQuestId = questF    ExclusiveGroup = -questC    NextQuestInChain = 0         entry = questD\par
+PrevQuestId = 0        NextQuestId = questF    ExclusiveGroup = -questC    NextQuestInChain = 0         entry = questE\par
+\par
+PrevQuestId = 0        NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questF\par
+\par
+PrevQuestId = questF   NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questA3\par
+PrevQuestId = questF   NextQuestId = 0         ExclusiveGroup = 0          NextQuestInChain = 0         entry = questB3\par
+Note: if player can choose between chain A or B may be determined by faction status (aldor or scryer), using ReqMinRepFaction = 1. Player should not be able to be neutral+1 with both at the same time. This may be the common threshold to obtain aldor or scryer quests (this is unsure). If that is the case, only the unlock of C, D and E after complete A2 _or_ B2 is the impossible part.\par
+}
+ 
