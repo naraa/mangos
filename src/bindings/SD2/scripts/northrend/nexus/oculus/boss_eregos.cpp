@@ -61,7 +61,6 @@ struct MANGOS_DLL_DECL boss_eregosAI : public ScriptedAI
     {
         m_pInstance = (instance_oculus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -277,7 +276,6 @@ struct MANGOS_DLL_DECL npc_planar_anomalyAI : public ScriptedAI
 {
     npc_planar_anomalyAI(Creature *pCreature) : ScriptedAI(pCreature)
     {
-       m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
        Reset();
     }
 

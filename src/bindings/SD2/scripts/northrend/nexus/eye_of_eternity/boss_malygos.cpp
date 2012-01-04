@@ -229,7 +229,6 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -382,7 +381,6 @@ struct MANGOS_DLL_DECL boss_malygosAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        pSummoned->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         uint32 uiEntry = pSummoned->GetEntry();
         if (uiEntry == NPC_VORTEX || uiEntry == NPC_STATIC_FIELD)
             pSummoned->SetDisplayId(MODEL_ID_INVISIBLE);
@@ -1054,7 +1052,6 @@ struct MANGOS_DLL_DECL npc_power_sparkAI : public ScriptedAI
     npc_power_sparkAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1141,7 +1138,6 @@ struct MANGOS_DLL_DECL npc_nexus_lordAI : public ScriptedAI
     npc_nexus_lordAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1242,7 +1238,6 @@ struct MANGOS_DLL_DECL npc_scion_of_eternityAI : public ScriptedAI
     npc_scion_of_eternityAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1285,7 +1280,6 @@ struct MANGOS_DLL_DECL npc_hover_diskAI : public ScriptedAI
 {
     npc_hover_diskAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1345,7 +1339,6 @@ struct MANGOS_DLL_DECL npc_alexstraszaAI : public ScriptedAI
     npc_alexstraszaAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
@@ -1473,7 +1466,6 @@ struct MANGOS_DLL_DECL npc_whyrmrest_skytalonAI : public ScriptedAI
     npc_whyrmrest_skytalonAI(Creature* pCreature) : ScriptedAI(pCreature)
     {
         m_pInstance = (ScriptedInstance*)pCreature->GetInstanceData();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 

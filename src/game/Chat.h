@@ -618,13 +618,6 @@ class MANGOS_DLL_SPEC ChatHandler
         bool HandleIRCpmCommand(char* args);
         bool HandleShowGearScoreCommand(char* args);
 
-        bool HandleMmapPathCommand(char* args);
-        bool HandleMmapLocCommand(char* args);
-        bool HandleMmapLoadedTilesCommand(char* args);
-        bool HandleMmapStatsCommand(char* args);
-        bool HandleMmap(char* args);
-        bool HandleMmapTestArea(char* args);
-
         //! Development Commands
         bool HandleSaveAllCommand(char* args);
 

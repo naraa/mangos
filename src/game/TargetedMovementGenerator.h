@@ -21,7 +21,6 @@
 
 #include "MovementGenerator.h"
 #include "FollowerReference.h"
-#include "PathFinder.h"
 #include "Unit.h"
 
 class MANGOS_DLL_SPEC TargetedMovementGeneratorBase
@@ -40,19 +39,13 @@ class MANGOS_DLL_SPEC TargetedMovementGeneratorMedium
     protected:
         TargetedMovementGeneratorMedium(Unit &target, float offset, float angle) :
             TargetedMovementGeneratorBase(target), i_offset(offset), i_angle(angle),
-            i_recalculateTravel(false), i_targetReached(false), i_recheckDistance(0),
-            i_path(NULL)
+            i_recalculateTravel(false), i_targetReached(false), i_recheckDistance(0)
         {
         }
-        ~TargetedMovementGeneratorMedium() { delete i_path; }
+        ~TargetedMovementGeneratorMedium() {}
 
     public:
         bool Update(T &, const uint32 &);
-
-        bool IsReachable() const
-        {
-            return (i_path) ? (i_path->getPathType() & PATHFIND_NORMAL) : true;
-        }
 
         Unit* GetTarget() const { return i_target.getTarget(); }
 
@@ -67,8 +60,6 @@ class MANGOS_DLL_SPEC TargetedMovementGeneratorMedium
         float i_angle;
         bool i_recalculateTravel : 1;
         bool i_targetReached : 1;
-
-        PathFinder* i_path;
 };
 
 template<class T>

@@ -74,7 +74,6 @@ struct MANGOS_DLL_DECL boss_uromAI : public ScriptedAI
     {
         m_pInstance = (instance_oculus*)pCreature->GetInstanceData();
         m_bIsRegularMode = pCreature->GetMap()->IsRegularDifficulty();
-        m_creature->addUnitState(UNIT_STAT_IGNORE_PATHFINDING);
         Reset();
     }
 
