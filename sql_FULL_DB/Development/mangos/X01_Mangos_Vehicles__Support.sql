@@ -171,8 +171,8 @@ REPLACE INTO creature_template_addon (entry, mount, bytes1, b2_0_sheath, emote, 
 -- ---------------
 -- fix quest (11690)
 UPDATE creature_template SET
-    spell1 = 45877,
-    spell2 = 0,
+    spell1 = 45901,
+    spell2 = 45877,
     spell3 = 0,
     spell4 = 0,
     spell5 = 0,
@@ -181,7 +181,7 @@ UPDATE creature_template SET
     vehicle_id = 29
 WHERE entry = 25596;
 
-INSERT IGNORE INTO spell_script_target VALUES (45877, 1, 25596);
+INSERT IGNORE INTO spell_script_target VALUES (45877, 1, 25698);
 
 -- ------------------
 -- Horde Siege Tank -

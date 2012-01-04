@@ -27,6 +27,50 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- -------------------------------------------------------------------------
+-- Quest:11690 bring them back alive ( special note requires veh support ) -
+-- -------------------------------------------------------------------------
+
+  -- Kodo Saved Credit template fixes
+UPDATE `creature_template` SET `KillCredit1` = 25698, `modelid_1` = 11686 WHERE `entry` = 25698;
+  -- kodo template fix
+UPDATE `creature_template` SET `modelid_2` = 23265 WHERE `entry` = 25596;
+
+DELETE FROM `creature_model_info` WHERE (`modelid`=23265);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (23265, 1.15, 1.5, 2, 1231, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=23265);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (23265, 1.15, 1.5, 2, 1231, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=23485);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (23485, 1.15, 1.5, 0, 0, 0);
+DELETE FROM `creature_model_info` WHERE (`modelid`=23873);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (23873, 1.15, 1.5, 2, 0, 0);
+
+ -- Area check for spells in this quest are correctly checked in dbc like should
+ -- Kodo ACID just to remove sickness and despawn when rider jumps off
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25596';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2559601');
+INSERT INTO `creature_ai_scripts` VALUES ('2559601', '25596', '8', '0', '100', '0', '45875', '-1', '1000', '1100', '28', '0', '19502', '0', '41', '0', '0', '0', '0', '0', '0', '0', 'Infinity q11690 kodo cured and despawn when ride jumps off');
+
+UPDATE `creature_template` SET `AIName` = 'EventAI', `ScriptName` = '' WHERE `entry` = '25698';
+DELETE FROM `creature_ai_scripts` WHERE (`id`='2569801');
+INSERT INTO `creature_ai_scripts` VALUES ('2569801', '25698', '8', '0', '100', '0', '45877', '-1', '1000', '1100', '33', '25698', '6', '0', '41', '0', '0', '0', '0', '0', '0', '0', 'Infinity q11690 kodo saved credit  credit spell then despawn');
+
+ -- adding save credit npcs to world
+DELETE FROM `creature` WHERE `id`=25698;
+INSERT INTO `creature` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`modelid`,`equipment_id`,`position_x`,`position_y`,`position_z`,`orientation`,`spawntimesecs`,`spawndist`,`currentwaypoint`,`curhealth`,`curmana`,`DeathState`,`MovementType`) VALUES
+(300069, 25698, 571, 1, 1, 0, 0, 2883.96, 6381.97, 93.588, 5.4285, 5, 0, 0, 1, 0, 0, 0),
+(300070, 25698, 571, 1, 1, 0, 0, 2877.73, 6389.13, 92.6093, 5.89974, 5, 0, 0, 1, 0, 0, 0),
+(300071, 25698, 571, 1, 1, 0, 0, 2869.13, 6394.59, 92.662, 1.28789, 5, 0, 0, 1, 0, 0, 0),
+(300072, 25698, 571, 1, 1, 0, 0, 2865.57, 6382.37, 94.781, 2.86182, 5, 0, 0, 1, 0, 0, 0),
+(300073, 25698, 571, 1, 1, 0, 0, 2878.74, 6378.59, 94.4404, 2.86182, 5, 0, 0, 1, 0, 0, 0),
+(300074, 25698, 571, 1, 1, 0, 0, 2897.02, 6383.03, 94.8042, 5.32169, 5, 0, 0, 1, 0, 0, 0),
+(300075, 25698, 571, 1, 1, 0, 0, 2890.81, 6391.93, 92.9649, 6.05683, 5, 0, 0, 1, 0, 0, 0),
+(300076, 25698, 571, 1, 1, 0, 0, 2876.5, 6395.22, 92.2141, 0.822932, 5, 0, 0, 1, 0, 0, 0),
+(300077, 25698, 571, 1, 1, 0, 0, 2882.82, 6374.92, 95.6987, 6.26574, 5, 0, 0, 1, 0, 0, 0),
+(300078, 25698, 571, 1, 1, 0, 0, 2866.07, 6375.21, 95.0021, 4.58813, 5, 0, 0, 1, 0, 0, 0),
+(300079, 25698, 571, 1, 1, 0, 0, 2868.29, 6392.97, 93.0525, 3.43202, 5, 0, 0, 1, 0, 0, 0),
+(300080, 25698, 571, 1, 1, 0, 0, 2884.95, 6397.13, 92.7944, 4.58813, 5, 0, 0, 1, 0, 0, 0);
+
 -- --------------------
 -- Quest:11231/11265 --
 -- --------------------
