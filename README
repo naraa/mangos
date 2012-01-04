@@ -49,6 +49,12 @@ Infinity Project
  * Implented/rewritten/Fixes: Instance Draktharon Keep:BETA
       :now open to bugreports,forum issues and ect
 
+ ==== Compile Platform ===== 
+
+ * VC90 = non use of mmfast and tbb in builds. uses standard allocation
+
+ * VC100 = uses mmfast allocation,
+
 =======================================================================================================
 Thank you mangos for all your work ====================================================================
 =======================================================================================================

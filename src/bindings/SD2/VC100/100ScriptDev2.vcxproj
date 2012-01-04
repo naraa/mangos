@@ -612,7 +612,6 @@
     <ClCompile Include="..\scripts\northrend\ulduar\ulduar\boss_yogg_saron.cpp" />
     <ClCompile Include="..\scripts\northrend\ulduar\ulduar\instance_ulduar.cpp" />
     <ClCompile Include="..\scripts\northrend\ulduar\ulduar\ulduar.cpp" />
-    <ClCompile Include="..\scripts\northrend\ulduar\ulduar\ulduar_teleport.cpp" />
     <ClCompile Include="..\scripts\northrend\utgarde_keep\utgarde_keep\boss_ingvar.cpp" />
     <ClCompile Include="..\scripts\northrend\utgarde_keep\utgarde_keep\boss_keleseth.cpp" />
     <ClCompile Include="..\scripts\northrend\utgarde_keep\utgarde_keep\boss_skarvald_and_dalronn.cpp" />

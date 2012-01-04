@@ -20,7 +20,6 @@
 */
 
 #include "Config/Config.h"
-#include "config.h"
 #include "../Player.h"
 #include "PlayerbotAI.h"
 #include "PlayerbotMgr.h"
@@ -33,7 +32,6 @@
 #include "../AccountMgr.h"
 #include "../Guild.h"
 #include "../World.h"
-#include "../Chat.h"
 
 class LoginQueryHolder;
 class CharacterHandler;

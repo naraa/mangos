@@ -1505,9 +1505,6 @@
     <ClCompile Include="..\scripts\northrend\ulduar\ulduar\ulduar.cpp">
       <Filter>scripts\northrend\ulduar\ulduar</Filter>
     </ClCompile>
-    <ClCompile Include="..\scripts\northrend\ulduar\ulduar\ulduar_teleport.cpp">
-      <Filter>scripts\northrend\ulduar\ulduar</Filter>
-    </ClCompile>
     <ClCompile Include="..\scripts\northrend\utgarde_keep\utgarde_keep\boss_ingvar.cpp">
       <Filter>scripts\northrend\utgarde_keep\utgarde_keep</Filter>
     </ClCompile>
