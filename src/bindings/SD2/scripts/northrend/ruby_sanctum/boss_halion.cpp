@@ -23,6 +23,7 @@ EndScriptData */
 
 // TODO: correct timers, Add twilight interorbs connection, sql spells, TESTING
 // Attention please! This script required some core modification.
+// 10 living embers and 1 living infero spawn on 25 man meteor strike  == need more research
 
 #include "precompiled.h"
 #include "ruby_sanctum.h"

@@ -61,6 +61,7 @@ UPDATE `creature_template` SET `ScriptName`='mob_xerestrasza', `AIName` ='' WHER
 -- --------------------
 -- Trash mobs updates -
 -- --------------------
+  -- ------------------------ Updated 1/6/2012 --------- loot and few things need more love
 
 -- ----------------------------- 
 -- Charscale Invoker ID: 40417 -
@@ -125,4 +126,45 @@ INSERT INTO `creature_loot_template` VALUES
 (40419, 43852, 12.7, 0, 1, 1, 0, 0, 0),
 (40419, 36682, 0.5, 0, 1, 1, 0, 0, 0),
 (40419, 36429, 0.5, 0, 1, 1, 0, 0, 0);
--- not finished w Ruby or this npc yet
+
+-- ------------------------------
+-- Charscale Elite     ID 40421 -
+-- ------------------------------
+
+UPDATE `creature_template` SET `modelid_2` = 12891, `speed_run` = 1.9 WHERE `entry` = 40421;
+UPDATE `creature_template` SET `KillCredit1` = 40421, `modelid_2` = 12891, `speed_run` = 1.9 WHERE `entry` = 40422;
+DELETE FROM `skinning_loot_template` WHERE (`entry`=40421);
+INSERT INTO `skinning_loot_template` VALUES 
+(40421, 33568, 74, 1, 1, 3, 0, 0, 0),
+(40421, 38557, 25, 1, 1, 2, 0, 0, 0),
+(40421, 44128, 0.9, 1, 1, 1, 0, 0, 0);
+DELETE FROM `creature_loot_template` WHERE (`entry`=40421);
+INSERT INTO `creature_loot_template` VALUES 
+(40421, 36556, 0.9, 0, 1, 1, 0, 0, 0),
+(40421, 33436, 3.9, 0, 1, 1, 0, 0, 0),
+(40421, 33470, 28.1, 0, 1, 7, 0, 0, 0),
+(40421, 33383, 1, 0, 1, 1, 0, 0, 0),
+(40421, 36500, 1.1, 0, 1, 1, 0, 0, 0),
+(40421, 36171, 1.3, 0, 1, 1, 0, 0, 0),
+(40421, 33445, 1.9, 0, 1, 1, 0, 0, 0),
+(40421, 33447, 1.4, 0, 1, 1, 0, 0, 0),
+(40421, 33448, 4.9, 0, 1, 1, 0, 0, 0),
+(40421, 33454, 7.3, 0, 1, 1, 0, 0, 0),
+(40421, 43852, 16.6, 0, 1, 1, 0, 0, 0),
+(40421, 36472, 0.9, 0, 1, 1, 0, 0, 0),
+(40421, 36668, 0.9, 0, 1, 1, 0, 0, 0),
+(40421, 36542, 0.9, 0, 1, 1, 0, 0, 0);
+
+-- ------------------------------
+-- Charscale Commander ID 40423 -
+-- ------------------------------
+
+UPDATE `creature_template` SET `modelid_2` = 27226, `speed_run` = 1.9 WHERE `entry` = 40423;
+DELETE FROM `creature_model_info` WHERE (`modelid`=27226);
+INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (27226, 2, 4, 0, 0, 0);
+UPDATE `creature_template` SET `KillCredit1` = 40423, `modelid_2` = 27226, `speed_run` = 1.9 WHERE `entry` = 40424;
+DELETE FROM `skinning_loot_template` WHERE (`entry`=40423);
+INSERT INTO `skinning_loot_template` VALUES 
+(40423, 33568, 75, 1, 1, 3, 0, 0, 0),
+(40423, 38557, 24, 1, 1, 2, 0, 0, 0),
+(40423, 44128, 0.9, 1, 1, 1, 0, 0, 0);
