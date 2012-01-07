@@ -31,6 +31,8 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Quest: 11676  -
 -- --------------------
 UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 25610 WHERE `entry` = 11676;
+  -- removing gossip here fixes an expliot for this npc to use text use sd2
+UPDATE `creature_template` SET `npcflag` = 0 WHERE `entry` = 25610;  
 
 -- -------------------------------------------------------------------------
 -- Quest:11690 bring them back alive ( special note requires veh support ) -
