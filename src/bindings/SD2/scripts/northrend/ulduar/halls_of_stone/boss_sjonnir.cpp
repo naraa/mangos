@@ -152,7 +152,7 @@ struct MANGOS_DLL_DECL boss_sjonnirAI : public ScriptedAI
 
     void JustSummoned(Creature* pSummoned)
     {
-        m_lDwarfGUIDList.push_back(pSummoned->GetGUID());
+        m_lDwarfGUIDList.push_back(pSummoned->GetObjectGuid());
 
         if (Unit* pTarget = m_creature->SelectAttackingTarget(ATTACKING_TARGET_RANDOM, 0))
         {

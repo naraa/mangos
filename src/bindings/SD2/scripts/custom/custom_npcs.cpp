@@ -83,7 +83,7 @@ bool GossipHello_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature)
         if(PlayerToolsEnabled)
             pPlayer->ADD_GOSSIP_ITEM( 7, "Player Tools ->"            , GOSSIP_SENDER_MAIN, 4000);
 	}
-    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -133,7 +133,7 @@ void SendDefaultMenu_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature,
                 pPlayer->ADD_GOSSIP_ITEM( 5, "Buff me Shadow Protection"               , GOSSIP_SENDER_MAIN, 1055);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"                            , GOSSIP_SENDER_MAIN, 5005);
 
-                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
                 break;
         }
         case 2000:
@@ -150,7 +150,7 @@ void SendDefaultMenu_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature,
                 pPlayer->ADD_GOSSIP_ITEM( 5, "Buff me Prayer of Spirit"                , GOSSIP_SENDER_MAIN, 2045);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"                            , GOSSIP_SENDER_MAIN, 5005);
 
-                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
                 break;
         }
         case 3000:
@@ -166,7 +166,7 @@ void SendDefaultMenu_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature,
                 pPlayer->ADD_GOSSIP_ITEM( 5, "Buff me Wisdom of Agamaggan"             , GOSSIP_SENDER_MAIN, 3040);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"                            , GOSSIP_SENDER_MAIN, 5005);
 
-                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
                 break;
         }
         case 4000:
@@ -178,7 +178,7 @@ void SendDefaultMenu_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature,
                 pPlayer->ADD_GOSSIP_ITEM( 5, "Heal me and party members Please"        , GOSSIP_SENDER_MAIN, 4015);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"                            , GOSSIP_SENDER_MAIN, 5005);
 
-                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+                pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
                 break;
         }
         case 5005:
@@ -205,7 +205,7 @@ void SendDefaultMenu_custom_npc_buffmaster(Player* pPlayer, Creature* pCreature,
                 if(PlayerToolsEnabled)
                     pPlayer->ADD_GOSSIP_ITEM( 7, "Player Tools ->"            , GOSSIP_SENDER_MAIN, 4000);
             }
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             break;
         }
         case 1001: // Buff me Mark of the Wild
@@ -608,7 +608,7 @@ bool showBuyList(Player *player, Creature *_creature, uint32 showFromId = 0)
 
         delete result;
 
-        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, _creature->GetGUID());
+        player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, _creature->GetObjectGuid());
 
         return true;
     }
@@ -730,7 +730,7 @@ bool GossipHello_custom_npc_guildmaster(Player *player, Creature *_creature)
             player->PlayerTalkClass->GetGossipMenu().AddMenuItem(ICON_GOSSIP_GOLD, MSG_GOSSIP_SELL, GOSSIP_SENDER_MAIN, ACTION_SELL_GUILDHOUSE, 0, true);
         }
     }
-    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, _creature->GetGUID());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE, _creature->GetObjectGuid());
     return true;
 }
 
@@ -792,7 +792,7 @@ bool GossipHello_custom_npc_news(Player* pPlayer, Creature* pCreature)
     // Close Menu
     pPlayer->ADD_GOSSIP_ITEM( 0, "No Thanks"                , GOSSIP_SENDER_MAIN, 10000);
 
-    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
 
     return true;
 }
@@ -811,7 +811,7 @@ void SendDefaultMenu_custom_npc_news(Player* pPlayer, Creature* pCreature, uint3
         case 1000: // News & Updates submenu
             pPlayer->ADD_GOSSIP_ITEM( 3, "20th July 2010"   , GOSSIP_SENDER_MAIN, 1001);
             pPlayer->ADD_GOSSIP_ITEM( 3, "No Thanks"        , GOSSIP_SENDER_MAIN, 10000);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 1001: // Actual News
@@ -860,7 +860,7 @@ bool GossipHello_custom_npc_professionmaster(Player* pPlayer, Creature* pCreatur
             pPlayer->ADD_GOSSIP_ITEM( 7, "Secondary Skills ->"   , GOSSIP_SENDER_MAIN, 2000);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
 
     return true;
 }
@@ -907,7 +907,7 @@ void SendDefaultMenu_custom_npc_professionmaster(Player* pPlayer, Creature* pCre
                     pPlayer->ADD_GOSSIP_ITEM( 5, "Tailoring."            , GOSSIP_SENDER_MAIN, 1011);
                     pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"          , GOSSIP_SENDER_MAIN, 3000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 2000: //Secondary Skills
@@ -918,7 +918,7 @@ void SendDefaultMenu_custom_npc_professionmaster(Player* pPlayer, Creature* pCre
                   //pPlayer->ADD_GOSSIP_ITEM( 5, "Archaeology."          , GOSSIP_SENDER_MAIN, 2005);
                     pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"          , GOSSIP_SENDER_MAIN, 3000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3000:
@@ -938,7 +938,7 @@ void SendDefaultMenu_custom_npc_professionmaster(Player* pPlayer, Creature* pCre
                 pPlayer->ADD_GOSSIP_ITEM( 7, "Secondary Skills ->"   , GOSSIP_SENDER_MAIN, 2000);
             }
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
 
@@ -1188,7 +1188,7 @@ bool GossipHello_custom_npc_renamecharacter(Player* pPlayer, Creature* pCreature
     pPlayer->ADD_GOSSIP_ITEM(0, "Do you want to rename your character ?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     pPlayer->ADD_GOSSIP_ITEM(0, "You're not interested.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
 
-    pPlayer->SEND_GOSSIP_MENU(907,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(907,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1218,7 +1218,7 @@ bool GossipHello_custom_npc_resetinstance(Player* pPlayer, Creature* pCreature)
     pPlayer->ADD_GOSSIP_ITEM(0, "Do you want to reset all instances ?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     pPlayer->ADD_GOSSIP_ITEM(0, "You're not interested.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
 
-    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetGUID());
+    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1283,7 +1283,7 @@ bool GossipHello_custom_npc_resetlevel(Player* pPlayer, Creature* pCreature)
     pPlayer->ADD_GOSSIP_ITEM(0, "Do you want to reset your character ?", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+1);
     pPlayer->ADD_GOSSIP_ITEM(0, "You're not interested.", GOSSIP_SENDER_MAIN, GOSSIP_ACTION_INFO_DEF+2);
 
-    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetGUID());
+    pPlayer->PlayerTalkClass->SendGossipMenu(907,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -1409,7 +1409,7 @@ bool GossipHello_custom_npc_spellmaster(Player* pPlayer, Creature* pCreature)
         pCreature->MonsterWhisper("You need more levels to learn the spells!", pPlayer, false);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -2438,7 +2438,7 @@ void ProcessMenu_custom_npc_teleportmaster(Player *player, Creature *Creature, u
         if( GroupID==0 || (action<100 && GroupID>0) )
             player->ADD_GOSSIP_ITEM( 4, "<- Main Menu", GOSSIP_SENDER_MAIN,  100000 );
     }
-    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,Creature->GetGUID());
+    player->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,Creature->GetObjectGuid());
     return;
 }
 
@@ -2553,7 +2553,7 @@ bool GossipHello_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature)
         pPlayer->ADD_GOSSIP_ITEM( 9, GOSSIP_BUY_OTHER_TITLES, GOSSIP_SENDER_MAIN, 3000);
     }
 
-    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
 
     return true;
 }
@@ -2588,7 +2588,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "Next ->"													, GOSSIP_SENDER_MAIN, 1500);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 1500: //Alliance Titles 2
@@ -2604,7 +2604,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"													, GOSSIP_SENDER_MAIN, 1000);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 2000: //Horde Titles
@@ -2624,7 +2624,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "Next ->"													, GOSSIP_SENDER_MAIN, 2500);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 2500: //Horde Titles 2
@@ -2640,7 +2640,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"												, GOSSIP_SENDER_MAIN, 2000);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"											, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3000: //Other Titles
@@ -2660,7 +2660,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "Next ->"													, GOSSIP_SENDER_MAIN, 3500);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3500: //Other Titles 2
@@ -2680,7 +2680,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"													, GOSSIP_SENDER_MAIN, 3000);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3501: //Other Titles 3
@@ -2700,7 +2700,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"												, GOSSIP_SENDER_MAIN, 3500);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"											, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3502: //Other Titles 4
@@ -2720,7 +2720,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"														, GOSSIP_SENDER_MAIN, 3501);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"													, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3503: //Other Titles 5
@@ -2740,7 +2740,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"																, GOSSIP_SENDER_MAIN, 3503);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"															, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3504: //Other Titles 6
@@ -2760,7 +2760,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"												, GOSSIP_SENDER_MAIN, 3505);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"											, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3505: //Other Titles 7
@@ -2780,7 +2780,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"													, GOSSIP_SENDER_MAIN, 3504);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 3506: //Other Titles 8
@@ -2800,7 +2800,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Back"													, GOSSIP_SENDER_MAIN, 3505);
                 pPlayer->ADD_GOSSIP_ITEM( 7, "<- Main Menu"												, GOSSIP_SENDER_MAIN, 8000);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         //Back To Main Menu
@@ -2819,7 +2819,7 @@ void SendDefaultMenu_custom_npc_titlemaster(Player* pPlayer, Creature* pCreature
                 pPlayer->ADD_GOSSIP_ITEM( 9, GOSSIP_BUY_OTHER_TITLES, GOSSIP_SENDER_MAIN, 3000);
             }
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
 
         break;
 
@@ -6310,7 +6310,7 @@ bool GossipHello_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature)
     pPlayer->ADD_GOSSIP_ITEM(5,"10 BOJ Exchange 1 Item Summon Professional" ,GOSSIP_SENDER_MAIN,7000);
     pPlayer->ADD_GOSSIP_ITEM(5,"10 BOJ Exchange 1 Item Summon Tele NPC" ,GOSSIP_SENDER_MAIN,8000);
 
-    pPlayer->SEND_GOSSIP_MENU(3961,pCreature->GetGUID());
+    pPlayer->SEND_GOSSIP_MENU(3961,pCreature->GetObjectGuid());
     return true;
 }
 
@@ -6415,7 +6415,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"Prayer of Shadow Protection",GOSSIP_SENDER_MAIN,5009);
             pPlayer->ADD_GOSSIP_ITEM(5,"Prayer of Spirit",GOSSIP_SENDER_MAIN,5010);
 
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
         break;
 
         case 5001:
@@ -6424,7 +6424,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,43002,true);
             pPlayer->DestroyItemCount(itemBoj, 5, true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6439,7 +6439,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pCreature->CastSpell(pPlayer,25898,false);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6454,7 +6454,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,48470,true);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6469,7 +6469,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,61316,true);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6484,7 +6484,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pCreature->CastSpell(pPlayer,48934,false);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6499,7 +6499,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pCreature->CastSpell(pPlayer,25899,false);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6514,7 +6514,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pCreature->CastSpell(pPlayer,48938,false);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6529,7 +6529,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,48162,true);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6544,7 +6544,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,48170,true);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {
@@ -6559,7 +6559,7 @@ void SendDefaultMenu_custom_npc_tokenvendor(Player* pPlayer, Creature* pCreature
             pPlayer->ADD_GOSSIP_ITEM(5,"<--Back",GOSSIP_SENDER_MAIN,5000);
             pPlayer->CastSpell(pPlayer,48074,true);
             pPlayer->DestroyItemCount(itemBoj,5,true);
-            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetGUID());
+            pPlayer->SEND_GOSSIP_MENU(DEFAULT_GOSSIP_MESSAGE,pCreature->GetObjectGuid());
             }
             else
             {

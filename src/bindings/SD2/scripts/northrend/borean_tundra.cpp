@@ -580,7 +580,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
      {
             if (pSpell->Id == SPELL_DRAKE_HARPOON && pCaster->GetTypeId() == TYPEID_PLAYER)
             {
-                uiHarpoonerGUID = pCaster->GetGUID();
+                uiHarpoonerGUID = pCaster->GetObjectGuid();
                 DoCast(m_creature, SPELL_RED_DRAGONBLOOD, true);
             }
             m_creature->Attack(pCaster,true);
@@ -597,7 +597,7 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
            if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
                  {
 
-                     pHarpooner->KilledMonsterCredit(DRAKE_HUNT_KILL_CREDIT,m_creature->GetGUID());
+                     pHarpooner->KilledMonsterCredit(DRAKE_HUNT_KILL_CREDIT,m_creature->GetObjectGuid());
                      pHarpooner->RemoveAurasByCasterSpell(SPELL_DRAKE_HATCHLING_SUBDUED,uiHarpoonerGUID);
                      SetFollowComplete();
                      uiHarpoonerGUID = 0;
@@ -674,7 +674,7 @@ bool GOHello_go_scourge_cage(Player* pPlayer, GameObject* pGo)
         Creature *pCreature = GetClosestCreatureWithEntry(pGo, NPC_SCOURGE_PRISONER, INTERACTION_DISTANCE);
         if(pCreature)
         {
-            pPlayer->KilledMonsterCredit(NPC_SCOURGE_PRISONER, pCreature->GetGUID());
+            pPlayer->KilledMonsterCredit(NPC_SCOURGE_PRISONER, pCreature->GetObjectGuid());
             pCreature->CastSpell(pCreature, 43014, false);
         }
     }
@@ -730,7 +730,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
             {
                 EnterEvadeMode(); //We make sure that the npc is not attacking the player!
                 m_creature->setFaction(35);
-                uiChainerGUID = pCaster->GetGUID();
+                uiChainerGUID = pCaster->GetObjectGuid();
                 if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
                 {
                 StartFollow(pChainer, 35, NULL);
@@ -749,7 +749,7 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
             {
                 if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
                 {
-                    pChainer->KilledMonsterCredit(NPC_CAPTURED_BERLY_SORCERER,m_creature->GetGUID());
+                    pChainer->KilledMonsterCredit(NPC_CAPTURED_BERLY_SORCERER,m_creature->GetObjectGuid());
                     SetFollowComplete();
                     m_creature->ForcedDespawn(1000);
                 }

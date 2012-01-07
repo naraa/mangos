@@ -213,6 +213,7 @@ UPDATE `creature_template` SET `modelid_2` = 22044, `speed_run` = 1.4285 WHERE `
 --  Oil-stained Wolf :ID 25791  -
 -- --------------------------------------
 UPDATE `creature_template` SET `speed_walk` = 1, `AIName` = '' WHERE `entry` = 25791;
+DELETE FROM `creature_ai_scripts` WHERE (`id`=2579101);
 
 -- --------------------------------------
 --  Bloodthirsty Tundra Wolf :ID 26672  -
