@@ -729,7 +729,13 @@ INSERT INTO `spell_proc_event` VALUES (11129, 0x00, 0x03, 0x08C00017, 0x00031048
 DELETE FROM `spell_proc_event` WHERE `entry` IN (15337);
 INSERT INTO `spell_proc_event` VALUES (15337, 0x20, 0x06, 0x00802000, 0x00000000, 0x00000000, 0x00000002, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000002, 0, 0, 0);
 
--- spell proc hacks
+-- (50871) Savage Rend
+DELETE FROM `spell_proc_event` WHERE `entry` IN (50871);
+INSERT INTO `spell_proc_event` VALUES (50871, 0x00, 0x09, 0x00000000, 0x00000000, 0x00000000, 0x40000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000010, 0x00000002, 0, 0, 0);
+
+-- ----------------------------------------------------------------------------------------------------------------------------------
+-- spell proc hacks -
+-- ------------------
 
 -- Arcane Potency 
 DELETE FROM spell_chain WHERE spell_ID IN (57529, 57531);
@@ -753,7 +759,6 @@ INSERT INTO spell_proc_event VALUES (51682, 0x00, 8, 0x10014000, 0x10014000, 0x1
 -- Vanish & Invisibility
 DELETE FROM spell_proc_event WHERE entry IN (26888, 32612);
 
--- https://github.com/mangosR2/mangos/commit/11b986b85cc29a8b2b398370c97c36335f709940
 -- (56636) Taste for Blood
 DELETE FROM spell_proc_event WHERE entry = 56636;
 INSERT INTO spell_proc_event VALUES (56636, 0x00, 0x04, 0x00000020, 0x00000020, 0x00000020, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00100000, 0, 0, 6);
@@ -769,3 +774,5 @@ INSERT INTO spell_proc_event VALUES (37483, 0x00, 0x09, 0x00000000, 0x00000000, 
 -- (47535) Rapture (Rank 1)
 DELETE FROM `spell_proc_event` WHERE `entry` IN (47535);
 INSERT INTO `spell_proc_event` VALUES (47535, 0x02, 0x06, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x00000000, 0x08000000, 0x00600000, 0, 0, 0);
+
+
