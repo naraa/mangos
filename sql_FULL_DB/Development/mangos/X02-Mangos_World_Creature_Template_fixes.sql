@@ -2,6 +2,7 @@
 -- World Creatures Template Spell Data && General Fixes ( all instance trash will be handled in instance sql) -
 -- ------------------------------------------------------------------------------------------------------------
 -- VERSION == 1.0.0
+
 -- ----------------------
 --  :ID  -
 -- ----------------------
@@ -106,6 +107,11 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 
 UPDATE `creature_template` SET `modelid_2` = 200 WHERE `entry` = 48;
 
+-- ----------------------------------
+-- Bonechewer Riding Wolf :ID 18706 -
+-- ----------------------------------
+UPDATE `creature_template` SET `speed_walk` = 1, `speed_run` = 1.14286 WHERE `entry` = 18706;
+
 -- ------------------------------
 -- Gjalerbron Rune-Caster:ID 23989 -
 -- ------------------------------
@@ -197,3 +203,25 @@ INSERT INTO creature_ai_scripts VALUES
 
 DELETE FROM `creature_model_info` WHERE (`modelid`=21988);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (21988, 2, 2.625, 0, 0, 0);
+
+-- --------------------------------------
+--  Tundra Wolf :ID 25675  -
+-- --------------------------------------
+UPDATE `creature_template` SET `modelid_2` = 22044, `speed_run` = 1.4285 WHERE `entry` = 25675;
+
+-- --------------------------------------
+--  Oil-stained Wolf :ID 25791  -
+-- --------------------------------------
+UPDATE `creature_template` SET `speed_walk` = 1, `AIName` = '' WHERE `entry` = 25791;
+
+-- --------------------------------------
+--  Bloodthirsty Tundra Wolf :ID 26672  -
+-- --------------------------------------
+UPDATE `creature_template` SET `speed_walk` = 1.2, `speed_run` = 1.4285 WHERE `entry` = 26672;
+
+-- --------------------------------------
+--  Sinewy Wolf :ID 31233  -
+-- --------------------------------------
+UPDATE `creature_template` SET `speed_run` = 1.4285 WHERE `entry` = 31233;
+
+

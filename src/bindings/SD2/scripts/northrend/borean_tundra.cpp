@@ -48,6 +48,11 @@ enum
 {
     NPC_NESINGWARY_TRAPPER  = 25835,
     GO_QUALITY_FUR          = 187983,
+///-> ADD COMBAT SPELL S TO THE MIX
+    SPELL_BITE_ME           = 27050,
+    SPELL_FURIOUS_HOWL      = 24604,
+    SPELL_CALL_OF_THE_WILD  = 53434,
+    SPELL_GROWL             = 27047,
 
     SAY_PHRASE_1            = -1000599,
     SAY_PHRASE_2            = -1000600,
