@@ -122,7 +122,7 @@ INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`,
 DELETE FROM `creature_model_info` WHERE (`modelid`=21986);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (21986, 1.15, 1.5, 0, 21985, 0);
 -- ACID
-DELETE FROM creature_ai_scripts WHERE id=2398900;
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=23989);
 INSERT INTO creature_ai_scripts VALUES
 (2398900,23989,0,0,100,1,1000,1000,7000,7000,11,66290,1,0,0,0,0,0,0,0,0,0,'Gjalerbron Sleep Watcher - Cast Sleep');
 
@@ -142,7 +142,7 @@ INSERT INTO creature_ai_texts VALUES
 (-239901,'You tiny creatures disgust me.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Gjalerbron Rune-Caster Say1'),
 (-239902,'There will be no everlasting life for you.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Gjalerbron Rune-Caster Say2');
 -- ACID
-DELETE FROM creature_ai_scripts WHERE id IN (2399000,2399001,2399002);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=23990);
 INSERT INTO creature_ai_scripts VALUES
 (2399000,23990,4,0,100,0,0,0,0,0,11,34787,1,0,23,1,0,0,1,-239901,-239902,0,'Gjalerbron Rune-Caster - Cast Freezing Circle and Say on Aggro'),
 (2399001,23990,0,0,100,1,1000,1000,5000,5000,11,9672,1,0,0,0,0,0,0,0,0,0,'Gjalerbron Rune-Caster - Cast Frostbolt'),
@@ -159,7 +159,7 @@ DELETE FROM creature_ai_texts WHERE entry=-239911;
 INSERT INTO creature_ai_texts VALUES
 (-239911,'Look what has come to play.',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,0,0,0,'Gjalerbron Warrior Say1');
 -- ACID
-DELETE FROM creature_ai_scripts WHERE id IN (2399100,2399101);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=23991);
 INSERT INTO creature_ai_scripts VALUES
 (2399100,23991,4,0,100,0,0,0,0,0,11,13730,1,0,23,1,0,0,1,-239911,0,0,'Gjalerbron Warrior - Cast Demoralizing Shout and Say on Aggro'),
 (2399101,23991,0,0,100,1,1000,1000,10000,10000,11,10966,1,0,0,0,0,0,0,0,0,0,'Gjalerbron Warrior - Cast Uppercut');
@@ -176,7 +176,7 @@ UPDATE `creature_template` SET `modelid_2` = 17444, `AIName` = 'EventAI', `Scrip
 DELETE FROM `creature_model_info` WHERE (`modelid`=17444);
 INSERT INTO `creature_model_info` (`modelid`, `bounding_radius`, `combat_reach`, `gender`, `modelid_other_gender`, `modelid_alternative`) VALUES (17444, 3.5, 4.25, 0, 0, 0);
 -- EventAi
-DELETE FROM creature_ai_scripts WHERE id IN (2399300,2399301,2399302);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=23993);
 INSERT INTO creature_ai_scripts VALUES
 (2399300,23993,4,0,100,0,0,0,0,0,11,43556,1,0,23,1,0,0,1,-239901,-239902,0,'Sepulchral Overseer - Cast Curse of the Sepulcher on Aggro'),
 (2399301,23993,0,0,100,1,1000,1000,5000,5000,11,12737,1,0,0,0,0,0,0,0,0,0,'Sepulchral Overseerr - Cast Frostbolt'),
@@ -213,7 +213,7 @@ UPDATE `creature_template` SET `modelid_2` = 22044, `speed_run` = 1.4285 WHERE `
 --  Oil-stained Wolf :ID 25791  -
 -- --------------------------------------
 UPDATE `creature_template` SET `speed_walk` = 1, `AIName` = '' WHERE `entry` = 25791;
-DELETE FROM `creature_ai_scripts` WHERE (`id`=2579101);
+DELETE FROM `creature_ai_scripts` WHERE (`creature_id`=25791);
 
 -- --------------------------------------
 --  Bloodthirsty Tundra Wolf :ID 26672  -
