@@ -27,6 +27,11 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- --------------------
+-- Quest: 11676  -
+-- --------------------
+UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 25610 WHERE `entry` = 11676;
+
 -- -------------------------------------------------------------------------
 -- Quest:11690 bring them back alive ( special note requires veh support ) -
 -- -------------------------------------------------------------------------

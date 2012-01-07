@@ -663,19 +663,20 @@ CreatureAI* GetAI_npc_nexus_drake(Creature* pCreature)
 
 enum
 {
-    QUEST_MERCIFUL_FREEDOM      =  11676,
-    NPC_SCOURGE_PRISONER        =  25610,
+    QUEST_MERCIFUL_FREEDOM      = 11676,
+    NPC_SCOURGE_PRISONER        = 25610,
+    ILL_JUST_DESPAWN_MYSELF     = 43014, 
 };
 
 bool GOHello_go_scourge_cage(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestStatus(QUEST_MERCIFUL_FREEDOM) == QUEST_STATUS_INCOMPLETE)
     {
-        Creature *pCreature = GetClosestCreatureWithEntry(pGo, NPC_SCOURGE_PRISONER, INTERACTION_DISTANCE);
-        if(pCreature)
+        Creature* pCreature = GetClosestCreatureWithEntry(pGo, NPC_SCOURGE_PRISONER, INTERACTION_DISTANCE);
+        if (pCreature)
         {
             pPlayer->KilledMonsterCredit(NPC_SCOURGE_PRISONER, pCreature->GetObjectGuid());
-            pCreature->CastSpell(pCreature, 43014, false);
+            pCreature->CastSpell(pCreature, ILL_JUST_DESPAWN_MYSELF, false);
         }
     }
     return false;
@@ -700,13 +701,14 @@ enum eBerylSorcerer
 
 struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
 {
-    npc_beryl_sorcererAI(Creature* pCreature) : FollowerAI(pCreature) {
+    npc_beryl_sorcererAI(Creature* pCreature) : FollowerAI(pCreature) 
+    {
         m_uiNormalFaction = pCreature->getFaction();
         Reset();
     }
 
     bool bEnslaved;
-    uint64 uiChainerGUID;
+    ObjectGuid uiChainerGUID;
     uint32 m_uiNormalFaction;
 
     uint32 SPELL_FROST_BOLT_Timer;
@@ -727,34 +729,35 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
     void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
     {
         if (pSpell->Id == SPELL_ARCANE_CHAINS && pCaster->GetTypeId() == TYPEID_PLAYER && !bEnslaved)
+        {
+            EnterEvadeMode(); //We make sure that the npc is not attacking the player!
+            m_creature->setFaction(35);
+            uiChainerGUID = pCaster->GetObjectGuid();
+            if (Player* pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
             {
-                EnterEvadeMode(); //We make sure that the npc is not attacking the player!
-                m_creature->setFaction(35);
-                uiChainerGUID = pCaster->GetObjectGuid();
-                if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
-                {
                 StartFollow(pChainer, 35, NULL);
                 m_creature->UpdateEntry(NPC_CAPTURED_BERLY_SORCERER);
                 DoCast(m_creature, SPELL_COSMETIC_ENSLAVE_CHAINS_SELF, true);
                 bEnslaved = true;
-                }
             }
+        }
     }
 
     void MoveInLineOfSight(Unit* pWho)
     {
-            FollowerAI::MoveInLineOfSight(pWho);
+        FollowerAI::MoveInLineOfSight(pWho);
 
-            if (pWho->GetEntry() == NPC_LIBRARIAN_DONATHAN && m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+        if (pWho->GetEntry() == NPC_LIBRARIAN_DONATHAN && m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+        {
+            if(Player* pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
             {
-                if(Player *pChainer = m_creature->GetMap()->GetPlayer(uiChainerGUID))
-                {
-                    pChainer->KilledMonsterCredit(NPC_CAPTURED_BERLY_SORCERER,m_creature->GetObjectGuid());
-                    SetFollowComplete();
-                    m_creature->ForcedDespawn(1000);
-                }
+                pChainer->KilledMonsterCredit(NPC_CAPTURED_BERLY_SORCERER,m_creature->GetObjectGuid());
+                SetFollowComplete();
+                m_creature->ForcedDespawn(1000);
             }
-     }
+        }
+    }
+
     void UpdateAI(const uint32 uiDiff)
     {
         if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
