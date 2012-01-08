@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -35,7 +35,7 @@ void instance_sethekk_halls::Initialize()
 
 void instance_sethekk_halls::OnObjectCreate(GameObject* pGo)
 {
-     switch (pGo->GetEntry())
+    switch (pGo->GetEntry())
     {
         case GO_IKISS_DOOR:
             if (m_auiEncounter[TYPE_IKISS] == DONE)
@@ -45,7 +45,10 @@ void instance_sethekk_halls::OnObjectCreate(GameObject* pGo)
             if (m_auiEncounter[TYPE_IKISS] == DONE)
                 pGo->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND);
             break;
+        default:
+            return;
     }
+
     m_mGoEntryGuidStore[pGo->GetEntry()] = pGo->GetObjectGuid();
 }
 
@@ -61,10 +64,9 @@ void instance_sethekk_halls::SetData(uint32 uiType, uint32 uiData)
             if (uiData == DONE)
             {
                 DoUseDoorOrButton(GO_IKISS_DOOR, DAY);
+
                 if(GameObject* pChest = GetSingleGameObjectFromStorage(GO_IKISS_CHEST))
-                {
                     pChest->RemoveFlag(GAMEOBJECT_FLAGS, GO_FLAG_NO_INTERACT | GO_FLAG_INTERACT_COND);
-                }
             }
             m_auiEncounter[uiType] = uiData;
             break;

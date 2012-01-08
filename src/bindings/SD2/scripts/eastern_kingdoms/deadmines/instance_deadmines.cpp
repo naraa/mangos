@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -35,6 +35,14 @@ void instance_deadmines::Initialize()
     memset(&m_auiEncounter, 0, sizeof(m_auiEncounter));
 }
 
+void instance_deadmines::OnPlayerEnter(Player* pPlayer)
+{
+    // Respawn the Mysterious chest if one of the players who enter the instance has the quest in his log
+    if (pPlayer->GetQuestStatus(QUEST_FORTUNE_AWAITS) == QUEST_STATUS_COMPLETE &&
+        !pPlayer->GetQuestRewardStatus(QUEST_FORTUNE_AWAITS))
+        DoRespawnGameObject(GO_MYSTERIOUS_CHEST, HOUR);
+}
+
 void instance_deadmines::OnCreatureCreate(Creature* pCreature)
 {
     if (pCreature->GetEntry() == NPC_MR_SMITE)
@@ -67,6 +75,7 @@ void instance_deadmines::OnObjectCreate(GameObject* pGo)
             break;
         case GO_DEFIAS_CANNON:
         case GO_SMITE_CHEST:
+        case GO_MYSTERIOUS_CHEST:
             break;
 
         default:

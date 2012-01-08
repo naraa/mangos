@@ -1,4 +1,4 @@
-/* Copyright (C) 2006 - 2011 ScriptDev2 <http://www.scriptdev2.com/>
+/* Copyright (C) 2006 - 2012 ScriptDev2 <http://www.scriptdev2.com/>
  * This program is free software licensed under GPL version 2
  * Please see the included DOCS/LICENSE.TXT for more information */
 
@@ -25,6 +25,7 @@ enum
     GO_IRON_CLAD_DOOR       = 16397,
     GO_DEFIAS_CANNON        = 16398,
     GO_SMITE_CHEST          = 144111,                       // use to get correct location of mr.smites equipment changes
+    GO_MYSTERIOUS_CHEST     = 180024,                       // used for quest 7938; spawns in the instance only if one of the players has the quest
 
     NPC_RHAHKZOR            = 644,
     NPC_SNEED               = 643,
@@ -32,6 +33,8 @@ enum
     NPC_MR_SMITE            = 646,
     NPC_PIRATE              = 657,
     NPC_SQUALLSHAPER        = 1732,
+
+    QUEST_FORTUNE_AWAITS    = 7938,
 };
 
 class MANGOS_DLL_DECL instance_deadmines : public ScriptedInstance
@@ -40,6 +43,8 @@ class MANGOS_DLL_DECL instance_deadmines : public ScriptedInstance
         instance_deadmines(Map* pMap);
 
         void Initialize();
+
+        void OnPlayerEnter(Player* pPlayer);
 
         void OnCreatureCreate(Creature* pCreature);
         void OnObjectCreate(GameObject* pGo);
