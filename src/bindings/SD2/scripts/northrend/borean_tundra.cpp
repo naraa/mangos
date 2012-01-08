@@ -33,6 +33,7 @@ npc_beryl_sorcerer
 npc_seaforium_depth_charge
 npc_tad_pole
 Go_tadpole_cage
+Go_pile_of_furs
 EndContentData */
 
 #include "precompiled.h"
@@ -46,13 +47,15 @@ EndContentData */
 
 enum
 {
+    QUEST_UNFIT_FOR_DEATH   = 11865,
+
     NPC_NESINGWARY_TRAPPER  = 25835,
+
     GO_QUALITY_FUR          = 187983,
-///-> ADD COMBAT SPELL S TO THE MIX
-    SPELL_BITE_ME           = 27050,
-    SPELL_FURIOUS_HOWL      = 24604,
-    SPELL_CALL_OF_THE_WILD  = 53434,
-    SPELL_GROWL             = 27047,
+    GO_CARIBOU_TRAP         = 187982,
+
+    SPELL_PLACE_FAKE_FUR    = 46085,
+    SPELL_TRAPPED           = 46104,
 
     SAY_PHRASE_1            = -1000599,
     SAY_PHRASE_2            = -1000600,
@@ -62,87 +65,84 @@ enum
 
 struct MANGOS_DLL_DECL npc_nesingwary_trapperAI : public ScriptedAI
 {
-    npc_nesingwary_trapperAI(Creature* pCreature) : ScriptedAI(pCreature) { Reset(); }
+    npc_nesingwary_trapperAI(Creature* pCreature) : ScriptedAI(pCreature)
+    {
+        Reset();
+        m_bMovedAlready = false;
+    }
 
-    uint8 m_uiPhase;
-    uint32 m_uiPhaseTimer;
-    ObjectGuid m_playerGuid;
-    ObjectGuid m_trapGuid;
+    uint32 m_uiTimer;
+    bool m_bMovedAlready;
 
     void Reset()
     {
-        m_uiPhase = 0;
-        m_uiPhaseTimer = 0;
-        m_playerGuid.Clear();
-        m_trapGuid.Clear();
-    }
-
-    void StartAction(Player* pPlayer, GameObject* pTrap)
-    {
-        m_uiPhase = 1;
-        m_uiPhaseTimer = 3000;
-        m_playerGuid = pPlayer->GetObjectGuid();
-        m_trapGuid = pTrap->GetObjectGuid();
-
-        switch (urand(0, 3))
-        {
-            case 0: DoScriptText(SAY_PHRASE_1, m_creature); break;
-            case 1: DoScriptText(SAY_PHRASE_2, m_creature); break;
-            case 2: DoScriptText(SAY_PHRASE_3, m_creature); break;
-            case 3: DoScriptText(SAY_PHRASE_4, m_creature); break;
-        }
+        m_uiTimer = 3000;
     }
 
     void UpdateAI(const uint32 uiDiff)
     {
-        if (!m_creature->getVictim() && m_uiPhase)
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
         {
-            if (m_uiPhaseTimer <= uiDiff)
-            {
-                switch(m_uiPhase)
+            if (!m_bMovedAlready)
+		    {
+                if (GameObject* pQuality_fur = GetClosestGameObjectWithEntry(m_creature, GO_CARIBOU_TRAP, 20.0f))
                 {
-                    case 1:
-                        if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
-                        {
-                            if (pTrap->isSpawned())
-                                m_creature->GetMotionMaster()->MovePoint(0, pTrap->GetPositionX(), pTrap->GetPositionY(), pTrap->GetPositionZ());
-                        }
-                        break;
-                    case 2:
-                        if (GameObject* pTrap = m_creature->GetMap()->GetGameObject(m_trapGuid))
-                        {
-                            if (pTrap->isSpawned())
-                            {
-                                pTrap->Use(m_creature);
-
-                                if (Player* pPlayer = m_creature->GetMap()->GetPlayer(m_playerGuid))
-                                {
-                                    if (pPlayer->isAlive())
-                                        pPlayer->KilledMonsterCredit(m_creature->GetEntry());
-                                }
-                            }
-                        }
-                        break;
+                    m_creature->SetFacingToObject(pQuality_fur);
+                    m_creature->GetMotionMaster()->MovePoint(0,pQuality_fur->GetPositionX(),pQuality_fur->GetPositionY(),pQuality_fur->GetPositionZ());
+		            switch (urand(0, 3))
+                    {
+                        case 0: DoScriptText(SAY_PHRASE_1, m_creature); break;
+                        case 1: DoScriptText(SAY_PHRASE_2, m_creature); break;
+                        case 2: DoScriptText(SAY_PHRASE_3, m_creature); break;
+                        case 3: DoScriptText(SAY_PHRASE_4, m_creature); break;
+                    }
+                    m_bMovedAlready = true;
                 }
-
-                m_uiPhase = 0;
             }
-            else
-                m_uiPhaseTimer -= uiDiff;
+
+            if (m_bMovedAlready)
+            {
+                if (m_uiTimer < uiDiff)
+                {
+                    if (GameObject* pTrap = GetClosestGameObjectWithEntry(m_creature, GO_CARIBOU_TRAP, INTERACTION_DISTANCE))
+                    {
+                        pTrap->Use(m_creature);
+                        m_creature->ForcedDespawn(10000);
+                    }
+                }else m_uiTimer -= uiDiff;
+            }
         }
+        return;
+
     }
 
-    void MovementInform(uint32 uiType, uint32 uiPointId)
-    {
-        m_creature->HandleEmote(EMOTE_ONESHOT_LOOT);
-        m_uiPhaseTimer = 2000;
-        m_uiPhase = 2;
-    }
 };
 
 CreatureAI* GetAI_npc_nesingwary_trapper(Creature* pCreature)
 {
     return new npc_nesingwary_trapperAI(pCreature);
+}
+
+/*######
+## go_caribou_trap
+######*/
+
+bool GOUse_go_caribou_trap(Player* pPlayer, GameObject* pGo)
+{
+    //pGo->CastSpell(m_creature,SPELL_TRAPPED,true);
+    //pPlayer->KilledMonsterCredit(NPC_NESINGWARY_TRAPPER);
+    return true;
+}
+
+/*######
+## Pile_Of_Furs
+######*/
+
+bool GOUse_go_Pile_Of_Furs(Player* pPlayer, GameObject* pGo)
+{
+    pPlayer->SummonCreature(NPC_NESINGWARY_TRAPPER,pGo->GetPositionX()+rand()%7,pGo->GetPositionY()+rand()%7,pGo->GetPositionZ(),0,TEMPSUMMON_DEAD_DESPAWN,0);
+    pPlayer->KilledMonsterCredit(NPC_NESINGWARY_TRAPPER);
+    return true;
 }
 
 /*#####
@@ -155,6 +155,12 @@ enum
     SPELL_PLACE_WOLF_BAIT           = 46072,                // doesn't appear to be used for anything
     SPELL_HAS_EATEN                 = 46073,
     SPELL_SUMMON_DROPPINGS          = 46075,
+
+    ///-> ADD COMBAT SPELL S TO THE MIX
+    SPELL_BITE_ME           = 27050,
+    SPELL_FURIOUS_HOWL      = 24604,
+    SPELL_CALL_OF_THE_WILD  = 53434,
+    SPELL_GROWL             = 27047,
 
     FACTION_MONSTER                 = 634,
 
@@ -267,34 +273,6 @@ bool EffectAuraDummy_npc_oil_stained_wolf(const Aura* pAura, bool bApply)
     return false;
 }
 
-/*######
-## go_caribou_trap
-######*/
-
-bool GOUse_go_caribou_trap(Player* pPlayer, GameObject* pGo)
-{
-    float fX, fY, fZ;
-    pGo->GetClosePoint(fX, fY, fZ, pGo->GetObjectBoundingRadius(), 2*INTERACTION_DISTANCE, frand(0, M_PI_F*2));
-
-    if (Creature* pCreature = pGo->SummonCreature(NPC_NESINGWARY_TRAPPER, fX, fY, fZ, pGo->GetOrientation(), TEMPSUMMON_TIMED_OR_DEAD_DESPAWN, 10000))
-    {
-        if (npc_nesingwary_trapperAI* pTrapperAI = dynamic_cast<npc_nesingwary_trapperAI*>(pCreature->AI()))
-            pTrapperAI->StartAction(pPlayer, pGo);
-
-        pGo->SetFlag(GAMEOBJECT_FLAGS, GO_FLAG_IN_USE);
-
-        if (GameObject* pGoFur = GetClosestGameObjectWithEntry(pGo, GO_QUALITY_FUR, INTERACTION_DISTANCE))
-        {
-            if (!pGoFur->isSpawned())
-            {
-                pGoFur->SetRespawnTime(10);
-                pGoFur->Refresh();
-            }
-        }
-    }
-
-    return true;
-}
 /*#####
 # npc_sinkhole_kill_credit
 #####*/
@@ -557,99 +535,98 @@ struct MANGOS_DLL_DECL npc_nexus_drakeAI : public FollowerAI
 {
     npc_nexus_drakeAI(Creature* pCreature) : FollowerAI(pCreature) { Reset(); }
 
-     uint64 uiHarpoonerGUID;
-     bool bWithRedDragonBlood;
-     bool bIsFollowing;
-     uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
-     uint32 SPELL_NETHERBREATH_Timer;
+    ObjectGuid uiHarpoonerGUID;
+    bool bWithRedDragonBlood;
+    bool bIsFollowing;
+    uint32 SPELL_INTANGIBLE_PRESENCE_Timer;
+    uint32 SPELL_NETHERBREATH_Timer;
 
-     void Reset()
-     {
-         bWithRedDragonBlood = false;
-         bIsFollowing = false;
-         SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
-         SPELL_NETHERBREATH_Timer = 4600;
-     }
+    void Reset()
+    {
+        bWithRedDragonBlood = false;
+        bIsFollowing = false;
+        SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
+        SPELL_NETHERBREATH_Timer = 4600;
+    }
 
-     void EnterCombat(Unit* pWho)
-     {
-         AttackStart(pWho);
-     }
+    void EnterCombat(Unit* pWho)
+    {
+       AttackStart(pWho);
+    }
 
-     void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
-     {
-            if (pSpell->Id == SPELL_DRAKE_HARPOON && pCaster->GetTypeId() == TYPEID_PLAYER)
-            {
-                uiHarpoonerGUID = pCaster->GetObjectGuid();
-                DoCast(m_creature, SPELL_RED_DRAGONBLOOD, true);
-            }
-            m_creature->Attack(pCaster,true);
-            bWithRedDragonBlood = true;
-     }
-
-     void MoveInLineOfSight(Unit *pWho)
-     {
-         FollowerAI::MoveInLineOfSight(pWho);
-
-
-         if (pWho->GetEntry() == NPC_RAELORASZ && m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
-         {
-           if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
-                 {
-
-                     pHarpooner->KilledMonsterCredit(DRAKE_HUNT_KILL_CREDIT,m_creature->GetObjectGuid());
-                     pHarpooner->RemoveAurasByCasterSpell(SPELL_DRAKE_HATCHLING_SUBDUED,uiHarpoonerGUID);
-                     SetFollowComplete();
-                     uiHarpoonerGUID = 0;
-                     m_creature->ForcedDespawn(1000);
-                 }
-
-          }
-      }
-
-     void UpdateAI(const uint32 uidiff)
+    void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
+    {
+        if (pSpell->Id == SPELL_DRAKE_HARPOON && pCaster->GetTypeId() == TYPEID_PLAYER)
         {
-            if (bWithRedDragonBlood && uiHarpoonerGUID && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
-            {
-                if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
-                {
-                    EnterEvadeMode();
-                    StartFollow(pHarpooner, 35, NULL);
+            uiHarpoonerGUID = pCaster->GetObjectGuid();
+            DoCast(m_creature, SPELL_RED_DRAGONBLOOD, true);
+        }
+        m_creature->Attack(pCaster,true);
+        bWithRedDragonBlood = true;
+    }
 
-                    DoCast(m_creature, SPELL_SUBDUED, true);
-                    pHarpooner->CastSpell(pHarpooner, SPELL_DRAKE_HATCHLING_SUBDUED, true);
+    void MoveInLineOfSight(Unit *pWho)
+    {
+        FollowerAI::MoveInLineOfSight(pWho);
 
-                    m_creature->AttackStop();
-                    bIsFollowing = true;
-                    bWithRedDragonBlood = false;
-                }
-            }
-            if(bIsFollowing && !m_creature->HasAura(SPELL_SUBDUED))
+
+        if (pWho->GetEntry() == NPC_RAELORASZ && m_creature->IsWithinDistInMap(pWho, INTERACTION_DISTANCE))
+        {
+            if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
             {
+                pHarpooner->KilledMonsterCredit(DRAKE_HUNT_KILL_CREDIT,m_creature->GetObjectGuid());
+                pHarpooner->RemoveAurasByCasterSpell(SPELL_DRAKE_HATCHLING_SUBDUED,uiHarpoonerGUID);
+                SetFollowComplete();
+                uiHarpoonerGUID = 0;
                 m_creature->ForcedDespawn(1000);
             }
 
-            if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
-                return;
-
-            if (SPELL_NETHERBREATH_Timer < uidiff)
-            {
-                DoCastSpellIfCan(m_creature->getVictim(),SPELL_NETHERBREATH);
-                SPELL_NETHERBREATH_Timer = 4600;
-            }
-            else
-                SPELL_NETHERBREATH_Timer -= uidiff;
-
-            if (SPELL_INTANGIBLE_PRESENCE_Timer < uidiff)
-            {
-                DoCastSpellIfCan(m_creature,SPELL_INTANGIBLE_PRESENCE);
-                SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
-             }
-             else
-                 SPELL_INTANGIBLE_PRESENCE_Timer -= uidiff;
-
-            DoMeleeAttackIfReady();
         }
+    }
+
+    void UpdateAI(const uint32 uidiff)
+    {
+        if (bWithRedDragonBlood && uiHarpoonerGUID && !m_creature->HasAura(SPELL_RED_DRAGONBLOOD))
+        {
+            if (Player *pHarpooner = m_creature->GetMap()->GetPlayer(uiHarpoonerGUID))
+            {
+                EnterEvadeMode();
+                StartFollow(pHarpooner, 35, NULL);
+
+                DoCast(m_creature, SPELL_SUBDUED, true);
+                pHarpooner->CastSpell(pHarpooner, SPELL_DRAKE_HATCHLING_SUBDUED, true);
+
+                m_creature->AttackStop();
+                bIsFollowing = true;
+                bWithRedDragonBlood = false;
+            }
+        }
+        if(bIsFollowing && !m_creature->HasAura(SPELL_SUBDUED))
+        {
+            m_creature->ForcedDespawn(1000);
+        }
+
+        if (!m_creature->SelectHostileTarget() || !m_creature->getVictim())
+            return;
+
+        if (SPELL_NETHERBREATH_Timer < uidiff)
+        {
+            DoCastSpellIfCan(m_creature->getVictim(),SPELL_NETHERBREATH);
+            SPELL_NETHERBREATH_Timer = 4600;
+        }
+        else
+            SPELL_NETHERBREATH_Timer -= uidiff;
+
+        if (SPELL_INTANGIBLE_PRESENCE_Timer < uidiff)
+        {
+            DoCastSpellIfCan(m_creature,SPELL_INTANGIBLE_PRESENCE);
+            SPELL_INTANGIBLE_PRESENCE_Timer = 16600;
+        }
+        else
+            SPELL_INTANGIBLE_PRESENCE_Timer -= uidiff;
+
+        DoMeleeAttackIfReady();
+    }
 };
 
 CreatureAI* GetAI_npc_nexus_drake(Creature* pCreature)
@@ -665,7 +642,7 @@ enum
 {
     QUEST_MERCIFUL_FREEDOM      = 11676,
     NPC_SCOURGE_PRISONER        = 25610,
-    ILL_JUST_DESPAWN_MYSELF     = 43014, 
+    ILL_JUST_DESPAWN_MYSELF     = 43014,
 };
 
 bool GOHello_go_scourge_cage(Player* pPlayer, GameObject* pGo)
@@ -701,7 +678,7 @@ enum eBerylSorcerer
 
 struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
 {
-    npc_beryl_sorcererAI(Creature* pCreature) : FollowerAI(pCreature) 
+    npc_beryl_sorcererAI(Creature* pCreature) : FollowerAI(pCreature)
     {
         m_uiNormalFaction = pCreature->getFaction();
         Reset();
@@ -716,14 +693,14 @@ struct MANGOS_DLL_DECL npc_beryl_sorcererAI : public FollowerAI
 
     void Reset()
     {
-         m_creature->setFaction(m_uiNormalFaction);
-         bEnslaved = false;
-         SPELL_FROST_BOLT_Timer = 5400;
-         SPELL_BLINK_Timer = 15000;
+        m_creature->setFaction(m_uiNormalFaction);
+        bEnslaved = false;
+        SPELL_FROST_BOLT_Timer = 5400;
+        SPELL_BLINK_Timer = 15000;
     }
     void EnterCombat(Unit* pWho)
     {
-            AttackStart(pWho);
+        AttackStart(pWho);
     }
 
     void SpellHit(Unit* pCaster, SpellEntry const* pSpell)
@@ -843,7 +820,7 @@ enum
 
 const int32 textNotOnQuest[3] =
 {
-    -1999825, 
+    -1999825,
     -1999826,
     -1999827
 };
@@ -915,15 +892,20 @@ void AddSC_borean_tundra()
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
-    pNewScript->Name = "npc_oil_stained_wolf";
-    pNewScript->GetAI = &GetAI_npc_oil_stained_wolf;
-    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_oil_stained_wolf;
-    pNewScript->pEffectAuraDummy = &EffectAuraDummy_npc_oil_stained_wolf;
+    pNewScript->Name = "go_high_fur";
+    pNewScript->pGOUse = &GOUse_go_Pile_Of_Furs;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;
     pNewScript->Name = "go_caribou_trap";
     pNewScript->pGOUse = &GOUse_go_caribou_trap;
+    pNewScript->RegisterSelf();
+
+    pNewScript = new Script;
+    pNewScript->Name = "npc_oil_stained_wolf";
+    pNewScript->GetAI = &GetAI_npc_oil_stained_wolf;
+    pNewScript->pEffectDummyNPC = &EffectDummyCreature_npc_oil_stained_wolf;
+    pNewScript->pEffectAuraDummy = &EffectAuraDummy_npc_oil_stained_wolf;
     pNewScript->RegisterSelf();
 
     pNewScript = new Script;

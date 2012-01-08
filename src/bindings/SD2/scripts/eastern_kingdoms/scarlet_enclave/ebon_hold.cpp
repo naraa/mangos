@@ -4075,21 +4075,15 @@ enum
 bool GOUse_go_org_portal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestStatus(QUEST_WARCHIEF_BLESSING) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(QUEST_WARCHIEF_BLESSING) == QUEST_STATUS_INCOMPLETE)
-    {
-         pPlayer->CastSpell(pPlayer, SPELL_PORTAL_ORGRIMMAR, true);
-         return true;
-    }
-    return false;
+        pPlayer->CastSpell(pPlayer, SPELL_PORTAL_ORGRIMMAR, true);
+    return true;
 }
 
 bool GOUse_go_sw_portal(Player* pPlayer, GameObject* pGo)
 {
     if (pPlayer->GetQuestStatus(QUEST_KINGS_WALK) == QUEST_STATUS_COMPLETE || pPlayer->GetQuestStatus(QUEST_KINGS_WALK) == QUEST_STATUS_INCOMPLETE)
-    {
-         pPlayer->CastSpell(pPlayer, SPELL_PORTAL_STORMWIND, true);
-         return true;
-    }
-    return false;
+        pPlayer->CastSpell(pPlayer, SPELL_PORTAL_STORMWIND, true);
+    return true;
 }
 
 void AddSC_ebon_hold()

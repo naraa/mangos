@@ -27,12 +27,69 @@ UPDATE `quest_template` SET `SpecialFlags` = 2 WHERE `entry` = 3377;
 -- Start of Quest and related data and fixes ----------------------
 -- ----------------------------------------------------------------
 
+-- --------------
+-- Quest: 11865 -
+-- --------------
+   -- minor graphic bug left the placed furs arent showing up rest is good
+DELETE FROM `gameobject` WHERE `id`=187982;
+DELETE FROM `gameobject` WHERE `id`=187996;
+DELETE FROM `gameobject` WHERE `id`=187995;
+DELETE FROM `gameobject` WHERE `id`=187997;
+DELETE FROM `gameobject` WHERE `id`=188003;
+DELETE FROM `gameobject` WHERE `id`=188000;
+DELETE FROM `gameobject` WHERE `id`=187999;
+DELETE FROM `gameobject` WHERE `id`=187998;
+DELETE FROM `gameobject` WHERE `id`=188002;
+DELETE FROM `gameobject` WHERE `id`=188004;
+DELETE FROM `gameobject` WHERE `id`=188006;
+DELETE FROM `gameobject` WHERE `id`=188008;
+DELETE FROM `gameobject` WHERE `id`=188007;
+DELETE FROM `gameobject` WHERE `id`=188005;
+DELETE FROM `gameobject` WHERE `id`=188001;
+INSERT INTO `gameobject` (`guid`,`id`,`map`,`spawnMask`,`phaseMask`,`position_x`,`position_y`,`position_z`,`orientation`,`rotation0`,`rotation1`,`rotation2`,`rotation3`,`spawntimesecs`,`animprogress`,`state`) VALUES
+(47111, 187982, 571, 1, 1, 3117.05, 5249.89, 60.5869, 2.54818, 0, 0, 0.956305, 0.292372, 300, 100, 1),
+(972580, 187982, 571, 1, 1, 2996.81, 5228.06, 62.9081, 5.8946, 0, 0, 0.193074, -0.981184, 25, 255, 1),
+(972579, 187982, 571, 1, 1, 2951.34, 5246.67, 60.8139, 5.8946, 0, 0, 0.193074, -0.981184, 25, 255, 1),
+(972578, 187982, 571, 1, 1, 3030.97, 5271.25, 61.4123, 1.35814, 0, 0, 0.628068, 0.778158, 25, 255, 1),
+(972577, 187982, 571, 1, 1, 3063.12, 5236.74, 64.9415, 5.78621, 0, 0, 0.245938, -0.969285, 25, 255, 1),
+(972575, 187982, 571, 1, 1, 3124.89, 5314.25, 54.2164, 5.80192, 0, 0, 0.238316, -0.971188, 25, 255, 1),
+(972574, 187982, 571, 1, 1, 3079.76, 5340.87, 57.9214, 6.17499, 0, 0, 0.0540726, -0.998537, 25, 255, 1),
+(972573, 187982, 571, 1, 1, 3043.47, 5318.17, 59.8185, 0.325342, 0, 0, 0.161954, 0.986798, 25, 255, 1),
+(972572, 187982, 571, 1, 1, 3000.72, 5332.48, 62.7281, 0.24523, 0, 0, 0.122308, 0.992492, 25, 255, 1),
+(972571, 187982, 571, 1, 1, 2955.71, 5330.13, 63.0549, 1.49873, 0, 0, 0.681173, 0.732123, 25, 255, 1),
+(972570, 187982, 571, 1, 1, 2975.49, 5287.94, 61.5077, 5.51447, 0, 0, 0.374965, -0.927039, 25, 255, 1),
+(972569, 187982, 571, 1, 1, 2924.65, 5297.66, 60.1248, 1.42725, 0, 0, 0.65458, 0.755992, 25, 255, 1),
+(972568, 187982, 571, 1, 1, 2907.54, 5215.89, 63.6194, 1.69115, 0, 0, 0.748352, 0.663302, 25, 255, 1),
+(972567, 187982, 571, 1, 1, 2892.35, 5261.13, 60.2892, 0.802077, 0, 0, 0.390375, 0.920656, 25, 255, 1);
+
+UPDATE `gameobject_template` SET `ScriptName` = 'go_high_fur' WHERE `entry` = 187983;
+UPDATE `gameobject_template` SET `type` = 10, `flags` = 4, `data1` = 11865 WHERE `entry` = 187983;
+
 -- --------------------
 -- Quest: 11676  -
 -- --------------------
 UPDATE `quest_template` SET `ReqCreatureOrGOId1` = 25610 WHERE `entry` = 11676;
   -- removing gossip here fixes an expliot for this npc to use text use sd2
-UPDATE `creature_template` SET `npcflag` = 0 WHERE `entry` = 25610;  
+UPDATE `creature_template` SET `npcflag` = 0 WHERE `entry` = 25610;
+
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187982 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187995 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187996 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187997 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187998 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187983 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=187999 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188000 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188001 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188002 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188003 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188004 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188005 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188006 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188007 LIMIT 1;
+DELETE FROM `spell_script_target` WHERE  `entry`=46085 AND `type`=0 AND `targetEntry`=188008 LIMIT 1;
+
+INSERT INTO `spell_script_target` (`entry`, `targetEntry`) VALUES (46085, 187983);
 
 -- -------------------------------------------------------------------------
 -- Quest:11690 bring them back alive ( special note requires veh support ) -
