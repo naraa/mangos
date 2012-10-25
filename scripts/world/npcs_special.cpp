@@ -2187,12 +2187,12 @@ enum
     PHASE_FAIL              = 3,
     PHASE_END               = 4,
 
-    YELL_IGNITE             = -1100001,
-    YELL_1ST                = -1100002,
-    YELL_2ND                = -1100003,
-    YELL_FAIL               = -1100004,
-    YELL_VICTORY            = -1100005,
-    YELL_CONFLAGRATION      = -1100006
+    YELL_IGNITE             = -1110001,
+    YELL_1ST                = -1110002,
+    YELL_2ND                = -1110003,
+    YELL_FAIL               = -1110004,
+    YELL_VICTORY            = -1110005,
+    YELL_CONFLAGRATION      = -1110006
 };
 
 struct MANGOS_DLL_DECL npc_horseman_fire_bunnyAI : public Scripted_NoMovementAI
